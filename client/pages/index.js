@@ -39,7 +39,7 @@ class Index extends React.Component {
         }
         </tbody>
       </table>
-      <p><Link to="/new" className="govuk-button">Create project</Link></p>
+      <p><Link to="/new" className="govuk-button">Add new project</Link></p>
     </React.Fragment>;
   }
 
