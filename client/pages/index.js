@@ -7,6 +7,8 @@ import DropZone from 'react-dropzone';
 import { deleteProject, importProject } from '../actions/projects';
 import { throwError } from '../actions/messages';
 
+import ExportLink from '../components/export-link';
+
 const mapStateToProps = state => {
   return {
     projects: state.projects
@@ -62,7 +64,10 @@ class Index extends React.Component {
             return <tr key={ project.id }>
               <td><Link to={`/project/${project.id}`}>{ project.title }</Link></td>
               <td>{ moment(project.updated).format('D MMMM YYYY, HH:mm') }</td>
-              <td><button onClick={() => this.props.remove(project.id)} className="govuk-button">Remove</button></td>
+              <td>
+                <ExportLink project={project.id} />
+                <button onClick={() => this.props.remove(project.id)} className="govuk-button">Remove</button>
+              </td>
             </tr>
           })
         }
