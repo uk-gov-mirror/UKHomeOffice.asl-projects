@@ -50,7 +50,8 @@ module.exports = () => {
           return new Promise((resolve, reject) => {
             const transaction = db.transaction(['projects'], 'readwrite');
             const objectStore = transaction.objectStore('projects');
-            const request = objectStore.add({ ...project, updated: Date.now() });
+            project.updated = project.updated || Date.now();
+            const request = objectStore.add(project);
             request.onsuccess = e => {
               return resolve({
                 id: e.target.result,
