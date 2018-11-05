@@ -10,8 +10,7 @@ const mapStateToProps = (state, props) => {
     return {};
   }
   return {
-    title: project.title,
-    id: project.id
+    project
   };
 };
 
@@ -22,11 +21,17 @@ const mapDispatchToProps = (dispatch, props) => {
 class Index extends React.Component {
 
   render() {
+    if (!this.props.project) {
+      return null;
+    }
     return <React.Fragment>
-      <h1>{ this.props.title }</h1>
+      <h1>{ this.props.project.title }</h1>
       <h2>Sections</h2>
-      <ApplicationSummary project={ this.props.id } />
-      <p className="control-panel"><Link to="/">&lt; Back to project list</Link></p>
+      <ApplicationSummary project={ this.props.project.id } />
+      <p className="control-panel">
+        <Link to="/">&lt; Back to project list</Link>
+        <a href={`data:application/json;base64,${window.btoa(JSON.stringify(this.props.project))}`} download={`${this.props.project.title}.json`}>Export</a>
+      </p>
     </React.Fragment>
   }
 

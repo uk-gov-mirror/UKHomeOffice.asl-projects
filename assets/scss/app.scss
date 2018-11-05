@@ -16,7 +16,7 @@ p.control-panel {
   justify-content: flex-start;
   align-items: center;
 
-  button {
+  .govuk-button {
     margin-bottom: 0;
   }
 
@@ -46,6 +46,11 @@ main {
   background: $green;
   color: white;
   font-weight: bold;
+  z-index: 100;
+
+  &.alert-error {
+    background: $govuk-error-colour;
+  }
 }
 
 .alert-enter {
@@ -78,3 +83,13 @@ main {
   }
 }
 
+.import-active {
+  border: 3px dashed $mid-grey;
+  padding: 12px;
+  margin: -15px;
+}
+.import-rejected {
+  border: 3px dashed $govuk-error-colour;
+  padding: 12px;
+  margin: -15px;
+}

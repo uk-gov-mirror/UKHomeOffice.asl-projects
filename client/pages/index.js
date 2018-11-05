@@ -2,8 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
+import DropZone from 'react-dropzone';
 
-import { deleteProject } from '../actions/projects';
+import { deleteProject, importProject } from '../actions/projects';
+import { throwError } from '../actions/messages';
 
 const mapStateToProps = state => {
   return {
@@ -12,13 +14,39 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
   return {
+    error: message => dispatch(throwError(message)),
+    import: data => dispatch(importProject(data)),
     remove: id => dispatch(deleteProject(id))
   };
 }
 
 class Index extends React.Component {
+
+  drop(files, rejected) {
+    files.forEach(file => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const obj = JSON.parse(reader.result);
+          this.props.import(obj);
+        } catch (e) {
+          return this.props.error(`Error importing file: ${e.message}`);
+        }
+      };
+      reader.readAsBinaryString(file);
+    });
+  }
+
   render() {
-    return <React.Fragment>
+    return <DropZone
+      onDrop={files => this.drop(files)}
+      onDropRejected={files => this.props.error(`Invalid file type: ${files[0].type}`)}
+      accept="application/json"
+      activeClassName="import-active"
+      rejectClassName="import-rejected"
+      style={{}}
+      disableClick={true}
+      >
       <h1>Your projects</h1>
       <table className="govuk-table">
         <thead>
@@ -40,8 +68,11 @@ class Index extends React.Component {
         }
         </tbody>
       </table>
-      <p><Link to="/new" className="govuk-button">Add new project</Link></p>
-    </React.Fragment>;
+      <p className="control-panel">
+        <Link to="/new" className="govuk-button">Add new project</Link>
+        <span>or drag an exported json file onto this window to import it.</span>
+      </p>
+    </DropZone>;
   }
 
 }

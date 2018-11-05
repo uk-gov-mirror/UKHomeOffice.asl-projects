@@ -1,3 +1,5 @@
+import { omit } from 'lodash';
+
 import * as types from './types';
 import database from '../database';
 
@@ -18,6 +20,17 @@ export function createProject(project) {
       .then(db => db.create(project))
       .then(project => dispatch({ type: types.CREATE_PROJECT, project }))
       .then(() => dispatch(showMessage('Project created!')))
+      .catch(error => dispatch({ type: types.ERROR, error }));
+  };
+}
+
+export function importProject(project) {
+  project = omit(project, 'id');
+  return (dispatch, getState) => {
+    return database()
+      .then(db => db.create(project))
+      .then(project => dispatch({ type: types.CREATE_PROJECT, project }))
+      .then(() => dispatch(showMessage('Project imported!')))
       .catch(error => dispatch({ type: types.ERROR, error }));
   };
 }

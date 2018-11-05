@@ -15,7 +15,7 @@ class Create extends React.Component {
     if (!this.props.message) {
       return;
     }
-    return <div className="alert" key="alert">
+    return <div className={`alert alert-${this.props.type}`} key="alert">
       <div className="govuk-width-container">
         <p>{ this.props.message }</p>
       </div>
