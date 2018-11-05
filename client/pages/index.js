@@ -19,6 +19,7 @@ const mapDispatchToProps = dispatch => {
 class Index extends React.Component {
   render() {
     return <React.Fragment>
+      <h1>Your projects</h1>
       <table className="govuk-table">
         <thead>
           <tr>

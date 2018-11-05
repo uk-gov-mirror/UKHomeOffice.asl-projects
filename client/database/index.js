@@ -34,6 +34,7 @@ module.exports = () => {
           });
         },
         update: (id, data) => {
+          data.updated = Date.now();
           return new Promise((resolve, reject) => {
             const transaction = db.transaction(['projects'], 'readwrite');
             const objectStore = transaction.objectStore('projects');
