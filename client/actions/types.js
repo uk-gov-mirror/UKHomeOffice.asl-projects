@@ -1,0 +1,9 @@
+export const LOAD_PROJECTS = 'LOAD_PROJECTS';
+export const CREATE_PROJECT = 'CREATE_PROJECT';
+export const UPDATE_PROJECT = 'UPDATE_PROJECT';
+export const DELETE_PROJECT = 'DELETE_PROJECT';
+
+export const SHOW_MESSAGE = 'SHOW_MESSAGE';
+export const HIDE_MESSAGE = 'HIDE_MESSAGE';
+
+export const ERROR = 'ERROR';
