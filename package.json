@@ -4,6 +4,7 @@
   "description": "ASL PPL prototype",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "dev": "nodemon -r dotenv/config -e js,jsx index.js",
     "build": "npm run build:css && npm run build:js",
     "prebuild:css": "mkdir -p public/js",
