@@ -1,0 +1,3 @@
+export const INCOMPLETE = 'INCOMPLETE';
+export const PARTIALLY_COMPLETE = 'PARTIALLY_COMPLETE';
+export const COMPLETE = 'COMPLETE';
