@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { INCOMPLETE, PARTIALLY_COMPLETE, COMPLETE } from '../constants/completeness';
 
 import { Badge } from '@ukhomeoffice/react-components';
 
@@ -19,15 +20,29 @@ const mapDispatchToProps = (dispatch, props) => {
 class ApplicationSummary extends React.Component {
 
   complete(subsection) {
-    let incomplete = true;
+    let completeness = INCOMPLETE;
     if (typeof subsection.complete === 'function') {
-      incomplete = !subsection.complete(this.props.values);
+      completeness = subsection.complete(this.props.values) || INCOMPLETE;
     } else if (Array.isArray(subsection.fields)) {
       const fields = subsection.fields.map(f => f.name);
-      incomplete = fields.filter(f => !this.props.values[f]).length;
+      const completed = fields.filter(f => this.props.values[f]);
+      if (completed.length === 0) {
+        completeness = INCOMPLETE;
+      } else if (completed.length < subsection.fields.length) {
+        completeness = PARTIALLY_COMPLETE;
+      } else if (completed.length === subsection.fields.length) {
+        completeness = COMPLETE;
+      }
     }
 
-    return incomplete ? <span className="badge incomplete">incomplete</span> : <span className="badge complete">complete</span>;
+    switch (completeness) {
+      case COMPLETE:
+        return <span className="badge complete">complete</span>;
+      case PARTIALLY_COMPLETE:
+        return <span className="badge incomplete">incomplete</span>;
+      default:
+        return null;
+    }
   }
 
   sectionVisible (section) {

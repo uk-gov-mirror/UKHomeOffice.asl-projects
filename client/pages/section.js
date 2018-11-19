@@ -13,6 +13,8 @@ const mapStateToProps = (state, props) => {
     return found || section.subsections[props.match.params.section];
   }, null);
 
+  section.fields = section.fields || [];
+
   return {
     ...project,
     section
@@ -42,7 +44,7 @@ class Section extends React.Component {
     e.preventDefault();
     const errors = {};
     this.props.section.fields.forEach(field => {
-      if (!this.state[field.name]) {
+      if (field.required && !this.state[field.name]) {
         errors[field.name] = 'This field is required';
       }
     });
