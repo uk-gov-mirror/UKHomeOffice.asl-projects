@@ -3,12 +3,13 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { pick } from 'lodash';
 
-import { Button, Input, Select, TextArea } from '@ukhomeoffice/react-components';
+import { Button } from '@ukhomeoffice/react-components';
 
 import { updateProject } from '../actions/projects';
+import Field from '../components/field';
 
 const mapStateToProps = (state, props) => {
-  const project = state.projects.find(project => project.id === parseInt(props.match.params.id, 10));
+  const values = state.projects.find(project => project.id === parseInt(props.match.params.id, 10));
   const section = Object.values(state.application).reduce((found, section) => {
     return found || section.subsections[props.match.params.section];
   }, null);
@@ -16,8 +17,9 @@ const mapStateToProps = (state, props) => {
   section.fields = section.fields || [];
 
   return {
-    ...project,
-    section
+    id: values.id,
+    values,
+    ...section
   };
 };
 
@@ -31,80 +33,58 @@ const mapDispatchToProps = (dispatch, props) => {
 class Section extends React.Component {
 
   componentWillMount() {
-    this.setState({ errors: {}, ...this.props });
+    this.setState({ errors: {}, ...this.props.values });
   }
 
   componentWillReceiveProps(props) {
-    this.props.section.fields.forEach(field => {
-      this.setState({ [field.name]: props[field.name] });
+    this.props.fields.forEach(field => {
+      this.setState({ [field.name]: props.values[field.name] });
     });
   }
 
-  submit(e) {
-    e.preventDefault();
+  validate() {
     const errors = {};
-    this.props.section.fields.forEach(field => {
+    this.props.fields.forEach(field => {
       if (field.required && !this.state[field.name]) {
         errors[field.name] = 'This field is required';
       }
     });
-    if (Object.keys(errors).length) {
-      return this.setState({ errors });
-    }
-    const fieldNames = this.props.section.fields.map(f => f.name);
-    return this.props.update(pick(this.state, fieldNames))
-      .then(() => {
-        this.props.history.push(`/project/${this.props.id}`);
-      });
+    this.setState({ errors });
+    return Object.keys(errors).length === 0;
   }
 
-  field(field) {
-    if (!this.state) {
-      return null;
+  submit(e) {
+    e.preventDefault();
+    const valid = this.validate();
+    if (valid) {
+      const fieldNames = this.props.fields.map(f => f.name);
+      return this.props.update(pick(this.state, fieldNames))
+        .then(() => {
+          this.props.history.push(`/project/${this.props.id}`);
+        });
     }
-    if (field.type === 'select') {
-      return <Select
-        key={ field.name }
-        name={ field.name }
-        label={ field.label }
-        options={ field.options }
-        value={ this.state[field.name] }
-        error={ this.state.errors && this.state.errors[field.name] }
-        onChange={ e => this.setState({ [field.name]: e.target.value }) }
-        />
-    }
-    if (field.type === 'textarea') {
-      return <TextArea
-        key={ field.name }
-        name={ field.name }
-        label={ field.label }
-        value={ this.state[field.name] }
-        error={ this.state.errors && this.state.errors[field.name] }
-        onChange={ e => this.setState({ [field.name]: e.target.value }) }
-        />
-    }
-    return <Input
-      key={ field.name }
-      name={ field.name }
-      label={ field.label }
-      value={ this.state[field.name] }
-      error={ this.state.errors && this.state.errors[field.name] }
-      onChange={ e => this.setState({ [field.name]: e.target.value }) }
-      />
   }
 
   render() {
-    if (!this.props.section) {
+    if (!this.props.values || !this.state) {
       return null;
     }
-    if (this.props.section.component) {
-      const Section = this.props.section.component;
+    if (this.props.component) {
+      const Section = this.props.component;
       return <Section />
     }
     return <form onSubmit={e => this.submit(e)}>
-      <h1>{ this.props.section.label }</h1>
+      <h1>{ this.props.label }</h1>
       {
-        this.props.section.fields.map(field => this.field(field))
+        this.props.fields.map(field => {
+          return <Field
+            { ...field }
+            key={ field.name }
+            value={ this.state[field.name] }
+            error={ this.state.errors[field.name] }
+            onChange={ value => this.setState({ [field.name]: value }) }
+            />
+        })
       }
       <p className="control-panel">
         <Button type="submit">Save</Button>

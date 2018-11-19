@@ -8,21 +8,50 @@ export default function applicationReducer(state = {}) {
           fields: [
             {
               name: 'title',
+              required: true,
               label: 'Title',
               type: 'text'
             },
             {
               name: 'type',
-              label: 'Licence type',
-              type: 'select',
               required: true,
+              label: 'Licence type',
+              type: 'radio',
               options: [
                 { value: 'research', label: 'Research' },
-                { value: 'testing', label: 'Testing or screening as a service' },
+                { value: 'provision-testing', label: 'Provision of regulatory testing' },
+                { value: 'provision-product', label: 'Provision of a product' },
+                { value: 'testing', label: 'Testing or screening' },
                 { value: 'manufacture', label: 'Manufacture of a product' },
-                { value: 'teaching', label: 'Teaching' }
+                { value: 'teaching-knowledge', label: 'Teaching (knowledge)' },
+                { value: 'teaching-skills', label: 'Teaching (skills)' }
               ]
-            }
+            },
+            {
+              name: 'overall-aim',
+              required: true,
+              label: 'What is the overall aim of this project?',
+              type: 'textarea'
+            },
+            {
+              name: 'why-important',
+              required: true,
+              label: 'Why is it important to undertake this work?',
+              type: 'textarea'
+            },
+            {
+              name: 'duation',
+              required: true,
+              label: 'What will be the duration of this project?',
+              type: 'radio',
+              options: [
+                { value: '1', label: '1 year' },
+                { value: '2', label: '2 years' },
+                { value: '3', label: '3 years' },
+                { value: '4', label: '4 years' },
+                { value: '5', label: '5 years' },
+              ]
+            },
           ]
         }
       }
