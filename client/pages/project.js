@@ -27,7 +27,6 @@ class Index extends React.Component {
     }
     return <React.Fragment>
       <h1>{ this.props.title }</h1>
-      <h2>Sections</h2>
       <ApplicationSummary project={ this.props.id } />
       <p className="control-panel">
         <ExportLink project={this.props.id} />

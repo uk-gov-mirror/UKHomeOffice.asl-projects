@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -18,9 +18,14 @@ const mapDispatchToProps = (dispatch, props) => {
 
 class ApplicationSummary extends React.Component {
 
-  complete(key) {
-    const fields = this.props.sections[key].fields.map(f => f.name);
-    const incomplete = fields.filter(f => !this.props.values[f]).length;
+  complete(subsection) {
+    let incomplete = true;
+    if (typeof subsection.complete === 'function') {
+      incomplete = !subsection.complete(this.props.values);
+    } else if (Array.isArray(subsection.fields)) {
+      const fields = subsection.fields.map(f => f.name);
+      incomplete = fields.filter(f => !this.props.values[f]).length;
+    }
 
     return incomplete ? <span className="badge incomplete">incomplete</span> : <span className="badge complete">complete</span>;
   }
@@ -33,22 +38,33 @@ class ApplicationSummary extends React.Component {
     if (!this.props.values) {
       return null;
     }
-    return <table className="govuk-table">
-      <tbody>
-      {
-        Object.keys(this.props.sections).map(key => {
-          const section = this.props.sections[key];
-          if (!this.sectionVisible(section)) {
-            return null;
-          }
-          return <tr key={key}>
-            <td><Link to={`/project/${this.props.project}/${key}`}>{ section.label }</Link></td>
-            <td>{ this.complete(key) }</td>
-          </tr>
-        })
+    return Object.keys(this.props.sections).map(key => {
+      const section = this.props.sections[key];
+      const subsections = Object.keys(section.subsections)
+        .filter(subsection => this.sectionVisible(section.subsections[subsection]));
+
+      if (!subsections.length) {
+        return null;
       }
-      </tbody>
-    </table>
+
+      return <Fragment key={key}>
+        <h2>{ section.label }</h2>
+        <table className="govuk-table">
+          <tbody>
+          {
+            subsections.map(key => {
+              const subsection = section.subsections[key];
+              return <tr key={key}>
+                <td><Link to={`/project/${this.props.project}/${key}`}>{ subsection.label }</Link></td>
+                <td>{ this.complete(subsection) }</td>
+              </tr>
+            })
+          }
+          </tbody>
+        </table>
+      </Fragment>
+    });
+
   }
 
 }

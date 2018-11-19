@@ -9,12 +9,10 @@ import { updateProject } from '../actions/projects';
 
 const mapStateToProps = (state, props) => {
   const project = state.projects.find(project => project.id === parseInt(props.match.params.id, 10));
-  const section = state.application[props.match.params.section];
-  if (!project) {
-    return {
-      section
-    };
-  }
+  const section = Object.values(state.application).reduce((found, section) => {
+    return found || section.subsections[props.match.params.section];
+  }, null);
+
   return {
     ...project,
     section
@@ -94,6 +92,13 @@ class Section extends React.Component {
   }
 
   render() {
+    if (!this.props.section) {
+      return null;
+    }
+    if (this.props.section.component) {
+      const Section = this.props.section.component;
+      return <Section />
+    }
     return <form onSubmit={e => this.submit(e)}>
       <h1>{ this.props.section.label }</h1>
       {
