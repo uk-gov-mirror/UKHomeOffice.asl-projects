@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { pick } from 'lodash';
 
 import { Button } from '@ukhomeoffice/react-components';
 
