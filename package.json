@@ -51,6 +51,6 @@
   },
   "devDependencies": {
     "dotenv": "^6.1.0",
-    "nodemon": "^1.18.5"
+    "nodemon": "^1.18.7"
   }
 }
