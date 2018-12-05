@@ -54,7 +54,6 @@ export function updateProject(id, data) {
     return database()
       .then(db =>  db.update(id, { ...project, ...data }))
       .then(project => dispatch({ type: types.UPDATE_PROJECT, id, project }))
-      .then(() => dispatch(showMessage('Project saved!')))
       .catch(error => dispatch({ type: types.ERROR, error }));
   };
 }

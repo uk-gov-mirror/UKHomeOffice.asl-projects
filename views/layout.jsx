@@ -87,7 +87,7 @@ Layout.defaultProps = {
   stylesheets: [],
   scripts: [],
   homepageUrl: '/',
-  propositionHeader: 'Research and testing with animals',
+  propositionHeader: 'Research and testing using animals',
   propositionHeaderLink: '/',
   logoLinkTitle: '',
   skipToContent: 'Skip to main content',

@@ -63,14 +63,14 @@ class ApplicationSummary extends React.Component {
       }
 
       return <Fragment key={key}>
-        <h2>{ section.label }</h2>
+        <h2>{ section.title }</h2>
         <table className="govuk-table">
           <tbody>
           {
             subsections.map(key => {
               const subsection = section.subsections[key];
               return <tr key={key}>
-                <td><Link to={`/project/${this.props.project}/${key}`}>{ subsection.label }</Link></td>
+                <td><Link to={`/project/${this.props.project}/${key}`}>{ subsection.title }</Link></td>
                 <td>{ this.complete(subsection) }</td>
               </tr>
             })
