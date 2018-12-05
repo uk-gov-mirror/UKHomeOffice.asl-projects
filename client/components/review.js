@@ -4,9 +4,13 @@ class Review extends React.Component {
 
   replay() {
     if (this.props.type === 'checkbox') {
+      const value = this.props.value || [];
+      if (!value.length) {
+        return <p><em>None selected</em></p>;
+      }
       return <ul>
         {
-          (this.props.value || []).map(value => <li key={ value }>{ value }</li>)
+          value.map(value => <li key={ value }>{ value }</li>)
         }
       </ul>;
     }
