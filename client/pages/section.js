@@ -18,7 +18,7 @@ const mapStateToProps = (state, props) => {
 
   return {
     id: props.match.params.id,
-    step: parseInt(props.match.params.step, 10),
+    step: parseInt(props.match.params.step, 10) || 0,
     section: props.match.params.section,
     values,
     ...section
