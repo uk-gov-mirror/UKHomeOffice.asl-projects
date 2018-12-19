@@ -54,10 +54,10 @@ class Field extends React.Component {
       return <TextArea
         name={ this.props.name }
         label={ this.props.label }
-        value={ this.props.value }
+        value={ this.props.value || '' }
         error={ this.props.error }
         onChange={ e => this.onChange(e.target.value) }
-        />
+      />;
     }
     if (this.props.type === 'texteditor') {
       return <TextEditor
@@ -71,10 +71,10 @@ class Field extends React.Component {
     return <Input
       name={ this.props.name }
       label={ this.props.label }
-      value={ this.props.value }
+      value={ this.props.value || '' }
       error={ this.props.error }
       onChange={ e => this.onChange(e.target.value) }
-      />
+    />;
   }
 
 }
