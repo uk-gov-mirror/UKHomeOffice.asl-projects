@@ -9,6 +9,10 @@ class Field extends React.Component {
     return this.props.onChange && this.props.onChange(value);
   }
 
+  onSave(value) {
+    return this.props.onSave && this.props.onSave(value);
+  }
+
   render() {
     if (this.props.type === 'select') {
       return <Select
@@ -61,7 +65,7 @@ class Field extends React.Component {
         label={ this.props.label }
         value={ this.props.value }
         error={ this.props.error }
-        // onChange={ e => this.onChange(e.target.value) }
+        onSave={ value => this.onSave(value) }
         />
     }
     return <Input

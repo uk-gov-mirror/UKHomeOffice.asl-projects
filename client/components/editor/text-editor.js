@@ -38,21 +38,18 @@ const initialValue = Value.fromJSON({
 
 export default class TextEditor extends Component {
 
-  onKeyDown(e, change ) {
-    console.log(e.key);
-  };
-
-  constructor() {
-    super();
-    this.state = { value: initialValue }
-  }
+	constructor(props) {
+    super(props);
+		this.state = { value: initialValue }
+	}
 
   onChange({ value }) {
-    this.setState({ value });
-  };
+		this.setState({ value });
+		this.props.onSave(JSON.stringify(this.state));
+	};
 
-  renderNode(props) {
-		console.log('render node ', props.node);
+	renderNode(props) {
+		// console.log('render node ', props.node);
 		switch (props.node.type) {
 			// case 'link': {
 			// 	console.log(props.node.data.get('href'));

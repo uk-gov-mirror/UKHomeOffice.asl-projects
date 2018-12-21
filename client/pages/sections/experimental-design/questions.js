@@ -14,7 +14,10 @@ class Questions extends React.Component {
             { ...field }
             key={ field.name }
             value={ this.props.values[field.name] }
-            onChange={ value => this.props.save(field.name, value) }
+            onChange={ value => {
+              this.props.save(field.name, value)} }
+            onSave = { value => {
+              this.props.save(field.name, value)} }
             />
         })
       }
