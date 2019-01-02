@@ -40,12 +40,13 @@ export default class TextEditor extends Component {
 
 	constructor(props) {
     super(props);
-		this.state = { value: initialValue }
+		this.state = { value: initialValue };
+		if(props.value) this.state = { value: Value.fromJSON(JSON.parse(props.value)) };
 	}
 
   onChange({ value }) {
 		this.setState({ value });
-		this.props.onSave(JSON.stringify(this.state));
+		this.props.onSave(JSON.stringify(value.toJSON()));
 	};
 
 	renderNode(props) {
