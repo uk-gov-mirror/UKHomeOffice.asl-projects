@@ -1,9 +1,5 @@
-import React from 'react';
+import React from "react";
 
-const BoldMark = props => (
-	<strong>
-		{props.children}
-	</strong>
-);
+const BoldMark = props => <strong>{props.children}</strong>;
 
 export default BoldMark;
