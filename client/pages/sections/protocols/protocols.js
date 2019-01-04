@@ -45,6 +45,7 @@ class ProtocolSections extends Component {
       expanded: !this.props.values.complete
     }
     this.setCompleted = this.setCompleted.bind(this);
+    this.toggleActive = this.toggleActive.bind(this);
     this.toggleExpanded = this.toggleExpanded.bind(this);
   }
 
@@ -60,6 +61,7 @@ class ProtocolSections extends Component {
   }
 
   toggleActive(e) {
+    e.preventDefault();
     this.props.onToggleActive();
   }
 
