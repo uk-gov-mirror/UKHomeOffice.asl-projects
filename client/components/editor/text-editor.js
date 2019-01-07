@@ -74,19 +74,9 @@ export default class TextEditor extends Component {
   }
 
   onMarkClick(e, type) {
-    /* disabling browser default behavior like page refresh, etc */
     e.preventDefault();
-
-    /* grabbing the this.state.value */
     const { value } = this.state;
-
-    /*
-			applying the formatting on the selected text
-			which the desired formatting
-		*/
     const change = value.change().toggleMark(type);
-
-    /* calling the  onChange method we declared */
     this.onChange(change);
   }
 
@@ -105,7 +95,7 @@ export default class TextEditor extends Component {
     if (this.props.readonly) {
       return (
         <Fragment>
-					<br />
+          <br />
           <Editor
             value={this.state.value}
             renderMark={this.renderMark.bind(this)}
