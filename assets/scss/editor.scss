@@ -1,50 +1,52 @@
-h1 {
-	margin: 20px 0 25px 0;
-}
-blockquote {
-	font-size: 1.4em;
-	width: 80%;
-	margin: 50px auto;
-	font-style: italic;
-	color: $dark-grey;
-	padding: $govuk-gutter-half;
-	border-left: 8px solid $blue;
-	line-height: 1.6;
-	position: relative;
-	background: $background;
-	&::before {
-		content: '\201C';
-		color: $blue;
-		font-size: 2em;
-		position: absolute;
-		left: 10px;
-		top: -10px;
-	}
-	&::after {
-		content: '';
-	}
-	span {
-		display: block;
-		color: $dark-grey;
-		font-style: normal;
-		font-weight: bold;
-		margin-top: 1em;
-	}
-}
-a {
-	color: $blue;
-}
 .editor {
-	background-color: $white;
-	border: 2px solid $black;
+
+  background-color: $white;
+  border: 2px solid $black;
   border-radius: 0px;
-}
-.format-toolbar {
-	display: flex;
-	border-bottom: solid 1.7px $dark-grey;
-	padding: $govuk-gutter / 3;
-}
-.tooltip-icon-button {
-	cursor: pointer;
-	border: 0;
+
+  h1 {
+    margin: 20px 0 25px 0;
+  }
+  blockquote {
+    font-size: 1.4em;
+    width: 80%;
+    margin: 50px auto;
+    font-style: italic;
+    color: $dark-grey;
+    padding: $govuk-gutter-half;
+    border-left: 8px solid $blue;
+    line-height: 1.6;
+    position: relative;
+    background: $background;
+    &::before {
+      content: "\201C";
+      color: $blue;
+      font-size: 2em;
+      position: absolute;
+      left: 10px;
+      top: -10px;
+    }
+    &::after {
+      content: "";
+    }
+    span {
+      display: block;
+      color: $dark-grey;
+      font-style: normal;
+      font-weight: bold;
+      margin-top: 1em;
+    }
+  }
+  a {
+    color: $blue;
+  }
+  .format-toolbar {
+    display: flex;
+    border-bottom: solid 1.7px $dark-grey;
+    padding: $govuk-gutter / 3;
+  }
+  .tooltip-icon-button {
+    cursor: pointer;
+    border: 0;
+  }
 }
