@@ -1,4 +1,5 @@
 import { Input, Select, TextArea, RadioGroup, CheckboxGroup } from '@ukhomeoffice/react-components';
+import { TextEditor } from './editor';
 
 import React from 'react';
 
@@ -6,6 +7,10 @@ class Field extends React.Component {
 
   onChange(value) {
     return this.props.onChange && this.props.onChange(value);
+  }
+
+  onSave(value) {
+    return this.props.onSave && this.props.onSave(value);
   }
 
   render() {
@@ -54,6 +59,15 @@ class Field extends React.Component {
         onChange={ e => this.onChange(e.target.value) }
         />
     }
+    if (this.props.type === 'texteditor') {
+      return <TextEditor
+        name={ this.props.name }
+        label={ this.props.label }
+        value={ this.props.value }
+        error={ this.props.error }
+        onSave={ value => this.onSave(value) }
+        />
+    }
     return <Input
       name={ this.props.name }
       label={ this.props.label }
@@ -66,4 +80,3 @@ class Field extends React.Component {
 }
 
 export default Field;
-

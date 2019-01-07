@@ -1,12 +1,6 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { pick } from 'lodash';
-
-import { Button } from '@ukhomeoffice/react-components';
-
 import { updateProject } from '../actions/projects';
-import Field from '../components/field';
 
 const mapStateToProps = (state, props) => {
   const values = state.projects.find(project => project.id === parseInt(props.match.params.id, 10));
