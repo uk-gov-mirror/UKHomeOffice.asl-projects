@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 
-import some from 'lodash/some'
+import some from 'lodash/some';
+import every from 'lodash/every';
 
 import Fieldset from '../../../components/fieldset';
 import Controls from '../../../components/controls';
@@ -53,7 +54,7 @@ class Animals extends Component {
     super(props);
     this.state = {
       adding: false,
-      toggleActive: false,
+      active: false,
       review: false
     }
     this.toggleAdding = this.toggleAdding.bind(this);
@@ -99,7 +100,7 @@ class Animals extends Component {
     const speciesField = fields.filter(f => f.section === 'intro').map(f => ({ ...f, options: this.props.globalValues[f.optionsFromKey] }));
     const items = this.getItems();
     if (review) {
-      return <Review fields={fields.filter(f => f.section !== 'intro')} values={values.speciesDetails} advance={advance} onEdit={this.toggleReview} />
+      return <Review fields={fields.filter(f => f.section !== 'intro')} values={values.speciesDetails} advance={advance} onEdit={this.toggleReview} globalValues={this.props.globalValues} />
     }
     const prefix = `${name}-${index}-`;
     return (

@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 
 import castArray from 'lodash/castArray';
+import every from 'lodash/every';
 
 import { Input, Select, TextArea, RadioGroup, CheckboxGroup } from '@ukhomeoffice/react-components';
 import { TextEditor } from './editor';
@@ -40,7 +41,19 @@ class Field extends Component {
     })
   }
 
+  showField() {
+    const { conditional, values } = this.props;
+    if (!conditional) {
+      return true;
+    }
+    console.log(conditional, values)
+    return every(Object.keys(conditional), key => conditional[key] === values[key])
+  }
+
   render() {
+    if (!this.showField()) {
+      return null;
+    }
     if (this.props.type === 'select') {
       return <Select
         className={ this.props.className }

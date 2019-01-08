@@ -31,7 +31,7 @@ h1, h2, h3 {
   .header {
     background: none !important;
     padding-top: 0 !important;
-    
+
     .title {
       margin-bottom: 0 !important;
     }
@@ -358,8 +358,8 @@ fieldset.smaller {
   margin-bottom: $govuk-gutter;
 
   &.complete {
-    .expandable {
-      .header {
+    > .expandable {
+      > .header {
         background-color: $blue;
 
         * {

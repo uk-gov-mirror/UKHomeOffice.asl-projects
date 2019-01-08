@@ -1,5 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import map from 'lodash/map';
+import pickBy from 'lodash/pickBy';
+import every from 'lodash/every';
 
 import Accordion from '../../../components/accordion';
 import ExpandingPanel from '../../../components/expanding-panel';
@@ -21,10 +23,17 @@ const getSection = (section, props) => {
   }
 }
 
+const sectionIncluded = (section, values) => {
+  if (!section.conditional) {
+    return true;
+  }
+  return every(Object.keys(section.conditional), key => section.conditional[key] === values[key]);
+}
+
 const ProtocolSections = ({ sections, ...props }) => (
   <Accordion openOne>
     {
-      map(sections, (section, name) => (
+      map(pickBy(sections, section => sectionIncluded(section, props.globalValues)), (section, name) => (
         <ExpandingPanel key={name} title={section.title}>
           {
             getSection(name, { ...props, ...section })

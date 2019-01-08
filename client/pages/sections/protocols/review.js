@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import flatten from 'lodash/flatten';
 import castArray from 'lodash/castArray';
+import every from 'lodash/every';
 
 import Review from '../../../components/review';
 import Controls from '../../../components/controls';
@@ -24,7 +25,14 @@ const flattenReveals = fields => {
   }, []);
 }
 
-const ReviewSection = ({ fields = [], values, advance, onEdit }) => (
+const fieldIncluded = (field, values) => {
+  if (!field.conditional) {
+    return true;
+  }
+  return every(Object.keys(field.conditional), key => field.conditional[key] === values[key])
+}
+
+const ReviewSection = ({ fields = [], values, advance, onEdit, globalValues }) => (
   <Fragment>
     <Banner>
       <h2>Please review your answers</h2>
@@ -36,7 +44,7 @@ const ReviewSection = ({ fields = [], values, advance, onEdit }) => (
             item.name && <h2>{item.name}</h2>
           }
           {
-            flattenReveals(fields).map(field => {
+            flattenReveals(fields.filter(field => fieldIncluded(field, globalValues))).map(field => {
               return <Review
                 { ...field }
                 label={ field.review || field.label }
