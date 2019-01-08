@@ -83,7 +83,7 @@ class Repeater extends Component {
     return (
       <Fragment>
         {
-          this.props.addButtonBefore && addButton
+          this.props.addButtonBefore && this.props.addAnother && addButton
         }
         {
           this.state.items.map((item, index) =>
@@ -97,13 +97,14 @@ class Repeater extends Component {
                 moveUp: () => this.moveUp(index),
                 moveDown: () => this.moveDown(index),
                 values: item,
+                globalValues: child.props.values,
                 length: this.state.items.length
               })
             })
           )
         }
         {
-          !this.props.addButtonBefore && addButton
+          !this.props.addButtonBefore && this.props.addAnother && addButton
         }
       </Fragment>
     );
@@ -113,6 +114,7 @@ class Repeater extends Component {
 Repeater.defaultProps = {
   type: 'item',
   initCollapsed: false,
+  addAnother: true,
   onBeforeAdd: () => Promise.resolve(),
   onAfterAdd: () => Promise.resolve(),
   onBeforeRemove: () => Promise.resolve(),

@@ -70,8 +70,10 @@ class ProtocolSections extends Component {
       name,
       values,
       sections,
+      globalValues,
       index,
       steps,
+      save,
       updateItem
     } = this.props;
 
@@ -84,16 +86,18 @@ class ProtocolSections extends Component {
               <dt>Severity category: </dt>
               <dd className="grey">{ values.severity || 'Not set' }</dd>
             </dl>
-            <a href="#" onClick={this.toggleActive}>Edit</a>
+            <a href="#" onClick={this.toggleActive}>Edit title</a>
           </Completable>
           <div>
             <Sections
               name={name}
               index={index}
               sections={sections}
+              globalValues={globalValues}
               values={values}
               updateItem={updateItem}
               onFieldChange={(key, value) => updateItem({ [key]: value })}
+              save={save}
             />
             <Complete completed={values.complete} onChange={this.setCompleted}/>
           </div>
@@ -163,7 +167,6 @@ class Protocols extends Component {
       >
         <Protocol {...this.props} />
       </Repeater>
-      <Controls onContinue={this.props.exit} onExit={this.props.exit} />
     </Fragment>
   }
 }

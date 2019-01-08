@@ -6,15 +6,18 @@ import ExpandingPanel from '../../../components/expanding-panel';
 
 import Section from './section';
 import Steps from './steps';
+import Animals from './animals';
 
 const getSection = (section, props) => {
   switch(section) {
     case 'steps':
       return <Steps {...props} />
+    case 'animals':
+      return <Animals {...props} />
+    case 'experience':
+      return <Section { ...props } sections={{ typical: props.typical, maximal: props.maximal }} />
     default:
-      return (
-        <Section {...props} />
-      )
+      return <Section {...props} />
   }
 }
 

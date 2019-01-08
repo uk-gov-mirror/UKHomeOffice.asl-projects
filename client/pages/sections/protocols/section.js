@@ -1,16 +1,40 @@
 import React, { Component, Fragment } from 'react';
 import every from 'lodash/every';
+import flatten from 'lodash/flatten';
+import map from 'lodash/map';
 
 import Fieldset from '../../../components/fieldset'
 import Controls from '../../../components/controls'
 
 import Review from './review';
 
+const RenderSection = ({ title, hideTitle = true, fields, values, prefix, onFieldChange }) => {
+  return (
+    <Fragment>
+      {
+        title && !hideTitle && <h3>{title}</h3>
+      }
+      <Fieldset
+        fields={fields}
+        values={values}
+        prefix={prefix}
+        onFieldChange={onFieldChange}
+      />
+    </Fragment>
+  )
+}
+
 class Section extends Component {
   constructor(props) {
     super(props);
+
+    const fields = this.props.sections
+      ? flatten(map(this.props.sections, section => section.fields))
+      : this.props.fields
+
     this.state = {
-      review: every(this.props.fields, field => this.props.values[field.name])
+      fields,
+      review: every(fields, field => this.props.values[field.name])
     };
     this.toggleReview = this.toggleReview.bind(this);
   }
@@ -22,19 +46,23 @@ class Section extends Component {
   }
 
   render() {
-    const { index, name, values, fields, onFieldChange, advance, prefix = '' } = this.props;
-    const { review } = this.state;
+    const { index, name, values, sections, exit, advance, hideTitle, ...props } = this.props;
+    const { review, fields } = this.state;
+
+    let { prefix = '' } = this.props;
+    prefix = `${prefix}${name}-${index}-`;
+
     return review
       ? <Review fields={fields} values={values} advance={advance} onEdit={this.toggleReview} />
       : (
         <Fragment>
-          <Fieldset
-            fields={fields}
-            values={values}
-            prefix={`${prefix}${name}-${index}-`}
-            onFieldChange={onFieldChange}
-          />
-          <Controls onContinue={this.toggleReview} exitClassName="link" />
+          {
+            sections
+              ? Object.keys(sections).map(section => <RenderSection {...props} {...sections[section]} prefix={prefix} values={values} hideTitle={false} />)
+              : <RenderSection {...props} hideTitle={hideTitle} fields={fields} prefix={prefix} values={values} />
+          }
+
+          <Controls onContinue={this.toggleReview} onExit={exit} exitClassName="link" />
         </Fragment>
       );
   }

@@ -13,7 +13,7 @@ const Fieldset = ({ fields, values = {}, onFieldChange, prefix = '' }) => (
           name={ `${prefix}${field.name}` }
           value={ values[field.name] }
           onChange={ value => onFieldChange(field.name, value) }
-          onChange={ value => onFieldChange(field.name, value) }
+          onSave={ value => onFieldChange(field.name, value) }
           onFieldChange={onFieldChange}
           values={ values }
         />
