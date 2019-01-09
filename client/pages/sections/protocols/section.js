@@ -8,11 +8,14 @@ import Controls from '../../../components/controls'
 
 import Review from './review';
 
-const RenderSection = ({ title, hideTitle = true, fields, values, prefix, onFieldChange }) => {
+const RenderSection = ({ title, label, hideTitle = true, fields, values, prefix, onFieldChange }) => {
   return (
     <Fragment>
       {
         title && !hideTitle && <h3>{title}</h3>
+      }
+      {
+        label && <h4>{label}</h4>
       }
       <Fieldset
         fields={fields}

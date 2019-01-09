@@ -70,7 +70,6 @@ class ProtocolSections extends Component {
       name,
       values,
       sections,
-      globalValues,
       index,
       steps,
       save,
@@ -93,7 +92,6 @@ class ProtocolSections extends Component {
               name={name}
               index={index}
               sections={sections}
-              globalValues={globalValues}
               values={values}
               updateItem={updateItem}
               onFieldChange={(key, value) => updateItem({ [key]: value })}
