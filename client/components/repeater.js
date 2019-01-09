@@ -97,7 +97,6 @@ class Repeater extends Component {
                 moveUp: () => this.moveUp(index),
                 moveDown: () => this.moveDown(index),
                 values: item,
-                globalValues: child.props.values,
                 length: this.state.items.length
               })
             })

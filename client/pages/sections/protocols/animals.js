@@ -8,6 +8,8 @@ import Controls from '../../../components/controls';
 import Expandable from '../../../components/expandable';
 import Repeater from '../../../components/repeater';
 
+import { connectProject } from '../../../helpers';
+
 import Review from './review';
 
 import SpeciesSelector from '../../../components/species-selector';
@@ -91,16 +93,17 @@ class Animals extends Component {
   }
 
   getItems() {
-    return (this.props.values.speciesDetails || []).filter(s => this.props.values.species.includes(s.name))
+    const { values: { speciesDetails = [], species = [] }, project } = this.props;
+    return speciesDetails.filter(s => species.includes(s.name) && project.species.includes(s.name))
   }
 
   render() {
     const { fields, values, onFieldChange, updateItem, exit, advance, name, index } = this.props;
     const { adding, active, review } = this.state;
-    const speciesField = fields.filter(f => f.section === 'intro').map(f => ({ ...f, options: this.props.globalValues[f.optionsFromKey] }));
+    const speciesField = fields.filter(f => f.section === 'intro').map(f => ({ ...f, options: this.props.project[f.optionsFromKey] }));
     const items = this.getItems();
     if (review) {
-      return <Review fields={fields.filter(f => f.section !== 'intro')} values={values.speciesDetails} advance={advance} onEdit={this.toggleReview} globalValues={this.props.globalValues} />
+      return <Review fields={fields.filter(f => f.section !== 'intro')} values={this.getItems()} advance={advance} onEdit={this.toggleReview} />
     }
     const prefix = `${name}-${index}-`;
     return (
@@ -109,6 +112,7 @@ class Animals extends Component {
           <Fragment>
             <Repeater
               items={items}
+              initCollapsed={true}
               onSave={speciesDetails => updateItem({ speciesDetails })}
               addAnother={false}
             >
@@ -141,7 +145,7 @@ class Animals extends Component {
               adding && <AddSpecies
                 onExitClicked={this.toggleAdding}
                 onContinueClicked={this.toggleAdding}
-                values={this.props.globalValues}
+                values={this.props.project}
                 onFieldChange={this.props.save}
               />
             }
@@ -152,4 +156,4 @@ class Animals extends Component {
   }
 }
 
-export default Animals;
+export default connectProject(Animals);

@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import { connectProject } from '../helpers';
 
 import castArray from 'lodash/castArray';
 import every from 'lodash/every';
@@ -42,12 +43,11 @@ class Field extends Component {
   }
 
   showField() {
-    const { conditional, values } = this.props;
+    const { conditional, project } = this.props;
     if (!conditional) {
       return true;
     }
-    console.log(conditional, values)
-    return every(Object.keys(conditional), key => conditional[key] === values[key])
+    return every(Object.keys(conditional), key => conditional[key] === project[key])
   }
 
   render() {
@@ -132,4 +132,4 @@ class Field extends Component {
 
 }
 
-export default Field;
+export default connectProject(Field);

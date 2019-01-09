@@ -97,7 +97,7 @@ export default {
                 name: 'description',
                 label: 'Briefly describe the scientific purposes of this protocol',
                 hint: 'Information about protocol steps should be added later',
-                type: 'textarea'
+                type: 'texteditor'
               },
               {
                 name: 'severity',
@@ -114,13 +114,13 @@ export default {
               {
                 name: 'severity-details',
                 label: 'Why did you choose this severity category?',
-                type: 'textarea'
+                type: 'texteditor'
               },
               {
                 name: 'outputs',
                 label: 'What outputs do you think may arise from this protocol?',
                 hint: 'For example, test results, phenotypic information, or products.',
-                type: 'textarea'
+                type: 'texteditor'
               }
             ]
           },

@@ -301,6 +301,12 @@ fieldset.smaller {
   }
 }
 
+.govuk-reveal {
+  textarea:last-child {
+    margin-bottom: 0;
+  }
+}
+
 .status-label {
   display: block;
   float: right;

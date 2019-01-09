@@ -1,6 +1,9 @@
 import React, { Component, Fragment } from 'react';
+import { connectProject } from '../../../helpers';
 import classnames from 'classnames'
-import isBoolean from 'lodash/isBoolean'
+
+import isBoolean from 'lodash/isBoolean';
+import every from 'lodash/every';
 
 import Repeater from '../../../components/repeater';
 import Fieldset from '../../../components/fieldset';
@@ -9,11 +12,19 @@ import ExpandingPanel from '../../../components/expandable';
 
 const Section = ({ children, ...props }) => <section {...props}>{ children }</section>
 
+const fieldIncluded = (field, values) => {
+  if (!field.conditional) {
+    return true;
+  }
+  return every(Object.keys(field.conditional), key => field.conditional[key] === values[key])
+}
+
 class Step extends Component {
   constructor(props) {
     super(props)
+    const fields = this.props.fields.filter(field => fieldIncluded(field, this.props.project))
     this.state = {
-      editing: true,
+      editing: !every(fields, field => this.props.values[field.name]),
       expanded: false
     }
     this.toggleEditing = this.toggleEditing.bind(this);
@@ -59,7 +70,7 @@ class Step extends Component {
   }
 
   render() {
-    const { prefix, index, fields, values, exit, additional, updateItem, length } = this.props
+    const { prefix, index, fields, values, exit, additional, updateItem, length } = this.props;
     const { editing, expanded } = this.state;
 
     const Element = editing ? Section : ExpandingPanel;
@@ -129,4 +140,4 @@ class Steps extends Component {
   }
 }
 
-export default Steps;
+export default connectProject(Steps);

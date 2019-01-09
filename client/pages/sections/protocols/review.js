@@ -1,4 +1,6 @@
 import React, { Fragment } from 'react';
+import { connectProject } from '../../../helpers';
+
 import flatten from 'lodash/flatten';
 import castArray from 'lodash/castArray';
 import every from 'lodash/every';
@@ -7,13 +9,18 @@ import Review from '../../../components/review';
 import Controls from '../../../components/controls';
 import Banner from '../../../components/banner';
 
-const flattenReveals = fields => {
+const flattenReveals = (fields, values) => {
   return fields.reduce((arr, item) => {
     const reveals = [];
     if (item.options) {
       item.options.forEach(option => {
         if (option.reveal) {
-          reveals.push(flattenReveals(castArray(option.reveal)))
+          if (Array.isArray(values[item.name]) && values[item.name].includes(option.value)) {
+            reveals.push(flattenReveals(castArray(option.reveal), values))
+          }
+          else if (option.value === values[item.name]) {
+            reveals.push(flattenReveals(castArray(option.reveal), values))
+          }
         }
       })
     }
@@ -32,7 +39,7 @@ const fieldIncluded = (field, values) => {
   return every(Object.keys(field.conditional), key => field.conditional[key] === values[key])
 }
 
-const ReviewSection = ({ fields = [], values, advance, onEdit, globalValues }) => (
+const ReviewSection = ({ fields = [], values, advance, onEdit, project }) => (
   <Fragment>
     <Banner>
       <h2>Please review your answers</h2>
@@ -44,7 +51,7 @@ const ReviewSection = ({ fields = [], values, advance, onEdit, globalValues }) =
             item.name && <h2>{item.name}</h2>
           }
           {
-            flattenReveals(fields.filter(field => fieldIncluded(field, globalValues))).map(field => {
+            flattenReveals(fields.filter(field => fieldIncluded(field, project)), item).map(field => {
               return <Review
                 { ...field }
                 label={ field.review || field.label }
@@ -65,6 +72,6 @@ const ReviewSection = ({ fields = [], values, advance, onEdit, globalValues }) =
       onExit={onEdit}
     />
   </Fragment>
-)
+);
 
-export default ReviewSection;
+export default connectProject(ReviewSection);

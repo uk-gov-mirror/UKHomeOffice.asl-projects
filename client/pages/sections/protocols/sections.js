@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import { connectProject } from '../../../helpers';
 import map from 'lodash/map';
 import pickBy from 'lodash/pickBy';
 import every from 'lodash/every';
@@ -33,7 +34,7 @@ const sectionIncluded = (section, values) => {
 const ProtocolSections = ({ sections, ...props }) => (
   <Accordion openOne>
     {
-      map(pickBy(sections, section => sectionIncluded(section, props.globalValues)), (section, name) => (
+      map(pickBy(sections, section => sectionIncluded(section, props.project)), (section, name) => (
         <ExpandingPanel key={name} title={section.title}>
           {
             getSection(name, { ...props, ...section })
@@ -44,4 +45,4 @@ const ProtocolSections = ({ sections, ...props }) => (
   </Accordion>
 );
 
-export default ProtocolSections;
+export default connectProject(ProtocolSections);
