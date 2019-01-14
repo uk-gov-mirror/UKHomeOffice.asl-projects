@@ -5,6 +5,7 @@ import castArray from 'lodash/castArray';
 import every from 'lodash/every';
 
 import { Input, Select, TextArea, RadioGroup, CheckboxGroup } from '@ukhomeoffice/react-components';
+import SpeciesSelector from './species-selector';
 import { TextEditor } from './editor';
 
 import Fieldset from './fieldset';
@@ -53,6 +54,16 @@ class Field extends Component {
   render() {
     if (!this.showField()) {
       return null;
+    }
+    if (this.props.type === 'species-selector') {
+      return <SpeciesSelector
+        label={ this.props.label }
+        hint={ this.props.hint }
+        name={ this.props.name }
+        values={ this.props.values }
+        error={ this.props.error }
+        onFieldChange={ this.props.onFieldChange }
+      />
     }
     if (this.props.type === 'select') {
       return <Select
@@ -114,6 +125,7 @@ class Field extends Component {
       return <TextEditor
         name={ this.props.name }
         label={ this.props.label }
+        hint={ this.props.hint }
         value={ this.props.value }
         error={ this.props.error }
         onSave={ value => this.onSave(value) }

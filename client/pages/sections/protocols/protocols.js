@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from 'react';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import classnames from 'classnames';
 
 import Completable from '../../../components/completable';
@@ -12,16 +11,18 @@ import Sections from './sections.js';
 import Complete from '../../../components/complete';
 
 class Form extends Component {
+  removeItem = e => {
+    e.preventDefault();
+    this.props.removeItem();
+  }
+
   render() {
-    const { title, index, name, updateItem, removeItem, exit, toggleActive, prefix = '', ...props } = this.props;
+    const { title, index, name, updateItem, exit, toggleActive, prefix = '', ...props } = this.props;
     return (
       <div className={classnames('protocol', 'panel')}>
         {
           index !== 0 && (
-            <a href="#" className="float-right" onClick={e => {
-              e.preventDefault();
-              removeItem();
-            }}>Remove</a>
+            <a href="#" className="float-right" onClick={this.removeItem}>Remove</a>
           )
         }
 
@@ -39,28 +40,22 @@ class Form extends Component {
 }
 
 class ProtocolSections extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      expanded: !this.props.values.complete
-    }
-    this.setCompleted = this.setCompleted.bind(this);
-    this.toggleActive = this.toggleActive.bind(this);
-    this.toggleExpanded = this.toggleExpanded.bind(this);
+  state = {
+    expanded: !this.props.values.complete
   }
 
-  setCompleted(value) {
+  setCompleted = value => {
     this.props.updateItem({ complete: value });
     this.setState({ expanded: !value })
   }
 
-  toggleExpanded() {
+  toggleExpanded = () => {
     this.setState({
       expanded: !this.state.expanded
     })
   }
 
-  toggleActive(e) {
+  toggleActive = e => {
     e.preventDefault();
     this.props.onToggleActive();
   }
@@ -97,7 +92,7 @@ class ProtocolSections extends Component {
               onFieldChange={(key, value) => updateItem({ [key]: value })}
               save={save}
             />
-            <Complete completed={values.complete} onChange={this.setCompleted}/>
+            <Complete type="protocol" completed={values.complete} onChange={this.setCompleted} buttonClassName="button-secondary" />
           </div>
         </Expandable>
       </section>
@@ -106,20 +101,16 @@ class ProtocolSections extends Component {
 }
 
 class Protocol extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      active: this.props.active || !this.props.values.title,
-      complete: false
-    }
-    this.toggleActive = this.toggleActive.bind(this);
+  state = {
+    active: this.props.active || !this.props.values.title,
+    complete: false
   }
 
-  toggleActive() {
+  toggleActive = () => {
     this.setState({ active: !this.state.active });
   }
 
-  render () {
+  render() {
     const { steps, species, updateItem, active, ...props } = this.props;
 
     return this.state.active
@@ -134,12 +125,7 @@ class Protocol extends Component {
 }
 
 class Protocols extends Component {
-  constructor(props) {
-    super(props);
-    this.save = this.save.bind(this);
-  }
-
-  save(protocols) {
+  save = protocols => {
     this.props.save({ protocols });
   }
 

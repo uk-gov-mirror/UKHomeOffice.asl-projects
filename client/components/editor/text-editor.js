@@ -45,6 +45,7 @@ export default class TextEditor extends Component {
         focus: false
       };
     }
+    this.ref = React.createRef();
     this.setFocus = this.setFocus.bind(this)
     this.onChange = this.onChange.bind(this)
     this.renderMark = this.renderMark.bind(this)
@@ -90,6 +91,7 @@ export default class TextEditor extends Component {
     const { value } = this.state;
     const change = value.change().toggleMark(type);
     this.onChange(change);
+    console.log(this.ref.current)
   }
 
   renderMarkIcon(type, icon) {
@@ -113,10 +115,10 @@ export default class TextEditor extends Component {
       );
     }
     return (
-      <Fragment>
-        {
-          this.props.label && <h2 className="govuk-fieldset__heading govuk-heading-l">{this.props.label}</h2>
-        }
+      <div className={classnames('govuk-form-group', {'govuk-form-group--error': this.props.error}, this.props.className)}>
+        <label className="govuk-label" htmlFor={this.props.name}>{this.props.label}</label>
+        { this.props.hint && <span id={`${this.props.name}-hint`} className="govuk-hint">{this.props.hint}</span> }
+        { this.props.error && <span id={`${this.props.name}-error`} className="govuk-error-message">{this.props.error}</span> }
         <div className={classnames('editor', { focus: this.state.focus })}>
           <FormatToolbar>
             {this.renderMarkIcon('title', ic_title)}
@@ -128,6 +130,7 @@ export default class TextEditor extends Component {
             {this.renderMarkIcon('quote', ic_format_quote)}
           </FormatToolbar>
           <Editor
+            ref={this.ref}
             onFocus={() => this.setFocus(true)}
             onBlur={() => this.setFocus(false)}
             value={this.state.value}
@@ -138,7 +141,7 @@ export default class TextEditor extends Component {
             renderMark={this.renderMark}
           />
         </div>
-      </Fragment>
+      </div>
     );
   }
 }

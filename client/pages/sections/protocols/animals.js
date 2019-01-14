@@ -22,15 +22,11 @@ const AddSpecies = ({ onContinueClicked, onExitClicked, onFieldChange, ...props 
 )
 
 class Animal extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      expanded: false
-    }
-    this.toggleExpanded = this.toggleExpanded.bind(this);
+  state = {
+    expanded: false
   }
 
-  toggleExpanded() {
+  toggleExpanded = () => {
     this.setState({ expanded: !this.state.expanded });
   }
 
@@ -52,33 +48,26 @@ class Animal extends Component {
 }
 
 class Animals extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      adding: false,
-      active: false,
-      review: false
-    }
-    this.toggleAdding = this.toggleAdding.bind(this);
-    this.toggleActive = this.toggleActive.bind(this);
-    this.toggleReview = this.toggleReview.bind(this);
-    this.saveAnimals = this.saveAnimals.bind(this);
+  state = {
+    adding: false,
+    active: false,
+    review: false
   }
 
-  toggleReview() {
+  toggleReview = () => {
     this.setState({ review: !this.state.review })
   }
 
-  toggleAdding(e) {
+  toggleAdding = e => {
     e.preventDefault();
     this.setState({ adding: !this.state.adding });
   }
 
-  toggleActive() {
+  toggleActive = () => {
     this.setState({ active: !this.state.active });
   }
 
-  saveAnimals() {
+  saveAnimals = () => {
     const species = this.props.values.species;
     const speciesDetails = this.props.values.speciesDetails || [];
     species.forEach(item => {
@@ -92,16 +81,21 @@ class Animals extends Component {
     this.toggleActive()
   }
 
-  getItems() {
+  getItems = () => {
     const { values: { speciesDetails = [], species = [] }, project } = this.props;
-    return speciesDetails.filter(s => species.includes(s.name) && project.species.includes(s.name))
+    console.log(speciesDetails, species)
+    return speciesDetails.filter(s => species.includes(s.name) && [...project.species, ...([project['species-other']] || [])].includes(s.name))
   }
 
   render() {
     const { fields, values, onFieldChange, updateItem, exit, advance, name, index } = this.props;
     const { adding, active, review } = this.state;
-    const speciesField = fields.filter(f => f.section === 'intro').map(f => ({ ...f, options: this.props.project[f.optionsFromKey] }));
+    const speciesField = fields.filter(f => f.section === 'intro').map(f => ({ ...f, options: [
+      ...this.props.project[f.optionsFromKey],
+      ...([this.props.project[`${f.optionsFromKey}-other`]] || [])
+    ] }));
     const items = this.getItems();
+    console.log(items)
     if (review) {
       return <Review fields={fields.filter(f => f.section !== 'intro')} values={this.getItems()} advance={advance} onEdit={this.toggleReview} />
     }

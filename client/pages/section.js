@@ -35,12 +35,13 @@ class Section extends React.Component {
 
   render() {
     if (this.props.component) {
-      const { values, fields, title, step, ...rest } = this.props;
+      const { values, fields, title, step, section, ...rest } = this.props;
 
       const Section = this.props.component;
       return <Section
         { ...this.props }
         title={ title }
+        section={ section }
         save={ (...args) => this.props.update(...args) }
         exit={ () => this.props.history.push(`/project/${this.props.id}`) }
         values={ values }

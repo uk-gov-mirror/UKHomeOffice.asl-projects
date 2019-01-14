@@ -46,7 +46,7 @@ h1, h2, h3 {
   font-weight: normal;
 }
 
-.smaller {
+.smaller-text {
   font-size: 0.8em;
 }
 
@@ -226,6 +226,10 @@ hr {
   padding: $govuk-gutter;
   background-color: $mid-grey;
   border-color: transparent;
+
+  &.yellow-bg {
+    background-color: $ho-focus;
+  }
 }
 
 fieldset.inline {
@@ -302,7 +306,7 @@ fieldset.smaller {
 }
 
 .govuk-reveal {
-  textarea:last-child {
+  textarea:last-child, .editor:last-child {
     margin-bottom: 0;
   }
 }
@@ -430,5 +434,67 @@ fieldset.smaller {
     h2:first-child {
       margin-top:0;
     }
+  }
+}
+
+.nts {
+  @extend .panel;
+  @extend .yellow-bg;
+
+  margin-bottom: $govuk-gutter;
+
+  > .govuk-button {
+    margin-bottom: 0;
+  }
+}
+
+.sidebar-nav {
+  border-top: 4px solid $blue;
+
+  > a {
+    display: block;
+    padding: $govuk-gutter-half;
+    text-decoration: none;
+
+    &.active {
+      background-color: $blue;
+      color: $white;
+    }
+  }
+}
+
+.nts-review {
+  display: flex;
+
+  > nav {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    align-self: flex-start;
+    flex-shrink: 0;
+  }
+
+  > nav, .content {
+    vertical-align: top;
+  }
+
+  .content {
+    flex-grow: 1;
+    margin-left: $govuk-gutter;
+  }
+}
+
+.download {
+  font-size: 1.2em;
+
+  &:before {
+    content: '';
+    margin-right: 0.5em;
+    background: $download;
+    background-size: 100%;
+    vertical-align: middle;
+    display: inline-block;
+    width: 1.2em;
+    height: 1.2em;
   }
 }

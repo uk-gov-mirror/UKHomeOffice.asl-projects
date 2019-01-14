@@ -17,53 +17,51 @@ const fieldIncluded = (field, values) => {
     return true;
   }
   return every(Object.keys(field.conditional), key => field.conditional[key] === values[key])
-}
+};
+
+const allFieldsCompleted = (fields, values) => {
+  return every(fields, field => values[field.name])
+};
+
+const filterByFieldIncluded = (fields, values) => {
+  return fields.filter(f => fieldIncluded(f, values))
+};
 
 class Step extends Component {
-  constructor(props) {
-    super(props)
-    const fields = this.props.fields.filter(field => fieldIncluded(field, this.props.project))
-    this.state = {
-      editing: !every(fields, field => this.props.values[field.name]),
-      expanded: false
-    }
-    this.toggleEditing = this.toggleEditing.bind(this);
-    this.toggleExpanded = this.toggleExpanded.bind(this);
-    this.removeItem = this.removeItem.bind(this);
-    this.onContinue = this.onContinue.bind(this);
-    this.moveUp = this.moveUp.bind(this);
-    this.moveDown = this.moveDown.bind(this);
+  state = {
+    editing: !allFieldsCompleted(filterByFieldIncluded(this.props.fields, this.props.project), this.props.values),
+    expanded: false
   }
 
-  toggleEditing(active) {
+  toggleEditing = active => {
     const editing = isBoolean(active) ? active : !this.state.active;
     this.setState({ editing })
   }
 
-  toggleExpanded(active) {
+  toggleExpanded = active => {
     const expanded = isBoolean(active) ? active : !this.state.expanded;
     this.setState({ expanded })
   }
 
-  removeItem(e) {
+  removeItem = e => {
     e.preventDefault();
     this.props.removeItem();
   }
 
-  onContinue() {
+  onContinue = () => {
     if (this.state.editing) {
       this.toggleEditing(false);
     }
     this.toggleExpanded(false)
   }
 
-  moveUp(e) {
+  moveUp = e => {
     e.preventDefault();
     e.stopPropagation();
     this.props.moveUp();
   }
 
-  moveDown(e) {
+  moveDown = e => {
     e.preventDefault();
     e.stopPropagation();
     this.props.moveDown();

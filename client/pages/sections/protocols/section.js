@@ -39,10 +39,9 @@ class Section extends Component {
       fields,
       review: every(fields, field => this.props.values[field.name])
     };
-    this.toggleReview = this.toggleReview.bind(this);
   }
 
-  toggleReview() {
+  toggleReview = () => {
     this.setState({
       review: !this.state.review
     });
