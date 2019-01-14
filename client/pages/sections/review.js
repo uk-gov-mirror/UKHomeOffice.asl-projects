@@ -39,39 +39,42 @@ const fieldIncluded = (field, values) => {
   return every(Object.keys(field.conditional), key => field.conditional[key] === values[key])
 }
 
-const ReviewSection = ({ fields = [], nts, values, onContinue, advance, onEdit, project, exit, title }) => (
-  <Fragment>
-    <Banner>
-      <h2>{`Please review your answers${title ? ' for:' : ''}`}</h2>
+const ReviewSection = ({ fields = [], nts, values, onContinue, advance, onEdit, project, exit, title, reviewTitle }) => {
+  const displayTitle = reviewTitle || title || false;
+  return (
+    <Fragment>
+      <Banner>
+        <h2>{`Please review your answers${displayTitle ? ' for:' : ''}`}</h2>
+        {
+          displayTitle && <h1>{ displayTitle }</h1>
+        }
+      </Banner>
       {
-        title && <h1>{ title }</h1>
+        nts && <NTS review={true} />
       }
-    </Banner>
-    {
-      nts && <NTS review={true} />
-    }
-    {
-      castArray(values).map(item => (
-        <Fragment>
-          {
-            item.name && <h2>{item.name}</h2>
-          }
-          {
-            flattenReveals(fields.filter(field => fieldIncluded(field, project)), item).map(field => {
-              return <Review
-                { ...field }
-                label={ field.review || field.label }
-                key={ field.name }
-                value={ item[field.name] }
-                onEdit={ () => onEdit() }
-              />
-            })
-          }
-        </Fragment>
-      ))
+      {
+        castArray(values).map(item => (
+          <Fragment>
+            {
+              item.name && <h2>{item.name}</h2>
+            }
+            {
+              flattenReveals(fields.filter(field => fieldIncluded(field, project)), item).map(field => {
+                return <Review
+                  { ...field }
+                  label={ field.review || field.label }
+                  key={ field.name }
+                  value={ item[field.name] }
+                  onEdit={ () => onEdit() }
+                />
+              })
+            }
+          </Fragment>
+        ))
 
-    }
-  </Fragment>
-);
+      }
+    </Fragment>
+  )
+}
 
 export default connectProject(ReviewSection);
