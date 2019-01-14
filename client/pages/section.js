@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { updateProject } from '../actions/projects';
 
 const mapStateToProps = (state, props) => {
-  const values = state.projects.find(project => project.id === parseInt(props.match.params.id, 10));
+  const values = state.projects.find(project => project.id === parseInt(props.match.params.id, 10)) || {};
   const section = Object.values(state.application).reduce((found, section) => {
     return found || section.subsections[props.match.params.section];
   }, null);

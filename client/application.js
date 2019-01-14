@@ -10,6 +10,22 @@ export default {
     title: 'Project introduction',
     subsections: {
       details: {
+        title: 'Project details',
+        fields: [
+          {
+            name: 'title',
+            required: true,
+            label: 'Title',
+            type: 'text'
+          }
+        ]
+      }
+    }
+  },
+  setup: {
+    title: 'Project setup',
+    subsections: {
+      setup: {
         title: 'Introductory details',
         component: DefaultSection,
         fields: [

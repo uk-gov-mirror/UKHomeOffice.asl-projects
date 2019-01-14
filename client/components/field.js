@@ -60,7 +60,7 @@ class Field extends Component {
         label={ this.props.label }
         hint={ this.props.hint }
         name={ this.props.name }
-        values={ this.props.values }
+        values={ this.props.project }
         error={ this.props.error }
         onFieldChange={ this.props.onFieldChange }
       />
