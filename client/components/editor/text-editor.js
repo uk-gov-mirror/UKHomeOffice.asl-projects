@@ -45,7 +45,6 @@ export default class TextEditor extends Component {
         focus: false
       };
     }
-    this.ref = React.createRef();
     this.setFocus = this.setFocus.bind(this)
     this.onChange = this.onChange.bind(this)
     this.renderMark = this.renderMark.bind(this)
@@ -91,7 +90,6 @@ export default class TextEditor extends Component {
     const { value } = this.state;
     const change = value.change().toggleMark(type);
     this.onChange(change);
-    console.log(this.ref.current)
   }
 
   renderMarkIcon(type, icon) {
@@ -130,7 +128,6 @@ export default class TextEditor extends Component {
             {this.renderMarkIcon('quote', ic_format_quote)}
           </FormatToolbar>
           <Editor
-            ref={this.ref}
             onFocus={() => this.setFocus(true)}
             onBlur={() => this.setFocus(false)}
             value={this.state.value}

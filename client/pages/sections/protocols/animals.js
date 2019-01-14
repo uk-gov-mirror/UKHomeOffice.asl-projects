@@ -83,7 +83,6 @@ class Animals extends Component {
 
   getItems = () => {
     const { values: { speciesDetails = [], species = [] }, project } = this.props;
-    console.log(speciesDetails, species)
     return speciesDetails.filter(s => species.includes(s.name) && [...project.species, ...([project['species-other']] || [])].includes(s.name))
   }
 
@@ -95,7 +94,6 @@ class Animals extends Component {
       ...([this.props.project[`${f.optionsFromKey}-other`]] || [])
     ] }));
     const items = this.getItems();
-    console.log(items)
     if (review) {
       return <Review fields={fields.filter(f => f.section !== 'intro')} values={this.getItems()} advance={advance} onEdit={this.toggleReview} />
     }
