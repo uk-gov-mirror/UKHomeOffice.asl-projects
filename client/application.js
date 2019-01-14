@@ -709,6 +709,95 @@ export default {
       }
     }
   },
+  threeRs: {
+    title: 'The 3Rs',
+    subsections: {
+      replacement: {
+        title: 'Replacement',
+        reviewTitle: '3Rs: Replacement',
+        component: DefaultSection,
+        complete: values => {
+          if (values['replacement-complete']) {
+            return COMPLETE;
+          }
+        },
+        nts: true,
+        fields: [
+          {
+            name: 'replacement-alternatives',
+            label: 'Which non-animal alternatives did you consider for use in this project?',
+            type: 'texteditor'
+          },
+          {
+            name: 'replacement-justification',
+            label: 'Why were they not suitable?',
+            type: 'texteditor'
+          }
+        ]
+      },
+      reduction: {
+        title: 'Reduction',
+        reviewTitle: '3Rs: Reduction',
+        component: DefaultSection,
+        nts: true,
+        complete: values => {
+          if (values['reduction-complete']) {
+            return COMPLETE;
+          }
+        },
+        fields: [
+          {
+            name: 'reduction-quantities',
+            label: 'Enter the estimated numbers of animals used in this project',
+            type: 'animal-quantities'
+          },
+          {
+            name: 'reduction-estimation',
+            label: 'How did you estimate these numbers?',
+            hint: 'For example, you may have made some power calculations or carried out some statistical modelling.',
+            type: 'texteditor'
+          },
+          {
+            name: 'reduction-steps',
+            label: 'What steps did you take to reduce animal numbers when you designed your experiments?',
+            hint: 'For example, you may have made some power calculations or carried out some statistical modelling.',
+            type: 'texteditor'
+          },
+          {
+            name: 'reduction-review',
+            label: 'How will you review these estimates as the project progresses',
+            hint: 'This may include pilot studies, computer modelling, or sharing of tissue.',
+            type: 'texteditor'
+          }
+        ]
+      },
+      refinement: {
+        title: 'Refinement',
+        reviewTitle: '3Rs: Refinement',
+        component: DefaultSection,
+        nts: true,
+        complete: values => {
+          if (values['refinement-complete']) {
+            return COMPLETE;
+          }
+        },
+        fields: [
+          {
+            name: 'refinement-models',
+            label: 'Which animal models and methods will you use during this project',
+            hint: 'Explain why these models and methods cause the least pain, suffering, distress or lasting harm to the animals?',
+            type: 'texteditor'
+          },
+          {
+            name: 'refinement-explaination',
+            label: 'How will you refine the methods and procedures you\'re using as this project progresses',
+            hint: 'Potential refinements include increased monitoring, post-operative care, pain management, and training of animals.',
+            type: 'texteditor'
+          }
+        ]
+      }
+    }
+  },
   nts: {
     title: 'Non-technical summary',
     subsections: {

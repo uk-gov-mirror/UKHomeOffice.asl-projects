@@ -19,6 +19,12 @@ h1, h2, h3 {
   margin-bottom: 1em;
 }
 
+dl {
+  dt {
+    font-weight: bold;
+  }
+}
+
 .grey {
   color: $govuk-secondary-text-colour;
 }
@@ -497,4 +503,8 @@ fieldset.smaller {
     width: 1.2em;
     height: 1.2em;
   }
+}
+
+input[type="number"] {
+  width: 6em;
 }
