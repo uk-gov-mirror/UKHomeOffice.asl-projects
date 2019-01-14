@@ -113,10 +113,10 @@ export default class TextEditor extends Component {
       );
     }
     return (
-      <Fragment>
-        {
-          this.props.label && <h2 className="govuk-fieldset__heading govuk-heading-l">{this.props.label}</h2>
-        }
+      <div className={classnames('govuk-form-group', {'govuk-form-group--error': this.props.error}, this.props.className)}>
+        <label className="govuk-label" htmlFor={this.props.name}>{this.props.label}</label>
+        { this.props.hint && <span id={`${this.props.name}-hint`} className="govuk-hint">{this.props.hint}</span> }
+        { this.props.error && <span id={`${this.props.name}-error`} className="govuk-error-message">{this.props.error}</span> }
         <div className={classnames('editor', { focus: this.state.focus })}>
           <FormatToolbar>
             {this.renderMarkIcon('title', ic_title)}
@@ -138,7 +138,7 @@ export default class TextEditor extends Component {
             renderMark={this.renderMark}
           />
         </div>
-      </Fragment>
+      </div>
     );
   }
 }

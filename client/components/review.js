@@ -1,10 +1,20 @@
 import React from "react";
+import { connectProject } from '../helpers';
 import TextEditor from "./editor/text-editor";
 
 class Review extends React.Component {
   replay() {
-    if (this.props.type === "checkbox") {
-      const value = this.props.value || [];
+    let value = this.props.value;
+    if (this.props.type === 'species-selector') {
+      if (this.props.project[`${this.props.name}-other`]) {
+        value = [
+          ...value,
+          this.props.project[`${this.props.name}-other`]
+        ]
+      }
+    }
+    if (this.props.type === "checkbox" || this.props.type === 'species-selector') {
+      value = value || [];
       if (!value.length) {
         return (
           <p>
@@ -49,4 +59,4 @@ class Review extends React.Component {
   }
 }
 
-export default Review;
+export default connectProject(Review);

@@ -1,5 +1,7 @@
 import ExperimentalDesign from './pages/sections/experimental-design';
-import Protocols from './pages/sections/protocols'
+import NTSSummary from './pages/sections/nts';
+import Protocols from './pages/sections/protocols';
+import DefaultSection from './pages/sections/default';
 import every from 'lodash/every';
 import { COMPLETE, INCOMPLETE, PARTIALLY_COMPLETE } from './constants/completeness';
 
@@ -15,6 +17,92 @@ export default {
             required: true,
             label: 'Title',
             type: 'text'
+          }
+        ]
+      }
+    }
+  },
+  setup: {
+    title: 'Project setup',
+    subsections: {
+      setup: {
+        title: 'Introductory details',
+        component: DefaultSection,
+        fields: [
+          {
+            name: 'species',
+            label: 'What types of animals will be used in this project?',
+            type: 'species-selector'
+          }
+        ]
+      }
+    }
+  },
+  projectPlan: {
+    title: 'Project plan',
+    subsections: {
+      'scientific-background': {
+        title: 'Scientific background',
+        component: DefaultSection,
+        fields: [
+          {
+            name: 'scientific-knowledge-summary',
+            label: 'Briefly summarise the current state of scientific knowledge in your area of work.',
+            hint: 'Be specific and relevant to your project aim - there\'s no need for a detailed overview of the entire landscape. Include any relevant non-animal research if it has contributed to the starting point of your project.',
+            type: 'texteditor'
+          },
+          {
+            name: 'scientific-knowledge-details',
+            label: 'How will this project address any knowledge gaps or try to advance scientific knowledge in this area of work?',
+            hint: 'You should refer to the basis for any scientific hypothesis you plan to test during this project.',
+            type: 'texteditor'
+          },
+          {
+            name: 'clinical-condition',
+            label: 'Does your project directly relate to a particular clinical condition?',
+            type: 'radio',
+            inline: true,
+            className: 'smaller',
+            options: [
+              {
+                value: 'Yes',
+                label: 'Yes',
+                reveal: [
+                  {
+                    name: 'condition-severity',
+                    label: 'What is the current prevalence and severity of this condition?',
+                    type: 'texteditor'
+                  },
+                  {
+                    name: 'condition-treatments-problems',
+                    label: 'What are the problems with the current treatments for this condition which mean that further work is necessary?',
+                    type: 'texteditor'
+                  },
+                  {
+                    name: 'condition-scientific-approach',
+                    label: 'What is the scientific basis for your proposed approach',
+                    type: 'texteditor'
+                  }
+                ]
+              },
+              'No'
+            ]
+          }
+        ]
+      },
+      strategy: {
+        title: 'Strategy'
+      },
+      'experimental-design': {
+        title: 'Experiental design'
+      },
+      benefits: {
+        title: 'Benefits',
+        fields: [
+          {
+            name: 'benefit-outputs',
+            label: 'What outputs do you think you will see at the end of this project?',
+            type: 'texteditor'
           }
         ]
       }
@@ -523,6 +611,52 @@ export default {
             ]
           }
         }
+      },
+      'project-harms': {
+        title: 'Project harms',
+        component: DefaultSection,
+        nts: true,
+        complete: values => {
+          if (values['project-harms-complete']) {
+            return COMPLETE;
+          }
+        },
+        fields: [
+          {
+            name: 'project-harms-summary',
+            label: 'Summarise what will typically be done to an animal used on your project.',
+            hint: 'Include any relevant information about injections, surgery, experiment durations and the number of procedures an animal may experience.',
+            type: 'texteditor'
+          },
+          {
+            name: 'project-harms-effects',
+            label: 'What do you expect will be the impacts or adverse effects that an animal may experience during your project?',
+            hint: 'Examples may include pain, inactivity, or abnormal behaviour. You should also state the estimated duration of these effects on the animal.',
+            type: 'texteditor'
+          },
+          {
+            name: 'project-harms-severity',
+            label: 'What are the expected severities and the proportion of animals in each category (per species)?',
+            type: 'texteditor'
+          }
+        ]
+      },
+      'fate-of-animals': {
+        title: 'Fate of animals',
+        component: DefaultSection,
+        nts: true,
+        complete: values => {
+          if (values['fate-of-animals-complete']) {
+            return COMPLETE;
+          }
+        },
+        fields: [
+          {
+            name: 'fate-of-animals',
+            label: 'What will happen to animals at the end of their use in this project?',
+            type: 'texteditor'
+          }
+        ]
       }
     }
   },
@@ -571,6 +705,45 @@ export default {
             type: 'texteditor',
             step: 2
           }
+        ]
+      }
+    }
+  },
+  nts: {
+    title: 'Non-technical summary',
+    subsections: {
+      review: {
+        title: 'Review',
+        component: NTSSummary,
+        sections: [
+          // {
+          //   name: 'aim',
+          //   title: 'Aim and duration'
+          // },
+          {
+            name: 'benefits',
+            title: 'Benefits'
+          },
+          {
+            name: 'project-harms',
+            title: 'Anticipated harms'
+          },
+          {
+            name: 'fate-of-animals',
+            title: 'Fate of animals'
+          },
+          // {
+          //   name: 'replacement',
+          //   title: 'Replacement'
+          // },
+          // {
+          //   name: 'reduction',
+          //   title: 'Reduction'
+          // },
+          // {
+          //   name: 'refinement',
+          //   title: 'Refinement'
+          // }
         ]
       }
     }

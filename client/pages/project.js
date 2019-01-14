@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -15,26 +15,15 @@ const mapStateToProps = (state, props) => {
   };
 };
 
-const mapDispatchToProps = (dispatch, props) => {
-  return {};
-};
+const Index = ({ id, title }) => (
+  <Fragment>
+    <h1>{ title }</h1>
+    <p className="controls">
+      <ExportLink className="float-right" project={id} />
+      <Link to="/">Back to project list</Link>
+    </p>
+    <ApplicationSummary project={ id } />
+  </Fragment>
+);
 
-class Index extends React.Component {
-
-  render() {
-    if (!this.props) {
-      return null;
-    }
-    return <React.Fragment>
-      <h1>{ this.props.title }</h1>
-      <ApplicationSummary project={ this.props.id } />
-      <p className="control-panel">
-        <ExportLink project={this.props.id} />
-        <Link to="/">Back to project list</Link>
-      </p>
-    </React.Fragment>
-  }
-
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Index);
+export default connect(mapStateToProps)(Index);

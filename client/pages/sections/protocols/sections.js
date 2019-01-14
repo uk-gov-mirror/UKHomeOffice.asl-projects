@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import { connectProject } from '../../../helpers';
 import map from 'lodash/map';
 import pickBy from 'lodash/pickBy';

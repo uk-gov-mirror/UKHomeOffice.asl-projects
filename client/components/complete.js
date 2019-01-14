@@ -5,7 +5,7 @@ class Complete extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      checked: this.props.completed || false
+      checked: this.props.complete || false
     }
     this.toggleChecked = this.toggleChecked.bind(this);
     this.emitChange = this.emitChange.bind(this);

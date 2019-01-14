@@ -7,9 +7,9 @@ import SPECIES_CATEGORIES from '../constants/species-categories';
 
 import Fieldset from './fieldset';
 
-const getFields = options => ([
+const getFields = (options, name) => ([
   {
-    name: 'species',
+    name,
     label: '',
     type: 'checkbox',
     className: 'smaller',
@@ -18,35 +18,50 @@ const getFields = options => ([
 ]);
 
 class SpeciesSelector extends Component {
-  constructor(props) {
-    super(props);
-    this.isOpen = this.isOpen.bind(this);
-  }
-
-  isOpen(options) {
-    return intersection(this.props.values.species, options).length > 0
+  isOpen = options => {
+    return intersection(this.props.values[this.props.name], options).length > 0
   }
 
   render() {
-    const { species = SPECIES, categories = SPECIES_CATEGORIES, values, onFieldChange } = this.props;
+    const {
+      species = SPECIES,
+      categories = SPECIES_CATEGORIES,
+      values,
+      onFieldChange,
+      label,
+      otherLabel = 'Which species will you be using',
+      name = 'species',
+      hint
+    } = this.props;
     return (
       <Fragment>
-        <h3>What types of animals will be used in this project?</h3>
+      <label className="govuk-label" htmlFor={name}>{label}</label>
+      { hint && <span id={`${name}-hint`} className="govuk-hint">{this.props.hint}</span> }
         {
           map(species, (options, code) => (
             <details open={this.isOpen(options)}>
               <summary>{SPECIES_CATEGORIES[code]}</summary>
               <Fieldset
-                fields={getFields(options)}
+                fields={getFields(options, name)}
                 values={values}
                 onFieldChange={onFieldChange}
               />
             </details>
           ))
         }
-        <details>
+        <details open={!!values[`${this.props.name}-other`]}>
           <summary>Other</summary>
-          <p>something</p>
+          <Fieldset
+            fields={[
+              {
+                name: `${name}-other`,
+                label: otherLabel,
+                type: 'text'
+              }
+            ]}
+            values={values}
+            onFieldChange={onFieldChange}
+          />
         </details>
       </Fragment>
     )
