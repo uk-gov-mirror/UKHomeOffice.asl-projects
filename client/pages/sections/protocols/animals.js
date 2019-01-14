@@ -90,8 +90,8 @@ class Animals extends Component {
     const { fields, values, onFieldChange, updateItem, exit, advance, name, index } = this.props;
     const { adding, active, review } = this.state;
     const speciesField = fields.filter(f => f.section === 'intro').map(f => ({ ...f, options: [
-      ...this.props.project[f.optionsFromKey],
-      ...([this.props.project[`${f.optionsFromKey}-other`]] || [])
+      ...(this.props.project.species || []),
+      ...(this.props.project['species-other'] || [])
     ] }));
     const items = this.getItems();
     if (review) {
