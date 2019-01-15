@@ -2,10 +2,14 @@ import React from 'react';
 import Field from './field';
 
 const getSpecies = values => {
-  return [
-    ...(values.species || []),
-    ...(values['species-other'] || [])
-  ]
+  const species = values.species || []
+  if (values['species-other']) {
+    return [
+      ...species,
+      values['species-other']
+    ]
+  }
+  return species;
 }
 
 const AnimalQuantities = ({ label, hint, error, name, values, onFieldChange }) => {

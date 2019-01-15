@@ -113,7 +113,16 @@ class Field extends Component {
         value={ this.props.value }
         error={ this.props.error }
         inline={ this.props.inline }
-        onChange={ e => this.onChange(e.target.value) }
+        onChange={ e => {
+          let val = e.target.value;
+          if (val === 'true') {
+            val = true;
+          }
+          if (val === 'false') {
+            val = false;
+          }
+          this.onChange(val)
+        }}
         />
     }
     if (this.props.type === 'checkbox') {

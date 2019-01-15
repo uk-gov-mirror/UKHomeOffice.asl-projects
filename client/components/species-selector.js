@@ -19,7 +19,7 @@ const getFields = (options, name) => ([
 
 class SpeciesSelector extends Component {
   isOpen = options => {
-    return intersection(this.props.values[this.props.name], options).length > 0
+    return intersection(this.props.values[this.props.name], options.map(option => option.value)).length > 0
   }
 
   render() {

@@ -24,18 +24,21 @@ export default {
                 options: [
                   {
                     label: 'To carry out or support research',
-                    value: 'To carry out or support research',
+                    value: 'research',
                     hint: 'This can be for yourself or in collaboration with others and can include basic or translational research and non-regulatory drug/device development.'
                   },
                   {
                     label: 'To produce animals or antibodies for supply to others',
-                    value: 'To produce animals or antibodies for supply to others',
+                    value: 'animals',
                     hint: 'This can include genetically altered or surgically prepared animals.'
                   },
-                  'To produce or support the production of blood products, vaccines or medicines for medical or veterinary use.',
+                  {
+                    label: 'To produce or support the production of blood products, vaccines or medicines for medical or veterinary use.',
+                    value: 'blood-products'
+                  },
                   {
                     label: 'To generate testing or screening data.',
-                    value: 'To generate testing or screening data.',
+                    value: 'screening-data',
                     hint: 'This can be for yourself or for others, for regulatory (GLP work) or non regulatory use.',
                     reveal: {
                       name: 'main-output-testing-screening',
@@ -44,12 +47,12 @@ export default {
                       options: [
                         {
                           label: 'To produce animals or antibodies for supply to others',
-                          value: 'To produce animals or antibodies for supply to others',
+                          value: 'supply-to-others',
                           hint: 'This can include genetically altered or surgically prepared animals.'
                         },
                         {
                           label: 'Non regulatory use',
-                          value: 'Non regulatory use',
+                          value: 'non-regulatory-use',
                           hint: 'If done for others, the models and methods used are likely to be tailored to the needs of one particular client'
                         }
                       ]
@@ -57,7 +60,7 @@ export default {
                   },
                   {
                     label: 'To teach practical skills or knowledge',
-                    value: 'To teach practical skills or knowledge',
+                    value: 'teach',
                     hint: 'For example, microsurgery, or to use animals as part of a higher education course, such as physiology.'
                   }
                 ]
@@ -129,8 +132,8 @@ export default {
             className: 'smaller',
             options: [
               {
-                value: 'Yes',
                 label: 'Yes',
+                value: true,
                 reveal: [
                   {
                     name: 'condition-severity',
@@ -149,7 +152,10 @@ export default {
                   }
                 ]
               },
-              'No'
+              {
+                label: 'No',
+                value: false
+              }
             ]
           }
         ]
@@ -196,8 +202,14 @@ export default {
             inline: true,
             className: 'smaller',
             options: [
-              'Yes',
-              'No'
+              {
+                label: 'Yes',
+                value: true,
+              },
+              {
+                label: 'No',
+                value: false
+              }
             ]
           },
           {
@@ -207,8 +219,14 @@ export default {
             inline: true,
             className: 'smaller',
             options: [
-              'Yes',
-              'No'
+              {
+                label: 'Yes',
+                value: true
+              },
+              {
+                label: 'No',
+                value: false
+              }
             ]
           },
           {
@@ -218,8 +236,14 @@ export default {
             inline: true,
             className: 'smaller',
             options: [
-              'Yes',
-              'No'
+              {
+                label: 'Yes',
+                value: true
+              },
+              {
+                label: 'No',
+                value: false
+              }
             ]
           },
           {
@@ -229,8 +253,14 @@ export default {
             inline: true,
             className: 'smaller',
             options: [
-              'Yes',
-              'No'
+              {
+                label: 'Yes',
+                value: true
+              },
+              {
+                label: 'No',
+                value: false
+              }
             ]
           }]
         },
@@ -256,10 +286,22 @@ export default {
                 label: 'What is the prospective severity of this protocol?',
                 type: 'radio',
                 options: [
-                  'Mild',
-                  'Moderate',
-                  'Severe',
-                  'Non-recovery'
+                  {
+                    label: 'Mild',
+                    value: 'mild'
+                  },
+                  {
+                    label: 'Moderate',
+                    value: 'moderate'
+                  },
+                  {
+                    label: 'Severe',
+                    value: 'severe'
+                  },
+                  {
+                    label: 'Non-recovery',
+                    value: 'non-recovery'
+                  }
                 ],
                 className: 'smaller'
               },
@@ -279,7 +321,7 @@ export default {
           quantitative: {
             title: 'Quantitative data',
             conditional: {
-              quantitative: 'Yes'
+              quantitative: true
             },
             fields: [
               {
@@ -333,11 +375,26 @@ export default {
                 type: 'checkbox',
                 className: 'smaller',
                 options: [
-                  'Embryo and egg',
-                  'Neonate',
-                  'Juvenile',
-                  'Adult',
-                  'Pregnant adult'
+                  {
+                    label: 'Embryo and egg',
+                    value: 'embryo'
+                  },
+                  {
+                    label: 'Neonate',
+                    value: 'neonate'
+                  },
+                  {
+                    label: 'Juvenile',
+                    value: 'juvenile'
+                  },
+                  {
+                    label: 'Adult',
+                    value: 'adult'
+                  },
+                  {
+                    label: 'Pregnant adult',
+                    value: 'pregnant'
+                  }
                 ]
               },
               {
@@ -351,8 +408,8 @@ export default {
                 type: 'radio',
                 options: [
                   {
-                    value: 'Yes',
                     label: 'Yes',
+                    value: true,
                     reveal: {
                       name: 'continued-use-sourced',
                       label: 'Where will these animals be sourced from?',
@@ -360,7 +417,10 @@ export default {
                       type: 'textarea'
                     }
                   },
-                  'No'
+                  {
+                    label: 'No',
+                    value: false
+                  }
                 ],
                 inline: true,
                 className: 'smaller'
@@ -371,15 +431,18 @@ export default {
                 type: 'radio',
                 options: [
                   {
-                    value: 'Yes',
                     label: 'Yes',
+                    value: true,
                     reveal: {
                       name: 'reuse-details',
                       label: 'Give details',
                       type: 'textarea'
                     }
                   },
-                  'No'
+                  {
+                    label: 'No',
+                    value: false
+                  }
                 ],
                 inline: true,
                 className: 'smaller'
@@ -389,7 +452,7 @@ export default {
                 label: 'Which general types or strains of GAAs will you be using and why?​',
                 type: 'textarea',
                 conditional: {
-                  gaas: 'Yes'
+                  gaas: true
                 }
               },
               {
@@ -398,8 +461,8 @@ export default {
                 type: 'radio',
                 options: [
                   {
-                    value: 'Yes',
                     label: 'Yes',
+                    value: true,
                     reveal: [
                       {
                         name: 'why',
@@ -413,12 +476,15 @@ export default {
                       }
                     ]
                   },
-                  'No'
+                  {
+                    label: 'No',
+                    value: false
+                  }
                 ],
                 inline: true,
                 className: 'smaller',
                 conditional: {
-                  gaas: 'Yes'
+                  gaas: true
                 }
               }
             ]
@@ -441,25 +507,40 @@ export default {
                 className: 'smaller',
                 options: [
                   {
-                    value: 'Yes',
                     label: 'Yes',
+                    value: true,
                     reveal: {
                       name: 'code',
                       label: 'Select the anaesthetic code you intend to use',
                       type: 'radio',
                       options: [
-                        'AB (general anaesthesia with recovery)',
-                        'AB-L (local anaesthesia)',
-                        'AC (non-recovery general anaesthesia)​',
-                        'AD (neuromuscular blocking agent)'
+                        {
+                          label: 'AB (general anaesthesia with recovery)',
+                          value: 'ab'
+                        },
+                        {
+                          label: 'AB-L (local anaesthesia)',
+                          value: 'abl'
+                        },
+                        {
+                          label: 'AC (non-recovery general anaesthesia)​',
+                          value: 'ac'
+                        },
+                        {
+                          label: 'AD (neuromuscular blocking agent)',
+                          value: 'ad'
+                        }
                       ],
                       className: 'smaller'
                     }
                   },
-                  'No'
+                  {
+                    label: 'No',
+                    value: false
+                  }
                 ],
                 conditional: {
-                  anaesthesia: 'Yes'
+                  anaesthesia: true
                 }
               },
               {
@@ -469,8 +550,14 @@ export default {
                 inline: true,
                 className: 'smaller',
                 options: [
-                  'Yes',
-                  'No'
+                  {
+                    label: 'Yes',
+                    value: true
+                  },
+                  {
+                    label: 'No',
+                    value: false
+                  }
                 ]
               }
             ],
@@ -485,8 +572,8 @@ export default {
                   className: 'smaller',
                   options: [
                     {
-                      value: 'Yes',
                       label: 'Yes',
+                      value: true,
                       reveal: [
                         {
                           name: 'adverse-effects',
@@ -507,7 +594,10 @@ export default {
                         }
                       ]
                     },
-                    'No'
+                    {
+                      label: 'No',
+                      value: false
+                    }
                   ]
                 },
                 {
@@ -608,7 +698,7 @@ export default {
                 hint: 'For example, you may need to evaluate the toxicity, efficacy and sterility of these substances.',
                 type: 'textarea',
                 conditional: {
-                  substances: 'Yes'
+                  substances: true
                 }
               },
               {
@@ -617,7 +707,7 @@ export default {
                 hint: 'Explain how you considered the routes, dose volumes, frequencies, and overall duration of a dosing regimen.',
                 type: 'textarea',
                 conditional: {
-                  substances: 'Yes'
+                  substances: true
                 }
               },
               {
@@ -642,14 +732,29 @@ export default {
                 type: 'checkbox',
                 className: 'smaller',
                 options: [
-                  'Kept alive',
-                  'Re-used',
-                  'Continued use',
-                  'Set free',
-                  'Re-homed',
                   {
-                    value: 'Killed',
+                    label: 'Kept alive',
+                    value: 'kept-alive'
+                  },
+                  {
+                    label: 'Re-used',
+                    value: 're-used'
+                  },
+                  {
+                    label: 'Continued use',
+                    value: 'continued-use'
+                  },
+                  {
+                    label: 'Set free',
+                    value: 'set-free'
+                  },
+                  {
+                    label: 'Re-homed',
+                    value: 're-homed'
+                  },
+                  {
                     label: 'Killed',
+                    value: 'killed',
                     reveal: {
                       label: '',
                       review: 'Method of killing',
@@ -657,10 +762,13 @@ export default {
                       type: 'radio',
                       className: 'smaller',
                       options: [
-                        'Schedule 1 method​',
                         {
-                          value: 'Non-schedule 1 method​',
+                          label: 'Schedule 1 method​',
+                          value: 'schedule-1'
+                        },
+                        {
                           label: 'Non-schedule 1 method​',
+                          value: 'other',
                           reveal: {
                             name: 'method-and-justification',
                             label: 'State the method of killing that you will use along with your justification for using it.​',
@@ -707,55 +815,6 @@ export default {
             name: 'fate-of-animals',
             label: 'What will happen to animals at the end of their use in this project?',
             type: 'texteditor'
-          }
-        ]
-      }
-    }
-  },
-  'project-plan': {
-    title: 'Project plan',
-    subsections: {
-      'sandwich-design': {
-        title: 'Sandwich design',
-        component: ExperimentalDesign,
-        fields: [
-          {
-            name: 'bread',
-            label: 'What kind of bread would you like in your sandwich?',
-            type: 'radio',
-            options: [
-              'White',
-              'Brown'
-            ],
-            step: 0
-          },
-          {
-            name: 'meat',
-            label: 'What kind of meat would you like in your sandwich?',
-            type: 'radio',
-            options: [
-              'Chicken',
-              'Pork',
-              'Beef'
-            ],
-            step: 0
-          },
-          {
-            name: 'salad',
-            label: 'What salads would you like included in your sandwich?',
-            type: 'checkbox',
-            options: [
-              'Lettuce',
-              'Tomato',
-              'Cucumber'
-            ],
-            step: 1
-          },
-          {
-            name: 'additional-instructions',
-            label: 'Are there any additional requests?',
-            type: 'texteditor',
-            step: 2
           }
         ]
       }
