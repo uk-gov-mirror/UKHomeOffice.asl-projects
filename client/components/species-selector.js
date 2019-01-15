@@ -19,7 +19,7 @@ const getFields = (options, name) => ([
 
 class SpeciesSelector extends Component {
   isOpen = options => {
-    return intersection(this.props.values[this.props.name], options).length > 0
+    return intersection(this.props.values[this.props.name], options.map(option => option.value)).length > 0
   }
 
   render() {
@@ -31,7 +31,8 @@ class SpeciesSelector extends Component {
       label,
       otherLabel = 'Which species will you be using',
       name = 'species',
-      hint
+      hint,
+      summary
     } = this.props;
     return (
       <Fragment>
@@ -63,6 +64,7 @@ class SpeciesSelector extends Component {
             onFieldChange={onFieldChange}
           />
         </details>
+        { /* TODO: species summary section - awaiting designs */ }
       </Fragment>
     )
   }

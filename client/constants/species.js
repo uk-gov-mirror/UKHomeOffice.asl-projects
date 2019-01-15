@@ -1,55 +1,166 @@
 export default {
   SA: [
-    'Mice',
-    'Rats',
-    'Guinea pigs',
-    'Hamsters (Syrian)',
-    'Hamsters (Chinese)',
-    'Mongolian gerbils',
-    'Other rodents',
-    'Rabbits',
-    'Ferrets'
+    {
+      label: 'Mice',
+      value: 'mice'
+    },
+    {
+      label: 'Rats',
+      value: 'rats'
+    },
+    {
+      label: 'Guinea pigs',
+      value: 'guinea-pigs'
+    },
+    {
+      label: 'Hamsters (Syrian)',
+      value: 'hamsters-syrian'
+    },
+    {
+      label: 'Hamsters (Chinese)',
+      value: 'hamsters-chinese'
+    },
+    {
+      label: 'Mongolian gerbils',
+      value: 'gerbils'
+    },
+    {
+      label: 'Other rodents',
+      value: 'other-rodents'
+    },
+    {
+      label: 'Rabbits',
+      value: 'rabbits'
+    },
+    {
+      label: 'Ferrets',
+      value: 'ferrets'
+    }
   ],
   LA: [
-    'Pigs',
-    'Goats',
-    'Sheep',
-    'Cattle'
+    {
+      label: 'Pigs',
+      value: 'pigs'
+    },
+    {
+      label: 'Goats',
+      value: 'goats'
+    },
+    {
+      label: 'Sheep',
+      value: 'sheep'
+    },
+    {
+      label: 'Cattle',
+      value: 'cattle'
+    }
   ],
   AQ: [
-    'Reptiles',
-    'Common and Northern leopard frogs',
-    'African and Western clawed frogs',
-    'Other amphibians',
-    'Zebra fish',
-    'Other fish',
-    'Cephalopods'
+    {
+      label: 'Reptiles',
+      value: 'reptiles'
+    },
+    {
+      label: 'Common and Northern leopard frogs',
+      value: 'common-frogs'
+    },
+    {
+      label: 'African and Western clawed frogs',
+      value: 'african-frogs'
+    },
+    {
+      label: 'Other amphibians',
+      value: 'other-amphibians'
+    },
+    {
+      label: 'Zebra fish',
+      value: 'zebra-fish'
+    },
+    {
+      label: 'Other fish',
+      value: 'other-fish'
+    },
+    {
+      label: 'Cephalopods',
+      value: 'cephalopods'
+    }
   ],
   AV: [
-    'Domestic fowl',
-    'Quails',
-    'Other birds'
+    {
+      label: 'Domestic fowl',
+      value: 'fowl'
+    },
+    {
+      label: 'Quails',
+      value: 'quails'
+    },
+    {
+      label: 'Other birds',
+      value: 'other-birds'
+    }
   ],
   DOG: [
-    'Beagles',
-    'Other dogs'
+    {
+      label: 'Beagles',
+      value: 'beagles'
+    },
+    {
+      label: 'Other dogs',
+      value: 'other-dogs'
+    }
   ],
   CAT: [
-    'Cats'
+    {
+      label: 'Cats',
+      value: 'cats'
+    }
   ],
   EQU: [
-    'Horses, donkeys and cross-breeds'
+    {
+      label: 'Horses, donkeys and cross-breeds',
+      value: 'horses'
+    }
   ],
   NHP: [
-    'Prosimians',
-    'Marmosets and tamarins',
-    'Cynomolgus monkeys',
-    'Rhesus monkeys',
-    'Vervets',
-    'Baboons',
-    'Squirrel monkeys',
-    'Other Old World monkeys',
-    'Other New World monkeys',
-    'Apes'
+    {
+      label: 'Prosimians',
+      value: 'prosimians'
+    },
+    {
+      label: 'Marmosets and tamarins',
+      value: 'marmosets'
+    },
+    {
+      label: 'Cynomolgus monkeys',
+      value: 'cynomolgus'
+    },
+    {
+      label: 'Rhesus monkeys',
+      value: 'rhesus'
+    },
+    {
+      label: 'Vervets',
+      value: 'vervets'
+    },
+    {
+      label: 'Baboons',
+      value: 'baboons'
+    },
+    {
+      label: 'Squirrel monkeys',
+      value: 'squirrel-monkeys'
+    },
+    {
+      label: 'Other Old World monkeys',
+      value: 'other-old-world'
+    },
+    {
+      label: 'Other New World monkeys',
+      value: 'other-new-world'
+    },
+    {
+      label: 'Apes',
+      value: 'apes'
+    }
   ]
 }

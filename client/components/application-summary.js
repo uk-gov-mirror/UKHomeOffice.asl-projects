@@ -6,6 +6,7 @@ import map from 'lodash/map';
 import values from 'lodash/values';
 import flatten from 'lodash/flatten';
 import every from 'lodash/every';
+import some from 'lodash/some';
 
 import { INCOMPLETE, PARTIALLY_COMPLETE, COMPLETE } from '../constants/completeness';
 
@@ -22,26 +23,31 @@ const mapStateToProps = (state, props) => {
 class ApplicationSummary extends React.Component {
 
   isCompleted = () => {
-    const subsections = flatten(map(this.props.sections, section => values(section.subsections))).map(this.complete)
+    const subsections = map(
+      map(this.props.sections, section => section.subsections)
+        .reduce((obj, values) => ({ ...obj, ...values }), {}),
+      this.complete
+    );
+
     return every(subsections, complete => complete === COMPLETE);
   }
 
-  complete = subsection => {
-    let completeness = INCOMPLETE;
+  complete = (subsection, key) => {
     if (typeof subsection.complete === 'function') {
-      completeness = subsection.complete(this.props.values) || INCOMPLETE;
-    } else if (Array.isArray(subsection.fields)) {
-      const fields = subsection.fields.map(f => f.name);
-      const completed = fields.filter(f => this.props.values[f]);
-      if (completed.length === 0) {
-        completeness = INCOMPLETE;
-      } else if (completed.length < subsection.fields.length) {
-        completeness = PARTIALLY_COMPLETE;
-      } else if (completed.length === subsection.fields.length) {
-        completeness = COMPLETE;
-      }
+      return subsection.complete(this.props.values) || INCOMPLETE;
     }
 
+    let completeness = INCOMPLETE;
+
+    if (this.props.values[`${key}-complete`]) {
+      completeness = COMPLETE;
+    }
+
+    else if (Array.isArray(subsection.fields)) {
+      if (some(subsection.fields, field => this.props.values[field.name])) {
+        completeness = PARTIALLY_COMPLETE;
+      }
+    }
     return completeness;
   }
 
@@ -85,7 +91,7 @@ class ApplicationSummary extends React.Component {
                     const subsection = section.subsections[key];
                     return <tr key={key}>
                       <td><Link to={`/project/${this.props.project}/${key}`}>{ subsection.title }</Link></td>
-                      <td>{ this.completeBadge(this.complete(subsection)) }</td>
+                      <td>{ this.completeBadge(this.complete(subsection, key)) }</td>
                     </tr>
                   })
                 }

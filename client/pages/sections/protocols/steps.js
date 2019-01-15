@@ -93,7 +93,7 @@ class Step extends Component {
           <h2>
             {`Step ${index + 1}`}
             {
-              !editing && values.optional && <span className="light smaller">{` (${values.optional === 'Yes' ? 'optional' : 'mandatory'})`}</span>
+              !editing && values.optional && <span className="light smaller">{` (${values.optional === true ? 'optional' : 'mandatory'})`}</span>
             }
           </h2>
           {

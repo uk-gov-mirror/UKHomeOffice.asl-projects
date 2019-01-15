@@ -1,9 +1,10 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { updateProject } from '../actions/projects';
+import DefaultSection from './sections';
 
 const mapStateToProps = (state, props) => {
-  const values = state.projects.find(project => project.id === parseInt(props.match.params.id, 10)) || {};
+  const values = state.projects.find(project => project.id === parseInt(props.match.params.id, 10));
   const section = Object.values(state.application).reduce((found, section) => {
     return found || section.subsections[props.match.params.section];
   }, null);
@@ -34,26 +35,21 @@ const mapDispatchToProps = (dispatch, props) => {
 class Section extends React.Component {
 
   render() {
-    if (this.props.component) {
-      const { values, fields, title, step, section, ...rest } = this.props;
+    const Component = this.props.component || DefaultSection;
+    const { values, fields, title, step, section, ...rest } = this.props;
 
-      const Section = this.props.component;
-      return <Section
-        { ...this.props }
-        title={ title }
-        section={ section }
-        save={ (...args) => this.props.update(...args) }
-        exit={ () => this.props.history.push(`/project/${this.props.id}`) }
-        values={ values }
-        fields={ fields }
-        step={ step }
-        { ...rest }
-        onProgress={ step => this.props.history.push(`/project/${this.props.id}/${this.props.section}/${step}`) }
-        />
-    }
-    return <Fragment>
-      <h1>{ this.props.label }</h1>
-    </Fragment>
+    return <Component
+      { ...this.props }
+      title={ title }
+      section={ section }
+      save={ (...args) => this.props.update(...args) }
+      exit={ () => this.props.history.push(`/project/${this.props.id}`) }
+      values={ values }
+      fields={ fields }
+      step={ step }
+      { ...rest }
+      onProgress={ step => this.props.history.push(`/project/${this.props.id}/${this.props.section}/${step}`) }
+      />
   }
 
 }

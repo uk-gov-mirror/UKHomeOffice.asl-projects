@@ -18,8 +18,11 @@ export function createProject(project) {
   return (dispatch, getState) => {
     return database()
       .then(db => db.create(project))
-      .then(project => dispatch({ type: types.CREATE_PROJECT, project }))
-      .then(() => dispatch(showMessage('Project created!')))
+      .then(project => {
+        dispatch({ type: types.CREATE_PROJECT, project })
+        dispatch(showMessage('Project created!'))
+        return project;
+      })
       .catch(error => dispatch({ type: types.ERROR, error }));
   };
 }

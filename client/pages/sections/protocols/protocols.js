@@ -71,6 +71,9 @@ class ProtocolSections extends Component {
       updateItem
     } = this.props;
 
+    const severityField = sections.details.fields.find(field => field.name === 'severity');
+    const severityOption = severityField.options.find(option => option.value === values.severity);
+
     return (
       <section className={classnames('protocol', { complete: values.complete })}>
         <Expandable expanded={this.state.expanded} onHeaderClick={this.toggleExpanded}>
@@ -78,7 +81,7 @@ class ProtocolSections extends Component {
             <h2 className="title"><span className="larger">{index + 1}. </span>{values.title}</h2>
             <dl className="inline">
               <dt>Severity category: </dt>
-              <dd className="grey">{ values.severity || 'Not set' }</dd>
+              <dd className="grey">{ severityOption ? severityOption.label : 'Not set' }</dd>
             </dl>
             <a href="#" onClick={this.toggleActive}>Edit title</a>
           </Completable>
