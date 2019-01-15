@@ -24,11 +24,6 @@ dl {
     font-weight: bold;
   }
 }
-.govuk-radios__item, .govuk-checkboxes__item {
-  > .govuk-hint {
-    // padding-left: 15px;
-  }
-}
 
 .grey {
   color: $govuk-secondary-text-colour;
@@ -298,8 +293,12 @@ fieldset.smaller {
     left: 6px;
   }
 
+  .govuk-checkboxes__item > .govuk-reveal > .govuk-inset-text {
+    margin-left: -5px !important;
+  }
+
   .govuk-inset-text {
-    margin-left: -5px;
+    margin-left: -30px;
 
     .govuk-inset-text {
       margin-left: -30px;

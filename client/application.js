@@ -767,12 +767,6 @@ export default {
       replacement: {
         title: 'Replacement',
         reviewTitle: '3Rs: Replacement',
-        component: DefaultSection,
-        complete: values => {
-          if (values['replacement-complete']) {
-            return COMPLETE;
-          }
-        },
         nts: true,
         fields: [
           {
@@ -790,13 +784,7 @@ export default {
       reduction: {
         title: 'Reduction',
         reviewTitle: '3Rs: Reduction',
-        component: DefaultSection,
         nts: true,
-        complete: values => {
-          if (values['reduction-complete']) {
-            return COMPLETE;
-          }
-        },
         fields: [
           {
             name: 'reduction-quantities',
@@ -826,13 +814,7 @@ export default {
       refinement: {
         title: 'Refinement',
         reviewTitle: '3Rs: Refinement',
-        component: DefaultSection,
         nts: true,
-        complete: values => {
-          if (values['refinement-complete']) {
-            return COMPLETE;
-          }
-        },
         fields: [
           {
             name: 'refinement-models',
