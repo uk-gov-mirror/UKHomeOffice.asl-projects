@@ -3,6 +3,8 @@ import classnames from 'classnames';
 import { Editor } from 'slate-react';
 import { Block, Value } from 'slate';
 
+import defer from 'lodash/defer';
+
 import { isKeyHotkey } from 'is-hotkey';
 import Icon from 'react-icons-kit';
 import {
@@ -56,9 +58,7 @@ const getInitialValue = () =>
  */
 
 function isImage(url) {
-  // console.log('~~~~~~HOW DOES THIS WORK AT ALL ?~~~~~~');
-  // it works because its only ondrop or paste, not on upload via the button
-  // TODO: install imageExtensions i
+  // TODO: install imageExtensions
   return !!imageExtensions.find(url.endsWith);
 }
 
@@ -107,17 +107,11 @@ const schema = {
 };
 
 export default class TextEditor extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { value: getInitialValue() };
-    if (props.value) {
-      this.state = {
-        value: Value.fromJSON(JSON.parse(props.value))
-        // ,
-        // focus: false
-      };
-    }
+  state = {
+    value: this.props.value ? Value.fromJSON(JSON.parse(this.props.value)) : getInitialValue(),
+    focus: false
   }
+
   ref = editor => {
     this.editor = editor;
   };
@@ -127,9 +121,15 @@ export default class TextEditor extends Component {
     if (!this.props.readonly) this.props.onSave(JSON.stringify(value.toJSON()));
   };
 
-  // setFocus(focus) {
-  //   this.setState({ focus });
-  // }
+  onFocus = (self, editor, next) => {
+    next()
+    defer(() => this.setState({ focus: true }))
+  }
+
+  onBlur = (self, editor, next) => {
+    next();
+    defer(() => this.setState({ focus: false }));
+  }
 
   hasMark = type => {
     const { value } = this.state;
@@ -375,8 +375,7 @@ export default class TextEditor extends Component {
             {this.props.error}
           </span>
         )}
-        {/* <div className={classnames('editor', { focus: this.state.focus })} /> */}
-        <div className='editor'>
+        <div className={classnames('editor', { focus: this.state.focus })}>
           <FormatToolbar>
             {this.renderMarkButton('bold', ic_format_bold)}
             {this.renderMarkButton('italic', ic_format_italic)}
@@ -391,8 +390,6 @@ export default class TextEditor extends Component {
           </FormatToolbar>
           <Editor
             spellCheck
-            // if I do not autofocus , I can not type
-            autoFocus
             placeholder=''
             ref={this.ref}
             value={this.state.value}
@@ -400,15 +397,10 @@ export default class TextEditor extends Component {
             onKeyDown={this.onKeyDown}
             renderNode={this.renderNode}
             renderMark={this.renderMark}
-            // readOnly={...this.props.readonly}
-            // onFocus={() => this.setFocus(true)}
-            // onBlur={() => this.setFocus(false)}
-            //   value={this.state.value}
+            onFocus={this.onFocus}
+            onBlur={this.onBlur}
             name={this.props.name}
             key={this.props.name}
-            // focus={false}
-            //   onChange={this.onChange}
-            //   renderMark={this.renderMark}
             schema={schema}
           />
         </div>

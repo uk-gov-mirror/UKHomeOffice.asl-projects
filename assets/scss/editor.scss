@@ -98,7 +98,7 @@
 }
 
 .review {
-  [data-slate-editor] {
+  > [data-slate-editor] {
     pointer-events: none;
   }
 }
