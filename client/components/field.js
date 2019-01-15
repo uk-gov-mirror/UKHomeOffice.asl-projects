@@ -8,7 +8,7 @@ import { Input, Select, TextArea, RadioGroup, CheckboxGroup } from '@ukhomeoffic
 
 import SpeciesSelector from './species-selector';
 import AnimalQuantities from './animal-quantities';
-
+import Duration from './duration';
 import { TextEditor } from './editor';
 
 import Fieldset from './fieldset';
@@ -75,6 +75,19 @@ class Field extends Component {
         values={ this.props.project }
         error={ this.props.error }
         onFieldChange={ this.props.onFieldChange }
+        summary={ this.props.summary }
+      />
+    }
+    if (this.props.type === 'duration') {
+      return <Duration
+        name={ this.props.name }
+        label={ this.props.label }
+        hint={ this.props.hint }
+        error={ this.props.error }
+        min={ this.props.min }
+        max={ this.props.max }
+        value={ this.props.value }
+        onChange={ val => this.onChange(val) }
       />
     }
     if (this.props.type === 'select') {

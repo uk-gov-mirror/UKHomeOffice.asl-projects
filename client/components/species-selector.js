@@ -31,7 +31,8 @@ class SpeciesSelector extends Component {
       label,
       otherLabel = 'Which species will you be using',
       name = 'species',
-      hint
+      hint,
+      summary
     } = this.props;
     return (
       <Fragment>
@@ -63,6 +64,7 @@ class SpeciesSelector extends Component {
             onFieldChange={onFieldChange}
           />
         </details>
+        { /* TODO: species summary section - awaiting designs */ }
       </Fragment>
     )
   }

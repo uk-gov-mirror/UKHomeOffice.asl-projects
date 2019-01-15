@@ -24,6 +24,11 @@ dl {
     font-weight: bold;
   }
 }
+.govuk-radios__item, .govuk-checkboxes__item {
+  > .govuk-hint {
+    // padding-left: 15px;
+  }
+}
 
 .grey {
   color: $govuk-secondary-text-colour;
@@ -507,4 +512,11 @@ fieldset.smaller {
 
 input[type="number"] {
   width: 6em;
+}
+
+.duration {
+  .govuk-form-group {
+    display: inline-block;
+    margin-right: 1em;
+  }
 }

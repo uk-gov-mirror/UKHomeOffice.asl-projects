@@ -1,7 +1,7 @@
 import ExperimentalDesign from './pages/sections/experimental-design';
 import NTSSummary from './pages/sections/nts';
 import Protocols from './pages/sections/protocols';
-import DefaultSection from './pages/sections/default';
+
 import every from 'lodash/every';
 import { COMPLETE, INCOMPLETE, PARTIALLY_COMPLETE } from './constants/completeness';
 
@@ -9,30 +9,95 @@ export default {
   introduction: {
     title: 'Project introduction',
     subsections: {
-      details: {
-        title: 'Project details',
-        fields: [
-          {
-            name: 'title',
-            required: true,
-            label: 'Title',
-            type: 'text'
-          }
-        ]
-      }
-    }
-  },
-  setup: {
-    title: 'Project setup',
-    subsections: {
-      setup: {
+      introduction: {
         title: 'Introductory details',
-        component: DefaultSection,
-        fields: [
+        steps: [
           {
-            name: 'species',
-            label: 'What types of animals will be used in this project?',
-            type: 'species-selector'
+            title: 'Apply for project licence - 1 of 2',
+            subtitle: 'Project information',
+            fields: [
+              {
+                name: 'main-output',
+                label: 'What is the main output of your project',
+                type: 'radio',
+                className: 'smaller',
+                options: [
+                  {
+                    label: 'To carry out or support research',
+                    value: 'To carry out or support research',
+                    hint: 'This can be for yourself or in collaboration with others and can include basic or translational research and non-regulatory drug/device development.'
+                  },
+                  {
+                    label: 'To produce animals or antibodies for supply to others',
+                    value: 'To produce animals or antibodies for supply to others',
+                    hint: 'This can include genetically altered or surgically prepared animals.'
+                  },
+                  'To produce or support the production of blood products, vaccines or medicines for medical or veterinary use.',
+                  {
+                    label: 'To generate testing or screening data.',
+                    value: 'To generate testing or screening data.',
+                    hint: 'This can be for yourself or for others, for regulatory (GLP work) or non regulatory use.',
+                    reveal: {
+                      name: 'main-output-testing-screening',
+                      label: 'What will you be generating testing or screening data for?',
+                      type: 'radio',
+                      options: [
+                        {
+                          label: 'To produce animals or antibodies for supply to others',
+                          value: 'To produce animals or antibodies for supply to others',
+                          hint: 'This can include genetically altered or surgically prepared animals.'
+                        },
+                        {
+                          label: 'Non regulatory use',
+                          value: 'Non regulatory use',
+                          hint: 'If done for others, the models and methods used are likely to be tailored to the needs of one particular client'
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    label: 'To teach practical skills or knowledge',
+                    value: 'To teach practical skills or knowledge',
+                    hint: 'For example, microsurgery, or to use animals as part of a higher education course, such as physiology.'
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            title: 'Apply for project licence - 2 of 2',
+            subtitle: 'Project introduction',
+            nts: true,
+            fields: [
+              {
+                name: 'title',
+                label: 'What\'s the title of this project?',
+                type: 'text'
+              },
+              {
+                name: 'project-aim',
+                label: 'What\'s the overall aim of this project?',
+                type: 'texteditor'
+              },
+              {
+                name: 'project-importance',
+                label: 'Why is it important to undertake this work?',
+                type: 'texteditor'
+              },
+              {
+                name: 'duration',
+                label: 'What will be the duration of this project?',
+                type: 'duration',
+                max: 60,
+                min: 1
+              },
+              {
+                name: 'species',
+                label: 'What types of animals will be used in this project?',
+                type: 'species-selector',
+                summary: true
+              }
+            ]
           }
         ]
       }
@@ -43,7 +108,6 @@ export default {
     subsections: {
       'scientific-background': {
         title: 'Scientific background',
-        component: DefaultSection,
         fields: [
           {
             name: 'scientific-knowledge-summary',
@@ -614,13 +678,7 @@ export default {
       },
       'project-harms': {
         title: 'Project harms',
-        component: DefaultSection,
         nts: true,
-        complete: values => {
-          if (values['project-harms-complete']) {
-            return COMPLETE;
-          }
-        },
         fields: [
           {
             name: 'project-harms-summary',
@@ -643,13 +701,7 @@ export default {
       },
       'fate-of-animals': {
         title: 'Fate of animals',
-        component: DefaultSection,
         nts: true,
-        complete: values => {
-          if (values['fate-of-animals-complete']) {
-            return COMPLETE;
-          }
-        },
         fields: [
           {
             name: 'fate-of-animals',

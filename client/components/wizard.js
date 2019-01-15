@@ -1,9 +1,11 @@
 import React, { Fragment } from 'react';
 
+import flatten from 'lodash/flatten'
+
 class Wizard extends React.Component {
 
   advance() {
-    const step = Math.min(this.props.step + 1, this.props.children.length - 1);
+    const step = Math.min(this.props.step + 1, React.Children.count(this.props.children) - 1);
     this.props.onProgress && this.props.onProgress(step);
   }
 
@@ -19,7 +21,8 @@ class Wizard extends React.Component {
   }
 
   render() {
-    const child = this.props.children && this.props.children[this.props.step];
+    const children = flatten(this.props.children);
+    const child = children && children[this.props.step];
     if (!child) {
       return null;
     }

@@ -5,6 +5,16 @@ import TextEditor from './editor/text-editor';
 class Review extends React.Component {
   replay() {
     let value = this.props.value;
+    if (value && this.props.type === 'duration') {
+      return (
+        <dl className="inline">
+          <dt>Years</dt>
+          <dd>{value.years || 0}</dd>
+          <dt>Months</dt>
+          <dd>{value.months || 0}</dd>
+        </dl>
+      )
+    }
     if (this.props.type === 'species-selector') {
       if (this.props.project[`${this.props.name}-other`]) {
         value = [

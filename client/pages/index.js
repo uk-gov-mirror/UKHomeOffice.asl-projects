@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom';
 import moment from 'moment';
 import DropZone from 'react-dropzone';
 
-import { deleteProject, importProject } from '../actions/projects';
+import { Button } from '@ukhomeoffice/react-components';
+
+import { deleteProject, importProject, createProject } from '../actions/projects';
 import { throwError } from '../actions/messages';
 
 import ExportLink from '../components/export-link';
@@ -18,7 +20,8 @@ const mapDispatchToProps = dispatch => {
   return {
     error: message => dispatch(throwError(message)),
     import: data => dispatch(importProject(data)),
-    remove: id => dispatch(deleteProject(id))
+    remove: id => dispatch(deleteProject(id)),
+    create: project => dispatch(createProject(project))
   };
 }
 
@@ -37,6 +40,11 @@ class Index extends React.Component {
       };
       reader.readAsBinaryString(file);
     });
+  }
+
+  create = () => {
+    this.props.create({})
+      .then(project => this.props.history.push(`/project/${project.id}/introduction`));
   }
 
   render() {
@@ -62,7 +70,7 @@ class Index extends React.Component {
         {
           this.props.projects.map(project => {
             return <tr key={ project.id }>
-              <td><Link to={`/project/${project.id}`}>{ project.title }</Link></td>
+              <td><Link to={`/project/${project.id}`}>{ project.title || 'Untitled project' }</Link></td>
               <td>{ moment(project.updated).format('D MMMM YYYY, HH:mm') }</td>
               <td>
                 <ExportLink project={project.id} />
@@ -74,7 +82,7 @@ class Index extends React.Component {
         </tbody>
       </table>
       <p className="control-panel">
-        <Link to="/new" className="govuk-button">Add new project</Link>
+        <Button onClick={this.create}>Add new project</Button>
         <span>or drag an exported json file onto this window to import it.</span>
       </p>
     </DropZone>;
