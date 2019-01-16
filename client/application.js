@@ -263,10 +263,17 @@ export default {
       },
       benefits: {
         title: 'Benefits',
+        nts: true,
         fields: [
           {
             name: 'benefit-outputs',
             label: 'What outputs do you think you will see at the end of this project?',
+            hint: 'Outputs can include new information, publications, or products. Outputs may be short-term, or they may not be fully realised until you\'ve completed the project. Consider all timescales in your answer.',
+            type: 'texteditor'
+          },
+          {
+            name: 'benefit-who',
+            label: 'Who or what will benefit from these outcomes?',
             type: 'texteditor'
           }
         ]
