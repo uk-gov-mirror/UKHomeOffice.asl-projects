@@ -164,7 +164,102 @@ export default {
         title: 'Strategy'
       },
       'experimental-design': {
-        title: 'Experiental design'
+        title: 'Experiental design',
+        steps: [
+          {
+            title: 'Experiental design - 1 of 2',
+            intro: 'There are several useful resources to help you plan your experiments. It is recommended that you read the ARRIVE or PREPARE guidelines, or use the NC3Rs\' Experimental Design Assistant before answering the questions in this section.',
+            fields: [
+              {
+                name: 'experimental-design-how',
+                label: 'How have you ensured that your experiments are appropriately designed and correctly powered to achieve your aim and objectives?',
+                type: 'texteditor'
+              },
+              {
+                name: 'experimental-design-analysis',
+                label: 'How will you ensure that the results of your experiments are effectively analysed?',
+                type: 'texteditor'
+              },
+              {
+                name: 'experimental-design-repeating',
+                label: 'Will you be repeating work that has already been undertaken by others?',
+                type: 'radio',
+                inline: true,
+                className: 'smaller',
+                options: [
+                  {
+                    label: 'Yes',
+                    value: true,
+                    reveal: {
+                      name: 'experimental-design-repeating-justification',
+                      label: 'What is the scientific justification for repeating this work?',
+                      type: 'texteditor'
+                    }
+                  },
+                  {
+                    label: 'No',
+                    value: false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            title: 'Experiental design - 2 of 2',
+            fields: [
+              {
+                name: 'experimental-design-data',
+                label: 'Does data exist from previous work? If it does, how will you use it to reduce animal use in this project?',
+                type: 'texteditor'
+              },
+              {
+                name: 'experimental-design-sexes',
+                label: 'Will you use animals of both sexes in this project?',
+                type: 'radio',
+                inline: true,
+                className: 'smaller',
+                options: [
+                  {
+                    label: 'Yes',
+                    value: true
+                  },
+                  {
+                    label: 'No',
+                    value: false,
+                    reveal: {
+                      name: 'experimental-design-sexes-justification',
+                      label: 'Why will you not use animals of both sexes?',
+                      type: 'texteditor'
+                    }
+                  }
+                ]
+              },
+              {
+                name: 'experimental-design-pilot-studies',
+                label: 'Will you run pilot studies for this project?',
+                type: 'radio',
+                inline: true,
+                className: 'smaller',
+                options: [
+                  {
+                    label: 'Yes',
+                    value: true,
+                    reveal: {
+                      name: 'experimental-design-pilot-studies-description',
+                      label: 'Describe what you will do in your pilot studies.',
+                      hint: 'You may find the NC3Rs\' Guidance On Pilot Studies helpful when you\'re answering this question.',
+                      type: 'texteditor'
+                    }
+                  },
+                  {
+                    label: 'No',
+                    value: false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       },
       benefits: {
         title: 'Benefits',

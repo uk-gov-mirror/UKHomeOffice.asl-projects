@@ -30,13 +30,16 @@ class Questions extends PureComponent {
   }
 
   render = () => {
-    const { title, fields, values, save, advance, exit, nts, subtitle } = this.props;
+    const { title, fields, values, save, advance, exit, nts, subtitle, intro } = this.props;
     const { ntsAccepted } = this.state;
     return (
       <Fragment>
         <h1>{ title }</h1>
         {
           subtitle && <h2>{ subtitle }</h2>
+        }
+        {
+          intro && <p className="grey">{ intro }</p>
         }
         {
           nts && <NTS onAccept={this.toggleAccepted} accepted={ntsAccepted} />
