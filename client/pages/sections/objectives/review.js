@@ -4,7 +4,7 @@ import Review from '../../../components/review';
 import Banner from '../../../components/banner';
 import Playback from '../../../components/playback';
 
-const ObjectivesReview = ({ playback, values, steps }) => (
+const ObjectivesReview = ({ playback, values, steps, goto }) => (
   <Fragment>
     <Banner>
       <h2>Please review your answers for:</h2>
@@ -25,6 +25,7 @@ const ObjectivesReview = ({ playback, values, steps }) => (
             key={index}
             {...steps[0].fields.find(f => f.name === 'how')}
             value={objective.how}
+            onEdit={() => goto(0)}
           />
           <hr />
         </div>
@@ -35,6 +36,7 @@ const ObjectivesReview = ({ playback, values, steps }) => (
         <Review
           {...field}
           value={values[field.name]}
+          onEdit={() => goto(1)}
         />
       ))
     }
