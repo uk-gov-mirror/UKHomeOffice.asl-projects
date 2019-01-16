@@ -247,7 +247,6 @@ export default class TextEditor extends Component {
       'load',
       () => {
         const src = reader.result;
-        // window.alert(src);
         if (!src) return;
         this.editor.command(insertImage, src);
       },
@@ -257,6 +256,7 @@ export default class TextEditor extends Component {
     if (event.target.files[0]) {
       reader.readAsDataURL(event.target.files[0]);
     }
+    event.target.value='';
   };
 
   onDropOrPaste = (event, editor, next) => {
@@ -293,8 +293,6 @@ export default class TextEditor extends Component {
 
   renderNode = (props, editor, next) => {
     const { attributes, children, node, isFocused } = props;
-    // console.log('isFocused ' , isFocused);
-    // const { attributes, node, isFocused } = props
     switch (node.type) {
       case 'block-quote':
         return <blockquote {...attributes}>{children}</blockquote>;
