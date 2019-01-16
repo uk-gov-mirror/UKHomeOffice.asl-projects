@@ -8,6 +8,7 @@ import Fieldset from '../../components/fieldset';
 import Controls from '../../components/controls';
 import Complete from '../../components/complete';
 import NTS from '../../components/nts';
+import Playback from '../../components/playback';
 
 import ReviewSection from './review';
 
@@ -30,11 +31,14 @@ class Questions extends PureComponent {
   }
 
   render = () => {
-    const { title, fields, values, save, advance, exit, nts, subtitle, intro } = this.props;
+    const { title, fields, values, save, advance, exit, nts, subtitle, playback, intro } = this.props;
     const { ntsAccepted } = this.state;
     return (
       <Fragment>
         <h1>{ title }</h1>
+        {
+          playback && <Playback playback={playback} />
+        }
         {
           subtitle && <h2>{ subtitle }</h2>
         }
@@ -69,15 +73,21 @@ class Review extends Component {
 
   render = () => {
     const { save, retreat, steps, fields, ...props } = this.props;
-
+    const ReviewComponent = props.review || ReviewSection;
+    const reviewFields = steps ? flatten(steps.filter(s => !s.repeat).map(s => s.fields)) : fields
     return (
       <Fragment>
-        <ReviewSection
-          { ...props }
+        <ReviewComponent
+          { ...this.props }
           onEdit={retreat}
-          fields={steps ? flatten(steps.map(s => s.fields)) : fields}
+          fields={reviewFields}
         />
-        <Complete className="panel" onChange={this.onCompleteChange} complete={this.props.values[`${this.props.section}-complete`]}>
+        <Complete
+          className="panel"
+          onChange={this.onCompleteChange}
+          complete={this.props.values[`${this.props.section}-complete`]}
+          label="This section is completed"
+        >
           <h2>Mark this section as completed?</h2>
           <p>If you mark a section as completed, you can still come back & edit this section and it will not be submitted to ASRU, all sections in the sections list must be marked as 'Complete'.</p>
         </Complete>
@@ -93,12 +103,14 @@ class Section extends PureComponent {
       return null
     }
     const steps = props.steps || [props];
+
     return (
       <Wizard onProgress={ step => onProgress(step) } step={ step }>
         {
-          steps.map((stepSettings, index) => (
-            <Questions key={index} exit={exit} step={index} {...props} {...stepSettings} />
-          ))
+          steps.map((stepSettings, index) => {
+            const Component = stepSettings.component || Questions;
+            return <Component key={index} exit={exit} step={index} {...props} {...stepSettings} />
+          })
         }
 
         <Review {...props} step={steps.length} onContinue={exit} exit={exit} />
