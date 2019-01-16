@@ -1021,6 +1021,111 @@ export default {
             ]
           }
         ]
+      },
+      'keeping-animals-alive': {
+        title: 'Keeping animals alive',
+        fields: [
+          {
+            name: 'keeping-animals-alive-determine',
+            label: 'How will you determine whether animals can be kept alive at the end of the project?',
+            type: 'texteditor'
+          },
+          {
+            name: 'keeping-animals-alive-supervised',
+            label: 'Will animals that have been kept alive be held and supervised by a veterinary surgeon?',
+            hint: 'Remember to include any limitations on the length of time that certain animals can be held and monitored.',
+            type: 'texteditor'
+          }
+        ]
+      },
+      'reusing-animals': {
+        title: 'Re-using animals',
+        fields: [
+          {
+            name: 'reusing-why',
+            label: 'Why do you intend to re-use animals?',
+            hint: 'Explain how you balanced the needs of refining and reducing animal use before making your decision.',
+            type: 'texteditor'
+          },
+          {
+            name: 'reusing-limitations',
+            label: 'Have you placed any limitations on re-using animals during your project?',
+            hint: 'For example, there may be a maximum number of times that an animal can be re-used, or a set of performance standards that requires a limit on re-use?',
+            type: 'texteditor'
+          }
+        ]
+      },
+      'rehoming-animals': {
+        title: 'Re-homing animals',
+        fields: [
+          {
+            name: 'rehoming-authority',
+            label: 'Does your primary establishment already have the authority to re-home animals?',
+            type: 'radio',
+            inline: true,
+            className: 'smaller',
+            options: [
+              {
+                label: 'Yes',
+                value: true,
+                reveal: [
+                  {
+                    name: 'rehoming-healthy',
+                    label: 'How will you determine whether animals are healthy enough to be re-homed?',
+                    type: 'texteditor'
+                  },
+                  {
+                    name: 'rehoming-harmful',
+                    label: 'How will you ensure that re-homing animals will not be harmful to other species, the environment, and human health?',
+                    type: 'texteditor'
+                  },
+                  {
+                    name: 'rehoming-socialisation',
+                    label: 'How will you verify that animals are undergoing an appropriate socialisation programme onced they have been re-homed?',
+                    type: 'texteditor'
+                  },
+                  {
+                    name: 'rehoming-other',
+                    label: 'What other measures will you take to safeguard the wellbeing of animals once they have been re-homed?',
+                    type: 'texteditor'
+                  }
+                ]
+              },
+              {
+                label: 'No',
+                value: false
+              }
+            ]
+          }
+        ]
+      },
+      'commercial-slaughter': {
+        title: 'Commercial slaughter',
+        fields: [
+          {
+            name: 'commercial-slaughter',
+            label: 'Will you be sending any animals to a commercial slaughterhouse at the end of their use?',
+            type: 'radio',
+            inline: true,
+            className: 'smaller',
+            options: [
+              {
+                label: 'Yes',
+                value: true,
+                reveal: {
+                  name: 'commercial-slaughter-hygiene',
+                  label: 'How will you ensure that these animals are healthy and meet commercial standards for meat hygiene?',
+                  hint: 'Include any relevant information about drug withdrawal times.',
+                  type: 'texteditor'
+                }
+              },
+              {
+                label: 'No',
+                value: false
+              }
+            ]
+          }
+        ]
       }
     }
   },
