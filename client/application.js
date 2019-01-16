@@ -1021,6 +1021,22 @@ export default {
             ]
           }
         ]
+      },
+      'keeping-animals-alive': {
+        title: 'Keeping animals alive',
+        fields: [
+          {
+            name: 'keeping-animals-alive-determine',
+            label: 'How will you determine whether animals can be kept alive at the end of the project?',
+            type: 'texteditor'
+          },
+          {
+            name: 'keeping-animals-alive-supervised',
+            label: 'Will animals that have been kept alive be held and supervised by a veterinary surgeon?',
+            hint: 'Remember to include any limitations on the length of time that certain animals can be held and monitored.',
+            type: 'texteditor'
+          }
+        ]
       }
     }
   },
