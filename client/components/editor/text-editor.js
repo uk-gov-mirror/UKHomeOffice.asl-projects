@@ -356,12 +356,17 @@ export default class TextEditor extends Component {
   render() {
     if (this.props.readonly) {
       return (
-        <Editor
-          value={this.state.value}
-          renderMark={this.renderMark}
-        />
+        <div className='editor readonly'>
+          <Editor
+            value={this.state.value}
+            renderMark={this.renderMark}
+            renderNode={this.renderNode}
+            readOnly
+          />
+        </div>
       );
     }
+
     return (
       <div
         className={classnames(

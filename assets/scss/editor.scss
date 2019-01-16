@@ -97,6 +97,11 @@
   }
 }
 
+.readonly {
+  background-color: inherit;
+  border: none;
+}
+
 .review {
   > [data-slate-editor] {
     pointer-events: none;
