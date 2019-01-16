@@ -5,6 +5,11 @@
   border-radius: 0px;
   margin-bottom: $govuk-gutter;
 
+  &.readonly {
+    background-color: inherit;
+    border: none;
+  }
+
   &.focus {
     outline: 3px solid $ho-focus;
     outline-offset: 0;
