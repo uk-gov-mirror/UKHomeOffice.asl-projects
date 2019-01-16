@@ -25,6 +25,17 @@ dl {
   }
 }
 
+.playback {
+  border-left: 4px solid $ho-brand;
+  padding-left: $govuk-gutter;
+  margin-bottom: $govuk-gutter;
+}
+
+.objective {
+  @extend .panel;
+  margin-bottom: $govuk-gutter;
+}
+
 .grey {
   color: $govuk-secondary-text-colour;
 }
@@ -517,5 +528,26 @@ input[type="number"] {
   .govuk-form-group {
     display: inline-block;
     margin-right: 1em;
+  }
+}
+
+.objective-review {
+  .review {
+    hr {
+      border: none;
+    }
+  }
+}
+
+.playback {
+  .review {
+    hr {
+      border: none;
+      margin: 0;
+    }
+
+    p {
+      margin-bottom: 0;
+    }
   }
 }

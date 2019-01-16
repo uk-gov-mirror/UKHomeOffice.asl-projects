@@ -1,6 +1,8 @@
 import ExperimentalDesign from './pages/sections/experimental-design';
 import NTSSummary from './pages/sections/nts';
 import Protocols from './pages/sections/protocols';
+import Objectives from './pages/sections/objectives';
+import ObjectivesReview from './pages/sections/objectives/review';
 
 import every from 'lodash/every';
 import { COMPLETE, INCOMPLETE, PARTIALLY_COMPLETE } from './constants/completeness';
@@ -161,7 +163,45 @@ export default {
         ]
       },
       strategy: {
-        title: 'Strategy'
+        title: 'Strategy',
+        playback: 'project-aim',
+        review: ObjectivesReview,
+        steps: [
+          {
+            title: 'Strategy - 1 of 2',
+            component: Objectives,
+            repeat: 'objectives',
+            fields: [
+              {
+                name: 'title',
+                label: 'Title',
+                type: 'text'
+              },
+              {
+                name: 'how',
+                label: 'How will you achieve this scientific objective?',
+                hint: 'Refer to existing in silico, in vitro, and ex vivo procedures that will contribute to achieving this objective.',
+                type: 'texteditor'
+              }
+            ]
+          },
+          {
+            title: 'Strategy - 2 of 2',
+            fields: [
+              {
+                name: 'objectives-how',
+                label: 'How will these objectives help you to achieve your aim?',
+                hint: 'Remember to include the results of any work carried out in other project licences that will influence your research strategy.',
+                type: 'texteditor'
+              },
+              {
+                name: 'objectives-alternatives',
+                label: 'How will you look for, or develop, new non-animal alternatives as this project progresses?',
+                type: 'texteditor'
+              }
+            ]
+          }
+        ]
       },
       'experimental-design': {
         title: 'Experiental design',

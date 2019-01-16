@@ -22,15 +22,19 @@ class Complete extends Component {
   }
 
   render() {
+    const { children, label = 'Mark this protocol as complete' } = this.props;
     return (
       <div className="panel">
+        {
+          children
+        }
         <CheckboxGroup
           label=""
           name="complete"
           className="smaller"
           options={[{
             value: true,
-            label: 'Mark this protocol as complete'
+            label
           }]}
           value={this.state.checked}
           onChange={this.toggleChecked}

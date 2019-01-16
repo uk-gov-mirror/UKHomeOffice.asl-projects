@@ -39,7 +39,18 @@ const fieldIncluded = (field, values) => {
   return every(Object.keys(field.conditional), key => field.conditional[key] === values[key])
 }
 
-const ReviewSection = ({ fields = [], nts, values, onContinue, advance, onEdit, project, exit, title, reviewTitle }) => {
+const ReviewSection = ({
+  fields = [],
+  nts,
+  values,
+  onContinue,
+  advance,
+  onEdit,
+  project,
+  exit,
+  title,
+  reviewTitle
+}) => {
   const displayTitle = reviewTitle || title || false;
   return (
     <Fragment>
