@@ -110,6 +110,109 @@ export default {
       }
     }
   },
+  applicantInformation: {
+    title: 'Applicant information',
+    subsections: {
+      experience: {
+        title: 'Experience',
+        fields: [
+          {
+            name: 'experience-projects',
+            label: 'Have you worked on projects in this area of science before?',
+            type: 'radio',
+            inline: true,
+            className: 'smaller',
+            options: [
+              {
+                label: 'Yes',
+                value: true,
+                reveal: {
+                  name: 'experience-achievements',
+                  label: 'What were your, or your group\'s achievements in your previous projects?',
+                  hint: 'Explain the extent to which you achieved your scientific objectives in these projects.',
+                  type: 'texteditor'
+                }
+              },
+              {
+                label: 'No',
+                value: false,
+                reveal: [
+                  {
+                    name: 'experience-knowledge',
+                    label: 'What relevant scientific knowledge or education do you have?',
+                    type: 'texteditor'
+                  },
+                  {
+                    name: 'experience-animals',
+                    label: 'What experience do you have of using the types of animals stated in this licence application?',
+                    type: 'texteditor'
+                  },
+                  {
+                    name: 'experience-experimental-design',
+                    label: 'What experimental design and data analysis training have you had?',
+                    type: 'texteditor'
+                  },
+                  {
+                    name: 'experience-others',
+                    label: 'Will other people help you manage this project? If so, how?',
+                    type: 'texteditor'
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            name: 'experience-similar',
+            label: 'Is similar work already being done in any of the establishments listed in this application?',
+            type: 'radio',
+            inline: true,
+            className: 'smaller',
+            options: [
+              {
+                label: 'Yes',
+                value: true,
+                reveal: {
+                  name: 'experience-relevant-expertise',
+                  label: 'What relevant expertise, people, and support will be available to help you carry out your experiments?',
+                  type: 'texteditor'
+                }
+              },
+              {
+                label: 'No',
+                value: false
+              }
+            ]
+          }
+        ]
+      },
+      funding: {
+        title: 'Funding',
+        fields: [
+          {
+            name: 'funding-how',
+            label: 'How will your project be funded?',
+            type: 'texteditor'
+          },
+          {
+            name: 'funding-parts',
+            label: 'Which parts of your project already have funding?',
+            type: 'texteditor'
+          },
+          {
+            name: 'funding-reviewed',
+            label: 'Has this application already been peer reviewed by an external funder?',
+            type: 'texteditor'
+          },
+          {
+            name: 'funding-previous',
+            label: 'Have you secured funding for this type of work before?',
+            hint: 'If you have, briefly describe your track record in securing funding for previous projects.',
+            type: 'texteditor'
+          }
+        ]
+      }
+    }
+  },
   projectPlan: {
     title: 'Project plan',
     subsections: {
