@@ -5,6 +5,8 @@ import Objectives from './pages/sections/objectives';
 import ObjectivesReview from './pages/sections/objectives/review';
 
 import every from 'lodash/every';
+import some from 'lodash/some';
+
 import { COMPLETE, INCOMPLETE, PARTIALLY_COMPLETE } from './constants/completeness';
 
 export default {
@@ -957,6 +959,66 @@ export default {
             name: 'fate-of-animals',
             label: 'What will happen to animals at the end of their use in this project?',
             type: 'texteditor'
+          }
+        ]
+      }
+    }
+  },
+  otherConsiderations: {
+    title: 'Other considerations',
+    subsections: {
+      nmbas: {
+        title: 'Neuromuscular blocking agents (NMBAs)',
+        show: values => some(values.protocols, protocol => {
+          return some(protocol.steps, step => step.code === 'ad');
+        }),
+        linkTo: 'protocols',
+        steps: [
+          {
+            title: 'Neuromuscular blocking agents (NMBAs) - 1 of 2',
+            fields: [
+              {
+                name: 'nmbas-why',
+                label: 'Why do you need to use NMBAs in your protocols?',
+                type: 'texteditor'
+              },
+              {
+                name: 'nmbas-anaesthetic',
+                label: 'What anaesthetic and analgesic regime will you use?',
+                type: 'texteditor'
+              },
+              {
+                name: 'nmbas-ventilation',
+                label: 'How will you ensure that animals have adequate ventilation?',
+                type: 'texteditor'
+              },
+              {
+                name: 'nmbas-pain',
+                label: 'How will you minimise pain and distress for animals under the influence of an NMBA?',
+                type: 'texteditor'
+              }
+            ]
+          },
+          {
+            title: 'Neuromuscular blocking agents (NMBAs) - 2 of 2',
+            fields: [
+              {
+                name: 'nmbas-depth',
+                label: 'How wil you monitor the depth of anaesthesia?',
+                type: 'texteditor'
+              },
+              {
+                name: 'nmbas-people',
+                label: 'How will you ensure that you have enough people with the right skills involved throughout the process of administering NMBA\'s, including animals recovery periods?',
+                type: 'texteditor'
+              },
+              {
+                name: 'nmbas-emergency-routine',
+                label: 'Explain the agreed emergency routine at your establishment that covers potential hazardous events (such as a power failure).',
+                hint: 'You may want to add a copy of your emergency routine as an attachment.',
+                type: 'texteditor'
+              }
+            ]
           }
         ]
       }

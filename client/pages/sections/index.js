@@ -9,6 +9,7 @@ import Controls from '../../components/controls';
 import Complete from '../../components/complete';
 import NTS from '../../components/nts';
 import Playback from '../../components/playback';
+import Link from '../../components/link';
 
 import ReviewSection from './review';
 
@@ -31,11 +32,14 @@ class Questions extends PureComponent {
   }
 
   render = () => {
-    const { title, fields, values, save, advance, exit, nts, subtitle, playback, intro } = this.props;
+    const { title, fields, values, save, advance, exit, nts, subtitle, intro, linkTo, playback } = this.props;
     const { ntsAccepted } = this.state;
     return (
       <Fragment>
         <h1>{ title }</h1>
+        {
+          linkTo && <p><Link to={linkTo} /></p>
+        }
         {
           playback && <Playback playback={playback} />
         }
