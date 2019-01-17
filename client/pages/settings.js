@@ -74,6 +74,8 @@ class Settings extends Component {
         <Button className="button-secondary" onClick={this.addEstablishment}>Add establishment</Button>
         <Controls
           onContinue={this.save}
+          continueDisabled={!compact(this.state.establishments).length}
+          exitLabel="Cancel"
           onExit={this.exit}
         />
       </Fragment>
