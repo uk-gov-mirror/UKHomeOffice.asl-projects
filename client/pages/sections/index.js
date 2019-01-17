@@ -31,6 +31,16 @@ class Questions extends PureComponent {
     });
   }
 
+  getFields = () => {
+    const fields = this.props.fields;
+    return fields.filter(field => {
+      if (field.show && typeof field.show === 'function') {
+        return field.show(this.props.values)
+      }
+      return true;
+    });
+  }
+
   render = () => {
     const { title, fields, values, save, advance, exit, nts, subtitle, intro, linkTo, playback } = this.props;
     const { ntsAccepted } = this.state;
@@ -56,7 +66,7 @@ class Questions extends PureComponent {
           (!nts || ntsAccepted) && (
             <div ref={this.ref}>
               <Fieldset
-                fields={fields}
+                fields={this.getFields()}
                 values={values}
                 onFieldChange={save}
               />
@@ -101,6 +111,13 @@ class Review extends Component {
 }
 
 class Section extends PureComponent {
+  showStep = step => {
+    if (!step.show) {
+      return true;
+    }
+    return step.show(this.props.values);
+  }
+
   render = () => {
     const { onProgress, exit, step, ...props } = this.props;
     if (!props.values) {
@@ -111,7 +128,7 @@ class Section extends PureComponent {
     return (
       <Wizard onProgress={ step => onProgress(step) } step={ step }>
         {
-          steps.map((stepSettings, index) => {
+          steps.filter(this.showStep).map((stepSettings, index) => {
             const Component = stepSettings.component || Questions;
             return <Component key={index} exit={exit} step={index} {...props} {...stepSettings} />
           })
