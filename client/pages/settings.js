@@ -65,9 +65,7 @@ class Settings extends Component {
                   onChange={value => this.onChange(index, value)}
                 />
               </div>
-              {
-                index > 0 && <Button className="shrink" onClick={() => this.remove(index)}>Remove</Button>
-              }
+              <Button className="shrink" onClick={() => this.remove(index)}>Remove</Button>
             </div>
           ))
         }
