@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react';
-import { Button } from '@ukhomeoffice/react-components';
+import Controls from '../../../components/controls';
 import Fieldset from '../../../components/fieldset';
 
-const Setup = ({ advance, save, values, setup: { fields } }) => (
+const Setup = ({ advance, exit, save, values, setup: { fields } }) => (
   <Fragment>
     <h1>Protocols</h1>
     <h2 className="subtitle">Please answer a few questions before adding your first protocol.</h2>
@@ -12,8 +12,8 @@ const Setup = ({ advance, save, values, setup: { fields } }) => (
       onFieldChange={save}
       values={values}
     />
-    <Button onClick={advance}>Continue</Button>
+    <Controls onContinue={advance} onExit={exit} />
   </Fragment>
-)
+);
 
 export default Setup;
