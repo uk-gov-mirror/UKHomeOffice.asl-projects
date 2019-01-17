@@ -27,42 +27,42 @@ export default {
             fields: [
               {
                 name: 'main-output',
-                label: 'What is the main output of your project',
+                label: 'What is the main output of your project?',
                 type: 'radio',
                 className: 'smaller',
                 options: [
                   {
                     label: 'To carry out or support research',
                     value: 'research',
-                    hint: 'This can be for yourself or in collaboration with others and can include basic or translational research and non-regulatory drug/device development.'
+                    hint: 'This can be for yourself or in collaboration with others, and can include basic or translational research and non-regulatory drug/device development.'
                   },
                   {
                     label: 'To produce animals or antibodies for supply to others',
                     value: 'animals',
-                    hint: 'This can include genetically altered or surgically prepared animals.'
+                    hint: 'This can include genetically-altered or surgically prepared animals.'
                   },
                   {
-                    label: 'To produce or support the production of blood products, vaccines or medicines for medical or veterinary use.',
+                    label: 'To produce or support the production of blood products, vaccines, or medicines for medical or veterinary use',
                     value: 'blood-products'
                   },
                   {
-                    label: 'To generate testing or screening data.',
+                    label: 'To generate testing or screening data',
                     value: 'screening-data',
-                    hint: 'This can be for yourself or for others, for regulatory (GLP work) or non regulatory use.',
+                    hint: 'This can be for yourself or for others, for regulatory (GLP) or non-regulatory use.',
                     reveal: {
                       name: 'main-output-testing-screening',
-                      label: 'What will you be generating testing or screening data for?',
+                      label: 'Why will you be generating testing or screening data?',
                       type: 'radio',
                       options: [
                         {
-                          label: 'To produce animals or antibodies for supply to others',
+                          label: 'To produce animals or antibodies to supply to others',
                           value: 'supply-to-others',
-                          hint: 'This can include genetically altered or surgically prepared animals.'
+                          hint: 'This can include genetically-altered or surgically prepared animals.'
                         },
                         {
-                          label: 'Non regulatory use',
+                          label: 'Non-regulatory use',
                           value: 'non-regulatory-use',
-                          hint: 'If done for others, the models and methods used are likely to be tailored to the needs of one particular client'
+                          hint: 'If done for others, the models and methods used are likely to be tailored to the needs of one particular client.'
                         }
                       ]
                     }
@@ -465,7 +465,7 @@ export default {
           },
           {
             name: 'quantitative',
-            label: 'Will this project generate quantitative data',
+            label: 'Will this project generate quantitative data?',
             type: 'radio',
             inline: true,
             className: 'smaller',
@@ -482,7 +482,7 @@ export default {
           },
           {
             name: 'anaesthesia',
-            label: 'Will you be using anaesthesia during this project',
+            label: 'Will you be using anaesthesia during this project?',
             type: 'radio',
             inline: true,
             className: 'smaller',
@@ -529,7 +529,7 @@ export default {
               {
                 name: 'description',
                 label: 'Briefly describe the scientific purposes of this protocol',
-                hint: 'Information about protocol steps should be added later',
+                hint: 'Information about protocol steps should be added later.',
                 type: 'texteditor'
               },
               {
@@ -686,7 +686,7 @@ export default {
                     value: true,
                     reveal: {
                       name: 'reuse-details',
-                      label: 'Give details',
+                      label: 'Which protocols or projects?',
                       type: 'textarea'
                     }
                   },
@@ -946,7 +946,7 @@ export default {
               {
                 name: 'substances-suitibility',
                 label: 'How will you assess the suitability of substances given to the particular strain/type of animal you will be using?',
-                hint: 'For example, you may need to evaluate the toxicity, efficacy and sterility of these substances.',
+                hint: 'For example, you may need to evaluate the toxicity, efficacy, and sterility of these substances.',
                 type: 'textarea',
                 conditional: {
                   substances: true
