@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import moment from 'moment';
 import DropZone from 'react-dropzone';
 
+import Settings from './settings';
+
 import { Button } from '@ukhomeoffice/react-components';
 
 import { deleteProject, importProject, createProject } from '../actions/projects';
@@ -13,7 +15,8 @@ import ExportLink from '../components/export-link';
 
 const mapStateToProps = state => {
   return {
-    projects: state.projects
+    projects: state.projects,
+    settings: state.settings
   };
 }
 const mapDispatchToProps = dispatch => {
@@ -48,6 +51,9 @@ class Index extends React.Component {
   }
 
   render() {
+    if (!this.props.settings.establishments || !this.props.settings.establishments.length) {
+      return <Settings />
+    }
     return <DropZone
       onDrop={files => this.drop(files)}
       onDropRejected={files => this.props.error(`Invalid file type: ${files[0].type}`)}
@@ -58,6 +64,7 @@ class Index extends React.Component {
       disableClick={true}
       >
       <h1>Your projects</h1>
+      <a href="/settings" className="float-right">Settings</a>
       <table className="govuk-table">
         <thead>
           <tr>

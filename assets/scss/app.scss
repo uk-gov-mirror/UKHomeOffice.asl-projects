@@ -10,6 +10,21 @@ $assetPath: '/public';
 
 @import "images";
 
+.flex {
+  display: flex;
+
+
+  .grow {
+    flex-grow: 1;
+  }
+
+  .shrink {
+    flex-shrink: 1;
+    align-self: flex-end;
+    margin-left: $govuk-gutter;
+  }
+}
+
 a[disabled] {
   color: $govuk-secondary-text-colour;
   cursor: default;
