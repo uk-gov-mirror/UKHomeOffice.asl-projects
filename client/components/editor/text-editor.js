@@ -26,25 +26,10 @@ const isItalicHotkey = isKeyHotkey('mod+i');
 const isUnderlinedHotkey = isKeyHotkey('mod+u');
 const isCodeHotkey = isKeyHotkey('mod+`');
 
-/*
- * A function to determine whether a URL has an image extension.
- *
- * @param {String} url
- * @return {Boolean}
- */
-
 function isImage(url) {
   // TODO: install imageExtensions
   return !!imageExtensions.find(url.endsWith);
 }
-
-/**
- * A change function to standardize inserting images.
- *
- * @param {Editor} editor
- * @param {String} src
- * @param {Range} target
- */
 
 function insertImage(editor, src, target) {
   if (target) {
@@ -56,12 +41,6 @@ function insertImage(editor, src, target) {
     data: { src }
   });
 }
-
-/**
- * The editor's schema.
- *
- * @type {Object}
- */
 
 const schema = {
   document: {
