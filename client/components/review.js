@@ -87,7 +87,7 @@ class Review extends React.Component {
         }
       </dl>
     }
-    if (this.props.type === 'texteditor') {
+    if (this.props.type === 'texteditor' && this.props.value) {
       return <ReviewTextEditor {...this.props} />;
     }
     if (value) {

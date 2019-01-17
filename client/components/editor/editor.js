@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Value } from 'slate';
 
-const getInitialValue = () =>
-  Value.fromJSON({
+class Editor extends Component {
+
+  getInitialValue = () => Value.fromJSON({
     document: {
       nodes: [
         {
@@ -21,15 +22,16 @@ const getInitialValue = () =>
         }
       ]
     }
-  });
+  })
 
-class Editor extends Component {
   state = {
     value: this.props.value
       ? Value.fromJSON(JSON.parse(this.props.value))
-      : getInitialValue(),
+      : this.getInitialValue(),
     focus: false
   };
+
+
 
   renderNode = (props, editor, next) => {
     const { attributes, children, node, isFocused } = props;
