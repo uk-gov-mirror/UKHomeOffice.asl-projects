@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { connectProject } from '../helpers';
-import TextEditor from './editor/text-editor';
+import { ReviewTextEditor } from './editor';
 import speciesOptions from '../constants/species';
 
 import flatten from 'lodash/flatten';
@@ -88,7 +88,7 @@ class Review extends React.Component {
       </dl>
     }
     if (this.props.type === 'texteditor') {
-      return <TextEditor {...this.props} readonly/>;
+      return <ReviewTextEditor {...this.props} />;
     }
     if (value) {
       return <p>{value.label || value}</p>;

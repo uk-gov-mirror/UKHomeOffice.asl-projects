@@ -9,7 +9,7 @@ import { Input, Select, TextArea, RadioGroup, CheckboxGroup } from '@ukhomeoffic
 import SpeciesSelector from './species-selector';
 import AnimalQuantities from './animal-quantities';
 import Duration from './duration';
-import { TextEditor } from './editor';
+import { EditableTextEditor } from './editor';
 
 import Fieldset from './fieldset';
 
@@ -156,7 +156,7 @@ class Field extends Component {
       />;
     }
     if (this.props.type === 'texteditor') {
-      return <TextEditor
+      return <EditableTextEditor
         name={ this.props.name }
         label={ this.props.label }
         hint={ this.props.hint }
