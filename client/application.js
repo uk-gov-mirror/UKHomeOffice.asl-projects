@@ -27,42 +27,42 @@ export default {
             fields: [
               {
                 name: 'main-output',
-                label: 'What is the main output of your project',
+                label: 'What is the main output of your project?',
                 type: 'radio',
                 className: 'smaller',
                 options: [
                   {
                     label: 'To carry out or support research',
                     value: 'research',
-                    hint: 'This can be for yourself or in collaboration with others and can include basic or translational research and non-regulatory drug/device development.'
+                    hint: 'This can be for yourself or in collaboration with others, and can include basic or translational research and non-regulatory drug/device development.'
                   },
                   {
                     label: 'To produce animals or antibodies for supply to others',
                     value: 'animals',
-                    hint: 'This can include genetically altered or surgically prepared animals.'
+                    hint: 'This can include genetically-altered or surgically prepared animals.'
                   },
                   {
-                    label: 'To produce or support the production of blood products, vaccines or medicines for medical or veterinary use.',
+                    label: 'To produce or support the production of blood products, vaccines, or medicines for medical or veterinary use.',
                     value: 'blood-products'
                   },
                   {
                     label: 'To generate testing or screening data.',
                     value: 'screening-data',
-                    hint: 'This can be for yourself or for others, for regulatory (GLP work) or non regulatory use.',
+                    hint: 'This can be for yourself or for others, for regulatory (GLP work) or non-regulatory use.',
                     reveal: {
                       name: 'main-output-testing-screening',
-                      label: 'What will you be generating testing or screening data for?',
+                      label: 'Why will you be generating testing or screening data?',
                       type: 'radio',
                       options: [
                         {
-                          label: 'To produce animals or antibodies for supply to others',
+                          label: 'To produce animals or antibodies to supply to others',
                           value: 'supply-to-others',
-                          hint: 'This can include genetically altered or surgically prepared animals.'
+                          hint: 'This can include genetically-altered or surgically prepared animals.'
                         },
                         {
                           label: 'Non regulatory use',
                           value: 'non-regulatory-use',
-                          hint: 'If done for others, the models and methods used are likely to be tailored to the needs of one particular client'
+                          hint: 'If data is provided to others, the models and methods used are likely to be tailored to the needs of that particular client'
                         }
                       ]
                     }
@@ -70,7 +70,7 @@ export default {
                   {
                     label: 'To teach practical skills or knowledge',
                     value: 'teach',
-                    hint: 'For example, microsurgery, or to use animals as part of a higher education course, such as physiology.'
+                    hint: 'For example, microsurgery, or to use animals as part of a higher education course such as physiology.'
                   }
                 ]
               }
@@ -465,7 +465,7 @@ export default {
           },
           {
             name: 'quantitative',
-            label: 'Will this project generate quantitative data',
+            label: 'Will this project generate quantitative data?',
             type: 'radio',
             inline: true,
             className: 'smaller',
@@ -482,7 +482,7 @@ export default {
           },
           {
             name: 'anaesthesia',
-            label: 'Will you be using anaesthesia during this project',
+            label: 'Will you be using anaesthesia during this project?',
             type: 'radio',
             inline: true,
             className: 'smaller',
@@ -529,7 +529,7 @@ export default {
               {
                 name: 'description',
                 label: 'Briefly describe the scientific purposes of this protocol',
-                hint: 'Information about protocol steps should be added later',
+                hint: 'Information about protocol steps should be added later.',
                 type: 'texteditor'
               },
               {
@@ -742,13 +742,13 @@ export default {
           },
           steps: {
             title: 'Steps',
-            hint: 'Step numbers are for reference only, and you will be able to reorder them at any time before you submit you project licence application.',
+            hint: 'Step numbers are for reference only. You will be able to reorder them at any time before you send your application to the Home Office.',
             footer: 'Once you’ve created a list of steps, you need to add information about adverse effects, controls and limitations, and humane endpoints to each one.​',
             fields: [
               {
                 name: 'title',
                 type: 'textarea',
-                label: 'To ensure that an adequate harm benifit assessment can be performed for your project, please provide clear and explicit information for each step.'
+                label: 'To ensure that an adequate harm benefit assessment can be carried out for your project, please provide clear and explicit information for each step.'
               },
               {
                 name: 'anaesthesia',
@@ -762,7 +762,7 @@ export default {
                     value: true,
                     reveal: {
                       name: 'code',
-                      label: 'Select the anaesthetic code you intend to use',
+                      label: 'Select the anaesthetic code you intend to use.',
                       type: 'radio',
                       options: [
                         {
@@ -829,13 +829,13 @@ export default {
                         {
                           name: 'adverse-effects',
                           label: 'What are the likely adverse effects of this step?​',
-                          hint: 'State the signs for each adverse effect, including the anticipated degree and duration of suffering.',
+                          hint: 'State the signs of each adverse effect, including the anticipated degree and duration of suffering.',
                           type: 'textarea'
                         },
                         {
                           name: 'prevent-adverse-effects',
                           label: 'How will you attempt to prevent any of these adverse effects?​',
-                          hint: 'If adverse effects can\'t be prevented, how will you attempt to ameliorate the initial signs of them?',
+                          hint: 'If adverse effects can\'t be prevented, how will you attempt to ameliorate their initial signs?',
                           type: 'textarea'
                         },
                         {
@@ -888,7 +888,7 @@ export default {
               fields: [
                 {
                   name: 'maximal-steps',
-                  label: 'Describe the potential series of steps in this protocol that will cause the greatest suffering to an animal?',
+                  label: 'Describe the potential series of steps in this protocol that will cause the greatest suffering to an animal.',
                   hint: 'Include information about the potential intensity of suffering.',
                   type: 'textarea'
                 },
@@ -929,7 +929,7 @@ export default {
               },
               {
                 name: 'scientific-endpoints-justification',
-                label: 'Why can\'t you achieve your objectives by using an earlier scientific endpoint, that would reduce the degree of harm experienced by an animal?',
+                label: 'Why can\'t you achieve your objectives by using an earlier scientific endpoint that would reduce the degree of harm experienced by an animal?',
                 hint: 'Take into account any phenotypic adverse effects if relevant.',
                 type: 'textarea'
               },
@@ -945,8 +945,8 @@ export default {
               },
               {
                 name: 'substances-suitibility',
-                label: 'How will you assess the suitability of substances given to the particular strain/type of animal you will be using?',
-                hint: 'For example, you may need to evaluate the toxicity, efficacy and sterility of these substances.',
+                label: 'How will you assess the suitability of substances given to the particular strain or type of animal you will be using?',
+                hint: 'For example, you may need to evaluate the toxicity, efficacy, and sterility of these substances.',
                 type: 'textarea',
                 conditional: {
                   substances: true
@@ -1053,7 +1053,7 @@ export default {
           },
           {
             name: 'project-harms-severity',
-            label: 'What are the expected severities and the proportion of animals in each category (per species)?',
+            label: 'What are the expected severity levels and the proportion of animals (per type) that will experience each one?',
             type: 'texteditor'
           }
         ]
@@ -1472,7 +1472,7 @@ export default {
               },
               {
                 name: 'nmbas-people',
-                label: 'How will you ensure that you have enough people with the right skills involved throughout the process of administering NMBA\'s, including animals recovery periods?',
+                label: 'How will you ensure that you have enough people with the right skills involved throughout the process of administering NMBAs, including animal recovery periods?',
                 type: 'texteditor'
               },
               {
@@ -1629,7 +1629,7 @@ export default {
         fields: [
           {
             name: 'reduction-quantities',
-            label: 'Enter the estimated numbers of animals used in this project',
+            label: 'Enter the estimated numbers of animals used in this project.',
             type: 'animal-quantities'
           },
           {
@@ -1641,7 +1641,6 @@ export default {
           {
             name: 'reduction-steps',
             label: 'What steps did you take to reduce animal numbers when you designed your experiments?',
-            hint: 'For example, you may have made some power calculations or carried out some statistical modelling.',
             type: 'texteditor'
           },
           {
@@ -1659,13 +1658,13 @@ export default {
         fields: [
           {
             name: 'refinement-models',
-            label: 'Which animal models and methods will you use during this project',
-            hint: 'Explain why these models and methods cause the least pain, suffering, distress or lasting harm to the animals?',
+            label: 'Which animal models and methods will you use during this project?',
+            hint: 'Explain why these models and methods cause the least pain, suffering, distress or lasting harm to the animals.',
             type: 'texteditor'
           },
           {
             name: 'refinement-explaination',
-            label: 'How will you refine the methods and procedures you\'re using as this project progresses',
+            label: 'How will you refine the methods and procedures you\'re using as this project progresses?',
             hint: 'Potential refinements include increased monitoring, post-operative care, pain management, and training of animals.',
             type: 'texteditor'
           }
