@@ -139,7 +139,7 @@ class Protocols extends Component {
     }
     return <Fragment>
       <h1>Protocols</h1>
-      <p>Please enter the details of the protocols that make up this project</p>
+      <p>Please enter the details of the protocols that make up this project.</p>
       <Repeater
         type="protocol"
         items={values[name]}
