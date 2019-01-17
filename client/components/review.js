@@ -67,7 +67,7 @@ class Review extends React.Component {
         ...(this.props.project.species || []),
         ...(this.props.project['species-other'] || [])
       ].map(s => ({
-        title: s,
+        title: flatten(values(speciesOptions)).find(species => species.value === s).label,
         value: this.props.project[`${this.props.name}-${s}`]
       }))
 
@@ -81,7 +81,7 @@ class Review extends React.Component {
           species.map(s => (
             <Fragment>
               <dt>{s.title}:</dt>
-              <dd>{s.value}</dd>
+              <dd>{s.value ? s.value : <em>No answer provided</em>}</dd>
             </Fragment>
           ))
         }

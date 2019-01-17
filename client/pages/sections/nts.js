@@ -1,9 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
+
 import pick from 'lodash/pick';
 import map from 'lodash/map';
 import reduce from 'lodash/reduce';
+import flatten from 'lodash/flatten';
 
 import Review from '../../components/review'
 import NTS from '../../components/nts';
@@ -15,15 +17,15 @@ class NTSSummary extends Component {
     window.onscroll = this.onscroll;
   }
 
-  sectionRefs = this.props.sections.reduce((obj, section) => {
+  sectionRefs = this.props.sections.reduce((obj, { section }) => {
     return {
       ...obj,
-      [section.name]: React.createRef()
+      [section]: React.createRef()
     }
   }, {})
 
   state = {
-    active: this.props.sections[0].name
+    active: this.props.sections[0].section
   };
 
   thresholds = {};
@@ -67,6 +69,17 @@ class NTSSummary extends Component {
     this.setState({ active: this.thresholds[section] })
   }
 
+  getFields = (section, whitelist) => {
+    let fields;
+    if (section.fields) {
+      fields = section.fields;
+    }
+    if (section.steps){
+      fields = flatten(section.steps.map(step => step.fields));
+    }
+    return fields.filter(field => !whitelist || whitelist.includes(field.name));
+  }
+
   render() {
     return (
       <Fragment>
@@ -74,23 +87,23 @@ class NTSSummary extends Component {
         <div className="nts-review">
           <nav className="sidebar-nav">
             {
-              this.props.sections.map((section, index) => (
+              this.props.sections.map(({ section, title }, index) => (
                 <a
                   key={index}
                   href="#"
-                  onClick={(e) => this.updateActiveSection(e, section.name)}
-                  className={classnames({ active: this.state.active === section.name })}
-                >{section.title}</a>
+                  onClick={(e) => this.updateActiveSection(e, section)}
+                  className={classnames({ active: this.state.active === section })}
+                >{title}</a>
               ))
             }
           </nav>
           <div className="content">
             {
-              this.props.sections.map((section, index) => (
+              this.props.sections.map(({ section, title, fields }, index) => (
                 <Fragment key={index}>
-                  <h2 ref={this.sectionRefs[section.name]}>{section.title}</h2>
+                  <h2 ref={this.sectionRefs[section]}>{title}</h2>
                   {
-                    this.props.sectionsSettings[section.name].fields.map(field => (
+                    this.getFields(this.props.sectionsSettings[section], fields).map(field => (
                       <Review
                         {...field}
                         label={ field.review || field.label }

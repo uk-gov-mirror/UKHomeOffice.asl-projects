@@ -503,6 +503,13 @@ fieldset.smaller {
     flex-grow: 1;
     margin-left: $govuk-gutter;
   }
+
+  .review {
+    hr {
+      margin: 0;
+      border: none;
+    }
+  }
 }
 
 .download {
