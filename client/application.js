@@ -1223,7 +1223,7 @@ export default {
                       },
                       {
                         name: 'wild-animals-competence',
-                        label: 'How will you check the competence any person responsible for the capture of animals?',
+                        label: 'How will you check the competence of any person responsible for the capture of animals?',
                         type: 'texteditor'
                       },
                       {
