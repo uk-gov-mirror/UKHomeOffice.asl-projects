@@ -84,6 +84,7 @@ export default {
               {
                 name: 'project-aim',
                 label: 'What\'s the overall aim of this project?',
+                playback: 'Overall aim of this project',
                 type: 'texteditor'
               },
               {
@@ -94,9 +95,7 @@ export default {
               {
                 name: 'duration',
                 label: 'What will be the duration of this project?',
-                type: 'duration',
-                max: 60,
-                min: 1
+                type: 'duration'
               },
               {
                 name: 'species',
@@ -1237,6 +1236,7 @@ export default {
     subsections: {
       replacement: {
         title: 'Replacement',
+        playback: 'project-aim',
         reviewTitle: '3Rs: Replacement',
         nts: true,
         fields: [
@@ -1310,34 +1310,39 @@ export default {
         title: 'Review',
         component: NTSSummary,
         sections: [
-          // {
-          //   name: 'aim',
-          //   title: 'Aim and duration'
-          // },
           {
-            name: 'benefits',
+            section: 'introduction',
+            title: 'Aim and duration',
+            fields: [
+              'project-aim',
+              'project-importance',
+              'duration'
+            ]
+          },
+          {
+            section: 'benefits',
             title: 'Benefits'
           },
           {
-            name: 'project-harms',
+            section: 'project-harms',
             title: 'Anticipated harms'
           },
           {
-            name: 'fate-of-animals',
+            section: 'fate-of-animals',
             title: 'Fate of animals'
           },
-          // {
-          //   name: 'replacement',
-          //   title: 'Replacement'
-          // },
-          // {
-          //   name: 'reduction',
-          //   title: 'Reduction'
-          // },
-          // {
-          //   name: 'refinement',
-          //   title: 'Refinement'
-          // }
+          {
+            section: 'replacement',
+            title: 'Replacement'
+          },
+          {
+            section: 'reduction',
+            title: 'Reduction'
+          },
+          {
+            section: 'refinement',
+            title: 'Refinement'
+          }
         ]
       }
     }

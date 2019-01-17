@@ -8,6 +8,7 @@ import every from 'lodash/every';
 import Review from '../../components/review';
 import Banner from '../../components/banner';
 import NTS from '../../components/nts'
+import Playback from '../../components/playback';
 
 const flattenReveals = (fields, values) => {
   return fields.reduce((arr, item) => {
@@ -49,6 +50,7 @@ const ReviewSection = ({
   project,
   exit,
   title,
+  playback,
   reviewTitle
 }) => {
   const displayTitle = reviewTitle || title || false;
@@ -62,6 +64,9 @@ const ReviewSection = ({
       </Banner>
       {
         nts && <NTS review={true} />
+      }
+      {
+        playback && <Playback playback={playback} />
       }
       {
         castArray(values).map(item => (

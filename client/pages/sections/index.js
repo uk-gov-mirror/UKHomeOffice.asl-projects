@@ -38,23 +38,23 @@ class Questions extends PureComponent {
       <Fragment>
         <h1>{ title }</h1>
         {
-          linkTo && <p><Link to={linkTo} /></p>
-        }
-        {
-          playback && <Playback playback={playback} />
-        }
-        {
-          subtitle && <h2>{ subtitle }</h2>
-        }
-        {
-          intro && <p className="grey">{ intro }</p>
-        }
-        {
           nts && <NTS onAccept={this.toggleAccepted} accepted={ntsAccepted} />
         }
         {
           (!nts || ntsAccepted) && (
             <div ref={this.ref}>
+              {
+                linkTo && <p><Link to={linkTo} /></p>
+              }
+              {
+                playback && <Playback playback={playback} />
+              }
+              {
+                subtitle && <h2>{ subtitle }</h2>
+              }
+              {
+                intro && <p className="grey">{ intro }</p>
+              }
               <Fieldset
                 fields={fields}
                 values={values}

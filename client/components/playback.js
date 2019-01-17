@@ -28,6 +28,7 @@ const Playback = ({ project, step, value, history, field, section }) => {
     <div className="playback">
       <Review
         { ...field }
+        label={field.playback || field.label}
         value={project[field.name]}
         onEdit={() => history.push(getUrl(project.id, section, step))}
       />
