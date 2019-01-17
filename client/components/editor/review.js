@@ -1,8 +1,8 @@
 import React from 'react';
 import { Editor } from 'slate-react';
-import TextEditor from './text-editor';
+import RTEditor from './editor';
 
-class ReviewTextEditor extends TextEditor {
+class ReviewTextEditor extends RTEditor {
   render() {
     return (
       <div className='editor readonly'>
