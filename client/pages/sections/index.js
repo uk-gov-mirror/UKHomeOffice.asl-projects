@@ -100,10 +100,10 @@ class Review extends Component {
           className="panel"
           onChange={this.onCompleteChange}
           complete={this.props.values[`${this.props.section}-complete`]}
-          label="This section is completed"
+          label="This section is complete"
         >
-          <h2>Mark this section as completed?</h2>
-          <p>If you mark a section as completed, you can still come back & edit this section and it will not be submitted to ASRU, all sections in the sections list must be marked as 'Complete'.</p>
+          <h2>Mark this section as complete?</h2>
+          <p>You can still edit this section later, but you will be unable to send your application to the Home Office until all sections are marked as complete.</p>
         </Complete>
       </Fragment>
     )
