@@ -33,8 +33,11 @@ const flattenReveals = (fields, values) => {
 }
 
 const fieldIncluded = (field, values) => {
-  if (!field.conditional) {
+  if (!field.conditional && !field.show) {
     return true;
+  }
+  if (field.show && typeof field.show === 'function') {
+    return field.show(values);
   }
   return every(Object.keys(field.conditional), key => field.conditional[key] === values[key])
 }

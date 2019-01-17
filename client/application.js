@@ -4,8 +4,13 @@ import Protocols from './pages/sections/protocols';
 import Objectives from './pages/sections/objectives';
 import ObjectivesReview from './pages/sections/objectives/review';
 
+import SPECIES from './constants/species';
+
+import intersection from 'lodash/intersection';
 import every from 'lodash/every';
 import some from 'lodash/some';
+import flatten from 'lodash/flatten';
+import castArray from 'lodash/castArray';
 
 import { COMPLETE, INCOMPLETE, PARTIALLY_COMPLETE } from './constants/completeness';
 
@@ -1067,6 +1072,362 @@ export default {
       }
     }
   },
+  useOfAnimals: {
+    title: 'Use of animals',
+    subsections: {
+      domestic: {
+        title: 'Cats, dogs, and equidae',
+        show: values => intersection(
+          flatten([
+            SPECIES.CAT,
+            SPECIES.DOG,
+            SPECIES.EQU
+          ]).map(s => s.value),
+          values.species
+        ).length,
+        fields: [
+          {
+            name: 'domestic',
+            label: 'What are the scientific reasons for using cats, dogs, or equidae in your project?',
+            type: 'texteditor'
+          }
+        ]
+      },
+      nhps: {
+        title: 'Non-human primates',
+        show: values => intersection(SPECIES.NHP.map(s => s.value), values.species).length,
+        fields: [
+          {
+            name: 'nhps',
+            label: 'Why do you need to use non-human primates to achieve your objectives?',
+            type: 'texteditor'
+          },
+          {
+            name: 'marmoset-colony',
+            label: 'Will all marmosets be sourced from a self-sustaining colony?',
+            type: 'radio',
+            inline: true,
+            className: 'smaller',
+            show: values => (values.species || []).includes('marmosets'),
+            options: [
+              {
+                label: 'Yes',
+                value: true
+              },
+              {
+                label: 'No',
+                value: false,
+                reveal: {
+                  name: 'marmoset-colony-justification',
+                  label: 'Why can’t you achieve your objectives without using marmosets from a self-sustaining colony?',
+                  type: 'texteditor'
+                }
+              }
+            ]
+          }
+        ]
+      },
+      'purpose-bred-animals': {
+        title: 'Purpose-bred animals',
+        fields: [
+          {
+            name: 'purpose-bred',
+            label: 'Will all animals used in your project be purpose-bred?',
+            type: 'radio',
+            inline: true,
+            className: 'smaller',
+            options: [
+              {
+                label: 'Yes',
+                value: true
+              },
+              {
+                label: 'No',
+                value: false,
+                reveal: [
+                  {
+                    name: 'purpose-bred-sourced',
+                    label: 'Where will you source animals from that are not purpose-bred?',
+                    type: 'texteditor'
+                  },
+                  {
+                    name: 'purpose-bred-justification',
+                    label: 'Why can’t you achieve your objectives by only using purpose-bred animals?',
+                    type: 'texteditor'
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      'endangered-animals': {
+        title: 'Endangered animals',
+        fields: [
+          {
+            name: 'endangered-animals',
+            label: 'Will you be using any endangered animals?',
+            type: 'radio',
+            inline: true,
+            className: 'smaller',
+            options: [
+              {
+                label: 'Yes',
+                value: true,
+                reveal: {
+                  name: 'endangered-animals-justification',
+                  label: 'Why can’t you achieve your objectives without using endangered animals?',
+                  type: 'texteditor'
+                }
+              },
+              {
+                label: 'No',
+                value: false
+              }
+            ]
+          }
+        ]
+      },
+      'animals-taken-from-the-wild': {
+        title: 'Animals taken from the wild',
+        intro: 'Make sure you have all the necessary permissions from regulatory bodies before you apply to be licensed to capture animals from the wild.',
+        steps: [
+          {
+            title: 'Animals taken from the wild - 1 of 2',
+            fields: [
+              {
+                name: 'wild-animals',
+                label: 'Will you be using any animals taken from the wild?',
+                type: 'radio',
+                inline: true,
+                className: 'smaller',
+                options: [
+                  {
+                    label: 'Yes',
+                    value: true,
+                    reveal: [
+                      {
+                        name: 'wild-animals-justification',
+                        label: 'Why can’t you achieve your objectives without using animals taken from the wild?',
+                        type: 'texteditor'
+                      },
+                      {
+                        name: 'wild-animals-caught',
+                        label: 'How will these animals be caught?',
+                        type: 'texteditor'
+                      },
+                      {
+                        name: 'wild-animals-potential-harms',
+                        label: 'How will you minimise potential harms when catching these animals?',
+                        type: 'texteditor'
+                      },
+                      {
+                        name: 'wild-animals-competence',
+                        label: 'How will you check the competence any person responsible for the capture of animals?',
+                        type: 'texteditor'
+                      },
+                      {
+                        name: 'wild-animals-examine',
+                        label: 'How will you examine and treat any animals that are found to be ill or injured at the time of capture?',
+                        type: 'texteditor'
+                      },
+                      {
+                        name: 'wild-animals-vet',
+                        label: 'Will a veterinary surgeon perform the examination?',
+                        type: 'radio',
+                        inline: true,
+                        className: 'smaller',
+                        options: [
+                          {
+                            label: 'Yes',
+                            value: true
+                          },
+                          {
+                            label: 'No',
+                            value: false,
+                            reveal: {
+                              name: 'wild-animals-vet-competence',
+                              label: 'How will you check the competence of the person responsible for assessing ill or injured animals?',
+                              type: 'texteditor'
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    label: 'No',
+                    value: false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            title: 'Animals taken from the wild - 2 of 2',
+            show: values => values['wild-animals'] === true,
+            fields: [
+              {
+                name: 'wild-animals-transport',
+                label: 'If ill or injured animals need to be transported to have treatment elsewhere, how will you minimise potential harms during their transport?',
+                type: 'texteditor'
+              },
+              {
+                name: 'wild-animals-killing-method',
+                label: 'If ill or injured animals are to be killed, which method will you use?',
+                type: 'texteditor'
+              },
+              {
+                name: 'wild-animals-identify',
+                label: 'How will you identify the animals that you have captured?',
+                type: 'texteditor'
+              },
+              {
+                name: 'wild-animals-devices',
+                label: 'Will you be attaching any devices to animals that you have captured from the wild?',
+                type: 'radio',
+                inline: true,
+                className: 'smaller',
+                options: [
+                  {
+                    label: 'Yes',
+                    value: true,
+                    reveal: [
+                      {
+                        name: 'wild-animals-devices-effects',
+                        label: 'How will you minimise any adverse effects of these devices?',
+                        type: 'texteditor'
+                      },
+                      {
+                        name: 'wild-animals-devices-removal',
+                        label: 'How will you ensure that devices are removed from animals at the end of your project?',
+                        hint: 'If devices will not be removed, explain why it is safe for them to remain.',
+                        type: 'texteditor'
+                      },
+                      {
+                        name: 'wild-animals-devices-environment-effects',
+                        label: 'What are the potential effects on other species, the environment, and human health of not removing devices from animals?',
+                        type: 'texteditor'
+                      }
+                    ]
+                  },
+                  {
+                    label: 'No',
+                    value: false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      'setting-animals-free': {
+        title: 'Setting animals free',
+        show: values => some(values.protocols, protocol => {
+          return castArray(protocol.fate).includes('set-free');
+        }),
+        steps: [
+          {
+            title: 'Setting animals free - 1 of 2',
+            fields: [
+              {
+                name: 'setting-free-health',
+                label: 'How will an animal\'s health be assessed to determine whether it can be set free?',
+                type: 'texteditor'
+              },
+              {
+                name: 'setting-free-vet',
+                label: 'Will a veterinary surgeon perform this assessment?',
+                type: 'radio',
+                inline: true,
+                className: 'smaller',
+                options: [
+                  {
+                    label: 'Yes',
+                    value: true
+                  },
+                  {
+                    label: 'No',
+                    value: false,
+                    reveal: {
+                      name: 'setting-free-competence',
+                      label: 'How will you check the competence of the person responsible for assessing whether animals can be set free?',
+                      type: 'texteditor'
+                    }
+                  }
+                ]
+              },
+              {
+                name: 'setting-free-ensure-not-harmful',
+                label: 'How will you ensure that setting animals free will not be harmful to other species, the environment, and human health?',
+                type: 'texteditor'
+              },
+              {
+                name: 'setting-free-rehabilitate',
+                label: 'Will you attempt to rehabilitate animals before setting them free? If so, how?',
+                type: 'texteditor'
+              },
+              {
+                name: 'setting-free-socialise',
+                label: 'Will you attempt to socialise any animals that you have set free? If so, how?',
+                type: 'texteditor'
+              }
+            ]
+          },
+          {
+            title: 'Setting animals free - 2 of 2',
+            fields: [
+              {
+                name: 'setting-free-wellbeing',
+                label: 'What measures will you take to safeguard an animal’s wellbeing once you have set it free?',
+                type: 'texteditor'
+              },
+              {
+                name: 'setting-free-recapturing',
+                label: 'What is the likelihood of inadvertently re-capturing and re-using animals that have been set free?',
+                type: 'texteditor'
+              },
+              {
+                name: 'setting-free-lost',
+                label: 'If animals are lost to the study or not re-captured, how will you determine whether your project is complete?',
+                hint: 'This information is important to ensure that the use of these animals is recorded in the return of procedures, and is considered when determining the actual severity of your protocols.',
+                type: 'texteditor'
+              }
+            ]
+          }
+        ]
+      },
+      'feral-animals': {
+        title: 'Feral animals',
+        intro: 'Feral animals are animals from a domesticated species that are now living in a natural or wild state.',
+        fields: [
+          {
+            name: 'feral-animals',
+            label: 'Will you be using any feral animals in your project?',
+            type: 'radio',
+            inline: true,
+            className: 'smaller',
+            options: [
+              {
+                label: 'Yes',
+                value: true,
+                reveal: {
+                  name: 'feral-animals-justification',
+                  label: 'Why can’t you achieve your objectives without using feral animals?',
+                  hint: 'For example, it may be essential to use feral animals to protect the health and welfare of a species, or avoid a threat to the health of other animals, humans, or the environment?',
+                  type: 'texteditor'
+                }
+              },
+              {
+                label: 'No',
+                value: false
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
   otherConsiderations: {
     title: 'Other considerations',
     subsections: {
@@ -1127,6 +1488,9 @@ export default {
       },
       'keeping-animals-alive': {
         title: 'Keeping animals alive',
+        show: values => some(values.protocols, protocol => {
+          return castArray(protocol.fate).includes('kept-alive');
+        }),
         fields: [
           {
             name: 'keeping-animals-alive-determine',
@@ -1143,6 +1507,9 @@ export default {
       },
       'reusing-animals': {
         title: 'Re-using animals',
+        show: values => some(values.protocols, protocol => {
+          return castArray(protocol.fate).includes('re-used');
+        }),
         fields: [
           {
             name: 'reusing-why',
@@ -1160,6 +1527,9 @@ export default {
       },
       'rehoming-animals': {
         title: 'Re-homing animals',
+        show: values => some(values.protocols, protocol => {
+          return castArray(protocol.fate).includes('re-homed');
+        }),
         fields: [
           {
             name: 'rehoming-authority',
