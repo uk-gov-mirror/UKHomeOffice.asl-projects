@@ -69,13 +69,15 @@ class NTSSummary extends Component {
     this.setState({ active: this.thresholds[section] })
   }
 
-  getFields = section => {
+  getFields = (section, whitelist) => {
+    let fields;
     if (section.fields) {
-      return section.fields;
+      fields = section.fields;
     }
     if (section.steps){
-      return flatten(section.steps.map(step => step.fields));
+      fields = flatten(section.steps.map(step => step.fields));
     }
+    return fields.filter(field => !whitelist || whitelist.includes(field.name));
   }
 
   render() {
@@ -101,7 +103,7 @@ class NTSSummary extends Component {
                 <Fragment key={index}>
                   <h2 ref={this.sectionRefs[section]}>{title}</h2>
                   {
-                    this.getFields(this.props.sectionsSettings[section]).map(field => (
+                    this.getFields(this.props.sectionsSettings[section], fields).map(field => (
                       <Review
                         {...field}
                         label={ field.review || field.label }
