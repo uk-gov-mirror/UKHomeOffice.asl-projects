@@ -68,7 +68,8 @@ class ProtocolSections extends Component {
       index,
       steps,
       save,
-      updateItem
+      updateItem,
+      exit
     } = this.props;
 
     const severityField = sections.details.fields.find(field => field.name === 'severity');
@@ -92,6 +93,7 @@ class ProtocolSections extends Component {
               sections={sections}
               values={values}
               updateItem={updateItem}
+              exit={exit}
               onFieldChange={(key, value) => updateItem({ [key]: value })}
               save={save}
             />
