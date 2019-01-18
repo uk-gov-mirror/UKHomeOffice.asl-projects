@@ -28,10 +28,6 @@ const isItalicHotkey = isKeyHotkey('mod+i');
 const isUnderlinedHotkey = isKeyHotkey('mod+u');
 const isCodeHotkey = isKeyHotkey('mod+`');
 
-function isImage(url) {
-  return !!['jpg', 'jpeg', 'png', 'gif'].find(url.endsWith);
-}
-
 function insertImage(editor, src, target) {
   if (target) {
     editor.select(target);
@@ -210,38 +206,6 @@ class TextEditor extends RTEditor {
       reader.readAsDataURL(event.target.files[0]);
     }
     event.target.value = '';
-  };
-
-  onDropOrPaste = (event, editor, next) => {
-    const target = getEventRange(event, editor);
-    if (!target && event.type === 'drop') return next();
-
-    const transfer = getEventTransfer(event);
-    const { type, text, files } = transfer;
-
-    if (type === 'files') {
-      for (const file of files) {
-        const reader = new FileReader();
-        const [mime] = file.type.split('/');
-        if (mime !== 'image') continue;
-
-        reader.addEventListener('load', () => {
-          editor.command(insertImage, reader.result, target);
-        });
-
-        reader.readAsDataURL(file);
-      }
-      return;
-    }
-
-    if (type === 'text') {
-      if (!isUrl(text)) return next();
-      if (!isImage(text)) return next();
-      editor.command(insertImage, text, target);
-      return;
-    }
-
-    next();
   };
 
   onKeyDown = (event, editor, next) => {
