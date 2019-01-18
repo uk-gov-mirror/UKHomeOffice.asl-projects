@@ -388,6 +388,7 @@ export default {
                 type: 'radio',
                 inline: true,
                 className: 'smaller',
+                show: values => values['anaesthesia'],
                 options: [
                   {
                     label: 'Yes',
@@ -788,10 +789,7 @@ export default {
                     label: 'No',
                     value: false
                   }
-                ],
-                conditional: {
-                  anaesthesia: true
-                }
+                ]
               },
               {
                 name: 'optional',
