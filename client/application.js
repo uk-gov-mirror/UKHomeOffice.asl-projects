@@ -62,7 +62,7 @@ export default {
                         {
                           label: 'Non regulatory use',
                           value: 'non-regulatory-use',
-                          hint: 'If data is provided to others, the models and methods used are likely to be tailored to the needs of that particular client'
+                          hint: 'If data is provided to others, the models and methods used are likely to be tailored to the needs of that particular client.'
                         }
                       ]
                     }
@@ -592,7 +592,7 @@ export default {
               },
               {
                 name: 'maximize-effectiveness',
-                label: 'How will you maximize the effectiveness of your findings and the animals that you use on this protocol?​',
+                label: 'How will you maximize the effectiveness of your findings and the animals that you use in this protocol?​',
                 type: 'textarea'
               },
               {
@@ -655,7 +655,7 @@ export default {
               },
               {
                 name: 'continued-use',
-                label: 'Have any of these animals had procedures applied to them in preparation for their use on this protocol (continued use)?',
+                label: 'Have any of these animals had procedures applied to them in preparation for their use in this protocol (continued use)?',
                 type: 'radio',
                 options: [
                   {
@@ -1042,7 +1042,7 @@ export default {
           {
             name: 'project-harms-summary',
             label: 'Summarise what will typically be done to an animal used on your project.',
-            hint: 'Include any relevant information about injections, surgery, experiment durations and the number of procedures an animal may experience.',
+            hint: 'Include any relevant information about injections, surgery, experiment durations, and the number of procedures an animal may experience.',
             type: 'texteditor'
           },
           {
