@@ -11,4 +11,4 @@ export default function messageReducer(state = {}, action) {
     default:
       return state;
   }
-};
+}

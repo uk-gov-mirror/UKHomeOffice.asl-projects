@@ -6,7 +6,7 @@ import database from '../database';
 import { showMessage } from './messages';
 
 export function loadProjects() {
-  return (dispatch, getState) => {
+  return dispatch => {
     return database()
       .then(db => db.list())
       .then(projects => dispatch({ type: types.LOAD_PROJECTS, projects }))
@@ -15,12 +15,12 @@ export function loadProjects() {
 }
 
 export function createProject(project) {
-  return (dispatch, getState) => {
+  return dispatch => {
     return database()
       .then(db => db.create(project))
       .then(project => {
-        dispatch({ type: types.CREATE_PROJECT, project })
-        dispatch(showMessage('Project created!'))
+        dispatch({ type: types.CREATE_PROJECT, project });
+        dispatch(showMessage('Project created!'));
         return project;
       })
       .catch(error => dispatch({ type: types.ERROR, error }));
@@ -29,7 +29,7 @@ export function createProject(project) {
 
 export function importProject(project) {
   project = omit(project, 'id');
-  return (dispatch, getState) => {
+  return dispatch => {
     return database()
       .then(db => db.create(project))
       .then(project => dispatch({ type: types.CREATE_PROJECT, project }))
@@ -39,7 +39,7 @@ export function importProject(project) {
 }
 
 export function deleteProject(id) {
-  return (dispatch, getState) => {
+  return dispatch => {
     return database()
       .then(db => db.delete(id))
       .then(() => dispatch({ type: types.DELETE_PROJECT, id }))
@@ -55,7 +55,7 @@ export function updateProject(id, data) {
       return dispatch({ type: types.ERROR, error: new Error(`Unknown project: ${id}`) });
     }
     return database()
-      .then(db =>  db.update(id, { ...project, ...data }))
+      .then(db => db.update(id, { ...project, ...data }))
       .then(project => dispatch({ type: types.UPDATE_PROJECT, id, project }))
       .catch(error => dispatch({ type: types.ERROR, error }));
   };

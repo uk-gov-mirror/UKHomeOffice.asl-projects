@@ -47,11 +47,8 @@ const ReviewSection = ({
   fields = [],
   nts,
   values,
-  onContinue,
-  advance,
   onEdit,
   project,
-  exit,
   title,
   playback,
   reviewTitle
@@ -72,8 +69,8 @@ const ReviewSection = ({
         playback && <Playback playback={playback} />
       }
       {
-        castArray(values).map(item => (
-          <Fragment>
+        castArray(values).map((item, i) => (
+          <Fragment key={i}>
             {
               item.name && <h2>{item.name}</h2>
             }

@@ -5,7 +5,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 const mapStateToProps = state => {
   return { ...state.message };
 }
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = () => {
   return {};
 }
 

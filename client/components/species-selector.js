@@ -25,7 +25,6 @@ class SpeciesSelector extends Component {
   render() {
     const {
       species = SPECIES,
-      categories = SPECIES_CATEGORIES,
       values,
       onFieldChange,
       label,

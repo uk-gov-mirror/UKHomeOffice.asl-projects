@@ -42,7 +42,7 @@ class Questions extends PureComponent {
   }
 
   render = () => {
-    const { title, fields, values, save, advance, exit, nts, subtitle, intro, linkTo, playback } = this.props;
+    const { title, values, save, advance, exit, nts, subtitle, intro, linkTo, playback } = this.props;
     const { ntsAccepted } = this.state;
     return (
       <Fragment>
@@ -86,7 +86,7 @@ class Review extends Component {
   }
 
   render = () => {
-    const { save, retreat, steps, fields, ...props } = this.props;
+    const { retreat, steps, fields, ...props } = this.props;
     const ReviewComponent = props.review || ReviewSection;
     const reviewFields = steps ? flatten(steps.filter(s => !s.repeat).map(s => s.fields)) : fields
     return (

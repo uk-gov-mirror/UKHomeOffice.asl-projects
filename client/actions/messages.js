@@ -1,7 +1,7 @@
 import * as types from './types';
 
 export function showMessage(message) {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     setTimeout(() => {
       dispatch({ type: types.HIDE_MESSAGE });
     }, 5000);
@@ -10,7 +10,7 @@ export function showMessage(message) {
 }
 
 export function throwError(message) {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     setTimeout(() => {
       dispatch({ type: types.HIDE_MESSAGE });
     }, 5000);

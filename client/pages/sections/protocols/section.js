@@ -60,7 +60,7 @@ class Section extends Component {
         <Fragment>
           {
             sections
-              ? Object.keys(sections).map(section => <RenderSection {...props} {...sections[section]} prefix={prefix} values={values} hideTitle={false} />)
+              ? Object.keys(sections).map(section => <RenderSection key={section} {...props} {...sections[section]} prefix={prefix} values={values} hideTitle={false} />)
               : <RenderSection {...props} hideTitle={hideTitle} fields={fields} prefix={prefix} values={values} />
           }
 
