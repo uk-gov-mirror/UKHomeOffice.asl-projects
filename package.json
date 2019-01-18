@@ -6,13 +6,13 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon -r dotenv/config -e js,jsx index.js",
+    "test": "eslint .",
     "postinstall": "npm run build",
     "build": "npm run build:css && npm run build:js",
     "prebuild:css": "mkdir -p public/css",
     "build:css": "npm-sass assets/scss/app.scss > public/css/app.css",
     "prebuild:js": "mkdir -p public/js",
-    "build:js": "webpack",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:js": "webpack"
   },
   "repository": {
     "type": "git",
@@ -55,7 +55,10 @@
     "webpack-cli": "^3.1.2"
   },
   "devDependencies": {
+    "babel-eslint": "^10.0.1",
     "dotenv": "^6.1.0",
+    "eslint": "^5.12.0",
+    "eslint-plugin-react": "^7.12.4",
     "nodemon": "^1.18.7"
   }
 }
