@@ -90,7 +90,7 @@ class Review extends Component {
           className="panel"
           onChange={this.onCompleteChange}
           complete={this.props.values[`${this.props.section}-complete`]}
-          label="This section is completed"
+          label="This section is complete"
         >
           <h2>Mark this section as complete?</h2>
           <p>You can still edit this section later, but you will be unable to send this application to the Home Office until all sections are marked as complete.</p>
