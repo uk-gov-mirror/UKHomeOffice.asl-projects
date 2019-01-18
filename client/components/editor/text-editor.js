@@ -19,6 +19,8 @@ import { isKeyHotkey } from 'is-hotkey';
 import Icon from 'react-icons-kit';
 import defer from 'lodash/defer';
 
+import { Block } from 'slate';
+
 const DEFAULT_NODE = 'paragraph';
 
 const isBoldHotkey = isKeyHotkey('mod+b');
