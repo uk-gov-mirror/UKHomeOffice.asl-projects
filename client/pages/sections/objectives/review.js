@@ -32,8 +32,9 @@ const ObjectivesReview = ({ playback, values, steps, goto }) => (
       ))
     }
     {
-      steps[1].fields.map(field => (
+      steps[1].fields.map((field, index) => (
         <Review
+          key={index}
           {...field}
           value={values[field.name]}
           onEdit={() => goto(1)}

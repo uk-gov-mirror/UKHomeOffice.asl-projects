@@ -1,8 +1,3 @@
-try {
-  require('dotenv/config');
-} catch (e) {}
-
-const webpack = require('webpack');
 const path = require('path');
 
 module.exports = {
@@ -12,7 +7,7 @@ module.exports = {
   ],
   target: 'web',
   output: {
-    path: __dirname + '/public/js',
+    path: path.resolve(__dirname, './public/js'),
     filename: 'index.js'
   },
   module: {

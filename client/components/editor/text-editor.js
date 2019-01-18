@@ -29,8 +29,7 @@ const isUnderlinedHotkey = isKeyHotkey('mod+u');
 const isCodeHotkey = isKeyHotkey('mod+`');
 
 function isImage(url) {
-  // TODO: install imageExtensions
-  return !!imageExtensions.find(url.endsWith);
+  return !!['jpg', 'jpeg', 'png', 'gif'].find(url.endsWith);
 }
 
 function insertImage(editor, src, target) {
@@ -47,7 +46,7 @@ function insertImage(editor, src, target) {
 const schema = {
   document: {
     last: { type: 'paragraph' },
-    normalize: (editor, { code, node, child }) => {
+    normalize: (editor, { code, node }) => {
       switch (code) {
         case 'last_child_type_invalid': {
           const paragraph = Block.create('paragraph');

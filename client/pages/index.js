@@ -30,7 +30,7 @@ const mapDispatchToProps = dispatch => {
 
 class Index extends React.Component {
 
-  drop(files, rejected) {
+  drop(files) {
     files.forEach(file => {
       const reader = new FileReader();
       reader.onload = () => {

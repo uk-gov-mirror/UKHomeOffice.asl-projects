@@ -24,6 +24,7 @@ const AnimalQuantities = ({ label, hint, error, name, values, onFieldChange }) =
           ? species.map(species => {
               const fieldName = `${name}-${species}`;
               return <Field
+                key={species}
                 type="number"
                 name={fieldName}
                 label={species}

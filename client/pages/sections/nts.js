@@ -2,7 +2,6 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
 
-import pick from 'lodash/pick';
 import map from 'lodash/map';
 import reduce from 'lodash/reduce';
 import flatten from 'lodash/flatten';

@@ -1,4 +1,3 @@
-import ExperimentalDesign from './pages/sections/experimental-design';
 import NTSSummary from './pages/sections/nts';
 import Protocols from './pages/sections/protocols';
 import Objectives from './pages/sections/objectives';

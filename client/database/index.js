@@ -5,8 +5,8 @@ module.exports = () => {
     request.onerror = reject;
     request.onupgradeneeded = event => {
       const db = event.target.result;
-      const objStore = db.createObjectStore('projects', { autoIncrement : true });
-      const settingsStore = db.createObjectStore('settings', { autoIncrement : true });
+      db.createObjectStore('projects', { autoIncrement : true });
+      db.createObjectStore('settings', { autoIncrement : true });
     };
     request.onsuccess = event => {
       const db = event.target.result;
@@ -40,7 +40,7 @@ module.exports = () => {
             const transaction = db.transaction([table], 'readwrite');
             const objectStore = transaction.objectStore(table);
             const request = objectStore.put(data, id);
-            request.onsuccess = e => resolve({
+            request.onsuccess = () => resolve({
               id,
               ...data
             });

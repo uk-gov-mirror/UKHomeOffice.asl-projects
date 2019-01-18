@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connectProject } from '../helpers';
 
 import castArray from 'lodash/castArray';
