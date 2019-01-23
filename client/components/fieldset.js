@@ -1,6 +1,5 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 
-import { Button } from '@ukhomeoffice/react-components';
 import Field from './field';
 
 const Fieldset = ({ fields, values = {}, onFieldChange, prefix = '' }) => (

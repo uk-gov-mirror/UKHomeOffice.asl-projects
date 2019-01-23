@@ -4,6 +4,10 @@ import castArray from 'lodash/castArray';
 
 class Accordion extends React.Component {
 
+  defaultProps = {
+    scrollToActive: false
+  }
+
   constructor(props) {
     super(props);
 
@@ -62,13 +66,13 @@ class Accordion extends React.Component {
             key: i,
             onToggle: () => this.toggle(i),
             advance: () => this.advance(i),
-            open: this.state.open[i]
+            open: this.state.open[i],
+            scrollToActive: this.props.scrollToActive
           }))
         }
       </div>
     );
   }
-
 }
 
 export default Accordion;

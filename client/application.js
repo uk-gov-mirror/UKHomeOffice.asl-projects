@@ -1,4 +1,3 @@
-import ExperimentalDesign from './pages/sections/experimental-design';
 import NTSSummary from './pages/sections/nts';
 import Protocols from './pages/sections/protocols';
 import Objectives from './pages/sections/objectives';
@@ -42,13 +41,13 @@ export default {
                     hint: 'This can include genetically-altered or surgically prepared animals.'
                   },
                   {
-                    label: 'To produce or support the production of blood products, vaccines, or medicines for medical or veterinary use',
+                    label: 'To produce or support the production of blood products, vaccines, or medicines for medical or veterinary use.',
                     value: 'blood-products'
                   },
                   {
                     label: 'To generate testing or screening data',
                     value: 'screening-data',
-                    hint: 'This can be for yourself or for others, for regulatory (GLP) or non-regulatory use.',
+                    hint: 'This can be for yourself or for others, for regulatory (GLP work) or non-regulatory use.',
                     reveal: {
                       name: 'main-output-testing-screening',
                       label: 'Why will you be generating testing or screening data?',
@@ -62,7 +61,7 @@ export default {
                         {
                           label: 'Non-regulatory use',
                           value: 'non-regulatory-use',
-                          hint: 'If done for others, the models and methods used are likely to be tailored to the needs of one particular client.'
+                          hint: 'If data is provided to others, the models and methods used are likely to be tailored to the needs of that particular client.'
                         }
                       ]
                     }
@@ -70,7 +69,7 @@ export default {
                   {
                     label: 'To teach practical skills or knowledge',
                     value: 'teach',
-                    hint: 'For example, microsurgery, or to use animals as part of a higher education course, such as physiology.'
+                    hint: 'For example, microsurgery, or to use animals as part of a higher education course such as physiology.'
                   }
                 ]
               }
@@ -592,7 +591,7 @@ export default {
               },
               {
                 name: 'maximize-effectiveness',
-                label: 'How will you maximize the effectiveness of your findings and the animals that you use on this protocol?​',
+                label: 'How will you maximize the effectiveness of your findings and the animals that you use in this protocol?​',
                 type: 'textarea'
               },
               {
@@ -655,7 +654,7 @@ export default {
               },
               {
                 name: 'continued-use',
-                label: 'Have any of these animals had procedures applied to them in preparation for their use on this protocol (continued use)?',
+                label: 'Have any of these animals had procedures applied to them in preparation for their use in this protocol (continued use)?',
                 type: 'radio',
                 options: [
                   {
@@ -742,13 +741,13 @@ export default {
           },
           steps: {
             title: 'Steps',
-            hint: 'Step numbers are for reference only, and you will be able to reorder them at any time before you submit you project licence application.',
+            hint: 'Step numbers are for reference only. You will be able to reorder them at any time before you send your application to the Home Office.',
             footer: 'Once you’ve created a list of steps, you need to add information about adverse effects, controls and limitations, and humane endpoints to each one.​',
             fields: [
               {
                 name: 'title',
                 type: 'textarea',
-                label: 'To ensure that an adequate harm benifit assessment can be performed for your project, please provide clear and explicit information for each step.'
+                label: 'To ensure that an adequate harm benefit assessment can be carried out for your project, please provide clear and explicit information for each step.'
               },
               {
                 name: 'anaesthesia',
@@ -762,8 +761,8 @@ export default {
                     value: true,
                     reveal: {
                       name: 'code',
-                      label: 'Select the anaesthetic code you intend to use',
-                      type: 'radio',
+                      label: 'Select the anaesthetic code you intend to use.',
+                      type: 'checkbox',
                       options: [
                         {
                           label: 'AB (general anaesthesia with recovery)',
@@ -829,13 +828,13 @@ export default {
                         {
                           name: 'adverse-effects',
                           label: 'What are the likely adverse effects of this step?​',
-                          hint: 'State the signs for each adverse effect, including the anticipated degree and duration of suffering.',
+                          hint: 'State the signs of each adverse effect, including the anticipated degree and duration of suffering.',
                           type: 'textarea'
                         },
                         {
                           name: 'prevent-adverse-effects',
                           label: 'How will you attempt to prevent any of these adverse effects?​',
-                          hint: 'If adverse effects can\'t be prevented, how will you attempt to ameliorate the initial signs of them?',
+                          hint: 'If adverse effects can\'t be prevented, how will you attempt to ameliorate their initial signs?',
                           type: 'textarea'
                         },
                         {
@@ -888,7 +887,7 @@ export default {
               fields: [
                 {
                   name: 'maximal-steps',
-                  label: 'Describe the potential series of steps in this protocol that will cause the greatest suffering to an animal?',
+                  label: 'Describe the potential series of steps in this protocol that will cause the greatest suffering to an animal.',
                   hint: 'Include information about the potential intensity of suffering.',
                   type: 'textarea'
                 },
@@ -929,7 +928,7 @@ export default {
               },
               {
                 name: 'scientific-endpoints-justification',
-                label: 'Why can\'t you achieve your objectives by using an earlier scientific endpoint, that would reduce the degree of harm experienced by an animal?',
+                label: 'Why can\'t you achieve your objectives by using an earlier scientific endpoint that would reduce the degree of harm experienced by an animal?',
                 hint: 'Take into account any phenotypic adverse effects if relevant.',
                 type: 'textarea'
               },
@@ -945,7 +944,7 @@ export default {
               },
               {
                 name: 'substances-suitibility',
-                label: 'How will you assess the suitability of substances given to the particular strain/type of animal you will be using?',
+                label: 'How will you assess the suitability of substances given to the particular strain or type of animal you will be using?',
                 hint: 'For example, you may need to evaluate the toxicity, efficacy, and sterility of these substances.',
                 type: 'textarea',
                 conditional: {
@@ -1042,7 +1041,7 @@ export default {
           {
             name: 'project-harms-summary',
             label: 'Summarise what will typically be done to an animal used on your project.',
-            hint: 'Include any relevant information about injections, surgery, experiment durations and the number of procedures an animal may experience.',
+            hint: 'Include any relevant information about injections, surgery, experiment durations, and the number of procedures an animal may experience.',
             type: 'texteditor'
           },
           {
@@ -1053,7 +1052,7 @@ export default {
           },
           {
             name: 'project-harms-severity',
-            label: 'What are the expected severities and the proportion of animals in each category (per species)?',
+            label: 'What are the expected severity levels and the proportion of animals (per type) that will experience each one?',
             type: 'texteditor'
           }
         ]
@@ -1433,7 +1432,7 @@ export default {
       nmbas: {
         title: 'Neuromuscular blocking agents (NMBAs)',
         show: values => some(values.protocols, protocol => {
-          return some(protocol.steps, step => step.code === 'ad');
+          return some(protocol.steps, step => step.code && step.code.includes('ad'));
         }),
         linkTo: 'protocols',
         steps: [
@@ -1472,7 +1471,7 @@ export default {
               },
               {
                 name: 'nmbas-people',
-                label: 'How will you ensure that you have enough people with the right skills involved throughout the process of administering NMBA\'s, including animals recovery periods?',
+                label: 'How will you ensure that you have enough people with the right skills involved throughout the process of administering NMBAs, including animal recovery periods?',
                 type: 'texteditor'
               },
               {
@@ -1629,7 +1628,7 @@ export default {
         fields: [
           {
             name: 'reduction-quantities',
-            label: 'Enter the estimated numbers of animals used in this project',
+            label: 'Enter the estimated numbers of animals used in this project.',
             type: 'animal-quantities'
           },
           {
@@ -1641,7 +1640,6 @@ export default {
           {
             name: 'reduction-steps',
             label: 'What steps did you take to reduce animal numbers when you designed your experiments?',
-            hint: 'For example, you may have made some power calculations or carried out some statistical modelling.',
             type: 'texteditor'
           },
           {
@@ -1659,13 +1657,13 @@ export default {
         fields: [
           {
             name: 'refinement-models',
-            label: 'Which animal models and methods will you use during this project',
-            hint: 'Explain why these models and methods cause the least pain, suffering, distress or lasting harm to the animals?',
+            label: 'Which animal models and methods will you use during this project?',
+            hint: 'Explain why these models and methods cause the least pain, suffering, distress or lasting harm to the animals.',
             type: 'texteditor'
           },
           {
             name: 'refinement-explaination',
-            label: 'How will you refine the methods and procedures you\'re using as this project progresses',
+            label: 'How will you refine the methods and procedures you\'re using as this project progresses?',
             hint: 'Potential refinements include increased monitoring, post-operative care, pain management, and training of animals.',
             type: 'texteditor'
           }

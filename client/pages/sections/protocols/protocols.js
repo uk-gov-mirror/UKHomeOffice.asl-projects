@@ -17,7 +17,7 @@ class Form extends Component {
   }
 
   render() {
-    const { title, index, name, updateItem, exit, toggleActive, prefix = '', ...props } = this.props;
+    const { index, name, updateItem, exit, toggleActive, prefix = '', ...props } = this.props;
     return (
       <div className={classnames('protocol', 'panel')}>
         {
@@ -66,9 +66,9 @@ class ProtocolSections extends Component {
       values,
       sections,
       index,
-      steps,
       save,
-      updateItem
+      updateItem,
+      exit
     } = this.props;
 
     const severityField = sections.details.fields.find(field => field.name === 'severity');
@@ -92,6 +92,7 @@ class ProtocolSections extends Component {
               sections={sections}
               values={values}
               updateItem={updateItem}
+              exit={exit}
               onFieldChange={(key, value) => updateItem({ [key]: value })}
               save={save}
             />
@@ -114,7 +115,7 @@ class Protocol extends Component {
   }
 
   render() {
-    const { steps, species, updateItem, active, ...props } = this.props;
+    const { steps, updateItem, ...props } = this.props;
 
     return this.state.active
       ? <Form {...props} updateItem={updateItem} toggleActive={this.toggleActive} />
@@ -139,7 +140,7 @@ class Protocols extends Component {
     }
     return <Fragment>
       <h1>Protocols</h1>
-      <p>Please enter the details of the protocols that make up this project</p>
+      <p>Please enter the details of the protocols that make up this project.</p>
       <Repeater
         type="protocol"
         items={values[name]}

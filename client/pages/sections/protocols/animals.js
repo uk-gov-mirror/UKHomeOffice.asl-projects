@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react';
 
 import some from 'lodash/some';
-import every from 'lodash/every';
 
 import Fieldset from '../../../components/fieldset';
 import Controls from '../../../components/controls';
@@ -31,7 +30,7 @@ class Animal extends Component {
   }
 
   render() {
-    const { prefix, fields, values, updateItem, title, index } = this.props;
+    const { prefix, fields, values, updateItem, index } = this.props;
     const { expanded } = this.state;
     return (
       <Expandable className="no-bg" onHeaderClick={this.toggleExpanded} expanded={expanded}>

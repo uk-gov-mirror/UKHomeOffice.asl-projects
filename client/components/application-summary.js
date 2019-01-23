@@ -3,14 +3,12 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import map from 'lodash/map';
-import values from 'lodash/values';
-import flatten from 'lodash/flatten';
 import every from 'lodash/every';
 import some from 'lodash/some';
 
 import { INCOMPLETE, PARTIALLY_COMPLETE, COMPLETE } from '../constants/completeness';
 
-import { Badge, Button } from '@ukhomeoffice/react-components';
+import { Button } from '@ukhomeoffice/react-components';
 
 const mapStateToProps = (state, props) => {
   const project = state.projects.find(project => project.id === props.project);

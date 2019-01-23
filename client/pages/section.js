@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { updateProject } from '../actions/projects';
 import DefaultSection from './sections';

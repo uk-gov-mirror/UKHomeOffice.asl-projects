@@ -20,7 +20,7 @@ const getUrl = (id, section, step) => {
   return url;
 }
 
-const Playback = ({ project, step, value, history, field, section }) => {
+const Playback = ({ project, step, history, field, section }) => {
   if (!project || !field) {
     return null;
   }
@@ -36,7 +36,7 @@ const Playback = ({ project, step, value, history, field, section }) => {
   )
 }
 
-const mapStateToProps = ({ application }, { playback, project }) => {
+const mapStateToProps = ({ application }, { playback }) => {
   let step;
   let field;
   const subsections = map(application, section => section.subsections).reduce((obj, subsections) => ({ ...obj, ...subsections }), {});

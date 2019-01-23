@@ -1,9 +1,25 @@
-import React, { Component } from 'react';
-import { Value } from 'slate';
-import Icon from 'react-icons-kit';
+import React from 'react';
 import classnames from 'classnames';
-import defer from 'lodash/defer';
+import { Editor } from 'slate-react';
+import {
+  ic_format_bold,
+  ic_format_italic,
+  ic_format_underlined,
+  ic_code,
+  ic_looks_one,
+  ic_looks_two,
+  ic_format_quote,
+  ic_format_list_numbered,
+  ic_format_list_bulleted,
+  ic_image
+} from 'react-icons-kit/md/';
+import { FormatToolbar } from './index';
+import RTEditor from './editor';
 import { isKeyHotkey } from 'is-hotkey';
+import Icon from 'react-icons-kit';
+import defer from 'lodash/defer';
+
+import { Block } from 'slate';
 
 const DEFAULT_NODE = 'paragraph';
 
@@ -11,48 +27,6 @@ const isBoldHotkey = isKeyHotkey('mod+b');
 const isItalicHotkey = isKeyHotkey('mod+i');
 const isUnderlinedHotkey = isKeyHotkey('mod+u');
 const isCodeHotkey = isKeyHotkey('mod+`');
-
-const getInitialValue = () =>
-  Value.fromJSON({
-    document: {
-      nodes: [
-        {
-          object: 'block',
-          type: 'paragraph',
-          nodes: [
-            {
-              object: 'text',
-              leaves: [
-                {
-                  text: ''
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
-  });
-
-/*
- * A function to determine whether a URL has an image extension.
- *
- * @param {String} url
- * @return {Boolean}
- */
-
-function isImage(url) {
-  // TODO: install imageExtensions
-  return !!imageExtensions.find(url.endsWith);
-}
-
-/**
- * A change function to standardize inserting images.
- *
- * @param {Editor} editor
- * @param {String} src
- * @param {Range} target
- */
 
 function insertImage(editor, src, target) {
   if (target) {
@@ -65,21 +39,35 @@ function insertImage(editor, src, target) {
   });
 }
 
-class TextEditor extends Component {
-  state = {
-    value: this.props.value
-      ? Value.fromJSON(JSON.parse(this.props.value))
-      : getInitialValue(),
-    focus: false
-  };
+const schema = {
+  document: {
+    last: { type: 'paragraph' },
+    normalize: (editor, { code, node }) => {
+      switch (code) {
+        case 'last_child_type_invalid': {
+          const paragraph = Block.create('paragraph');
+          return editor.insertNodeByKey(node.key, node.nodes.size, paragraph);
+        }
+      }
+    }
+  },
+  blocks: {
+    image: {
+      isVoid: true
+    }
+  }
+};
 
+class TextEditor extends RTEditor {
   ref = editor => {
     this.editor = editor;
   };
 
   onChange = ({ value }) => {
+    const jsonVal = JSON.stringify(value.toJSON())
+    const notNull = jsonVal !== JSON.stringify(this.getInitialValue().toJSON());
     this.setState({ value });
-    if (!this.props.readonly) this.props.onSave(JSON.stringify(value.toJSON()));
+    this.props.onSave(notNull ? jsonVal : null);
   };
 
   onFocus = (self, editor, next) => {
@@ -220,79 +208,6 @@ class TextEditor extends Component {
     event.target.value = '';
   };
 
-  onDropOrPaste = (event, editor, next) => {
-    const target = getEventRange(event, editor);
-    if (!target && event.type === 'drop') return next();
-
-    const transfer = getEventTransfer(event);
-    const { type, text, files } = transfer;
-
-    if (type === 'files') {
-      for (const file of files) {
-        const reader = new FileReader();
-        const [mime] = file.type.split('/');
-        if (mime !== 'image') continue;
-
-        reader.addEventListener('load', () => {
-          editor.command(insertImage, reader.result, target);
-        });
-
-        reader.readAsDataURL(file);
-      }
-      return;
-    }
-
-    if (type === 'text') {
-      if (!isUrl(text)) return next();
-      if (!isImage(text)) return next();
-      editor.command(insertImage, text, target);
-      return;
-    }
-
-    next();
-  };
-
-  renderNode = (props, editor, next) => {
-    const { attributes, children, node, isFocused } = props;
-    switch (node.type) {
-      case 'block-quote':
-        return <blockquote {...attributes}>{children}</blockquote>;
-      case 'bulleted-list':
-        return <ul {...attributes}>{children}</ul>;
-      case 'heading-one':
-        return <h1 {...attributes}>{children}</h1>;
-      case 'heading-two':
-        return <h2 {...attributes}>{children}</h2>;
-      case 'list-item':
-        return <li {...attributes}>{children}</li>;
-      case 'numbered-list':
-        return <ol {...attributes}>{children}</ol>;
-      case 'image': {
-        const src = node.data.get('src');
-        return <img src={src} {...attributes} selected={isFocused} />;
-      }
-      default:
-        return next();
-    }
-  };
-
-  renderMark = (props, editor, next) => {
-    const { children, mark, attributes } = props;
-
-    switch (mark.type) {
-      case 'bold':
-        return <strong {...attributes}>{children}</strong>;
-      case 'code':
-        return <code {...attributes}>{children}</code>;
-      case 'italic':
-        return <em {...attributes}>{children}</em>;
-      case 'underlined':
-        return <u {...attributes}>{children}</u>;
-      default:
-        return next();
-    }
-  };
-
   onKeyDown = (event, editor, next) => {
     let mark;
 
@@ -311,6 +226,61 @@ class TextEditor extends Component {
     event.preventDefault();
     editor.toggleMark(mark);
   };
+
+  render() {
+    return (
+      <div
+        className={classnames(
+          'govuk-form-group',
+          { 'govuk-form-group--error': this.props.error },
+          this.props.className
+        )}
+      >
+        <label className='govuk-label' htmlFor={this.props.name}>
+          {this.props.label}
+        </label>
+        {this.props.hint && (
+          <span id={`${this.props.name}-hint`} className='govuk-hint'>
+            {this.props.hint}
+          </span>
+        )}
+        {this.props.error && (
+          <span id={`${this.props.name}-error`} className='govuk-error-message'>
+            {this.props.error}
+          </span>
+        )}
+        <div className={classnames('editor', { focus: this.state.focus })}>
+          <FormatToolbar>
+            {this.renderMarkButton('bold', ic_format_bold)}
+            {this.renderMarkButton('italic', ic_format_italic)}
+            {this.renderMarkButton('underlined', ic_format_underlined)}
+            {this.renderMarkButton('code', ic_code)}
+            {this.renderBlockButton('heading-one', ic_looks_one)}
+            {this.renderBlockButton('heading-two', ic_looks_two)}
+            {this.renderBlockButton('block-quote', ic_format_quote)}
+            {this.renderBlockButton('numbered-list', ic_format_list_numbered)}
+            {this.renderBlockButton('bulleted-list', ic_format_list_bulleted)}
+            {this.renderBlockButton('input-file', ic_image)}
+          </FormatToolbar>
+          <Editor
+            spellCheck
+            placeholder=''
+            ref={this.ref}
+            value={this.state.value}
+            onChange={this.onChange}
+            onKeyDown={this.onKeyDown}
+            renderNode={this.renderNode}
+            renderMark={this.renderMark}
+            onFocus={this.onFocus}
+            onBlur={this.onBlur}
+            name={this.props.name}
+            key={this.props.name}
+            schema={schema}
+          />
+        </div>
+      </div>
+    );
+  }
 }
 
 export default TextEditor;

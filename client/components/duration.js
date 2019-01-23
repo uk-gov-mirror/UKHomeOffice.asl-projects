@@ -51,7 +51,7 @@ class Duration extends Component {
   }
 
   render() {
-    const { label, hint, error } = this.props;
+    const { label, error } = this.props;
     return (
       <div className={classnames('govuk-form-group', 'duration', { 'govuk-form-group--error': error })}>
         <label className="govuk-label" htmlFor={this.props.name}>{this.props.label}</label>

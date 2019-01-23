@@ -7,12 +7,17 @@ import Router from './router';
 import configureStore from './store';
 
 import { loadProjects } from './actions/projects';
+import { loadSettings } from './actions/settings';
 
 const store = configureStore();
 
-store.dispatch(loadProjects());
+store.dispatch(loadSettings())
+  .then(() => {
+    store.dispatch(loadProjects());
+    renderApp()
+  });
 
-render(
+const renderApp = () => render(
   <Provider store={store}>
     <React.Fragment>
       <Alert />

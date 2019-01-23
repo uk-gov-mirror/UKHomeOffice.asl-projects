@@ -1,6 +1,6 @@
 import React, { Fragment, Component, PureComponent } from 'react';
 
-import every from 'lodash/every';
+import some from 'lodash/some';
 import flatten from 'lodash/flatten';
 
 import Wizard from '../../components/wizard';
@@ -15,7 +15,7 @@ import ReviewSection from './review';
 
 class Questions extends PureComponent {
   state = {
-    ntsAccepted: !this.props.nts || every(this.props.fields, field => this.props.values[field.name])
+    ntsAccepted: !this.props.nts || some((this.props.fields || this.props.steps[this.props.step].fields), field => this.props.values[field.name])
   }
 
   ref = React.createRef()
@@ -42,7 +42,7 @@ class Questions extends PureComponent {
   }
 
   render = () => {
-    const { title, fields, values, save, advance, exit, nts, subtitle, intro, linkTo, playback } = this.props;
+    const { title, values, save, advance, exit, nts, subtitle, intro, linkTo, playback } = this.props;
     const { ntsAccepted } = this.state;
     return (
       <Fragment>
@@ -86,7 +86,7 @@ class Review extends Component {
   }
 
   render = () => {
-    const { save, retreat, steps, fields, ...props } = this.props;
+    const { retreat, steps, fields, ...props } = this.props;
     const ReviewComponent = props.review || ReviewSection;
     const reviewFields = steps ? flatten(steps.filter(s => !s.repeat).map(s => s.fields)) : fields
     return (
@@ -103,7 +103,7 @@ class Review extends Component {
           label="This section is complete"
         >
           <h2>Mark this section as complete?</h2>
-          <p>You can still edit this section later, but you will be unable to send your application to the Home Office until all sections are marked as complete.</p>
+          <p>You can still edit this section later, but you will be unable to send this application to the Home Office until all sections are marked as complete.</p>
         </Complete>
       </Fragment>
     )

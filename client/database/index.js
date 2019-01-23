@@ -5,15 +5,16 @@ module.exports = () => {
     request.onerror = reject;
     request.onupgradeneeded = event => {
       const db = event.target.result;
-      const objStore = db.createObjectStore('projects', { autoIncrement : true });
+      db.createObjectStore('projects', { autoIncrement : true });
+      db.createObjectStore('settings', { autoIncrement : true });
     };
     request.onsuccess = event => {
       const db = event.target.result;
       resolve({
-        list: () => {
+        list: (table = 'projects') => {
           return new Promise((resolve, reject) => {
-            const transaction = db.transaction(['projects']);
-            const objectStore = transaction.objectStore('projects');
+            const transaction = db.transaction([table]);
+            const objectStore = transaction.objectStore(table);
 
             const request = objectStore.openCursor();
             const result = [];
@@ -33,38 +34,38 @@ module.exports = () => {
             transaction.onerror = e => reject(e);
           });
         },
-        update: (id, data) => {
+        update: (id, data, table = 'projects') => {
           data.updated = Date.now();
           return new Promise((resolve, reject) => {
-            const transaction = db.transaction(['projects'], 'readwrite');
-            const objectStore = transaction.objectStore('projects');
+            const transaction = db.transaction([table], 'readwrite');
+            const objectStore = transaction.objectStore(table);
             const request = objectStore.put(data, id);
-            request.onsuccess = e => resolve({
+            request.onsuccess = () => resolve({
               id,
               ...data
             });
             transaction.onerror = e => reject(e);
           });
         },
-        create: project => {
+        create: (item, table = 'projects') => {
           return new Promise((resolve, reject) => {
-            const transaction = db.transaction(['projects'], 'readwrite');
-            const objectStore = transaction.objectStore('projects');
-            project.updated = project.updated || Date.now();
-            const request = objectStore.add(project);
+            const transaction = db.transaction([table], 'readwrite');
+            const objectStore = transaction.objectStore(table);
+            item.updated = item.updated || Date.now();
+            const request = objectStore.add(item);
             request.onsuccess = e => {
               return resolve({
                 id: e.target.result,
-                ...project
+                ...item
               });
             };
             transaction.onerror = e => reject(e);
           });
         },
-        delete: id => {
+        delete: (id, table = 'projects') => {
           return new Promise((resolve, reject) => {
-            const transaction = db.transaction(['projects'], 'readwrite');
-            const objectStore = transaction.objectStore('projects');
+            const transaction = db.transaction([table], 'readwrite');
+            const objectStore = transaction.objectStore(table);
             const request = objectStore.delete(id);
             request.onsuccess = () => resolve();
             transaction.onerror = e => reject(e);
