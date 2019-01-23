@@ -32,7 +32,7 @@ const sectionIncluded = (section, values) => {
 }
 
 const ProtocolSections = ({ sections, ...props }) => (
-  <Accordion openOne>
+  <Accordion openOne scrollToActive>
     {
       map(pickBy(sections, section => sectionIncluded(section, props.project)), (section, name) => (
         <ExpandingPanel key={name} title={section.title}>
