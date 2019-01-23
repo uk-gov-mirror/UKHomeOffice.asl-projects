@@ -34,15 +34,19 @@ class ExpandingPanel extends Component {
 
   componentDidUpdate() {
     if (this.props.scrollToActive && this.props.open) {
-      window.scrollTo({
-        top: getScrollPos(this.ref.current, OFFSET),
-        behavior: 'smooth'
-      })
+      this.scrollToTop();
     }
   }
 
   shouldComponentUpdate(nextProps) {
     return nextProps.open !== this.props.open;
+  }
+
+  scrollToTop = () => {
+    window.scrollTo({
+      top: getScrollPos(this.ref.current, OFFSET),
+      behavior: 'smooth'
+    })
   }
 
   render() {
@@ -53,7 +57,7 @@ class ExpandingPanel extends Component {
         </header>
         <div className={classnames('content', { hidden: !this.isOpen() })}>
           {
-            React.Children.map(this.props.children, child => React.cloneElement(child, this.props))
+            React.Children.map(this.props.children, child => React.cloneElement(child, { ...this.props, scrollToTop: this.scrollToTop }))
           }
         </div>
       </section>

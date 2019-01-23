@@ -45,7 +45,7 @@ class Section extends Component {
   toggleReview = () => {
     this.setState({
       review: !this.state.review
-    });
+    }, this.props.scrollToTop);
   }
 
   render() {

@@ -10,7 +10,7 @@ const mapStateToProps = (state, props) => {
 
 export const connectProject = Component => withRouter(connect(mapStateToProps)(Component));
 
-export const getScrollPos = (elem, offset) => {
+export const getScrollPos = (elem, offset = 0) => {
   const box = elem.getBoundingClientRect();
   const body = document.body;
   const docEl = document.documentElement;
