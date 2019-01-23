@@ -74,7 +74,7 @@ class Review extends React.Component {
 
       if (!species.length) {
         return <p>
-          <em>No answer provided</em>
+          <em>No answer provided.</em>
         </p>
       }
       return <dl className="inline">
@@ -82,7 +82,7 @@ class Review extends React.Component {
           species.map(s => (
             <Fragment key={s.key}>
               <dt>{s.title}:</dt>
-              <dd>{s.value ? s.value : <em>No answer provided</em>}</dd>
+              <dd>{s.value ? s.value : <em>No answer provided.</em>}</dd>
             </Fragment>
           ))
         }
@@ -96,7 +96,7 @@ class Review extends React.Component {
     }
     return (
       <p>
-        <em>No answer provided</em>
+        <em>No answer provided.</em>
       </p>
     );
   }

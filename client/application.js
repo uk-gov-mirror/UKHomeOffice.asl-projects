@@ -1126,11 +1126,12 @@ export default {
         ]
       },
       'purpose-bred-animals': {
-        title: 'Purpose-bred animals',
+        title: 'Purpose bred animals',
         fields: [
           {
             name: 'purpose-bred',
-            label: 'Will all animals used in your project be purpose-bred?',
+            label: 'Will all animals used in your project be purpose bred?',
+            hint: 'This means animals that have been bred primarily to be used in regulated procedures or for the use of their tissues or organs for scientific purposes.',
             type: 'radio',
             inline: true,
             className: 'smaller',
@@ -1145,12 +1146,12 @@ export default {
                 reveal: [
                   {
                     name: 'purpose-bred-sourced',
-                    label: 'Where will you source animals from that are not purpose-bred?',
+                    label: 'Where will you source animals from that have not been purpose bred?',
                     type: 'texteditor'
                   },
                   {
                     name: 'purpose-bred-justification',
-                    label: 'Why can’t you achieve your objectives by only using purpose-bred animals?',
+                    label: 'Why can’t you achieve your objectives by only using purpose bred animals?',
                     type: 'texteditor'
                   }
                 ]
@@ -1282,7 +1283,8 @@ export default {
               },
               {
                 name: 'wild-animals-devices',
-                label: 'Will you be attaching any devices to animals that you have captured from the wild?',
+                label: 'Will you attach any devices to animals that you have captured from the wild?',
+                hint: 'For example, any device used to identify, track, and monitor an animal’s behaviour in its natural habitat.',
                 type: 'radio',
                 inline: true,
                 className: 'smaller',
@@ -1298,7 +1300,7 @@ export default {
                       },
                       {
                         name: 'wild-animals-devices-removal',
-                        label: 'How will you ensure that devices are removed from animals at the end of your project?',
+                        label: 'How will you ensure that devices are safely removed from animals at the end of your project?',
                         hint: 'If devices will not be removed, explain why it is safe for them to remain.',
                         type: 'texteditor'
                       },
@@ -1397,11 +1399,11 @@ export default {
       },
       'feral-animals': {
         title: 'Feral animals',
-        intro: 'Feral animals are animals from a domesticated species that are now living in a natural or wild state.',
         fields: [
           {
             name: 'feral-animals',
             label: 'Will you be using any feral animals in your project?',
+            hint: 'Feral animals are animals from a domesticated species that are now living in a natural or wild state.',
             type: 'radio',
             inline: true,
             className: 'smaller',
@@ -1412,7 +1414,7 @@ export default {
                 reveal: {
                   name: 'feral-animals-justification',
                   label: 'Why can’t you achieve your objectives without using feral animals?',
-                  hint: 'For example, it may be essential to use feral animals to protect the health and welfare of a species, or avoid a threat to the health of other animals, humans, or the environment?',
+                  hint: 'For example, it may be essential to use feral animals to protect the health and welfare of a species, or avoid a threat to the health of other animals, humans, or the environment.',
                   type: 'texteditor'
                 }
               },
@@ -1477,7 +1479,6 @@ export default {
               {
                 name: 'nmbas-emergency-routine',
                 label: 'Explain the agreed emergency routine at your establishment that covers potential hazardous events (such as a power failure).',
-                hint: 'You may want to add a copy of your emergency routine as an attachment.',
                 type: 'texteditor'
               }
             ]
@@ -1498,7 +1499,7 @@ export default {
           {
             name: 'keeping-animals-alive-supervised',
             label: 'Will animals that have been kept alive be held and supervised by a veterinary surgeon?',
-            hint: 'Remember to include any limitations on the length of time that certain animals can be held and monitored.',
+            hint: 'If they will be, include any limitations on the length of time that certain animals can be held and monitored.',
             type: 'texteditor'
           }
         ]
@@ -1518,20 +1519,20 @@ export default {
           {
             name: 'reusing-limitations',
             label: 'Have you placed any limitations on re-using animals during your project?',
-            hint: 'For example, there may be a maximum number of times that an animal can be re-used, or a set of performance standards that requires a limit on re-use?',
+            hint: 'For example, there may be a maximum number of times that an animal can be re-used, or a set of performance standards that requires a limit on re-use.',
             type: 'texteditor'
           }
         ]
       },
       'rehoming-animals': {
-        title: 'Re-homing animals',
+        title: 'Rehoming animals',
         show: values => some(values.protocols, protocol => {
           return castArray(protocol.fate).includes('re-homed');
         }),
         fields: [
           {
             name: 'rehoming-authority',
-            label: 'Does your primary establishment already have the authority to re-home animals?',
+            label: 'Does your primary establishment already have the authority to rehome animals?',
             type: 'radio',
             inline: true,
             className: 'smaller',
@@ -1542,22 +1543,22 @@ export default {
                 reveal: [
                   {
                     name: 'rehoming-healthy',
-                    label: 'How will you determine whether animals are healthy enough to be re-homed?',
+                    label: 'How will you determine whether animals are healthy enough to be rehomed?',
                     type: 'texteditor'
                   },
                   {
                     name: 'rehoming-harmful',
-                    label: 'How will you ensure that re-homing animals will not be harmful to other species, the environment, and human health?',
+                    label: 'How will you ensure that rehoming animals will not be harmful to other species, the environment, and human health?',
                     type: 'texteditor'
                   },
                   {
                     name: 'rehoming-socialisation',
-                    label: 'How will you verify that animals are undergoing an appropriate socialisation programme onced they have been re-homed?',
+                    label: 'How will you ensure that animals are undergoing an appropriate socialisation programme once they have been rehomed?',
                     type: 'texteditor'
                   },
                   {
                     name: 'rehoming-other',
-                    label: 'What other measures will you take to safeguard the wellbeing of animals once they have been re-homed?',
+                    label: 'What other measures will you take to safeguard the wellbeing of animals once they have been rehomed?',
                     type: 'texteditor'
                   }
                 ]
@@ -1628,7 +1629,7 @@ export default {
         fields: [
           {
             name: 'reduction-quantities',
-            label: 'Enter the estimated numbers of animals used in this project.',
+            label: 'Enter the estimated number of animals used in this project.',
             type: 'animal-quantities'
           },
           {
@@ -1639,7 +1640,7 @@ export default {
           },
           {
             name: 'reduction-steps',
-            label: 'What steps did you take to reduce animal numbers when you designed your experiments?',
+            label: 'What steps did you take during the experimental design phase to reduce the number of animals being used in this project?',
             type: 'texteditor'
           },
           {
@@ -1658,7 +1659,7 @@ export default {
           {
             name: 'refinement-models',
             label: 'Which animal models and methods will you use during this project?',
-            hint: 'Explain why these models and methods cause the least pain, suffering, distress or lasting harm to the animals.',
+            hint: 'Explain why these models and methods cause the least pain, suffering, distress, or lasting harm to the animals.',
             type: 'texteditor'
           },
           {
