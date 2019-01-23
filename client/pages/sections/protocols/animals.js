@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
 
 import some from 'lodash/some';
 
@@ -6,8 +7,6 @@ import Fieldset from '../../../components/fieldset';
 import Controls from '../../../components/controls';
 import Expandable from '../../../components/expandable';
 import Repeater from '../../../components/repeater';
-
-import { connectProject } from '../../../helpers';
 
 import Review from './review';
 
@@ -147,4 +146,13 @@ class Animals extends Component {
   }
 }
 
-export default connectProject(Animals);
+const mapStateToProps = (state, ownProps) => {
+  const project = state.projects.find(p => p.id === parseInt(ownProps.match.params.id, 10))
+  const values = project.protocols[ownProps.index];
+  return {
+    project,
+    values
+  }
+}
+
+export default connect(mapStateToProps)(Animals);

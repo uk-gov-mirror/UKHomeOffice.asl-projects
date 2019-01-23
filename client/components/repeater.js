@@ -16,6 +16,12 @@ class Repeater extends Component {
     }
   }
 
+  componentWillReceiveProps({ items }) {
+    if (items) {
+      this.setState({ items })
+    }
+  }
+
   componentDidMount() {
     if (!this.props.initCollapsed && !this.state.items.length) {
       this.setState({ items: [{}] });
@@ -97,7 +103,8 @@ class Repeater extends Component {
                 moveUp: () => this.moveUp(index),
                 moveDown: () => this.moveDown(index),
                 values: item,
-                length: this.state.items.length
+                length: this.state.items.length,
+                expanded: this.props.expanded && this.props.expanded[index]
               })
             })
           )
