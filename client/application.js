@@ -45,7 +45,7 @@ export default {
                     value: 'blood-products'
                   },
                   {
-                    label: 'To generate testing or screening data.',
+                    label: 'To generate testing or screening data',
                     value: 'screening-data',
                     hint: 'This can be for yourself or for others, for regulatory (GLP work) or non-regulatory use.',
                     reveal: {
@@ -59,7 +59,7 @@ export default {
                           hint: 'This can include genetically-altered or surgically prepared animals.'
                         },
                         {
-                          label: 'Non regulatory use',
+                          label: 'Non-regulatory use',
                           value: 'non-regulatory-use',
                           hint: 'If data is provided to others, the models and methods used are likely to be tailored to the needs of that particular client.'
                         }
@@ -685,7 +685,7 @@ export default {
                     value: true,
                     reveal: {
                       name: 'reuse-details',
-                      label: 'Give details',
+                      label: 'Which protocols or projects?',
                       type: 'textarea'
                     }
                   },
