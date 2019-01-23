@@ -53,16 +53,16 @@ class Animals extends Component {
   }
 
   toggleReview = () => {
-    this.setState({ review: !this.state.review })
+    this.setState({ review: !this.state.review }, this.props.scrollToTop)
   }
 
   toggleAdding = e => {
     e.preventDefault();
-    this.setState({ adding: !this.state.adding });
+    this.setState({ adding: !this.state.adding }, this.props.scrollToTop);
   }
 
   toggleActive = () => {
-    this.setState({ active: !this.state.active });
+    this.setState({ active: !this.state.active }, this.props.scrollToTop);
   }
 
   saveAnimals = () => {
