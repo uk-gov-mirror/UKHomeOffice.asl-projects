@@ -56,6 +56,7 @@ class Protocols extends Component {
     if (!project.protocols || !project.protocols.length) {
       return <h3>No protocols have been added. Please revisit this section once you have completed the Protocols section.</h3>;
     }
+    console.log(project.protocols, this.props.index)
     return (
       <div className="protocols">
         <h3>Please select all protocols and steps that will be carried out in this POLE</h3>
@@ -64,7 +65,6 @@ class Protocols extends Component {
             <div key={index} className="protocol-summary">
               <div className="header">
                 <Field
-                  label=""
                   type="checkbox"
                   name={`poles-${this.props.index}-protocols-${index}`}
                   options={[{ label: `Protocol ${index + 1}`, value: protocol.id }]}
@@ -74,7 +74,7 @@ class Protocols extends Component {
                 />
                 <div className="header-info">
                   <h3>{ protocol.title }</h3>
-                  <p>Severity classification: <strong>{protocol.severity.toUpperCase()}</strong></p>
+                  <p>Severity classification: <strong>{protocol.severity && protocol.severity.toUpperCase()}</strong></p>
                 </div>
               </div>
               <Steps
