@@ -762,7 +762,7 @@ export default {
                     reveal: {
                       name: 'code',
                       label: 'Select the anaesthetic code you intend to use.',
-                      type: 'radio',
+                      type: 'checkbox',
                       options: [
                         {
                           label: 'AB (general anaesthesia with recovery)',
@@ -1432,7 +1432,7 @@ export default {
       nmbas: {
         title: 'Neuromuscular blocking agents (NMBAs)',
         show: values => some(values.protocols, protocol => {
-          return some(protocol.steps, step => step.code === 'ad');
+          return some(protocol.steps, step => step.code && step.code.includes('ad'));
         }),
         linkTo: 'protocols',
         steps: [
