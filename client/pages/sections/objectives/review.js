@@ -7,7 +7,7 @@ import Playback from '../../../components/playback';
 const ObjectivesReview = ({ playback, values, steps, goto }) => (
   <Fragment>
     <Banner>
-      <h2>Please review your answers for:</h2>
+      <h2>Please review your answers for</h2>
       <h1>Strategy</h1>
     </Banner>
     <h1>Strategy</h1>
