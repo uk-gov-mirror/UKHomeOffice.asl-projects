@@ -1,8 +1,6 @@
 import React, { Fragment } from 'react';
 import { connectProject } from '../../../helpers';
 
-import findIndex from 'lodash/findIndex';
-
 import Banner from '../../../components/banner';
 import Review from '../../../components/review';
 
