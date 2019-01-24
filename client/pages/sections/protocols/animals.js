@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import some from 'lodash/some';
 import intersection from 'lodash/intersection';
+import flatten from 'lodash/flatten';
 
 import Fieldset from '../../../components/fieldset';
 import Controls from '../../../components/controls';
@@ -88,10 +89,15 @@ class Animals extends Component {
   render() {
     const { fields, values, onFieldChange, updateItem, exit, advance, name, index } = this.props;
     const { adding, active, review } = this.state;
-    const speciesField = fields.filter(f => f.section === 'intro').map(f => ({ ...f, options: [
-      ...(this.props.project.species || []),
+    const speciesField = fields.filter(f => f.section === 'intro').map(f => ({ ...f, options: flatten([
+      ...(this.props.project.species || []).map(s => {
+        if (s.indexOf('other') > -1) {
+          return this.props.project[`species-${s}`]
+        }
+        return s;
+      }),
       ...(this.props.project['species-other'] || [])
-    ] }));
+    ]) }));
     const items = this.getItems();
     if (review) {
       return <Review fields={fields.filter(f => f.section !== 'intro')} values={this.getItems()} advance={advance} onEdit={this.toggleReview} />
@@ -144,7 +150,20 @@ class Animals extends Component {
               />
             }
             <Controls
-              continueDisabled={!intersection(values.species, this.props.project.species).length}
+              continueDisabled={!intersection(
+                values.species,
+                flatten(
+                  [
+                    ...this.props.project.species.map(s => {
+                      if (s.indexOf('other') > -1) {
+                        return this.props.project[`species-${s}`];
+                      }
+                      return s
+                    }),
+                    this.props.project['species-other']
+                  ]
+                )
+              ).length}
               onContinue={this.saveAnimals}
               onExit={exit}
             />

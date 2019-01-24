@@ -1,4 +1,5 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
+
 import map from 'lodash/map';
 import intersection from 'lodash/intersection';
 
@@ -6,6 +7,7 @@ import SPECIES from '../constants/species';
 import SPECIES_CATEGORIES from '../constants/species-categories';
 
 import Fieldset from './fieldset';
+import OtherSpecies from './other-species-selector';
 
 const getFields = (options, name) => ([
   {
@@ -13,13 +15,28 @@ const getFields = (options, name) => ([
     label: '',
     type: 'checkbox',
     className: 'smaller',
-    options
+    options: options.map(option => {
+      if (option.value.indexOf('other') > -1) {
+        return {
+          ...option,
+          reveal: {
+            label: `Which ${option.label.charAt(0).toLowerCase()}${option.label.substring(1)} will you be using`,
+            name: `${name}-${option.value}`,
+            type: 'other-species-selector'
+          }
+        }
+      }
+      return option
+    })
   }
-]);
+])
 
 class SpeciesSelector extends Component {
   isOpen = options => {
-    return intersection(this.props.values.species, options.map(option => option.value)).length > 0
+    return intersection(
+      this.props.values.species,
+      options.map(option => option.value)
+    ).length > 0;
   }
 
   render() {
@@ -28,15 +45,16 @@ class SpeciesSelector extends Component {
       values,
       onFieldChange,
       label,
-      otherLabel = 'Which species will you be using',
       name = 'species',
       hint,
       summary
     } = this.props;
     return (
-      <Fragment>
-      <label className="govuk-label" htmlFor={name}>{label}</label>
-      { hint && <span id={`${name}-hint`} className="govuk-hint">{this.props.hint}</span> }
+      <div className="species-selector">
+        <label className="govuk-label" htmlFor={name}>{label}</label>
+        {
+          hint && <span id={`${name}-hint`} className="govuk-hint">{this.props.hint}</span>
+        }
         {
           map(species, (options, code) => (
             <details open={this.isOpen(options)}>
@@ -49,21 +67,16 @@ class SpeciesSelector extends Component {
             </details>
           ))
         }
-        <details open={!!values[`${this.props.name}-other`]}>
+        <details open={values[`${this.props.name}-other`] && values[`${this.props.name}-other`].length}>
           <summary>Other</summary>
-          <Fieldset
-            fields={[
-              {
-                name: `${name}-other`,
-                label: otherLabel,
-                type: 'text'
-              }
-            ]}
-            values={values}
+          <br />
+          <OtherSpecies
+            name={`${this.props.name}-other`}
+            values={values[`${this.props.name}-other`]}
             onFieldChange={onFieldChange}
           />
         </details>
-      </Fragment>
+      </div>
     )
   }
 }

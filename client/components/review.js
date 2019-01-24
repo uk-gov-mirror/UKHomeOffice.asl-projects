@@ -33,12 +33,17 @@ class Review extends React.Component {
       )
     }
     if (this.props.type === 'species-selector') {
-      if (this.props.project[`${this.props.name}-other`]) {
-        value = [
-          ...value,
-          this.props.project[`${this.props.name}-other`]
-        ]
-      }
+      const project = this.props.project;
+      const other = project[`${this.props.name}-other`] || [];
+      value = flatten([
+        ...value.map(val => {
+          if (val.indexOf('other') > -1) {
+            return project[`${this.props.name}-${val}`];
+          }
+          return val;
+        }),
+        ...other
+      ]);
     }
     if (this.props.type === 'checkbox' || this.props.type === 'species-selector') {
       value = value || [];

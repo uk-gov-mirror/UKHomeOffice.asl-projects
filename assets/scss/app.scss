@@ -609,3 +609,9 @@ input[type="number"] {
     display: block;
   }
 }
+
+.species-selector {
+  .govuk-form-group {
+    margin-bottom: $govuk-gutter !important;
+  }
+}
