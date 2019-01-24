@@ -8,6 +8,7 @@ import without from 'lodash/without';
 
 import { Input, Select, TextArea, RadioGroup, CheckboxGroup } from '@ukhomeoffice/react-components';
 
+import OtherSpecies from './other-species-selector';
 import SpeciesSelector from './species-selector';
 import AnimalQuantities from './animal-quantities';
 import Duration from './duration';
@@ -161,6 +162,14 @@ class Field extends Component {
         />
         <Link to="../strategy">Add new objective</Link>
       </div>
+    }
+    if (this.props.type === 'other-species-selector') {
+      return <OtherSpecies
+        name={this.props.name}
+        label={this.props.label}
+        values={this.props.project[this.props.name]}
+        onFieldChange={this.props.onFieldChange}
+      />
     }
     if (this.props.type === 'checkbox') {
       return <CheckboxGroup
