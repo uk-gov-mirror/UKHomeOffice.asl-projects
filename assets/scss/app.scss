@@ -25,6 +25,10 @@ $assetPath: '/public';
   }
 }
 
+.gutter {
+  margin-bottom: $govuk-gutter;
+}
+
 a[disabled] {
   color: $govuk-secondary-text-colour;
   cursor: default;
