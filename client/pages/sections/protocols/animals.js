@@ -103,6 +103,19 @@ class Animals extends Component {
       return <Review fields={fields.filter(f => f.section !== 'intro')} values={this.getItems()} advance={advance} onEdit={this.toggleReview} />
     }
     const prefix = `${name}-${index}-`;
+
+    const allSpecies = flatten([
+      ...this.props.project.species.map(s => {
+        if (s.indexOf('other') > -1) {
+          return this.props.project[`species-${s}`];
+        }
+        return s;
+      }),
+      this.props.project['species-other']
+    ]);
+
+    const continueDisabled = !intersection(values.species, allSpecies).length
+
     return (
       active
         ? (
@@ -150,20 +163,7 @@ class Animals extends Component {
               />
             }
             <Controls
-              continueDisabled={!intersection(
-                values.species,
-                flatten(
-                  [
-                    ...this.props.project.species.map(s => {
-                      if (s.indexOf('other') > -1) {
-                        return this.props.project[`species-${s}`];
-                      }
-                      return s
-                    }),
-                    this.props.project['species-other']
-                  ]
-                )
-              ).length}
+              continueDisabled={continueDisabled}
               onContinue={this.saveAnimals}
               onExit={exit}
             />
