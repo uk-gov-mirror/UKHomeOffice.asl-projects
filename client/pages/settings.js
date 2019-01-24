@@ -16,17 +16,6 @@ class Settings extends Component {
     establishments: this.props.establishments || ['']
   }
 
-  nuke = React.createRef()
-
-  componentDidMount() {
-    const nuke = this.nuke.current
-    nuke.onmouseover = () => {
-      nuke.style.position = 'fixed';
-      nuke.style.top = `${Math.random() * window.innerHeight}px`;
-      nuke.style.left = `${Math.random() * window.innerWidth}px`;
-    }
-  }
-
   addEstablishment = () => {
     this.setState({
       establishments: [
@@ -61,7 +50,7 @@ class Settings extends Component {
     const { establishments } = this.state;
     return (
       <Fragment>
-        <button onClick={this.props.nuke} className="float-right govuk-button" ref={this.nuke}>Nuke the data</button>
+        <Button className="float-right" onClick={this.props.nuke}>Clear database</Button>
         <h1>Settings</h1>
         <h3>Your establishments</h3>
         {
