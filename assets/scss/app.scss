@@ -63,6 +63,11 @@ dl {
   background-color: $light-grey !important;
 }
 
+.inline-block {
+  display: inline-block;
+  margin-right: $govuk-gutter-half;
+}
+
 .no-bg {
   .header {
     background: none !important;
