@@ -304,7 +304,7 @@ export default {
                     value: false,
                     reveal: {
                       name: 'establishments-care-conditions-justification',
-                      label: 'If any of your establishments do not meet requirements, explain how and why.',
+                      label: 'If any of your establishments do not meet these requirements, explain how and why.',
                       type: 'texteditor'
                     }
                   }
@@ -315,7 +315,7 @@ export default {
         ]
       },
       'transfer-of-animals': {
-        title: 'Trasfer and movement of animals',
+        title: 'Transfer and movement of animals',
         show: values => values['other-establishments'] && values['other-establishments-list'] && values['other-Establishments-list'].length,
         fields: [
           {
@@ -367,7 +367,7 @@ export default {
             fields: [
               {
                 name: 'poles',
-                label: 'Will any of your project be carried out in any places other than a licensed establishment (POLEs)?',
+                label: 'Will any part of your project be carried out in any places other than a licensed establishment (POLEs)?',
                 type: 'radio',
                 inline: true,
                 className: 'smaller',
@@ -400,7 +400,7 @@ export default {
               },
               {
                 name: 'pole-info',
-                label: '',
+                label: 'Details',
                 type: 'texteditor'
               }
             ]
