@@ -653,3 +653,15 @@ input[type="number"] {
   margin-top: $govuk-gutter;
   margin-bottom: $govuk-gutter;
 }
+
+.location-selector, .objective-selector {
+  margin-bottom: $govuk-gutter;
+
+  > .govuk-form-group {
+    margin-bottom: 0;
+  }
+
+  > a {
+    display: block;
+  }
+}

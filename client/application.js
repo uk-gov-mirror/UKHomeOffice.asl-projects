@@ -393,6 +393,11 @@ export default {
             show: values => values.poles === true,
             fields: [
               {
+                name: 'title',
+                label: 'Title',
+                type: 'text'
+              },
+              {
                 name: 'pole-info',
                 label: '',
                 type: 'texteditor'
@@ -807,6 +812,18 @@ export default {
                 name: 'severity-details',
                 label: 'Why did you choose this severity category?',
                 type: 'texteditor'
+              },
+              {
+                name: 'locations',
+                label: 'Select the establishments or POLEs where this protocol will be carried out.',
+                hint: 'Select all that apply.',
+                type: 'location-selector'
+              },
+              {
+                name: 'objectives',
+                label: 'Which of your objectives will this protocol cover?',
+                hint: 'Select all that apply.',
+                type: 'objective-selector'
               },
               {
                 name: 'outputs',
