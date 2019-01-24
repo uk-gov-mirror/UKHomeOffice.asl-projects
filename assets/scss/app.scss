@@ -125,6 +125,12 @@ dl {
       clear: left;
       margin-right: $govuk-gutter-half / 2;
     }
+
+    dd {
+      a {
+        margin-left: $govuk-gutter-half;
+      }
+    }
   }
 }
 
@@ -422,6 +428,67 @@ fieldset.smaller {
   }
 }
 
+.protocol-summary {
+  margin-bottom: $govuk-gutter;
+
+  .header {
+    @extend .panel;
+    background-color: $blue;
+    color: $white;
+
+    h2, p {
+      margin-bottom: 0;
+    }
+
+    .govuk-form-group {
+      margin-bottom: 0;
+
+      label {
+        color: $white;
+        font-size: 1.4em;
+        line-height: 1.4em;
+
+        &:before, &:after {
+          margin-top: 9px;
+          color: $black;
+          background-color: $white;
+        }
+      }
+    }
+
+    .header-info {
+      margin-left: 42px;
+    }
+
+  }
+
+  .govuk-form-group {
+    margin-bottom: 0;
+
+    .steps {
+      .govuk-checkboxes__item {
+        @extend .panel;
+        background-color: $white;
+        border-bottom: 5px solid $light-grey;
+        margin-bottom: 0;
+        display: flex;
+
+        label {
+          padding: 0;
+          position: relative;
+          padding-left: 45px;
+        }
+
+        .govuk-hint {
+          margin-left: $govuk-gutter;
+        }
+      }
+    }
+  }
+
+
+}
+
 .accordion {
   margin-bottom: $govuk-gutter;
 }
@@ -572,4 +639,13 @@ input[type="number"] {
       margin-bottom: 0;
     }
   }
+
+  dl.inline {
+    padding: $govuk-gutter-half 0;
+  }
+}
+
+.establishment-review {
+  margin-top: $govuk-gutter;
+  margin-bottom: $govuk-gutter;
 }

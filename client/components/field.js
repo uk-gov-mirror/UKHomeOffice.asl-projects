@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { connectProject } from '../helpers';
+import { connectProject, connectSettings } from '../helpers';
 
 import castArray from 'lodash/castArray';
 import every from 'lodash/every';
+import without from 'lodash/without';
 
 import { Input, Select, TextArea, RadioGroup, CheckboxGroup } from '@ukhomeoffice/react-components';
 
@@ -10,6 +11,7 @@ import SpeciesSelector from './species-selector';
 import AnimalQuantities from './animal-quantities';
 import Duration from './duration';
 import { TextEditor } from './editor';
+
 
 import Fieldset from './fieldset';
 
@@ -58,6 +60,13 @@ class Field extends Component {
     if (!this.showField()) {
       return null;
     }
+    let options = this.props.optionsFromSettings
+      ? this.props.settings[this.props.optionsFromSettings]
+      : this.props.options;
+    if (this.props.values && this.props.without) {
+      options = without(options, this.props.values[this.props.without]);
+    }
+
     if (this.props.type === 'animal-quantities') {
       return <AnimalQuantities
         label={ this.props.label }
@@ -96,20 +105,19 @@ class Field extends Component {
         hint={ this.props.hint }
         name={ this.props.name }
         label={ this.props.label }
-        options={ this.props.options }
+        options={ options }
         value={ this.props.value }
         error={ this.props.error }
         onChange={ e => this.onChange(e.target.value) }
         />
     }
     if (this.props.type === 'radio') {
-
       return <RadioGroup
         className={ this.props.className }
         hint={ this.props.hint }
         name={ this.props.name }
         label={ this.props.label }
-        options={ this.mapOptions(this.props.options) }
+        options={ this.mapOptions(options) }
         value={ this.props.value }
         error={ this.props.error }
         inline={ this.props.inline }
@@ -131,7 +139,7 @@ class Field extends Component {
         hint={ this.props.hint }
         name={ this.props.name }
         label={ this.props.label }
-        options={ this.mapOptions(this.props.options) }
+        options={ this.mapOptions(options) }
         value={ this.props.value }
         error={ this.props.error }
         inline={ this.props.inline }
@@ -179,4 +187,4 @@ class Field extends Component {
 
 }
 
-export default connectProject(Field);
+export default connectSettings(connectProject(Field))

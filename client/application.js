@@ -2,6 +2,10 @@ import NTSSummary from './pages/sections/nts';
 import Protocols from './pages/sections/protocols';
 import Objectives from './pages/sections/objectives';
 import ObjectivesReview from './pages/sections/objectives/review';
+import Establishments from './pages/sections/establishments';
+import EstablishmentsReview from './pages/sections/establishments/review';
+import Poles from './pages/sections/poles';
+import PolesReview from './pages/sections/poles/review';
 
 import SPECIES from './constants/species';
 
@@ -72,6 +76,14 @@ export default {
                     hint: 'For example, microsurgery, or to use animals as part of a higher education course such as physiology.'
                   }
                 ]
+              },
+              {
+                name: 'primary-establishment',
+                playback: 'Primary establishment',
+                label: 'What is the primary establishment for this project?',
+                type: 'radio',
+                className: 'smaller',
+                optionsFromSettings: 'establishments'
               }
             ]
           },
@@ -211,6 +223,241 @@ export default {
             label: 'Have you secured funding for this type of work before?',
             hint: 'If you have, briefly describe your track record in securing funding for previous projects.',
             type: 'texteditor'
+          }
+        ]
+      }
+    }
+  },
+  projectLocation: {
+    title: 'Project location',
+    subsections: {
+      establishments: {
+        title: 'Establishments',
+        playback: 'primary-establishment',
+        review: EstablishmentsReview,
+        steps: [
+          {
+            fields: [
+              {
+                name: 'other-establishments',
+                label: 'Will your project use any other establishments?',
+                type: 'radio',
+                inline: true,
+                className: 'smaller',
+                options: [
+                  {
+                    label: 'Yes',
+                    value: true,
+                    reveal: {
+                      name: 'other-establishments-list',
+                      label: '',
+                      type: 'checkbox',
+                      className: 'smaller',
+                      optionsFromSettings: 'establishments',
+                      without: 'primary-establishment'
+                    }
+                  },
+                  {
+                    label: 'No',
+                    value: false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            show: values => values['other-establishments'] === true,
+            component: Establishments,
+            fields: [
+              {
+                name: 'establishment-about',
+                label: 'Why do you need to carry out work at this establishment?',
+                hint: 'For example, there may be important specialised equipment at this location that is not available at your primary establishment.',
+                type: 'texteditor',
+                repeats: true
+              },
+              {
+                name: 'establishment-supervisor',
+                label: 'Who will be supervising your work at this establishment?',
+                type: 'texteditor',
+                repeats: true
+              }
+            ]
+          },
+          {
+            fields: [
+              {
+                name: 'establishments-care-conditions',
+                label: 'Do the housing, husbandry, and care conditions at each establishment meet the requirements laid out in the Code of Practice for each type of animal you will be using?',
+                hint: 'Please read the Code of Practice for the housing and care of animals bred, supplied, or used for scientific purposes before you answer.',
+                type: 'radio',
+                inline: true,
+                className: 'smaller',
+                options: [
+                  {
+                    label: 'Yes',
+                    value: true
+                  },
+                  {
+                    label: 'No',
+                    value: false,
+                    reveal: {
+                      name: 'establishments-care-conditions-justification',
+                      label: 'If any of your establishments do not meet requirements, explain how and why.',
+                      type: 'texteditor'
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      'transfer-of-animals': {
+        title: 'Trasfer and movement of animals',
+        show: values => values['other-establishments'] && values['other-establishments-list'].length,
+        fields: [
+          {
+            name: 'transfer',
+            label: 'Will any animals be moved between licensed establishments during this project?',
+            type: 'radio',
+            inline: true,
+            className: 'smaller',
+            options: [
+              {
+                label: 'Yes',
+                value: true,
+                reveal: [
+                  {
+                    name: 'transfer-why',
+                    label: 'Why do you need to move animals between licensed establishments?',
+                    type: 'texteditor'
+                  },
+                  {
+                    name: 'transfer-when',
+                    label: 'At what point in the project will animals be moved?',
+                    type: 'texteditor'
+                  },
+                  {
+                    name: 'transfer-how',
+                    label: 'How may the movement of animals between licensed establishments affect the scientific delivery of this project?',
+                    type: 'texteditor'
+                  },
+                  {
+                    name: 'transfer-measures',
+                    label: 'Which measures will you use to minimise any adverse effects for animals that may arise when moving them between licensed establishments?',
+                    type: 'texteditor'
+                  }
+                ]
+              },
+              {
+                label: 'No',
+                value: false
+              }
+            ]
+          }
+        ]
+      },
+      poles: {
+        title: 'Places other than a licensed establishment (POLEs)',
+        review: PolesReview,
+        steps: [
+          {
+            fields: [
+              {
+                name: 'poles',
+                label: 'Will any of your project be carried out in any places other than a licensed establishment (POLEs)?',
+                type: 'radio',
+                inline: true,
+                className: 'smaller',
+                options: [
+                  {
+                    label: 'Yes',
+                    value: true,
+                    reveal: {
+                      name: 'poles-justification',
+                      label: 'Why can\'t this part of your project take place at a licensed establishment?',
+                      type: 'texteditor'
+                    }
+                  },
+                  {
+                    label: 'No',
+                    value: false
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            component: Poles,
+            show: values => values.poles === true,
+            fields: [
+              {
+                name: 'pole-info',
+                label: '',
+                type: 'texteditor'
+              }
+            ]
+          },
+          {
+            show: values => values.poles === true,
+            fields: [
+              {
+                name: 'poles-inspection',
+                label: 'How will you ensure that these POLEs can be adequately inspected?',
+                hint: 'For example, you may need to consent from the landowner.',
+                type: 'texteditor'
+              },
+              {
+                name: 'poles-transfer',
+                label: 'Will any animals be moved between a POLE and a licensed establishment during this project?',
+                type: 'radio',
+                inline: true,
+                className: 'smaller',
+                options: [
+                  {
+                    label: 'Yes',
+                    value: true,
+                    reveal: [
+                      {
+                        name: 'poles-transfer-justification',
+                        label: 'Why do you need to move animals between a POLE and a licensed establishment?',
+                        type: 'texteditor'
+                      },
+                      {
+                        name: 'poles-transfer-condition',
+                        label: 'How will you ensure that animals are in a suitable condition to be transported?',
+                        type: 'texteditor'
+                      },
+                      {
+                        name: 'poles-transfer-responsibility',
+                        label: 'Who will be responsible for checking the animals before they are transported?',
+                        type: 'texteditor'
+                      },
+                      {
+                        name: 'poles-transfer-checks',
+                        label: 'How will you guarantee the competence of this person to make the appropriate checks?',
+                        type: 'texteditor'
+                      },
+                      {
+                        name: 'poles-transfer-delivery',
+                        label: 'How may the movement of animals between a POLE and a licensed establishment affect the scientific delivery of this project?',
+                        type: 'texteditor'
+                      },
+                      {
+                        name: 'poles-transfer-measures',
+                        label: 'Which measures will you use to minimise any adverse effects for animals that may arise from moving them between a POLE and a licensed establishment?',
+                        type: 'texteditor'
+                      }
+                    ]
+                  },
+                  {
+                    label: 'No',
+                    value: false
+                  }
+                ]
+              }
+            ]
           }
         ]
       }

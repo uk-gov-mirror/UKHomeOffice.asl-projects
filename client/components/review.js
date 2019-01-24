@@ -1,18 +1,25 @@
 import React, { Fragment } from 'react';
-import { connectProject } from '../helpers';
+import { connectProject, connectSettings } from '../helpers';
 import { ReviewTextEditor } from './editor';
 import speciesOptions from '../constants/species';
 
 import flatten from 'lodash/flatten';
 import values from 'lodash/values';
-
 import isUndefined from 'lodash/isUndefined';
+import isNull from 'lodash/isNull';
 
 class Review extends React.Component {
   replay() {
     let value = this.props.value;
+    let options;
+    if (this.props.type === 'checkbox' || this.props.type === 'radio') {
+      options = this.props.optionsFromSettings
+        ? this.props.settings[this.props.optionsFromSettings]
+        : this.props.options;
+    }
+
     if (this.props.type === 'radio' && !isUndefined(value)) {
-      value = this.props.options.find(option => option.value === value)
+      value = options.find(option => !isUndefined(option.value) ? option.value === value : option === value)
     }
 
     if (value && this.props.type === 'duration') {
@@ -43,9 +50,9 @@ class Review extends React.Component {
         );
       }
 
-      const options = this.props.type === 'species-selector'
-        ? flatten(values(speciesOptions))
-        : this.props.options;
+      if (this.props.type === 'species-selector') {
+        options = flatten(values(speciesOptions))
+      }
 
       const getValue = value => {
         const v = options.find(option => option.value === value)
@@ -91,7 +98,7 @@ class Review extends React.Component {
     if (this.props.type === 'texteditor' && this.props.value) {
       return <ReviewTextEditor {...this.props} />;
     }
-    if (value) {
+    if (!isUndefined(value) && !isNull(value) && value !== '') {
       return <p>{value.label || value}</p>;
     }
     return (
@@ -117,4 +124,4 @@ class Review extends React.Component {
   }
 }
 
-export default connectProject(Review);
+export default connectSettings(connectProject(Review));
