@@ -28,8 +28,9 @@ class ProtocolSections extends Component {
     this.props.onToggleActive();
   }
 
-  shouldComponentUpdate(newProps) {
+  shouldComponentUpdate(newProps, newState) {
     return newProps.values.complete !== this.props.values.complete
+      || newState.expanded !== this.state.expanded
       || newProps.values.severity !== this.props.values.severity;
   }
 
