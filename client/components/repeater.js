@@ -25,7 +25,7 @@ class Repeater extends Component {
 
   componentDidMount() {
     if (!this.props.initCollapsed && !this.state.items.length) {
-      this.setState({ items: [{ id: v4() }] });
+      this.addItem();
     }
   }
 
