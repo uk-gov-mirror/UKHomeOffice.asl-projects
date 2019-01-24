@@ -16,7 +16,7 @@ class ReviewStep extends React.Component {
   render() {
     return <Fragment>
       <Banner>
-        <h2>Please review your answers for:</h2>
+        <h2>Please review your answers for</h2>
         <h1>{ this.props.title }</h1>
       </Banner>
       {

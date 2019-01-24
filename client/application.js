@@ -153,6 +153,7 @@ export default {
                   {
                     name: 'experience-experimental-design',
                     label: 'What experimental design and data analysis training have you had?',
+                    hint: 'If you have, briefly describe your track record in securing funding for previous projects.',
                     type: 'texteditor'
                   },
                   {
@@ -312,10 +313,10 @@ export default {
         ]
       },
       'experimental-design': {
-        title: 'Experiental design',
+        title: 'Experimental design',
         steps: [
           {
-            title: 'Experiental design - 1 of 2',
+            title: 'Experimental design - 1 of 2',
             intro: 'There are several useful resources to help you plan your experiments. It is recommended that you read the ARRIVE or PREPARE guidelines, or use the NC3Rs\' Experimental Design Assistant before answering the questions in this section.',
             fields: [
               {
@@ -353,7 +354,7 @@ export default {
             ]
           },
           {
-            title: 'Experiental design - 2 of 2',
+            title: 'Experimental design - 2 of 2',
             fields: [
               {
                 name: 'experimental-design-data',
