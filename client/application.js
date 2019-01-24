@@ -315,7 +315,7 @@ export default {
       },
       'transfer-of-animals': {
         title: 'Trasfer and movement of animals',
-        show: values => values['other-establishments'] && values['other-establishments-list'].length,
+        show: values => values['other-establishments'] && values['other-establishments-list'] && values['other-Establishments-list'].length,
         fields: [
           {
             name: 'transfer',
@@ -392,6 +392,11 @@ export default {
             component: Poles,
             show: values => values.poles === true,
             fields: [
+              {
+                name: 'title',
+                label: 'Title',
+                type: 'text'
+              },
               {
                 name: 'pole-info',
                 label: '',
@@ -807,6 +812,18 @@ export default {
                 name: 'severity-details',
                 label: 'Why did you choose this severity category?',
                 type: 'texteditor'
+              },
+              {
+                name: 'locations',
+                label: 'Select the establishments or POLEs where this protocol will be carried out.',
+                hint: 'Select all that apply.',
+                type: 'location-selector'
+              },
+              {
+                name: 'objectives',
+                label: 'Which of your objectives will this protocol cover?',
+                hint: 'Select all that apply.',
+                type: 'objective-selector'
               },
               {
                 name: 'outputs',

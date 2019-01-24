@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connectProject, connectSettings } from '../helpers';
+import { Link } from 'react-router-dom';
 
 import castArray from 'lodash/castArray';
 import every from 'lodash/every';
@@ -132,6 +133,34 @@ class Field extends Component {
           this.onChange(val)
         }}
         />
+    }
+    if (this.props.type === 'location-selector') {
+      return <div className="location-selector">
+        <Field
+          {...this.props}
+          type="checkbox"
+          className="smaller"
+          options={[
+            ...this.props.settings.establishments,
+            ...(this.props.project.polesList || []).filter(p => p.title).map(p => p.title)
+          ]}
+        />
+        <Link to="/settings">Add new establishment</Link>
+        <Link to="../poles">Add new POLE</Link>
+      </div>
+    }
+    if (this.props.type === 'objective-selector') {
+      return <div className="objective-selector">
+        <Field
+          {...this.props}
+          type="checkbox"
+          className="smaller"
+          options={[
+            ...(this.props.project.objectives || []).filter(p => p.title).map(p => p.title)
+          ]}
+        />
+        <Link to="../strategy">Add new objective</Link>
+      </div>
     }
     if (this.props.type === 'checkbox') {
       return <CheckboxGroup

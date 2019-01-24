@@ -4,11 +4,9 @@ import Repeater from '../../../components/repeater';
 import Fieldset from '../../../components/fieldset';
 import Controls from '../../../components/controls';
 
-import Protocols from './protocols';
-
 const Pole = ({ index, fields, values, updateItem, removeItem, length }) => (
   <Fragment>
-    <div className="panel">
+    <div className="panel gutter">
       {
         length > 1 && <a href="#" className="float-right" onClick={removeItem}>Remove</a>
       }
@@ -19,7 +17,6 @@ const Pole = ({ index, fields, values, updateItem, removeItem, length }) => (
         onFieldChange={(key, value) => updateItem({ [key]: value })}
       />
     </div>
-    <Protocols index={index} updateItem={updateItem} protocols={values.protocols} />
   </Fragment>
 )
 

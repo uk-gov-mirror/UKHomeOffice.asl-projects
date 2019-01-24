@@ -1,8 +1,6 @@
 import React, { Fragment } from 'react';
 import { connectProject } from '../../../helpers';
 
-import findIndex from 'lodash/findIndex';
-
 import Banner from '../../../components/banner';
 import Review from '../../../components/review';
 
@@ -30,33 +28,9 @@ const ReviewSection = ({ title, fields, values, goto }) => (
                   <h2>POLE {index + 1}</h2>
                   <Review
                     {...fields.find(f => f.name === 'pole-info')}
+                    value={pole['pole-info']}
                   />
                 </div>
-                <br />
-                <h3>Protocols and steps that will be carried out at this POLE</h3>
-                {
-                  pole.protocols && Object.keys(pole.protocols).map((key, index) => {
-                    const protocol = values.protocols.find(p => p.id === key)
-                    const steps = protocol.steps.filter(s => pole.protocols[key].steps.includes(s.id))
-                    return (
-                      <div key={key} className="protocol-summary">
-                        <div className="header">
-                          <h2>Protocol {index + 1}</h2>
-                          <h3>{protocol.title}</h3>
-                          <p>Severity classification: <strong>{protocol.severity.toUpperCase()}</strong></p>
-                          <br />
-                          {
-                            steps.map((step, index) => (
-                              <h3 key={index}>Step {findIndex(protocol.steps, s => s.id === step.id) + 1} <span className="smaller-text">{step.title}</span></h3>
-                            ))
-                          }
-                        </div>
-                      </div>
-                    )
-                  })
-                }
-                <hr />
-                <br />
               </Fragment>
             ))
           }
