@@ -12,10 +12,8 @@ import { loadSettings } from './actions/settings';
 const store = configureStore();
 
 store.dispatch(loadSettings())
-  .then(() => {
-    store.dispatch(loadProjects());
-    renderApp()
-  });
+  .then(() => store.dispatch(loadProjects()))
+  .then(() => renderApp());
 
 const renderApp = () => render(
   <Provider store={store}>
