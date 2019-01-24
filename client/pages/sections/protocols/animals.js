@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 
 import some from 'lodash/some';
+import intersection from 'lodash/intersection';
 
 import Fieldset from '../../../components/fieldset';
 import Controls from '../../../components/controls';
@@ -129,6 +130,9 @@ class Animals extends Component {
               prefix={prefix}
             />
             {
+              !this.props.project.species.length && <p><em>No species added to project</em></p>
+            }
+            {
               !adding && <a href="#" onClick={this.toggleAdding}>Add more animal types</a>
             }
             {
@@ -139,7 +143,11 @@ class Animals extends Component {
                 onFieldChange={this.props.save}
               />
             }
-            <Controls onContinue={this.saveAnimals} onExit={exit} />
+            <Controls
+              continueDisabled={!intersection(values.species, this.props.project.species).length}
+              onContinue={this.saveAnimals}
+              onExit={exit}
+            />
           </Fragment>
         )
     )
