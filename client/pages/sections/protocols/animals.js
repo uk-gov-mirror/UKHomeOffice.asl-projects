@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import some from 'lodash/some';
 import intersection from 'lodash/intersection';
 import flatten from 'lodash/flatten';
+import values from 'lodash/values';
+
+import SPECIES from '../../../constants/species';
 
 import Fieldset from '../../../components/fieldset';
 import Controls from '../../../components/controls';
@@ -87,14 +90,14 @@ class Animals extends Component {
   }
 
   render() {
-    const { fields, values, onFieldChange, updateItem, exit, advance, name, index } = this.props;
+    const { fields, onFieldChange, updateItem, exit, advance, name, index } = this.props;
     const { adding, active, review } = this.state;
     const speciesField = fields.filter(f => f.section === 'intro').map(f => ({ ...f, options: flatten([
       ...(this.props.project.species || []).map(s => {
         if (s.indexOf('other') > -1) {
           return this.props.project[`species-${s}`]
         }
-        return s;
+        return flatten(values(SPECIES)).find(species => species.value === s);
       }),
       ...(this.props.project['species-other'] || [])
     ]) }));
@@ -114,7 +117,7 @@ class Animals extends Component {
       this.props.project['species-other']
     ]);
 
-    const continueDisabled = !intersection(values.species, allSpecies).length
+    const continueDisabled = !intersection(this.props.values.species, allSpecies).length
 
     return (
       active
@@ -144,7 +147,7 @@ class Animals extends Component {
           <Fragment>
             <Fieldset
               fields={speciesField}
-              values={values}
+              values={this.props.values}
               onFieldChange={onFieldChange}
               prefix={prefix}
             />
