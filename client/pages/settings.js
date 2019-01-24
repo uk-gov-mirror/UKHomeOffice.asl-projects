@@ -9,10 +9,22 @@ import Field from '../components/field';
 import Controls from '../components/controls';
 
 import { updateSettings } from '../actions/settings';
+import { nuke } from '../actions/nuke';
 
 class Settings extends Component {
   state = {
     establishments: this.props.establishments || ['']
+  }
+
+  nuke = React.createRef()
+
+  componentDidMount() {
+    const nuke = this.nuke.current
+    nuke.onmouseover = () => {
+      nuke.style.position = 'fixed';
+      nuke.style.top = `${Math.random() * window.innerHeight}px`;
+      nuke.style.left = `${Math.random() * window.innerWidth}px`;
+    }
   }
 
   addEstablishment = () => {
@@ -41,7 +53,6 @@ class Settings extends Component {
     this.props.history.push('/');
   }
 
-
   exit = () => {
     this.props.history.push('/');
   }
@@ -50,6 +61,7 @@ class Settings extends Component {
     const { establishments } = this.state;
     return (
       <Fragment>
+        <button onClick={this.props.nuke} className="float-right govuk-button" ref={this.nuke}>Nuke the data</button>
         <h1>Settings</h1>
         <h3>Your establishments</h3>
         {
@@ -89,7 +101,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    save: (key, value) => dispatch(updateSettings(key, value))
+    save: (key, value) => dispatch(updateSettings(key, value)),
+    nuke: () => dispatch(nuke())
   }
 }
 
