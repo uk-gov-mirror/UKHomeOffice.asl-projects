@@ -36,6 +36,7 @@ class Animal extends Component {
   render() {
     const { prefix, fields, values, updateItem, index } = this.props;
     const { expanded } = this.state;
+    console.log(values)
     return (
       <Expandable className="no-bg" onHeaderClick={this.toggleExpanded} expanded={expanded}>
         <h3 className="title">{values.name}</h3>
@@ -73,7 +74,14 @@ class Animals extends Component {
   saveAnimals = () => {
     const species = this.props.values.species;
     const speciesDetails = this.props.values.speciesDetails || [];
-    species.forEach(item => {
+    species.forEach(i => {
+      let item = flatten(values(SPECIES)).find(f => f.value === i);
+      if (item) {
+        item = item.label
+      }
+      else {
+        item = i;
+      }
       if (some(speciesDetails, sd => sd.name === item)) {
         return;
       }
@@ -85,8 +93,32 @@ class Animals extends Component {
   }
 
   getItems = () => {
-    const { values: { speciesDetails = [], species = [] }, project } = this.props;
-    return speciesDetails.filter(s => species.includes(s.name) && [...project.species, ...([project['species-other']] || [])].includes(s.name))
+    const { values: { speciesDetails = [] }, project } = this.props;
+    let species = this.props.values.species || [];
+
+    species = species.map(s => {
+      const obj = flatten(values(SPECIES)).find(sp => sp.value === s);
+      if (obj) {
+        return obj.label;
+      }
+      return s;
+    });
+
+
+    const proj = flatten([
+      ...project.species.map(s => {
+        if (s.indexOf('other') > -1) {
+          return project[`species-${s}`];
+        }
+        const species = flatten(values(SPECIES)).find(sp => sp.value === s);
+        if (species) {
+          return species.label;
+        }
+      }),
+      ...([project['species-other']] || [])
+    ]);
+
+    return speciesDetails.filter(s => species.includes(s.name) && proj.includes(s.name))
   }
 
   render() {
@@ -103,7 +135,7 @@ class Animals extends Component {
     ]) }));
     const items = this.getItems();
     if (review) {
-      return <Review fields={fields.filter(f => f.section !== 'intro')} values={this.getItems()} advance={advance} onEdit={this.toggleReview} />
+      return <Review fields={fields.filter(f => f.section !== 'intro')} values={items} advance={advance} onEdit={this.toggleReview} />
     }
     const prefix = `${name}-${index}-`;
 
