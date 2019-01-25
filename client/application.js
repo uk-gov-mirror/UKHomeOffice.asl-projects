@@ -115,7 +115,7 @@ export default {
               },
               {
                 name: 'species',
-                label: 'What types of animals will be used in this project?',
+                label: 'Which types of animals will be used in this project?',
                 type: 'species-selector',
                 summary: true
               }

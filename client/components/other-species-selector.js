@@ -38,7 +38,7 @@ class OtherSpecies extends Component {
   }
 
   render() {
-    const { name, label = 'Which species will you be using' } = this.props;
+    const { name, label = 'Which other type of animal will you be using?' } = this.props;
     const { items } = this.state;
 
     return (
