@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import some from 'lodash/some';
 import intersection from 'lodash/intersection';
 import flatten from 'lodash/flatten';
+import values from 'lodash/values';
+
+import SPECIES from '../../../constants/species';
 
 import Fieldset from '../../../components/fieldset';
 import Controls from '../../../components/controls';
@@ -70,7 +73,14 @@ class Animals extends Component {
   saveAnimals = () => {
     const species = this.props.values.species;
     const speciesDetails = this.props.values.speciesDetails || [];
-    species.forEach(item => {
+    species.forEach(i => {
+      let item = flatten(values(SPECIES)).find(f => f.value === i);
+      if (item) {
+        item = item.label
+      }
+      else {
+        item = i;
+      }
       if (some(speciesDetails, sd => sd.name === item)) {
         return;
       }
@@ -82,25 +92,49 @@ class Animals extends Component {
   }
 
   getItems = () => {
-    const { values: { speciesDetails = [], species = [] }, project } = this.props;
-    return speciesDetails.filter(s => species.includes(s.name) && [...project.species, ...([project['species-other']] || [])].includes(s.name))
+    const { values: { speciesDetails = [] }, project } = this.props;
+    let species = this.props.values.species || [];
+
+    species = species.map(s => {
+      const obj = flatten(values(SPECIES)).find(sp => sp.value === s);
+      if (obj) {
+        return obj.label;
+      }
+      return s;
+    });
+
+
+    const proj = flatten([
+      ...project.species.map(s => {
+        if (s.indexOf('other') > -1) {
+          return project[`species-${s}`];
+        }
+        const species = flatten(values(SPECIES)).find(sp => sp.value === s);
+        if (species) {
+          return species.label;
+        }
+      }),
+      ...([project['species-other']] || [])
+    ]);
+
+    return speciesDetails.filter(s => species.includes(s.name) && proj.includes(s.name))
   }
 
   render() {
-    const { fields, values, onFieldChange, updateItem, exit, advance, name, index } = this.props;
+    const { fields, onFieldChange, updateItem, exit, advance, name, index } = this.props;
     const { adding, active, review } = this.state;
     const speciesField = fields.filter(f => f.section === 'intro').map(f => ({ ...f, options: flatten([
       ...(this.props.project.species || []).map(s => {
         if (s.indexOf('other') > -1) {
           return this.props.project[`species-${s}`]
         }
-        return s;
+        return flatten(values(SPECIES)).find(species => species.value === s);
       }),
       ...(this.props.project['species-other'] || [])
     ]) }));
     const items = this.getItems();
     if (review) {
-      return <Review fields={fields.filter(f => f.section !== 'intro')} values={this.getItems()} advance={advance} onEdit={this.toggleReview} />
+      return <Review fields={fields.filter(f => f.section !== 'intro')} values={items} advance={advance} onEdit={this.toggleReview} />
     }
     const prefix = `${name}-${index}-`;
 
@@ -114,7 +148,7 @@ class Animals extends Component {
       this.props.project['species-other']
     ]);
 
-    const continueDisabled = !intersection(values.species, allSpecies).length
+    const continueDisabled = !intersection(this.props.values.species, allSpecies).length
 
     return (
       active
@@ -144,7 +178,7 @@ class Animals extends Component {
           <Fragment>
             <Fieldset
               fields={speciesField}
-              values={values}
+              values={this.props.values}
               onFieldChange={onFieldChange}
               prefix={prefix}
             />
