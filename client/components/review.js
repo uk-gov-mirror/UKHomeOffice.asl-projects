@@ -35,6 +35,7 @@ class Review extends React.Component {
     if (this.props.type === 'species-selector') {
       const project = this.props.project;
       const other = project[`${this.props.name}-other`] || [];
+      value = value || [];
       value = flatten([
         ...value.map(val => {
           if (val.indexOf('other') > -1) {
