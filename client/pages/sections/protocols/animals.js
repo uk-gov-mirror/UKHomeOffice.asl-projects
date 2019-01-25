@@ -105,7 +105,7 @@ class Animals extends Component {
 
 
     const proj = flatten([
-      ...project.species.map(s => {
+      ...(project.species || []).map(s => {
         if (s.indexOf('other') > -1) {
           return project[`species-${s}`];
         }
@@ -139,7 +139,7 @@ class Animals extends Component {
     const prefix = `${name}-${index}-`;
 
     const allSpecies = flatten([
-      ...this.props.project.species.map(s => {
+      ...(this.props.project.species || []).map(s => {
         if (s.indexOf('other') > -1) {
           return this.props.project[`species-${s}`];
         }
@@ -183,7 +183,7 @@ class Animals extends Component {
               prefix={prefix}
             />
             {
-              !this.props.project.species.length && <p><em>No species added to project</em></p>
+              !this.props.project.species || !this.props.project.species.length && <p><em>No species added to project</em></p>
             }
             {
               !adding && <a href="#" onClick={this.toggleAdding}>Add more animal types</a>
