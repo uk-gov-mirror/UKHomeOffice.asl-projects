@@ -36,7 +36,6 @@ class Animal extends Component {
   render() {
     const { prefix, fields, values, updateItem, index } = this.props;
     const { expanded } = this.state;
-    console.log(values)
     return (
       <Expandable className="no-bg" onHeaderClick={this.toggleExpanded} expanded={expanded}>
         <h3 className="title">{values.name}</h3>
