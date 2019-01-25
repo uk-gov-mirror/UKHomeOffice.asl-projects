@@ -32,7 +32,7 @@ const AnimalQuantities = ({ label, hint, error, name, values, onFieldChange }) =
                 value={values[fieldName]}
               />
             })
-          : <p>No species have been added</p>
+          : <p>No animals have been added</p>
       }
     </div>
   )
