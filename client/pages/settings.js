@@ -7,6 +7,7 @@ import compact from 'lodash/compact';
 
 import Field from '../components/field';
 import Controls from '../components/controls';
+import WarningButton from '../components/warning-button';
 
 import { updateSettings } from '../actions/settings';
 import { nuke } from '../actions/nuke';
@@ -50,7 +51,7 @@ class Settings extends Component {
     const { establishments } = this.state;
     return (
       <Fragment>
-        <Button className="float-right" onClick={this.props.nuke}>Clear database</Button>
+        <WarningButton className="float-right" onClick={this.props.nuke}>Clear database</WarningButton>
         <h1>Settings</h1>
         <h3>Your establishments</h3>
         {
