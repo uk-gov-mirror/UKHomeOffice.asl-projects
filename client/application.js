@@ -186,16 +186,16 @@ export default {
             options: [
               {
                 label: 'Yes',
-                value: true,
+                value: true
+              },
+              {
+                label: 'No',
+                value: false,
                 reveal: {
                   name: 'experience-relevant-expertise',
                   label: 'What relevant expertise, people, and support will be available to help you carry out your experiments?',
                   type: 'texteditor'
                 }
-              },
-              {
-                label: 'No',
-                value: false
               }
             ]
           }
