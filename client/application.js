@@ -735,7 +735,7 @@ export default {
           },
           {
             name: 'anaesthesia',
-            label: 'Will you be using anaesthesia during this project?',
+            label: 'Will you be using any form of anaesthesia during this project?',
             type: 'radio',
             inline: true,
             className: 'smaller',
@@ -752,7 +752,7 @@ export default {
           },
           {
             name: 'substances',
-            label: 'Will you be using substances for testing or physiological effects during this project?',
+            label: 'Will you be administering substances for testing or to cause physiological effects?',
             type: 'radio',
             inline: true,
             className: 'smaller',
