@@ -316,7 +316,7 @@ export default {
       },
       'transfer-of-animals': {
         title: 'Transfer and movement of animals',
-        show: values => values['other-establishments'] && values['other-establishments-list'] && values['other-Establishments-list'].length,
+        show: values => values['other-establishments'] && values['other-establishments-list'] && values['other-establishments-list'].length,
         fields: [
           {
             name: 'transfer',
