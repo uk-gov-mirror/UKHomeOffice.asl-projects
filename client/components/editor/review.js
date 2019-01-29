@@ -1,5 +1,5 @@
 import React from 'react';
-import { Editor } from 'slate-react';
+import { Editor } from '@lennym/slate-react';
 import RTEditor from './editor';
 
 class ReviewTextEditor extends RTEditor {
