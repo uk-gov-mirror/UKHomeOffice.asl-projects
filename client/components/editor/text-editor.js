@@ -1,6 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
-import { Editor } from 'slate-react';
+import { Editor } from '@lennym/slate-react';
 import {
   ic_format_bold,
   ic_format_italic,
