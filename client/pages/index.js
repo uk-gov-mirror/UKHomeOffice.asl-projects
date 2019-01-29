@@ -41,7 +41,7 @@ class Index extends React.Component {
           return this.props.error(`Error importing file: ${e.message}`);
         }
       };
-      reader.readAsBinaryString(file);
+      reader.readAsText(file);
     });
   }
 
