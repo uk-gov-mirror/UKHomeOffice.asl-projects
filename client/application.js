@@ -670,12 +670,13 @@ export default {
           {
             name: 'benefit-outputs',
             label: 'What outputs do you think you will see at the end of this project?',
-            hint: 'Outputs can include new information, publications, or products. Outputs may be short-term, or they may not be fully realised until you\'ve completed the project. Consider all timescales in your answer.',
+            hint: 'Outputs can include new information, publications, or products.',
             type: 'texteditor'
           },
           {
             name: 'benefit-who',
-            label: 'Who or what will benefit from these outcomes?',
+            label: 'Who or what will benefit from these outputs?',
+            hint: 'The benefits of these outputs may be seen in the short-term, or they may not be fully realised until you\'ve completed the project. Consider all timescales in your answer.',
             type: 'texteditor'
           }
         ]
@@ -752,7 +753,7 @@ export default {
           },
           {
             name: 'substances',
-            label: 'Will you be administering substances for testing or to cause physiological effects?',
+            label: 'Will you be administering substances for testing or to cause physiological effects during this project?',
             type: 'radio',
             inline: true,
             className: 'smaller',
@@ -1262,7 +1263,7 @@ export default {
                     value: 'set-free'
                   },
                   {
-                    label: 'Re-homed',
+                    label: 'Rehomed',
                     value: 're-homed'
                   },
                   {
@@ -1892,7 +1893,7 @@ export default {
         fields: [
           {
             name: 'reduction-quantities',
-            label: 'Enter the estimated number of animals used in this project.',
+            label: 'Enter the estimated number of animals of each type used in this project.',
             type: 'animal-quantities'
           },
           {
