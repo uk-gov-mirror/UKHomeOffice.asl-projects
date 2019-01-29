@@ -916,7 +916,7 @@ export default {
               {
                 name: 'quantity',
                 label: 'How many of these animals will be used in this protocol?',
-                type: 'number',
+                type: 'text'
               },
               {
                 name: 'continued-use',
@@ -1141,7 +1141,7 @@ export default {
                   name: 'typical-percentage',
                   label: 'How many animals used in this protocol do you estimate will experience this typical series of steps?',
                   hint: 'If you’re unable to estimate a single percentage, enter a percentage range (for example 30-50%).',
-                  type: 'number'
+                  type: 'text'
                 }
               ]
             },
@@ -1164,7 +1164,7 @@ export default {
                   name: 'maximal-percentage',
                   label: 'How many animals used in this protocol do you estimate will experience this maximal series of steps?',
                   hint: 'If you’re unable to estimate a single percentage, enter a percentage range (for example 30-50%).',
-                  type: 'number'
+                  type: 'text'
                 }
               ]
             }
@@ -1226,7 +1226,7 @@ export default {
               {
                 name: 'max-repetitions',
                 label: 'What’s the maximum number of times that the same animal could go through this protocol?',
-                type: 'number'
+                type: 'text'
               },
               {
                 name: 'repetitions-justification',
