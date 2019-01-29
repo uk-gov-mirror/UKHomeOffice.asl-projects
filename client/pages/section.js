@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { updateProject } from '../actions/projects';
 import DefaultSection from './sections';
+import SectionsLink from '../components/sections-link';
 
 const mapStateToProps = (state, props) => {
   const section = Object.values(state.application).reduce((found, section) => {
@@ -36,17 +37,22 @@ class Section extends React.Component {
     const Component = this.props.component || DefaultSection;
     const { fields, title, step, section, ...rest } = this.props;
 
-    return <Component
-      { ...this.props }
-      title={ title }
-      section={ section }
-      save={ (...args) => this.props.update(...args) }
-      exit={ () => this.props.history.push(`/project/${this.props.id}`) }
-      fields={ fields }
-      step={ step }
-      { ...rest }
-      onProgress={ step => this.props.history.push(`/project/${this.props.id}/${this.props.section}/${step}`) }
-      />
+    return (
+      <Fragment>
+        <SectionsLink />
+        <Component
+          { ...this.props }
+          title={ title }
+          section={ section }
+          save={ (...args) => this.props.update(...args) }
+          exit={ () => this.props.history.push(`/project/${this.props.id}`) }
+          fields={ fields }
+          step={ step }
+          { ...rest }
+          onProgress={ step => this.props.history.push(`/project/${this.props.id}/${this.props.section}/${step}`) }
+        />
+      </Fragment>
+    )
   }
 
 }
