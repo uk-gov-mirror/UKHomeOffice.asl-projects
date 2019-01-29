@@ -72,7 +72,13 @@ class ProtocolSections extends Component {
               onFieldChange={(key, value) => updateItem({ [key]: value })}
               save={save}
             />
-            <Complete type="protocol" complete={values.complete} onChange={this.setCompleted} buttonClassName="button-secondary" />
+            <Complete
+              type="protocol"
+              complete={values.complete}
+              onChange={this.setCompleted}
+              buttonClassName="button-secondary"
+              checkChanged
+            />
           </div>
         </Expandable>
       </section>
