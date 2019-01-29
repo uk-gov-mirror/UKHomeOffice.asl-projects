@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
+import { connectProject } from '../../helpers';
 import classnames from 'classnames';
 
 import map from 'lodash/map';
@@ -107,7 +108,7 @@ class NTSSummary extends Component {
                         {...field}
                         label={ field.review || field.label }
                         key={ field.name }
-                        value={ this.props.values && this.props.values[field.name] }
+                        value={ this.props.project && this.props.project[field.name] }
                         onEdit={ () => console.log('edit') }
                       />
                     ))
@@ -128,4 +129,4 @@ const mapStateToProps = ({ application }) => ({
     .reduce((obj, subsections) => ({ ...obj, ...subsections }), {})
 });
 
-export default connect(mapStateToProps)(NTSSummary);
+export default connect(mapStateToProps)(connectProject(NTSSummary));
