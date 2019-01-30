@@ -56,8 +56,6 @@ class Index extends React.Component {
     }
     return <DropZone
       onDrop={files => this.drop(files)}
-      onDropRejected={files => this.props.error(`Invalid file type: ${files[0].type}`)}
-      accept="application/json"
       activeClassName="import-active"
       rejectClassName="import-rejected"
       style={{}}
