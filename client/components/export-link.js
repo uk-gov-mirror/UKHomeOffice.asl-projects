@@ -23,7 +23,7 @@ class ExportLink extends React.Component {
     if (!this.props.project) {
       return null;
     }
-    return <a className={classnames('download', this.props.className)} href={`data:application/json;base64,${this.encode()}`} download={`${this.props.data.title}.json`}>Export</a>
+    return <a className={classnames('download', this.props.className)} href={`data:application/json;base64,${this.encode()}`} download={`${this.props.data.title}.ppl`}>Export</a>
   }
 
 }
