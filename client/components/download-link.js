@@ -5,6 +5,8 @@ import saveAs from 'file-saver';
 import { Document, Packer, Paragraph, TextRun, Indent, Numbering } from 'docx';
 
 import flatten from 'lodash/flatten';
+import SPECIES from '../constants/species';
+import isUndefined from 'lodash/isUndefined';
 
 const mapStateToProps = (state, props) => {
   const project = state.projects.find(project => project.id === props.project);
@@ -12,6 +14,90 @@ const mapStateToProps = (state, props) => {
     values: project,
     sections: Object.values(state.application)
   };
+};
+
+const renderTextEditor = (value, doc) => {
+  var content = JSON.parse(value);
+  var nodes = content.document.nodes;
+  var text;
+  nodes.forEach(node => {
+    switch (node.type) {
+      case 'heading-one': {
+        doc.createParagraph(node.nodes[0].leaves[0].text.trim()).heading1();
+        break;
+      }
+      case 'heading-two': {
+        doc.createParagraph(node.nodes[0].leaves[0].text.trim()).heading2();
+        break;
+      }
+      case 'block-quote': {
+        doc.createParagraph(node.nodes[0].leaves[0].text.trim()).style('aside');
+        break;
+      }
+      case 'numbered-list': {
+        const numbering = new Numbering();
+        const abstract = numbering.createAbstractNumbering();
+        abstract.createLevel(0, 'decimal', '%2.', 'start');
+        const concrete = numbering.createConcreteNumbering(abstract);
+        node.nodes.map(n => {
+          // TODO: the item may have marks
+          text = new TextRun(n.nodes[0].leaves[0].text.trim()).size(28);
+          var paragraph = new Paragraph();
+          paragraph.setNumbering(concrete, 0);
+          paragraph.style('body');
+          paragraph.addRun(text);
+          doc.addParagraph(paragraph);
+        });
+        break;
+      }
+      case 'bulleted-list': {
+        node.nodes.map(n => {
+          // TODO: the item may have marks
+          text = new TextRun(n.nodes[0].leaves[0].text.trim()).size(28);
+          var paragraph = new Paragraph();
+          paragraph.style('body').bullet();
+          paragraph.addRun(text);
+          doc.addParagraph(paragraph);
+        });
+        break;
+      }
+      case 'paragraph': {
+        node.nodes[0].leaves.map(leaf => {
+          text = new TextRun(leaf.text.trim());
+          if (text) {
+            leaf.marks.forEach(mark => {
+              switch (mark.type) {
+                case 'bold':
+                  text.bold();
+                  break;
+                // case 'code':
+                // return text.code();
+                case 'italic':
+                  text.italic();
+                  break;
+                case 'underlined':
+                  text.underline();
+                  break;
+                default:
+                  return text;
+              }
+            });
+            var paragraph = new Paragraph();
+            paragraph.style('body');
+            paragraph.addRun(text);
+            doc.addParagraph(paragraph);
+          }
+        });
+        break;
+      }
+      case 'image':
+        var img = doc.createImage(node.data.src);
+        img.scale(2);
+        break;
+      default:
+        break;
+    }
+  });
 };
 
 class DownloadLink extends React.Component {
@@ -64,9 +150,9 @@ class DownloadLink extends React.Component {
     doc.createParagraph(this.props.values.title).heading1();
 
     this.props.sections.map(section => {
-      doc.createParagraph(section.title).heading1();
 
-      // each section has got subsections
+      console.log(JSON.stringify(this.props.values));
+
       Object.values(section.subsections).map(({ title, fields, steps }) => {
         doc.createParagraph(title).heading2();
 
@@ -80,11 +166,12 @@ class DownloadLink extends React.Component {
 
         if (sectionFields) {
           sectionFields.map(field => {
-            this.props.values[field.name] +
-              doc.createParagraph(field.label).heading3();
-            const value = this.props.values[field.name];
 
-            if (!value) {
+            // console.log(field.name + ' : ' + field.type);
+
+            doc.createParagraph(field.label).heading3();
+            const value = this.props.values[field.name];
+            if (isUndefined(value)) {
               var paragraph = new Paragraph();
               paragraph.style('body');
               paragraph.addRun(new TextRun('No answer provided').italic());
@@ -93,13 +180,70 @@ class DownloadLink extends React.Component {
               switch (field.type) {
                 case 'radio':
                 case 'checkbox':
-                  var label = field.options
-                    ? field.options.find(o => o.value === value).label
-                    : value;
+                  var option;
+                  if (field.options)
+                    option = field.options.find(o => o.value === value);
+                  var label = option ? option.label : value;
                   doc.createParagraph(label).style('body');
+                  if (option && option.reveal) {
+                    //make sure reveals are arrays everywhere
+                    //and then do the below for each reveal
+                    var reveals = !Array.isArray(option.reveal) ? [option.reveal] : option.reveal;
+                    reveals.map(reveal => {
+                      const revealValue = this.props.values[reveal.name];
+                      if (revealValue) {
+                        doc.createParagraph(reveal.label).heading3();
+                        switch (reveal.type) {
+                          case 'radio':
+                          case 'species-selector':
+                            doc
+                              .createParagraph(
+                                reveal.options.find(
+                                  r => r.value === revealValue
+                                )
+                              )
+                              .style('body');
+                            break;
+                          case 'texteditor':
+                            renderTextEditor(revealValue, doc);
+                            break;
+                          default:
+                            break;
+                        }
+                      }
+                    });
+
+                  }
+                  // if(field.name==='primary-establishment') {
+                  //   console.log('PRIMARY ESTABLISHMENT BEGIN');
+                  //   console.log(JSON.stringify(field.playback) + ' : ' + value);
+                  //   console.log('PRIMARY ESTABLISHMENT END');
+                  //   doc.createParagraph(field.playback).heading3();
+                  //   doc.createParagraph(value).style('body');
+                  // }
                   break;
                 case 'species-selector':
-                  doc.createParagraph(value.join(',')).style('body');
+                  var text;
+                  value.map(specie => {
+                    text = new TextRun(
+                      flatten(Object.values(SPECIES)).find(
+                        s => s.value === specie
+                      ).label
+                    ).size(28);
+                    var paragraph = new Paragraph();
+                    paragraph.style('body').bullet();
+                    paragraph.addRun(text);
+                    doc.addParagraph(paragraph);
+                  });
+                  const otherSpecies = this.props.values['species-other'];
+                  if (otherSpecies)
+                    otherSpecies.map(s => {
+                      text = new TextRun(s).size(28);
+                      var paragraph = new Paragraph();
+                      paragraph.style('body').bullet();
+                      paragraph.addRun(text);
+                      doc.addParagraph(paragraph);
+                    });
                   break;
                 case 'text':
                   if (typeof value == typeof true) {
@@ -113,99 +257,7 @@ class DownloadLink extends React.Component {
                   doc.createParagraph('Months ' + value.months);
                   break;
                 case 'texteditor':
-                  var content = JSON.parse(value);
-                  var nodes = content.document.nodes;
-                  var text;
-                  nodes.forEach(node => {
-                    switch (node.type) {
-                      case 'heading-one': {
-                        doc
-                          .createParagraph(node.nodes[0].leaves[0].text.trim())
-                          .heading1();
-                        break;
-                      }
-                      case 'heading-two': {
-                        doc
-                          .createParagraph(node.nodes[0].leaves[0].text.trim())
-                          .heading2();
-                        break;
-                      }
-                      case 'block-quote': {
-                        doc
-                          .createParagraph(node.nodes[0].leaves[0].text.trim())
-                          .style('aside');
-                        break;
-                      }
-                      case 'numbered-list': {
-                        const numbering = new Numbering();
-                        const abstract = numbering.createAbstractNumbering();
-                        abstract.createLevel(0, 'decimal', '%2.', 'start');
-                        const concrete = numbering.createConcreteNumbering(
-                          abstract
-                        );
-                        node.nodes.map(n => {
-                          // TODO: the item may have marks
-                          text = new TextRun(
-                            n.nodes[0].leaves[0].text.trim()
-                          ).size(28);
-                          var paragraph = new Paragraph();
-                          paragraph.setNumbering(concrete, 0);
-                          paragraph.style('body');
-                          paragraph.addRun(text);
-                          doc.addParagraph(paragraph);
-                        });
-                        break;
-                      }
-                      case 'bulleted-list': {
-                        node.nodes.map(n => {
-                          // TODO: the item may have marks
-                          text = new TextRun(
-                            n.nodes[0].leaves[0].text.trim()
-                          ).size(28);
-                          var paragraph = new Paragraph();
-                          paragraph.style('body').bullet();
-                          paragraph.addRun(text);
-                          doc.addParagraph(paragraph);
-                        });
-                        break;
-                      }
-                      case 'paragraph': {
-                        node.nodes[0].leaves.map(leaf => {
-                          text = new TextRun(leaf.text.trim());
-                          if (text) {
-                            leaf.marks.forEach(mark => {
-                              switch (mark.type) {
-                                case 'bold':
-                                  text.bold();
-                                  break;
-                                // case 'code':
-                                // return text.code();
-                                case 'italic':
-                                  text.italic();
-                                  break;
-                                case 'underlined':
-                                  text.underline();
-                                  break;
-                                default:
-                                  return text;
-                              }
-                            });
-                            var paragraph = new Paragraph();
-                            paragraph.style('body');
-                            paragraph.addRun(text);
-                            doc.addParagraph(paragraph);
-                          }
-                        });
-                        break;
-                      }
-                      case 'image':
-                        var img = doc.createImage(node.data.src);
-                        img.scale(2);
-                        break;
-                      default:
-                        break;
-                    }
-                  });
+                  renderTextEditor(value, doc);
                   break;
                 default:
                   break;
