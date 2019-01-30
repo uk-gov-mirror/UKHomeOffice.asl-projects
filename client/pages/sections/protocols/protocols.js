@@ -7,6 +7,8 @@ import { connectProject } from '../../../helpers';
 
 import ProtocolSections from './protocol-sections';
 
+import ReviewFields from '../../../components/review-fields';
+import ExpandingPanel from '../../../components/expanding-panel';
 import Fieldset from '../../../components/fieldset';
 import Repeater from '../../../components/repeater';
 import Controls from '../../../components/controls';
@@ -89,14 +91,31 @@ class Protocols extends Component {
     return length !== nextLength;
   }
 
+  edit = e => {
+    e.preventDefault();
+    this.props.retreat();
+  }
+
   render() {
-    const { project } = this.props;
+    const { project, setup: { fields } } = this.props;
     if (!size(project)) {
       return null;
     }
     return <Fragment>
       <h1>Protocols</h1>
       <p>Please enter the details of the protocols that make up this project.</p>
+      <ExpandingPanel
+        title="Protocols - general"
+        className="protocols-setup"
+      >
+        <Fragment>
+          <ReviewFields
+            fields={fields}
+            values={project}
+          />
+          <a href="#" onClick={this.edit}>Edit</a>
+        </Fragment>
+      </ExpandingPanel>
       <Repeater
         type="protocol"
         name="protocols"

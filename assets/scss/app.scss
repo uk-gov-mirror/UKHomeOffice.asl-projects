@@ -426,6 +426,21 @@ fieldset.smaller {
   }
 }
 
+.protocols-setup {
+  margin-bottom: $govuk-gutter;
+  border-bottom: 1px solid $govuk-border-colour;
+
+  header {
+    background-color: $light-grey;
+  }
+
+  .review {
+    hr, a {
+      display: none;
+    }
+  }
+}
+
 .steps {
   > button {
     display: inline-block;

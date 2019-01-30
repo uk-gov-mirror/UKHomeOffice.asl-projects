@@ -10,8 +10,8 @@ class ExpandingPanel extends Component {
 
   ref = React.createRef()
 
-  componentDidMount() {
-    this.setState({ open: false });
+  state = {
+    open: this.props.open || false
   }
 
   controlled() {
@@ -38,8 +38,9 @@ class ExpandingPanel extends Component {
     }
   }
 
-  shouldComponentUpdate(nextProps) {
-    return nextProps.open !== this.props.open;
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps.open !== this.props.open
+      || nextState.open !== this.state.open
   }
 
   scrollToTop = () => {
