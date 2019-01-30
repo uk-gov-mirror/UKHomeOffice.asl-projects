@@ -32,7 +32,7 @@ class Field extends Component {
   }
 
   mapOptions(options = []) {
-    return options.map(option => {
+    return options.filter(Boolean).map(option => {
       if (!option.reveal) {
         return option;
       }
