@@ -1313,7 +1313,7 @@ export default {
                           value: 'other',
                           reveal: {
                             name: 'method-and-justification',
-                            label: 'State the method of killing that you will use along with your justification for using it.​',
+                            label: 'State the method of killing that you will use, along with a scientific justification for using it, and an explanation of how you will minimise the animal\'s suffering.',
                             type: 'texteditor'
                           }
                         }
