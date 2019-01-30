@@ -51,9 +51,12 @@ class Settings extends Component {
     const { establishments } = this.state;
     return (
       <Fragment>
-        <WarningButton className="float-right" onClick={this.props.nuke}>Clear database</WarningButton>
+        <WarningButton className="float-right" onClick={this.props.nuke}>Clear all</WarningButton>
         <h1>Settings</h1>
         <h3>Your establishments</h3>
+        <span className='govuk-hint'>
+          Please add all establishments where your projects may take place. You will be able to define them as primary and other establishments in each application.
+        </span>
         {
           establishments.map((est, index) => (
             <div key={index} className="flex">
