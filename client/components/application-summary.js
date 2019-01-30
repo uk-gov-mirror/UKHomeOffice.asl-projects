@@ -99,7 +99,7 @@ class ApplicationSummary extends React.Component {
           })
         }
         <Fragment>
-          <p>All sections must be marked as complete before you can continue and send your application to the Home Office</p>
+          <p>All sections must be marked as complete before you can continue and send your application to the Home Office.</p>
           <Button
             disabled={!this.isCompleted()}
             onClick={() => console.log('complete')}
