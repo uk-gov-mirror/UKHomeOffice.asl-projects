@@ -44,8 +44,7 @@ class ExpandingPanel extends Component {
 
   scrollToTop = () => {
     window.scrollTo({
-      top: getScrollPos(this.ref.current, OFFSET),
-      behavior: 'smooth'
+      top: getScrollPos(this.ref.current, OFFSET)
     })
   }
 

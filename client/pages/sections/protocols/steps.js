@@ -10,7 +10,6 @@ import { ReviewTextEditor } from '../../../components/editor';
 import Review from '../../../components/review-fields';
 import Repeater from '../../../components/repeater';
 import Fieldset from '../../../components/fieldset';
-import Controls from '../../../components/controls';
 
 class Step extends Component {
   removeItem = e => {
@@ -93,10 +92,10 @@ class Step extends Component {
   }
 }
 
-const Steps = ({ values, updateItem, index, name, advance, exit, ...props }) => {
+const Steps = ({ values, updateItem, index, name, advance, ...props }) => {
   const prefix = `${name}-${index}-`;
   return (
-    <Fragment>
+    <div className="steps">
       <p className="grey">{props.hint}</p>
       <br />
       <Repeater
@@ -110,7 +109,8 @@ const Steps = ({ values, updateItem, index, name, advance, exit, ...props }) => 
           { ...props }
         />
       </Repeater>
-    </Fragment>
+      <Button onClick={advance} className="button-secondary">Next section</Button>
+    </div>
   )
 }
 

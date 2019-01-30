@@ -51,12 +51,13 @@ class Protocol extends Component {
   }
 
   render() {
-    const { steps, exit, save, updateItem, sections, values, fields, index, length } = this.props;
+    const { steps, exit, save, updateItem, sections, values, fields, index, length, removeItem, name } = this.props;
 
     return this.state.active
       ? <Form
         values={values}
         updateItem={updateItem}
+        removeItem={removeItem}
         fields={fields}
         index={index}
         length={length}
@@ -72,6 +73,7 @@ class Protocol extends Component {
           save={save}
           exit={exit}
           steps={steps}
+          name={name}
         />
   }
 }

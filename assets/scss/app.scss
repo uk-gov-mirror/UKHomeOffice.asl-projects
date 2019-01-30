@@ -426,25 +426,33 @@ fieldset.smaller {
   }
 }
 
-.step {
-  margin-bottom: $govuk-gutter;
-
-  &.completed {
-    @extend .panel;
+.steps {
+  > button {
+    display: inline-block;
+    margin-right: $govuk-gutter;
   }
 
-  > .review {
-    @extend .panel;
-    background-color: $white;
-    margin: -$govuk-gutter-half;
+  .step {
+    margin-bottom: $govuk-gutter;
 
-    .review {
-      hr, a {
-        display: none;
+    &.completed {
+      @extend .panel;
+    }
+
+    > .review {
+      @extend .panel;
+      background-color: $white;
+      margin: -$govuk-gutter-half;
+
+      .review {
+        hr, a {
+          display: none;
+        }
       }
     }
   }
 }
+
 
 .protocol {
   margin-bottom: $govuk-gutter;

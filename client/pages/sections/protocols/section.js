@@ -1,13 +1,12 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
-import every from 'lodash/every';
+
+import { Button } from '@ukhomeoffice/react-components';
+
 import flatten from 'lodash/flatten';
 import map from 'lodash/map';
 
 import Fieldset from '../../../components/fieldset'
-import Controls from '../../../components/controls'
-
-import Review from './review';
 
 const RenderSection = ({ title, label, hideTitle = true, fields, values, prefix, onFieldChange }) => {
   return (
@@ -28,47 +27,36 @@ const RenderSection = ({ title, label, hideTitle = true, fields, values, prefix,
   )
 }
 
-class Section extends Component {
-  constructor(props) {
-    super(props);
+const Section = ({
+  index,
+  name,
+  values,
+  sections,
+  advance,
+  hideTitle,
+  prefix = '',
+  sectionsLength,
+  sectionIndex,
+  ...props
+}) => {
+  const fields = sections
+    ? flatten(map(sections, section => section.fields))
+    : props.fields;
 
-    const fields = this.props.sections
-      ? flatten(map(this.props.sections, section => section.fields))
-      : this.props.fields
+  prefix = `${prefix}${name}-${index}-`;
 
-    this.state = {
-      fields,
-      review: every(fields, field => this.props.values[field.name])
-    };
-  }
-
-  toggleReview = () => {
-    this.setState({
-      review: !this.state.review
-    }, this.props.scrollToTop);
-  }
-
-  render() {
-    const { index, name, values, sections, exit, advance, hideTitle, ...props } = this.props;
-    const { review, fields } = this.state;
-
-    let { prefix = '' } = this.props;
-    prefix = `${prefix}${name}-${index}-`;
-
-    return review
-      ? <Review fields={fields} values={values} advance={advance} onEdit={this.toggleReview} exit={exit} />
-      : (
-        <Fragment>
-          {
-            sections
-              ? Object.keys(sections).map(section => <RenderSection key={section} {...props} {...sections[section]} prefix={prefix} values={values} hideTitle={false} />)
-              : <RenderSection {...props} hideTitle={hideTitle} fields={fields} prefix={prefix} values={values} />
-          }
-
-          <Controls onContinue={this.toggleReview} onExit={exit} exitClassName="link" />
-        </Fragment>
-      );
-  }
+  return (
+    <Fragment>
+      {
+        sections
+          ? Object.keys(sections).map(section => <RenderSection key={section} {...props} {...sections[section]} prefix={prefix} values={values} hideTitle={false} />)
+          : <RenderSection {...props} hideTitle={hideTitle} fields={fields} prefix={prefix} values={values} />
+      }
+      {
+        sectionIndex + 1 < sectionsLength && <Button className="button-secondary" onClick={advance}>Next section</Button>
+      }
+    </Fragment>
+  );
 }
 
 const mapStateToProps = (state, ownProps) => {

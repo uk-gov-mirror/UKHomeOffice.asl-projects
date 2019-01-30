@@ -86,7 +86,7 @@ class Repeater extends Component {
   }
 
   render() {
-    const addButton = <Button className="block button-secondary" onClick={this.addItem}>{`Add another ${this.props.type}`}</Button>
+    const addButton = <Button className="block" onClick={this.addItem}>{`Add another ${this.props.type}`}</Button>
     return (
       <Fragment>
         {

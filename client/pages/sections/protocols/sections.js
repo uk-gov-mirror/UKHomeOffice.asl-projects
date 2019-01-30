@@ -1,6 +1,7 @@
 import React from 'react';
 import { connectProject } from '../../../helpers';
-import map from 'lodash/map';
+
+import size from 'lodash/size'
 import pickBy from 'lodash/pickBy';
 import every from 'lodash/every';
 
@@ -31,18 +32,23 @@ const sectionIncluded = (section, values) => {
   return every(Object.keys(section.conditional), key => section.conditional[key] === values[key]);
 }
 
-const ProtocolSections = ({ sections, ...props }) => (
-  <Accordion openOne scrollToActive>
-    {
-      map(pickBy(sections, section => sectionIncluded(section, props.project)), (section, name) => (
-        <ExpandingPanel key={name} title={section.title}>
-          {
-            getSection(name, { ...props, ...section })
-          }
-        </ExpandingPanel>
-      ))
-    }
-  </Accordion>
-);
+const ProtocolSections = ({ sections, ...props }) => {
+  sections = pickBy(sections, section => sectionIncluded(section, props.project));
+
+  return (
+    <Accordion openOne scrollToActive>
+      {
+        Object.keys(sections).map((section, sectionIndex) => (
+          <ExpandingPanel key={section} title={sections[section].title}>
+            {
+              getSection(section, { ...props, ...sections[section], sectionsLength: size(sections), sectionIndex })
+            }
+          </ExpandingPanel>
+        ))
+      }
+    </Accordion>
+  )
+
+}
 
 export default connectProject(ProtocolSections);
