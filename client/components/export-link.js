@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
+import { saveAs } from 'file-saver';
 import { pack } from 'utf8-buffer';
 import { fromByteArray } from 'base64-js';
 
