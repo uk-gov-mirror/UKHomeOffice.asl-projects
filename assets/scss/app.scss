@@ -429,8 +429,20 @@ fieldset.smaller {
 .step {
   margin-bottom: $govuk-gutter;
 
-  .header, .content {
-    background-color: $light-grey !important;
+  &.completed {
+    @extend .panel;
+  }
+
+  > .review {
+    @extend .panel;
+    background-color: $white;
+    margin: -$govuk-gutter-half;
+
+    .review {
+      hr, a {
+        display: none;
+      }
+    }
   }
 }
 

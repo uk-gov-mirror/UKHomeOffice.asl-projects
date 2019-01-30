@@ -1041,7 +1041,7 @@ export default {
             fields: [
               {
                 name: 'title',
-                type: 'textarea',
+                type: 'texteditor',
                 label: 'To ensure that an adequate harm benefit assessment can be carried out for your project, please provide clear and explicit information for each step.'
               },
               {
@@ -1101,54 +1101,49 @@ export default {
                     value: false
                   }
                 ]
+              },
+              {
+                name: 'adverse',
+                label: 'Do you expect this step to have any adverse effects for the animals?',
+                type: 'radio',
+                inline: true,
+                className: 'smaller',
+                options: [
+                  {
+                    label: 'Yes',
+                    value: true,
+                    reveal: [
+                      {
+                        name: 'adverse-effects',
+                        label: 'What are the likely adverse effects of this step?​',
+                        hint: 'State the signs of each adverse effect, including the anticipated degree and duration of suffering.',
+                        type: 'texteditor'
+                      },
+                      {
+                        name: 'prevent-adverse-effects',
+                        label: 'How will you attempt to prevent any of these adverse effects?​',
+                        hint: 'If adverse effects can\'t be prevented, how will you attempt to ameliorate their initial signs?',
+                        type: 'texteditor'
+                      },
+                      {
+                        name: 'minimise-suffering',
+                        label: 'How do you intend to prevent or minimise the suffering of any animal experiencing adverse effects?​',
+                        type: 'texteditor'
+                      }
+                    ]
+                  },
+                  {
+                    label: 'No',
+                    value: false
+                  }
+                ]
+              },
+              {
+                name: 'endpoints',
+                label: 'What are the humane endpoints for this step?',
+                type: 'texteditor'
               }
-            ],
-            additional: {
-              title: 'Additional information',
-              fields: [
-                {
-                  name: 'adverse',
-                  label: 'Do you expect this step to have any adverse effects for the animals?',
-                  type: 'radio',
-                  inline: true,
-                  className: 'smaller',
-                  options: [
-                    {
-                      label: 'Yes',
-                      value: true,
-                      reveal: [
-                        {
-                          name: 'adverse-effects',
-                          label: 'What are the likely adverse effects of this step?​',
-                          hint: 'State the signs of each adverse effect, including the anticipated degree and duration of suffering.',
-                          type: 'texteditor'
-                        },
-                        {
-                          name: 'prevent-adverse-effects',
-                          label: 'How will you attempt to prevent any of these adverse effects?​',
-                          hint: 'If adverse effects can\'t be prevented, how will you attempt to ameliorate their initial signs?',
-                          type: 'texteditor'
-                        },
-                        {
-                          name: 'minimise-suffering',
-                          label: 'How do you intend to prevent or minimise the suffering of any animal experiencing adverse effects?​',
-                          type: 'texteditor'
-                        }
-                      ]
-                    },
-                    {
-                      label: 'No',
-                      value: false
-                    }
-                  ]
-                },
-                {
-                  name: 'endpoints',
-                  label: 'What are the humane endpoints for this step?',
-                  type: 'texteditor'
-                }
-              ]
-            }
+            ]
           },
           experience: {
             title: 'Animal experience',
