@@ -17,6 +17,10 @@ const mapStateToProps = (state, props) => {
 };
 
 const renderTextEditor = (value, doc) => {
+  // console.log('----------------------renderTextEditor begin-----------------------------------------');
+  // console.log(JSON.stringify(value));
+  // console.log('----------------------renderTextEditor end-----------------------------------------');
+
   var content = JSON.parse(value);
   var nodes = content.document.nodes;
   var text;
@@ -100,6 +104,103 @@ const renderTextEditor = (value, doc) => {
   });
 };
 
+const renderDocument = (doc, field, values) => {
+  const value = values[field.name];
+
+  if (isUndefined(value)) {
+    var paragraph = new Paragraph();
+    paragraph.style('body');
+    paragraph.addRun(new TextRun('No answer provided').italic());
+    doc.addParagraph(paragraph);
+  } else {
+    switch (field.type) {
+      case 'radio':
+        var option;
+        if (field.options) option = field.options.find(o => o.value === value);
+        var label = option ? option.label : value;
+        doc.createParagraph(label).style('body');
+        if (option && option.reveal) {
+          //make sure reveals are arrays everywhere
+          //and then do the below for each reveal
+          var reveals = !Array.isArray(option.reveal)
+            ? [option.reveal]
+            : option.reveal;
+          reveals.map(reveal => {
+            const revealValue = values[reveal.name];
+            if (revealValue) {
+              doc.createParagraph(reveal.label).heading3();
+              switch (reveal.type) {
+                case 'radio':
+                case 'species-selector':
+                  doc
+                    .createParagraph(
+                      reveal.options.find(r => r.value === revealValue)
+                    )
+                    .style('body');
+                  break;
+                case 'texteditor':
+                  renderTextEditor(revealValue, doc);
+                  break;
+                default:
+                  break;
+              }
+            }
+          });
+        }
+        break;
+      case 'species-selector':
+        var text;
+        value.map(specie => {
+          text = new TextRun(
+            flatten(Object.values(SPECIES)).find(s => s.value === specie).label
+          ).size(28);
+          var paragraph = new Paragraph();
+          paragraph.style('body').bullet();
+          paragraph.addRun(text);
+          doc.addParagraph(paragraph);
+        });
+        const otherSpecies = values['species-other'];
+        if (otherSpecies)
+          otherSpecies.map(s => {
+            text = new TextRun(s).size(28);
+            var paragraph = new Paragraph();
+            paragraph.style('body').bullet();
+            paragraph.addRun(text);
+            doc.addParagraph(paragraph);
+          });
+        break;
+      case 'location-selector':
+      case 'objective-selector':
+      case 'checkbox':
+        var text;
+        value.map(item => {
+          text = new TextRun(item).size(28);
+          var paragraph = new Paragraph();
+          paragraph.style('body').bullet();
+          paragraph.addRun(text);
+          doc.addParagraph(paragraph);
+        });
+        break;
+      case 'text':
+        if (typeof value == typeof true) {
+          value
+            ? doc.createParagraph('Yes').style('body')
+            : doc.createParagraph('No').style('body');
+        } else doc.createParagraph(value).style('body');
+        break;
+      case 'duration':
+        doc.createParagraph('Years ' + value.years);
+        doc.createParagraph('Months ' + value.months);
+        break;
+      case 'texteditor':
+        renderTextEditor(value, doc);
+        break;
+      default:
+        break;
+    }
+  }
+};
+
 class DownloadLink extends React.Component {
   generate = () => {
     const doc = new Document();
@@ -150,122 +251,73 @@ class DownloadLink extends React.Component {
     doc.createParagraph(this.props.values.title).heading1();
 
     this.props.sections.map(section => {
+      // console.log('-----------------------Section-----------------------------------');
+      // console.log(JSON.stringify(section));
+      // console.log('------------------------All values-------------------------------);
+      // console.log(JSON.stringify(this.props.values));
 
-      console.log(JSON.stringify(this.props.values));
+      Object.values(section.subsections).map(
+        ({ title, sections, fields, steps }) => {
+          // console.log('Title: ' + JSON.stringify(title));
+          // console.log('Sections: ' + JSON.stringify(sections));
+          // console.log('Fields: ' + JSON.stringify(fields));
+          // console.log('Steps: ' + JSON.stringify(steps));
 
-      Object.values(section.subsections).map(({ title, fields, steps }) => {
-        doc.createParagraph(title).heading2();
+          doc.createParagraph(title).heading2();
 
-        let sectionFields;
-        if (fields) {
-          sectionFields = fields;
-        }
-        if (steps) {
-          sectionFields = flatten(steps.map(step => step.fields));
-        }
+          // for protocols everything below needs to be repeated as many times as
+          // the lenght of the protocols array in all values
 
-        if (sectionFields) {
-          sectionFields.map(field => {
+          let count = 1;
+          if (title === 'Protocols' && this.props.values.protocols) {
+            count = this.props.values.protocols.length;
+          }
 
-            // console.log(field.name + ' : ' + field.type);
+          for (var i = 0; i < count; i++) {
 
-            doc.createParagraph(field.label).heading3();
-            const value = this.props.values[field.name];
-            if (isUndefined(value)) {
-              var paragraph = new Paragraph();
-              paragraph.style('body');
-              paragraph.addRun(new TextRun('No answer provided').italic());
-              doc.addParagraph(paragraph);
-            } else {
-              switch (field.type) {
-                case 'radio':
-                case 'checkbox':
-                  var option;
-                  if (field.options)
-                    option = field.options.find(o => o.value === value);
-                  var label = option ? option.label : value;
-                  doc.createParagraph(label).style('body');
-                  if (option && option.reveal) {
-                    //make sure reveals are arrays everywhere
-                    //and then do the below for each reveal
-                    var reveals = !Array.isArray(option.reveal) ? [option.reveal] : option.reveal;
-                    reveals.map(reveal => {
-                      const revealValue = this.props.values[reveal.name];
-                      if (revealValue) {
-                        doc.createParagraph(reveal.label).heading3();
-                        switch (reveal.type) {
-                          case 'radio':
-                          case 'species-selector':
-                            doc
-                              .createParagraph(
-                                reveal.options.find(
-                                  r => r.value === revealValue
-                                )
-                              )
-                              .style('body');
-                            break;
-                          case 'texteditor':
-                            renderTextEditor(revealValue, doc);
-                            break;
-                          default:
-                            break;
-                        }
-                      }
-                    });
+            let values;
+            if (title === 'Protocols' && this.props.values.protocols) {
+              values = this.props.values.protocols[i];
+            } else values = this.props.values;
 
-                  }
-                  // if(field.name==='primary-establishment') {
-                  //   console.log('PRIMARY ESTABLISHMENT BEGIN');
-                  //   console.log(JSON.stringify(field.playback) + ' : ' + value);
-                  //   console.log('PRIMARY ESTABLISHMENT END');
-                  //   doc.createParagraph(field.playback).heading3();
-                  //   doc.createParagraph(value).style('body');
-                  // }
-                  break;
-                case 'species-selector':
-                  var text;
-                  value.map(specie => {
-                    text = new TextRun(
-                      flatten(Object.values(SPECIES)).find(
-                        s => s.value === specie
-                      ).label
-                    ).size(28);
-                    var paragraph = new Paragraph();
-                    paragraph.style('body').bullet();
-                    paragraph.addRun(text);
-                    doc.addParagraph(paragraph);
-                  });
-                  const otherSpecies = this.props.values['species-other'];
-                  if (otherSpecies)
-                    otherSpecies.map(s => {
-                      text = new TextRun(s).size(28);
-                      var paragraph = new Paragraph();
-                      paragraph.style('body').bullet();
-                      paragraph.addRun(text);
-                      doc.addParagraph(paragraph);
-                    });
-                  break;
-                case 'text':
-                  if (typeof value == typeof true) {
-                    value
-                      ? doc.createParagraph('Yes').style('body')
-                      : doc.createParagraph('No').style('body');
-                  } else doc.createParagraph(value).style('body');
-                  break;
-                case 'duration':
-                  doc.createParagraph('Years ' + value.years);
-                  doc.createParagraph('Months ' + value.months);
-                  break;
-                case 'texteditor':
-                  renderTextEditor(value, doc);
-                  break;
-                default:
-                  break;
-              }
+            if (title === 'Protocols' && this.props.values.protocols) {
+              doc.createParagraph(this.props.values.protocols[i].title).heading2();
             }
-          });
+            // if there are section subsection sections - like in the protocols - repeat for each of them
+            let secSubSecs;
+            if (sections) {
+              secSubSecs = Object.values(sections);
+            } else {
+              secSubSecs = [
+                {
+                  fields: fields,
+                  steps: steps
+                }
+              ];
+            }
+            Object.values(secSubSecs).map(({ fields, steps }) => {
+              let sectionFields;
+              if (fields) {
+                sectionFields = fields;
+              }
+              if (steps) {
+                sectionFields = flatten(steps.map(step => step.fields));
+              }
+              // if (title === 'Protocols' && this.props.values.protocols) {
+              //   console.log('--------------PROTOCOLS SECTION FIELDS BEGIN---------------');
+              //   console.log(JSON.stringify(sectionFields));
+              //   console.log('--------------PROTOCOLS SECTION FIELDS END---------------');
+              // }
+              if (sectionFields) {
+                sectionFields.map(field => {
+                  doc.createParagraph(field.label).heading3();
+                  renderDocument(doc, field, values);
+                });
+              }
+            });
+          }
         }
-      });
+      );
     });
     const packer = new Packer();
     packer.toBlob(doc).then(blob => {
