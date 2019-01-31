@@ -109,6 +109,34 @@ export default {
                 type: 'texteditor'
               },
               {
+                name: 'permissible-purpose',
+                label: 'Which permissible purpose applies to this project?',
+                type: 'radio',
+                className: 'smaller',
+                options: [
+                  {
+                    label: 'Basic research',
+                    value: 'basic-research'
+                  },
+                  {
+                    label: 'Translational and applied research',
+                    value: 'translational-research'
+                  },
+                  {
+                    label: 'Protection of the natural environment in the interests of the health or welfare of human beings or animals',
+                    value: 'protection-of-environment'
+                  },
+                  {
+                    label: 'Preservation of species',
+                    value: 'preservation-of-species'
+                  },
+                  {
+                    label: 'Forensic enquiries',
+                    value: 'forensic-enquiries'
+                  }
+                ]
+              },
+              {
                 name: 'duration',
                 label: 'What will be the duration of this project?',
                 type: 'duration'
@@ -1285,7 +1313,7 @@ export default {
                           value: 'other',
                           reveal: {
                             name: 'method-and-justification',
-                            label: 'State the method of killing that you will use along with your justification for using it.​',
+                            label: 'State the method of killing that you will use, along with a scientific justification for using it, and an explanation of how you will minimise the animal\'s suffering.',
                             type: 'texteditor'
                           }
                         }
