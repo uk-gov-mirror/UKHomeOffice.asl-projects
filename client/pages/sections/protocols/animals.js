@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 
+import { Button } from '@ukhomeoffice/react-components';
+
 import some from 'lodash/some';
 import intersection from 'lodash/intersection';
 import flatten from 'lodash/flatten';
@@ -12,8 +14,6 @@ import Fieldset from '../../../components/fieldset';
 import Controls from '../../../components/controls';
 import Expandable from '../../../components/expandable';
 import Repeater from '../../../components/repeater';
-
-import Review from './review';
 
 import SpeciesSelector from '../../../components/species-selector';
 
@@ -53,12 +53,7 @@ class Animal extends Component {
 class Animals extends Component {
   state = {
     adding: false,
-    active: false,
-    review: false
-  }
-
-  toggleReview = () => {
-    this.setState({ review: !this.state.review }, this.props.scrollToTop)
+    active: false
   }
 
   toggleAdding = e => {
@@ -122,7 +117,7 @@ class Animals extends Component {
 
   render() {
     const { fields, onFieldChange, updateItem, exit, advance, name, index } = this.props;
-    const { adding, active, review } = this.state;
+    const { adding, active } = this.state;
     const speciesField = fields.filter(f => f.section === 'intro').map(f => ({ ...f, options: flatten([
       ...(this.props.project.species || []).map(s => {
         if (s.indexOf('other') > -1) {
@@ -133,9 +128,7 @@ class Animals extends Component {
       ...(this.props.project['species-other'] || [])
     ]) }));
     const items = this.getItems();
-    if (review) {
-      return <Review fields={fields.filter(f => f.section !== 'intro')} values={items} advance={advance} onEdit={this.toggleReview} />
-    }
+
     const prefix = `${name}-${index}-`;
 
     const allSpecies = flatten([
@@ -166,12 +159,7 @@ class Animals extends Component {
                 fields={fields.filter(f => f.section !== 'intro')}
               />
             </Repeater>
-            <Controls
-              onContinue={this.toggleReview}
-              onExit={this.toggleActive}
-              exitClassName="link"
-              exitLabel="Back"
-            />
+            <Button onClick={advance} className="button-secondary">Next section</Button>
           </Fragment>
         )
         : (

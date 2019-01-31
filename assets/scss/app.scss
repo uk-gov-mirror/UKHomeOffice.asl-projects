@@ -426,13 +426,44 @@ fieldset.smaller {
   }
 }
 
-.step {
+.protocols-setup {
   margin-bottom: $govuk-gutter;
+  border-bottom: 1px solid $govuk-border-colour;
 
-  .header, .content {
-    background-color: $light-grey !important;
+  header {
+    background-color: $light-grey;
+  }
+
+  .review {
+    hr, a {
+      display: none;
+    }
   }
 }
+
+.steps {
+
+  .step {
+    margin-bottom: $govuk-gutter;
+
+    &.completed {
+      @extend .panel;
+    }
+
+    > .review {
+      @extend .panel;
+      background-color: $white;
+      margin: -$govuk-gutter-half;
+
+      .review {
+        hr, a {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
 
 .protocol {
   margin-bottom: $govuk-gutter;
