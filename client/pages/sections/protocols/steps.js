@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import classnames from 'classnames'
 import { Button } from '@ukhomeoffice/react-components';
 
+import every from 'lodash/every';
 import isUndefined from 'lodash/isUndefined';
 import { ReviewTextEditor } from '../../../components/editor';
 
@@ -77,7 +78,7 @@ class Step extends Component {
                 prefix={`${prefix}steps-${index}-`}
                 values={values}
               />
-              <Button onClick={() => this.setCompleted(true)}>Complete step</Button>
+              <Button onClick={() => this.setCompleted(true)}>Save step</Button>
               {
                 length > 1 && <Button className="link" onClick={this.removeItem}>Remove step</Button>
               }
@@ -102,6 +103,7 @@ const Steps = ({ values, updateItem, index, name, advance, ...props }) => {
         type="step"
         items={values.steps}
         onSave={steps => updateItem({ steps })}
+        addAnother={every(values.steps, step => step.completed)}
         {...props}
       >
         <Step
