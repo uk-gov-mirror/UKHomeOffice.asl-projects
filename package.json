@@ -26,7 +26,6 @@
   },
   "homepage": "https://github.com/UKHomeOffice/peephole#readme",
   "dependencies": {
-    "@lennym/slate-react": "^0.21.16",
     "@ukhomeoffice/frontend-toolkit": "^2.2.2",
     "@ukhomeoffice/react-components": "^0.6.0",
     "babel-loader": "^7.1.5",
@@ -53,7 +52,7 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "slate": "^0.44.9",
-    "slate-react": "^0.21.15",
+    "slate-react": "^0.21.16",
     "webpack": "^4.23.1",
     "webpack-cli": "^3.1.2"
   },
