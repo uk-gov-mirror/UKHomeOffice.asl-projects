@@ -182,6 +182,7 @@ const renderDocument = (doc, field, values) => {
         });
         break;
       case 'text':
+      case 'textarea':
         if (typeof value == typeof true) {
           value
             ? doc.createParagraph('Yes').style('body')
@@ -251,17 +252,9 @@ class DownloadLink extends React.Component {
     doc.createParagraph(this.props.values.title).heading1();
 
     this.props.sections.map(section => {
-      // console.log('-----------------------Section-----------------------------------');
-      // console.log(JSON.stringify(section));
-      // console.log('------------------------All values-------------------------------);
-      // console.log(JSON.stringify(this.props.values));
 
       Object.values(section.subsections).map(
         ({ title, sections, fields, steps }) => {
-          // console.log('Title: ' + JSON.stringify(title));
-          // console.log('Sections: ' + JSON.stringify(sections));
-          // console.log('Fields: ' + JSON.stringify(fields));
-          // console.log('Steps: ' + JSON.stringify(steps));
 
           doc.createParagraph(title).heading2();
 
@@ -295,21 +288,22 @@ class DownloadLink extends React.Component {
                 }
               ];
             }
-            Object.values(secSubSecs).map(({ fields, steps }) => {
-              let sectionFields;
-              if (fields) {
-                sectionFields = fields;
+            // Object.values(secSubSecs).map(({ sectionTitle:title, fields, steps }) => {
+              Object.values(secSubSecs).map((subsection) => {
+
+              let subsectionFields;
+              if (subsection.fields) {
+                subsectionFields = subsection.fields;
               }
-              if (steps) {
-                sectionFields = flatten(steps.map(step => step.fields));
+              if (subsection.steps) {
+                subsectionFields = flatten(subsection.steps.map(step => step.fields));
               }
-              // if (title === 'Protocols' && this.props.values.protocols) {
-              //   console.log('--------------PROTOCOLS SECTION FIELDS BEGIN---------------');
-              //   console.log(JSON.stringify(sectionFields));
-              //   console.log('--------------PROTOCOLS SECTION FIELDS END---------------');
-              // }
-              if (sectionFields) {
-                sectionFields.map(field => {
+              if (title === 'Protocols' && this.props.values.protocols) {
+                doc.createParagraph(subsection.title).heading2();
+              }
+
+              if (subsectionFields) {
+                subsectionFields.map(field => {
                   doc.createParagraph(field.label).heading3();
                   renderDocument(doc, field, values);
                 });
