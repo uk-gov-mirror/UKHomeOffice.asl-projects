@@ -1137,11 +1137,6 @@ export default {
                     value: false
                   }
                 ]
-              },
-              {
-                name: 'endpoints',
-                label: 'What are the humane endpoints for this step?',
-                type: 'texteditor'
               }
             ]
           },
