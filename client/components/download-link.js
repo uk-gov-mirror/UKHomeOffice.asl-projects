@@ -217,10 +217,10 @@ const renderField = (doc, field, values) => {
   }
 };
 
-const renderSteps = (subsection, values, doc) => {
-  console.log(JSON.stringify(subsection));
-  const subsectionSteps = (subsection.steps) ? subsection.steps : [{ 'fields': subsection.fields }];
-  subsectionSteps.map(step => {
+const renderFields = (subsection, values, doc) => {
+  // console.log(JSON.stringify(subsection));
+  const fields = (subsection.steps) ? subsection.steps : [{ 'fields': subsection.fields }];
+  fields.map(step => {
 
       if (step.name === 'polesList' ||
         step.name === 'establishments' ||
@@ -288,7 +288,7 @@ class DownloadLink extends React.Component {
     doc.createParagraph(this.props.values.title).heading1();
 
     const sections = this.props.sections.filter((s) => { return s.name !== 'nts'; });
-    console.log('sections : ', JSON.stringify(sections));
+    // console.log('sections : ', JSON.stringify(sections));
     sections.map(section => {
       // console.log('section :', JSON.stringify(section));
       Object.values(section.subsections).map(subsection => {
@@ -297,7 +297,7 @@ class DownloadLink extends React.Component {
 
           if(subsection.name === 'protocols') {
 
-            renderSteps(subsection.setup, this.props.values, doc);
+            renderFields(subsection.setup, this.props.values, doc);
             this.props.values['protocols'].map(protocolValues => {
               // next line renders just the protocol title
               renderField(doc, subsection.fields[0], protocolValues);
@@ -312,24 +312,24 @@ class DownloadLink extends React.Component {
 
                   protocolValues.steps.map(stepValues => {
                     // console.log('stepValues: ', JSON.stringify(stepValues));
-                    renderSteps(protocolSection, stepValues, doc);
+                    renderFields(protocolSection, stepValues, doc);
                   });
                 }
                 else if (protocolSection.name === 'protocolExperience') {
                   // I know I have more subsections
                   Object.values(protocolSection).filter((e) => { return e instanceof Object; }).map(s => {
                     // console.log('protocolExperience subsection: ', JSON.stringify(s));
-                    renderSteps(s, protocolValues, doc);
+                    renderFields(s, protocolValues, doc);
                   });
                 }
                 else {
-                  renderSteps(protocolSection, protocolValues, doc);
+                  renderFields(protocolSection, protocolValues, doc);
                 }
               })
             });
           }
           else {
-            renderSteps(subsection, this.props.values, doc);
+            renderFields(subsection, this.props.values, doc);
           }
       });
     });
