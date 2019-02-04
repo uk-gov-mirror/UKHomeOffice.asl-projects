@@ -332,7 +332,7 @@ export default {
                     value: false,
                     reveal: {
                       name: 'establishments-care-conditions-justification',
-                      label: 'If any of your establishments do not meet these requirements, explain how you will ensure that housing, husbandry and care conditions will be appropriate for your project.',
+                      label: 'If any of your establishments do not meet these requirements, explain how you will ensure that housing, husbandry, and care conditions will be appropriate for your project.',
                       type: 'texteditor'
                     }
                   }
