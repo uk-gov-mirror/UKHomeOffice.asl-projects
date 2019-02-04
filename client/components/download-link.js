@@ -18,13 +18,10 @@ const mapStateToProps = (state, props) => {
 };
 
 const renderTextEditor = (value, doc) => {
-  // console.log('----------------------renderTextEditor begin-----------------------------------------');
-  // console.log(JSON.stringify(value));
-  // console.log('----------------------renderTextEditor end-----------------------------------------');
 
-  var content = JSON.parse(value);
-  var nodes = content.document.nodes;
-  var text;
+  const content = JSON.parse(value);
+  const nodes = content.document.nodes;
+  let text;
   nodes.forEach(node => {
     switch (node.type) {
       case 'heading-one': {
@@ -47,7 +44,7 @@ const renderTextEditor = (value, doc) => {
         node.nodes.map(n => {
           // TODO: the item may have marks
           text = new TextRun(n.nodes[0].leaves[0].text.trim()).size(28);
-          var paragraph = new Paragraph();
+          const paragraph = new Paragraph();
           paragraph.setNumbering(concrete, 0);
           paragraph.style('body');
           paragraph.addRun(text);
@@ -59,7 +56,7 @@ const renderTextEditor = (value, doc) => {
         node.nodes.map(n => {
           // TODO: the item may have marks
           text = new TextRun(n.nodes[0].leaves[0].text.trim()).size(28);
-          var paragraph = new Paragraph();
+          const paragraph = new Paragraph();
           paragraph.style('body').bullet();
           paragraph.addRun(text);
           doc.addParagraph(paragraph);
@@ -87,7 +84,7 @@ const renderTextEditor = (value, doc) => {
                   return text;
               }
             });
-            var paragraph = new Paragraph();
+            const paragraph = new Paragraph();
             paragraph.style('body');
             paragraph.addRun(text);
             doc.addParagraph(paragraph);
@@ -95,10 +92,11 @@ const renderTextEditor = (value, doc) => {
         });
         break;
       }
-      case 'image':
-        var img = doc.createImage(node.data.src);
+      case 'image': {
+        let img = doc.createImage(node.data.src);
         img.scale(2);
         break;
+      }
       default:
         break;
     }
@@ -107,27 +105,27 @@ const renderTextEditor = (value, doc) => {
 
 const renderField = (doc, field, values) => {
 
-  var value = values[field.name];
+  const value = values[field.name];
 
   //console.log('field name : ' + field.name + ' : ' + JSON.stringify(value));
   doc.createParagraph(field.label).heading3();
   if (isUndefined(value)) {
-    var paragraph = new Paragraph();
+    const paragraph = new Paragraph();
     paragraph.style('body');
     paragraph.addRun(new TextRun('No answer provided').italic());
     doc.addParagraph(paragraph);
   } else {
 
     switch (field.type) {
-      case 'radio':
-        var option;
+      case 'radio': {
+        let option;
         if (field.options) option = field.options.find(o => o.value === value);
-        var label = option ? option.label : value;
+        const label = option ? option.label : value;
         doc.createParagraph(label).style('body');
         if (option && option.reveal) {
           //make sure reveals are arrays everywhere
           //and then do the below for each reveal
-          var reveals = !Array.isArray(option.reveal)
+          const reveals = !Array.isArray(option.reveal)
             ? [option.reveal]
             : option.reveal;
           reveals.map(reveal => {
@@ -146,8 +144,8 @@ const renderField = (doc, field, values) => {
                   else {
                     // console.log(revealValue);
                     revealValue.map(v => {
-                      text = new TextRun(v).size(28);
-                      var paragraph = new Paragraph();
+                      let text = new TextRun(v).size(28);
+                      const paragraph = new Paragraph();
                       paragraph.style('body').bullet();
                       paragraph.addRun(text);
                       doc.addParagraph(paragraph);
@@ -164,33 +162,34 @@ const renderField = (doc, field, values) => {
           });
         }
         break;
-      case 'species-selector':
-        var text;
+      }
+      case 'species-selector': {
         value.map(specie => {
-          text = new TextRun(
+          let text = new TextRun(
             flatten(Object.values(SPECIES)).find(s => s.value === specie).label
           ).size(28);
-          var paragraph = new Paragraph();
+          const paragraph = new Paragraph();
           paragraph.style('body').bullet();
           paragraph.addRun(text);
           doc.addParagraph(paragraph);
         });
-        var otherSpecies = values['species-other'];
+        const otherSpecies = values['species-other'];
         if (otherSpecies)
           otherSpecies.map(s => {
-            text = new TextRun(s).size(28);
-            var paragraph = new Paragraph();
+            let text = new TextRun(s).size(28);
+            const paragraph = new Paragraph();
             paragraph.style('body').bullet();
             paragraph.addRun(text);
             doc.addParagraph(paragraph);
           });
         break;
+      }
       case 'location-selector':
       case 'objective-selector':
       case 'checkbox':
         value.map(item => {
-          text = new TextRun(item).size(28);
-          var paragraph = new Paragraph();
+          let text = new TextRun(item).size(28);
+          const paragraph = new Paragraph();
           paragraph.style('body').bullet();
           paragraph.addRun(text);
           doc.addParagraph(paragraph);
