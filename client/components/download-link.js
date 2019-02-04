@@ -203,10 +203,12 @@ const renderField = (doc, field, values) => {
             : doc.createParagraph('No').style('body');
         } else doc.createParagraph(value).style('body');
         break;
-      case 'duration':
-        doc.createParagraph('Years ' + value.years);
-        doc.createParagraph('Months ' + value.months);
+      case 'duration': {
+        let years = value.years > 1 ? 'Years' : 'Year';
+        let months = value.years > 1 ? 'Months' : 'Month';
+        doc.createParagraph(`${value.years} ${years} ${value.months} ${months}`);
         break;
+      }
       case 'texteditor':
         renderTextEditor(value, doc);
         break;
