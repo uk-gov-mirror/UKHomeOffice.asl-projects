@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
 import saveAs from 'file-saver';
-import { Document, Packer, Paragraph, TextRun, Indent, Numbering } from 'docx';
+import { Document, Packer, Paragraph, TextRun, Numbering } from 'docx';
 
 import flatten from 'lodash/flatten';
 import SPECIES from '../constants/species';
@@ -12,7 +12,8 @@ const mapStateToProps = (state, props) => {
   const project = state.projects.find(project => project.id === props.project);
   return {
     values: project,
-    sections: Object.values(state.application)
+    sections: Object.values(state.application),
+    optionsFromSettings: state.settings
   };
 };
 
@@ -104,15 +105,19 @@ const renderTextEditor = (value, doc) => {
   });
 };
 
-const renderDocument = (doc, field, values) => {
-  const value = values[field.name];
+const renderField = (doc, field, values) => {
 
+  var value = values[field.name];
+
+  //console.log('field name : ' + field.name + ' : ' + JSON.stringify(value));
+  doc.createParagraph(field.label).heading3();
   if (isUndefined(value)) {
     var paragraph = new Paragraph();
     paragraph.style('body');
     paragraph.addRun(new TextRun('No answer provided').italic());
     doc.addParagraph(paragraph);
   } else {
+
     switch (field.type) {
       case 'radio':
         var option;
@@ -131,12 +136,23 @@ const renderDocument = (doc, field, values) => {
               doc.createParagraph(reveal.label).heading3();
               switch (reveal.type) {
                 case 'radio':
+                case 'checkbox':
                 case 'species-selector':
-                  doc
-                    .createParagraph(
+                  if (reveal.options) {
+                    doc.createParagraph(
                       reveal.options.find(r => r.value === revealValue)
-                    )
-                    .style('body');
+                    ).style('body');
+                  }
+                  else {
+                    // console.log(revealValue);
+                    revealValue.map(v => {
+                      text = new TextRun(v).size(28);
+                      var paragraph = new Paragraph();
+                      paragraph.style('body').bullet();
+                      paragraph.addRun(text);
+                      doc.addParagraph(paragraph);
+                    });
+                  }
                   break;
                 case 'texteditor':
                   renderTextEditor(revealValue, doc);
@@ -159,7 +175,7 @@ const renderDocument = (doc, field, values) => {
           paragraph.addRun(text);
           doc.addParagraph(paragraph);
         });
-        const otherSpecies = values['species-other'];
+        var otherSpecies = values['species-other'];
         if (otherSpecies)
           otherSpecies.map(s => {
             text = new TextRun(s).size(28);
@@ -172,7 +188,6 @@ const renderDocument = (doc, field, values) => {
       case 'location-selector':
       case 'objective-selector':
       case 'checkbox':
-        var text;
         value.map(item => {
           text = new TextRun(item).size(28);
           var paragraph = new Paragraph();
@@ -201,6 +216,26 @@ const renderDocument = (doc, field, values) => {
     }
   }
 };
+
+const renderSteps = (subsection, values, doc) => {
+  console.log(JSON.stringify(subsection));
+  const subsectionSteps = (subsection.steps) ? subsection.steps : [{ 'fields': subsection.fields }];
+  subsectionSteps.map(step => {
+
+      if (step.name === 'polesList' ||
+        step.name === 'establishments' ||
+        step.name === 'objectives') {
+        values[step.name].map(v => {
+          step.fields.map(field => renderField(doc, field, v));
+        });
+      }
+      else {
+        step.fields.map(field => {
+          renderField(doc, field, values);
+        })
+      }
+  })
+}
 
 class DownloadLink extends React.Component {
   generate = () => {
@@ -249,70 +284,56 @@ class DownloadLink extends React.Component {
       .color('999999')
       .italics();
 
+    // project.json -> title
     doc.createParagraph(this.props.values.title).heading1();
 
-    this.props.sections.map(section => {
+    const sections = this.props.sections.filter((s) => { return s.name !== 'nts'; });
+    console.log('sections : ', JSON.stringify(sections));
+    sections.map(section => {
+      // console.log('section :', JSON.stringify(section));
+      Object.values(section.subsections).map(subsection => {
+          // console.log('subsection :', JSON.stringify(subsection));
+          doc.createParagraph(subsection.title).heading2();
 
-      Object.values(section.subsections).map(
-        ({ title, sections, fields, steps }) => {
+          if(subsection.name === 'protocols') {
 
-          doc.createParagraph(title).heading2();
+            renderSteps(subsection.setup, this.props.values, doc);
+            this.props.values['protocols'].map(protocolValues => {
+              // next line renders just the protocol title
+              renderField(doc, subsection.fields[0], protocolValues);
+              // as many protocol objects I have , this many times I need to render ALL the subsection.sections
+              Object.values(subsection.sections).map((protocolSection) => {
 
-          // for protocols everything below needs to be repeated as many times as
-          // the lenght of the protocols array in all values
+                doc.createParagraph(protocolSection.title).heading2();
 
-          let count = 1;
-          if (title === 'Protocols' && this.props.values.protocols) {
-            count = this.props.values.protocols.length;
-          }
+                if(protocolSection.name === 'protocolSteps') {
+                  //I need to render steps as many times as protocols.steps there are
+                  // console.log('protocolSteps: ', JSON.stringify(protocolSection));
 
-          for (var i = 0; i < count; i++) {
-
-            let values;
-            if (title === 'Protocols' && this.props.values.protocols) {
-              values = this.props.values.protocols[i];
-            } else values = this.props.values;
-
-            if (title === 'Protocols' && this.props.values.protocols) {
-              doc.createParagraph(this.props.values.protocols[i].title).heading2();
-            }
-            // if there are section subsection sections - like in the protocols - repeat for each of them
-            let secSubSecs;
-            if (sections) {
-              secSubSecs = Object.values(sections);
-            } else {
-              secSubSecs = [
-                {
-                  fields: fields,
-                  steps: steps
+                  protocolValues.steps.map(stepValues => {
+                    // console.log('stepValues: ', JSON.stringify(stepValues));
+                    renderSteps(protocolSection, stepValues, doc);
+                  });
                 }
-              ];
-            }
-            // Object.values(secSubSecs).map(({ sectionTitle:title, fields, steps }) => {
-              Object.values(secSubSecs).map((subsection) => {
-
-              let subsectionFields;
-              if (subsection.fields) {
-                subsectionFields = subsection.fields;
-              }
-              if (subsection.steps) {
-                subsectionFields = flatten(subsection.steps.map(step => step.fields));
-              }
-              if (title === 'Protocols' && this.props.values.protocols) {
-                doc.createParagraph(subsection.title).heading2();
-              }
-
-              if (subsectionFields) {
-                subsectionFields.map(field => {
-                  doc.createParagraph(field.label).heading3();
-                  renderDocument(doc, field, values);
-                });
-              }
+                else if (protocolSection.name === 'protocolExperience') {
+                  // I know I have more subsections
+                  Object.values(protocolSection).filter((e) => { return e instanceof Object; }).map(s => {
+                    // console.log('protocolExperience subsection: ', JSON.stringify(s));
+                    renderSteps(s, protocolValues, doc);
+                  });
+                }
+                else {
+                  renderSteps(protocolSection, protocolValues, doc);
+                }
+              })
             });
           }
-        }
-      );
+          else {
+            renderSteps(subsection, this.props.values, doc);
+          }
+      });
     });
+
     const packer = new Packer();
     packer.toBlob(doc).then(blob => {
       saveAs(blob, this.props.values.title);

@@ -297,6 +297,7 @@ export default {
           {
             show: values => values['other-establishments'] === true,
             component: Establishments,
+            name: 'establishments',
             fields: [
               {
                 name: 'establishment-about',
@@ -420,6 +421,7 @@ export default {
           {
             component: Poles,
             show: values => values.poles === true,
+            name: 'polesList',
             fields: [
               {
                 name: 'title',
@@ -538,7 +540,7 @@ export default {
                   },
                   {
                     name: 'condition-scientific-approach',
-                    label: 'What is the scientific basis for your proposed approach?',
+                    label: 'What is the scientific basis for your proposed approach',
                     type: 'texteditor'
                   }
                 ]
@@ -557,6 +559,7 @@ export default {
         review: ObjectivesReview,
         steps: [
           {
+            name: 'objectives',
             title: 'Strategy - 1 of 2',
             component: Objectives,
             repeat: 'objectives',
@@ -601,7 +604,7 @@ export default {
             fields: [
               {
                 name: 'experimental-design-how',
-                label: 'How will you ensure that your experiments are appropriately designed and correctly powered to achieve your aim and objectives?',
+                label: 'How have you ensured that your experiments are appropriately designed and correctly powered to achieve your aim and objectives?',
                 type: 'texteditor'
               },
               {
@@ -704,7 +707,7 @@ export default {
           {
             name: 'benefit-who',
             label: 'Who or what will benefit from these outputs?',
-            hint: 'The impact of these outputs may be seen in the short-term, or they may not be fully realised until you\'ve completed the project. Consider all timescales in your answer.',
+            hint: 'The benefits of these outputs may be seen in the short-term, or they may not be fully realised until you\'ve completed the project. Consider all timescales in your answer.',
             type: 'texteditor'
           }
         ]
@@ -840,7 +843,7 @@ export default {
               },
               {
                 name: 'severity-details',
-                label: 'Why are you proposing this severity category?',
+                label: 'Why did you choose this severity category?',
                 type: 'texteditor'
               },
               {
@@ -857,7 +860,7 @@ export default {
               },
               {
                 name: 'outputs',
-                label: 'What outputs are expected to arise from this protocol?',
+                label: 'What outputs do you think may arise from this protocol?',
                 hint: 'For example, test results, phenotypic information, or products.',
                 type: 'texteditor'
               }
@@ -876,7 +879,7 @@ export default {
               },
               {
                 name: 'control-groups-size',
-                label: 'How will you determine group sizes?',
+                label: 'How will you determine the size of these groups?',
                 type: 'texteditor'
               },
               {
@@ -886,7 +889,7 @@ export default {
               },
               {
                 name: 'maximize-effectiveness',
-                label: 'How will you maximize the data output from the animals you use in this protocol?​',
+                label: 'How will you maximize the effectiveness of your findings and the animals that you use in this protocol?​',
                 type: 'texteditor'
               },
               {
@@ -896,7 +899,7 @@ export default {
               },
               {
                 name: 'randomised',
-                label: 'Will experiments and data analysis in this protocol be randomised or blinded? If so, how?​',
+                label: 'Will studies in this protocol be randomised or blinded? If so, how?​',
                 type: 'texteditor'
               }
             ]
@@ -1036,6 +1039,7 @@ export default {
           },
           steps: {
             title: 'Steps',
+            name: 'protocolSteps',
             hint: 'Step numbers are for reference only. You will be able to reorder them at any time before you send your application to the Home Office.',
             footer: 'Once you’ve created a list of steps, you need to add information about adverse effects, controls and limitations, and humane endpoints to each one.​',
             fields: [
@@ -1126,8 +1130,8 @@ export default {
                         type: 'texteditor'
                       },
                       {
-                        name: 'endpoints',
-                        label: 'What are the humane endpoints for this step?',
+                        name: 'minimise-suffering',
+                        label: 'How do you intend to prevent or minimise the suffering of any animal experiencing adverse effects?​',
                         type: 'texteditor'
                       }
                     ]
@@ -1137,11 +1141,17 @@ export default {
                     value: false
                   }
                 ]
+              },
+              {
+                name: 'endpoints',
+                label: 'What are the humane endpoints for this step?',
+                type: 'texteditor'
               }
             ]
           },
           experience: {
             title: 'Animal experience',
+            name: 'protocolExperience',
             typical: {
               title: 'Typical experience',
               fields: [
@@ -1190,7 +1200,7 @@ export default {
           },
           justification: {
             title: 'Protocol justification',
-            label: 'Why is each experimental model proposed in this protocol​',
+            label: 'Why is each model, type of study, or technique proposed in this protocol​',
             fields: [
               {
                 name: 'most-appropriate',
@@ -1494,7 +1504,7 @@ export default {
                       },
                       {
                         name: 'wild-animals-caught',
-                        label: 'How will these animals be captured?',
+                        label: 'How will these animals be caught?',
                         type: 'texteditor'
                       },
                       {
@@ -1504,7 +1514,7 @@ export default {
                       },
                       {
                         name: 'wild-animals-competence',
-                        label: 'How will you ensure the competence of any person responsible for the capture of animals?',
+                        label: 'How will you check the competence of any person responsible for the capture of animals?',
                         type: 'texteditor'
                       },
                       {
@@ -1528,7 +1538,7 @@ export default {
                             value: false,
                             reveal: {
                               name: 'wild-animals-vet-competence',
-                              label: 'How will you ensure the competence of the person responsible for assessing ill or injured animals?',
+                              label: 'How will you check the competence of the person responsible for assessing ill or injured animals?',
                               type: 'texteditor'
                             }
                           }
@@ -1633,7 +1643,7 @@ export default {
                     value: false,
                     reveal: {
                       name: 'setting-free-competence',
-                      label: 'How will you ensure the competence of the person responsible for assessing whether animals can be set free?',
+                      label: 'How will you check the competence of the person responsible for assessing whether animals can be set free?',
                       type: 'texteditor'
                     }
                   }
@@ -1750,7 +1760,7 @@ export default {
             fields: [
               {
                 name: 'nmbas-depth',
-                label: 'How wil you monitor the depth of anaesthesia?',
+                label: 'How will you monitor the depth of anaesthesia?',
                 type: 'texteditor'
               },
               {
@@ -1956,6 +1966,7 @@ export default {
   },
   nts: {
     title: 'Non-technical summary',
+    name: 'nts',
     subsections: {
       review: {
         title: 'Review',
