@@ -43,7 +43,7 @@ const renderTextEditor = (value, doc) => {
         const concrete = numbering.createConcreteNumbering(abstract);
         node.nodes.map(n => {
           // TODO: the item may have marks
-          text = new TextRun(n.nodes[0].leaves[0].text.trim()).size(28);
+          text = new TextRun(n.nodes[0].leaves[0].text.trim()).size(24);
           const paragraph = new Paragraph();
           paragraph.setNumbering(concrete, 0);
           paragraph.style('body');
@@ -55,7 +55,7 @@ const renderTextEditor = (value, doc) => {
       case 'bulleted-list': {
         node.nodes.map(n => {
           // TODO: the item may have marks
-          text = new TextRun(n.nodes[0].leaves[0].text.trim()).size(28);
+          text = new TextRun(n.nodes[0].leaves[0].text.trim()).size(24);
           const paragraph = new Paragraph();
           paragraph.style('body').bullet();
           paragraph.addRun(text);
@@ -131,26 +131,28 @@ const renderField = (doc, field, values) => {
           reveals.map(reveal => {
             const revealValue = values[reveal.name];
             if (revealValue) {
+              let text;
+              let paragraph = new Paragraph();
+              paragraph.style('body');
               doc.createParagraph(reveal.label).heading3();
               switch (reveal.type) {
                 case 'radio':
                 case 'checkbox':
                 case 'species-selector':
                   if (reveal.options) {
-                    doc.createParagraph(
-                      reveal.options.find(r => r.value === revealValue)
-                    ).style('body');
+                    let revealOption = reveal.options.find(r => r.value === revealValue);
+                    if(revealOption) {
+                      text = new TextRun(revealOption.label);
+                    }
                   }
                   else {
-                    // console.log(revealValue);
                     revealValue.map(v => {
-                      let text = new TextRun(v).size(28);
-                      const paragraph = new Paragraph();
-                      paragraph.style('body').bullet();
-                      paragraph.addRun(text);
-                      doc.addParagraph(paragraph);
+                      text = new TextRun(v);
+                      paragraph.bullet();
                     });
                   }
+                  paragraph.addRun(text);
+                  doc.addParagraph(paragraph);
                   break;
                 case 'texteditor':
                   renderTextEditor(revealValue, doc);
@@ -167,7 +169,7 @@ const renderField = (doc, field, values) => {
         value.map(specie => {
           let text = new TextRun(
             flatten(Object.values(SPECIES)).find(s => s.value === specie).label
-          ).size(28);
+          ).size(24);
           const paragraph = new Paragraph();
           paragraph.style('body').bullet();
           paragraph.addRun(text);
@@ -176,7 +178,7 @@ const renderField = (doc, field, values) => {
         const otherSpecies = values['species-other'];
         if (otherSpecies)
           otherSpecies.map(s => {
-            let text = new TextRun(s).size(28);
+            let text = new TextRun(s).size(24);
             const paragraph = new Paragraph();
             paragraph.style('body').bullet();
             paragraph.addRun(text);
@@ -188,7 +190,7 @@ const renderField = (doc, field, values) => {
       case 'objective-selector':
       case 'checkbox':
         value.map(item => {
-          let text = new TextRun(item).size(28);
+          let text = new TextRun(item).size(24);
           const paragraph = new Paragraph();
           paragraph.style('body').bullet();
           paragraph.addRun(text);
@@ -205,8 +207,8 @@ const renderField = (doc, field, values) => {
         break;
       case 'duration': {
         let years = value.years > 1 ? 'Years' : 'Year';
-        let months = value.years > 1 ? 'Months' : 'Month';
-        doc.createParagraph(`${value.years} ${years} ${value.months} ${months}`);
+        let months = value.months > 1 ? 'Months' : 'Month';
+        doc.createParagraph(`${value.years} ${years} ${value.months} ${months}`).style('body');
         break;
       }
       case 'texteditor':
@@ -273,7 +275,7 @@ class DownloadLink extends React.Component {
       .basedOn('Normal')
       .next('Normal')
       .quickFormat()
-      .size(28)
+      .size(24)
       .font('Helvetica')
       .spacing({ before: 360, after: 360 });
 
@@ -281,7 +283,7 @@ class DownloadLink extends React.Component {
       .basedOn('Body')
       .next('Body')
       .quickFormat()
-      .size(28)
+      .size(24)
       .color('999999')
       .italics();
 
