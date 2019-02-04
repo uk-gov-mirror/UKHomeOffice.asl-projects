@@ -949,7 +949,7 @@ export default {
               {
                 name: 'quantity',
                 label: 'How many of these animals will be used in this protocol?',
-                type: 'number'
+                type: 'text'
               },
               {
                 name: 'continued-use',
