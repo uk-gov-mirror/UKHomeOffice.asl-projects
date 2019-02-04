@@ -197,7 +197,7 @@ const renderField = (doc, field, values) => {
         break;
       case 'text':
       case 'textarea':
-        if (typeof value == typeof true) {
+        if (typeof value === 'boolean') {
           value
             ? doc.createParagraph('Yes').style('body')
             : doc.createParagraph('No').style('body');
@@ -287,39 +287,27 @@ class DownloadLink extends React.Component {
 
     // project.json -> title
     doc.createParagraph(this.props.values.title).heading1();
-
     const sections = this.props.sections.filter((s) => { return s.name !== 'nts'; });
-    // console.log('sections : ', JSON.stringify(sections));
     sections.map(section => {
-      // console.log('section :', JSON.stringify(section));
       Object.values(section.subsections).map(subsection => {
-          // console.log('subsection :', JSON.stringify(subsection));
           doc.createParagraph(subsection.title).heading2();
-
           if(subsection.name === 'protocols') {
-
             renderFields(subsection.setup, this.props.values, doc);
             this.props.values['protocols'].map(protocolValues => {
               // next line renders just the protocol title
               renderField(doc, subsection.fields[0], protocolValues);
               // as many protocol objects I have , this many times I need to render ALL the subsection.sections
               Object.values(subsection.sections).map((protocolSection) => {
-
                 doc.createParagraph(protocolSection.title).heading2();
-
                 if(protocolSection.name === 'protocolSteps') {
                   //I need to render steps as many times as protocols.steps there are
-                  // console.log('protocolSteps: ', JSON.stringify(protocolSection));
-
                   protocolValues.steps.map(stepValues => {
-                    // console.log('stepValues: ', JSON.stringify(stepValues));
                     renderFields(protocolSection, stepValues, doc);
                   });
                 }
                 else if (protocolSection.name === 'protocolExperience') {
                   // I know I have more subsections
                   Object.values(protocolSection).filter((e) => { return e instanceof Object; }).map(s => {
-                    // console.log('protocolExperience subsection: ', JSON.stringify(s));
                     renderFields(s, protocolValues, doc);
                   });
                 }
