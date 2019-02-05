@@ -297,6 +297,7 @@ export default {
           {
             show: values => values['other-establishments'] === true,
             component: Establishments,
+            name: 'establishments',
             fields: [
               {
                 name: 'establishment-about',
@@ -420,6 +421,7 @@ export default {
           {
             component: Poles,
             show: values => values.poles === true,
+            name: 'polesList',
             fields: [
               {
                 name: 'title',
@@ -557,6 +559,7 @@ export default {
         review: ObjectivesReview,
         steps: [
           {
+            name: 'objectives',
             title: 'Strategy - 1 of 2',
             component: Objectives,
             repeat: 'objectives',
@@ -1040,6 +1043,7 @@ export default {
           },
           steps: {
             title: 'Steps',
+            name: 'protocolSteps',
             hint: 'Step numbers are for reference only. You will be able to reorder them at any time before you send your application to the Home Office.',
             footer: 'Once you’ve created a list of steps, you need to add information about adverse effects, controls and limitations, and humane endpoints to each one.​',
             fields: [
@@ -1146,6 +1150,7 @@ export default {
           },
           experience: {
             title: 'Animal experience',
+            name: 'protocolExperience',
             typical: {
               title: 'Typical experience',
               fields: [
@@ -1194,7 +1199,7 @@ export default {
           },
           justification: {
             title: 'Protocol justification',
-            label: 'Why is each experimental model proposed in this protocol​',
+            label: 'Why is each experimental model proposed in this protocol',
             fields: [
               {
                 name: 'most-appropriate',
@@ -1753,7 +1758,7 @@ export default {
             fields: [
               {
                 name: 'nmbas-depth',
-                label: 'How wil you monitor the depth of anaesthesia?',
+                label: 'How will you monitor the depth of anaesthesia?',
                 type: 'texteditor'
               },
               {
@@ -1959,6 +1964,7 @@ export default {
   },
   nts: {
     title: 'Non-technical summary',
+    name: 'nts',
     subsections: {
       review: {
         title: 'Review',

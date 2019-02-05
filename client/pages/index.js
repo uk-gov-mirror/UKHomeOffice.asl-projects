@@ -12,6 +12,7 @@ import { deleteProject, importProject, createProject } from '../actions/projects
 import { throwError } from '../actions/messages';
 
 import ExportLink from '../components/export-link';
+import DownloadLink from '../components/download-link';
 
 const mapStateToProps = state => {
   return {
@@ -78,6 +79,7 @@ class Index extends React.Component {
               <td><Link to={`/project/${project.id}`}>{ project.title || 'Untitled project' }</Link></td>
               <td>{ moment(project.updated).format('D MMMM YYYY, HH:mm') }</td>
               <td>
+                <DownloadLink project={project.id} />
                 <ExportLink project={project.id} />
                 <button onClick={() => this.props.remove(project.id)} className="govuk-button">Remove</button>
               </td>
