@@ -439,7 +439,7 @@ export default {
               {
                 name: 'poles-inspection',
                 label: 'How will you ensure that procedures taking place at these POLEs can be inspected?',
-                hint: 'For example, you may need to consent from the landowner.',
+                hint: 'For example, how will you obtain consent from landowners?',
                 type: 'texteditor'
               },
               {
@@ -505,19 +505,19 @@ export default {
         fields: [
           {
             name: 'scientific-knowledge-summary',
-            label: 'Briefly summarise the current state of scientific knowledge in your area of work.',
-            hint: 'Be specific and relevant to your project aim - there\'s no need for a detailed overview of the entire landscape. Include any relevant non-animal research if it has contributed to the starting point of your project.',
+            label: 'Briefly summarise the current state of scientific knowledge in this area of work to show how you defined the starting point of this project',
+            hint: 'Be specific and relevant to your project aim - there\'s no need for a detailed overview of the entire field. Include any relevant non-animal research if it has contributed to the starting point of your project.',
             type: 'texteditor'
           },
           {
             name: 'scientific-knowledge-details',
-            label: 'How will this project address any knowledge gaps or try to advance scientific knowledge in this area of work?',
-            hint: 'You should refer to the basis for any scientific hypothesis you plan to test during this project.',
+            label: 'What new knowledge do you hope to discover that will address a gap in fundamental scientific knowledge or meet a clinical need?',
+            hint: 'Refer to the basis for any scientific hypotheses you plan to test during this project.',
             type: 'texteditor'
           },
           {
             name: 'clinical-condition',
-            label: 'Does your project directly relate to a particular clinical condition?',
+            label: 'Does your project mainly involve translational or veterinary clinical applications?',
             type: 'radio',
             inline: true,
             className: 'smaller',
@@ -528,12 +528,12 @@ export default {
                 reveal: [
                   {
                     name: 'condition-severity',
-                    label: 'What is the current prevalence and severity of this condition?',
+                    label: 'How prevalent and severe are the relevant clinical conditions?',
                     type: 'texteditor'
                   },
                   {
                     name: 'condition-treatments-problems',
-                    label: 'What are the problems with the current treatments for this condition which mean that further work is necessary?',
+                    label: 'What are the problems with current treatments which mean that further work is necessary?',
                     type: 'texteditor'
                   },
                   {
@@ -585,7 +585,7 @@ export default {
               },
               {
                 name: 'objectives-alternatives',
-                label: 'How will you look for, or develop, new non-animal alternatives as this project progresses?',
+                label: 'Where relevant, how will you seek to use or develop non-animal alternatives for all or part of your work?',
                 type: 'texteditor'
               }
             ]
@@ -1531,7 +1531,7 @@ export default {
                             value: false,
                             reveal: {
                               name: 'wild-animals-vet-competence',
-                              label: 'How will you ensure the competence of the person responsible for assessing ill or injured animals?',
+                              label: 'How will you ensure the competence of the person responsible for making this assessment?',
                               type: 'texteditor'
                             }
                           }
@@ -1553,22 +1553,22 @@ export default {
             fields: [
               {
                 name: 'wild-animals-transport',
-                label: 'If ill or injured animals need to be transported to have treatment elsewhere, how will you minimise potential harms during their transport?',
+                label: 'If sick animals are to be treated, how will you transport them to minimise harms if necessary to provide treatment?',
                 type: 'texteditor'
               },
               {
                 name: 'wild-animals-killing-method',
-                label: 'If ill or injured animals are to be killed, which method will you use?',
+                label: 'If sick animals are to be killed, which method will you use?',
                 type: 'texteditor'
               },
               {
                 name: 'wild-animals-identify',
-                label: 'How will you identify the animals that you have captured?',
+                label: 'How will animals be identified?',
                 type: 'texteditor'
               },
               {
                 name: 'wild-animals-devices',
-                label: 'Will you attach any devices to animals that you have captured from the wild?',
+                label: 'If devices are being used, will they remain attached to or implanted in animals?',
                 hint: 'For example, any device used to identify, track, and monitor an animal’s behaviour in its natural habitat.',
                 type: 'radio',
                 inline: true,
@@ -1580,18 +1580,18 @@ export default {
                     reveal: [
                       {
                         name: 'wild-animals-devices-effects',
-                        label: 'How will you minimise any adverse effects of these devices?',
+                        label: 'How will any adverse effect from the device\'s attachment or implantation be minimised?',
                         type: 'texteditor'
                       },
                       {
                         name: 'wild-animals-devices-removal',
-                        label: 'How will you ensure that devices are safely removed from animals at the end of your project?',
-                        hint: 'If devices will not be removed, explain why it is safe for them to remain.',
+                        label: 'How will you locate and recapture the animals or otherwise ensure the devices are removed at the end of the regulated procedures',
+                        hint: 'If devices will not be removed, explain why it is not required.',
                         type: 'texteditor'
                       },
                       {
                         name: 'wild-animals-devices-environment-effects',
-                        label: 'What are the potential effects on other species, the environment, and human health of not removing devices from animals?',
+                        label: 'What is the potential effect on the animals, other animals, the environment and human health if the devices cannot be removed?',
                         type: 'texteditor'
                       }
                     ]
