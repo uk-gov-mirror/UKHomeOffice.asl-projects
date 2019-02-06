@@ -53,6 +53,10 @@ export default {
     {
       label: 'Cattle',
       value: 'cattle'
+    },
+    {
+      label: 'Camelids',
+      value: 'camelids'
     }
   ],
   AQ: [
@@ -117,7 +121,7 @@ export default {
   ],
   EQU: [
     {
-      label: 'Horses, donkeys and cross-breeds',
+      label: 'Horses, donkeys, ponies, and cross-breeds',
       value: 'horses'
     }
   ],
