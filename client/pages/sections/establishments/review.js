@@ -25,7 +25,7 @@ const EstablishmentsReview = ({ fields, values, goto, retreat }) => {
           <div key={index} className="establishment-review">
             <div className="playback">
               <dl className="inline">
-                <dt>Secondary establishment: </dt>
+                <dt>Additional establishment: </dt>
                 <dd>
                   <span>{ establishment.name }</span>
                   <a href="#other-establishments-list" onClick={() => goto(0)}>Edit</a>

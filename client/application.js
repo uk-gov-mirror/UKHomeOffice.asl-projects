@@ -161,7 +161,7 @@ export default {
         fields: [
           {
             name: 'experience-projects',
-            label: 'Have you worked on projects in this area of science before?',
+            label: 'Have you managed similar work in this field before?',
             type: 'radio',
             inline: true,
             className: 'smaller',
@@ -171,8 +171,7 @@ export default {
                 value: true,
                 reveal: {
                   name: 'experience-achievements',
-                  label: 'What were your, or your group\'s achievements in your previous projects?',
-                  hint: 'Explain the extent to which you achieved your scientific objectives in these projects.',
+                  label: 'What were your, or your group\'s, main achievements that are relevant to this application?',
                   type: 'texteditor'
                 }
               },
@@ -187,43 +186,21 @@ export default {
                   },
                   {
                     name: 'experience-animals',
-                    label: 'What experience do you have of using the types of animals stated in this licence application?',
+                    label: 'What experience do you have of using the types of animals and experimental models stated in this licence application?',
                     type: 'texteditor'
                   },
                   {
                     name: 'experience-experimental-design',
                     label: 'What experimental design and data analysis training have you had?',
-                    hint: 'If you have, briefly describe your track record in securing funding for previous projects.',
+                    hint: 'If you do not have this expertise, how will you access it?',
                     type: 'texteditor'
                   },
                   {
                     name: 'experience-others',
-                    label: 'Will other people help you manage this project? If so, how?',
+                    label: 'Why are you the most suitable person in the research group, department or company to manage the project?',
                     type: 'texteditor'
                   }
                 ]
-              }
-            ]
-          },
-          {
-            name: 'experience-similar',
-            label: 'Is similar work already being done in any of the establishments listed in this application?',
-            type: 'radio',
-            inline: true,
-            className: 'smaller',
-            options: [
-              {
-                label: 'Yes',
-                value: true
-              },
-              {
-                label: 'No',
-                value: false,
-                reveal: {
-                  name: 'experience-relevant-expertise',
-                  label: 'What relevant expertise, people, and support will be available to help you carry out your experiments?',
-                  type: 'texteditor'
-                }
               }
             ]
           }
@@ -235,16 +212,12 @@ export default {
           {
             name: 'funding-how',
             label: 'How will your project be funded?',
-            type: 'texteditor'
-          },
-          {
-            name: 'funding-parts',
-            label: 'Which parts of your project already have funding?',
+            hint: 'If you do not have full funding, explain how you will stage your work and the likelihood of you obtaining further funding.',
             type: 'texteditor'
           },
           {
             name: 'funding-reviewed',
-            label: 'Has this application already been peer reviewed by an external funder?',
+            label: 'Has this application been peer reviewed by an external funder?',
             type: 'texteditor'
           },
           {
@@ -425,12 +398,12 @@ export default {
             fields: [
               {
                 name: 'title',
-                label: 'Title',
+                label: 'Name',
                 type: 'text'
               },
               {
                 name: 'pole-info',
-                label: 'Details',
+                label: 'Description',
                 type: 'texteditor'
               }
             ]
@@ -1866,7 +1839,7 @@ export default {
         fields: [
           {
             name: 'commercial-slaughter',
-            label: 'Will you be sending any animals to a commercial slaughterhouse at the end of their use?',
+            label: 'Will you be sending any farm animals to a commercial slaughterhouse at the end of their use?',
             type: 'radio',
             inline: true,
             className: 'smaller',
