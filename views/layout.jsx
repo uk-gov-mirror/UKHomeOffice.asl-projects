@@ -62,6 +62,7 @@ class Layout extends React.Component {
                       <a href="http://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/copyright-and-re-use/crown-copyright/">© Crown copyright</a>
                        - All content is available under the <a href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/" rel="license">Open Government Licence v3.0</a>, except where otherwise stated
                     </p>
+                    <p>Version: {this.props.version} - {this.props.released}</p>
                   </div>
                 </div>
               </div>
