@@ -224,11 +224,10 @@ const renderFields = (subsection, values, doc) => {
   // console.log(JSON.stringify(subsection));
   const fields = (subsection.steps) ? subsection.steps : [{ 'fields': subsection.fields }];
   fields.map(step => {
-
       if (step.name === 'polesList' ||
         step.name === 'establishments' ||
         step.name === 'objectives') {
-        values[step.name].map(v => {
+        (values[step.name] || []).map(v => {
           step.fields.map(field => renderField(doc, field, v));
         });
       }
@@ -295,7 +294,7 @@ class DownloadLink extends React.Component {
           doc.createParagraph(subsection.title).heading2();
           if(subsection.name === 'protocols') {
             renderFields(subsection.setup, this.props.values, doc);
-            this.props.values['protocols'].map(protocolValues => {
+            (this.props.values['protocols'] || []).map(protocolValues => {
               // next line renders just the protocol title
               renderField(doc, subsection.fields[0], protocolValues);
               // as many protocol objects I have , this many times I need to render ALL the subsection.sections
