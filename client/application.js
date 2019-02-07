@@ -30,52 +30,7 @@ export default {
             fields: [
               {
                 name: 'main-output',
-                label: 'What is the main output of your project?',
-                type: 'radio',
-                className: 'smaller',
-                options: [
-                  {
-                    label: 'To carry out or support research',
-                    value: 'research',
-                    hint: 'This can be for yourself or in collaboration with others, and can include basic or translational research and non-regulatory drug/device development.'
-                  },
-                  {
-                    label: 'To produce animals or antibodies for supply to others',
-                    value: 'animals',
-                    hint: 'This can include genetically-altered or surgically prepared animals.'
-                  },
-                  {
-                    label: 'To produce or support the production of blood products, vaccines, or medicines for medical or veterinary use.',
-                    value: 'blood-products'
-                  },
-                  {
-                    label: 'To generate testing or screening data',
-                    value: 'screening-data',
-                    hint: 'This can be for yourself or for others, for regulatory (GLP work) or non-regulatory use.',
-                    reveal: {
-                      name: 'main-output-testing-screening',
-                      label: 'Why will you be generating testing or screening data?',
-                      type: 'radio',
-                      options: [
-                        {
-                          label: 'To produce animals or antibodies to supply to others',
-                          value: 'supply-to-others',
-                          hint: 'This can include genetically-altered or surgically prepared animals.'
-                        },
-                        {
-                          label: 'Non-regulatory use',
-                          value: 'non-regulatory-use',
-                          hint: 'If data is provided to others, the models and methods used are likely to be tailored to the needs of that particular client.'
-                        }
-                      ]
-                    }
-                  },
-                  {
-                    label: 'To teach practical skills or knowledge',
-                    value: 'teach',
-                    hint: 'For example, microsurgery, or to use animals as part of a higher education course such as physiology.'
-                  }
-                ]
+                label: 'This tool currently supports applications for Research projects. The full range of project licence applications will be added soon.',
               },
               {
                 name: 'primary-establishment',
@@ -339,11 +294,6 @@ export default {
                   {
                     name: 'transfer-why',
                     label: 'Why do you need to move animals between licensed establishments?',
-                    type: 'texteditor'
-                  },
-                  {
-                    name: 'transfer-when',
-                    label: 'At what point in the project will animals be moved?',
                     type: 'texteditor'
                   },
                   {
@@ -1178,37 +1128,37 @@ export default {
           },
           justification: {
             title: 'Protocol justification',
-            label: 'Why is each experimental model proposed in this protocol',
+            label: 'Why is each type of animal and experimental model proposed in this protocol',
             fields: [
               {
                 name: 'most-appropriate',
-                label: 'a) the most appropriate for your scientific objectives?​',
+                label: 'a) the best scientifically?​',
                 type: 'texteditor'
               },
               {
                 name: 'most-refined',
-                label: 'b) the most refined?',
+                label: 'b) the most refined for the purpose?',
                 type: 'texteditor'
               },
               {
                 name: 'scientific-endpoints',
-                label: 'What is the scientific need for the expected clinical signs for each experimental model in this protocol?',
+                label: 'What is the scientific need for the expected clinical signs for each experimental model and type of animal in this protocol?',
+                type: 'texteditor'
+              },
+              {
+                name: 'scientific-suffering',
+                label: 'Why scientifically do the animals need to suffer to this degree?',
                 type: 'texteditor'
               },
               {
                 name: 'scientific-endpoints-justification',
-                label: 'Why can\'t you achieve your objectives by using an earlier scientific endpoint that would reduce the degree of harm experienced by an animal?',
-                hint: 'Take into account any phenotypic adverse effects if relevant.',
+                label: 'Why can\'t you achieve your scientific outputs with an earlier humane endpoint, or without animals showing any clinical signs?',
                 type: 'texteditor'
               },
               {
                 name: 'minimise-duration',
                 label: 'How will you minimise the duration and intensity of suffering for animals in this protocol?',
-                type: 'texteditor'
-              },
-              {
-                name: 'monitor-pain',
-                label: 'How will you monitor animals for pain and provide appropriate levels of analgesia?​',
+                hint: 'For example, monitoring animals appropriately over the course of the experiment. '
                 type: 'texteditor'
               },
               {
@@ -1290,7 +1240,7 @@ export default {
                           value: 'other',
                           reveal: {
                             name: 'method-and-justification',
-                            label: 'State the method of killing that you will use, along with a scientific justification for using it, and an explanation of how you will minimise the animal\'s suffering.',
+                            label: 'For each method, explain why this is scientifically necessary and how you will ensure that suffering is minimised.',
                             type: 'texteditor'
                           }
                         }
@@ -1309,19 +1259,19 @@ export default {
         fields: [
           {
             name: 'project-harms-summary',
-            label: 'Summarise what will typically be done to an animal used on your project.',
-            hint: 'Include any relevant information about injections, surgery, experiment durations, and the number of procedures an animal may experience.',
+            label: 'Typically, what will be done to an animal used in your project.',
+            hint: 'For example, injections and procedures. Include any relevant information about the duration of experiments and the number of procedures.',
             type: 'texteditor'
           },
           {
             name: 'project-harms-effects',
-            label: 'What do you expect will be the impacts or adverse effects that an animal may experience during your project?',
-            hint: 'Examples may include pain, inactivity, or abnormal behaviour. You should also state the estimated duration of these effects on the animal.',
+            label: 'What are the expected impacts or adverse effects for an animal during your project?',
+            hint: 'Examples can include pain, inactivity, or abnormal behaviour. State the estimated duration of these effects on an animal.',
             type: 'texteditor'
           },
           {
             name: 'project-harms-severity',
-            label: 'What are the expected severity levels and the proportion of animals (per type) that will experience each one?',
+            label: 'What are the expected severities and the proportion of animals in each category (per animal type)?',
             type: 'texteditor'
           }
         ]
@@ -1727,7 +1677,7 @@ export default {
               },
               {
                 name: 'nmbas-pain',
-                label: 'How will you minimise pain and distress for animals under the influence of an NMBA?',
+                label: 'How will you minimise pain, suffering, and distress for an animal under the influence of an NMBA?',
                 type: 'texteditor'
               }
             ]
@@ -1742,7 +1692,8 @@ export default {
               },
               {
                 name: 'nmbas-people',
-                label: 'How will you ensure that you have enough people with the right skills involved throughout the process of administering NMBAs, including animal recovery periods?',
+                label: 'How will you ensure there are sufficient staff present who are competent to use NMBAs in these types of animal?',
+                hint: 'This also includes recovery periods.',
                 type: 'texteditor'
               },
               {
@@ -1845,7 +1796,7 @@ export default {
         fields: [
           {
             name: 'commercial-slaughter',
-            label: 'Will you be sending any farm animals to a commercial slaughterhouse at the end of their use?',
+            label: 'Will you send any farm animals to a commercial slaughterhouse at the end of their use?',
             type: 'radio',
             inline: true,
             className: 'smaller',
