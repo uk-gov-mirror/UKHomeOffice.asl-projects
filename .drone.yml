@@ -23,16 +23,14 @@ pipeline:
         - push
         - pull_request
 
-  compile:
+  publish:
     image: node:10
     secrets:
       - npm_auth_token
     commands:
-      - npm run build --production
+      - npm publish
     when:
-      event:
-        - push
-        - pull_request
+      event: tag
 
 matrix:
   NPM_AUTH_USERNAME:
