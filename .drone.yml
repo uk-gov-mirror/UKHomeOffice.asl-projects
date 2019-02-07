@@ -1,0 +1,39 @@
+pipeline:
+
+  test:
+    image: node:10
+    secrets:
+      - npm_auth_token
+    commands:
+      - npm ci
+      - npm test
+    when:
+      event:
+        - push
+        - pull_request
+
+  audit:
+    image: node:10
+    secrets:
+      - npm_auth_token
+    commands:
+      - npx @lennym/ciaudit
+    when:
+      event:
+        - push
+        - pull_request
+
+  compile:
+    image: node:10
+    secrets:
+      - npm_auth_token
+    commands:
+      - npm run build --production
+    when:
+      event:
+        - push
+        - pull_request
+
+matrix:
+  NPM_AUTH_USERNAME:
+    - asl
