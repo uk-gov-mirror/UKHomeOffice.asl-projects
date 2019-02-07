@@ -39,6 +39,7 @@
     "express-react-views": "^0.10.5",
     "file-saver": "^2.0.0",
     "immutable": "^3.8.2",
+    "mdn-polyfills": "^5.15.0",
     "moment": "^2.22.2",
     "morgan": "^1.9.1",
     "npm-sass": "^2.3.0",

@@ -1,8 +1,8 @@
+import './polyfills';
+
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-// eslint-disable-next-line no-unused-vars
-import DetailsPolyfill from 'details-element-polyfill';
 
 import Alert from './components/alert';
 import Router from './router';
