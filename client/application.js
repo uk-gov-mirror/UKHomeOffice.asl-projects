@@ -26,7 +26,7 @@ export default {
         steps: [
           {
             title: 'Apply for project licence - 1 of 2',
-            subtitle: 'This tool currently supports applications for Research projects. The full range of project licence applications will be added soon.',
+            intro: 'This tool currently supports applications for Research projects. The full range of project licence applications will be added soon.',
             fields: [
               {
                 name: 'primary-establishment',
