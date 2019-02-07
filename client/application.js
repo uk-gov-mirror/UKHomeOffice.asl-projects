@@ -199,6 +199,17 @@ export default {
                     name: 'experience-others',
                     label: 'Why are you the most suitable person in the research group, department or company to manage the project?',
                     type: 'texteditor'
+                  },
+                  {
+                    name: 'funding-previous',
+                    label: 'What relevant expertise and staffing will be available to help you to deliver the programme of work?',
+                    hint: 'Include examples of practical, technical, and specialist support.',
+                    type: 'texteditor'
+                  },
+                  {
+                    name: 'other-people',
+                    label: 'Will other people help you manage the project? If so, how?',
+                    type: 'texteditor'
                   }
                 ]
               }
@@ -218,12 +229,6 @@ export default {
           {
             name: 'funding-reviewed',
             label: 'Has this application been peer reviewed by an external funder?',
-            type: 'texteditor'
-          },
-          {
-            name: 'funding-previous',
-            label: 'Have you secured funding for this type of work before?',
-            hint: 'If you have, briefly describe your track record in securing funding for previous projects.',
             type: 'texteditor'
           }
         ]
@@ -786,8 +791,8 @@ export default {
             fields: [
               {
                 name: 'description',
-                label: 'Briefly describe the scientific purposes of this protocol',
-                hint: 'Information about protocol steps should be added later.',
+                label: 'Briefly describe the purposes of this protocol',
+                hint: 'Include any relevant regulatory guidelines that may apply.',
                 type: 'texteditor'
               },
               {
@@ -1017,13 +1022,14 @@ export default {
           steps: {
             title: 'Steps',
             name: 'protocolSteps',
-            hint: 'Step numbers are for reference only. You will be able to reorder them at any time before you send your application to the Home Office.',
+            hint: 'A step can be a single procedure or a combination of procedures to achieve an outcome. You will be able to reorder your steps at any time before you send your application to the Home Office.',
             footer: 'Once you’ve created a list of steps, you need to add information about adverse effects, controls and limitations, and humane endpoints to each one.​',
             fields: [
               {
                 name: 'title',
                 type: 'texteditor',
-                label: 'To ensure that an adequate harm benefit assessment can be carried out for your project, please provide clear and explicit information for each step.'
+                label: 'Describe the procedures that will be carried out during this step.',
+                hint: 'To ensure that an adequate harm benefit assessment can be carried out, please provide a clear and explicit explanation of each step.'
               },
               {
                 name: 'anaesthesia',
