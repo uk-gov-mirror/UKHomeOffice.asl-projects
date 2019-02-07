@@ -26,12 +26,8 @@ export default {
         steps: [
           {
             title: 'Apply for project licence - 1 of 2',
-            subtitle: 'Project information',
+            subtitle: 'This tool currently supports applications for Research projects. The full range of project licence applications will be added soon.',
             fields: [
-              {
-                name: 'main-output',
-                label: 'This tool currently supports applications for Research projects. The full range of project licence applications will be added soon.',
-              },
               {
                 name: 'primary-establishment',
                 playback: 'Primary establishment',
@@ -1158,7 +1154,7 @@ export default {
               {
                 name: 'minimise-duration',
                 label: 'How will you minimise the duration and intensity of suffering for animals in this protocol?',
-                hint: 'For example, monitoring animals appropriately over the course of the experiment. '
+                hint: 'For example, monitoring animals appropriately over the course of the experiment.',
                 type: 'texteditor'
               },
               {
