@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
 import saveAs from 'file-saver';
-import { Document, Packer, Paragraph, TextRun, Numbering } from 'docx';
+import { Document, Packer, Paragraph, TextRun, Numbering } from '@joefitter/docx';
 
 import flatten from 'lodash/flatten';
 import SPECIES from '../constants/species';
