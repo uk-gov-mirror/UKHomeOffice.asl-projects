@@ -3,6 +3,12 @@
   "scripts": {
   },
   "env": {
+    "NPM_AUTH_USERNAME": {
+      "required": true
+    },
+    "NPM_AUTH_TOKEN": {
+      "required": true
+    }
   },
   "formation": {
     "web": {
