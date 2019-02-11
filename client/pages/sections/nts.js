@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { connectProject } from '../../helpers';
 import classnames from 'classnames';
 
@@ -110,10 +109,10 @@ class NTSSummary extends Component {
                         label={ field.review || field.label }
                         key={ field.name }
                         value={ this.props.project && this.props.project[field.name] }
-                        editLink={() => {
-                          const actualSection = section === 'introduction' ? 'introduction/1' : section;
-                          return <Link to={`/project/${this.props.project.id}/${actualSection}#${field.name}`}>Edit</Link>;
-                        }}
+                        editLink={ section === 'introduction' ?
+                          `/project/${this.props.project.id}/introduction/1#${field.name}` :
+                          `/project/${this.props.project.id}/${section}#${field.name}`
+                        }
                       />
                     ))
                   }

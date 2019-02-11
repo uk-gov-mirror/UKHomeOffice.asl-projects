@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { Link } from 'react-router-dom';
 import { connectProject, connectSettings } from '../helpers';
 import { ReviewTextEditor } from './editor';
 import speciesOptions from '../constants/species';
@@ -122,7 +123,8 @@ class Review extends React.Component {
         <h3>{this.props.label}</h3>
         {this.replay()}
         <p>
-          { this.props.editLink ||
+          { (this.props.editLink && <Link to={this.props.editLink}>Edit</Link>)
+            ||
             <a onClick={e => this.props.onEdit(e)} href={`#${this.props.name}`}>
               Edit
             </a>
