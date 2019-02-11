@@ -51,6 +51,23 @@ const addStyles = doc => {
     .color('999999')
     .italics();
 
+    doc.Styles.createParagraphStyle('footerText', 'Footer Text')
+    .basedOn('Normal')
+    .next('Normal')
+    .quickFormat()
+    .font('Helvetica')
+    .size(20);
+
+  return doc;
+};
+
+const addPageNumbers = (doc) => {
+  doc.Footer.createParagraph()
+    .addRun(new TextRun('Page ').pageNumber())
+    .addRun(new TextRun(' of ').numberOfTotalPages())
+    .style('footerText')
+    .right();
+
   return doc;
 };
 
@@ -449,6 +466,7 @@ module.exports = {
       .then(() => new Document())
       .then(doc => addStyles(doc))
       .then(doc => renderDocument(doc, sections, values))
+      .then(doc => addPageNumbers(doc))
       .then(doc => pack(doc, values.title));
   }
 };
