@@ -10,6 +10,7 @@ class Index extends React.Component {
           <div id="app"/>
         </div>
       </main>
+      <script dangerouslySetInnerHTML={{__html: `window.PROJECT_ID='${this.props.projectId}';`}} />
     </Layout>
   }
 

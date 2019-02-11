@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import { connectProject, connectSettings } from '../helpers';
+import { connect } from 'react-redux';
+
 import { ReviewTextEditor } from './editor';
 import speciesOptions from '../constants/species';
 
@@ -134,4 +135,6 @@ class Review extends React.Component {
   }
 }
 
-export default connectSettings(connectProject(Review));
+const mapStateToProps = ({ project, settings }) => ({ project, settings });
+
+export default connect(mapStateToProps)(Review);

@@ -1,11 +1,10 @@
 import React from 'react';
-import { connectProject } from '../helpers';
 
-const Link = ({ to, project, label }) => {
+const Link = ({ to, label }) => {
   if (!label) {
     label = `View ${to}`;
   }
-  return <a href={`/project/${project.id}/${to}`}>{ label }</a>;
+  return <a href={`/${to}`}>{ label }</a>;
 }
 
-export default connectProject(Link);
+export default Link;

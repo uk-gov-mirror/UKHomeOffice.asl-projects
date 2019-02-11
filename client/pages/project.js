@@ -1,29 +1,20 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 
 import ApplicationSummary from '../components/application-summary';
 import DownloadLink from '../components/download-link';
 
-const mapStateToProps = (state, props) => {
-  const project = state.projects.find(project => project.id === parseInt(props.match.params.id, 10));
-  if (!project) {
-    return {};
-  }
-  return {
-    ...project
-  };
-};
-
-const Index = ({ id, title }) => (
+const Index = ({ project, title }) => (
   <Fragment>
     <h1>{ title }</h1>
     <p className="controls">
-      <DownloadLink className="float-right" project={id} label="Export" renderer="ppl" />
+      <DownloadLink className="float-right" project={project.id} label="Export" renderer="ppl" />
       <Link to="/">Back to project list</Link>
     </p>
-    <ApplicationSummary project={ id } />
+    <ApplicationSummary />
   </Fragment>
 );
+
+const mapStateToProps = ({ project }) => ({ project });
 
 export default connect(mapStateToProps)(Index);

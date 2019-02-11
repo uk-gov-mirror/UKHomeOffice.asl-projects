@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import moment from 'moment';
 import DropZone from 'react-dropzone';
 
@@ -47,13 +46,12 @@ class Index extends React.Component {
 
   create = () => {
     this.props.create({})
-      .then(project => this.props.history.push(`/project/${project.id}/introduction`));
+      .then(project => {
+        window.location.href = `/project/${project.id}/introduction`;
+      });
   }
 
   render() {
-    if (!this.props.settings.establishments || !this.props.settings.establishments.length) {
-      return <Settings />
-    }
     return <DropZone
       onDrop={files => this.drop(files)}
       activeClassName="import-active"
@@ -75,7 +73,7 @@ class Index extends React.Component {
         {
           this.props.projects.map(project => {
             return <tr key={ project.id }>
-              <td><Link to={`/project/${project.id}`}>{ project.title || 'Untitled project' }</Link></td>
+              <td><a href={`/project/${project.id}`}>{ project.title || 'Untitled project' }</a></td>
               <td>{ moment(project.updated).format('D MMMM YYYY, HH:mm') }</td>
               <td>
                 <DownloadLink project={project.id} label="Download" renderer="docx" />

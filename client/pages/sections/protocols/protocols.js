@@ -1,9 +1,8 @@
 import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
 import classnames from 'classnames';
 
 import size from 'lodash/size';
-
-import { connectProject } from '../../../helpers';
 
 import ProtocolSections from './protocol-sections';
 
@@ -21,6 +20,7 @@ class Form extends Component {
 
   render() {
     const { index, name, updateItem, exit, toggleActive, prefix = '', ...props } = this.props;
+    console.log('hisijsi')
     return (
       <div className={classnames('protocol', 'panel')}>
         {
@@ -135,4 +135,6 @@ class Protocols extends Component {
   }
 }
 
-export default connectProject(Protocols);
+const mapStateToProps = ({ project }) => ({ project });
+
+export default connect(mapStateToProps)(Protocols);

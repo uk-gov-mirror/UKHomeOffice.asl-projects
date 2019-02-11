@@ -10,11 +10,11 @@ import { INCOMPLETE, PARTIALLY_COMPLETE, COMPLETE } from '../constants/completen
 
 import { Button } from '@ukhomeoffice/react-components';
 
-const mapStateToProps = (state, props) => {
-  const project = state.projects.find(project => project.id === props.project);
+const mapStateToProps = ({ project, application }, props) => {
+  console.log(project)
   return {
     values: project,
-    sections: state.application
+    sections: application
   };
 }
 
@@ -88,7 +88,7 @@ class ApplicationSummary extends React.Component {
                   subsections.map(key => {
                     const subsection = section.subsections[key];
                     return <tr key={key}>
-                      <td><Link to={`/project/${this.props.project}/${key}`}>{ subsection.title }</Link></td>
+                      <td><Link to={`/${key}`}>{ subsection.title }</Link></td>
                       <td>{ this.completeBadge(this.complete(subsection, key)) }</td>
                     </tr>
                   })

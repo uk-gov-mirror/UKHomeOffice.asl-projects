@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { connectProject } from '../../helpers';
 import classnames from 'classnames';
 
 import map from 'lodash/map';
@@ -132,9 +131,10 @@ class NTSSummary extends Component {
   }
 }
 
-const mapStateToProps = ({ application }) => ({
+const mapStateToProps = ({ application, project }) => ({
   sectionsSettings: map(application, s => s.subsections)
-    .reduce((obj, subsections) => ({ ...obj, ...subsections }), {})
+    .reduce((obj, subsections) => ({ ...obj, ...subsections }), {}),
+  project
 });
 
-export default connect(mapStateToProps)(connectProject(NTSSummary));
+export default connect(mapStateToProps)(NTSSummary);

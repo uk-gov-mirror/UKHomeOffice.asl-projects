@@ -12,7 +12,7 @@ const mapStateToProps = (state, props) => {
   section.fields = section.fields || [];
 
   return {
-    id: props.match.params.id,
+    project: state.project,
     step: parseInt(props.match.params.step, 10) || 0,
     section: props.match.params.section,
     ...section
@@ -20,13 +20,12 @@ const mapStateToProps = (state, props) => {
 };
 
 const mapDispatchToProps = (dispatch, props) => {
-  const id = parseInt(props.match.params.id, 10);
   return {
     update: (data, value) => {
       if (typeof data === 'string') {
-        return dispatch(updateProject(id, { [data]: value }));
+        return dispatch(updateProject({ [data]: value }));
       }
-      return dispatch(updateProject(id, data));
+      return dispatch(updateProject(data));
     }
   };
 };
@@ -45,11 +44,11 @@ class Section extends React.Component {
           title={ title }
           section={ section }
           save={ (...args) => this.props.update(...args) }
-          exit={ () => this.props.history.push(`/project/${this.props.id}`) }
+          exit={ () => this.props.history.push('/') }
           fields={ fields }
           step={ step }
           { ...rest }
-          onProgress={ step => this.props.history.push(`/project/${this.props.id}/${this.props.section}/${step}`) }
+          onProgress={ step => this.props.history.push(`/${this.props.section}/${step}`) }
         />
       </Fragment>
     )

@@ -1,9 +1,8 @@
 import React, { Fragment, Component, PureComponent } from 'react';
+import { connect } from 'react-redux';
 
 import some from 'lodash/some';
 import flatten from 'lodash/flatten';
-
-import { connectProject } from '../../helpers';
 
 import Wizard from '../../components/wizard';
 import Fieldset from '../../components/fieldset';
@@ -142,4 +141,6 @@ class Section extends PureComponent {
   }
 }
 
-export default connectProject(Section)
+const mapStateToProps = ({ project }) => ({ project });
+
+export default connect(mapStateToProps)(Section);

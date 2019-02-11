@@ -116,11 +116,9 @@ const Steps = ({ values, updateItem, index, name, advance, ...props }) => {
   )
 }
 
-const mapStateToProps = (state, ownProps) => {
-  const project = state.projects.find(p => p.id === parseInt(ownProps.match.params.id, 10));
-  const values = project.protocols[ownProps.index];
+const mapStateToProps = ({ project }, { index }) => {
   return {
-    values
+    values: project.protocols[index]
   }
 }
 
