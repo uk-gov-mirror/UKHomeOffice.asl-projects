@@ -53,7 +53,7 @@ module.exports = () => {
             item.updated = item.updated || Date.now();
             item.id = uuid.v4();
             const request = objectStore.add(item);
-            request.onsuccess = e => {
+            request.onsuccess = () => {
               return resolve(item);
             };
             transaction.onerror = e => reject(e);
