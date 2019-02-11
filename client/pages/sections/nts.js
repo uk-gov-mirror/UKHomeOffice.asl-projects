@@ -13,8 +13,15 @@ import NTS from '../../components/nts';
 const OFFSET = 100;
 
 class NTSSummary extends Component {
+  _isMounted = false;
+
   componentDidMount() {
+    this._isMounted = true;
     window.onscroll = this.onscroll;
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   sectionRefs = this.props.sections.reduce((obj, { section }) => {
@@ -34,7 +41,9 @@ class NTSSummary extends Component {
 
   updateActiveSection = (e, section) => {
     e.preventDefault();
-    this.setState({ active: section }, this.scrollToActive)
+    if (this._isMounted) {
+      this.setState({ active: section }, this.scrollToActive);
+    }
   }
 
   scrollToActive = () => {
@@ -45,10 +54,13 @@ class NTSSummary extends Component {
       top: this.sectionRefs[this.state.active].current.offsetTop + OFFSET,
       behavior: 'smooth'
     });
-    // wait until animation finished then reattach scroll handler
-    this.timeout = setTimeout(() => {
-      window.onscroll = this.onscroll;
-    }, 1000);
+
+    if (this._isMounted) {
+      // wait until animation finished then reattach scroll handler
+      this.timeout = setTimeout(() => {
+        window.onscroll = this.onscroll;
+      }, 1000);
+    }
   }
 
   componentDidUpdate() {
@@ -66,7 +78,9 @@ class NTSSummary extends Component {
       const upperLimit = thresholds[index + 1] ? parseInt(thresholds[index + 1], 10) : Infinity;
       return scrollTop >= lowerLimit && scrollTop < upperLimit;
     })
-    this.setState({ active: this.thresholds[section] })
+    if (this._isMounted) {
+      this.setState({ active: this.thresholds[section] });
+    }
   }
 
   getFields = (section, whitelist) => {
