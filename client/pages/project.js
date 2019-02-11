@@ -2,11 +2,13 @@ import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+import { parseIfInt } from '../helpers';
+
 import ApplicationSummary from '../components/application-summary';
 import ExportLink from '../components/export-link';
 
 const mapStateToProps = (state, props) => {
-  const project = state.projects.find(p => p.id === props.match.params.id);
+  const project = state.projects.find(p => p.id === parseIfInt(props.match.params.id));
   if (!project) {
     return {};
   }

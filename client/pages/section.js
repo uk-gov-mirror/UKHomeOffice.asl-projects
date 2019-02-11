@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { updateProject } from '../actions/projects';
+import { parseIfInt } from '../helpers';
 import DefaultSection from './sections';
 import SectionsLink from '../components/sections-link';
 
@@ -20,7 +21,7 @@ const mapStateToProps = (state, props) => {
 };
 
 const mapDispatchToProps = (dispatch, props) => {
-  const id = props.match.params.id;
+  const id = parseIfInt(props.match.params.id);
   return {
     update: (data, value) => {
       if (typeof data === 'string') {

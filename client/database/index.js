@@ -1,4 +1,4 @@
-import uuid from 'uuid';
+import uuid from 'uuid/v4';
 
 module.exports = () => {
 
@@ -51,7 +51,7 @@ module.exports = () => {
             const transaction = db.transaction([table], 'readwrite');
             const objectStore = transaction.objectStore(table);
             item.updated = item.updated || Date.now();
-            item.id = uuid.v4();
+            item.id = uuid();
             const request = objectStore.add(item);
             request.onsuccess = () => {
               return resolve(item);
