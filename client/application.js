@@ -262,7 +262,7 @@ export default {
                     value: false,
                     reveal: {
                       name: 'establishments-care-conditions-justification',
-                      label: 'If any of your establishments do not meet these requirements, explain how you will ensure that housing, husbandry, and care conditions will be appropriate for your project.',
+                      label: 'If any of your establishments do not meet these requirements, explain how you will ensure that housing, husbandry, and care conditions are appropriate for your project.',
                       type: 'texteditor'
                     }
                   }
@@ -1224,7 +1224,7 @@ export default {
                       label: '',
                       review: 'Method of killing',
                       name: 'killing-method',
-                      type: 'radio',
+                      type: 'checkbox',
                       className: 'smaller',
                       options: [
                         {
@@ -1232,7 +1232,7 @@ export default {
                           value: 'schedule-1'
                         },
                         {
-                          label: 'Non-schedule 1 method​',
+                          label: 'Non-schedule 1 killing of a conscious animal',
                           value: 'other',
                           reveal: {
                             name: 'method-and-justification',
@@ -1734,7 +1734,7 @@ export default {
           },
           {
             name: 'reusing-limitations',
-            label: 'Have you placed any limitations on re-using animals during your project?',
+            label: 'What are the relevant limitations on re-using animals for this project?',
             hint: 'For example, there may be a maximum number of times that an animal can be re-used, or a set of performance standards that requires a limit on re-use.',
             type: 'texteditor'
           }
@@ -1850,7 +1850,7 @@ export default {
           },
           {
             name: 'reduction-estimation',
-            label: 'How did you estimate these numbers?',
+            label: 'How have you estimated the numbers of animals you will use?',
             hint: 'For example, you may have made some power calculations or carried out some statistical modelling.',
             type: 'texteditor'
           },
