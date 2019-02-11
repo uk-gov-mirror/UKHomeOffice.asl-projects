@@ -819,7 +819,7 @@ export default {
               },
               {
                 name: 'maximize-effectiveness',
-                label: 'How will you maximize the data output from the animals you use in this protocol?​',
+                label: 'How will you maximise the data output from the animals you use in this protocol?​',
                 type: 'texteditor'
               }
             ]
