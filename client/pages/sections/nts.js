@@ -105,16 +105,16 @@ class NTSSummary extends Component {
                   <h2 ref={this.sectionRefs[section]}>{title}</h2>
                   {
                     this.getFields(this.props.sectionsSettings[section], fields).map(field => (
-                    <Review
-                      {...field}
-                      label={ field.review || field.label }
-                      key={ field.name }
-                      value={ this.props.project && this.props.project[field.name] }
-                      editLink={() => {
-                        const actualSection = section === 'introduction' ? 'introduction/1' : section;
-                        return <Link to={`/project/${this.props.project.id}/${actualSection}#${field.name}`}>Edit</Link>;
-                      }}
-                    />
+                      <Review
+                        {...field}
+                        label={ field.review || field.label }
+                        key={ field.name }
+                        value={ this.props.project && this.props.project[field.name] }
+                        editLink={() => {
+                          const actualSection = section === 'introduction' ? 'introduction/1' : section;
+                          return <Link to={`/project/${this.props.project.id}/${actualSection}#${field.name}`}>Edit</Link>;
+                        }}
+                      />
                     ))
                   }
                   <hr />
