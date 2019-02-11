@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 const mapProject = (state, props) => {
   const { id } = props.match.params;
   return {
-    project: state.projects.find(p => p.id === parseInt(id, 10)) || {}
+    project: state.projects.find(p => p.id === id) || {}
   };
 }
 

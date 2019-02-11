@@ -20,7 +20,7 @@ const mapStateToProps = (state, props) => {
 };
 
 const mapDispatchToProps = (dispatch, props) => {
-  const id = parseInt(props.match.params.id, 10);
+  const id = props.match.params.id;
   return {
     update: (data, value) => {
       if (typeof data === 'string') {

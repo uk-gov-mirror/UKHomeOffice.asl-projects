@@ -6,7 +6,7 @@ import ApplicationSummary from '../components/application-summary';
 import ExportLink from '../components/export-link';
 
 const mapStateToProps = (state, props) => {
-  const project = state.projects.find(project => project.id === parseInt(props.match.params.id, 10));
+  const project = state.projects.find(p => p.id === props.match.params.id);
   if (!project) {
     return {};
   }

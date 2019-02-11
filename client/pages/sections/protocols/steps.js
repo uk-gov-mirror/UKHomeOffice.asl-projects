@@ -117,7 +117,7 @@ const Steps = ({ values, updateItem, index, name, advance, ...props }) => {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const project = state.projects.find(p => p.id === parseInt(ownProps.match.params.id, 10));
+  const project = state.projects.find(p => p.id === ownProps.match.params.id);
   const values = project.protocols[ownProps.index];
   return {
     values
