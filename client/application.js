@@ -799,21 +799,12 @@ export default {
               {
                 name: 'control-groups',
                 label: 'How will you use control groups?',
+                hint: 'Provide a robust scientific justification for controls with significant suffering such as sham surgery controls or untreated infected controls.',
                 type: 'texteditor'
               },
               {
-                name: 'control-groups-size',
-                label: 'How will you determine group sizes?',
-                type: 'texteditor'
-              },
-              {
-                name: 'effect-size',
-                label: 'What \'effect size\' will you need for this protocol and why?',
-                type: 'texteditor'
-              },
-              {
-                name: 'maximize-effectiveness',
-                label: 'How will you maximize the data output from the animals you use in this protocol?​',
+                name: 'randomised',
+                label: 'Will experiments and data analysis in this protocol be randomised or blinded? If so, how?​',
                 type: 'texteditor'
               },
               {
@@ -822,8 +813,13 @@ export default {
                 type: 'texteditor'
               },
               {
-                name: 'randomised',
-                label: 'Will experiments and data analysis in this protocol be randomised or blinded? If so, how?​',
+                name: 'control-groups-size',
+                label: 'How will you determine group sizes?',
+                type: 'texteditor'
+              },
+              {
+                name: 'maximize-effectiveness',
+                label: 'How will you maximise the data output from the animals you use in this protocol?​',
                 type: 'texteditor'
               }
             ]
@@ -925,7 +921,7 @@ export default {
               },
               {
                 name: 'gaas',
-                label: 'Which general types or strains of GAAs will you be using and why?​',
+                label: 'Which general types or strains of genetically altered animals (GAAs) will you be using and why?​',
                 type: 'texteditor',
                 conditional: {
                   gaas: true
@@ -933,7 +929,7 @@ export default {
               },
               {
                 name: 'gaas-welfare',
-                label: 'Do you expect any of these GAAs to show a phenotype with moderate or severe welfare consequences?',
+                label: 'Do you expect any of these GAAs to show a harmful phenotype with welfare consequences?',
                 type: 'radio',
                 options: [
                   {
@@ -942,7 +938,7 @@ export default {
                     reveal: [
                       {
                         name: 'why',
-                        label: 'Why are each of these phenotypes scientifically necessary?',
+                        label: 'Why are each of these significant phenotypes scientifically necessary?',
                         type: 'texteditor'
                       },
                       {
