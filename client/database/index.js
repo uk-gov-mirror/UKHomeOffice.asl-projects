@@ -1,5 +1,3 @@
-import uuid from 'uuid/v4';
-
 module.exports = () => {
 
   return new Promise((resolve, reject) => {
@@ -7,7 +5,7 @@ module.exports = () => {
     request.onerror = reject;
     request.onupgradeneeded = event => {
       const db = event.target.result;
-      db.createObjectStore('projects');
+      db.createObjectStore('projects', { autoIncrement : true });
       db.createObjectStore('settings', { autoIncrement : true });
     };
     request.onsuccess = event => {
@@ -42,7 +40,10 @@ module.exports = () => {
             const transaction = db.transaction([table], 'readwrite');
             const objectStore = transaction.objectStore(table);
             const request = objectStore.put(data, id);
-            request.onsuccess = () => resolve(data);
+            request.onsuccess = () => resolve({
+              id,
+              ...data
+            });
             transaction.onerror = e => reject(e);
           });
         },
@@ -51,10 +52,12 @@ module.exports = () => {
             const transaction = db.transaction([table], 'readwrite');
             const objectStore = transaction.objectStore(table);
             item.updated = item.updated || Date.now();
-            item.id = uuid();
             const request = objectStore.add(item);
-            request.onsuccess = () => {
-              return resolve(item);
+            request.onsuccess = e => {
+              return resolve({
+                id: e.target.result,
+                ...item
+              });
             };
             transaction.onerror = e => reject(e);
           });

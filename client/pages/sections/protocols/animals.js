@@ -8,8 +8,6 @@ import intersection from 'lodash/intersection';
 import flatten from 'lodash/flatten';
 import values from 'lodash/values';
 
-import { parseIfInt } from '../../../helpers';
-
 import SPECIES from '../../../constants/species';
 
 import Fieldset from '../../../components/fieldset';
@@ -198,7 +196,7 @@ class Animals extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const project = state.projects.find(p => p.id === parseIfInt(ownProps.match.params.id))
+  const project = state.projects.find(p => p.id === parseInt(ownProps.match.params.id, 10))
   const values = project.protocols[ownProps.index];
   return {
     project,
