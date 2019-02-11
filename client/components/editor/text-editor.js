@@ -249,7 +249,7 @@ class TextEditor extends RTEditor {
             {this.props.error}
           </span>
         )}
-        <div className={classnames('editor', { focus: this.state.focus })}>
+        <div id={this.props.name} className={classnames('editor', { focus: this.state.focus })}>
           <FormatToolbar>
             {this.renderMarkButton('bold', ic_format_bold)}
             {this.renderMarkButton('italic', ic_format_italic)}
