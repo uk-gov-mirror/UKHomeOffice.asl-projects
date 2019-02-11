@@ -1,7 +1,7 @@
 import saveAs from 'file-saver';
 import { Document, Packer, Paragraph, TextRun, Numbering } from '@joefitter/docx';
 import { flatten, isUndefined } from 'lodash';
-import SPECIES from '../client/constants/species';
+import SPECIES from '../../../constants/species';
 
 // 600px seems to be roughly 100% page width (inside the margins)
 const MAX_IMAGE_WIDTH = 600;
@@ -348,7 +348,7 @@ const renderSection = (doc, section, values) => {
   );
 };
 
-const render = (doc, sections, values) => {
+const renderDocument = (doc, sections, values) => {
   doc.createParagraph(values.title).heading1();
 
   sections = sections.filter(s => s.name !== 'nts');
@@ -443,12 +443,12 @@ const addImageDimensions = values => {
 };
 
 module.exports = {
-  generate: ({sections, values}) => {
+  render: ({sections, values}) => {
     return Promise.resolve()
       .then(() => addImageDimensions(values))
       .then(() => new Document())
       .then(doc => addStyles(doc))
-      .then(doc => render(doc, sections, values))
+      .then(doc => renderDocument(doc, sections, values))
       .then(doc => pack(doc, values.title));
   }
 };

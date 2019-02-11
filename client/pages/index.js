@@ -11,7 +11,6 @@ import { Button } from '@ukhomeoffice/react-components';
 import { deleteProject, importProject, createProject } from '../actions/projects';
 import { throwError } from '../actions/messages';
 
-import ExportLink from '../components/export-link';
 import DownloadLink from '../components/download-link';
 
 const mapStateToProps = state => {
@@ -79,8 +78,8 @@ class Index extends React.Component {
               <td><Link to={`/project/${project.id}`}>{ project.title || 'Untitled project' }</Link></td>
               <td>{ moment(project.updated).format('D MMMM YYYY, HH:mm') }</td>
               <td>
-                <DownloadLink project={project.id} />
-                <ExportLink project={project.id} />
+                <DownloadLink project={project.id} label="Download" renderer="docx" />
+                <DownloadLink project={project.id} label="Export" renderer="ppl" />
                 <button onClick={() => this.props.remove(project.id)} className="govuk-button">Remove</button>
               </td>
             </tr>

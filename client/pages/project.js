@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import ApplicationSummary from '../components/application-summary';
-import ExportLink from '../components/export-link';
+import DownloadLink from '../components/download-link';
 
 const mapStateToProps = (state, props) => {
   const project = state.projects.find(project => project.id === parseInt(props.match.params.id, 10));
@@ -19,7 +19,7 @@ const Index = ({ id, title }) => (
   <Fragment>
     <h1>{ title }</h1>
     <p className="controls">
-      <ExportLink className="float-right" project={id} />
+      <DownloadLink className="float-right" project={id} label="Export" renderer="ppl" />
       <Link to="/">Back to project list</Link>
     </p>
     <ApplicationSummary project={ id } />
