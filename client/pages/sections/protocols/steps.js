@@ -8,6 +8,7 @@ import every from 'lodash/every';
 import isUndefined from 'lodash/isUndefined';
 import { ReviewTextEditor } from '../../../components/editor';
 
+import { parseIfInt } from '../../../helpers';
 import Review from '../../../components/review-fields';
 import Repeater from '../../../components/repeater';
 import Fieldset from '../../../components/fieldset';
@@ -117,7 +118,7 @@ const Steps = ({ values, updateItem, index, name, advance, ...props }) => {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const project = state.projects.find(p => p.id === parseInt(ownProps.match.params.id, 10));
+  const project = state.projects.find(p => p.id === parseIfInt(ownProps.match.params.id));
   const values = project.protocols[ownProps.index];
   return {
     values

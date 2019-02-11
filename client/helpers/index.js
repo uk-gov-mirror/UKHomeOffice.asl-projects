@@ -1,10 +1,16 @@
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 
+export const parseIfInt = val => {
+  return /^[\d]+$/.test(val)
+    ? parseInt(val, 10)
+    : val
+};
+
 const mapProject = (state, props) => {
   const { id } = props.match.params;
   return {
-    project: state.projects.find(p => p.id === parseInt(id, 10)) || {}
+    project: state.projects.find(p => p.id === parseIfInt(id)) || {}
   };
 }
 

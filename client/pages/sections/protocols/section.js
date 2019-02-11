@@ -6,6 +6,7 @@ import { Button } from '@ukhomeoffice/react-components';
 import flatten from 'lodash/flatten';
 import map from 'lodash/map';
 
+import { parseIfInt } from '../../../helpers'
 import Fieldset from '../../../components/fieldset'
 
 const RenderSection = ({ title, label, hideTitle = true, fields, values, prefix, onFieldChange }) => {
@@ -60,7 +61,7 @@ const Section = ({
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const id = parseInt(ownProps.match.params.id, 10);
+  const id = parseIfInt(ownProps.match.params.id);
   const values = state.projects.find(p => p.id === id).protocols[ownProps.index]
   return {
     values
