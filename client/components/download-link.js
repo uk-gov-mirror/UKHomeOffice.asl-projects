@@ -75,7 +75,7 @@ const renderTextEditor = (value, doc) => {
                 // case 'code':
                 // return text.code();
                 case 'italic':
-                  text.italic();
+                  text.italics();
                   break;
                 case 'underlined':
                   text.underline();
@@ -112,7 +112,7 @@ const renderField = (doc, field, values) => {
   if (isUndefined(value)) {
     const paragraph = new Paragraph();
     paragraph.style('body');
-    paragraph.addRun(new TextRun('No answer provided').italic());
+    paragraph.addRun(new TextRun('No answer provided').italics());
     doc.addParagraph(paragraph);
   } else {
 
