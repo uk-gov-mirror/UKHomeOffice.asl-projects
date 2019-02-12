@@ -13,7 +13,7 @@ const Index = ({ project, title }) => {
       <h1>{ title }</h1>
       <p className="controls">
         <DownloadLink className="float-right" project={project.id} label="Export" renderer="ppl" />
-        <Link to="/">Back to project list</Link>
+        <a href="/">Back to project list</a>
       </p>
       <ApplicationSummary />
     </Fragment>
