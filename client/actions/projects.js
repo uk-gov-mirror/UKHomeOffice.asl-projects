@@ -1,5 +1,5 @@
 import omit from 'lodash/omit';
-import throttle from 'lodash/throttle';
+import debounce from 'lodash/debounce';
 
 import * as types from './types';
 import database from '../database';
@@ -72,12 +72,12 @@ export function updateProject(project) {
   }
 }
 
-const throttledUpdate = throttle((id, data, dispatch) => {
+const debouncedUpdate = debounce((id, data, dispatch) => {
   return database()
     .then(db => db.update(id, data))
     // TODO: notify user autosaved.
     .catch(err => dispatch({ type: types.ERROR, err }))
-}, 1000, { leading: true, trailing: true })
+}, 500, { maxWait: 5000 })
 
 export function updateAndSave(data) {
   return (dispatch, getState) => {
@@ -85,6 +85,6 @@ export function updateAndSave(data) {
     const newState = { ...project, ...data };
     dispatch(updateProject(newState));
     const id = project.id;
-    return throttledUpdate(id, newState, dispatch);
+    return debouncedUpdate(id, newState, dispatch);
   };
 }
