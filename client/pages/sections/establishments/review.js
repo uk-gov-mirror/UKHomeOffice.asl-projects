@@ -7,7 +7,7 @@ import Playback from '../../../components/playback';
 import Review from '../../../components/review';
 
 const EstablishmentsReview = ({ fields, values, goto, retreat }) => {
-  const establishments = castArray(values.establishments).filter(f => values['other-establishments'] && values['other-establishments-list'].includes(f.name))
+  const establishments = castArray(values.establishments).filter(f => values['other-establishments'] && f && values['other-establishments-list'].includes(f.name))
   return (
     <Fragment>
       <Banner>

@@ -301,6 +301,50 @@ export default {
                     name: 'transfer-measures',
                     label: 'Which measures will you use to minimise any adverse effects for animals that may arise when moving them between licensed establishments?',
                     type: 'texteditor'
+                  },
+                  {
+                    name: 'transfer-recovery',
+                    label: 'a) Will medically and surgically prepared animals be given a minimum of 7 days to recover before being transferred?',
+                    type: 'radio',
+                    inline: true,
+                    className: 'smaller',
+                    options: [
+                      {
+                        label: 'Yes',
+                        value: true
+                      },
+                      {
+                        label: 'No',
+                        value: false,
+                        reveal: {
+                          name: 'transfer-no-recovery',
+                          label: 'Why won\'t animals be given 7 days to recover before being transferred?',
+                          type: 'texteditor'
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    name: 'transfer-acclimatisation',
+                    label: 'b) Will animals be given a minimum of 7 days to acclimatise to their new surroundings prior to any further regulated procedures?',
+                    type: 'radio',
+                    inline: true,
+                    className: 'smaller',
+                    options: [
+                      {
+                        label: 'Yes',
+                        value: true
+                      },
+                      {
+                        label: 'No',
+                        value: false,
+                        reveal: {
+                          name: 'transfer-no-acclimatisation',
+                          label: 'Why won\'t  animals be given 7 days to acclimatise to their new surroundings? ',
+                          type: 'texteditor'
+                        }
+                      }
+                    ]
                   }
                 ]
               },
