@@ -833,7 +833,6 @@ export default {
                 type: 'checkbox',
                 className: 'smaller',
                 inline: true,
-                optionsFromKey: 'species',
                 section: 'intro'
               },
               {

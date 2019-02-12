@@ -4,29 +4,28 @@ import { connect } from 'react-redux';
 import { Button } from '@ukhomeoffice/react-components';
 
 import some from 'lodash/some';
-import intersection from 'lodash/intersection';
 import flatten from 'lodash/flatten';
 import values from 'lodash/values';
 
 import SPECIES from '../../../constants/species';
 
 import Fieldset from '../../../components/fieldset';
-import Controls from '../../../components/controls';
 import Expandable from '../../../components/expandable';
 import Repeater from '../../../components/repeater';
 
 import SpeciesSelector from '../../../components/species-selector';
 
-const AddSpecies = ({ onContinueClicked, onExitClicked, onFieldChange, ...props }) => (
-  <div className="panel light-grey-bg">
-    <SpeciesSelector { ...props } onFieldChange={onFieldChange} />
-    <Controls onContinue={onContinueClicked} onExit={onExitClicked} advanceLabel="Add species" exitLabel="Back" exitClassName="link" />
-  </div>
-)
+const AddSpecies = ({ onContinueClicked, onFieldChange, ...props }) => {
+  return (<div className="panel light-grey-bg">
+    <SpeciesSelector name='species' { ...props } onFieldChange={onFieldChange} />
+    <p className="control-panel">
+      <Button onClick={onContinueClicked}>Add species</Button>
+    </p>
+  </div>)}
 
 class Animal extends Component {
   state = {
-    expanded: false
+    expanded: true
   }
 
   toggleExpanded = () => {
@@ -52,20 +51,15 @@ class Animal extends Component {
 
 class Animals extends Component {
   state = {
-    adding: false,
-    active: false
+    adding: false
   }
 
   toggleAdding = e => {
     e.preventDefault();
-    this.setState({ adding: !this.state.adding }, this.props.scrollToTop);
+    this.setState({ adding: !this.state.adding });
   }
 
-  toggleActive = () => {
-    this.setState({ active: !this.state.active }, this.props.scrollToTop);
-  }
-
-  saveAnimals = () => {
+  saveAnimalsAndAdvance = () => {
     const species = this.props.values.species;
     const speciesDetails = this.props.values.speciesDetails || [];
     species.forEach(i => {
@@ -83,7 +77,7 @@ class Animals extends Component {
     });
 
     this.props.onFieldChange('speciesDetails', speciesDetails);
-    this.toggleActive()
+    this.props.advance();
   }
 
   getItems = () => {
@@ -98,7 +92,6 @@ class Animals extends Component {
       return s;
     });
 
-
     const proj = flatten([
       ...(project.species || []).map(s => {
         if (s.indexOf('other') > -1) {
@@ -112,12 +105,30 @@ class Animals extends Component {
       ...([project['species-other']] || [])
     ]);
 
+    species.forEach(i => {
+      let item = flatten(values(SPECIES)).find(f => f.value === i);
+      if (item) {
+        item = item.label
+      }
+      else {
+        item = i;
+      }
+
+      if (some(speciesDetails, sd => sd.name === item)) {
+        return;
+      }
+      speciesDetails.push({ name: item })
+    });
+
     return speciesDetails.filter(s => species.includes(s.name) && proj.includes(s.name))
   }
 
   render() {
-    const { fields, onFieldChange, updateItem, exit, advance, name, index } = this.props;
-    const { adding, active } = this.state;
+
+    const { fields, onFieldChange, updateItem, name, index } = this.props;
+
+    const { adding } = this.state;
+
     const speciesField = fields.filter(f => f.section === 'intro').map(f => ({ ...f, options: flatten([
       ...(this.props.project.species || []).map(s => {
         if (s.indexOf('other') > -1) {
@@ -127,70 +138,43 @@ class Animals extends Component {
       }),
       ...(this.props.project['species-other'] || [])
     ]) }));
-    const items = this.getItems();
 
+    const items = this.getItems();
     const prefix = `${name}-${index}-`;
 
-    const allSpecies = flatten([
-      ...(this.props.project.species || []).map(s => {
-        if (s.indexOf('other') > -1) {
-          return this.props.project[`species-${s}`];
-        }
-        return s;
-      }),
-      this.props.project['species-other']
-    ]);
-
-    const continueDisabled = !intersection(this.props.values.species, allSpecies).length
-
     return (
-      active
-        ? (
-          <Fragment>
-            <Repeater
-              items={items}
-              initCollapsed={true}
-              onSave={speciesDetails => updateItem({ speciesDetails })}
-              addAnother={false}
-            >
-              <Animal
-                {...this.props}
-                prefix={prefix}
-                fields={fields.filter(f => f.section !== 'intro')}
-              />
-            </Repeater>
-            <Button onClick={advance} className="button-secondary">Next section</Button>
-          </Fragment>
-        )
-        : (
-          <Fragment>
-            <Fieldset
-              fields={speciesField}
-              values={this.props.values}
-              onFieldChange={onFieldChange}
-              prefix={prefix}
-            />
-            {
-              !this.props.project.species || !this.props.project.species.length && <p><em>No species added to project</em></p>
-            }
-            {
-              !adding && <a href="#" onClick={this.toggleAdding}>Add more animal types</a>
-            }
-            {
-              adding && <AddSpecies
-                onExitClicked={this.toggleAdding}
-                onContinueClicked={this.toggleAdding}
-                values={this.props.project}
-                onFieldChange={this.props.save}
-              />
-            }
-            <Controls
-              continueDisabled={continueDisabled}
-              onContinue={this.saveAnimals}
-              onExit={exit}
-            />
-          </Fragment>
-        )
+      <Fragment>
+        <Fieldset
+          fields={speciesField}
+          values={this.props.values}
+          onFieldChange={onFieldChange}
+          prefix={prefix}
+        />
+
+        <Repeater
+          items={items}
+          onSave={speciesDetails => updateItem({ speciesDetails })}
+          addAnother={false}
+        >
+          <Animal
+            {...this.props}
+            prefix={prefix}
+            fields={fields.filter(f => f.section !== 'intro')}
+          />
+        </Repeater>
+        {
+          !adding && <div className="add-more-animals"><a href="#" onClick={this.toggleAdding}>Add more animal types</a></div>
+        }
+        {
+          adding && <AddSpecies
+            onContinueClicked={this.toggleAdding}
+            values={this.props.project}
+            onFieldChange={this.props.save}
+          />
+        }
+        <Button onClick={this.saveAnimalsAndAdvance}  className="button-secondary">Next section</Button>
+
+      </Fragment>
     )
   }
 }
