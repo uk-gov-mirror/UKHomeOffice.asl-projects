@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import ApplicationSummary from '../components/application-summary';
 import DownloadLink from '../components/download-link';
 
-const Index = ({ project, title }) => {
+const Index = ({ project }) => {
   if (!project) {
     return null
   }
