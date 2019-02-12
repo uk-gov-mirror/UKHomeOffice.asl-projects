@@ -33,6 +33,10 @@ const mapDispatchToProps = dispatch => {
 class Section extends React.Component {
 
   render() {
+    if (!this.props.project) {
+      return null;
+    }
+    
     const Component = this.props.component || DefaultSection;
     const { fields, title, step, section, ...rest } = this.props;
 
