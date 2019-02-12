@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
-import { updateProject } from '../actions/projects';
+import { updateAndSave } from '../actions/projects';
 import DefaultSection from './sections';
 import SectionsLink from '../components/sections-link';
 
@@ -20,7 +20,7 @@ const mapStateToProps = (state, props) => {
 };
 
 const mapDispatchToProps = (dispatch, { onUpdate }) => {
-  const update = onUpdate || updateProject;
+  const update = onUpdate || updateAndSave;
   return {
     update: (data, value) => {
       if (typeof data === 'string') {
@@ -37,7 +37,7 @@ class Section extends React.Component {
     if (!this.props.project) {
       return null;
     }
-    
+
     const Component = this.props.component || DefaultSection;
     const { fields, title, step, section, ...rest } = this.props;
 
