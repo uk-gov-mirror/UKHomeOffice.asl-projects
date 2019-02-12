@@ -1,11 +1,11 @@
 import React from 'react';
-import { connectProject } from '../helpers';
+import { Link } from 'react-router-dom';
 
-const Link = ({ to, project, label }) => {
+const LinkTo = ({ to, label }) => {
   if (!label) {
     label = `View ${to}`;
   }
-  return <a href={`/project/${project.id}/${to}`}>{ label }</a>;
+  return <Link to={`/${to}`}>{ label }</Link>;
 }
 
-export default connectProject(Link);
+export default LinkTo;

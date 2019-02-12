@@ -1,5 +1,5 @@
 import React from 'react';
-import { connectProject } from '../../../helpers';
+import { connect } from 'react-redux';
 
 import size from 'lodash/size'
 import pickBy from 'lodash/pickBy';
@@ -49,6 +49,8 @@ const ProtocolSections = ({ sections, ...props }) => {
     </Accordion>
   )
 
-}
+};
 
-export default connectProject(ProtocolSections);
+const mapStateToProps = ({ project }) => ({ project });
+
+export default connect(mapStateToProps)(ProtocolSections);

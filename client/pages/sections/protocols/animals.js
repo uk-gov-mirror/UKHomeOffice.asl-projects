@@ -195,8 +195,7 @@ class Animals extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  const project = state.projects.find(p => p.id === parseInt(ownProps.match.params.id, 10))
+const mapStateToProps = ({ project }, ownProps) => {
   const values = project.protocols[ownProps.index];
   return {
     project,

@@ -1,16 +1,15 @@
 import React from 'react';
+import { withRouter } from 'react-router';
 
 import { connect } from 'react-redux';
 
 import map from 'lodash/map'
 import findKey from 'lodash/findKey';
 
-import { connectProject } from '../helpers';
-
 import Review from './review';
 
 const getUrl = (id, section, step) => {
-  let url = `/project/${id}`;
+  let url = '';
   if (section) {
     url = `${url}/${section}`;
   }
@@ -36,7 +35,7 @@ const Playback = ({ project, step, history, field, section }) => {
   )
 }
 
-const mapStateToProps = ({ application }, { playback }) => {
+const mapStateToProps = ({ application, project }, { playback }) => {
   let step;
   let field;
   const subsections = map(application, section => section.subsections).reduce((obj, subsections) => ({ ...obj, ...subsections }), {});
@@ -56,8 +55,9 @@ const mapStateToProps = ({ application }, { playback }) => {
   return {
     field,
     step,
-    section
+    section,
+    project
   };
 }
 
-export default connect(mapStateToProps)(connectProject(Playback));
+export default withRouter(connect(mapStateToProps)(Playback));

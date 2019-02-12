@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { connectProject, connectSettings } from '../helpers';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import castArray from 'lodash/castArray';
@@ -142,7 +142,7 @@ class Field extends Component {
           type="checkbox"
           className="smaller"
           options={[
-            ...this.props.settings.establishments,
+            ...this.props.settings.establishments || [],
             ...(this.props.project.polesList || []).filter(p => p.title).map(p => p.title)
           ]}
         />
@@ -225,4 +225,6 @@ class Field extends Component {
 
 }
 
-export default connectSettings(connectProject(Field))
+const mapStateToProps = ({ project, settings }) => ({ project, settings });
+
+export default connect(mapStateToProps)(Field);

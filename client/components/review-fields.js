@@ -1,10 +1,9 @@
 import React, { Fragment } from 'react';
+import { connect } from 'react-redux';
 
 import castArray from 'lodash/castArray';
 import flatten from 'lodash/flatten';
 import every from 'lodash/every';
-
-import { connectProject } from '../helpers';
 
 import Review from './review';
 
@@ -64,6 +63,8 @@ const ReviewFields = ({ fields, values, onEdit, project }) => (
       ))
     }
   </Fragment>
-)
+);
 
-export default connectProject(ReviewFields);
+const mapStateToProps = ({ project }) => ({ project })
+
+export default connect(mapStateToProps)(ReviewFields);

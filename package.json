@@ -1,8 +1,9 @@
 {
-  "name": "peephole",
+  "name": "@asl/peephole",
   "version": "1.0.0",
   "description": "ASL PPL prototype",
-  "main": "index.js",
+  "main": "client/external.js",
+  "styles": "assets/scss/app.scss",
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon -r dotenv/config -e js,jsx index.js",

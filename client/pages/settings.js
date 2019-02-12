@@ -39,8 +39,10 @@ class Settings extends Component {
   }
 
   save = () => {
-    this.props.save('establishments', compact(this.state.establishments));
-    this.props.history.push('/');
+    this.props.save('establishments', compact(this.state.establishments))
+      .then(() => {
+        this.props.history.push('/');
+      })
   }
 
   exit = () => {

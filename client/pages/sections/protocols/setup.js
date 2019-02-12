@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { connectProject } from '../../../helpers';
+import { connect } from 'react-redux';
 import Controls from '../../../components/controls';
 import Fieldset from '../../../components/fieldset';
 
@@ -17,4 +17,6 @@ const Setup = ({ advance, exit, save, project, setup: { fields } }) => (
   </Fragment>
 );
 
-export default connectProject(Setup);
+const mapStateToProps = ({ project }) => ({ project });
+
+export default connect(mapStateToProps)(Setup);

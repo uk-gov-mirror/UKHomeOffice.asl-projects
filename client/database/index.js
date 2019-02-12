@@ -34,6 +34,18 @@ module.exports = () => {
             transaction.onerror = e => reject(e);
           });
         },
+        read: (id, table = 'projects') => {
+          return new Promise((resolve, reject) => {
+            const transaction = db.transaction([table]);
+            const objectStore = transaction.objectStore(table);
+            const request = objectStore.get(id);
+            request.onsuccess = e => resolve({
+              id,
+              ...e.target.result
+            });
+            transaction.onerror = e => reject(e);
+          });
+        },
         update: (id, data, table = 'projects') => {
           data.updated = Date.now();
           return new Promise((resolve, reject) => {

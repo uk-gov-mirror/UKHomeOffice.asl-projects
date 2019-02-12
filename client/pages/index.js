@@ -4,8 +4,6 @@ import { Link } from 'react-router-dom';
 import moment from 'moment';
 import DropZone from 'react-dropzone';
 
-import Settings from './settings';
-
 import { Button } from '@ukhomeoffice/react-components';
 
 import { deleteProject, importProject, createProject } from '../actions/projects';
@@ -13,12 +11,8 @@ import { throwError } from '../actions/messages';
 
 import DownloadLink from '../components/download-link';
 
-const mapStateToProps = state => {
-  return {
-    projects: state.projects,
-    settings: state.settings
-  };
-}
+const mapStateToProps = ({ projects, settings: { establishments } }) => ({ projects, establishments });
+
 const mapDispatchToProps = dispatch => {
   return {
     error: message => dispatch(throwError(message)),
@@ -47,12 +41,14 @@ class Index extends React.Component {
 
   create = () => {
     this.props.create({})
-      .then(project => this.props.history.push(`/project/${project.id}/introduction`));
+      .then(project => {
+        this.props.history.push(`/project/${project.id}/introduction`);
+      });
   }
 
   render() {
-    if (!this.props.settings.establishments || !this.props.settings.establishments.length) {
-      return <Settings />
+    if (!this.props.establishments || !this.props.establishments.length) {
+      this.props.history.push('/settings');
     }
     return <DropZone
       onDrop={files => this.drop(files)}
@@ -62,7 +58,7 @@ class Index extends React.Component {
       disableClick={true}
       >
       <h1>Your projects</h1>
-      <a href="/settings" className="float-right">Settings</a>
+      <Link to="/settings" className="float-right">Settings</Link>
       <table className="govuk-table">
         <thead>
           <tr>

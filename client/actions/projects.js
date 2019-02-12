@@ -14,6 +14,22 @@ export function loadProjects() {
   };
 }
 
+export function loadProject(id) {
+  return dispatch => {
+    return database()
+      .then(db => db.read(id))
+      .then(project => dispatch({ type: types.LOAD_PROJECT, project }))
+      .catch(error => dispatch({ type: types.ERROR, error }));
+  };
+}
+
+export function setProject(project) {
+  return {
+    type: types.SET_PROJECT,
+    project
+  }
+}
+
 export function createProject(project) {
   return dispatch => {
     return database()
@@ -48,15 +64,13 @@ export function deleteProject(id) {
   };
 }
 
-export function updateProject(id, data) {
+export function updateProject(data) {
   return (dispatch, getState) => {
-    const project = getState().projects.find(p => p.id === id);
-    if (!project) {
-      return dispatch({ type: types.ERROR, error: new Error(`Unknown project: ${id}`) });
-    }
+    const project = getState().project;
+    const id = project.id;
     return database()
       .then(db => db.update(id, { ...project, ...data }))
-      .then(project => dispatch({ type: types.UPDATE_PROJECT, id, project }))
+      .then(project => dispatch({ type: types.UPDATE_PROJECT, project }))
       .catch(error => dispatch({ type: types.ERROR, error }));
   };
 }

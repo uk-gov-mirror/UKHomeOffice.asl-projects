@@ -1,9 +1,8 @@
 import React, { Fragment, Component, PureComponent } from 'react';
+import { connect } from 'react-redux';
 
 import some from 'lodash/some';
 import flatten from 'lodash/flatten';
-
-import { connectProject } from '../../helpers';
 
 import Wizard from '../../components/wizard';
 import Fieldset from '../../components/fieldset';
@@ -17,7 +16,17 @@ import ReviewSection from './review';
 
 class Questions extends PureComponent {
   state = {
-    ntsAccepted: !this.props.nts || some((this.props.fields || this.props.steps[this.props.step].fields), field => this.props.values[field.name])
+    ntsAccepted: !this.props.nts || this.started()
+  }
+
+  started() {
+    return some((this.props.fields || this.props.steps[this.props.step].fields), field => this.props.values[field.name]);
+  }
+
+  componentDidUpdate() {
+    if (!this.state.ntsAccepted && this.started()) {
+      this.setState({ ntsAccepted: true });
+    }
   }
 
   ref = React.createRef()
@@ -142,4 +151,6 @@ class Section extends PureComponent {
   }
 }
 
-export default connectProject(Section)
+const mapStateToProps = ({ project }) => ({ project });
+
+export default connect(mapStateToProps)(Section);

@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { connectProject } from '../../../helpers';
+import { connect } from 'react-redux';
 
 import Banner from '../../../components/banner';
 import Review from '../../../components/review';
@@ -61,4 +61,6 @@ const ReviewSection = ({ title, fields, values, goto }) => (
   </Fragment>
 )
 
-export default connectProject(ReviewSection)
+const mapStateToProps = ({ project }) => ({ project });
+
+export default connect(mapStateToProps)(ReviewSection);

@@ -59,11 +59,9 @@ const Section = ({
   );
 }
 
-const mapStateToProps = (state, ownProps) => {
-  const id = parseInt(ownProps.match.params.id, 10);
-  const values = state.projects.find(p => p.id === id).protocols[ownProps.index]
+const mapStateToProps = ({ project }, { index }) => {
   return {
-    values
+    values: project.protocols[index]
   };
 };
 
