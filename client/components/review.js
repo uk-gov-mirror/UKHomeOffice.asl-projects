@@ -125,7 +125,7 @@ class Review extends React.Component {
         <p>
           <Link
             to={this.props.editLink || `#${this.props.name}`}
-            onClick={e => this.props.onClick && this.props.onClick(e)}
+            onClick={e => this.props.onEdit && this.props.onEdit(e)}
           >Edit</Link>
         </p>
         <hr />
