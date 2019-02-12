@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router';
 
 import { connect } from 'react-redux';
 
@@ -59,4 +60,4 @@ const mapStateToProps = ({ application, project }, { playback }) => {
   };
 }
 
-export default connect(mapStateToProps)(Playback);
+export default withRouter(connect(mapStateToProps)(Playback));

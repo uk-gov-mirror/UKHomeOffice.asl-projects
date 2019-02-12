@@ -20,7 +20,6 @@ class Form extends Component {
 
   render() {
     const { index, name, updateItem, exit, toggleActive, prefix = '', ...props } = this.props;
-    console.log('hisijsi')
     return (
       <div className={classnames('protocol', 'panel')}>
         {

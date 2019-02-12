@@ -1,9 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import moment from 'moment';
 import DropZone from 'react-dropzone';
-
-import Settings from './settings';
 
 import { Button } from '@ukhomeoffice/react-components';
 
@@ -12,12 +11,8 @@ import { throwError } from '../actions/messages';
 
 import DownloadLink from '../components/download-link';
 
-const mapStateToProps = state => {
-  return {
-    projects: state.projects,
-    settings: state.settings
-  };
-}
+const mapStateToProps = ({ projects, settings: { establishments } }) => ({ projects, establishments });
+
 const mapDispatchToProps = dispatch => {
   return {
     error: message => dispatch(throwError(message)),
@@ -47,11 +42,14 @@ class Index extends React.Component {
   create = () => {
     this.props.create({})
       .then(project => {
-        window.location.href = `/project/${project.id}/introduction`;
+        this.props.history.push(`/project/${project.id}/introduction`);
       });
   }
 
   render() {
+    if (!this.props.establishments || !this.props.establishments.length) {
+      this.props.history.push('/settings');
+    }
     return <DropZone
       onDrop={files => this.drop(files)}
       activeClassName="import-active"
@@ -60,7 +58,7 @@ class Index extends React.Component {
       disableClick={true}
       >
       <h1>Your projects</h1>
-      <a href="/settings" className="float-right">Settings</a>
+      <Link to="/settings" className="float-right">Settings</Link>
       <table className="govuk-table">
         <thead>
           <tr>
@@ -73,7 +71,7 @@ class Index extends React.Component {
         {
           this.props.projects.map(project => {
             return <tr key={ project.id }>
-              <td><a href={`/project/${project.id}`}>{ project.title || 'Untitled project' }</a></td>
+              <td><Link to={`/project/${project.id}`}>{ project.title || 'Untitled project' }</Link></td>
               <td>{ moment(project.updated).format('D MMMM YYYY, HH:mm') }</td>
               <td>
                 <DownloadLink project={project.id} label="Download" renderer="docx" />

@@ -16,7 +16,17 @@ import ReviewSection from './review';
 
 class Questions extends PureComponent {
   state = {
-    ntsAccepted: !this.props.nts || some((this.props.fields || this.props.steps[this.props.step].fields), field => this.props.values[field.name])
+    ntsAccepted: !this.props.nts || this.started()
+  }
+
+  started() {
+    return some((this.props.fields || this.props.steps[this.props.step].fields), field => this.props.values[field.name]);
+  }
+
+  componentDidUpdate() {
+    if (!this.state.ntsAccepted && this.started()) {
+      this.setState({ ntsAccepted: true });
+    }
   }
 
   ref = React.createRef()

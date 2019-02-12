@@ -23,6 +23,13 @@ export function loadProject(id) {
   };
 }
 
+export function setProject(project) {
+  return {
+    type: types.SET_PROJECT,
+    project
+  }
+}
+
 export function createProject(project) {
   return dispatch => {
     return database()

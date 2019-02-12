@@ -19,7 +19,7 @@ const mapStateToProps = (state, props) => {
   };
 };
 
-const mapDispatchToProps = (dispatch, props) => {
+const mapDispatchToProps = dispatch => {
   return {
     update: (data, value) => {
       if (typeof data === 'string') {

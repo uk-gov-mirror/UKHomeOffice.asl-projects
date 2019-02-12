@@ -1,16 +1,18 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
-import ScrollToTop from './components/scroll-to-top';
-
-import Index from './pages/index';
+import Index from './pages';
 import Settings from './pages/settings';
+import ConnectProject from './connect-project';
 
-export default ({ basename = '/' }) => <BrowserRouter>
-  <ScrollToTop>
+const Router = () => (
+  <BrowserRouter>
     <Switch>
       <Route path="/settings" component={ Settings } />
+      <Route path="/project/:id" component={ ConnectProject } />
       <Route path="/" component={ Index } />
     </Switch>
-  </ScrollToTop>
-</BrowserRouter>;
+  </BrowserRouter>
+);
+
+export default Router;

@@ -6,7 +6,6 @@ module.exports = {
   mode,
   entry: {
     index: './client/index',
-    internal: './client/internal',
     external: './client/external'
   },
   target: 'web',

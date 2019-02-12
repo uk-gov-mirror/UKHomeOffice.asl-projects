@@ -1,14 +1,11 @@
 import './polyfills';
 
 import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 
-import ScrollToTop from './components/scroll-to-top';
 import Alert from './components/alert';
-import Index from './pages/index';
-import Settings from './pages/settings';
+import Router from './router';
 import configureStore from './store';
 
 import { loadProjects } from './actions/projects';
@@ -24,12 +21,7 @@ const renderApp = () => render(
   <Provider store={store}>
     <React.Fragment>
       <Alert />
-      <BrowserRouter>
-        <Switch>
-          <Route path="/settings" component={ Settings } />
-          <Route path="/" component={ Index } />
-        </Switch>
-      </BrowserRouter>
+      <Router />
     </React.Fragment>
   </Provider>,
   document.getElementById('app')

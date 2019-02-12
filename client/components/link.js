@@ -1,10 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-const Link = ({ to, label }) => {
+const LinkTo = ({ to, label }) => {
   if (!label) {
     label = `View ${to}`;
   }
-  return <a href={`/${to}`}>{ label }</a>;
+  return <Link to={`/${to}`}>{ label }</Link>;
 }
 
-export default Link;
+export default LinkTo;

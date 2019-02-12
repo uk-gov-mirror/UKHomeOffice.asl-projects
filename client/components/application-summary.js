@@ -10,8 +10,7 @@ import { INCOMPLETE, PARTIALLY_COMPLETE, COMPLETE } from '../constants/completen
 
 import { Button } from '@ukhomeoffice/react-components';
 
-const mapStateToProps = ({ project, application }, props) => {
-  console.log(project)
+const mapStateToProps = ({ project, application }) => {
   return {
     values: project,
     sections: application

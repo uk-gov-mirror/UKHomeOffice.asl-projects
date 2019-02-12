@@ -1,10 +1,24 @@
-import start from './project';
+import './polyfills';
+
+import React from 'react';
+import { render } from 'react-dom';
+import { Provider } from 'react-redux';
+
+import Alert from './components/alert';
+import ProjectRouter from './project-router';
 import configureStore from './store';
 
-export default (settings, initialState) => {
+const renderApp = ({ basename }, initialState) => {
   const store = configureStore(initialState);
-  start({
-    store,
-    basename: settings.basename
-  });
-};
+  render(
+    <Provider store={store}>
+      <React.Fragment>
+        <Alert />
+        <ProjectRouter basename={basename} />
+      </React.Fragment>
+    </Provider>,
+    document.getElementById('app')
+  );
+}
+
+export default renderApp;
