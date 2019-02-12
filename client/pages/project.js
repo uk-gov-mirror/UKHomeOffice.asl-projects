@@ -16,7 +16,7 @@ const Index = ({ project }) => {
         <DownloadLink project={project.id} label="Word (.docx)" renderer="docx" />
         <DownloadLink project={project.id} label="Backup (.ppl)" renderer="ppl" />
       </span>
-      <Link to="/">Back to project list</Link>
+      <a href="/">Back to project list</a>
     </p>
     <ApplicationSummary />
   </Fragment>
