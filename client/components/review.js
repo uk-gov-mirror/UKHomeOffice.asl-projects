@@ -123,12 +123,10 @@ class Review extends React.Component {
         <h3>{this.props.label}</h3>
         {this.replay()}
         <p>
-          { (this.props.editLink && <Link to={this.props.editLink}>Edit</Link>)
-            ||
-            <a onClick={e => this.props.onEdit(e)} href={`#${this.props.name}`}>
-              Edit
-            </a>
-          }
+          <Link
+            to={this.props.editLink || `#${this.props.name}`}
+            onClick={e => this.props.onClick && this.props.onClick(e)}
+          >Edit</Link>
         </p>
         <hr />
       </div>
