@@ -65,6 +65,8 @@ class Index extends React.Component {
             <th>Title</th>
             <th>Updated</th>
             <th></th>
+            <th></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -74,8 +76,12 @@ class Index extends React.Component {
               <td><Link to={`/project/${project.id}`}>{ project.title || 'Untitled project' }</Link></td>
               <td>{ moment(project.updated).format('D MMMM YYYY, HH:mm') }</td>
               <td>
-                <DownloadLink project={project.id} label="Download" renderer="docx" />
-                <DownloadLink project={project.id} label="Export" renderer="ppl" />
+                <DownloadLink project={project.id} label="Word (.docx)" renderer="docx" />
+              </td>
+              <td>
+                <DownloadLink project={project.id} label="Backup (.ppl)" renderer="ppl" />
+              </td>
+              <td>
                 <button onClick={() => this.props.remove(project.id)} className="govuk-button">Remove</button>
               </td>
             </tr>
