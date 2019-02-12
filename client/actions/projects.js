@@ -1,4 +1,5 @@
-import { omit } from 'lodash';
+import omit from 'lodash/omit';
+import throttle from 'lodash/throttle';
 
 import * as types from './types';
 import database from '../database';
@@ -64,13 +65,26 @@ export function deleteProject(id) {
   };
 }
 
-export function updateProject(data) {
+export function updateProject(project) {
+  return {
+    type: types.UPDATE_PROJECT,
+    project
+  }
+}
+
+const throttledUpdate = throttle((id, data, dispatch) => {
+  return database()
+    .then(db => db.update(id, data))
+    // TODO: notify user autosaved.
+    .catch(err => dispatch({ type: types.ERROR, err }))
+}, 1000, { leading: true, trailing: true })
+
+export function updateAndSave(data) {
   return (dispatch, getState) => {
     const project = getState().project;
+    const newState = { ...project, ...data };
+    dispatch(updateProject(newState));
     const id = project.id;
-    return database()
-      .then(db => db.update(id, { ...project, ...data }))
-      .then(project => dispatch({ type: types.UPDATE_PROJECT, project }))
-      .catch(error => dispatch({ type: types.ERROR, error }));
+    return throttledUpdate(id, newState, dispatch);
   };
 }
