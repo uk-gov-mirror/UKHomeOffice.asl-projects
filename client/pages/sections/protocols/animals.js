@@ -15,14 +15,13 @@ import Repeater from '../../../components/repeater';
 
 import SpeciesSelector from '../../../components/species-selector';
 
-const AddSpecies = ({ onContinueClicked, onFieldChange, ...props }) => (
-  <div className="panel light-grey-bg">
-    <SpeciesSelector { ...props } onFieldChange={onFieldChange} />
+const AddSpecies = ({ onContinueClicked, onFieldChange, ...props }) => {
+  return (<div className="panel light-grey-bg">
+    <SpeciesSelector name='species' { ...props } onFieldChange={onFieldChange} />
     <p className="control-panel">
       <Button onClick={onContinueClicked}>Add species</Button>
     </p>
-  </div>
-)
+  </div>)}
 
 class Animal extends Component {
   state = {
@@ -36,7 +35,6 @@ class Animal extends Component {
   render() {
     const { prefix, fields, values, updateItem, index } = this.props;
     const { expanded } = this.state;
-
     return (
       <Expandable className="no-bg" onHeaderClick={this.toggleExpanded} expanded={expanded}>
         <h3 className="title">{values.name}</h3>
@@ -61,7 +59,7 @@ class Animals extends Component {
     this.setState({ adding: !this.state.adding });
   }
 
-  saveAnimals = () => {
+  saveAnimalsAndAdvance = () => {
     const species = this.props.values.species;
     const speciesDetails = this.props.values.speciesDetails || [];
     species.forEach(i => {
@@ -72,21 +70,18 @@ class Animals extends Component {
       else {
         item = i;
       }
-      // Checks if predicate returns truthy for any element of collection
       if (some(speciesDetails, sd => sd.name === item)) {
         return;
       }
       speciesDetails.push({ name: item })
     });
 
-    // update speciesDetails
     this.props.onFieldChange('speciesDetails', speciesDetails);
+    this.props.advance();
   }
 
   getItems = () => {
-
     const { values: { speciesDetails = [] }, project } = this.props;
-
     let species = this.props.values.species || [];
 
     species = species.map(s => {
@@ -130,7 +125,7 @@ class Animals extends Component {
 
   render() {
 
-    const { fields, onFieldChange, updateItem, advance, name, index } = this.props;
+    const { fields, onFieldChange, updateItem, name, index } = this.props;
 
     const { adding } = this.state;
 
@@ -144,9 +139,7 @@ class Animals extends Component {
       ...(this.props.project['species-other'] || [])
     ]) }));
 
-
     const items = this.getItems();
-
     const prefix = `${name}-${index}-`;
 
     return (
@@ -179,7 +172,7 @@ class Animals extends Component {
             onFieldChange={this.props.save}
           />
         }
-        <Button onClick={this.saveAnimals}  className="button-secondary">Next section</Button>
+        <Button onClick={this.saveAnimalsAndAdvance}  className="button-secondary">Next section</Button>
 
       </Fragment>
     )
