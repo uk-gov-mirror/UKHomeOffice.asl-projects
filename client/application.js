@@ -198,7 +198,7 @@ export default {
             fields: [
               {
                 name: 'other-establishments',
-                label: 'Will your project use any other establishments?',
+                label: 'Will your project use any additional establishments?',
                 type: 'radio',
                 inline: true,
                 className: 'smaller',
@@ -1286,6 +1286,7 @@ export default {
     subsections: {
       domestic: {
         title: 'Cats, dogs, and equidae',
+        intro: 'You are seeing this section because you added a type of cat, dog, or equid to your project. To change this, go to Introductory details.',
         show: values => intersection(
           flatten([
             SPECIES.CAT,
@@ -1304,6 +1305,7 @@ export default {
       },
       nhps: {
         title: 'Non-human primates',
+        intro: 'You are seeing this section because you added a non-human primate to your project. To change this, go to Introductory details.',
         show: values => intersection(SPECIES.NHP.map(s => s.value), values.species).length,
         fields: [
           {
@@ -1540,6 +1542,7 @@ export default {
         steps: [
           {
             title: 'Setting animals free - 1 of 2',
+            intro: 'You are seeing this section because you will be setting animals free at the end of a protocol or project. To change this, go to Protocols.',
             fields: [
               {
                 name: 'setting-free-health',
@@ -1587,6 +1590,7 @@ export default {
           },
           {
             title: 'Setting animals free - 2 of 2',
+            intro: 'You are seeing this section because you will be setting animals free at the end of a protocol or project. To change this, go to Protocols.',
             fields: [
               {
                 name: 'setting-free-wellbeing',
@@ -1651,6 +1655,7 @@ export default {
         steps: [
           {
             title: 'Neuromuscular blocking agents (NMBAs) - 1 of 2',
+            intro: 'You are seeing this section because you will be using an NMBA during your project. To change this, go to Protocols.',
             fields: [
               {
                 name: 'nmbas-why',
@@ -1676,6 +1681,7 @@ export default {
           },
           {
             title: 'Neuromuscular blocking agents (NMBAs) - 2 of 2',
+            intro: 'You are seeing this section because you will be using an NMBA during your project. To change this, go to Protocols.',
             fields: [
               {
                 name: 'nmbas-depth',
@@ -1699,6 +1705,7 @@ export default {
       },
       'keeping-animals-alive': {
         title: 'Keeping animals alive',
+        intro: 'You are seeing this section because you will be keeping animals alive at the end of a protocol or project. To change this, go to Protocols.',
         show: values => some(values.protocols, protocol => {
           return castArray(protocol.fate).includes('kept-alive');
         }),
@@ -1718,6 +1725,7 @@ export default {
       },
       'reusing-animals': {
         title: 'Re-using animals',
+        intro: 'You are seeing this section because you will be re-using at the end of a protocol or project. To change this, go to Protocols.',
         show: values => some(values.protocols, protocol => {
           return castArray(protocol.fate).includes('re-used');
         }),
@@ -1738,6 +1746,7 @@ export default {
       },
       'rehoming-animals': {
         title: 'Rehoming animals',
+        intro: 'You are seeing this section because you will be rehoming animals at the end of a protocol or project. To change this, go to Protocols.',
         show: values => some(values.protocols, protocol => {
           return castArray(protocol.fate).includes('re-homed');
         }),
