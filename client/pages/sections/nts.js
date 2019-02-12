@@ -17,6 +17,10 @@ class NTSSummary extends Component {
     window.onscroll = this.onscroll;
   }
 
+  componentWillUnmount() {
+    window.onscroll = null;
+  }
+
   sectionRefs = this.props.sections.reduce((obj, { section }) => {
     return {
       ...obj,
@@ -34,7 +38,7 @@ class NTSSummary extends Component {
 
   updateActiveSection = (e, section) => {
     e.preventDefault();
-    this.setState({ active: section }, this.scrollToActive)
+    this.setState({ active: section }, this.scrollToActive);
   }
 
   scrollToActive = () => {
@@ -45,6 +49,7 @@ class NTSSummary extends Component {
       top: this.sectionRefs[this.state.active].current.offsetTop + OFFSET,
       behavior: 'smooth'
     });
+
     // wait until animation finished then reattach scroll handler
     this.timeout = setTimeout(() => {
       window.onscroll = this.onscroll;
@@ -66,7 +71,7 @@ class NTSSummary extends Component {
       const upperLimit = thresholds[index + 1] ? parseInt(thresholds[index + 1], 10) : Infinity;
       return scrollTop >= lowerLimit && scrollTop < upperLimit;
     })
-    this.setState({ active: this.thresholds[section] })
+    this.setState({ active: this.thresholds[section] });
   }
 
   getFields = (section, whitelist) => {
@@ -109,7 +114,10 @@ class NTSSummary extends Component {
                         label={ field.review || field.label }
                         key={ field.name }
                         value={ this.props.project && this.props.project[field.name] }
-                        onEdit={ () => console.log('edit') }
+                        editLink={ section === 'introduction' ?
+                          `/project/${this.props.project.id}/introduction/1#${field.name}` :
+                          `/project/${this.props.project.id}/${section}#${field.name}`
+                        }
                       />
                     ))
                   }
