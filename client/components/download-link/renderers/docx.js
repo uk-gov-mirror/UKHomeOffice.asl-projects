@@ -15,25 +15,25 @@ const addStyles = doc => {
     .size(40)
     .bold()
     .font('Helvetica')
-    .spacing({ before: 360, after: 360 });
+    .spacing({ before: 360, after: 240 });
 
   doc.Styles.createParagraphStyle('Heading2', 'Heading 2')
     .basedOn('Normal')
     .next('Normal')
     .quickFormat()
-    .size(32)
+    .size(36)
     .bold()
     .font('Helvetica')
-    .spacing({ before: 360, after: 360 });
+    .spacing({ before: 400, after: 200 });
 
   doc.Styles.createParagraphStyle('Heading3', 'Heading 3')
     .basedOn('Normal')
     .next('Normal')
     .quickFormat()
-    .size(24)
+    .size(30)
     .bold()
     .font('Helvetica')
-    .spacing({ before: 360, after: 360 });
+    .spacing({ before: 400, after: 200 });
 
   doc.Styles.createParagraphStyle('body', 'Body')
     .basedOn('Normal')
@@ -41,7 +41,7 @@ const addStyles = doc => {
     .quickFormat()
     .size(24)
     .font('Helvetica')
-    .spacing({ before: 360, after: 360 });
+    .spacing({ before: 200, after: 200 });
 
   doc.Styles.createParagraphStyle('aside', 'Aside')
     .basedOn('Body')
@@ -119,9 +119,6 @@ const renderTextEditor = (doc, value) => {
                 case 'underlined':
                   text.underline();
                   break;
-
-                default:
-                  return text;
               }
             });
             const paragraph = new Paragraph();
@@ -134,9 +131,6 @@ const renderTextEditor = (doc, value) => {
 
       case 'image':
         doc.createImage(node.data.src, node.data.width, node.data.height);
-        break;
-
-      default:
         break;
     }
   });
@@ -159,6 +153,8 @@ const renderRadio = (doc, field, values, value) => {
       const revealValue = values[reveal.name];
 
       if (revealValue) {
+        renderHorizontalRule(doc);
+
         let text;
         let paragraph = new Paragraph();
         paragraph.style('body');
@@ -246,6 +242,10 @@ const renderDuration = (doc, value) => {
   doc.createParagraph(`${value.years} ${years} ${value.months} ${months}`).style('body');
 };
 
+const renderHorizontalRule = doc => {
+  doc.createParagraph('___________________________________________________________________');
+};
+
 const renderField = (doc, field, values) => {
   const value = values[field.name];
   doc.createParagraph(field.label).heading3();
@@ -255,6 +255,7 @@ const renderField = (doc, field, values) => {
     paragraph.style('body');
     paragraph.addRun(new TextRun('No answer provided').italics());
     doc.addParagraph(paragraph);
+    renderHorizontalRule(doc);
     return;
   }
 
@@ -286,6 +287,8 @@ const renderField = (doc, field, values) => {
       renderTextEditor(doc, value);
       break;
   }
+
+  renderHorizontalRule(doc);
 };
 
 const renderFields = (doc, subsection, values) => {
@@ -332,8 +335,18 @@ const renderProtocolsSection = (doc, subsection, values) => {
   });
 };
 
+let isFirstSection = true;
+
 const renderSubsection = (doc, subsection, values) => {
-  doc.createParagraph(subsection.title).heading2();
+  const sectionTitle = new Paragraph(subsection.title).heading2();
+
+  if (!isFirstSection) {
+    sectionTitle.pageBreakBefore();
+  } else {
+    isFirstSection = false;
+  }
+
+  doc.addParagraph(sectionTitle);
 
   if(subsection.name === 'protocols') {
     renderProtocolsSection(doc, subsection, values);
