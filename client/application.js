@@ -1357,6 +1357,28 @@ export default {
             type: 'texteditor'
           },
           {
+            name: 'wild-caught-primates',
+            label: 'Might any of these non-human primates be wild-caught?',
+            type: 'radio',
+            inline: true,
+            className: 'smaller',
+            options: [
+              {
+                label: 'No',
+                value: false
+              },
+              {
+                label: 'Yes',
+                value: true,
+                reveal: {
+                  name: 'wild-caught-primates-justification',
+                  label: 'Why can\'t you achieve your objectives without using wild-caught primates?',
+                  type: 'texteditor'
+                }
+              }
+            ]
+          },
+          {
             name: 'marmoset-colony',
             label: 'Will all marmosets be sourced from a self-sustaining colony?',
             type: 'radio',
