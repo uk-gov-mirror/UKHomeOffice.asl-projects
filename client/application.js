@@ -1865,6 +1865,28 @@ export default {
             ]
           }
         ]
+      },
+      'containing-human-material': {
+        title: 'Animals containing human material',
+        fields: [
+          {
+            name: 'animals-containing-human-material',
+            label: 'Do you intend to use animals containing human material in experiments classed as Category 2 or 3 by the Academy of Medical Sciences?',
+            type: 'radio',
+            inline: true,
+            className: 'smaller',
+            options: [
+              {
+                label: 'Yes',
+                value: true
+              },
+              {
+                label: 'No',
+                value: false
+              }
+            ]
+          }
+        ]
       }
     }
   },
