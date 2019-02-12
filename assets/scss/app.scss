@@ -594,7 +594,7 @@ fieldset.smaller {
 
 .download {
   font-size: 1.2em;
-
+  margin-left: 0.5em;
   &:before {
     content: '';
     margin-right: 0.5em;
@@ -604,6 +604,10 @@ fieldset.smaller {
     display: inline-block;
     width: 1.2em;
     height: 1.2em;
+  }
+  + .download {
+    border-left: 1px solid;
+    padding-left: 0.5em;
   }
 }
 

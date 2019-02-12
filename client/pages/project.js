@@ -8,17 +8,19 @@ const Index = ({ project }) => {
   if (!project) {
     return null
   }
-  return (
-    <Fragment>
-      <h1>{ project.title || 'Untitled project' }</h1>
-      <p className="controls">
-        <DownloadLink className="float-right" project={project.id} label="Export" renderer="ppl" />
-        <a href="/">Back to project list</a>
-      </p>
-      <ApplicationSummary />
-    </Fragment>
-  )
-}
+
+  return <Fragment>
+    <h1>{ project.title || 'Untitled project' }</h1>
+    <p className="controls">
+      <span className="float-right">Download as:
+        <DownloadLink project={project.id} label=".docx" renderer="docx" />
+        <DownloadLink project={project.id} label=".ppl" renderer="ppl" />
+      </span>
+      <Link to="/">Back to project list</Link>
+    </p>
+    <ApplicationSummary />
+  </Fragment>
+};
 
 const mapStateToProps = ({ project }) => ({ project });
 
