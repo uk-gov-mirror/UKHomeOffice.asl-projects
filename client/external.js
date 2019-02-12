@@ -8,13 +8,13 @@ import Alert from './components/alert';
 import ProjectRouter from './project-router';
 import configureStore from './store';
 
-const renderApp = ({ basename }, initialState) => {
+const renderApp = ({ basename, onUpdate }, initialState) => {
   const store = configureStore(initialState);
   render(
     <Provider store={store}>
       <React.Fragment>
         <Alert />
-        <ProjectRouter basename={basename} />
+        <ProjectRouter basename={basename} onUpdate={onUpdate} />
       </React.Fragment>
     </Provider>,
     document.getElementById('app')
