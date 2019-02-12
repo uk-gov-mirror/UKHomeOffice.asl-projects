@@ -89,7 +89,7 @@ class Index extends React.Component {
       </table>
       <p className="control-panel">
         <Button onClick={this.create}>Add new project</Button>
-        <span>or drag an exported json file onto this window to import it.</span>
+        <span>or drag an exported .ppl file onto this window to import it.</span>
       </p>
     </DropZone>;
   }
