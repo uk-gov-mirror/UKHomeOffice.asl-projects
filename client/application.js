@@ -1795,43 +1795,24 @@ export default {
         }),
         fields: [
           {
-            name: 'rehoming-authority',
-            label: 'Does your primary establishment already have the authority to rehome animals?',
-            type: 'radio',
-            inline: true,
-            className: 'smaller',
-            options: [
-              {
-                label: 'Yes',
-                value: true,
-                reveal: [
-                  {
-                    name: 'rehoming-healthy',
-                    label: 'How will you determine whether animals are healthy enough to be rehomed?',
-                    type: 'texteditor'
-                  },
-                  {
-                    name: 'rehoming-harmful',
-                    label: 'How will you ensure that rehoming animals will not be harmful to other species, the environment, and human health?',
-                    type: 'texteditor'
-                  },
-                  {
-                    name: 'rehoming-socialisation',
-                    label: 'How will you ensure that animals are undergoing an appropriate socialisation programme once they have been rehomed?',
-                    type: 'texteditor'
-                  },
-                  {
-                    name: 'rehoming-other',
-                    label: 'What other measures will you take to safeguard the wellbeing of animals once they have been rehomed?',
-                    type: 'texteditor'
-                  }
-                ]
-              },
-              {
-                label: 'No',
-                value: false
-              }
-            ]
+            name: 'rehoming-healthy',
+            label: 'How will you determine whether animals are healthy enough to be rehomed?',
+            type: 'texteditor'
+          },
+          {
+            name: 'rehoming-harmful',
+            label: 'How will you ensure that rehoming animals will not be harmful to other species, the environment, and human health?',
+            type: 'texteditor'
+          },
+          {
+            name: 'rehoming-socialisation',
+            label: 'How will you ensure that animals are undergoing an appropriate socialisation programme once they have been rehomed?',
+            type: 'texteditor'
+          },
+          {
+            name: 'rehoming-other',
+            label: 'What other measures will you take to safeguard the wellbeing of animals once they have been rehomed?',
+            type: 'texteditor'
           }
         ]
       },
