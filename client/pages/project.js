@@ -10,7 +10,7 @@ const Index = ({ project, title }) => {
   }
   return (
     <Fragment>
-      <h1>{ title }</h1>
+      <h1>{ project.title || 'Untitled project' }</h1>
       <p className="controls">
         <DownloadLink className="float-right" project={project.id} label="Export" renderer="ppl" />
         <a href="/">Back to project list</a>
