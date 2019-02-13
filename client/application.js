@@ -1499,6 +1499,28 @@ export default {
                         type: 'texteditor'
                       },
                       {
+                        name: 'non-target-species-capture-methods',
+                        label: 'Will your capture methods catch non target species?',
+                        type: 'radio',
+                        inline: true,
+                        className: 'smaller',
+                        options: [
+                          {
+                            label: 'No',
+                            value: false
+                          },
+                          {
+                            label: 'Yes',
+                            value: true,
+                            reveal: {
+                              name: 'non-target-species-capture-methods',
+                              label: 'How will you manage this to minimise the suffering for the animal?',
+                              type: 'texteditor'
+                            }
+                          }
+                        ]
+                      },
+                      {
                         name: 'wild-animals-competence',
                         label: 'How will you ensure the competence of any person responsible for the capture of animals?',
                         type: 'texteditor'
@@ -1857,6 +1879,28 @@ export default {
                   hint: 'Include any relevant information about drug withdrawal times.',
                   type: 'texteditor'
                 }
+              },
+              {
+                label: 'No',
+                value: false
+              }
+            ]
+          }
+        ]
+      },
+      'containing-human-material': {
+        title: 'Animals containing human material',
+        fields: [
+          {
+            name: 'animals-containing-human-material',
+            label: 'Do you intend to use animals containing human material in experiments classed as Category 2 or 3 by the Academy of Medical Sciences?',
+            type: 'radio',
+            inline: true,
+            className: 'smaller',
+            options: [
+              {
+                label: 'Yes',
+                value: true
               },
               {
                 label: 'No',
