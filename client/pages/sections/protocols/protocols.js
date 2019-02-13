@@ -121,6 +121,7 @@ class Protocols extends Component {
         items={project.protocols}
         onSave={this.save}
         addButtonBefore={true}
+        addButtonAfter={true}
         onAfterAdd={() => {
           window.scrollTo({
             top: document.body.scrollHeight,

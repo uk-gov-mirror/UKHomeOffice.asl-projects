@@ -111,7 +111,7 @@ class Repeater extends Component {
           )
         }
         {
-          !this.props.addButtonBefore && this.props.addAnother && addButton
+          (!this.props.addButtonBefore || this.props.addButtonAfter) && this.props.addAnother && addButton
         }
       </Fragment>
     );
