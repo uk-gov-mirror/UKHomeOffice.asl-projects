@@ -1491,7 +1491,6 @@ export default {
       },
       'animals-taken-from-the-wild': {
         title: 'Animals taken from the wild',
-        intro: 'Make sure you have all the necessary permissions from regulatory bodies before you apply to be licensed to capture animals from the wild.',
         steps: [
           {
             title: 'Animals taken from the wild - 1 of 2',
@@ -1638,6 +1637,18 @@ export default {
                   {
                     label: 'No',
                     value: false
+                  }
+                ]
+              },
+              {
+                name: 'wild-animals-declaration',
+                label: '',
+                type: 'checkbox',
+                className: 'smaller',
+                options: [
+                  {
+                    label: 'I confirm that I have, or will have, all necessary permissions from other regulators in place before commencing any work involving animals taken from the wild.',
+                    value: 'yes'
                   }
                 ]
               }
