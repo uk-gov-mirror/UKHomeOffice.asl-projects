@@ -61,8 +61,8 @@ export default {
               },
               {
                 name: 'permissible-purpose',
-                label: 'Which permissible purpose applies to this project?',
-                type: 'radio',
+                label: 'Which permissible purposes apply to this project?',
+                type: 'checkbox',
                 className: 'smaller',
                 options: [
                   {
@@ -516,7 +516,28 @@ export default {
               {
                 label: 'No',
                 value: false
-              }
+              },
+              name: 'transfer-expiring',
+              label: 'Do you need to transfer animals from an expiring licence as continued use?',
+              type: 'radio',
+              inline: true,
+              className: 'smaller',
+              options: [
+                {
+                  label: 'Yes',
+                  value: true,
+                  reveal: [
+                    {
+                      name: 'expiring-yes',
+                      label: 'Please state the licence number and expiry date of any of these licences.',
+                      type: 'texteditor'
+                    }
+                  ]
+                },
+                {
+                  label: 'No',
+                  value: false
+                }
             ]
           }
         ]
@@ -1811,7 +1832,7 @@ export default {
       },
       'rehoming-animals': {
         title: 'Rehoming animals',
-        intro: 'You are seeing this section because you will be rehoming animals at the end of a protocol or project. To change this, go to Protocols.',
+        intro: 'You are seeing this section because you are applying for the authority to rehome animals at the end of a protocol or project. To change this, go to Protocols.',
         show: values => some(values.protocols, protocol => {
           return castArray(protocol.fate).includes('re-homed');
         }),
