@@ -309,7 +309,7 @@ const renderProtocol = (doc, protocolSection, protocolValues) => {
   doc.createParagraph(protocolSection.title).heading2();
 
   if (protocolSection.name === 'protocolSteps') {
-    protocolValues.steps.map(stepValues => {
+    (protocolValues.steps || []).map(stepValues => {
       renderFields(doc, protocolSection, stepValues);
     });
   } else if (protocolSection.name === 'protocolExperience') {
