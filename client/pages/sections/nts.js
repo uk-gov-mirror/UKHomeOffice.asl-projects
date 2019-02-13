@@ -11,6 +11,10 @@ import NTS from '../../components/nts';
 
 const OFFSET = 100;
 
+const getStep = field => field.step
+  ? `/${field.step}`
+  : '';
+
 class NTSSummary extends Component {
   componentDidMount() {
     window.onscroll = this.onscroll;
@@ -79,7 +83,7 @@ class NTSSummary extends Component {
       fields = section.fields;
     }
     if (section.steps){
-      fields = flatten(section.steps.map(step => step.fields));
+      fields = flatten(section.steps.map((step, index) => step.fields.map(field => ({ ...field, step: index }))));
     }
     return fields.filter(field => !whitelist || whitelist.includes(field.name));
   }
@@ -113,10 +117,7 @@ class NTSSummary extends Component {
                         label={ field.review || field.label }
                         key={ field.name }
                         value={ this.props.project && this.props.project[field.name] }
-                        editLink={ section === 'introduction' ?
-                          `/project/${this.props.project.id}/introduction/1#${field.name}` :
-                          `/project/${this.props.project.id}/${section}#${field.name}`
-                        }
+                        editLink={`/${section}${getStep(field)}#${field.name}`}
                       />
                     ))
                   }
