@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import classnames from 'classnames';
 
 import size from 'lodash/size';
-
+import { Button } from '@ukhomeoffice/react-components';
 import ProtocolSections from './protocol-sections';
 
 import ReviewFields from '../../../components/review-fields';
@@ -100,7 +100,7 @@ class Protocols extends Component {
     if (!size(project)) {
       return null;
     }
-    return <Fragment>
+    return <div className="protocols-section">
       <h1>Protocols</h1>
       <p>Please enter the details of the protocols that make up this project.</p>
       <ExpandingPanel
@@ -131,7 +131,8 @@ class Protocols extends Component {
       >
         <Protocol {...this.props} />
       </Repeater>
-    </Fragment>
+      <Button className="button-secondary" onClick={this.props.exit}>Save and exit</Button>
+    </div>
   }
 }
 

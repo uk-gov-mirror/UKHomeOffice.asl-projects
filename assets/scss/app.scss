@@ -101,6 +101,13 @@ dl {
   text-overflow: ellipsis;
 }
 
+.protocols-section {
+  button.add-another {
+    display: inline-block;
+    margin-right: $govuk-gutter-half;
+  }
+}
+
 .subtitle {
   @extend .grey;
   @extend .light;
