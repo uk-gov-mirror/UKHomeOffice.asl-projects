@@ -516,28 +516,31 @@ export default {
               {
                 label: 'No',
                 value: false
+              }
+            ]
+          },
+          {
+            name: 'transfer-expiring',
+            label: 'Do you need to transfer animals from an expiring licence as continued use?',
+            type: 'radio',
+            inline: true,
+            className: 'smaller',
+            options: [
+              {
+                label: 'Yes',
+                value: true,
+                reveal: [
+                  {
+                    name: 'expiring-yes',
+                    label: 'Please state the licence number and expiry date of any of these licences.',
+                    type: 'texteditor'
+                  }
+                ]
               },
-              name: 'transfer-expiring',
-              label: 'Do you need to transfer animals from an expiring licence as continued use?',
-              type: 'radio',
-              inline: true,
-              className: 'smaller',
-              options: [
-                {
-                  label: 'Yes',
-                  value: true,
-                  reveal: [
-                    {
-                      name: 'expiring-yes',
-                      label: 'Please state the licence number and expiry date of any of these licences.',
-                      type: 'texteditor'
-                    }
-                  ]
-                },
-                {
-                  label: 'No',
-                  value: false
-                }
+              {
+                label: 'No',
+                value: false
+              }
             ]
           }
         ]
