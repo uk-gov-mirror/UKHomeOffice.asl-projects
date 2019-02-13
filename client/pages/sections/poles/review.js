@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Banner from '../../../components/banner';
 import Review from '../../../components/review';
 
-const ReviewSection = ({ title, fields, values, goto }) => (
+const ReviewSection = ({ title, fields, values }) => (
   <Fragment>
     <Banner>
       <h2>Please review your answers for:</h2>
@@ -13,6 +13,7 @@ const ReviewSection = ({ title, fields, values, goto }) => (
     <Review
       {...fields.find(f => f.name === 'poles')}
       value={values.poles}
+      editLink="/poles/0#poles"
     />
     {
       values.poles && (
@@ -20,6 +21,7 @@ const ReviewSection = ({ title, fields, values, goto }) => (
           <Review
             {...fields.find(f => f.name === 'poles').options[0].reveal}
             value={values['poles-justification']}
+            editLink="/poles/0#poles-justification"
           />
           {
             values.polesList && values.polesList.map((pole, index) => (
@@ -27,8 +29,14 @@ const ReviewSection = ({ title, fields, values, goto }) => (
                 <div key={index} className="panel">
                   <h2>POLE {index + 1}</h2>
                   <Review
+                    {...fields.find(f => f.name === 'title')}
+                    value={pole.title}
+                    editLink="/poles/1#title"
+                  />
+                  <Review
                     {...fields.find(f => f.name === 'pole-info')}
                     value={pole['pole-info']}
+                    editLink="/poles/1#pole-info"
                   />
                 </div>
               </Fragment>
@@ -37,12 +45,12 @@ const ReviewSection = ({ title, fields, values, goto }) => (
           <Review
             {...fields.find(f => f.name === 'poles-inspection')}
             value={values['poles-inspection']}
-            onEdit={() => goto(2)}
+            editLink="/poles/2#poles-inspection"
           />
           <Review
             {...fields.find(f => f.name === 'poles-transfer')}
             value={values['poles-transfer']}
-            onEdit={() => goto(2)}
+            editLink="/poles/2#poles-transfer"
           />
           {
             values['poles-transfer'] && fields.find(f => f.name === 'poles-transfer').options[0].reveal.map((field, index) => (
@@ -50,7 +58,7 @@ const ReviewSection = ({ title, fields, values, goto }) => (
                 key={index}
                 {...field}
                 value={values[field.name]}
-                onEdit={() => goto(2)}
+                editLink={`/poles/2#${field.name}`}
               />
             ))
           }
