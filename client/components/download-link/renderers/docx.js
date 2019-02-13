@@ -1,6 +1,6 @@
 import saveAs from 'file-saver';
 import { Document, Packer, Paragraph, TextRun, Numbering } from '@joefitter/docx';
-import { flatten, isUndefined } from 'lodash';
+import { flatten, isUndefined, isNull } from 'lodash';
 import SPECIES from '../../../constants/species';
 
 // 600px seems to be roughly 100% page width (inside the margins)
@@ -250,7 +250,7 @@ const renderField = (doc, field, values) => {
   const value = values[field.name];
   doc.createParagraph(field.label).heading3();
 
-  if (isUndefined(value)) {
+  if (isUndefined(value) || isNull(value)) {
     const paragraph = new Paragraph();
     paragraph.style('body');
     paragraph.addRun(new TextRun('No answer provided').italics());
