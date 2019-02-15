@@ -1,4 +1,4 @@
-module.exports = () => {
+export default () => {
 
   return new Promise((resolve, reject) => {
     const request = window.indexedDB.open('asl');
