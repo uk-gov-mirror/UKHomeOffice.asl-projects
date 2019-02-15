@@ -21,4 +21,4 @@ class ConnectProject extends Component {
 
 const mapStateToProps = ({ projects }) => ({ projects });
 
-module.exports = connect(mapStateToProps, { setProject })(ConnectProject);
+export default connect(mapStateToProps, { setProject })(ConnectProject);

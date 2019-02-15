@@ -455,7 +455,7 @@ const addImageDimensions = values => {
   });
 };
 
-module.exports = {
+export default {
   render: ({sections, values}) => {
     return Promise.resolve()
       .then(() => addImageDimensions(values))

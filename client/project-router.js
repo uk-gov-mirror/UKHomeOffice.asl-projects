@@ -16,4 +16,4 @@ const ProjectRouter = ({ basename, onUpdate }) => (
   </BrowserRouter>
 );
 
-module.exports = ProjectRouter;
+export default ProjectRouter;
