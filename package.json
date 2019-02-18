@@ -8,6 +8,7 @@
     "start": "node index.js",
     "dev": "nodemon -r dotenv/config -e js,jsx index.js",
     "test": "eslint .",
+    "heroku-postbuild": "npm run build",
     "build": "npm run build:css && npm run build:js",
     "prebuild:css": "mkdir -p public/css",
     "build:css": "npm-sass assets/scss/app.scss > public/css/app.css",
