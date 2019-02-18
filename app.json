@@ -1,7 +1,7 @@
 {
   "name": "peephole",
   "scripts": {
-    "predeploy": "npm run build"
+    "postdeploy": "npm run build"
   },
   "env": {
     "NPM_AUTH_USERNAME": {
