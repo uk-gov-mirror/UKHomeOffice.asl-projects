@@ -1,6 +1,6 @@
 {
   "name": "@asl/peephole",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "ASL PPL prototype",
   "main": "client/external.js",
   "styles": "assets/scss/app.scss",
