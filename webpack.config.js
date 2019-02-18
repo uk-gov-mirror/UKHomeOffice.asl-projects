@@ -17,7 +17,7 @@ module.exports = {
     rules: [
       {
         test: /\.jsx?$/,
-        exclude: p => p.match(/node_modules/) && !p.match(/@joefitter\/docx/) && !p.match(/node_modules\/@asl/),
+        exclude: p => p.match(/node_modules/) && !p.match(/@joefitter\/docx/),
         use: {
           loader: 'babel-loader',
           options: {
