@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import map from 'lodash/map';
+import pickBy from 'lodash/pickBy';
 import every from 'lodash/every';
 import some from 'lodash/some';
 
@@ -21,7 +22,7 @@ class ApplicationSummary extends React.Component {
 
   isCompleted = () => {
     const subsections = map(
-      map(this.props.sections, section => section.subsections)
+      map(this.props.sections, section => pickBy(section.subsections, this.sectionVisible))
         .reduce((obj, values) => ({ ...obj, ...values }), {}),
       this.complete
     );
@@ -101,7 +102,7 @@ class ApplicationSummary extends React.Component {
           <p>All sections must be marked as complete before you can continue and send your application to the Home Office.</p>
           <Button
             disabled={!this.isCompleted()}
-            onClick={() => console.log('complete')}
+            onClick={this.props.onComplete}
           >Continue</Button>
         </Fragment>
       </Fragment>

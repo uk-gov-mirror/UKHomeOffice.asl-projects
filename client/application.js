@@ -2022,7 +2022,7 @@ export default {
     title: 'Non-technical summary',
     name: 'nts',
     subsections: {
-      review: {
+      'nts-review': {
         title: 'Review',
         component: NTSSummary,
         sections: [

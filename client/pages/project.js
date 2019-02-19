@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import ApplicationSummary from '../components/application-summary';
 import DownloadLink from '../components/download-link';
 
-const Index = ({ project }) => {
+const Index = ({ project, onComplete = () => window.alert('Submitting to ASRU through this tool is not currently supported.') }) => {
   if (!project) {
     return null
   }
@@ -18,7 +18,7 @@ const Index = ({ project }) => {
       </span>
       <a href="/">Back to project list</a>
     </p>
-    <ApplicationSummary />
+    <ApplicationSummary onComplete={onComplete} />
   </Fragment>
 };
 

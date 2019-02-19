@@ -6,7 +6,8 @@ import map from 'lodash/map';
 import reduce from 'lodash/reduce';
 import flatten from 'lodash/flatten';
 
-import Review from '../../components/review'
+import Complete from '../../components/complete';
+import Review from '../../components/review';
 import NTS from '../../components/nts';
 
 const OFFSET = 100;
@@ -88,6 +89,11 @@ class NTSSummary extends Component {
     return fields.filter(field => !whitelist || whitelist.includes(field.name));
   }
 
+  onCompleteChange = complete => {
+    this.props.save('nts-review-complete', complete);
+    this.props.exit();
+  }
+
   render() {
     return (
       <Fragment>
@@ -125,6 +131,15 @@ class NTSSummary extends Component {
                 </Fragment>
               ))
             }
+            <Complete
+              className="panel"
+              onChange={this.onCompleteChange}
+              complete={this.props.project['nts-review-complete']}
+              label="This section is complete"
+            >
+              <h2>Mark this section as complete?</h2>
+              <p>You can still edit this section later, but you will be unable to send this application to the Home Office until all sections are marked as complete.</p>
+            </Complete>
           </div>
         </div>
       </Fragment>
