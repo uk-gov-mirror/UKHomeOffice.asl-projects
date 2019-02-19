@@ -10,673 +10,675 @@ $assetPath: '/public';
 
 @import "images";
 
-.flex {
-  display: flex;
+#ppl-drafting-tool {
+  .flex {
+    display: flex;
 
 
-  .grow {
-    flex-grow: 1;
-  }
+    .grow {
+      flex-grow: 1;
+    }
 
-  .shrink {
-    flex-shrink: 1;
-    align-self: flex-end;
-    margin-left: $govuk-gutter;
-  }
-}
-
-.gutter {
-  margin-bottom: $govuk-gutter;
-}
-
-a[disabled] {
-  color: $govuk-secondary-text-colour;
-  cursor: default;
-}
-
-h1, h2, h3 {
-  margin-bottom: 1em;
-}
-
-dl {
-  dt {
-    font-weight: bold;
-  }
-}
-
-.playback {
-  border-left: 4px solid $ho-brand;
-  padding-left: $govuk-gutter;
-  margin-bottom: $govuk-gutter;
-}
-
-.objective {
-  @extend .panel;
-  margin-bottom: $govuk-gutter;
-}
-
-.grey {
-  color: $govuk-secondary-text-colour;
-}
-
-.light-grey-bg {
-  background-color: $light-grey !important;
-}
-
-.inline-block {
-  display: inline-block;
-  margin-right: $govuk-gutter-half;
-}
-
-.no-bg {
-  .header {
-    background: none !important;
-    padding-top: 0 !important;
-
-    .title {
-      margin-bottom: 0 !important;
+    .shrink {
+      flex-shrink: 1;
+      align-self: flex-end;
+      margin-left: $govuk-gutter;
     }
   }
-}
 
-.hidden {
-  display: none;
-}
+  .gutter {
+    margin-bottom: $govuk-gutter;
+  }
 
-.light {
-  font-weight: normal;
-}
+  a[disabled] {
+    color: $govuk-secondary-text-colour;
+    cursor: default;
+  }
 
-.smaller-text {
-  font-size: 0.8em;
-}
+  h1, h2, h3 {
+    margin-bottom: 1em;
+  }
 
-.larger {
-  font-size: 1.2em;
-}
+  dl {
+    dt {
+      font-weight: bold;
+    }
+  }
 
-.no-wrap {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
+  .playback {
+    border-left: 4px solid $ho-brand;
+    padding-left: $govuk-gutter;
+    margin-bottom: $govuk-gutter;
+  }
 
-.protocols-section {
-  button.add-another {
+  .objective {
+    @extend .panel;
+    margin-bottom: $govuk-gutter;
+  }
+
+  .grey {
+    color: $govuk-secondary-text-colour;
+  }
+
+  .light-grey-bg {
+    background-color: $light-grey !important;
+  }
+
+  .inline-block {
     display: inline-block;
     margin-right: $govuk-gutter-half;
   }
-}
 
-.subtitle {
-  @extend .grey;
-  @extend .light;
-}
+  .no-bg {
+    .header {
+      background: none !important;
+      padding-top: 0 !important;
 
-.govuk-button {
-  &.link {
-    @extend a;
-    text-decoration: underline;
-    color: $blue;
-    background: none;
-    box-shadow: none;
-  }
-
-  &.button-secondary {
-    background: $white;
-    color: $govuk-text-colour;
-    border: 1px solid $govuk-border-colour;
-
-    &:hover {
-      background: $light-grey;
-    }
-  }
-}
-
-a.sections-link {
-  background-color: $black;
-  color: $white;
-  text-decoration: none;
-  position: relative;
-  top: -$govuk-gutter;
-  margin-bottom: $govuk-gutter;
-  display: inline-block;
-  padding: 10px 16px;
-  font-weight: bold;
-
-  &:before {
-    content: '◀';
-    font-size: 0.6em;
-    vertical-align: middle;
-    margin-right: $govuk-gutter;
-  }
-}
-
-dl {
-  clear: both;
-  &.inline {
-    dt {
-      float: left;
-      clear: left;
-      margin-right: $govuk-gutter-half / 2;
-    }
-
-    dd {
-      a {
-        margin-left: $govuk-gutter-half;
+      .title {
+        margin-bottom: 0 !important;
       }
     }
   }
-}
 
-p.control-panel {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  .hidden {
+    display: none;
+  }
+
+  .light {
+    font-weight: normal;
+  }
+
+  .smaller-text {
+    font-size: 0.8em;
+  }
+
+  .larger {
+    font-size: 1.2em;
+  }
+
+  .no-wrap {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .protocols-section {
+    button.add-another {
+      display: inline-block;
+      margin-right: $govuk-gutter-half;
+    }
+  }
+
+  .subtitle {
+    @extend .grey;
+    @extend .light;
+  }
 
   .govuk-button {
-    margin-bottom: 0;
+    &.link {
+      @extend a;
+      text-decoration: underline;
+      color: $blue;
+      background: none;
+      box-shadow: none;
+    }
+
+    &.button-secondary {
+      background: $white;
+      color: $govuk-text-colour;
+      border: 1px solid $govuk-border-colour;
+
+      &:hover {
+        background: $light-grey;
+      }
+    }
   }
 
-  > * {
-    margin-right: 1em;
-  }
-}
+  a.sections-link {
+    background-color: $black;
+    color: $white;
+    text-decoration: none;
+    position: relative;
+    top: -$govuk-gutter;
+    margin-bottom: $govuk-gutter;
+    display: inline-block;
+    padding: 10px 16px;
+    font-weight: bold;
 
-details summary {
-  color: $blue;
-}
-
-table {
-  .govuk-button {
-    margin: 0;
+    &:before {
+      content: '◀';
+      font-size: 0.6em;
+      vertical-align: middle;
+      margin-right: $govuk-gutter;
+    }
   }
-  td:last-child {
-    text-align: right;
+
+  dl {
+    clear: both;
+    &.inline {
+      dt {
+        float: left;
+        clear: left;
+        margin-right: $govuk-gutter-half / 2;
+      }
+
+      dd {
+        a {
+          margin-left: $govuk-gutter-half;
+        }
+      }
+    }
+  }
+
+  p.control-panel {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    .govuk-button {
+      margin-bottom: 0;
+    }
 
     > * {
-      margin-left: 0.5em;
+      margin-right: 1em;
     }
   }
-}
 
-main {
-  position: relative;
-}
-
-.alert {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  background: $green;
-  color: white;
-  font-weight: bold;
-  z-index: 100;
-
-  &.alert-error {
-    background: $govuk-error-colour;
-  }
-}
-
-.alert-enter {
-  opacity: 0.01;
-}
-
-.alert-enter.alert-enter-active {
-  opacity: 1;
-  transition: opacity 100ms ease-in;
-}
-
-.alert-leave {
-  opacity: 1;
-}
-
-.alert-leave.alert-leave-active {
-  opacity: 0.01;
-  transition: opacity 500ms ease-out;
-}
-
-.badge {
-  padding: 3px 6px;
-  background: #999;
-  color: white;
-  text-transform: uppercase;
-  font-weight: bold;
-
-  &.complete {
-    background: $blue;
-  }
-}
-
-.import-active {
-  border: 3px dashed $mid-grey;
-  padding: 12px;
-  margin: -15px;
-}
-
-.import-rejected {
-  border: 3px dashed $govuk-error-colour;
-  padding: 12px;
-  margin: -15px;
-}
-
-.banner {
-  background: $green;
-  color: white;
-  text-align: center;
-  padding: 2em 0 1px;
-  margin-bottom: 2em;
-}
-
-.block {
-  display: block;
-}
-
-.float-right {
-  float: right;
-}
-
-.float-left {
-  float: left;
-}
-
-.govuk-inset-text {
-  border-left: 4px solid $mid-grey;
-  padding-left: $govuk-gutter;
-}
-
-hr {
-  border: none;
-  border-top: 1px solid $govuk-border-colour;
-}
-
-.review ul {
-  margin-top: 1em;
-}
-
-.panel {
-  padding: $govuk-gutter;
-  background-color: $mid-grey;
-  border-color: transparent;
-
-  &.yellow-bg {
-    background-color: $ho-focus;
-  }
-}
-
-fieldset.inline {
-  > .govuk-radios > .govuk-radios__item,
-  > .govuk-checkboxes > .govuk-checkboxes__item {
-    display: inline-block;
-    margin-right: $govuk-gutter;
-  }
-}
-
-fieldset.smaller {
-  .govuk-radios [type='radio'] + label::before {
-    width: 24px;
-    height: 24px;
+  details summary {
+    color: $blue;
   }
 
-  .govuk-radios__item {
-    min-height: auto;
-  }
-
-   .govuk-radios [type='radio'] + label::after {
-    border: 7px solid;
-    top: 5px;
-    left: 5px;
-  }
-
-   .govuk-radios__label {
-    padding: 0;
-  }
-
-  .govuk-checkboxes {
-    .multiple-choice {
-      padding-top: 1px;
-      padding-bottom: 2px;
+  table {
+    .govuk-button {
+      margin: 0;
     }
-    .govuk-checkboxes__label {
-      padding: 3px 2px 5px;
+    td:last-child {
+      text-align: right;
+
+      > * {
+        margin-left: 0.5em;
+      }
+    }
+  }
+
+  main {
+    position: relative;
+  }
+
+  .alert {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    background: $green;
+    color: white;
+    font-weight: bold;
+    z-index: 100;
+
+    &.alert-error {
+      background: $govuk-error-colour;
+    }
+  }
+
+  .alert-enter {
+    opacity: 0.01;
+  }
+
+  .alert-enter.alert-enter-active {
+    opacity: 1;
+    transition: opacity 100ms ease-in;
+  }
+
+  .alert-leave {
+    opacity: 1;
+  }
+
+  .alert-leave.alert-leave-active {
+    opacity: 0.01;
+    transition: opacity 500ms ease-out;
+  }
+
+  .badge {
+    padding: 3px 6px;
+    background: #999;
+    color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+
+    &.complete {
+      background: $blue;
+    }
+  }
+
+  .import-active {
+    border: 3px dashed $mid-grey;
+    padding: 12px;
+    margin: -15px;
+  }
+
+  .import-rejected {
+    border: 3px dashed $govuk-error-colour;
+    padding: 12px;
+    margin: -15px;
+  }
+
+  .banner {
+    background: $green;
+    color: white;
+    text-align: center;
+    padding: 2em 0 1px;
+    margin-bottom: 2em;
+  }
+
+  .block {
+    display: block;
+  }
+
+  .float-right {
+    float: right;
+  }
+
+  .float-left {
+    float: left;
+  }
+
+  .govuk-inset-text {
+    border-left: 4px solid $mid-grey;
+    padding-left: $govuk-gutter;
+  }
+
+  hr {
+    border: none;
+    border-top: 1px solid $govuk-border-colour;
+  }
+
+  .review ul {
+    margin-top: 1em;
+  }
+
+  .panel {
+    padding: $govuk-gutter;
+    background-color: $mid-grey;
+    border-color: transparent;
+
+    &.yellow-bg {
+      background-color: $ho-focus;
+    }
+  }
+
+  fieldset.inline {
+    > .govuk-radios > .govuk-radios__item,
+    > .govuk-checkboxes > .govuk-checkboxes__item {
+      display: inline-block;
+      margin-right: $govuk-gutter;
+    }
+  }
+
+  fieldset.smaller {
+    .govuk-radios [type='radio'] + label::before {
+      width: 24px;
+      height: 24px;
     }
 
-    .govuk-checkboxes__item {
+    .govuk-radios__item {
+      min-height: auto;
+    }
+
+     .govuk-radios [type='radio'] + label::after {
+      border: 7px solid;
+      top: 5px;
+      left: 5px;
+    }
+
+     .govuk-radios__label {
+      padding: 0;
+    }
+
+    .govuk-checkboxes {
+      .multiple-choice {
+        padding-top: 1px;
+        padding-bottom: 2px;
+      }
+      .govuk-checkboxes__label {
+        padding: 3px 2px 5px;
+      }
+
+      .govuk-checkboxes__item {
+        margin-bottom: 0;
+      }
+    }
+
+    .govuk-checkboxes [type=checkbox] + label::before {
+      width: 25px;
+      height: 25px;
+    }
+
+    .govuk-checkboxes [type=checkbox] + label::after {
+      border-width: 0 0 3px 3px;
+      width: 11px;
+      height: 4px;
+      top: 8px;
+      left: 6px;
+    }
+
+    .govuk-checkboxes__item > .govuk-reveal > .govuk-inset-text {
+      margin-left: -5px !important;
+    }
+
+    .govuk-inset-text {
+      margin-left: -30px;
+
+      .govuk-inset-text {
+        margin-left: -30px;
+        margin-top: $govuk-gutter-half;
+
+        input, textarea {
+          margin-bottom: 0;
+        }
+      }
+    }
+
+    &.inline .govuk-inset-text {
+      margin-left: 10px;
+    }
+  }
+
+  .govuk-reveal {
+    textarea:last-child, .editor:last-child {
       margin-bottom: 0;
     }
   }
 
-  .govuk-checkboxes [type=checkbox] + label::before {
-    width: 25px;
-    height: 25px;
-  }
-
-  .govuk-checkboxes [type=checkbox] + label::after {
-    border-width: 0 0 3px 3px;
-    width: 11px;
-    height: 4px;
-    top: 8px;
-    left: 6px;
-  }
-
-  .govuk-checkboxes__item > .govuk-reveal > .govuk-inset-text {
-    margin-left: -5px !important;
-  }
-
-  .govuk-inset-text {
-    margin-left: -30px;
-
-    .govuk-inset-text {
-      margin-left: -30px;
-      margin-top: $govuk-gutter-half;
-
-      input, textarea {
-        margin-bottom: 0;
-      }
-    }
-  }
-
-  &.inline .govuk-inset-text {
-    margin-left: 10px;
-  }
-}
-
-.govuk-reveal {
-  textarea:last-child, .editor:last-child {
-    margin-bottom: 0;
-  }
-}
-
-.status-label {
-  display: block;
-  float: right;
-  padding: 2px 10px;
-  text-transform: uppercase;
-  font-weight: bold;
-  font-size: 0.8em;
-
-  &.completed {
-    background-color: $blue;
-    color: $white;
-  }
-
-  &.incomplete {
-    background-color: $ho-focus;
-  }
-}
-
-.expandable {
-  > .header, .content {
-    @extend .panel;
-  }
-
-  > .header .title {
-    @extend a;
-    cursor: pointer;
-    color: $blue;
-
-    &:before {
-      content: '►';
-      font-size: 0.5em;
-      vertical-align: middle;
-      margin-right: $govuk-gutter / 4;
-    }
-  }
-
-  &.expanded {
-    > .header {
-      .title:before {
-        content: '▼';
-      }
-    }
-  }
-}
-
-.protocols-setup {
-  margin-bottom: $govuk-gutter;
-  border-bottom: 1px solid $govuk-border-colour;
-
-  header {
-    background-color: $light-grey;
-  }
-
-  .review {
-    hr, a {
-      display: none;
-    }
-  }
-}
-
-.steps {
-
-  .step {
-    margin-bottom: $govuk-gutter;
+  .status-label {
+    display: block;
+    float: right;
+    padding: 2px 10px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 0.8em;
 
     &.completed {
-      @extend .panel;
+      background-color: $blue;
+      color: $white;
     }
 
-    > .review {
-      @extend .panel;
-      background-color: $white;
-      margin: -$govuk-gutter-half;
-
-      .review {
-        hr, a {
-          display: none;
-        }
-      }
-    }
-  }
-}
-
-
-.protocol {
-  margin-bottom: $govuk-gutter;
-
-  &.complete {
-    > .expandable {
-      > .header {
-        background-color: $blue;
-
-        * {
-          color: $white;
-        }
-      }
+    &.incomplete {
+      background-color: $ho-focus;
     }
   }
 
   .expandable {
-    .content {
-      background: $white;
+    > .header, .content {
+      @extend .panel;
     }
-  }
-}
 
-.accordion {
-  margin-bottom: $govuk-gutter;
-}
-
-.expanding-panel {
-  border-top: 1px solid $govuk-border-colour;
-  &:last-child {
-    border-bottom: 1px solid $govuk-border-colour;
-  }
-
-  header {
-    padding: $govuk-gutter-half;
-    padding-left: 0;
-    position: relative;
-    cursor: pointer;
-    margin: 0;
-
-    h3 {
+    > .header .title {
       @extend a;
+      cursor: pointer;
       color: $blue;
-      margin: 0;
 
-      &:after {
-        content: "";
-        display: block;
-        position: absolute;
-        top: $govuk-gutter-half;
-        right: $govuk-gutter-half;
-        width: 16px;
-        height: 16px;
-        margin-top: 4px;
-        background: $plus-minus no-repeat bottom left;
+      &:before {
+        content: '►';
+        font-size: 0.5em;
+        vertical-align: middle;
+        margin-right: $govuk-gutter / 4;
+      }
+    }
+
+    &.expanded {
+      > .header {
+        .title:before {
+          content: '▼';
+        }
       }
     }
   }
 
-  &.open {
-    h3:after {
-      background: $plus-minus no-repeat top left;
+  .protocols-setup {
+    margin-bottom: $govuk-gutter;
+    border-bottom: 1px solid $govuk-border-colour;
+
+    header {
+      background-color: $light-grey;
+    }
+
+    .review {
+      hr, a {
+        display: none;
+      }
     }
   }
 
-  .content {
-    padding: $govuk-gutter;
+  .steps {
 
-    h2:first-child {
-      margin-top:0;
+    .step {
+      margin-bottom: $govuk-gutter;
+
+      &.completed {
+        @extend .panel;
+      }
+
+      > .review {
+        @extend .panel;
+        background-color: $white;
+        margin: -$govuk-gutter-half;
+
+        .review {
+          hr, a {
+            display: none;
+          }
+        }
+      }
     }
   }
-}
 
-.nts {
-  @extend .panel;
-  @extend .yellow-bg;
 
-  margin-bottom: $govuk-gutter;
+  .protocol {
+    margin-bottom: $govuk-gutter;
 
-  > .govuk-button {
-    margin-bottom: 0;
-  }
-}
+    &.complete {
+      > .expandable {
+        > .header {
+          background-color: $blue;
 
-.sidebar-nav {
-  border-top: 4px solid $blue;
+          * {
+            color: $white;
+          }
+        }
+      }
+    }
 
-  > a {
-    display: block;
-    padding: $govuk-gutter-half;
-    text-decoration: none;
-
-    &.active {
-      background-color: $blue;
-      color: $white;
+    .expandable {
+      .content {
+        background: $white;
+      }
     }
   }
-}
 
-.nts-review {
-  display: flex;
-
-  > nav {
-    position: -webkit-sticky;
-    position: sticky;
-    top: 0;
-    align-self: flex-start;
-    flex-shrink: 0;
+  .accordion {
+    margin-bottom: $govuk-gutter;
   }
 
-  > nav, .content {
-    vertical-align: top;
-  }
+  .expanding-panel {
+    border-top: 1px solid $govuk-border-colour;
+    &:last-child {
+      border-bottom: 1px solid $govuk-border-colour;
+    }
 
-  .content {
-    flex-grow: 1;
-    margin-left: $govuk-gutter;
-  }
-
-  .review {
-    hr {
+    header {
+      padding: $govuk-gutter-half;
+      padding-left: 0;
+      position: relative;
+      cursor: pointer;
       margin: 0;
-      border: none;
-    }
-  }
-}
 
-.download {
-  font-size: 1.2em;
-  margin-left: 0.5em;
-  &:before {
-    content: '';
-    margin-right: 0.5em;
-    background: $download;
-    background-size: 100%;
-    vertical-align: middle;
-    display: inline-block;
-    width: 1.2em;
-    height: 1.2em;
-  }
-  + .download {
-    border-left: 1px solid;
-    padding-left: 0.5em;
-  }
-}
+      h3 {
+        @extend a;
+        color: $blue;
+        margin: 0;
 
-input[type="number"] {
-  width: 6em;
-}
-
-.duration {
-  .govuk-form-group {
-    display: inline-block;
-    margin-right: 1em;
-  }
-}
-
-.objective-review {
-  .review {
-    hr {
-      border: none;
-    }
-  }
-}
-
-.playback {
-  .review {
-    hr {
-      border: none;
-      margin: 0;
+        &:after {
+          content: "";
+          display: block;
+          position: absolute;
+          top: $govuk-gutter-half;
+          right: $govuk-gutter-half;
+          width: 16px;
+          height: 16px;
+          margin-top: 4px;
+          background: $plus-minus no-repeat bottom left;
+        }
+      }
     }
 
-    p {
+    &.open {
+      h3:after {
+        background: $plus-minus no-repeat top left;
+      }
+    }
+
+    .content {
+      padding: $govuk-gutter;
+
+      h2:first-child {
+        margin-top:0;
+      }
+    }
+  }
+
+  .nts {
+    @extend .panel;
+    @extend .yellow-bg;
+
+    margin-bottom: $govuk-gutter;
+
+    > .govuk-button {
       margin-bottom: 0;
     }
   }
 
-  dl.inline {
-    padding: $govuk-gutter-half 0;
-  }
-}
+  .sidebar-nav {
+    border-top: 4px solid $blue;
 
-.establishment-review {
-  margin-top: $govuk-gutter;
-  margin-bottom: $govuk-gutter;
-}
+    > a {
+      display: block;
+      padding: $govuk-gutter-half;
+      text-decoration: none;
 
-.location-selector, .objective-selector {
-  margin-bottom: $govuk-gutter;
-
-  > .govuk-form-group {
-    margin-bottom: 0;
+      &.active {
+        background-color: $blue;
+        color: $white;
+      }
+    }
   }
 
-  > a {
-    display: block;
-  }
-}
+  .nts-review {
+    display: flex;
 
-.species-selector {
-  .govuk-form-group {
-    margin-bottom: $govuk-gutter !important;
-  }
-}
+    > nav {
+      position: -webkit-sticky;
+      position: sticky;
+      top: 0;
+      align-self: flex-start;
+      flex-shrink: 0;
+    }
 
-.add-more-animals {
-  margin-bottom: $govuk-gutter;
+    > nav, .content {
+      vertical-align: top;
+    }
+
+    .content {
+      flex-grow: 1;
+      margin-left: $govuk-gutter;
+    }
+
+    .review {
+      hr {
+        margin: 0;
+        border: none;
+      }
+    }
+  }
+
+  .download {
+    font-size: 1.2em;
+    margin-left: 0.5em;
+    &:before {
+      content: '';
+      margin-right: 0.5em;
+      background: $download;
+      background-size: 100%;
+      vertical-align: middle;
+      display: inline-block;
+      width: 1.2em;
+      height: 1.2em;
+    }
+    + .download {
+      border-left: 1px solid;
+      padding-left: 0.5em;
+    }
+  }
+
+  input[type="number"] {
+    width: 6em;
+  }
+
+  .duration {
+    .govuk-form-group {
+      display: inline-block;
+      margin-right: 1em;
+    }
+  }
+
+  .objective-review {
+    .review {
+      hr {
+        border: none;
+      }
+    }
+  }
+
+  .playback {
+    .review {
+      hr {
+        border: none;
+        margin: 0;
+      }
+
+      p {
+        margin-bottom: 0;
+      }
+    }
+
+    dl.inline {
+      padding: $govuk-gutter-half 0;
+    }
+  }
+
+  .establishment-review {
+    margin-top: $govuk-gutter;
+    margin-bottom: $govuk-gutter;
+  }
+
+  .location-selector, .objective-selector {
+    margin-bottom: $govuk-gutter;
+
+    > .govuk-form-group {
+      margin-bottom: 0;
+    }
+
+    > a {
+      display: block;
+    }
+  }
+
+  .species-selector {
+    .govuk-form-group {
+      margin-bottom: $govuk-gutter !important;
+    }
+  }
+
+  .add-more-animals {
+    margin-bottom: $govuk-gutter;
+  }
 }

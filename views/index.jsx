@@ -7,7 +7,7 @@ class Index extends React.Component {
     return <Layout {...this.props}>
       <main className="main govuk-main-wrapper" id="content">
         <div className="govuk-width-container">
-          <div id="app"/>
+          <div id="ppl-drafting-tool"/>
         </div>
       </main>
     </Layout>

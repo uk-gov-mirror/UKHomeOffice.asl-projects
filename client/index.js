@@ -25,5 +25,5 @@ const renderApp = () => render(
       <Router />
     </React.Fragment>
   </Provider>,
-  document.getElementById('app')
+  document.getElementById('ppl-drafting-tool')
 );

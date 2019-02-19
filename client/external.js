@@ -17,7 +17,7 @@ const renderApp = ({ basename, onUpdate }, initialState) => {
         <ProjectRouter basename={basename} onUpdate={onUpdate} />
       </React.Fragment>
     </Provider>,
-    document.getElementById('app')
+    document.getElementById('ppl-drafting-tool')
   );
 }
 
