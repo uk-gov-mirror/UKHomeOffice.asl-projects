@@ -28,18 +28,22 @@ const Establishment = ({ index, fields, updateItem, values, advance, retreat, ac
 )
 
 class Establishments extends Component {
-  otherEstablishments = castArray(this.props.values['other-establishments-list']);
+  constructor(props) {
+    super(props);
 
-  // if no additional establishments were selected, don't try and use
-  // the currently saved establishments as they won't be valid any more
-  items = !this.otherEstablishments.length
-    ? []
-    : (this.props.values.establishments || this.otherEstablishments.map(name => ({ name })))
-      .filter(item => this.otherEstablishments.includes(item.name));
+    this.otherEstablishments = castArray(this.props.values['other-establishments-list']);
 
-  state = {
-    active: this.props.active || 0,
-    items: this.items
+    // if no additional establishments were selected, don't try and use
+    // the currently saved establishments as they won't be valid any more
+    this.items = !this.otherEstablishments.length
+      ? []
+      : (this.props.values.establishments || this.otherEstablishments.map(name => ({ name })))
+        .filter(item => this.otherEstablishments.includes(item.name));
+
+    this.state = {
+      active: this.props.active || 0,
+      items: this.items
+    }
   }
 
   advance = () => {
