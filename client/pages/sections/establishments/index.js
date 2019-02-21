@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import classnames from 'classnames';
 import castArray from 'lodash/castArray';
 
@@ -28,10 +28,18 @@ const Establishment = ({ index, fields, updateItem, values, advance, retreat, ac
 )
 
 class Establishments extends Component {
+  otherEstablishments = castArray(this.props.values['other-establishments-list']);
+
+  // if no additional establishments were selected, don't try and use
+  // the currently saved establishments as they won't be valid any more
+  items = !this.otherEstablishments.length
+    ? []
+    : (this.props.values.establishments || this.otherEstablishments.map(name => ({ name })))
+    .filter(item => this.otherEstablishments.includes(item.name));
+
   state = {
     active: this.props.active || 0,
-    items: (this.props.values.establishments || castArray(this.props.values['other-establishments-list']).map(name => ({ name })))
-      .filter(item => this.props.values['other-establishments-list'].includes(item.name))
+    items: this.items
   }
 
   advance = () => {
@@ -55,12 +63,25 @@ class Establishments extends Component {
   render() {
     const { save, ...props } = this.props;
     const { items, active } = this.state;
+
+    if (!items.length) {
+      return (
+        <Fragment>
+          <h2>Please select at least one additional establishment from the list.</h2>
+          <button onClick={() => this.retreat()} className="govuk-button button-secondary">Back</button>
+        </Fragment>
+      );
+    }
+
     return (
-      <Repeater
-        items={items}
-        addAnother={false}
-        onSave={establishments => save({ establishments })}
-      >
+<Repeater
+  items={items}
+  addAnother={false}
+  onSave={establishments => {
+    console.log(establishments);
+    return save({ establishments });
+  }}
+>
         <Establishment
           { ...props }
           active={active}
