@@ -212,7 +212,11 @@ export default {
                       type: 'checkbox',
                       className: 'smaller',
                       optionsFromSettings: 'establishments',
-                      without: 'primary-establishment'
+                      without: 'primary-establishment',
+                      fallbackLink: {
+                        url: '/settings',
+                        label: 'Please add another establishment'
+                      }
                     }
                   },
                   {
