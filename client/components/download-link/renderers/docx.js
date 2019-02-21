@@ -217,6 +217,8 @@ const renderSpeciesSelector = (doc, values, value) => {
 };
 
 const renderSelector = (doc, value) => {
+  value = Array.isArray(value) ? value : [value];
+
   value.map(item => {
     let text = new TextRun(item).size(24);
     const paragraph = new Paragraph();
