@@ -35,7 +35,7 @@ class Establishments extends Component {
   items = !this.otherEstablishments.length
     ? []
     : (this.props.values.establishments || this.otherEstablishments.map(name => ({ name })))
-    .filter(item => this.otherEstablishments.includes(item.name));
+      .filter(item => this.otherEstablishments.includes(item.name));
 
   state = {
     active: this.props.active || 0,
@@ -74,14 +74,14 @@ class Establishments extends Component {
     }
 
     return (
-<Repeater
-  items={items}
-  addAnother={false}
-  onSave={establishments => {
-    console.log(establishments);
-    return save({ establishments });
-  }}
->
+      <Repeater
+        items={items}
+        addAnother={false}
+        onSave={establishments => {
+          console.log(establishments);
+          return save({ establishments });
+        }}
+      >
         <Establishment
           { ...props }
           active={active}
