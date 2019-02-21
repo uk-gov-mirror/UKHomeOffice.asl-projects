@@ -56,10 +56,12 @@ class ProtocolSections extends Component {
               <span className="larger">{index + 1}. </span>{values.title}
             </h2>
             <a href="#" className="inline-block" onClick={this.toggleActive}>Edit title</a>
-            <dl className="inline">
-              <dt>Severity category: </dt>
-              <dd className="grey">{ severityOption ? severityOption.label : 'Not set' }</dd>
-            </dl>
+            { severityOption &&
+              <dl className="inline">
+                <dt>Severity category: </dt>
+                <dd className="grey">{severityOption.label}</dd>
+              </dl>
+            }
           </Completable>
           <div>
             <Sections
