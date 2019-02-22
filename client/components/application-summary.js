@@ -89,7 +89,11 @@ class ApplicationSummary extends React.Component {
                     const subsection = section.subsections[key];
                     return <tr key={key}>
                       <td><Link to={`/${key}`}>{ subsection.title }</Link></td>
-                      <td>{ this.completeBadge(this.complete(subsection, key)) }</td>
+                      {
+                        !this.props.readonly
+                          ? <td>{ this.completeBadge(this.complete(subsection, key)) }</td>
+                          : <td></td>
+                      }
                     </tr>
                   })
                 }
@@ -98,13 +102,17 @@ class ApplicationSummary extends React.Component {
             </Fragment>
           })
         }
-        <Fragment>
-          <p>All sections must be marked as complete before you can continue and send your application to the Home Office.</p>
-          <Button
-            disabled={!this.isCompleted()}
-            onClick={this.props.onComplete}
-          >Continue</Button>
-        </Fragment>
+        {
+          !this.props.readonly && (
+            <Fragment>
+              <p>All sections must be marked as complete before you can continue and send your application to the Home Office.</p>
+              <Button
+                disabled={!this.isCompleted()}
+                onClick={this.props.onComplete}
+              >Continue</Button>
+            </Fragment>
+          )
+        }
       </Fragment>
     )
   }
