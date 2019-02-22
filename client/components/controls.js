@@ -7,7 +7,7 @@ export default ({
   continueDisabled = false,
   exitDisabled = false,
   advanceLabel = 'Continue',
-  exitLabel = 'Cancel'
+  exitLabel = 'List of sections'
 }) => (
   <p className="control-panel">
     <Button disabled={continueDisabled} onClick={onContinue}>{advanceLabel}</Button>
