@@ -50,6 +50,7 @@ class ExpandingPanel extends Component {
   }
 
   render() {
+    const { children, scrollToActive } = this.props;
     return (
       <section className={classnames('expanding-panel', { open: this.isOpen() }, this.props.className)}>
         <header onClick={() => this.toggle()}>
@@ -57,7 +58,9 @@ class ExpandingPanel extends Component {
         </header>
         <div className={classnames('content', { hidden: !this.isOpen() })}>
           {
-            React.Children.map(this.props.children, child => React.cloneElement(child, { ...this.props, scrollToTop: this.scrollToTop }))
+            scrollToActive
+              ? React.Children.map(children, child => React.cloneElement(child, { ...this.props, scrollToTop: this.scrollToTop }))
+              : children
           }
         </div>
       </section>

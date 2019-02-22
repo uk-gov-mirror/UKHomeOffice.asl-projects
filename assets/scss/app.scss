@@ -6,14 +6,13 @@ $assetPath: '/public';
 @import "@ukhomeoffice/frontend-toolkit/assets/styles/components/phase-banner";
 @import "@ukhomeoffice/frontend-toolkit/assets/styles/components/button";
 @import "@ukhomeoffice/frontend-toolkit/assets/styles/components/table";
-@import "./editor";
 
+@import "editor";
 @import "images";
 
 #ppl-drafting-tool {
   .flex {
     display: flex;
-
 
     .grow {
       flex-grow: 1;
@@ -680,5 +679,52 @@ $assetPath: '/public';
 
   .add-more-animals {
     margin-bottom: $govuk-gutter;
+  }
+
+  .sidebar-nav.section-nav {
+    border-top: none;
+
+    .sections-link {
+      position: static;
+      margin-bottom: 0;
+    }
+
+    .expanding-panel {
+      header {
+        background: $white;
+        padding-left: $govuk-gutter-half;
+        user-select: none;
+
+        h3:after {
+          content: '►';
+          font-size: 0.75em;
+          background-image: none;
+        }
+      }
+
+      .content {
+        padding: 0;
+        padding-left: $govuk-gutter-half;
+      }
+
+      &.open {
+        header {
+          background-color: $blue;
+
+          h3 {
+            color: $white;
+
+            &:hover {
+              color: $light-grey;
+            }
+
+            &:after {
+              content: '▼'
+            }
+          }
+        }
+      }
+    }
+
   }
 }
