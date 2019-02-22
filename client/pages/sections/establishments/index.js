@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
-import castArray from 'lodash/castArray';
-
 import Repeater from '../../../components/repeater';
 import Fieldset from '../../../components/fieldset';
 import Controls from '../../../components/controls';
@@ -30,12 +28,10 @@ const Establishment = ({ index, fields, updateItem, values, advance, retreat, ac
 class Establishments extends Component {
   state = {
     active: this.props.active || 0,
-    items: (this.props.values.establishments || castArray(this.props.values['other-establishments-list']).map(name => ({ name })))
-      .filter(item => this.props.values['other-establishments-list'].includes(item.name))
   }
 
   advance = () => {
-    if (this.state.active >= this.state.items.length - 1) {
+    if (this.state.active >= (this.props.project.establishments || []).length - 1) {
       return this.props.advance()
     }
     this.setState({
@@ -53,8 +49,11 @@ class Establishments extends Component {
   }
 
   render() {
-    const { save, ...props } = this.props;
-    const { items, active } = this.state;
+    const { save, project, ...props } = this.props;
+    const { active } = this.state;
+
+    const items = project.establishments || project['other-establishments-list'].map(name => ({ name }))
+
     return (
       <Repeater
         items={items}
@@ -62,7 +61,7 @@ class Establishments extends Component {
         onSave={establishments => save({ establishments })}
       >
         <Establishment
-          { ...props }
+          fields={props.fields}
           active={active}
           advance={this.advance}
           retreat={this.retreat}

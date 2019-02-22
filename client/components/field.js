@@ -69,6 +69,10 @@ class Field extends Component {
       options = without(options, this.props.values[this.props.without]);
     }
 
+    if (options && options.length < 1 && this.props.fallbackLink) {
+      return <a href={this.props.fallbackLink.url}>{this.props.fallbackLink.label}</a>
+    }
+
     if (this.props.type === 'animal-quantities') {
       return <AnimalQuantities
         label={ this.props.label }

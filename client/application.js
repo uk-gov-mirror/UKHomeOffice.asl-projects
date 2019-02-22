@@ -212,7 +212,11 @@ export default {
                       type: 'checkbox',
                       className: 'smaller',
                       optionsFromSettings: 'establishments',
-                      without: 'primary-establishment'
+                      without: 'primary-establishment',
+                      fallbackLink: {
+                        url: '/settings',
+                        label: 'Please add another establishment'
+                      }
                     }
                   },
                   {
@@ -224,7 +228,7 @@ export default {
             ]
           },
           {
-            show: values => values['other-establishments'] === true,
+            show: values => values['other-establishments'] === true && values['other-establishments-list'] && values['other-establishments-list'].length,
             component: Establishments,
             name: 'establishments',
             fields: [
