@@ -28,26 +28,12 @@ const Establishment = ({ index, fields, updateItem, values, advance, retreat, ac
 )
 
 class Establishments extends Component {
-  constructor(props) {
-    super(props);
-
-    this.otherEstablishments = castArray(this.props.project['other-establishments-list']);
-
-    // if no additional establishments were selected, don't try and use
-    // the currently saved establishments as they won't be valid any more
-    this.items = !this.otherEstablishments.length
-      ? []
-      : (this.props.project.establishments || this.otherEstablishments.map(name => ({ name })))
-        .filter(item => this.otherEstablishments.includes(item.name));
-
-    this.state = {
-      active: this.props.active || 0,
-      items: this.items
-    }
+  state = {
+    active: this.props.active || 0,
   }
 
   advance = () => {
-    if (this.state.active >= this.state.items.length - 1) {
+    if (this.state.active >= (this.props.project.establishments || []).length - 1) {
       return this.props.advance()
     }
     this.setState({
@@ -65,17 +51,10 @@ class Establishments extends Component {
   }
 
   render() {
-    const { save, ...props } = this.props;
-    const { items, active } = this.state;
+    const { save, project, ...props } = this.props;
+    const { active } = this.state;
 
-    if (!items.length) {
-      return (
-        <Fragment>
-          <h2>Please select at least one additional establishment from the list.</h2>
-          <button onClick={() => this.retreat()} className="govuk-button button-secondary">Back</button>
-        </Fragment>
-      );
-    }
+    const items = project.establishments || project['other-establishments-list'].map(name => ({ name }))
 
     return (
       <Repeater
@@ -84,7 +63,7 @@ class Establishments extends Component {
         onSave={establishments => save({ establishments })}
       >
         <Establishment
-          { ...props }
+          fields={props.fields}
           active={active}
           advance={this.advance}
           retreat={this.retreat}

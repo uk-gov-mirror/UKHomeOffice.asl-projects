@@ -228,7 +228,7 @@ export default {
             ]
           },
           {
-            show: values => values['other-establishments'] === true,
+            show: values => values['other-establishments'] === true && values['other-establishments-list'] && values['other-establishments-list'].length,
             component: Establishments,
             name: 'establishments',
             fields: [
