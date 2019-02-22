@@ -31,13 +31,13 @@ class Establishments extends Component {
   constructor(props) {
     super(props);
 
-    this.otherEstablishments = castArray(this.props.values['other-establishments-list']);
+    this.otherEstablishments = castArray(this.props.project['other-establishments-list']);
 
     // if no additional establishments were selected, don't try and use
     // the currently saved establishments as they won't be valid any more
     this.items = !this.otherEstablishments.length
       ? []
-      : (this.props.values.establishments || this.otherEstablishments.map(name => ({ name })))
+      : (this.props.project.establishments || this.otherEstablishments.map(name => ({ name })))
         .filter(item => this.otherEstablishments.includes(item.name));
 
     this.state = {
@@ -81,10 +81,7 @@ class Establishments extends Component {
       <Repeater
         items={items}
         addAnother={false}
-        onSave={establishments => {
-          console.log(establishments);
-          return save({ establishments });
-        }}
+        onSave={establishments => save({ establishments })}
       >
         <Establishment
           { ...props }
