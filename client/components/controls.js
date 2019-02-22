@@ -11,6 +11,8 @@ export default ({
 }) => (
   <p className="control-panel">
     <Button disabled={continueDisabled} onClick={onContinue}>{advanceLabel}</Button>
-    <a href="#" disabled={exitDisabled} onClick={onExit}>{exitLabel}</a>
+    { !exitDisabled &&
+      <a href="#" onClick={onExit}>{exitLabel}</a>
+    }
   </p>
 )

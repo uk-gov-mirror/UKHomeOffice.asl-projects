@@ -34,7 +34,7 @@ class Form extends Component {
           prefix={`${prefix}${name}-${index}-`}
           onFieldChange={(key, value) => updateItem({ [key]: value })}
         />
-        <Controls onContinue={toggleActive} onExit={exit} />
+        <Controls onContinue={toggleActive} onExit={exit} exitDisabled={true} />
       </div>
     );
   }
