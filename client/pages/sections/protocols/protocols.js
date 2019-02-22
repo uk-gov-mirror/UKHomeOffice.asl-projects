@@ -34,7 +34,7 @@ class Form extends Component {
           prefix={`${prefix}${name}-${index}-`}
           onFieldChange={(key, value) => updateItem({ [key]: value })}
         />
-        <Controls onContinue={toggleActive} onExit={exit} />
+        <Controls onContinue={toggleActive} onExit={exit} exitDisabled={true} />
       </div>
     );
   }
@@ -119,7 +119,7 @@ class Protocols extends Component {
         name="protocols"
         items={project.protocols}
         onSave={this.save}
-        addButtonBefore={true}
+        addButtonBefore={project.protocols && project.protocols.length > 0 && project.protocols[0].title}
         addButtonAfter={true}
         onAfterAdd={() => {
           window.scrollTo({
