@@ -69,11 +69,11 @@ class Settings extends Component {
                   onChange={value => this.onChange(index, value)}
                 />
               </div>
-              <Button className="shrink" onClick={() => this.remove(index)}>Remove</Button>
+              <Button className="shrink button-secondary" onClick={() => this.remove(index)}>Remove</Button>
             </div>
           ))
         }
-        <Button className="button-secondary" onClick={this.addEstablishment}>Add establishment</Button>
+        <Button className="button-secondary" onClick={this.addEstablishment}>Add another</Button>
         <Controls
           onContinue={this.save}
           continueDisabled={!compact(this.state.establishments).length}

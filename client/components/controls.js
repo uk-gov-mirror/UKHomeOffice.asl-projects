@@ -6,12 +6,11 @@ export default ({
   onExit,
   continueDisabled = false,
   exitDisabled = false,
-  advanceLabel = 'Save and continue',
-  exitLabel = 'Save and exit',
-  exitClassName = 'button-secondary'
+  advanceLabel = 'Continue',
+  exitLabel = 'Cancel'
 }) => (
   <p className="control-panel">
     <Button disabled={continueDisabled} onClick={onContinue}>{advanceLabel}</Button>
-    <Button disabled={exitDisabled} onClick={onExit} className={exitClassName}>{exitLabel}</Button>
+    <a href="#" disabled={exitDisabled} onClick={onExit}>{exitLabel}</a>
   </p>
 )
