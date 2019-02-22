@@ -4,15 +4,20 @@ import { connect } from 'react-redux';
 import Banner from '../../../components/banner';
 import Review from '../../../components/review';
 
-const ReviewSection = ({ title, fields, values }) => (
+const ReviewSection = ({ title, fields, values, readonly }) => (
   <Fragment>
-    <Banner>
-      <h2>Please review your answers for:</h2>
-      <h1>{ title }</h1>
-    </Banner>
+    {
+      !readonly && (
+        <Banner>
+          <h2>Please review your answers for:</h2>
+          <h1>{ title }</h1>
+        </Banner>
+      )
+    }
     <Review
       {...fields.find(f => f.name === 'poles')}
       value={values.poles}
+      readonly={readonly}
       editLink="/poles/0#poles"
     />
     {
@@ -21,6 +26,7 @@ const ReviewSection = ({ title, fields, values }) => (
           <Review
             {...fields.find(f => f.name === 'poles').options[0].reveal}
             value={values['poles-justification']}
+            readonly={readonly}
             editLink="/poles/0#poles-justification"
           />
           {
@@ -31,11 +37,13 @@ const ReviewSection = ({ title, fields, values }) => (
                   <Review
                     {...fields.find(f => f.name === 'title')}
                     value={pole.title}
+                    readonly={readonly}
                     editLink="/poles/1#title"
                   />
                   <Review
                     {...fields.find(f => f.name === 'pole-info')}
                     value={pole['pole-info']}
+                    readonly={readonly}
                     editLink="/poles/1#pole-info"
                   />
                 </div>
@@ -45,11 +53,13 @@ const ReviewSection = ({ title, fields, values }) => (
           <Review
             {...fields.find(f => f.name === 'poles-inspection')}
             value={values['poles-inspection']}
+            readonly={readonly}
             editLink="/poles/2#poles-inspection"
           />
           <Review
             {...fields.find(f => f.name === 'poles-transfer')}
             value={values['poles-transfer']}
+            readonly={readonly}
             editLink="/poles/2#poles-transfer"
           />
           {
@@ -58,6 +68,7 @@ const ReviewSection = ({ title, fields, values }) => (
                 key={index}
                 {...field}
                 value={values[field.name]}
+                readonly={readonly}
                 editLink={`/poles/2#${field.name}`}
               />
             ))
