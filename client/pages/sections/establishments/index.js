@@ -1,7 +1,5 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import classnames from 'classnames';
-import castArray from 'lodash/castArray';
-
 import Repeater from '../../../components/repeater';
 import Fieldset from '../../../components/fieldset';
 import Controls from '../../../components/controls';
