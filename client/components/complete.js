@@ -39,7 +39,7 @@ class Complete extends Component {
           value={this.state.checked}
           onChange={this.toggleChecked}
         />
-        <Button disabled={this.props.checkChanged && this.props.complete === this.state.checked} onClick={this.emitChange} className="button-secondary">Save and continue</Button>
+        <Button disabled={this.props.checkChanged && this.props.complete === this.state.checked} onClick={this.emitChange}>Continue</Button>
       </div>
     )
   }
