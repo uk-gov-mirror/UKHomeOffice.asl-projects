@@ -5,12 +5,12 @@ import ScrollToTop from './components/scroll-to-top';
 import Section from './pages/section';
 import Project from './pages/project';
 
-const ProjectRouter = ({ basename, onUpdate, onComplete }) => (
+const ProjectRouter = ({ basename, onUpdate, onComplete, readonly }) => (
   <BrowserRouter basename={basename}>
     <ScrollToTop>
       <Switch>
-        <Route path="/:section/:step?" render={ props => <Section { ...props} onUpdate={onUpdate} /> } />
-        <Route path="/" render={ props => <Project {...props} onComplete={onComplete} /> }  />
+        <Route path="/:section/:step?" render={ props => <Section { ...props} onUpdate={onUpdate} readonly={readonly} /> } />
+        <Route path="/" render={ props => <Project {...props} onComplete={onComplete} readonly={readonly} /> }  />
       </Switch>
     </ScrollToTop>
   </BrowserRouter>

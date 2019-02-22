@@ -8,13 +8,13 @@ import Alert from './components/alert';
 import ProjectRouter from './project-router';
 import configureStore from './store';
 
-const renderApp = ({ basename, onUpdate, onComplete }, initialState) => {
+const renderApp = ({ basename, onUpdate, onComplete, readonly }, initialState) => {
   const store = configureStore(initialState);
   render(
     <Provider store={store}>
       <React.Fragment>
         <Alert />
-        <ProjectRouter basename={basename} onUpdate={onUpdate} onComplete={onComplete} />
+        <ProjectRouter basename={basename} onUpdate={onUpdate} onComplete={onComplete} readonly={readonly} />
       </React.Fragment>
     </Provider>,
     document.getElementById('ppl-drafting-tool')
