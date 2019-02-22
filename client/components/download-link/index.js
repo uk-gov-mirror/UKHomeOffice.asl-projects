@@ -4,8 +4,8 @@ import classnames from 'classnames';
 import docxRenderer from './renderers/docx';
 import pplRenderer from './renderers/ppl';
 
-const mapStateToProps = (state) => {
-  const project = state.project;
+const mapStateToProps = (state, props) => {
+  const project = state.project || state.projects.find(project => project.id === props.project);
 
   return {
     values: project,
