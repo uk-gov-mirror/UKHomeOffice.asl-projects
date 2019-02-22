@@ -6,7 +6,11 @@ import ReviewFields from './review-fields';
 const StaticSection = ({ section, project, fields = [] }) => (
   <Fragment>
     <h1>{section.title}</h1>
-    <ReviewFields fields={fields} values={project} readonly={true} />
+    {
+      section.review
+        ? <section.review {...section} fields={fields} values={project} readonly={true} />
+        : <ReviewFields fields={fields} values={project} readonly={true} />
+    }
   </Fragment>
 )
 
