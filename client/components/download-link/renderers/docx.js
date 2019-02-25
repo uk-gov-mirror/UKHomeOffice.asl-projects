@@ -59,7 +59,7 @@ const renderTextEditor = (doc, value) => {
   const nodes = content.document.nodes;
   let text;
 
-  nodes.map(node => {
+  nodes.forEach(node => {
     switch (node.type) {
       case 'heading-one':
         doc.createParagraph(node.nodes[0].leaves[0].text.trim()).heading1();
@@ -79,7 +79,7 @@ const renderTextEditor = (doc, value) => {
         abstract.createLevel(0, 'decimal', '%2.', 'start');
         const concrete = numbering.createConcreteNumbering(abstract);
 
-        node.nodes.map(n => {
+        node.nodes.forEach(n => {
           // TODO: the item may have marks
           text = new TextRun(n.nodes[0].leaves[0].text.trim()).size(24);
           const paragraph = new Paragraph();
@@ -92,7 +92,7 @@ const renderTextEditor = (doc, value) => {
       }
 
       case 'bulleted-list':
-        node.nodes.map(n => {
+        node.nodes.forEach(n => {
           // TODO: the item may have marks
           text = new TextRun(n.nodes[0].leaves[0].text.trim()).size(24);
           const paragraph = new Paragraph();
@@ -103,7 +103,7 @@ const renderTextEditor = (doc, value) => {
         break;
 
       case 'paragraph':
-        node.nodes[0].leaves.map(leaf => {
+        node.nodes[0].leaves.forEach(leaf => {
           text = new TextRun(leaf.text.trim());
           if (text) {
             leaf.marks.forEach(mark => {
@@ -134,6 +134,8 @@ const renderTextEditor = (doc, value) => {
         break;
     }
   });
+
+  renderHorizontalRule(doc);
 };
 
 const renderRadio = (doc, field, values, value) => {
@@ -146,55 +148,17 @@ const renderRadio = (doc, field, values, value) => {
   const label = option ? option.label : value;
   doc.createParagraph(label).style('body');
 
+  renderHorizontalRule(doc);
+
   if (option && option.reveal) {
-    const reveals = !Array.isArray(option.reveal) ? [option.reveal] : option.reveal;
-
-    reveals.map(reveal => {
-      const revealValue = values[reveal.name];
-
-      if (revealValue) {
-        renderHorizontalRule(doc);
-
-        let text;
-        let paragraph = new Paragraph();
-        paragraph.style('body');
-        doc.createParagraph(reveal.label).heading3();
-
-        switch (reveal.type) {
-          case 'radio':
-          case 'checkbox':
-          case 'species-selector':
-            if (reveal.options) {
-              let revealOption = reveal.options.find(r => r.value === revealValue);
-              if(revealOption) {
-                text = new TextRun(revealOption.label);
-              }
-            } else {
-              revealValue.map(v => {
-                text = new TextRun(v);
-                paragraph.bullet();
-              });
-            }
-            paragraph.addRun(text);
-            doc.addParagraph(paragraph);
-            break;
-
-          case 'texteditor':
-            renderTextEditor(doc, revealValue);
-            break;
-
-          default:
-            break;
-        }
-      }
-    });
+    [].concat(option.reveal).forEach(reveal => renderField(doc, reveal, values));
   }
 };
 
 const renderSpeciesSelector = (doc, values, value) => {
-  value.map(specie => {
+  value.forEach(species => {
     let text = new TextRun(
-      flatten(Object.values(SPECIES)).find(s => s.value === specie).label
+      flatten(Object.values(SPECIES)).find(s => s.value === species).label
     ).size(24);
 
     const paragraph = new Paragraph();
@@ -206,7 +170,7 @@ const renderSpeciesSelector = (doc, values, value) => {
   const otherSpecies = values['species-other'];
 
   if (otherSpecies) {
-    otherSpecies.map(s => {
+    otherSpecies.forEach(s => {
       let text = new TextRun(s).size(24);
       const paragraph = new Paragraph();
       paragraph.style('body').bullet();
@@ -214,18 +178,22 @@ const renderSpeciesSelector = (doc, values, value) => {
       doc.addParagraph(paragraph);
     });
   }
+
+  renderHorizontalRule(doc);
 };
 
 const renderSelector = (doc, value) => {
   value = Array.isArray(value) ? value : [value];
 
-  value.map(item => {
+  value.forEach(item => {
     let text = new TextRun(item).size(24);
     const paragraph = new Paragraph();
     paragraph.style('body').bullet();
     paragraph.addRun(text);
     doc.addParagraph(paragraph);
   });
+
+  renderHorizontalRule(doc);
 };
 
 const renderText = (doc, value) => {
@@ -236,6 +204,12 @@ const renderText = (doc, value) => {
   } else {
     doc.createParagraph(value).style('body');
   }
+
+  renderHorizontalRule(doc);
+};
+
+const renderDeclaration = (/*doc, field, values, value*/) => {
+  return;
 };
 
 const renderDuration = (doc, value) => {
@@ -250,6 +224,11 @@ const renderHorizontalRule = doc => {
 
 const renderField = (doc, field, values) => {
   const value = values[field.name];
+
+  if (!field.label && field.type === 'checkbox' && field.name.includes('declaration')) {
+    return renderDeclaration(doc, field, values, value);
+  }
+
   doc.createParagraph(field.label).heading3();
 
   if (isUndefined(value) || isNull(value)) {
@@ -290,19 +269,18 @@ const renderField = (doc, field, values) => {
       break;
   }
 
-  renderHorizontalRule(doc);
 };
 
 const renderFields = (doc, subsection, values) => {
   const fields = (subsection.steps) ? subsection.steps : [{ 'fields': subsection.fields }];
 
-  fields.map(step => {
+  fields.forEach(step => {
     if (step.name === 'polesList' || step.name === 'establishments' || step.name === 'objectives') {
-      (values[step.name] || []).map(v => {
-        step.fields.map(field => renderField(doc, field, v));
+      (values[step.name] || []).forEach(v => {
+        step.fields.forEach(field => renderField(doc, field, v));
       });
     } else {
-      step.fields.map(field => renderField(doc, field, values));
+      step.fields.forEach(field => renderField(doc, field, values));
     }
   });
 }
@@ -311,13 +289,13 @@ const renderProtocol = (doc, protocolSection, protocolValues) => {
   doc.createParagraph(protocolSection.title).heading2();
 
   if (protocolSection.name === 'protocolSteps') {
-    (protocolValues.steps || []).map(stepValues => {
+    (protocolValues.steps || []).forEach(stepValues => {
       renderFields(doc, protocolSection, stepValues);
     });
   } else if (protocolSection.name === 'protocolExperience') {
     Object.values(protocolSection)
       .filter((e) => { return e instanceof Object; })
-      .map(s => {
+      .forEach(s => {
         renderFields(doc, s, protocolValues);
       });
   } else {
@@ -328,10 +306,10 @@ const renderProtocol = (doc, protocolSection, protocolValues) => {
 const renderProtocolsSection = (doc, subsection, values) => {
   renderFields(doc, subsection.setup, values);
 
-  (values['protocols'] || []).map(protocolValues => {
+  (values['protocols'] || []).forEach(protocolValues => {
     renderField(doc, subsection.fields[0], protocolValues);
 
-    Object.values(subsection.sections).map(
+    Object.values(subsection.sections).forEach(
       protocolSection => renderProtocol(doc, protocolSection, protocolValues)
     );
   });
@@ -358,7 +336,7 @@ const renderSubsection = (doc, subsection, values) => {
 };
 
 const renderSection = (doc, section, values) => {
-  Object.values(section.subsections).map(
+  Object.values(section.subsections).forEach(
     subsection => renderSubsection(doc, subsection, values)
   );
 };
@@ -368,7 +346,7 @@ const renderDocument = (doc, sections, values) => {
 
   sections = sections.filter(s => s.name !== 'nts');
 
-  sections.map(section => {
+  sections.forEach(section => {
     renderSection(doc, section, values);
   });
 
