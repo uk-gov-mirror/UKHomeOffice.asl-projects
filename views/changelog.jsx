@@ -14,6 +14,11 @@ class Index extends React.Component {
             <li>Add call to action on non-technical summary review page</li>
           </ul>
 
+          <h2>Version 1.6.0</h2>
+          <ul>
+            <li>Fix issue with other species not showing in Word export</li>
+          </ul>
+
           <p><a href="/">Return to project list</a></p>
         </div>
       </main>
