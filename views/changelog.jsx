@@ -9,17 +9,13 @@ class Index extends React.Component {
         <div className="govuk-width-container">
           <h1>Changelog</h1>
 
-          <h2>Version 1.6.0</h2>
+          <h2>Version [next] - XXth March 2019</h2>
           <ul>
             <li>Fix issue with other species not showing in Word export</li>
-          </ul>
-
-          <h2>Version 1.6.0</h2>
-          <ul>
             <li>Fix issue with protocol species questions not appearing in Word export</li>
           </ul>
 
-          <h2>Version 1.6.0</h2>
+          <h2>Version 1.6.0 - 26th February 2019</h2>
           <ul>
             <li>Fix issue with certain questions not being included in Word export</li>
             <li>Add call to action on non-technical summary review page</li>
