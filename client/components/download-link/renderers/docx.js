@@ -1,6 +1,6 @@
 import saveAs from 'file-saver';
 import { Document, Packer, Paragraph, TextRun, Numbering } from '@joefitter/docx';
-import { flatten, isUndefined, isNull } from 'lodash';
+import { flatten, isUndefined, isNull, map } from 'lodash';
 import SPECIES from '../../../constants/species';
 
 // 600px seems to be roughly 100% page width (inside the margins)
@@ -271,10 +271,14 @@ const renderField = (doc, field, values) => {
 
 };
 
-const renderFields = (doc, subsection, values) => {
-  const fields = (subsection.steps) ? subsection.steps : [{ 'fields': subsection.fields }];
+const renderFields = (doc, subsection, values, fields) => {
+  if (fields) {
+    return fields.forEach(field => renderField(doc, field, values));
+  }
 
-  fields.forEach(step => {
+  const steps = (subsection.steps) ? subsection.steps : [{ 'fields': subsection.fields }];
+
+  steps.forEach(step => {
     if (step.name === 'polesList' || step.name === 'establishments' || step.name === 'objectives') {
       (values[step.name] || []).forEach(v => {
         step.fields.forEach(field => renderField(doc, field, v));
@@ -285,21 +289,27 @@ const renderFields = (doc, subsection, values) => {
   });
 }
 
-const renderProtocol = (doc, protocolSection, protocolValues) => {
-  doc.createParagraph(protocolSection.title).heading2();
+const renderProtocol = (doc, name, section, values) => {
+  doc.createParagraph(section.title).heading2();
 
-  if (protocolSection.name === 'protocolSteps') {
-    (protocolValues.steps || []).forEach(stepValues => {
-      renderFields(doc, protocolSection, stepValues);
-    });
-  } else if (protocolSection.name === 'protocolExperience') {
-    Object.values(protocolSection)
-      .filter((e) => { return e instanceof Object; })
-      .forEach(s => {
-        renderFields(doc, s, protocolValues);
+  switch (name) {
+    case 'steps':
+      return (values.steps || []).forEach(stepValues => {
+        renderFields(doc, section, stepValues);
       });
-  } else {
-    renderFields(doc, protocolSection, protocolValues);
+    case 'experience':
+      return Object.values(section)
+        .filter((e) => { return e instanceof Object; })
+        .forEach(s => {
+          renderFields(doc, s, values);
+        });
+    case 'animals':
+      return (values.speciesDetails || []).forEach(speciesValues => {
+        doc.createParagraph(speciesValues.name).heading2();
+        renderFields(doc, section, speciesValues, section.fields.filter(f => f.name !== 'species'));
+      });
+    default:
+      return renderFields(doc, section, values);
   }
 };
 
@@ -309,9 +319,7 @@ const renderProtocolsSection = (doc, subsection, values) => {
   (values['protocols'] || []).forEach(protocolValues => {
     renderField(doc, subsection.fields[0], protocolValues);
 
-    Object.values(subsection.sections).forEach(
-      protocolSection => renderProtocol(doc, protocolSection, protocolValues)
-    );
+    map(subsection.sections, (section, name) => renderProtocol(doc, name, section, protocolValues))
   });
 };
 

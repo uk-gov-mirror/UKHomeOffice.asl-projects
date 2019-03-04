@@ -1034,7 +1034,6 @@ export default {
           },
           steps: {
             title: 'Steps',
-            name: 'protocolSteps',
             hint: 'A step can be a single procedure or a combination of procedures to achieve an outcome. You will be able to reorder your steps at any time before you send your application to the Home Office.',
             footer: 'Once you’ve created a list of steps, you need to add information about adverse effects, controls and limitations, and humane endpoints to each one.​',
             fields: [
@@ -1142,7 +1141,6 @@ export default {
           },
           experience: {
             title: 'Animal experience',
-            name: 'protocolExperience',
             typical: {
               title: 'Typical experience',
               fields: [
