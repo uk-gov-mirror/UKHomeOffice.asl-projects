@@ -10,6 +10,11 @@ class Index extends React.Component {
           <h1>Changelog</h1>
           <h2>Version 1.6.0</h2>
           <ul>
+            <li>Fix issue with protocol species questions not appearing in Word export</li>
+          </ul>
+
+          <h2>Version 1.6.0</h2>
+          <ul>
             <li>Fix issue with certain questions not being included in Word export</li>
             <li>Add call to action on non-technical summary review page</li>
           </ul>
