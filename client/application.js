@@ -1534,7 +1534,7 @@ export default {
                             label: 'Yes',
                             value: true,
                             reveal: {
-                              name: 'non-target-species-capture-methods',
+                              name: 'non-target-species-capture-methods-minimise-suffering',
                               label: 'How will you manage this to minimise the suffering for the animal?',
                               type: 'texteditor'
                             }
