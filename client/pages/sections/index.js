@@ -97,9 +97,26 @@ class Review extends Component {
   }
 
   render = () => {
-    const { retreat, steps, fields, ...props } = this.props;
+    const { retreat, steps, fields, values, ...props } = this.props;
     const ReviewComponent = props.review || ReviewSection;
-    const reviewFields = steps ? flatten(steps.filter(s => !s.repeat).map(s => s.fields)) : fields
+    let reviewFields = fields;
+
+    if (steps) {
+      reviewFields = flatten(
+        steps.filter(s => {
+          if (s.repeat) {
+            return false;
+          }
+
+          if (s.show) {
+            return s.show(values);
+          }
+
+          return true;
+        }).map(s => s.fields)
+      );
+    }
+
     return (
       <Fragment>
         <ReviewComponent
