@@ -1390,10 +1390,6 @@ export default {
             className: 'smaller',
             options: [
               {
-                label: 'No',
-                value: false
-              },
-              {
                 label: 'Yes',
                 value: true,
                 reveal: {
@@ -1401,6 +1397,10 @@ export default {
                   label: 'Why can\'t you achieve your objectives without using wild-caught primates?',
                   type: 'texteditor'
                 }
+              },
+              {
+                label: 'No',
+                value: false
               }
             ]
           },
@@ -1531,10 +1531,6 @@ export default {
                         className: 'smaller',
                         options: [
                           {
-                            label: 'No',
-                            value: false
-                          },
-                          {
                             label: 'Yes',
                             value: true,
                             reveal: {
@@ -1542,6 +1538,10 @@ export default {
                               label: 'How will you manage this to minimise the suffering for the animal?',
                               type: 'texteditor'
                             }
+                          },
+                          {
+                            label: 'No',
+                            value: false
                           }
                         ]
                       },
