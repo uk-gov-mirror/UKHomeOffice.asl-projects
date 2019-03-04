@@ -156,28 +156,31 @@ const renderRadio = (doc, field, values, value) => {
 };
 
 const renderSpeciesSelector = (doc, values, value) => {
+  const other = values['species-other'] || [];
+  value = value || [];
+  value = flatten([
+    ...value.map(val => {
+      if (val.indexOf('other') > -1) {
+        return values[`species-${val}`];
+      }
+      return val;
+    }),
+    ...other
+  ]);
+
+  if (!value.lenth) {
+    return renderNull(doc);
+  }
+
   value.forEach(species => {
-    let text = new TextRun(
-      flatten(Object.values(SPECIES)).find(s => s.value === species).label
-    ).size(24);
+    const item = flatten(Object.values(SPECIES)).find(s => s.value === species)
+    let text = new TextRun(item ? item.label : species).size(24);
 
     const paragraph = new Paragraph();
     paragraph.style('body').bullet();
     paragraph.addRun(text);
     doc.addParagraph(paragraph);
   });
-
-  const otherSpecies = values['species-other'];
-
-  if (otherSpecies) {
-    otherSpecies.forEach(s => {
-      let text = new TextRun(s).size(24);
-      const paragraph = new Paragraph();
-      paragraph.style('body').bullet();
-      paragraph.addRun(text);
-      doc.addParagraph(paragraph);
-    });
-  }
 
   renderHorizontalRule(doc);
 };
@@ -218,6 +221,15 @@ const renderDuration = (doc, value) => {
   doc.createParagraph(`${value.years} ${years} ${value.months} ${months}`).style('body');
 };
 
+const renderNull = doc => {
+  const paragraph = new Paragraph();
+  paragraph.style('body');
+  paragraph.addRun(new TextRun('No answer provided').italics());
+  doc.addParagraph(paragraph);
+  renderHorizontalRule(doc);
+  return;
+}
+
 const renderHorizontalRule = doc => {
   doc.createParagraph('___________________________________________________________________');
 };
@@ -231,22 +243,17 @@ const renderField = (doc, field, values) => {
 
   doc.createParagraph(field.label).heading3();
 
+  if (field.type === 'species-selector') {
+    return renderSpeciesSelector(doc, values, value);
+  }
+
   if (isUndefined(value) || isNull(value)) {
-    const paragraph = new Paragraph();
-    paragraph.style('body');
-    paragraph.addRun(new TextRun('No answer provided').italics());
-    doc.addParagraph(paragraph);
-    renderHorizontalRule(doc);
-    return;
+    return renderNull(doc);
   }
 
   switch (field.type) {
     case 'radio':
       renderRadio(doc, field, values, value);
-      break;
-
-    case 'species-selector':
-      renderSpeciesSelector(doc, values, value);
       break;
 
     case 'location-selector':
