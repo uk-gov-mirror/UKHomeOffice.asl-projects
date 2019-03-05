@@ -11,9 +11,10 @@ class Index extends React.Component {
 
           <h2>Version [next] - XXth March 2019</h2>
           <ul>
-            <li>Fix issue with other species not showing in Word export</li>
-            <li>Fix issue with protocol species questions not appearing in Word export</li>
-            <li>Fix issue with &quot;minimise the suffering&quot; text-editor disappearing when given focus</li>
+            <li>Fixed: other species not showing in Word export</li>
+            <li>Fixed: protocol species questions not appearing in Word export</li>
+            <li>Fixed: &quot;minimise the suffering&quot; text-editor disappearing when given focus</li>
+            <li>Fixed: &quot;animals taken from the wild&quot; review page shows questions that were not asked</li>
           </ul>
 
           <h2>Version 1.6.0 - 26th February 2019</h2>
