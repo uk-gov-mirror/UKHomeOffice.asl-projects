@@ -9,7 +9,7 @@ class Index extends React.Component {
         <div className="govuk-width-container">
           <h1>Changelog</h1>
 
-          <h2>Version [next] - XXth March 2019</h2>
+          <h2>Version 1.6.1 - 5th March 2019</h2>
           <ul>
             <li>Fixed: other species not showing in Word export</li>
             <li>Fixed: protocol species questions not appearing in Word export</li>
@@ -19,8 +19,8 @@ class Index extends React.Component {
 
           <h2>Version 1.6.0 - 26th February 2019</h2>
           <ul>
-            <li>Fix issue with certain questions not being included in Word export</li>
-            <li>Add call to action on non-technical summary review page</li>
+            <li>Fixed: certain questions not being included in Word export</li>
+            <li>Feature: add call to action on non-technical summary review page</li>
           </ul>
           <p><a href="/">Return to project list</a></p>
         </div>
