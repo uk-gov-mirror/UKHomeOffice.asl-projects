@@ -848,7 +848,7 @@ export default {
                     reveal: {
                       name: 'continued-use-start',
                       label: 'How did these animals start their use?',
-                      hint: 'Describe that procedures that have been applied to animals that will continue their use on to this protocol.',
+                      hint: 'Describe the procedures that have been applied to animals that will continue their use on to this protocol.',
                       type: 'texteditor'
                     }
                   },
