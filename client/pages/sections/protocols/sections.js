@@ -18,8 +18,6 @@ const getSection = (section, props) => {
       return <Steps {...props} />
     case 'animals':
       return <Animals {...props} />
-    case 'experience':
-      return <Section { ...props } sections={{ typical: props.typical, maximal: props.maximal }} />
     default:
       return <Section {...props} />
   }

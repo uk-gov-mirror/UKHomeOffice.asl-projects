@@ -726,76 +726,6 @@ export default {
           }
           return PARTIALLY_COMPLETE;
         },
-        setup: {
-          fields: [{
-            name: 'gaas',
-            label: 'Will you use genetically-altered animals (GAAs) in this project?',
-            type: 'radio',
-            inline: true,
-            className: 'smaller',
-            options: [
-              {
-                label: 'Yes',
-                value: true,
-              },
-              {
-                label: 'No',
-                value: false
-              }
-            ]
-          },
-          {
-            name: 'quantitative',
-            label: 'Will this project generate quantitative data?',
-            type: 'radio',
-            inline: true,
-            className: 'smaller',
-            options: [
-              {
-                label: 'Yes',
-                value: true
-              },
-              {
-                label: 'No',
-                value: false
-              }
-            ]
-          },
-          {
-            name: 'anaesthesia',
-            label: 'Will you be using any form of anaesthesia during this project?',
-            type: 'radio',
-            inline: true,
-            className: 'smaller',
-            options: [
-              {
-                label: 'Yes',
-                value: true
-              },
-              {
-                label: 'No',
-                value: false
-              }
-            ]
-          },
-          {
-            name: 'substances',
-            label: 'Will you be administering substances for testing that will alter an animal\'s physiology during this project?',
-            type: 'radio',
-            inline: true,
-            className: 'smaller',
-            options: [
-              {
-                label: 'Yes',
-                value: true
-              },
-              {
-                label: 'No',
-                value: false
-              }
-            ]
-          }]
-        },
         fields: [
           {
             name: 'title',
@@ -862,40 +792,6 @@ export default {
               }
             ]
           },
-          quantitative: {
-            title: 'Quantitative data',
-            conditional: {
-              quantitative: true
-            },
-            fields: [
-              {
-                name: 'control-groups',
-                label: 'How will you use control groups?',
-                hint: 'Provide a robust scientific justification for controls with significant suffering such as sham surgery controls or untreated infected controls.',
-                type: 'texteditor'
-              },
-              {
-                name: 'randomised',
-                label: 'Will experiments and data analysis in this protocol be randomised or blinded? If so, how?​',
-                type: 'texteditor'
-              },
-              {
-                name: 'reproducibility',
-                label: 'How will you minimise variables to ensure reproducibility?',
-                type: 'texteditor'
-              },
-              {
-                name: 'control-groups-size',
-                label: 'How will you determine group sizes?',
-                type: 'texteditor'
-              },
-              {
-                name: 'maximize-effectiveness',
-                label: 'How will you maximise the data output from the animals you use in this protocol?​',
-                type: 'texteditor'
-              }
-            ]
-          },
           animals: {
             title: 'Animals used in this protocol',
             fields: [
@@ -941,13 +837,9 @@ export default {
                 ]
               },
               {
-                name: 'quantity',
-                label: 'How many of these animals will be used in this protocol?',
-                type: 'text'
-              },
-              {
                 name: 'continued-use',
-                label: 'Have any of these animals had procedures applied to them in preparation for their use in this protocol (continued use)?',
+                label: 'Will any animals coming on to this protocol be classed as ‘continued use’?',
+                hint: '‘Continued use’ describes animals that have had procedures applied to them in order to be used in a particular protocol. For example, genetically altered animals that have been bred for scientific use.',
                 type: 'radio',
                 options: [
                   {
@@ -955,8 +847,8 @@ export default {
                     value: true,
                     reveal: {
                       name: 'continued-use-sourced',
-                      label: 'Where will these animals be sourced from?',
-                      hint: 'This could be another protocol in this licence, another project licence, or somewhere else.',
+                      label: 'How did these animals start their use?',
+                      hint: 'Describe the procedures that have been applied to animals that will continue their use on to this protocol.',
                       type: 'texteditor'
                     }
                   },
@@ -969,8 +861,15 @@ export default {
                 className: 'smaller'
               },
               {
+                name: 'maximum-times-used',
+                label: 'What is the maximum number of times that this protocol will be used on this type of animal?',
+                hint: 'State the estimated number of animals that may go through this protocol more than once. You should consider both naïve and re-used animals in your answer.',
+                type: 'text'
+              },
+              {
                 name: 'reuse',
-                label: 'Have any of these animals been used in another protocol or project (re-use)?',
+                label: 'Will you be re-using animals on to this protocol?',
+                hint: '‘Re-use’ describes using animals again for a new experiment when you could equally use a naïve animal to get the same results.',
                 type: 'radio',
                 options: [
                   {
@@ -978,7 +877,7 @@ export default {
                     value: true,
                     reveal: {
                       name: 'reuse-details',
-                      label: 'Which protocols or projects?',
+                      label: 'Describe any procedure that may have been applied to these animals, and why you are choosing to re-use them.',
                       type: 'texteditor'
                     }
                   },
@@ -989,33 +888,56 @@ export default {
                 ],
                 inline: true,
                 className: 'smaller'
-              },
+              }
+            ]
+          },
+          gaas: {
+            title: 'Genetically altered animals (GAA)',
+            fields: [
               {
                 name: 'gaas',
-                label: 'Which general types or strains of genetically altered animals (GAAs) will you be using and why?​',
-                type: 'texteditor',
-                conditional: {
-                  gaas: true
-                }
-              },
-              {
-                name: 'gaas-welfare',
-                label: 'Do you expect any of these GAAs to show a harmful phenotype with welfare consequences?',
+                label: 'Will this protocol use any genetically altered animals?',
                 type: 'radio',
+                className: 'smaller',
+                inline: true,
                 options: [
                   {
                     label: 'Yes',
                     value: true,
                     reveal: [
                       {
-                        name: 'why',
-                        label: 'Why are each of these significant phenotypes scientifically necessary?',
+                        name: 'gaas-types',
+                        label: 'Which general types or strains will you be using and why?',
                         type: 'texteditor'
                       },
                       {
-                        name: 'how',
-                        label: 'How will you control the harms associated with these phenotypes?',
-                        type: 'texteditor'
+                        name: 'gaas-harmful',
+                        label: 'Do you expect any of these GAAs to show a harmful phenotype with welfare consequences?',
+                        type: 'radio',
+                        className: 'smaller',
+                        inline: true,
+                        options: [
+                          {
+                            label: 'Yes',
+                            value: true,
+                            reveal: [
+                              {
+                                name: 'gaas-harmful-justification',
+                                label: 'Why are each of these significant phenotypes scientifically necessary?',
+                                type: 'texteditor'
+                              },
+                              {
+                                name: 'gaas-harmful-control',
+                                label: 'How will you control the harms associated with these phenotypes?',
+                                type: 'texteditor'
+                              }
+                            ]
+                          },
+                          {
+                            label: 'No',
+                            value: false
+                          }
+                        ]
                       }
                     ]
                   },
@@ -1023,12 +945,7 @@ export default {
                     label: 'No',
                     value: false
                   }
-                ],
-                inline: true,
-                className: 'smaller',
-                conditional: {
-                  gaas: true
-                }
+                ]
               }
             ]
           },
@@ -1044,45 +961,32 @@ export default {
                 hint: 'To ensure that an adequate harm benefit assessment can be carried out, please provide a clear and explicit explanation of each step.'
               },
               {
-                name: 'anaesthesia',
-                label: 'Does this step involve the administration of anaesthesia?',
-                type: 'radio',
-                inline: true,
-                className: 'smaller',
+                name: 'code',
+                label: 'Select the anaesthetic code you intend to use.',
+                type: 'checkbox',
                 options: [
                   {
-                    label: 'Yes',
-                    value: true,
-                    reveal: {
-                      name: 'code',
-                      label: 'Select the anaesthetic code you intend to use.',
-                      type: 'checkbox',
-                      options: [
-                        {
-                          label: 'AB (general anaesthesia with recovery)',
-                          value: 'ab'
-                        },
-                        {
-                          label: 'AB-L (local anaesthesia)',
-                          value: 'abl'
-                        },
-                        {
-                          label: 'AC (non-recovery general anaesthesia)​',
-                          value: 'ac'
-                        },
-                        {
-                          label: 'AD (neuromuscular blocking agent)',
-                          value: 'ad'
-                        }
-                      ],
-                      className: 'smaller'
-                    }
+                    label: 'AA (no anaesthesia)',
+                    value: 'aa'
                   },
                   {
-                    label: 'No',
-                    value: false
+                    label: 'AB (general anaesthesia with recovery)',
+                    value: 'ab'
+                  },
+                  {
+                    label: 'AB-L (local anaesthesia)',
+                    value: 'abl'
+                  },
+                  {
+                    label: 'AC (non-recovery general anaesthesia)​',
+                    value: 'ac'
+                  },
+                  {
+                    label: 'AD (neuromuscular blocking agent)',
+                    value: 'ad'
                   }
-                ]
+                ],
+                className: 'smaller'
               },
               {
                 name: 'optional',
@@ -1127,6 +1031,7 @@ export default {
                       {
                         name: 'endpoints',
                         label: 'What are the humane endpoints for this step?',
+                        hint: 'This would be the point at which you would kill the animal to prevent further suffering.',
                         type: 'texteditor'
                       }
                     ]
@@ -1141,51 +1046,125 @@ export default {
           },
           experience: {
             title: 'Animal experience',
-            typical: {
-              title: 'Typical experience',
-              fields: [
-                {
-                  name: 'typical-steps',
-                  label: 'Describe the typical series of steps that an animal will experience during this protocol.​',
-                  type: 'texteditor'
-                },
-                {
-                  name: 'typical-effects',
-                  label: 'If an animal experiences this typical series of steps, what cumulative impacts or adverse effects do you anticipate?',
-                  hint: 'Examples may include pain, inactivity, or abnormal behaviour. You should also state the estimated duration of these effects on an animal.',
-                  type: 'texteditor'
-                },
-                {
-                  name: 'typical-percentage',
-                  label: 'How many animals used in this protocol do you estimate will experience this typical series of steps?',
-                  hint: 'If you’re unable to estimate a single percentage, enter a percentage range (for example 30-50%).',
-                  type: 'text'
-                }
-              ]
-            },
-            maximal: {
-              title: 'Maximal experience',
-              fields: [
-                {
-                  name: 'maximal-steps',
-                  label: 'Describe the potential series of steps in this protocol that will cause the greatest suffering to an animal.',
-                  hint: 'Include information about the potential intensity of suffering.',
-                  type: 'texteditor'
-                },
-                {
-                  name: 'maximal-effects',
-                  label: 'If an animal experiences this maximal series of steps, what cumulative impacts or adverse effects do you anticipate?',
-                  hint: 'Examples may include pain, inactivity, or abnormal behaviour. You should also state the estimated duration of these effects on an animal.',
-                  type: 'texteditor'
-                },
-                {
-                  name: 'maximal-percentage',
-                  label: 'How many animals used in this protocol do you estimate will experience this maximal series of steps?',
-                  hint: 'If you’re unable to estimate a single percentage, enter a percentage range (for example 30-50%).',
-                  type: 'text'
-                }
-              ]
-            }
+            fields: [
+              {
+                name: 'experience-summary',
+                label: 'Summarise the overall severity of the experience of an animal being used in this protocol.',
+                hint: 'This may be different to the severity category of the project that you are proposing.',
+                type: 'texteditor'
+              },
+              {
+                name: 'experience-proportion',
+                label: 'What is the approximate proportion of animals being used in this protocol that you expect to suffer the most?',
+                hint: 'When determining higher levels of severity, consider the cumulative effect of any combinations of procedures that you may carry out in the protocol.',
+                type: 'texteditor'
+              },
+              {
+                name: 'experience-endpoints',
+                label: 'Describe any general humane endpoints that you may apply during the protocol.',
+                hint: 'These will be in addition to the endpoints stated for each step.',
+                type: 'texteditor'
+              }
+            ]
+          },
+          experimentalDesign: {
+            title: 'Experimental design',
+            fields: [
+              {
+                name: 'quantitative-data',
+                label: 'Will this protocol generate quantitative data?',
+                type: 'radio',
+                className: 'smaller',
+                inline: true,
+                options: [
+                  {
+                    label: 'Yes',
+                    value: true,
+                    reveal: [
+                      {
+                        name: 'quantitative-data-guideline',
+                        label: 'Will your experimental design be determined by a regulatory guideline or similar?',
+                        type: 'radio',
+                        className: 'smaller',
+                        inline: true,
+                        options: [
+                          {
+                            label: 'Yes',
+                            value: true,
+                            reveal: {
+                              name: 'quantitative-data-guideline-refined',
+                              label: 'How will you ensure that you are using the most refined methodology?',
+                              type: 'texteditor'
+                            }
+                          },
+                          {
+                            label: 'No',
+                            value: false,
+                            reveal: {
+                              name: 'quantitative-data-pilot-studies',
+                              label: 'Will this protocol use pilot studies',
+                              type: 'radio',
+                              className: 'smaller',
+                              inline: true,
+                              options: [
+                                {
+                                  label: 'Yes',
+                                  value: true,
+                                  reveal: {
+                                    name: 'quantitative-data-pilot-studies-how',
+                                    label: 'How and when will you use pilot studies?',
+                                    type: 'texteditor'
+                                  }
+                                },
+                                {
+                                  label: 'No',
+                                  value: false
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        name: 'quantitative-data-experimental-groups',
+                        label: 'How will you choose different experimental groups?',
+                        type: 'texteditor'
+                      },
+                      {
+                        name: 'control-groups',
+                        label: 'How will you use control groups?',
+                        hint: 'Provide a robust scientific justification for controls with significant suffering such as sham surgery controls or untreated infected controls.',
+                        type: 'texteditor'
+                      },
+                      {
+                        name: 'randomised',
+                        label: 'Will experiments and data analysis in this protocol be randomised or blinded? If so, how?',
+                        type: 'texteditor'
+                      },
+                      {
+                        name: 'reproducibility',
+                        label: 'How will you minimise variables to ensure reproducibility?',
+                        type: 'texteditor'
+                      },
+                      {
+                        name: 'control-groups-size',
+                        label: 'How will you determine group sizes?',
+                        type: 'texteditor'
+                      },
+                      {
+                        name: 'maximize-effectiveness',
+                        label: 'How will you maximise the data output from the animals you use on this protocol?',
+                        type: 'texteditor'
+                      }
+                    ]
+                  },
+                  {
+                    label: 'No',
+                    value: false
+                  }
+                ]
+              }
+            ]
           },
           justification: {
             title: 'Protocol justification',
@@ -1203,7 +1182,7 @@ export default {
               },
               {
                 name: 'scientific-endpoints',
-                label: 'What is the scientific need for the expected clinical signs for each experimental model and type of animal in this protocol?',
+                label: 'What is the scientific need for the expected clinical signs for each experimental model in this protocol?',
                 type: 'texteditor'
               },
               {
@@ -1223,32 +1202,33 @@ export default {
                 type: 'texteditor'
               },
               {
-                name: 'substances-suitibility',
-                label: 'How will you assess the suitability of substances given to the particular strain or type of animal you will be using?',
-                hint: 'For example, you may need to evaluate the toxicity, efficacy, and sterility of these substances.',
-                type: 'texteditor',
-                conditional: {
-                  substances: true
-                }
-              },
-              {
-                name: 'dosing-regimen',
-                label: 'How will you determine an appropriate dosing regimen?​',
-                hint: 'Explain how you considered the routes, dose volumes, frequencies, and overall duration of a dosing regimen.',
-                type: 'texteditor',
-                conditional: {
-                  substances: true
-                }
-              },
-              {
-                name: 'max-repetitions',
-                label: 'What’s the maximum number of times that the same animal could go through this protocol?',
-                type: 'text'
-              },
-              {
-                name: 'repetitions-justification',
-                label: 'How have you estimated the maximum number of times you will need to repeat this protocol using the same animal?',
-                type: 'texteditor'
+                name: 'justification-substances',
+                label: 'Will you be administering substances for testing that will alter an animal’s physiology during this project?',
+                type: 'radio',
+                className: 'smaller',
+                inline: true,
+                options: [
+                  {
+                    label: 'Yes',
+                    value: true,
+                    reveal: [
+                      {
+                        name: 'substances-suitibility',
+                        label: 'How will you assess the suitability of substances given to the particular strain or type of animal you will be using?',
+                        type: 'texteditor'
+                      },
+                      {
+                        name: 'dosing-regimen',
+                        label: 'How will you determine an appropriate dosing regimen?​',
+                        type: 'texteditor'
+                      }
+                    ]
+                  },
+                  {
+                    label: 'No',
+                    value: false
+                  }
+                ]
               }
             ]
           },
@@ -1262,26 +1242,6 @@ export default {
                 type: 'checkbox',
                 className: 'smaller',
                 options: [
-                  {
-                    label: 'Kept alive',
-                    value: 'kept-alive'
-                  },
-                  {
-                    label: 'Re-used',
-                    value: 're-used'
-                  },
-                  {
-                    label: 'Continued use',
-                    value: 'continued-use'
-                  },
-                  {
-                    label: 'Set free',
-                    value: 'set-free'
-                  },
-                  {
-                    label: 'Rehomed',
-                    value: 're-homed'
-                  },
                   {
                     label: 'Killed',
                     value: 'killed',
@@ -1306,6 +1266,19 @@ export default {
                           }
                         }
                       ]
+                    }
+                  },
+                  {
+                    label: 'Kept alive',
+                    value: 'kept-alive'
+                  },
+                  {
+                    label: 'Continued use on another protocol',
+                    value: 'continued-use',
+                    reveal: {
+                      name: 'continued-use-relevant-project',
+                      label: 'Please state the relevant project and protocol.',
+                      type: 'texteditor'
                     }
                   }
                 ]
