@@ -846,7 +846,7 @@ export default {
                     label: 'Yes',
                     value: true,
                     reveal: {
-                      name: 'continued-use-start',
+                      name: 'continued-use-sourced',
                       label: 'How did these animals start their use?',
                       hint: 'Describe the procedures that have been applied to animals that will continue their use on to this protocol.',
                       type: 'texteditor'
