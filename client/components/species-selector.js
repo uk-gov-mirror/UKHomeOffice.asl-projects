@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import map from 'lodash/map';
 import intersection from 'lodash/intersection';
@@ -34,7 +35,7 @@ const getFields = (options, name) => ([
 class SpeciesSelector extends Component {
   isOpen = options => {
     return intersection(
-      this.props.values.species,
+      this.props.speciesValues,
       options.map(option => option.value)
     ).length > 0;
   }
@@ -43,9 +44,10 @@ class SpeciesSelector extends Component {
     const {
       species = SPECIES,
       values,
+      otherValues,
       onFieldChange,
       label,
-      name = 'species',
+      name,
       hint,
       summary
     } = this.props;
@@ -67,12 +69,12 @@ class SpeciesSelector extends Component {
             </details>
           ))
         }
-        <details open={values[`${this.props.name}-other`] && values[`${this.props.name}-other`].length}>
+        <details open={otherValues.length}>
           <summary>Other</summary>
           <br />
           <OtherSpecies
-            name={`${this.props.name}-other`}
-            values={values[`${this.props.name}-other`]}
+            name={`${name}-other`}
+            values={otherValues}
             onFieldChange={onFieldChange}
           />
         </details>
@@ -81,4 +83,9 @@ class SpeciesSelector extends Component {
   }
 }
 
-export default SpeciesSelector;
+const mapStateToProps = ({ project }, { name = 'species' }) => ({
+  speciesValues: project.species,
+  otherValues: project[`${name}-other`] || []
+});
+
+export default connect(mapStateToProps)(SpeciesSelector);
