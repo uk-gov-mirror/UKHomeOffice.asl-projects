@@ -169,6 +169,13 @@ $assetPath: '/public';
     }
   }
 
+  .review:last-child {
+    hr {
+      margin: 0;
+      border: none;
+    }
+  }
+
   p.control-panel {
     margin-top: 2*$govuk-gutter;
     display: flex;
@@ -464,10 +471,14 @@ $assetPath: '/public';
         margin: -$govuk-gutter-half;
 
         .review {
-          hr, a {
+          hr {
             display: none;
           }
         }
+      }
+
+      &.editable > .review .review a {
+        display: none;
       }
     }
   }

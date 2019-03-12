@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import { HashLink as Link } from 'react-router-hash-link';
 import { connect } from 'react-redux';
 
 import { ReviewTextEditor } from './editor';
@@ -129,7 +129,7 @@ class Review extends React.Component {
               <p>
                 <Link
                   to={this.props.editLink || `#${this.props.name}`}
-                  onClick={e => this.props.onEdit && this.props.onEdit(e)}
+                  onClick={e => this.props.onEdit && this.props.onEdit(e, this.props.name)}
                   >Edit</Link>
               </p>
               <hr />

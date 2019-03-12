@@ -717,15 +717,6 @@ export default {
         title: 'Protocols',
         name: 'protocols',
         component: Protocols,
-        complete: values => {
-          if (!values.protocols) {
-            return INCOMPLETE;
-          }
-          if (values.protocols.length && every(values.protocols, p => p.complete)) {
-            return COMPLETE;
-          }
-          return PARTIALLY_COMPLETE;
-        },
         fields: [
           {
             name: 'title',

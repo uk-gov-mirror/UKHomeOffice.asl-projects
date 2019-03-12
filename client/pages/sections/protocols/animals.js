@@ -9,6 +9,8 @@ import values from 'lodash/values';
 
 import SPECIES from '../../../constants/species';
 
+import Review from '../../../components/review';
+import ReviewFields from '../../../components/review-fields';
 import Fieldset from '../../../components/fieldset';
 import Expandable from '../../../components/expandable';
 import Repeater from '../../../components/repeater';
@@ -33,17 +35,29 @@ class Animal extends Component {
   }
 
   render() {
-    const { prefix, fields, values, updateItem, index } = this.props;
+    const { prefix, fields, values, updateItem, index, editable } = this.props;
     const { expanded } = this.state;
     return (
       <Expandable className="no-bg" onHeaderClick={this.toggleExpanded} expanded={expanded}>
         <h3 className="title">{values.name}</h3>
-        <Fieldset
-          fields={fields}
-          values={values}
-          prefix={`${prefix}speciesDetails-${index}-`}
-          onFieldChange={(key, value) => updateItem({ [key]: value })}
-        />
+        {
+          editable
+            ? (
+              <Fieldset
+                fields={fields}
+                values={values}
+                prefix={prefix}
+                onFieldChange={(key, value) => updateItem({ [key]: value })}
+              />
+            )
+            : (
+              <ReviewFields
+                fields={fields}
+                values={values}
+                editLink={`0#${prefix}`}
+              />
+            )
+        }
       </Expandable>
     )
   }
@@ -125,7 +139,7 @@ class Animals extends Component {
 
   render() {
 
-    const { fields, onFieldChange, updateItem, name, index } = this.props;
+    const { prefix, editable, fields, onFieldChange, updateItem, name, index } = this.props;
 
     const { adding } = this.state;
 
@@ -140,40 +154,51 @@ class Animals extends Component {
     ]) }));
 
     const items = this.getItems();
-    const prefix = `${name}-${index}-`;
+
+    if (!editable && !items.length) {
+      return <Review
+        label="Animals used in this protocol"
+        value={null}
+      />
+    }
 
     return (
       <Fragment>
-        <Fieldset
-          fields={speciesField}
-          values={this.props.values}
-          onFieldChange={onFieldChange}
-          prefix={prefix}
-        />
-
+        {
+          editable && (
+            <Fieldset
+              fields={speciesField}
+              values={this.props.values}
+              onFieldChange={onFieldChange}
+              prefix={prefix}
+            />
+          )
+        }
         <Repeater
           items={items}
+          type="animals"
+          prefix={prefix}
           onSave={speciesDetails => updateItem({ speciesDetails })}
           addAnother={false}
         >
           <Animal
             {...this.props}
-            prefix={prefix}
             fields={fields.filter(f => f.section !== 'intro')}
           />
         </Repeater>
         {
-          !adding && <div className="add-more-animals"><a href="#" onClick={this.toggleAdding}>Add more animal types</a></div>
+          editable && !adding && <div className="add-more-animals"><a href="#" onClick={this.toggleAdding}>Add more animal types</a></div>
         }
         {
-          adding && <AddSpecies
+          editable && adding && <AddSpecies
             onContinueClicked={this.toggleAdding}
             values={this.props.project}
             onFieldChange={this.props.save}
           />
         }
-        <Button onClick={this.saveAnimalsAndAdvance}  className="button-secondary">Next section</Button>
-
+        {
+          editable && <Button onClick={this.saveAnimalsAndAdvance}  className="button-secondary">Next section</Button>
+        }
       </Fragment>
     )
   }
