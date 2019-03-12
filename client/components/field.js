@@ -27,7 +27,7 @@ class Field extends Component {
     return this.props.onSave && this.props.onSave(value);
   }
 
-  mapOptions = (options = []) => {
+  mapOptions(options = []) {
     return options.filter(Boolean).map(option => {
       if (!option.reveal) {
         return option;
