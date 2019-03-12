@@ -50,6 +50,10 @@ class Field extends Component {
     })
   }
 
+  shouldComponentUpdate(newProps) {
+    return JSON.stringify(this.props.value) !== JSON.stringify(newProps.value);
+  }
+
   showField() {
     const { conditional, project } = this.props;
     if (!conditional) {

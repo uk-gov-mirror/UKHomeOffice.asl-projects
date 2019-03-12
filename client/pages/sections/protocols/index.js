@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent, Component } from 'react';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
 
@@ -9,7 +9,7 @@ import Fieldset from '../../../components/fieldset';
 import Repeater from '../../../components/repeater';
 import Controls from '../../../components/controls';
 
-class Form extends Component {
+class Form extends PureComponent {
   removeItem = e => {
     e.preventDefault();
     this.props.removeItem();
@@ -48,9 +48,12 @@ class Protocol extends Component {
     this.setState({ active: !this.state.active });
   }
 
-  render() {
-    const { steps, exit, save, updateItem, sections, values, fields, index, length, removeItem, name } = this.props;
+  shouldComponentUpdate(newProps, newState) {
+    return this.state.active !== newState.active || this.state.complete !== newState.complete;
+  }
 
+  render() {
+    const { values, steps, exit, save, updateItem, sections, fields, index, length, removeItem, name } = this.props;
     return this.state.active
       ? <Form
         values={values}
@@ -62,10 +65,10 @@ class Protocol extends Component {
         toggleActive={this.toggleActive}
       />
       : <ProtocolSections
+          values={values}
           index={index}
           length={length}
           sections={sections}
-          values={values}
           onToggleActive={this.toggleActive}
           updateItem={updateItem}
           save={save}

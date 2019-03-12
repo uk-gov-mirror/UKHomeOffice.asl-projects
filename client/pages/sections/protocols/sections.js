@@ -1,10 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
 import size from 'lodash/size'
-import pickBy from 'lodash/pickBy';
-import every from 'lodash/every';
-
 import Accordion from '../../../components/accordion';
 import ExpandingPanel from '../../../components/expanding-panel';
 
@@ -23,32 +19,18 @@ const getSection = (section, props) => {
   }
 }
 
-const sectionIncluded = (section, values) => {
-  if (!section.conditional) {
-    return true;
-  }
-  return every(Object.keys(section.conditional), key => section.conditional[key] === values[key]);
-}
+const ProtocolSections = ({ sections, ...props }) => (
+  <Accordion openOne scrollToActive>
+    {
+      Object.keys(sections).map((section, sectionIndex) => (
+        <ExpandingPanel key={section} title={sections[section].title}>
+          {
+            getSection(section, { ...props, ...sections[section], sectionsLength: size(sections), sectionIndex })
+          }
+        </ExpandingPanel>
+      ))
+    }
+  </Accordion>
+)
 
-const ProtocolSections = ({ sections, ...props }) => {
-  sections = pickBy(sections, section => sectionIncluded(section, props.project));
-
-  return (
-    <Accordion openOne scrollToActive>
-      {
-        Object.keys(sections).map((section, sectionIndex) => (
-          <ExpandingPanel key={section} title={sections[section].title}>
-            {
-              getSection(section, { ...props, ...sections[section], sectionsLength: size(sections), sectionIndex })
-            }
-          </ExpandingPanel>
-        ))
-      }
-    </Accordion>
-  )
-
-};
-
-const mapStateToProps = ({ project }) => ({ project });
-
-export default connect(mapStateToProps)(ProtocolSections);
+export default ProtocolSections;
