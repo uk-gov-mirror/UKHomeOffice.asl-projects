@@ -1,41 +1,47 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import size from 'lodash/size';
+import map from 'lodash/map';
 import Field from './field';
 
-const getSpecies = values => {
-  const species = values.species || []
-  if (values['species-other']) {
-    return [
-      ...species,
-      values['species-other']
-    ]
-  }
-  return species;
-}
-
-const AnimalQuantities = ({ label, hint, error, name, values, onFieldChange }) => {
-  const species = getSpecies(values);
+const AnimalQuantities = ({ label, hint, error, name, species, onFieldChange }) => {
   return (
     <div className="govuk-form-group">
       <label className="govuk-label" htmlFor={name}>{label}</label>
       { hint && <span id={`${name}-hint`} className="govuk-hint">{hint}</span> }
       { error && <span id={`${name}-error`} className="govuk-error-message">{error}</span> }
       {
-        species.length
-          ? species.map(species => {
-              const fieldName = `${name}-${species}`;
+        size(species)
+          ? map(species, ({ fieldName, value }, key) => {
               return <Field
-                key={species}
-                type="number"
+                key={key}
+                type="text"
                 name={fieldName}
-                label={species}
+                label={key}
                 onChange={val => onFieldChange(fieldName, val)}
-                value={values[fieldName]}
+                value={value}
               />
             })
           : <p>No animals have been added</p>
       }
     </div>
   )
-}
+};
 
-export default AnimalQuantities;
+const mapStateToProps = ({ project }, { name }) => ({
+  species: [
+    ...(project.species || []),
+    ...(project['species-other'] || [])
+  ].reduce((obj, species) => {
+    const fieldName = `${name}-${species}`;
+    return {
+      ...obj,
+      [species]: {
+        fieldName,
+        value: project[fieldName]
+      }
+    };
+  }, {})
+});
+
+export default connect(mapStateToProps)(AnimalQuantities);

@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
 import { Button } from '@ukhomeoffice/react-components';
 
 import compact from 'lodash/compact';
@@ -69,4 +70,8 @@ class OtherSpecies extends Component {
   }
 }
 
-export default OtherSpecies;
+const mapStateToProps = ({ project }, { name, values }) => ({
+  values: values || project[name]
+});
+
+export default connect(mapStateToProps)(OtherSpecies);
