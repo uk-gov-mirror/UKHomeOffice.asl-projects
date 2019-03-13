@@ -1,5 +1,6 @@
 import NTSSummary from './pages/sections/nts';
 import Protocols from './pages/sections/protocols';
+import ProtocolsReview from './pages/sections/protocols/review';
 import Objectives from './pages/sections/objectives';
 import ObjectivesReview from './pages/sections/objectives/review';
 import Establishments from './pages/sections/establishments';
@@ -717,6 +718,7 @@ export default {
         title: 'Protocols',
         name: 'protocols',
         component: Protocols,
+        review: ProtocolsReview,
         fields: [
           {
             name: 'title',

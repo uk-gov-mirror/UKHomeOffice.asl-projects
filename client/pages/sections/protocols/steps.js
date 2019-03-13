@@ -48,7 +48,7 @@ class Step extends Component {
   }
 
   render() {
-    const { prefix, index, fields, values, updateItem, length, editable } = this.props;
+    const { prefix, index, fields, values, updateItem, length, editable, readonly } = this.props;
 
     const completed = !editable || values.completed;
 
@@ -95,6 +95,7 @@ class Step extends Component {
             </Fragment>
           : <div className="review">
             <ReviewFields
+              readonly={readonly}
               fields={fields.filter(f => f.name !== 'title')}
               values={values}
               editLink={`0#${this.props.prefix}`}

@@ -35,7 +35,7 @@ class Animal extends Component {
   }
 
   render() {
-    const { prefix, fields, values, updateItem, index, editable } = this.props;
+    const { prefix, fields, values, updateItem, index, editable, readonly } = this.props;
     const { expanded } = this.state;
     return (
       <Expandable className="no-bg" onHeaderClick={this.toggleExpanded} expanded={expanded}>
@@ -54,6 +54,7 @@ class Animal extends Component {
               <ReviewFields
                 fields={fields}
                 values={values}
+                readonly={readonly}
                 editLink={`0#${prefix}`}
               />
             )
@@ -157,6 +158,7 @@ class Animals extends Component {
 
     if (!editable && !items.length) {
       return <Review
+        readonly={this.props.readonly}
         label="Animals used in this protocol"
         value={null}
       />

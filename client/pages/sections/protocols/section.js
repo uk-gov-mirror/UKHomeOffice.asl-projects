@@ -13,8 +13,6 @@ import ReviewFields from '../../../components/review-fields';
 class Section extends PureComponent {
   render() {
     const {
-      index,
-      name,
       label,
       fields,
       values,
@@ -24,6 +22,7 @@ class Section extends PureComponent {
       sectionsLength,
       sectionIndex,
       editable,
+      readonly,
       title
     } = this.props;
 
@@ -45,6 +44,7 @@ class Section extends PureComponent {
               <ReviewFields
                 fields={fields}
                 values={values}
+                readonly={readonly}
                 editLink={`0#${this.props.prefix}`}
               />
             )

@@ -487,6 +487,10 @@ $assetPath: '/public';
   .protocol {
     margin-bottom: $govuk-gutter;
 
+    > .expandable > .header {
+      cursor: pointer;
+    }
+
     &.complete {
       > .expandable {
         > .header {

@@ -31,15 +31,10 @@ class ProtocolSections extends PureComponent {
 
   render() {
     const {
-      name,
       values,
       sections,
-      parts,
       index,
-      save,
       updateItem,
-      prefix,
-      exit,
       editable
     } = this.props;
 
@@ -65,17 +60,8 @@ class ProtocolSections extends PureComponent {
           </Completable>
           <div>
             <Sections
-              name={name}
-              index={index}
-              sections={sections}
-              parts={parts}
-              values={values}
-              updateItem={updateItem}
-              exit={exit}
-              editable={editable}
-              prefix={prefix}
+              {...this.props}
               onFieldChange={(key, value) => updateItem({ [key]: value })}
-              save={save}
             />
             {
               editable && (

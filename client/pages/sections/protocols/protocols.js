@@ -68,35 +68,20 @@ class Protocol extends PureComponent {
   }
 
   render() {
-    const { editable, prefix, values, steps, exit, save, updateItem, sections, fields, index, length, removeItem, name } = this.props;
+    const { editable } = this.props;
 
     const parts = this.getParts();
     const isActive = this.isActive(parts);
 
     return editable && this.state.active
       ? <Form
-        values={values}
-        updateItem={updateItem}
-        removeItem={removeItem}
-        fields={fields}
-        index={index}
-        length={length}
+        {...this.props}
         toggleActive={this.toggleActive}
       />
       : <ProtocolSections
-          values={values}
-          index={index}
-          length={length}
-          sections={sections}
-          editable={editable}
-          prefix={prefix}
-          onToggleActive={this.toggleActive}
-          updateItem={updateItem}
-          save={save}
+          {...this.props}
           parts={isActive && parts}
-          exit={exit}
-          steps={steps}
-          name={name}
+          onToggleActive={this.toggleActive}
         />
   }
 }
