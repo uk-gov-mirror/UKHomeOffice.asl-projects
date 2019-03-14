@@ -35,7 +35,7 @@ class Animal extends Component {
   }
 
   render() {
-    const { prefix, fields, values, updateItem, index, editable, readonly } = this.props;
+    const { prefix, fields, values, updateItem, editable, readonly } = this.props;
     const { expanded } = this.state;
     return (
       <Expandable className="no-bg" onHeaderClick={this.toggleExpanded} expanded={expanded}>
@@ -140,7 +140,7 @@ class Animals extends Component {
 
   render() {
 
-    const { prefix, editable, fields, onFieldChange, updateItem, name, index } = this.props;
+    const { prefix, editable, fields, onFieldChange, updateItem } = this.props;
 
     const { adding } = this.state;
 

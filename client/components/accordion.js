@@ -1,5 +1,4 @@
 import React from 'react';
-import isUndefined from 'lodash/isUndefined';
 import every from 'lodash/every';
 import castArray from 'lodash/castArray';
 

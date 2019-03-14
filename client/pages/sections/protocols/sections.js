@@ -1,11 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
-import map from 'lodash/map';
 import size from 'lodash/size';
-import get from 'lodash/get';
 import flatten from 'lodash/flatten';
-import castArray from 'lodash/castArray';
 import Accordion from '../../../components/accordion';
 import ExpandingPanel from '../../../components/expanding-panel';
 

@@ -11,7 +11,7 @@ class ProtocolsReview extends PureComponent {
   }
 
   render() {
-    const { complete, save, readonly, ...props } = this.props;
+    const { complete, readonly, ...props } = this.props;
     return (
       <Fragment>
         {

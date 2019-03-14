@@ -11,12 +11,9 @@ import PolesReview from './pages/sections/poles/review';
 import SPECIES from './constants/species';
 
 import intersection from 'lodash/intersection';
-import every from 'lodash/every';
 import some from 'lodash/some';
 import flatten from 'lodash/flatten';
 import castArray from 'lodash/castArray';
-
-import { COMPLETE, INCOMPLETE, PARTIALLY_COMPLETE } from './constants/completeness';
 
 export default {
   introduction: {

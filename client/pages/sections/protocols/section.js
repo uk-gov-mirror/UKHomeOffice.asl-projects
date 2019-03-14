@@ -4,9 +4,6 @@ import { withRouter } from 'react-router';
 
 import { Button } from '@ukhomeoffice/react-components';
 
-import flatten from 'lodash/flatten';
-import map from 'lodash/map';
-
 import Fieldset from '../../../components/fieldset'
 import ReviewFields from '../../../components/review-fields';
 
