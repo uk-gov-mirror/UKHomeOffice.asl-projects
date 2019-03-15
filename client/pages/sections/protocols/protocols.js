@@ -48,30 +48,36 @@ class Protocol extends PureComponent {
     this.setState({ active: !this.state.active });
   }
 
-  getParts = () => {
+  getProtocolState = () => {
     if (!this.props.editable || !this.props.location.hash) {
       return null;
     }
     const parts = this.props.location.hash.split('.');
-    if (!parts.length) {
-      return null;
+
+    const protocolState = {
+      activeProtocol: parseInt(parts[1], 10),
+      fieldName: parts[parts.length - 1]
     }
-    return parts;
+    if (parts.length === 5) {
+      protocolState.section = parts[2],
+      protocolState.sectionItem = parseInt(parts[3], 10)
+    }
+
+    return protocolState;
   }
 
-  isActive = parts => {
-    if (!parts) {
+  isActive = protocolState => {
+    if (!protocolState) {
       return false;
     }
-    const active = parseInt(parts[1], 10);
-    return isNaN(active) ? false : active === this.props.index;
+    return protocolState.activeProtocol === this.props.index;
   }
 
   render() {
     const { editable } = this.props;
 
-    const parts = this.getParts();
-    const isActive = this.isActive(parts);
+    const protocolState = this.getProtocolState();
+    const isActive = this.isActive(protocolState);
 
     return editable && this.state.active
       ? <Form
@@ -80,7 +86,7 @@ class Protocol extends PureComponent {
       />
       : <ProtocolSections
           {...this.props}
-          parts={isActive && parts}
+          protocolState={isActive && protocolState}
           onToggleActive={this.toggleActive}
         />
   }
@@ -97,18 +103,15 @@ class Protocols extends PureComponent {
   }
 
   render() {
-    const { project, editable } = this.props;
-    if (!size(project)) {
-      return null;
-    }
+    const { protocols, editable } = this.props;
     return (
       <Repeater
         type="protocol"
         name="protocols"
-        items={project.protocols}
+        items={protocols}
         onSave={this.save}
         addAnother={editable}
-        addButtonBefore={project.protocols && project.protocols.length > 0 && project.protocols[0].title}
+        addButtonBefore={protocols && protocols.length > 0 && protocols[0].title}
         addButtonAfter={true}
         onAfterAdd={() => {
           window.scrollTo({
@@ -123,6 +126,6 @@ class Protocols extends PureComponent {
   }
 }
 
-const mapStateToProps = ({ project }) => ({ project });
+const mapStateToProps = ({ project: { protocols } }) => ({ protocols });
 
 export default connect(mapStateToProps)(Protocols);

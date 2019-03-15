@@ -30,29 +30,29 @@ const getFields = fields => {
   }));
 };
 
-const getOpenSection = (parts, editable, sections) => {
+const getOpenSection = (protocolState, editable, sections) => {
   if (!editable) {
     return null;
   }
 
-  if (!parts) {
+  if (!protocolState) {
     return 0;
   }
 
-  const fieldName = parts[parts.length - 1];
+  const { fieldName } = protocolState;
 
   return Object.values(sections).findIndex(section => {
     return getFields(section.fields).map(field => field.name).includes(fieldName);
   });
 }
 
-const ProtocolSections = ({ sections, parts, editable, ...props }) => (
-  <Accordion openOne scrollToActive open={getOpenSection(parts, editable, sections)}>
+const ProtocolSections = ({ sections, protocolState, editable, ...props }) => (
+  <Accordion openOne scrollToActive open={getOpenSection(protocolState, editable, sections)}>
     {
       Object.keys(sections).map((section, sectionIndex) => (
         <ExpandingPanel key={section} title={sections[section].title}>
           {
-            getSection(section, { ...props, parts, editable, ...sections[section], sectionsLength: size(sections), sectionIndex })
+            getSection(section, { ...props, protocolState, editable, ...sections[section], sectionsLength: size(sections), sectionIndex })
           }
         </ExpandingPanel>
       ))

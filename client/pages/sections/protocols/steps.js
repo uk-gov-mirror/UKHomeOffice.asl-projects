@@ -39,8 +39,8 @@ class Step extends Component {
   }
 
   componentDidMount() {
-    if (this.props.parts && this.props.parts.length === 5) {
-      const activeStep = parseInt(this.props.parts[3], 10);
+    if (this.props.protocolState && !isUndefined(this.props.protocolState.sectionItem)) {
+      const activeStep = this.props.protocolState.sectionItem;
       if (activeStep === this.props.index) {
         this.props.updateItem({ completed: false })
       }

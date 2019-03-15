@@ -10,7 +10,7 @@ import Sections from './sections';
 
 class ProtocolSections extends PureComponent {
   state = {
-    expanded: this.props.editable && (this.props.parts || !this.props.values.complete)
+    expanded: this.props.editable && (this.props.protocolState || !this.props.values.complete)
   }
 
   setCompleted = value => {
