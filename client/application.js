@@ -306,7 +306,7 @@ export default {
                   },
                   {
                     name: 'transfer-recovery',
-                    label: 'a) Will medically and surgically prepared animals be given a minimum of 7 days to recover before being transferred?',
+                    label: 'Will medically and surgically prepared animals be given a minimum of 7 days to recover before being transferred?',
                     type: 'radio',
                     inline: true,
                     className: 'smaller',
@@ -328,7 +328,7 @@ export default {
                   },
                   {
                     name: 'transfer-acclimatisation',
-                    label: 'b) Will animals be given a minimum of 7 days to acclimatise to their new surroundings prior to any further regulated procedures?',
+                    label: 'Will animals be given a minimum of 7 days to acclimatise to their new surroundings prior to any further regulated procedures?',
                     type: 'radio',
                     inline: true,
                     className: 'smaller',
@@ -851,12 +851,6 @@ export default {
                 className: 'smaller'
               },
               {
-                name: 'maximum-times-used',
-                label: 'What is the maximum number of times that this protocol will be used on this type of animal?',
-                hint: 'State the estimated number of animals that may go through this protocol more than once. You should consider both naïve and re-used animals in your answer.',
-                type: 'text'
-              },
-              {
                 name: 'reuse',
                 label: 'Will you be re-using animals on to this protocol?',
                 hint: '‘Re-use’ describes using animals again for a new experiment when you could equally use a naïve animal to get the same results.',
@@ -878,6 +872,12 @@ export default {
                 ],
                 inline: true,
                 className: 'smaller'
+              },
+              {
+                name: 'maximum-times-used',
+                label: 'What is the maximum number of times that this protocol will be used on this type of animal?',
+                hint: 'Count the number of first time uses of a naive animal, then add this to the number of instances of re-use (if relevant).',
+                type: 'text'
               }
             ]
           },
@@ -952,7 +952,7 @@ export default {
               },
               {
                 name: 'code',
-                label: 'Select the anaesthetic code you intend to use.',
+                label: 'Select the anaesthetic codes that apply to this step?',
                 type: 'checkbox',
                 options: [
                   {
@@ -1588,7 +1588,7 @@ export default {
                       },
                       {
                         name: 'wild-animals-devices-removal',
-                        label: 'How will you locate and recapture the animals or otherwise ensure the devices are removed at the end of the regulated procedures',
+                        label: 'How will you locate and recapture the animals or otherwise ensure the devices are removed at the end of the regulated procedures?',
                         hint: 'If devices will not be removed, explain why it is not required.',
                         type: 'texteditor'
                       },
@@ -1629,7 +1629,7 @@ export default {
         steps: [
           {
             title: 'Setting animals free - 1 of 2',
-            intro: 'You are seeing this section because you will be setting animals free at the end of a protocol or project. To change this, go to Protocols.',
+            intro: 'You are seeing this section because you will be setting animals free at the end of a project. To change this, go to Protocols.',
             fields: [
               {
                 name: 'setting-free-health',
@@ -1681,7 +1681,7 @@ export default {
             fields: [
               {
                 name: 'setting-free-wellbeing',
-                label: 'What measures will you take to safeguard an animal’s wellbeing once you have set it free?',
+                label: 'What arrangements will be made to assure their welfare during transport, particularly if they are being moved after the start of regulated procedures?',
                 type: 'texteditor'
               },
               {
@@ -1716,7 +1716,7 @@ export default {
                 reveal: {
                   name: 'feral-animals-justification',
                   label: 'Why can’t you achieve your objectives without using feral animals?',
-                  hint: 'For example, it may be essential to use feral animals to protect the health and welfare of a species, or avoid a threat to the health of other animals, humans, or the environment.',
+                  hint: 'For example, it may be essential to protect the health or welfare of that species or to avoid a serious threat to human or animal health or the environment.',
                   type: 'texteditor'
                 }
               },
@@ -1833,29 +1833,29 @@ export default {
       },
       'rehoming-animals': {
         title: 'Rehoming animals',
-        intro: 'You are seeing this section because you are applying for the authority to rehome animals at the end of a protocol or project. To change this, go to Protocols.',
+        intro: 'You are seeing this section because you are applying for the authority to rehome animals at the end of a project. To change this, go to Protocols.',
         show: values => some(values.protocols, protocol => {
           return castArray(protocol.fate).includes('re-homed');
         }),
         fields: [
           {
             name: 'rehoming-healthy',
-            label: 'How will you determine whether animals are healthy enough to be rehomed?',
+            label: 'How will you make sure that an animal\'s health allows it to be rehomed?',
             type: 'texteditor'
           },
           {
             name: 'rehoming-harmful',
-            label: 'How will you ensure that rehoming animals will not be harmful to other species, the environment, and human health?',
+            label: 'How will you ensure that rehoming does not pose a danger to public health, animal health, or the environment?',
             type: 'texteditor'
           },
           {
             name: 'rehoming-socialisation',
-            label: 'How will you ensure that animals are undergoing an appropriate socialisation programme once they have been rehomed?',
+            label: 'What scheme is in place to ensure socialisation when an animal is rehomed?',
             type: 'texteditor'
           },
           {
             name: 'rehoming-other',
-            label: 'What other measures will you take to safeguard the wellbeing of animals once they have been rehomed?',
+            label: 'What other measures will you take to safeguard an animal\'s wellbeing when it is rehomed?',
             type: 'texteditor'
           }
         ]
