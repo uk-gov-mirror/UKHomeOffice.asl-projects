@@ -71,86 +71,97 @@ const addPageNumbers = (doc) => {
   return doc;
 };
 
+const renderNode = (doc, node) => {
+
+  let text;
+  let paragraph;
+
+  switch (node.type) {
+    case 'heading-one':
+      doc.createParagraph(node.nodes[0].leaves[0].text.trim()).heading1();
+      break;
+
+    case 'heading-two':
+      doc.createParagraph(node.nodes[0].leaves[0].text.trim()).heading2();
+      break;
+
+    case 'block-quote':
+      doc.createParagraph(node.nodes[0].leaves[0].text.trim()).style('aside');
+      break;
+
+    case 'numbered-list': {
+      const numbering = new Numbering();
+      const abstract = numbering.createAbstractNumbering();
+      abstract.createLevel(0, 'decimal', '%2.', 'start');
+      const concrete = numbering.createConcreteNumbering(abstract);
+
+      node.nodes.forEach(n => {
+        if (n.type !== 'list-item') {
+          return renderNode(doc, n);
+        }
+        // TODO: the item may have marks
+        text = new TextRun(n.nodes[0].leaves[0].text.trim()).size(24);
+        const paragraph = new Paragraph();
+        paragraph.setNumbering(concrete, 0);
+        paragraph.style('body');
+        paragraph.addRun(text);
+        doc.addParagraph(paragraph);
+      });
+      break;
+    }
+
+    case 'bulleted-list':
+      node.nodes.forEach(n => {
+        if (n.type !== 'list-item') {
+          return renderNode(doc, n);
+        }
+        // TODO: the item may have marks
+        text = new TextRun(n.nodes[0].leaves[0].text.trim()).size(24);
+        const paragraph = new Paragraph();
+        paragraph.style('body').bullet();
+        paragraph.addRun(text);
+        doc.addParagraph(paragraph);
+      });
+      break;
+
+    case 'paragraph':
+      paragraph = new Paragraph();
+      node.nodes[0].leaves.forEach(leaf => {
+        text = new TextRun(leaf.text.trim());
+        if (text) {
+          leaf.marks.forEach(mark => {
+            switch (mark.type) {
+              case 'bold':
+                text.bold();
+                break;
+
+              case 'italic':
+                text.italics();
+                break;
+
+              case 'underlined':
+                text.underline();
+                break;
+            }
+          });
+          paragraph.style('body');
+          paragraph.addRun(text);
+        }
+      });
+      doc.addParagraph(paragraph);
+      break;
+
+    case 'image':
+      doc.createImage(node.data.src, node.data.width, node.data.height);
+      break;
+  }
+}
+
 const renderTextEditor = (doc, value) => {
   const content = JSON.parse(value);
   const nodes = content.document.nodes;
-  let text;
 
-  nodes.forEach(node => {
-    switch (node.type) {
-      case 'heading-one':
-        doc.createParagraph(node.nodes[0].leaves[0].text.trim()).heading1();
-        break;
-
-      case 'heading-two':
-        doc.createParagraph(node.nodes[0].leaves[0].text.trim()).heading2();
-        break;
-
-      case 'block-quote':
-        doc.createParagraph(node.nodes[0].leaves[0].text.trim()).style('aside');
-        break;
-
-      case 'numbered-list': {
-        const numbering = new Numbering();
-        const abstract = numbering.createAbstractNumbering();
-        abstract.createLevel(0, 'decimal', '%2.', 'start');
-        const concrete = numbering.createConcreteNumbering(abstract);
-
-        node.nodes.forEach(n => {
-          // TODO: the item may have marks
-          text = new TextRun(n.nodes[0].leaves[0].text.trim()).size(24);
-          const paragraph = new Paragraph();
-          paragraph.setNumbering(concrete, 0);
-          paragraph.style('body');
-          paragraph.addRun(text);
-          doc.addParagraph(paragraph);
-        });
-        break;
-      }
-
-      case 'bulleted-list':
-        node.nodes.forEach(n => {
-          // TODO: the item may have marks
-          text = new TextRun(n.nodes[0].leaves[0].text.trim()).size(24);
-          const paragraph = new Paragraph();
-          paragraph.style('body').bullet();
-          paragraph.addRun(text);
-          doc.addParagraph(paragraph);
-        });
-        break;
-
-      case 'paragraph':
-        node.nodes[0].leaves.forEach(leaf => {
-          text = new TextRun(leaf.text.trim());
-          if (text) {
-            leaf.marks.forEach(mark => {
-              switch (mark.type) {
-                case 'bold':
-                  text.bold();
-                  break;
-
-                case 'italic':
-                  text.italics();
-                  break;
-
-                case 'underlined':
-                  text.underline();
-                  break;
-              }
-            });
-            const paragraph = new Paragraph();
-            paragraph.style('body');
-            paragraph.addRun(text);
-            doc.addParagraph(paragraph);
-          }
-        });
-        break;
-
-      case 'image':
-        doc.createImage(node.data.src, node.data.width, node.data.height);
-        break;
-    }
-  });
+  nodes.forEach(node => renderNode(doc, node));
 
   renderHorizontalRule(doc);
 };
