@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import isUndefined from 'lodash/isUndefined';
 import castArray from 'lodash/castArray';
+import some from 'lodash/some';
 import every from 'lodash/every';
 import without from 'lodash/without';
 
@@ -48,7 +49,16 @@ class Field extends Component {
   }
 
   shouldComponentUpdate(newProps) {
-    return JSON.stringify(this.props.value) !== JSON.stringify(newProps.value);
+    if (this.props.type === 'texteditor') {
+      return JSON.stringify(this.props.value) !== JSON.stringify(newProps.value);
+    }
+    // if the field contains a reveal, trigger a rerender.
+    // This could be improved by traversing reveals and detecting
+    // changes in children, but the render is relatively cheap.
+    if (this.props.options && some(this.props.options, opt => opt.reveal)) {
+      return true;
+    }
+    return this.props.value !== newProps.value;
   }
 
   render() {
@@ -181,7 +191,7 @@ const mapStateToProps = ({ project, settings }, { name, conditional, optionsFrom
 
   return {
     options,
-    value: !isUndefined(value) ? value : project[name],
+    // value: !isUndefined(value) ? value : project[name],
     show: !conditional || every(Object.keys(conditional), key => conditional[key] === project[key])
   };
 }

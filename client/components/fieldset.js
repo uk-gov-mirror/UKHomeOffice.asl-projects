@@ -11,6 +11,8 @@ const Fieldset = ({ fields, onFieldChange, values, prefix = '' }) => (
           key={ field.name }
           name={ `${prefix}${field.name}` }
           value={ values && values[field.name] }
+          values={ values }
+          prefix={ prefix }
           onChange={ value => onFieldChange(field.name, value) }
           onSave={ value => onFieldChange(field.name, value) }
           onFieldChange={onFieldChange}
