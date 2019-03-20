@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import isUndefined from 'lodash/isUndefined';
 import castArray from 'lodash/castArray';
 import some from 'lodash/some';
 import every from 'lodash/every';
@@ -182,7 +181,7 @@ class Field extends Component {
   }
 }
 
-const mapStateToProps = ({ project, settings }, { name, conditional, optionsFromSettings, options, without: withoutField, value }) => {
+const mapStateToProps = ({ project, settings }, { conditional, optionsFromSettings, options, without: withoutField }) => {
   options = optionsFromSettings ? settings[optionsFromSettings] : options;
 
   if (withoutField) {
@@ -191,7 +190,6 @@ const mapStateToProps = ({ project, settings }, { name, conditional, optionsFrom
 
   return {
     options,
-    // value: !isUndefined(value) ? value : project[name],
     show: !conditional || every(Object.keys(conditional), key => conditional[key] === project[key])
   };
 }
