@@ -40,7 +40,7 @@ const fieldIncluded = (field, values) => {
   return every(Object.keys(field.conditional), key => field.conditional[key] === values[key])
 }
 
-const ReviewFields = ({ fields, values, onEdit, project, readonly }) => (
+const ReviewFields = ({ fields, values, onEdit, editLink, project, readonly }) => (
   <Fragment>
     {
       castArray(values).map((item, i) => (
@@ -56,7 +56,8 @@ const ReviewFields = ({ fields, values, onEdit, project, readonly }) => (
                 key={ field.name }
                 readonly={ readonly }
                 value={ item[field.name] }
-                onEdit={ () => onEdit() }
+                editLink={ editLink && `${editLink}${field.name}` }
+                onEdit={ onEdit }
               />
             })
           }

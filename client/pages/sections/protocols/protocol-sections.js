@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
+import { withRouter } from 'react-router';
 
 import classnames from 'classnames';
 
@@ -7,9 +8,9 @@ import Completable from '../../../components/completable';
 import Complete from '../../../components/complete';
 import Sections from './sections';
 
-class ProtocolSections extends Component {
+class ProtocolSections extends PureComponent {
   state = {
-    expanded: !this.props.values.complete
+    expanded: this.props.editable && (this.props.protocolState || !this.props.values.complete)
   }
 
   setCompleted = value => {
@@ -28,21 +29,13 @@ class ProtocolSections extends Component {
     this.props.onToggleActive();
   }
 
-  shouldComponentUpdate(newProps, newState) {
-    return newProps.values.complete !== this.props.values.complete
-      || newState.expanded !== this.state.expanded
-      || newProps.values.severity !== this.props.values.severity;
-  }
-
   render() {
     const {
-      name,
       values,
       sections,
       index,
-      save,
       updateItem,
-      exit
+      editable
     } = this.props;
 
     const severityField = sections.details.fields.find(field => field.name === 'severity');
@@ -55,7 +48,9 @@ class ProtocolSections extends Component {
             <h2 className="title inline-block">
               <span className="larger">{index + 1}. </span>{values.title}
             </h2>
-            <a href="#" className="inline-block" onClick={this.toggleActive}>Edit title</a>
+            {
+              editable && <a href="#" className="inline-block" onClick={this.toggleActive}>Edit title</a>
+            }
             { severityOption &&
               <dl className="inline">
                 <dt>Severity category: </dt>
@@ -65,22 +60,19 @@ class ProtocolSections extends Component {
           </Completable>
           <div>
             <Sections
-              name={name}
-              index={index}
-              sections={sections}
-              values={values}
-              updateItem={updateItem}
-              exit={exit}
+              {...this.props}
               onFieldChange={(key, value) => updateItem({ [key]: value })}
-              save={save}
             />
-            <Complete
-              type="protocol"
-              complete={values.complete}
-              onChange={this.setCompleted}
-              buttonClassName="button-secondary"
-              checkChanged
-            />
+            {
+              editable && (
+                <Complete
+                  type="protocol"
+                  complete={values.complete}
+                  onChange={this.setCompleted}
+                  buttonClassName="button-secondary"
+                />
+              )
+            }
           </div>
         </Expandable>
       </section>
@@ -88,4 +80,4 @@ class ProtocolSections extends Component {
   }
 }
 
-export default ProtocolSections;
+export default withRouter(ProtocolSections);

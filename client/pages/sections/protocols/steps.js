@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 
 import classnames from 'classnames'
 import { Button } from '@ukhomeoffice/react-components';
@@ -8,7 +9,7 @@ import every from 'lodash/every';
 import isUndefined from 'lodash/isUndefined';
 import { ReviewTextEditor } from '../../../components/editor';
 
-import Review from '../../../components/review-fields';
+import ReviewFields from '../../../components/review-fields';
 import Repeater from '../../../components/repeater';
 import Fieldset from '../../../components/fieldset';
 
@@ -37,16 +38,25 @@ class Step extends Component {
     this.props.moveDown();
   }
 
-  render() {
-    const { prefix, index, fields, values, updateItem, length } = this.props;
+  componentDidMount() {
+    if (this.props.protocolState && !isUndefined(this.props.protocolState.sectionItem)) {
+      const activeStep = this.props.protocolState.sectionItem;
+      if (activeStep === this.props.index) {
+        this.props.updateItem({ completed: false })
+      }
+    }
+  }
 
-    const completed = values.completed;
+  render() {
+    const { prefix, index, fields, values, updateItem, length, editable, readonly } = this.props;
+
+    const completed = !editable || values.completed;
 
     return (
-      <section className={classnames('step', { completed })}>
+      <section className={classnames('step', { completed, editable })}>
         <Fragment>
           {
-            completed && (
+            editable && completed && (
               <div className="float-right">
                 {
                   length > 1 && (
@@ -74,8 +84,8 @@ class Step extends Component {
             ? <Fragment>
               <Fieldset
                 fields={fields}
+                prefix={prefix}
                 onFieldChange={(key, value) => updateItem({ [key]: value })}
-                prefix={`${prefix}steps-${index}-`}
                 values={values}
               />
               <Button onClick={() => this.setCompleted(true)}>Save step</Button>
@@ -84,8 +94,15 @@ class Step extends Component {
               }
             </Fragment>
           : <div className="review">
-            <Review fields={fields.filter(f => f.name !== 'title')} values={values} />
-            <a href="#" onClick={(e) => this.setCompleted(false, e)}>Edit step</a>
+            <ReviewFields
+              readonly={readonly}
+              fields={fields.filter(f => f.name !== 'title')}
+              values={values}
+              editLink={`0#${this.props.prefix}`}
+            />
+            {
+              editable && <a href="#" onClick={(e) => this.setCompleted(false, e)}>Edit step</a>
+            }
           </div>
         }
       </section>
@@ -93,25 +110,27 @@ class Step extends Component {
   }
 }
 
-const Steps = ({ values, updateItem, index, name, advance, ...props }) => {
-  const prefix = `${name}-${index}-`;
+const Steps = ({ values, prefix, updateItem, advance, editable, ...props }) => {
   return (
     <div className="steps">
       <p className="grey">{props.hint}</p>
       <br />
       <Repeater
         type="step"
+        prefix={prefix}
         items={values.steps}
         onSave={steps => updateItem({ steps })}
         addAnother={every(values.steps, step => step.completed)}
-        {...props}
+        { ...props }
       >
         <Step
-          prefix={prefix}
+          editable={editable}
           { ...props }
         />
       </Repeater>
-      <Button onClick={advance} className="button-secondary">Next section</Button>
+      {
+        editable && <Button onClick={advance} className="button-secondary">Next section</Button>
+      }
     </div>
   )
 }
@@ -122,4 +141,4 @@ const mapStateToProps = ({ project }, { index }) => {
   }
 }
 
-export default connect(mapStateToProps)(Steps);
+export default withRouter(connect(mapStateToProps)(Steps));

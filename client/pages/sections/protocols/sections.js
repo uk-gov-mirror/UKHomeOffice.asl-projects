@@ -1,6 +1,7 @@
 import React from 'react';
 
-import size from 'lodash/size'
+import size from 'lodash/size';
+import flatten from 'lodash/flatten';
 import Accordion from '../../../components/accordion';
 import ExpandingPanel from '../../../components/expanding-panel';
 
@@ -19,13 +20,39 @@ const getSection = (section, props) => {
   }
 }
 
-const ProtocolSections = ({ sections, ...props }) => (
-  <Accordion openOne scrollToActive>
+const getFields = fields => {
+  return flatten(fields.map(field => {
+    const reveals = field.options && field.options.map(opt => opt.reveal).filter(Boolean);
+    if (!reveals) {
+      return field
+    }
+    return [field, ...flatten(reveals)];
+  }));
+};
+
+const getOpenSection = (protocolState, editable, sections) => {
+  if (!editable) {
+    return null;
+  }
+
+  if (!protocolState) {
+    return 0;
+  }
+
+  const { fieldName } = protocolState;
+
+  return Object.values(sections).findIndex(section => {
+    return getFields(section.fields).map(field => field.name).includes(fieldName);
+  });
+}
+
+const ProtocolSections = ({ sections, protocolState, editable, ...props }) => (
+  <Accordion openOne scrollToActive open={getOpenSection(protocolState, editable, sections)}>
     {
       Object.keys(sections).map((section, sectionIndex) => (
         <ExpandingPanel key={section} title={sections[section].title}>
           {
-            getSection(section, { ...props, ...sections[section], sectionsLength: size(sections), sectionIndex })
+            getSection(section, { ...props, protocolState, editable, ...sections[section], sectionsLength: size(sections), sectionIndex })
           }
         </ExpandingPanel>
       ))
@@ -33,4 +60,4 @@ const ProtocolSections = ({ sections, ...props }) => (
   </Accordion>
 )
 
-export default ProtocolSections;
+export default ProtocolSections

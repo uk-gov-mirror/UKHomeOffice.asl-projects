@@ -2,7 +2,7 @@ import React from 'react';
 
 import Field from './field';
 
-const Fieldset = ({ fields, onFieldChange, prefix = '' }) => (
+const Fieldset = ({ fields, onFieldChange, values, prefix = '' }) => (
   <fieldset>
     {
       fields.map(field => {
@@ -10,6 +10,7 @@ const Fieldset = ({ fields, onFieldChange, prefix = '' }) => (
           { ...field }
           key={ field.name }
           name={ `${prefix}${field.name}` }
+          value={ values && values[field.name] }
           onChange={ value => onFieldChange(field.name, value) }
           onSave={ value => onFieldChange(field.name, value) }
           onFieldChange={onFieldChange}

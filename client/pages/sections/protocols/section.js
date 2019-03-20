@@ -1,62 +1,57 @@
-import React, { Fragment } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 
 import { Button } from '@ukhomeoffice/react-components';
 
-import flatten from 'lodash/flatten';
-import map from 'lodash/map';
-
 import Fieldset from '../../../components/fieldset'
+import ReviewFields from '../../../components/review-fields';
 
-const RenderSection = ({ title, label, hideTitle = true, fields, values, prefix, onFieldChange }) => {
-  return (
-    <Fragment>
-      {
-        title && !hideTitle && <h3>{title}</h3>
-      }
-      {
-        label && <h4>{label}</h4>
-      }
-      <Fieldset
-        fields={fields}
-        values={values}
-        prefix={prefix}
-        onFieldChange={onFieldChange}
-      />
-    </Fragment>
-  )
-}
+class Section extends PureComponent {
+  render() {
+    const {
+      label,
+      fields,
+      values,
+      onFieldChange,
+      prefix,
+      advance,
+      sectionsLength,
+      sectionIndex,
+      editable,
+      readonly,
+      title
+    } = this.props;
 
-const Section = ({
-  index,
-  name,
-  values,
-  sections,
-  advance,
-  hideTitle,
-  prefix = '',
-  sectionsLength,
-  sectionIndex,
-  ...props
-}) => {
-  const fields = sections
-    ? flatten(map(sections, section => section.fields))
-    : props.fields;
-
-  prefix = `${prefix}${name}-${index}-`;
-
-  return (
-    <Fragment>
-      {
-        sections
-          ? Object.keys(sections).map(section => <RenderSection key={section} {...props} {...sections[section]} prefix={prefix} values={values} hideTitle={false} />)
-          : <RenderSection {...props} hideTitle={hideTitle} fields={fields} prefix={prefix} values={values} />
-      }
-      {
-        sectionIndex + 1 < sectionsLength && <Button className="button-secondary" onClick={advance}>Next section</Button>
-      }
-    </Fragment>
-  );
+    return (
+      <Fragment>
+        { title && <h3>{title}</h3> }
+        { label && <h4>{label}</h4> }
+        {
+          editable
+            ? (
+              <Fieldset
+                fields={fields}
+                values={values}
+                prefix={prefix}
+                onFieldChange={onFieldChange}
+              />
+            )
+            : (
+              <ReviewFields
+                fields={fields}
+                values={values}
+                readonly={readonly}
+                editLink={`0#${this.props.prefix}`}
+              />
+            )
+        }
+        {
+          editable && sectionIndex + 1 < sectionsLength && <Button className="button-secondary" onClick={advance}>Next section</Button>
+        }
+      </Fragment>
+    );
+  }
 }
 
 const mapStateToProps = ({ project }, { index }) => {
@@ -65,4 +60,4 @@ const mapStateToProps = ({ project }, { index }) => {
   };
 };
 
-export default connect(mapStateToProps)(Section);
+export default withRouter(connect(mapStateToProps)(Section));

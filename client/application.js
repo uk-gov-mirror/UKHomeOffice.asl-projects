@@ -1,5 +1,6 @@
 import NTSSummary from './pages/sections/nts';
 import Protocols from './pages/sections/protocols';
+import ProtocolsReview from './pages/sections/protocols/review';
 import Objectives from './pages/sections/objectives';
 import ObjectivesReview from './pages/sections/objectives/review';
 import Establishments from './pages/sections/establishments';
@@ -10,12 +11,9 @@ import PolesReview from './pages/sections/poles/review';
 import SPECIES from './constants/species';
 
 import intersection from 'lodash/intersection';
-import every from 'lodash/every';
 import some from 'lodash/some';
 import flatten from 'lodash/flatten';
 import castArray from 'lodash/castArray';
-
-import { COMPLETE, INCOMPLETE, PARTIALLY_COMPLETE } from './constants/completeness';
 
 export default {
   introduction: {
@@ -717,15 +715,7 @@ export default {
         title: 'Protocols',
         name: 'protocols',
         component: Protocols,
-        complete: values => {
-          if (!values.protocols) {
-            return INCOMPLETE;
-          }
-          if (values.protocols.length && every(values.protocols, p => p.complete)) {
-            return COMPLETE;
-          }
-          return PARTIALLY_COMPLETE;
-        },
+        review: ProtocolsReview,
         fields: [
           {
             name: 'title',

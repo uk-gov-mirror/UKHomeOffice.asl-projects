@@ -10,9 +10,8 @@ class Accordion extends React.Component {
 
   constructor(props) {
     super(props);
-
     const open = this.props.children.map((child, i) => {
-      if (i === 0) {
+      if (i === this.props.open) {
         return true;
       }
       return false;
