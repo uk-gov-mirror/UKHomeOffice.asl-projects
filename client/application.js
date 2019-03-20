@@ -952,7 +952,7 @@ export default {
               },
               {
                 name: 'code',
-                label: 'Select the anaesthetic codes that apply to this step?',
+                label: 'Select the anaesthetic codes that apply to this step.',
                 type: 'checkbox',
                 options: [
                   {
