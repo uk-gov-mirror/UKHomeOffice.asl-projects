@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
 
-import size from 'lodash/size';
 import ProtocolSections from './protocol-sections';
 
 import Fieldset from '../../../components/fieldset';
