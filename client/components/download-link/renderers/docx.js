@@ -338,8 +338,6 @@ const renderProtocol = (doc, name, section, values) => {
 };
 
 const renderProtocolsSection = (doc, subsection, values) => {
-  renderFields(doc, subsection.setup, values);
-
   (values['protocols'] || []).forEach(protocolValues => {
     renderField(doc, subsection.fields[0], protocolValues);
 
