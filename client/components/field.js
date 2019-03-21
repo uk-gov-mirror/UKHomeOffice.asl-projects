@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import isEqual from 'lodash/isEqual';
 import isUndefined from 'lodash/isUndefined';
 import castArray from 'lodash/castArray';
 import some from 'lodash/some';
@@ -58,7 +59,7 @@ class Field extends Component {
     if (this.props.options && some(this.props.options, opt => opt.reveal)) {
       return true;
     }
-    return this.props.value !== newProps.value;
+    return !isEqual(this.props.value, newProps.value);
   }
 
   render() {
