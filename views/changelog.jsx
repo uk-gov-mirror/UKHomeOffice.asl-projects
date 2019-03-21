@@ -14,7 +14,8 @@ class Index extends React.Component {
             <li>Feature: protocols review page</li>
             <li>Feature: remove &quot;Protocols setup&quot; section</li>
             <li>Fixed: performance issues when multiple texteditors on page</li>
-            <li>Fixed: issue exporting word documents when applications contain nested lists
+            <li>Fixed: issue exporting word documents when applications contain nested lists</li>
+            <li>Fixed: rich text editors exceeding the height of the window when containing large amounts of text</li>
           </ul>
 
           <h2>Version 1.6.1 - 5th March 2019</h2>
