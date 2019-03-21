@@ -9,8 +9,9 @@ class Index extends React.Component {
         <div className="govuk-width-container">
           <h1>Changelog</h1>
 
-          <h2>Version 1.7.0 - 20th March 2019</h2>
+          <h2>Version 1.7.0 - 21st March 2019</h2>
           <ul>
+            <li>Fixed: conditional reveal checkboxes not responding</li>
             <li>Feature: protocols review page</li>
             <li>Feature: remove &quot;Protocols setup&quot; section</li>
             <li>Fixed: performance issues when multiple texteditors on page</li>
