@@ -12,6 +12,9 @@
 
   [data-slate-editor] {
     min-height: 200px;
+    max-height: 600px;
+    max-height: 90vh;
+    overflow: auto;
     padding: 5px;
   }
 
