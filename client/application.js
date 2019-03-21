@@ -1090,67 +1090,69 @@ export default {
                           {
                             label: 'No',
                             value: false,
-                            reveal: {
-                              name: 'quantitative-data-pilot-studies',
-                              label: 'Will this protocol use pilot studies',
-                              type: 'radio',
-                              className: 'smaller',
-                              inline: true,
-                              options: [
-                                {
-                                  label: 'Yes',
-                                  value: true,
-                                  reveal: {
-                                    name: 'quantitative-data-pilot-studies-how',
-                                    label: 'How and when will you use pilot studies?',
-                                    type: 'texteditor'
-                                  }
-                                },
-                                {
-                                  label: 'No',
-                                  value: false
-                                }
-                              ]
-                            }
                           }
                         ]
-                      },
-                      {
-                        name: 'quantitative-data-experimental-groups',
-                        label: 'How will you choose different experimental groups?',
-                        type: 'texteditor'
-                      },
-                      {
-                        name: 'control-groups',
-                        label: 'How will you use control groups?',
-                        hint: 'Provide a robust scientific justification for controls with significant suffering such as sham surgery controls or untreated infected controls.',
-                        type: 'texteditor'
-                      },
-                      {
-                        name: 'randomised',
-                        label: 'Will experiments and data analysis in this protocol be randomised or blinded? If so, how?',
-                        type: 'texteditor'
-                      },
-                      {
-                        name: 'reproducibility',
-                        label: 'How will you minimise variables to ensure reproducibility?',
-                        type: 'texteditor'
-                      },
-                      {
-                        name: 'control-groups-size',
-                        label: 'How will you determine group sizes?',
-                        type: 'texteditor'
-                      },
-                      {
-                        name: 'maximize-effectiveness',
-                        label: 'How will you maximise the data output from the animals you use on this protocol?',
-                        type: 'texteditor'
                       }
                     ]
                   },
                   {
                     label: 'No',
-                    value: false
+                    value: false,
+                    reveal: {
+                      name: 'quantitative-data-pilot-studies',
+                      label: 'Will this protocol use pilot studies',
+                      type: 'radio',
+                      className: 'smaller',
+                      inline: true,
+                      options: [
+                        {
+                          label: 'Yes',
+                          value: true,
+                          reveal: {
+                            name: 'quantitative-data-pilot-studies-how',
+                            label: 'How and when will you use pilot studies?',
+                            type: 'texteditor'
+                          }
+                        },
+                        {
+                          label: 'No',
+                          value: false,
+                          reveal: [
+                            {
+                              name: 'quantitative-data-experimental-groups',
+                              label: 'How will you choose different experimental groups?',
+                              type: 'texteditor'
+                            },
+                            {
+                              name: 'control-groups',
+                              label: 'How will you use control groups?',
+                              hint: 'Provide a robust scientific justification for controls with significant suffering such as sham surgery controls or untreated infected controls.',
+                              type: 'texteditor'
+                            },
+                            {
+                              name: 'randomised',
+                              label: 'Will experiments and data analysis in this protocol be randomised or blinded? If so, how?',
+                              type: 'texteditor'
+                            },
+                            {
+                              name: 'reproducibility',
+                              label: 'How will you minimise variables to ensure reproducibility?',
+                              type: 'texteditor'
+                            },
+                            {
+                              name: 'control-groups-size',
+                              label: 'How will you determine group sizes?',
+                              type: 'texteditor'
+                            },
+                            {
+                              name: 'maximize-effectiveness',
+                              label: 'How will you maximise the data output from the animals you use on this protocol?',
+                              type: 'texteditor'
+                            }
+                          ]
+                        }
+                      ]
+                    }
                   }
                 ]
               }
