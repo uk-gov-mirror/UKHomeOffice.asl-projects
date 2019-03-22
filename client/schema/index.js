@@ -1,7 +1,7 @@
+import v0 from './v0';
 import v1 from './v1';
-import v2 from './v2';
 
 export default {
-  0: v1,
-  1: v2
+  0: v0,
+  1: v1
 }
