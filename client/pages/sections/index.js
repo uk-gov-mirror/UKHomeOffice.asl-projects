@@ -69,7 +69,7 @@ class Questions extends PureComponent {
                 linkTo && <p><Link to={linkTo} /></p>
               }
               {
-                playback && castArray(playback).map(p => <Playback playback={p} />)
+                playback && castArray(playback).map(p => <Playback key={p} playback={p} />)
               }
               {
                 subtitle && <h2>{ subtitle }</h2>
