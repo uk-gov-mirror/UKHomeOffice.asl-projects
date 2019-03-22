@@ -1,5 +1,5 @@
 {
-  "name": "@asl/peephole",
+  "name": "@asl/projects",
   "version": "1.7.0",
   "description": "ASL PPL prototype",
   "main": "client/external.js",
