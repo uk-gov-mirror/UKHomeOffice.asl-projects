@@ -35,7 +35,9 @@ const EstablishmentsReview = ({ fields, values, goto, retreat, readonly, schemaV
                 <dt>Additional establishment: </dt>
                 <dd>
                   <span>{ establishment.name }</span>
-                  <a href="#other-establishments-list" onClick={() => goto(0)}>Edit</a>
+                  {
+                    !readonly && <a href="#other-establishments-list" onClick={() => goto(0)}>Edit</a>
+                  }
                 </dd>
               </dl>
             </div>

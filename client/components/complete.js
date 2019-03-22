@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router';
+import { connect } from 'react-redux';
 import { CheckboxGroup, Button } from '@ukhomeoffice/react-components';
 
 class Complete extends Component {
@@ -22,6 +24,9 @@ class Complete extends Component {
   }
 
   render() {
+    if (this.props.legacy) {
+      return <Button onClick={() => this.props.history.push('/')}>Continue</Button>;
+    }
     const { children, label = 'Mark this protocol as complete' } = this.props;
     return (
       <div className="panel">
@@ -45,4 +50,6 @@ class Complete extends Component {
   }
 }
 
-export default Complete;
+const mapStateToProps = ({ application: { schemaVersion } }) => ({ legacy: schemaVersion === 0 });
+
+export default withRouter(connect(mapStateToProps)(Complete));
