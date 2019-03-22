@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { connect } from 'react-redux';
 
 import Review from '../../../components/review';
 import Banner from '../../../components/banner';
@@ -30,7 +31,6 @@ const ObjectivesReview = ({ playback, values, steps, goto, readonly }) => (
           <Review
             key={index}
             {...steps[0].fields.find(f => f.name === 'how')}
-            readonly={readonly}
             value={objective.how}
             onEdit={() => goto(0)}
           />
@@ -43,13 +43,14 @@ const ObjectivesReview = ({ playback, values, steps, goto, readonly }) => (
         <Review
           key={index}
           {...field}
-          readonly={readonly}
           value={values[field.name]}
           onEdit={() => goto(1)}
         />
       ))
     }
   </Fragment>
-)
+);
 
-export default ObjectivesReview;
+const mapStateToProps = ({ application: { readonly } }) => ({ readonly })
+
+export default connect(mapStateToProps)(ObjectivesReview);

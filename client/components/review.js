@@ -141,6 +141,6 @@ class Review extends React.Component {
   }
 }
 
-const mapStateToProps = ({ project, settings }) => ({ project, settings });
+const mapStateToProps = ({ project, settings, application: { readonly } }) => ({ project, settings, readonly });
 
 export default connect(mapStateToProps)(Review);

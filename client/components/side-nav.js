@@ -5,16 +5,17 @@ import map from 'lodash/map';
 import pickBy from 'lodash/pickBy';
 import SectionLink from './sections-link';
 import ExpandingPanel from './expanding-panel';
+import schema from '../schema';
 
 const sectionVisible = (section, values) => {
   return !section.show || section.show(values);
 }
 
-const SideNav = ({ application, project }) => (
+const SideNav = ({ sections, project }) => (
   <nav className="sidebar-nav section-nav">
     <SectionLink />
     {
-      map(application, (section, key) =>
+      map(sections, (section, key) =>
         <ExpandingPanel key={key} title={section.title}>
           {
             map(pickBy(section.subsections, s => sectionVisible(s, project)), (subsection, key) => {
@@ -27,6 +28,6 @@ const SideNav = ({ application, project }) => (
   </nav>
 )
 
-const mapStateToProps = ({ application, project }) => ({ application, project })
+const mapStateToProps = ({ application: { schemaVersion }, project }) => ({ sections: schema[schemaVersion], project })
 
 export default connect(mapStateToProps)(SideNav);

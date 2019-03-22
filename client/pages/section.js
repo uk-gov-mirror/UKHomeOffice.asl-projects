@@ -5,18 +5,20 @@ import DefaultSection from './sections';
 import SectionsLink from '../components/sections-link';
 import StaticSection from '../components/static-section';
 import SideNav from '../components/side-nav';
+import schema from '../schema';
 
-const mapStateToProps = (state, props) => {
-  const section = Object.values(state.application).reduce((found, section) => {
-    return found || section.subsections[props.match.params.section];
+const mapStateToProps = ({ project, application: { schemaVersion, readonly } }, { match: { params } }) => {
+  const section = Object.values(schema[schemaVersion]).reduce((found, section) => {
+    return found || section.subsections[params.section];
   }, null);
 
   section.fields = section.fields || [];
 
   return {
-    project: state.project,
-    step: parseInt(props.match.params.step, 10) || 0,
-    section: props.match.params.section,
+    project,
+    readonly,
+    step: parseInt(params.step, 10) || 0,
+    section: params.section,
     ...section,
     options: section
   };
@@ -41,21 +43,21 @@ class Section extends React.Component {
       return null;
     }
 
-    const Component = this.props.component || DefaultSection;
-    const { fields, title, step, section, readonly, options, ...rest } = this.props;
-
-    if (readonly) {
+    if (this.props.readonly) {
       return (
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-one-third">
             <SideNav />
           </div>
           <div className="govuk-grid-column-two-thirds">
-            <StaticSection section={options} />
+            <StaticSection section={this.props.options} />
           </div>
         </div>
-      )
+      );
     }
+
+    const Component = this.props.component || DefaultSection;
+    const { fields, title, step, section, ...rest } = this.props;
 
     return (
       <Fragment>
@@ -68,7 +70,6 @@ class Section extends React.Component {
           exit={ () => this.props.history.push('/') }
           fields={ fields }
           step={ step }
-          readonly={ readonly }
           { ...rest }
           onProgress={ step => this.props.history.push(`/${this.props.section}/${step}`) }
         />

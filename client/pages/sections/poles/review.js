@@ -17,7 +17,6 @@ const ReviewSection = ({ title, fields, values, readonly }) => (
     <Review
       {...fields.find(f => f.name === 'poles')}
       value={values.poles}
-      readonly={readonly}
       editLink="/poles/0#poles"
     />
     {
@@ -26,7 +25,6 @@ const ReviewSection = ({ title, fields, values, readonly }) => (
           <Review
             {...fields.find(f => f.name === 'poles').options[0].reveal}
             value={values['poles-justification']}
-            readonly={readonly}
             editLink="/poles/0#poles-justification"
           />
           {
@@ -37,13 +35,11 @@ const ReviewSection = ({ title, fields, values, readonly }) => (
                   <Review
                     {...fields.find(f => f.name === 'title')}
                     value={pole.title}
-                    readonly={readonly}
                     editLink="/poles/1#title"
                   />
                   <Review
                     {...fields.find(f => f.name === 'pole-info')}
                     value={pole['pole-info']}
-                    readonly={readonly}
                     editLink="/poles/1#pole-info"
                   />
                 </div>
@@ -53,13 +49,11 @@ const ReviewSection = ({ title, fields, values, readonly }) => (
           <Review
             {...fields.find(f => f.name === 'poles-inspection')}
             value={values['poles-inspection']}
-            readonly={readonly}
             editLink="/poles/2#poles-inspection"
           />
           <Review
             {...fields.find(f => f.name === 'poles-transfer')}
             value={values['poles-transfer']}
-            readonly={readonly}
             editLink="/poles/2#poles-transfer"
           />
           {
@@ -68,7 +62,6 @@ const ReviewSection = ({ title, fields, values, readonly }) => (
                 key={index}
                 {...field}
                 value={values[field.name]}
-                readonly={readonly}
                 editLink={`/poles/2#${field.name}`}
               />
             ))
@@ -80,6 +73,6 @@ const ReviewSection = ({ title, fields, values, readonly }) => (
   </Fragment>
 )
 
-const mapStateToProps = ({ project }) => ({ project });
+const mapStateToProps = ({ project, application: { readonly } }) => ({ project, readonly });
 
 export default connect(mapStateToProps)(ReviewSection);
