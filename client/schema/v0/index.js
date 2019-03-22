@@ -1,6 +1,7 @@
 import Establishments from '../../pages/sections/establishments';
 import EstablishmentsReview from '../../pages/sections/establishments/review';
 import Protocols from '../../pages/sections/protocols';
+import ProtocolsReview from '../../pages/sections/protocols/review';
 
 export default {
   introductions: {
@@ -21,6 +22,11 @@ export default {
             type: 'radio',
             className: 'smaller',
             optionsFromSettings: 'establishments'
+          },
+          {
+            name: 'duration',
+            label: 'Licence duration',
+            type: 'duration'
           }
         ]
       }
@@ -149,7 +155,58 @@ export default {
           {
             name: 'purpose',
             label: 'Which purposes apply to your project?',
-            type: 'texteditor'
+            type: 'checkbox',
+            className: 'smaller',
+            options: [
+              {
+                label: '(a) Basic research',
+                value: 'purpose-a'
+              },
+              {
+                label: '(b) Translational or applied research with one of the following aims:',
+                value: 'purpose-b',
+                reveal: {
+                  name: 'purpose-b',
+                  label: '',
+                  type: 'checkbox',
+                  className: 'smaller',
+                  options: [
+                    {
+                      label: '(i) Avoidance, prevention, diagnosis or treatment of disease, ill-health  or abnormality, or their effects, in man, animals or plants.',
+                      value: 'purpose-b1',
+                    },
+                    {
+                      label: '(ii) Assessment, detection, regulation or modification of physiological conditions in man, animals or plants.',
+                      value: 'purpose-b2'
+                    },
+                    {
+                      label: '(iii) Improvement of the welfare of animals or of the production conditions for animals reared for agricultural purposes.',
+                      value: 'purpose-b3'
+                    }
+                  ]
+                }
+              },
+              {
+                label: '(c) Development, manufacture or testing of the quality, effectiveness and safety of drugs, foodstuffs and feedstuffs or any other substances or products, with one of the following aims mentioned in paragraph (b)',
+                value: 'purpose-c'
+              },
+              {
+                label: '(d) Protection of the natural environment in the interests of the health or welfare of man or animals.',
+                value: 'purpose-d'
+              },
+              {
+                label: '(e) Research aimed at preserving the species of animal subjected to regulated procedures as part of the programme of work.',
+                value: 'purpose-e'
+              },
+              {
+                label: '(f) Higher education or training for the acquisition, maintenance or improvement of vocational skills.',
+                value: 'purpose-f'
+              },
+              {
+                label: '(g) Forensic enquiries.',
+                value: 'purpose-g'
+              }
+            ]
           }
         ]
       },
@@ -221,6 +278,7 @@ export default {
       protocols: {
         title: 'Protocols',
         component: Protocols,
+        review: ProtocolsReview,
         fields: [
           {
             name: 'title',
@@ -421,22 +479,12 @@ export default {
     subsections: {
       summary: {
         title: 'Project summary',
+        playback: [
+          'title',
+          'purpose',
+          'duration'
+        ],
         fields: [
-          {
-            name: 'nts-title',
-            label: 'Title',
-            type: 'text'
-          },
-          {
-            name: 'nts-purpose',
-            label: 'Purpose',
-            type: 'text'
-          },
-          {
-            name: 'nts-duration',
-            label: 'Duration',
-            type: 'text'
-          },
           {
             name: 'nts-objectives',
             label: 'Describe the aims and objectives of the project.',
@@ -459,7 +507,7 @@ export default {
           }
         ]
       },
-      replacement: {
+      'nts-replacement': {
         title: 'Replacement',
         fields: [
           {
@@ -469,7 +517,7 @@ export default {
           }
         ]
       },
-      reduction: {
+      'nts-reduction': {
         title: 'Reduction',
         fields: [
           {
@@ -479,7 +527,7 @@ export default {
           }
         ]
       },
-      refinement: {
+      'nts-refinement': {
         title: 'Refinement',
         fields: [
           {

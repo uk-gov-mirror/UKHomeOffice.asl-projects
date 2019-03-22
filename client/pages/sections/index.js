@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import some from 'lodash/some';
 import flatten from 'lodash/flatten';
+import castArray from 'lodash/castArray';
 
 import Wizard from '../../components/wizard';
 import Fieldset from '../../components/fieldset';
@@ -68,7 +69,7 @@ class Questions extends PureComponent {
                 linkTo && <p><Link to={linkTo} /></p>
               }
               {
-                playback && <Playback playback={playback} />
+                playback && castArray(playback).map(p => <Playback playback={p} />)
               }
               {
                 subtitle && <h2>{ subtitle }</h2>

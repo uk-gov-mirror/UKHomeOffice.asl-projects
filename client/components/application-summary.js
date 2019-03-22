@@ -15,6 +15,7 @@ import schema from '../schema'
 const mapStateToProps = ({ project, application: { schemaVersion, readonly } }) => {
   return {
     readonly,
+    legacy: schemaVersion === 0,
     values: project,
     sections: schema[schemaVersion]
   };
@@ -23,6 +24,9 @@ const mapStateToProps = ({ project, application: { schemaVersion, readonly } }) 
 class ApplicationSummary extends React.Component {
 
   isCompleted = () => {
+    if (this.props.legacy) {
+      return true;
+    }
     const subsections = map(
       map(this.props.sections, section => pickBy(section.subsections, this.sectionVisible))
         .reduce((obj, values) => ({ ...obj, ...values }), {}),
@@ -52,6 +56,9 @@ class ApplicationSummary extends React.Component {
   }
 
   completeBadge = completeness => {
+    if (this.props.legacy) {
+      return null;
+    }
     switch (completeness) {
       case COMPLETE:
         return <span className="badge complete">complete</span>;
@@ -107,7 +114,9 @@ class ApplicationSummary extends React.Component {
         {
           !this.props.readonly && (
             <Fragment>
-              <p>All sections must be marked as complete before you can continue and send your application to the Home Office.</p>
+              {
+                !this.props.legacy && <p>All sections must be marked as complete before you can continue and send your application to the Home Office.</p>
+              }
               <Button
                 disabled={!this.isCompleted()}
                 onClick={this.props.onComplete}
