@@ -7,14 +7,16 @@ import pickBy from 'lodash/pickBy';
 import every from 'lodash/every';
 import some from 'lodash/some';
 
-import { INCOMPLETE, PARTIALLY_COMPLETE, COMPLETE } from '../constants/completeness';
-
 import { Button } from '@ukhomeoffice/react-components';
 
-const mapStateToProps = ({ project, application }) => {
+import { INCOMPLETE, PARTIALLY_COMPLETE, COMPLETE } from '../constants/completeness';
+import schema from '../schema'
+
+const mapStateToProps = ({ project, application: { schemaVersion, readonly } }) => {
   return {
+    readonly,
     values: project,
-    sections: application
+    sections: schema[schemaVersion]
   };
 }
 

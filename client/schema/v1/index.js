@@ -1,14 +1,14 @@
-import NTSSummary from './pages/sections/nts';
-import Protocols from './pages/sections/protocols';
-import ProtocolsReview from './pages/sections/protocols/review';
-import Objectives from './pages/sections/objectives';
-import ObjectivesReview from './pages/sections/objectives/review';
-import Establishments from './pages/sections/establishments';
-import EstablishmentsReview from './pages/sections/establishments/review';
-import Poles from './pages/sections/poles';
-import PolesReview from './pages/sections/poles/review';
+import NTSSummary from '../../pages/sections/nts';
+import Protocols from '../../pages/sections/protocols';
+import ProtocolsReview from '../../pages/sections/protocols/review';
+import Objectives from '../../pages/sections/objectives';
+import ObjectivesReview from '../../pages/sections/objectives/review';
+import Establishments from '../../pages/sections/establishments';
+import EstablishmentsReview from '../../pages/sections/establishments/review';
+import Poles from '../../pages/sections/poles';
+import PolesReview from '../../pages/sections/poles/review';
 
-import SPECIES from './constants/species';
+import SPECIES from '../../constants/species';
 
 import intersection from 'lodash/intersection';
 import some from 'lodash/some';

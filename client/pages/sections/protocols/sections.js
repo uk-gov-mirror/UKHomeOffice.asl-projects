@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import size from 'lodash/size';
 import flatten from 'lodash/flatten';
@@ -8,13 +9,16 @@ import ExpandingPanel from '../../../components/expanding-panel';
 import Section from './section';
 import Steps from './steps';
 import Animals from './animals';
+import LegacyAnimals from './legacy-animals';
 
 const getSection = (section, props) => {
   switch(section) {
     case 'steps':
       return <Steps {...props} />
     case 'animals':
-      return <Animals {...props} />
+      return props.schemaVersion === 0
+        ? <LegacyAnimals {...props} />
+        : <Animals {...props} />
     default:
       return <Section {...props} />
   }
@@ -60,4 +64,6 @@ const ProtocolSections = ({ sections, protocolState, editable, ...props }) => (
   </Accordion>
 )
 
-export default ProtocolSections
+const mapStateToProps = ({ application: { schemaVersion } }) => ({ schemaVersion })
+
+export default connect(mapStateToProps)(ProtocolSections);

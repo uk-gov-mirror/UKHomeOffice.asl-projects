@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { connect } from 'react-redux';
 
 import castArray from 'lodash/castArray';
 
@@ -6,7 +7,7 @@ import Banner from '../../../components/banner';
 import Playback from '../../../components/playback';
 import Review from '../../../components/review';
 
-const EstablishmentsReview = ({ fields, values, goto, retreat, readonly }) => {
+const EstablishmentsReview = ({ fields, values, goto, retreat, readonly, schemaVersion }) => {
   const establishments = castArray(values.establishments).filter(f => values['other-establishments'] && f && values['other-establishments-list'].includes(f.name))
   return (
     <Fragment>
@@ -24,7 +25,6 @@ const EstablishmentsReview = ({ fields, values, goto, retreat, readonly }) => {
       <Review
         {...fields.find(f => f.name === 'other-establishments')}
         value={values['other-establishments']}
-        readonly={readonly}
         onEdit={() => goto(0)}
       />
       {
@@ -44,7 +44,6 @@ const EstablishmentsReview = ({ fields, values, goto, retreat, readonly }) => {
                 <Review
                   key={index}
                   {...field}
-                  readonly={readonly}
                   value={establishment[field.name]}
                 />
               ))
@@ -52,24 +51,31 @@ const EstablishmentsReview = ({ fields, values, goto, retreat, readonly }) => {
           </div>
         ))
       }
-      <Review
-        {...fields.find(f => f.name === 'establishments-care-conditions')}
-        value={values['establishments-care-conditions']}
-        readonly={readonly}
-        onEdit={retreat}
-      />
       {
-        values['establishments-care-conditions'] === false && (
-          <Review
-            {...fields.find(f => f.name === 'establishments-care-conditions').options[1].reveal}
-            value={values['establishments-care-conditions-justification']}
-            readonly={readonly}
-            onEdit={retreat}
-          />
+        // only show these fields when viewing a non-legacy PPL
+        schemaVersion === 1 && (
+          <Fragment>
+            <Review
+              {...fields.find(f => f.name === 'establishments-care-conditions')}
+              value={values['establishments-care-conditions']}
+              onEdit={retreat}
+            />
+            {
+              values['establishments-care-conditions'] === false && (
+                <Review
+                  {...fields.find(f => f.name === 'establishments-care-conditions').options[1].reveal}
+                  value={values['establishments-care-conditions-justification']}
+                  onEdit={retreat}
+                  />
+              )
+            }
+          </Fragment>
         )
       }
     </Fragment>
   )
 }
 
-export default EstablishmentsReview;
+const mapStateToProps = ({ application: { readonly, schemaVersion } }) => ({ readonly, schemaVersion });
+
+export default connect(mapStateToProps)(EstablishmentsReview);

@@ -23,7 +23,7 @@ class ProtocolsReview extends PureComponent {
           )
         }
 
-        <Protocols {...props} readonly={readonly} editable={false} />
+        <Protocols {...props} editable={false} />
 
         {
           !readonly && (
@@ -44,7 +44,8 @@ class ProtocolsReview extends PureComponent {
   }
 }
 
-const mapStateToProps = ({ project }) => ({
+const mapStateToProps = ({ project, application: { readonly } }) => ({
+  readonly,
   complete: project['protocols-complete']
 });
 

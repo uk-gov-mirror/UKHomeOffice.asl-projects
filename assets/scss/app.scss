@@ -390,6 +390,7 @@ $assetPath: '/public';
   }
 
   .govuk-reveal {
+    margin-bottom: $govuk-gutter;
     textarea:last-child, .editor:last-child {
       margin-bottom: 0;
     }

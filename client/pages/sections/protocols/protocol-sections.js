@@ -39,7 +39,7 @@ class ProtocolSections extends PureComponent {
     } = this.props;
 
     const severityField = sections.details.fields.find(field => field.name === 'severity');
-    const severityOption = severityField.options.find(option => option.value === values.severity);
+    const severityOption = severityField.options && severityField.options.find(option => option.value === values.severity);
 
     return (
       <section className={classnames('protocol', { complete: values.complete })}>

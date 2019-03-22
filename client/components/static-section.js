@@ -8,7 +8,7 @@ const StaticSection = ({ section, project, fields = [] }) => {
   return (
     <Fragment>
       <h1>{section.title}</h1>
-      <Component {...section} fields={fields} values={project} readonly={true} />
+      <Component {...section} fields={fields} values={project} />
     </Fragment>
   )
 }
