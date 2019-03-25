@@ -59,7 +59,7 @@ class Field extends Component {
     if (this.props.options && some(this.props.options, opt => opt.reveal)) {
       return true;
     }
-    return !isEqual(this.props.value, newProps.value);
+    return !isEqual(this.props, newProps);
   }
 
   render() {
