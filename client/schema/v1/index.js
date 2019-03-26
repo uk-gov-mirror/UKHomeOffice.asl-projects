@@ -64,24 +64,52 @@ export default {
                 className: 'smaller',
                 options: [
                   {
-                    label: 'Basic research',
-                    value: 'basic-research'
+                    label: '(a) Basic research',
+                    value: 'purpose-a'
                   },
                   {
-                    label: 'Translational and applied research',
-                    value: 'translational-research'
+                    label: '(b) Translational or applied research with one of the following aims:',
+                    value: 'purpose-b',
+                    reveal: {
+                      name: 'purpose-b',
+                      label: '',
+                      type: 'checkbox',
+                      className: 'smaller',
+                      options: [
+                        {
+                          label: '(i) Avoidance, prevention, diagnosis or treatment of disease, ill-health  or abnormality, or their effects, in man, animals or plants.',
+                          value: 'purpose-b1',
+                        },
+                        {
+                          label: '(ii) Assessment, detection, regulation or modification of physiological conditions in man, animals or plants.',
+                          value: 'purpose-b2'
+                        },
+                        {
+                          label: '(iii) Improvement of the welfare of animals or of the production conditions for animals reared for agricultural purposes.',
+                          value: 'purpose-b3'
+                        }
+                      ]
+                    }
                   },
                   {
-                    label: 'Protection of the natural environment in the interests of the health or welfare of human beings or animals',
-                    value: 'protection-of-environment'
+                    label: '(c) Development, manufacture or testing of the quality, effectiveness and safety of drugs, foodstuffs and feedstuffs or any other substances or products, with one of the following aims mentioned in paragraph (b)',
+                    value: 'purpose-c'
                   },
                   {
-                    label: 'Preservation of species',
-                    value: 'preservation-of-species'
+                    label: '(d) Protection of the natural environment in the interests of the health or welfare of man or animals.',
+                    value: 'purpose-d'
                   },
                   {
-                    label: 'Forensic enquiries',
-                    value: 'forensic-enquiries'
+                    label: '(e) Research aimed at preserving the species of animal subjected to regulated procedures as part of the programme of work.',
+                    value: 'purpose-e'
+                  },
+                  {
+                    label: '(f) Higher education or training for the acquisition, maintenance or improvement of vocational skills.',
+                    value: 'purpose-f'
+                  },
+                  {
+                    label: '(g) Forensic enquiries.',
+                    value: 'purpose-g'
                   }
                 ]
               },
