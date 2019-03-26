@@ -296,17 +296,17 @@ export default {
                   },
                   {
                     name: 'transfer-how',
-                    label: 'How may the movement of animals between licensed establishments affect the scientific delivery of this project?',
+                    label: 'How might the movement of animals between licensed establishments affect scientific delivery of the work?',
                     type: 'texteditor'
                   },
                   {
                     name: 'transfer-measures',
-                    label: 'Which measures will you use to minimise any adverse effects for animals that may arise when moving them between licensed establishments?',
+                    label: 'What measures will you use to minimise any adverse effects for animals that may arise when moving them between licensed establishments?',
                     type: 'texteditor'
                   },
                   {
                     name: 'transfer-recovery',
-                    label: 'Will medically and surgically prepared animals be given a minimum of 7 days to recover before being transferred?',
+                    label: 'Will surgically prepared animals be given a minimum of 7 days to recover before being transferred?',
                     type: 'radio',
                     inline: true,
                     className: 'smaller',
@@ -328,7 +328,7 @@ export default {
                   },
                   {
                     name: 'transfer-acclimatisation',
-                    label: 'Will animals be given a minimum of 7 days to acclimatise to their new surroundings prior to any further regulated procedures?',
+                    label: 'Will animals be given a minimum of 7 days to acclimatise to their new surroundings prior to any regulated procedures being undertaken?',
                     type: 'radio',
                     inline: true,
                     className: 'smaller',
@@ -400,7 +400,7 @@ export default {
               },
               {
                 name: 'pole-info',
-                label: 'Description',
+                label: 'Details',
                 type: 'texteditor'
               }
             ]
@@ -442,17 +442,17 @@ export default {
                       },
                       {
                         name: 'poles-transfer-checks',
-                        label: 'How will you guarantee the competence of this person to make the appropriate checks?',
+                        label: 'How will you ensure the competence of this person to make the appropriate checks?',
                         type: 'texteditor'
                       },
                       {
                         name: 'poles-transfer-delivery',
-                        label: 'How may the movement of animals between a POLE and a licensed establishment affect the scientific delivery of this project?',
+                        label: 'How might the movement of animals between a POLE and a licensed establishment affect the scientific delivery of this project?',
                         type: 'texteditor'
                       },
                       {
                         name: 'poles-transfer-measures',
-                        label: 'Which measures will you use to minimise any adverse effects for animals that may arise from moving them between a POLE and a licensed establishment?',
+                        label: 'What arrangements will be made to assure an animal\'s welfare during transport, particularly if they are being moved after the start of regulated procedures?',
                         type: 'texteditor'
                       }
                     ]
@@ -477,7 +477,7 @@ export default {
         fields: [
           {
             name: 'scientific-knowledge-summary',
-            label: 'Briefly summarise the current state of scientific knowledge in this area of work to show how you defined the starting point of this project',
+            label: 'Briefly summarise the current state of scientific knowledge in this area of work to show how you arrived at the starting point of this project.',
             hint: 'Be specific and relevant to your project aim - there\'s no need for a detailed overview of the entire field. Include any relevant non-animal research if it has contributed to the starting point of your project.',
             type: 'texteditor'
           },
