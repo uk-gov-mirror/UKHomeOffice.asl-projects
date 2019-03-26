@@ -9,6 +9,15 @@ class Index extends React.Component {
         <div className="govuk-width-container">
           <h1>Changelog</h1>
 
+          <h2>Version 1.7.1 - 26th March 2019</h2>
+          <ul>
+            <li>Fixed: protocols species not updating when new species selected</li>
+            <li>Fixed: protocols not working when undefined other species added</li>
+            <li>Fixed: Unable to export Word document in ppl tool</li>
+            <li>Fixed: Reduction number of animals broken for other species</li>
+            <li>Fixed: Project duration isn't saved in PPL tool</li>
+          </ul>
+
           <h2>Version 1.7.0 - 21st March 2019</h2>
           <ul>
             <li>Feature: protocols review page</li>
