@@ -9,6 +9,11 @@ class Index extends React.Component {
         <div className="govuk-width-container">
           <h1>Changelog</h1>
 
+          <h2>Version 2.2.3 - 26th March 2019</h2>
+          <ul>
+            <li>Content: minor copy updates</li>
+          </ul>
+
           <h2>Version 2.2.2 - 26th March 2019</h2>
           <ul>
             <li>Fixed: protocols species not updating when new species selected</li>
