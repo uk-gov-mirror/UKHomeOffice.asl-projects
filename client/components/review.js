@@ -79,15 +79,21 @@ class Review extends React.Component {
     }
     if (this.props.type === 'animal-quantities') {
       const species = [
-        ...(this.props.project.species || []),
+        ...flatten((this.props.project.species || []).map(s => {
+          if (s.indexOf('other') > -1) {
+            return this.props.project[`species-${s}`];
+          }
+          return s;
+        })),
         ...(this.props.project['species-other'] || [])
       ].map(s => {
-      const opt = flatten(values(speciesOptions)).find(species => species.value === s);
-      return {
-        key: species && species.value,
-        title: opt ? opt.label : s,
-        value: this.props.project[`${this.props.name}-${s}`]
-      }})
+        const opt = flatten(values(speciesOptions)).find(species => species.value === s);
+        return {
+          key: species && species.value,
+          title: opt ? opt.label : s,
+          value: this.props.project[`${this.props.name}-${s}`]
+        }
+      });
 
       if (!species.length) {
         return <p>
