@@ -11,7 +11,7 @@ class Index extends React.Component {
 
           <h2>Version 2.2.3 - 26th March 2019</h2>
           <ul>
-            <li>Fixed: minor copy updates</li>
+            <li>Content: minor copy updates</li>
           </ul>
 
           <h2>Version 2.2.2 - 26th March 2019</h2>
