@@ -3,13 +3,15 @@ import { connect } from 'react-redux';
 import classnames from 'classnames';
 import docxRenderer from './renderers/docx';
 import pplRenderer from './renderers/ppl';
+import schema from '../../schema';
 
 const mapStateToProps = (state, props) => {
-  const project = state.project || state.projects.find(project => project.id === props.project);
+  const values = state.project || state.projects.find(project => project.id === props.project);
+  const sections = Object.values(schema[state.application.schemaVersion]);
 
   return {
-    values: project,
-    sections: Object.values(state.application),
+    values,
+    sections,
     optionsFromSettings: state.settings
   };
 };
