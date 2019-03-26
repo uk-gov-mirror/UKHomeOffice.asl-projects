@@ -6,7 +6,7 @@ import Fieldset from './fieldset'
 const getNumbers = length => Array.apply(null, { length }).map(Number.call, String);
 
 class Duration extends Component {
-  state = (this.props.values && this.props.values.duration) || {
+  state = this.props.value || {
     years: null,
     months: null
   }

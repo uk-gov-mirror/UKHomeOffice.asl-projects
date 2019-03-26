@@ -332,12 +332,6 @@ const renderProtocol = (doc, name, section, values) => {
       return (values.steps || []).forEach(stepValues => {
         renderFields(doc, section, stepValues);
       });
-    case 'experience':
-      return Object.values(section)
-        .filter((e) => { return e instanceof Object; })
-        .forEach(s => {
-          renderFields(doc, s, values);
-        });
     case 'animals':
       return (values.speciesDetails || []).forEach(speciesValues => {
         doc.createParagraph(speciesValues.name).heading2();
