@@ -461,16 +461,6 @@ export default {
             type: 'texteditor'
           }
         ]
-      },
-      continuation: {
-        title: 'Continuation of work',
-        fields: [
-          {
-            name: 'continuation',
-            label: 'If you are seeking authority to continue work from another project licence, provide the relevant licence number and expiry date.',
-            type: 'texteditor'
-          }
-        ]
       }
     }
   },
