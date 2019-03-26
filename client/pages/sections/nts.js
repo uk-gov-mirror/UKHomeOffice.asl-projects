@@ -9,6 +9,7 @@ import flatten from 'lodash/flatten';
 import Complete from '../../components/complete';
 import Review from '../../components/review';
 import NTS from '../../components/nts';
+import schema from '../../schema';
 
 const OFFSET = 100;
 
@@ -147,8 +148,8 @@ class NTSSummary extends Component {
   }
 }
 
-const mapStateToProps = ({ application, project }) => ({
-  sectionsSettings: map(application, s => s.subsections)
+const mapStateToProps = ({ application: { schemaVersion }, project }) => ({
+  sectionsSettings: map(schema[schemaVersion], s => s.subsections)
     .reduce((obj, subsections) => ({ ...obj, ...subsections }), {}),
   project
 });
