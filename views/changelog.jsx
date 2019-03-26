@@ -9,7 +9,7 @@ class Index extends React.Component {
         <div className="govuk-width-container">
           <h1>Changelog</h1>
 
-          <h2>Version 1.7.1 - 26th March 2019</h2>
+          <h2>Version 2.2.2 - 26th March 2019</h2>
           <ul>
             <li>Fixed: protocols species not updating when new species selected</li>
             <li>Fixed: protocols not working when undefined other species added</li>
