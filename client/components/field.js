@@ -56,7 +56,7 @@ class Field extends Component {
     // if the field contains a reveal, trigger a rerender.
     // This could be improved by traversing reveals and detecting
     // changes in children, but the render is relatively cheap.
-    if (this.props.options && some(this.props.options, opt => opt.reveal)) {
+    if (this.props.options && some(this.props.options, opt => opt && opt.reveal)) {
       return true;
     }
     return !isEqual(this.props, newProps);
