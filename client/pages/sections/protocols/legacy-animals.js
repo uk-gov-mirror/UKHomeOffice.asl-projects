@@ -11,11 +11,11 @@ const getFields = fields => {
     label: '',
     type: 'checkbox',
     className: 'smaller',
-    options: LEGACY_SPECIES.map(species => {
+    options: LEGACY_SPECIES.map(({ label, value }) => {
       return {
-        label: species,
-        value: species,
-        reveal: fields.map(f => ({ ...f, name: `${species}-${f.name}` }))
+        label,
+        value,
+        reveal: fields.map(f => ({ ...f, name: `${value}-${f.name}` }))
       }
     })
   }]
@@ -34,11 +34,11 @@ const LegacyAnimals = ({ onFieldChange, values, fields, prefix, advance, editabl
           />
         )
         : values.species && values.species.length
-          ? values.species.map(species => (
-            <Fragment key={species}>
-              <h3>{species}</h3>
+          ? values.species.map(({ label, value }) => (
+            <Fragment key={value}>
+              <h3>{label}</h3>
               <ReviewFields
-                fields={fields.map(f => ({ ...f, name: `${species}-${f.name}` }))}
+                fields={fields.map(f => ({ ...f, name: `${value}-${f.name}` }))}
                 values={values}
                 editLink={`0#${prefix}`}
               />
