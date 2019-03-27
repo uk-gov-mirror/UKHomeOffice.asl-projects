@@ -13,7 +13,6 @@ import SPECIES from '../../constants/species';
 import intersection from 'lodash/intersection';
 import some from 'lodash/some';
 import flatten from 'lodash/flatten';
-import castArray from 'lodash/castArray';
 
 export default {
   introduction: {
