@@ -1,5 +1,5 @@
 const INITIAL_STATE = {
-  schemaVersion: 1,
+  schemaVersion: 0,
   readonly: false
 };
 

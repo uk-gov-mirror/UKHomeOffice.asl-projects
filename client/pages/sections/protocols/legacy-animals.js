@@ -34,16 +34,19 @@ const LegacyAnimals = ({ onFieldChange, values, fields, prefix, advance, editabl
           />
         )
         : values.species && values.species.length
-          ? values.species.map(({ label, value }) => (
-            <Fragment key={value}>
-              <h3>{label}</h3>
-              <ReviewFields
-                fields={fields.map(f => ({ ...f, name: `${value}-${f.name}` }))}
-                values={values}
-                editLink={`0#${prefix}`}
-              />
-            </Fragment>
-          ))
+          ? values.species.map(id => {
+            const species = LEGACY_SPECIES.find(s => s.value === id);
+            return (
+              <Fragment key={id}>
+                <h3>{species && species.label}</h3>
+                <ReviewFields
+                  fields={fields.map(f => ({ ...f, name: `${id}-${f.name}` }))}
+                  values={values}
+                  editLink={`0#${prefix}`}
+                />
+              </Fragment>
+            )
+          })
           : <em>No species selected</em>
     }
     {
