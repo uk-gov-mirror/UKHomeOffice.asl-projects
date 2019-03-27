@@ -87,6 +87,10 @@ export default {
     {
       label: 'Cephalopods',
       value: 'cephalopods'
+    },
+    {
+      label: 'Xenopus',
+      value: 'xenopus'
     }
   ],
   AV: [
