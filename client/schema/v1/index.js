@@ -574,8 +574,9 @@ export default {
           }
         ]
       },
-      strategy: {
-        title: 'Strategy',
+      'action-plan': {
+        title: 'Action plan',
+        intro: 'There are several useful resources to help you plan your experiments. It is recommended that you read the ARRIVE or PREPARE guidelines, or use the NC3Rs\' Experimental Design Assistant before answering the questions in this section.',
         playback: 'project-aim',
         review: ObjectivesReview,
         steps: [
