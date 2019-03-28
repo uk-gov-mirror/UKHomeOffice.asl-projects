@@ -1,15 +1,18 @@
 import React, { Fragment } from 'react';
+import { connect } from 'react-redux';
 import classnames from 'classnames';
 
-const Completable = ({ status = 'incomplete', children }) => (
+const Completable = ({ status = 'incomplete', legacy, children }) => (
   <Fragment>
-    <label className={classnames('status-label', status)}>
-      {
-        status === 'incomplete' ? 'In progress' : 'Completed'
-      }
-    </label>
+    { !legacy &&
+      <label className={classnames('status-label', status)}>
+        { status === 'incomplete' ? 'In progress' : 'Completed' }
+      </label>
+    }
     { children }
   </Fragment>
 )
 
-export default Completable;
+const mapStateToProps = ({ application: { schemaVersion } }) => ({ legacy: schemaVersion === 0 });
+
+export default connect(mapStateToProps)(Completable);
