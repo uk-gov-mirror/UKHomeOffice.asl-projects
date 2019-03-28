@@ -16,14 +16,6 @@ export default {
             type: 'text'
           },
           {
-            name: 'primary-establishment',
-            playback: 'Primary establishment',
-            label: 'What is the primary establishment for this project?',
-            type: 'radio',
-            className: 'smaller',
-            optionsFromSettings: 'establishments'
-          },
-          {
             name: 'duration',
             label: 'Licence duration',
             type: 'duration'
@@ -37,7 +29,6 @@ export default {
     subsections: {
       establishments: {
         title: 'Establishments',
-        playback: 'primary-establishment',
         review: EstablishmentsReview,
         steps: [
           {
