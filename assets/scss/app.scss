@@ -11,6 +11,15 @@ $assetPath: '/public';
 @import "images";
 
 #ppl-drafting-tool {
+  .page-header {
+    background-color: $background;
+
+    h2, h3 {
+      margin-bottom: $govuk-gutter/4;
+      font-weight: normal;
+    }
+  }
+  
   .flex {
     display: flex;
 

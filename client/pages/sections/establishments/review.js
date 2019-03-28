@@ -4,11 +4,10 @@ import { connect } from 'react-redux';
 import castArray from 'lodash/castArray';
 
 import Banner from '../../../components/banner';
-import Playback from '../../../components/playback';
 import Review from '../../../components/review';
 
 const EstablishmentsReview = ({ fields, values, goto, retreat, readonly, schemaVersion }) => {
-  const establishments = castArray(values.establishments).filter(f => values['other-establishments'] && f && values['other-establishments-list'].includes(f.name))
+  const establishments = castArray(values.establishments).filter(f => values['other-establishments'] && f && values['other-establishments-list'].includes(f.name));
   return (
     <Fragment>
       {
@@ -18,7 +17,6 @@ const EstablishmentsReview = ({ fields, values, goto, retreat, readonly, schemaV
               <h2>Please review your answers for:</h2>
               <h1>Establishments</h1>
             </Banner>
-            <Playback playback="primary-establishment" />
           </Fragment>
         )
       }

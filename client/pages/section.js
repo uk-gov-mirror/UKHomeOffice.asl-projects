@@ -5,9 +5,10 @@ import DefaultSection from './sections';
 import SectionsLink from '../components/sections-link';
 import StaticSection from '../components/static-section';
 import SideNav from '../components/side-nav';
+import Header from '../components/header';
 import schema from '../schema';
 
-const mapStateToProps = ({ project, application: { schemaVersion, readonly } }, { match: { params } }) => {
+const mapStateToProps = ({ project, application: { schemaVersion, readonly, establishment } }, { match: { params } }) => {
   const section = Object.values(schema[schemaVersion]).reduce((found, section) => {
     return found || section.subsections[params.section];
   }, null);
@@ -16,6 +17,7 @@ const mapStateToProps = ({ project, application: { schemaVersion, readonly } }, 
 
   return {
     project,
+    establishment,
     readonly,
     step: parseInt(params.step, 10) || 0,
     section: params.section,
@@ -62,6 +64,10 @@ class Section extends React.Component {
     return (
       <Fragment>
         <SectionsLink />
+        <Header
+          title={this.props.establishment}
+          subtitle={this.props.project.title || 'Untitled project'}
+        />
         <Component
           { ...this.props }
           title={ title }

@@ -20,110 +20,90 @@ export default {
     subsections: {
       introduction: {
         title: 'Introductory details',
-        steps: [
+        nts: true,
+        fields: [
           {
-            title: 'Apply for project licence - 1 of 2',
-            intro: 'This tool currently supports applications for Research projects. The full range of project licence applications will be added soon.',
-            fields: [
+            name: 'title',
+            label: 'What\'s the title of this project?',
+            type: 'text'
+          },
+          {
+            name: 'project-aim',
+            label: 'What\'s the overall aim of this project?',
+            playback: 'Overall aim of this project',
+            type: 'texteditor'
+          },
+          {
+            name: 'project-importance',
+            label: 'Why is it important to undertake this work?',
+            type: 'texteditor'
+          },
+          {
+            name: 'permissible-purpose',
+            label: 'Which permissible purposes apply to this project?',
+            type: 'checkbox',
+            className: 'smaller',
+            options: [
               {
-                name: 'primary-establishment',
-                playback: 'Primary establishment',
-                label: 'What is the primary establishment for this project?',
-                type: 'radio',
-                className: 'smaller',
-                optionsFromSettings: 'establishments'
+                label: '(a) Basic research',
+                value: 'basic-research'
+              },
+              {
+                label: '(b) Translational or applied research with one of the following aims:',
+                value: 'translational-research',
+                reveal: {
+                  name: 'translational-research',
+                  label: '',
+                  type: 'checkbox',
+                  className: 'smaller',
+                  options: [
+                    {
+                      label: '(i) Avoidance, prevention, diagnosis or treatment of disease, ill-health  or abnormality, or their effects, in man, animals or plants.',
+                      value: 'translational-research-1',
+                    },
+                    {
+                      label: '(ii) Assessment, detection, regulation or modification of physiological conditions in man, animals or plants.',
+                      value: 'translational-research-2'
+                    },
+                    {
+                      label: '(iii) Improvement of the welfare of animals or of the production conditions for animals reared for agricultural purposes.',
+                      value: 'translational-research-3'
+                    }
+                  ]
+                }
+              },
+              {
+                label: '(c) Development, manufacture or testing of the quality, effectiveness and safety of drugs, foodstuffs and feedstuffs or any other substances or products, with one of the following aims mentioned in paragraph (b)',
+                value: 'safety-of-drugs'
+              },
+              {
+                label: '(d) Protection of the natural environment in the interests of the health or welfare of man or animals.',
+                value: 'protection-of-environment'
+              },
+              {
+                label: '(e) Research aimed at preserving the species of animal subjected to regulated procedures as part of the programme of work.',
+                value: 'preservation-of-species'
+              },
+              {
+                label: '(f) Higher education or training for the acquisition, maintenance or improvement of vocational skills.',
+                value: 'higher-education'
+              },
+              {
+                label: '(g) Forensic enquiries.',
+                value: 'forensic-enquiries'
               }
             ]
           },
           {
-            title: 'Apply for project licence - 2 of 2',
-            subtitle: 'Project introduction',
-            nts: true,
-            fields: [
-              {
-                name: 'title',
-                label: 'What\'s the title of this project?',
-                type: 'text'
-              },
-              {
-                name: 'project-aim',
-                label: 'What\'s the overall aim of this project?',
-                playback: 'Overall aim of this project',
-                type: 'texteditor'
-              },
-              {
-                name: 'project-importance',
-                label: 'Why is it important to undertake this work?',
-                type: 'texteditor'
-              },
-              {
-                name: 'permissible-purpose',
-                label: 'Which permissible purposes apply to this project?',
-                type: 'checkbox',
-                className: 'smaller',
-                options: [
-                  {
-                    label: '(a) Basic research',
-                    value: 'basic-research'
-                  },
-                  {
-                    label: '(b) Translational or applied research with one of the following aims:',
-                    value: 'translational-research',
-                    reveal: {
-                      name: 'translational-research',
-                      label: '',
-                      type: 'checkbox',
-                      className: 'smaller',
-                      options: [
-                        {
-                          label: '(i) Avoidance, prevention, diagnosis or treatment of disease, ill-health  or abnormality, or their effects, in man, animals or plants.',
-                          value: 'translational-research-1',
-                        },
-                        {
-                          label: '(ii) Assessment, detection, regulation or modification of physiological conditions in man, animals or plants.',
-                          value: 'translational-research-2'
-                        },
-                        {
-                          label: '(iii) Improvement of the welfare of animals or of the production conditions for animals reared for agricultural purposes.',
-                          value: 'translational-research-3'
-                        }
-                      ]
-                    }
-                  },
-                  {
-                    label: '(c) Development, manufacture or testing of the quality, effectiveness and safety of drugs, foodstuffs and feedstuffs or any other substances or products, with one of the following aims mentioned in paragraph (b)',
-                    value: 'safety-of-drugs'
-                  },
-                  {
-                    label: '(d) Protection of the natural environment in the interests of the health or welfare of man or animals.',
-                    value: 'protection-of-environment'
-                  },
-                  {
-                    label: '(e) Research aimed at preserving the species of animal subjected to regulated procedures as part of the programme of work.',
-                    value: 'preservation-of-species'
-                  },
-                  {
-                    label: '(f) Higher education or training for the acquisition, maintenance or improvement of vocational skills.',
-                    value: 'higher-education'
-                  },
-                  {
-                    label: '(g) Forensic enquiries.',
-                    value: 'forensic-enquiries'
-                  }
-                ]
-              },
-              {
-                name: 'duration',
-                label: 'What will be the duration of this project?',
-                type: 'duration'
-              },
-              {
-                name: 'species',
-                label: 'Which types of animals will be used in this project?',
-                type: 'species-selector',
-                summary: true
-              }
-            ]
+            name: 'duration',
+            label: 'What will be the duration of this project?',
+            type: 'duration'
+          },
+          {
+            name: 'species',
+            label: 'Which types of animals will be used in this project?',
+            type: 'species-selector',
+            summary: true
           }
         ]
       }
@@ -216,7 +196,6 @@ export default {
     subsections: {
       establishments: {
         title: 'Establishments',
-        playback: 'primary-establishment',
         review: EstablishmentsReview,
         steps: [
           {
@@ -236,12 +215,7 @@ export default {
                       label: '',
                       type: 'checkbox',
                       className: 'smaller',
-                      optionsFromSettings: 'establishments',
-                      without: 'primary-establishment',
-                      fallbackLink: {
-                        url: '/settings',
-                        label: 'Please add another establishment'
-                      }
+                      optionsFromSettings: 'establishments'
                     }
                   },
                   {
