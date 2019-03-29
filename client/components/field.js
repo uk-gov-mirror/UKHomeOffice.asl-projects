@@ -6,7 +6,6 @@ import isUndefined from 'lodash/isUndefined';
 import castArray from 'lodash/castArray';
 import some from 'lodash/some';
 import every from 'lodash/every';
-import without from 'lodash/without';
 
 import { Input, Select, TextArea, RadioGroup, CheckboxGroup } from '@ukhomeoffice/react-components';
 
@@ -183,12 +182,8 @@ class Field extends Component {
   }
 }
 
-const mapStateToProps = ({ project, settings }, { name, conditional, optionsFromSettings, options, without: withoutField, value }) => {
+const mapStateToProps = ({ project, settings }, { name, conditional, optionsFromSettings, options, value }) => {
   options = optionsFromSettings ? settings[optionsFromSettings] : options;
-
-  if (withoutField) {
-    options = without(options, project[withoutField]);
-  }
 
   return {
     options,
