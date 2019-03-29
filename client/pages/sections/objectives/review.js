@@ -27,11 +27,10 @@ const ObjectivesReview = ({ playback, values, steps, goto, readonly }) => (
       values.objectives.map((objective, index) => (
         <div className="objective-review" key={index}>
           <h2>Objective {index + 1}</h2>
-          <h3>{objective.title}</h3>
           <Review
             key={index}
-            {...steps[0].fields.find(f => f.name === 'how')}
-            value={objective.how}
+            {...steps[0].fields.find(f => f.name === 'title')}
+            value={objective.title}
             onEdit={() => goto(0)}
           />
           <hr />
