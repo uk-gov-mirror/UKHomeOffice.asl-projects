@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import { withRouter } from 'react-router';
 
 import classnames from 'classnames';
@@ -11,6 +11,13 @@ import Sections from './sections';
 class ProtocolSections extends PureComponent {
   state = {
     expanded: this.props.editable && (this.props.protocolState || !this.props.values.complete)
+  }
+
+  delete = e => {
+    e.preventDefault();
+    if (window.confirm('Are you sure you want to remove this protocol?')) {
+      this.props.removeItem();
+    }
   }
 
   setCompleted = value => {
@@ -65,12 +72,15 @@ class ProtocolSections extends PureComponent {
             />
             {
               editable && (
-                <Complete
-                  type="protocol"
-                  complete={values.complete}
-                  onChange={this.setCompleted}
-                  buttonClassName="button-secondary"
-                />
+                <Fragment>
+                  <Complete
+                    type="protocol"
+                    complete={values.complete}
+                    onChange={this.setCompleted}
+                    buttonClassName="button-secondary"
+                  />
+                  <p><a href="#" onClick={this.delete}>Remove this protocol</a></p>
+                </Fragment>
               )
             }
           </div>

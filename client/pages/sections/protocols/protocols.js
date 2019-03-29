@@ -8,34 +8,26 @@ import Fieldset from '../../../components/fieldset';
 import Repeater from '../../../components/repeater';
 import Controls from '../../../components/controls';
 
-class Form extends PureComponent {
-  removeItem = e => {
-    e.preventDefault();
-    this.props.removeItem();
-  }
-
-  render() {
-    const { index, name, updateItem, exit, toggleActive, prefix = '', ...props } = this.props;
-    return (
-      <div className={classnames('protocol', 'panel')}>
-        {
-          index !== 0 && (
-            <a href="#" className="float-right" onClick={this.removeItem}>Remove</a>
-          )
-        }
-
-        <h2>{`Protocol ${index + 1}`}</h2>
-        <Fieldset
-          { ...props }
-          fields={props.fields}
-          prefix={`${prefix}${name}-${index}-`}
-          onFieldChange={(key, value) => updateItem({ [key]: value })}
-        />
-        <Controls onContinue={toggleActive} onExit={exit} exitDisabled={true} />
-      </div>
-    );
-  }
-}
+const Form = ({
+  index,
+  name,
+  updateItem,
+  exit,
+  toggleActive,
+  prefix = '',
+  ...props
+}) => (
+  <div className={classnames('protocol', 'panel')}>
+    <h2>{`Protocol ${index + 1}`}</h2>
+    <Fieldset
+      { ...props }
+      fields={props.fields}
+      prefix={`${prefix}${name}-${index}-`}
+      onFieldChange={(key, value) => updateItem({ [key]: value })}
+    />
+    <Controls onContinue={toggleActive} onExit={exit} exitDisabled={true} />
+  </div>
+);
 
 class Protocol extends PureComponent {
   state = {
