@@ -9,6 +9,13 @@ class Index extends React.Component {
         <div className="govuk-width-container">
           <h1>Changelog</h1>
 
+          <h2>Version 3.0.0 - 29th March 2019</h2>
+          <ul>
+            <li>Feature: infer primary establishment</li>
+            <li>Content: strategy section renamed to Action plan</li>
+            <li>Content: various issues</li>
+          </ul>
+
           <h2>Version 2.2.3 - 26th March 2019</h2>
           <ul>
             <li>Content: minor copy updates</li>
