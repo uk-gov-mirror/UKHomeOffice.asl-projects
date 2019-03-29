@@ -12,7 +12,7 @@ const Objective = ({ index, fields, length, values, removeItem, updateItem }) =>
     }
     <h2>Objective {index + 1}</h2>
     <Fieldset
-      fields={fields}
+      fields={fields.filter(f => f.objective)}
       values={values}
       onFieldChange={(key, value) => updateItem({ [key]: value })}
     />
@@ -26,6 +26,7 @@ class Objectives extends Component {
     }
     return <Fragment>
       <h1>{ this.props.title }</h1>
+      <p className="grey">{this.props.intro}</p>
       <Playback playback={this.props.playback} />
       <h3>What are your scientific objectives or research questions?</h3>
       <p className="grey">Each objective should be as SMART (specific, measurable, achievable, realistic, time-related) as possible.</p>
@@ -37,6 +38,11 @@ class Objectives extends Component {
       >
         <Objective {...this.props}/>
       </Repeater>
+      <Fieldset
+        fields={this.props.fields.filter(f => !f.objective)}
+        values={this.props.values}
+        onFieldChange={this.props.save}
+      />
       <Controls onContinue={this.props.advance} onExit={this.props.exit} />
     </Fragment>
   }

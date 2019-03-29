@@ -574,39 +574,41 @@ export default {
           }
         ]
       },
-      strategy: {
-        title: 'Strategy',
+      'action-plan': {
+        title: 'Action plan',
         playback: 'project-aim',
         review: ObjectivesReview,
         steps: [
           {
             name: 'objectives',
-            title: 'Strategy - 1 of 2',
+            title: 'Action plan - 1 of 2',
+            intro: 'There are several useful resources to help you plan your experiments. It is recommended that you read the ARRIVE or PREPARE guidelines, or use the NC3Rs\' Experimental Design Assistant before answering the questions in this section.',
             component: Objectives,
             repeat: 'objectives',
             fields: [
               {
                 name: 'title',
                 label: 'Title',
-                type: 'text'
+                type: 'text',
+                objective: true
               },
               {
-                name: 'how',
-                label: 'How will you achieve this scientific objective?',
-                hint: 'Refer to existing in silico, in vitro, and ex vivo procedures that will contribute to achieving this objective.',
+                name: 'objective-relation',
+                label: 'How do each of these objectives relate to each other?',
+                hint: `Outline any interdependencies, stop:go points, and milestones. If you are
+using findings and results from other projects, explain how this work will
+help you achieve the objectives of this project.
+
+Consider including images (.jpg and .png files) of annotated flow charts
+and decision trees in your action plan to illustrate how objectives relate to
+each other.`,
                 type: 'texteditor'
               }
             ]
           },
           {
-            title: 'Strategy - 2 of 2',
+            title: 'Action plan - 2 of 2',
             fields: [
-              {
-                name: 'objectives-how',
-                label: 'How will these objectives help you to achieve your aim?',
-                hint: 'Remember to include the results of any work carried out in other project licences that will influence your research strategy.',
-                type: 'texteditor'
-              },
               {
                 name: 'objectives-alternatives',
                 label: 'Where relevant, how will you seek to use or develop non-animal alternatives for all or part of your work?',
