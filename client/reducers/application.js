@@ -1,7 +1,7 @@
 const INITIAL_STATE = {
   schemaVersion: 1,
   readonly: false,
-  establishment: 'Establishment not specified'
+  establishment: null
 };
 
 export default function applicationReducer(state = INITIAL_STATE) {

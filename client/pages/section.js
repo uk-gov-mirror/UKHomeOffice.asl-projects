@@ -65,8 +65,8 @@ class Section extends React.Component {
       <Fragment>
         <SectionsLink />
         <Header
-          title={this.props.establishment}
-          subtitle={this.props.project.title || 'Untitled project'}
+          title={this.props.project.title || 'Untitled project'}
+          subtitle={this.props.establishment}
         />
         <Component
           { ...this.props }

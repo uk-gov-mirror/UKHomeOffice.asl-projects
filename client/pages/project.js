@@ -12,8 +12,8 @@ const Index = ({ establishment, project, onComplete = () => window.alert('Submit
 
   return <Fragment>
     <Header
-      title={establishment}
-      subtitle={project.title || 'Untitled project'}
+      title={project.title || 'Untitled project'}
+      subtitle={establishment}
     />
     <p className="controls">
       <span className="float-right">Download as:
