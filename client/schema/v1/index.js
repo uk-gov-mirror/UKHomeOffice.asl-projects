@@ -13,7 +13,6 @@ import SPECIES from '../../constants/species';
 import intersection from 'lodash/intersection';
 import some from 'lodash/some';
 import flatten from 'lodash/flatten';
-import castArray from 'lodash/castArray';
 
 export default {
   introduction: {
@@ -176,21 +175,21 @@ export default {
                     name: 'experience-others',
                     label: 'Why are you the most suitable person in the research group, department or company to manage the project?',
                     type: 'texteditor'
-                  },
-                  {
-                    name: 'funding-previous',
-                    label: 'What relevant expertise and staffing will be available to help you to deliver the programme of work?',
-                    hint: 'Include examples of practical, technical, and specialist support.',
-                    type: 'texteditor'
-                  },
-                  {
-                    name: 'other-people',
-                    label: 'Will other people help you manage the project? If so, how?',
-                    type: 'texteditor'
                   }
                 ]
               }
             ]
+          },
+          {
+            name: 'funding-previous',
+            label: 'What relevant expertise and staffing will be available to help you to deliver the programme of work?',
+            hint: 'Include examples of practical, technical, and specialist support.',
+            type: 'texteditor'
+          },
+          {
+            name: 'other-people',
+            label: 'Will other people help you manage the project? If so, how?',
+            type: 'texteditor'
           }
         ]
       },
@@ -617,103 +616,36 @@ export default {
           }
         ]
       },
-      'experimental-design': {
-        title: 'Experimental design',
-        steps: [
+      'general-principles': {
+        title: 'General principles',
+        fields: [
           {
-            title: 'Experimental design - 1 of 2',
-            intro: 'There are several useful resources to help you plan your experiments. It is recommended that you read the ARRIVE or PREPARE guidelines, or use the NC3Rs\' Experimental Design Assistant before answering the questions in this section.',
-            fields: [
+            label: 'Unnecessary duplication of work must be avoided. Under what circumstances would you knowingly duplicate work?',
+            name: 'general-principles-duplicate',
+            type: 'texteditor'
+          },
+          {
+            name: 'experimental-design-sexes',
+            label: 'Will you use animals of both sexes in this project?',
+            type: 'radio',
+            inline: true,
+            className: 'smaller',
+            options: [
               {
-                name: 'experimental-design-how',
-                label: 'How will you ensure that your experiments are appropriately designed and correctly powered to achieve your aim and objectives?',
-                type: 'texteditor'
+                label: 'Yes',
+                value: true
               },
               {
-                name: 'experimental-design-analysis',
-                label: 'How will you ensure that the results of your experiments are effectively analysed?',
-                type: 'texteditor'
-              },
-              {
-                name: 'experimental-design-repeating',
-                label: 'Will you be repeating work that has already been undertaken by others?',
-                type: 'radio',
-                inline: true,
-                className: 'smaller',
-                options: [
-                  {
-                    label: 'Yes',
-                    value: true,
-                    reveal: {
-                      name: 'experimental-design-repeating-justification',
-                      label: 'What is the scientific justification for repeating this work?',
-                      type: 'texteditor'
-                    }
-                  },
-                  {
-                    label: 'No',
-                    value: false
-                  }
-                ]
+                label: 'No',
+                value: false,
+                reveal: {
+                  name: 'experimental-design-sexes-justification',
+                  label: 'Why will you not use animals of both sexes?',
+                  type: 'texteditor'
+                }
               }
             ]
           },
-          {
-            title: 'Experimental design - 2 of 2',
-            fields: [
-              {
-                name: 'experimental-design-data',
-                label: 'Does data exist from previous work? If it does, how will you use it to reduce animal use in this project?',
-                type: 'texteditor'
-              },
-              {
-                name: 'experimental-design-sexes',
-                label: 'Will you use animals of both sexes in this project?',
-                type: 'radio',
-                inline: true,
-                className: 'smaller',
-                options: [
-                  {
-                    label: 'Yes',
-                    value: true
-                  },
-                  {
-                    label: 'No',
-                    value: false,
-                    reveal: {
-                      name: 'experimental-design-sexes-justification',
-                      label: 'Why will you not use animals of both sexes?',
-                      type: 'texteditor'
-                    }
-                  }
-                ]
-              },
-              {
-                name: 'experimental-design-pilot-studies',
-                label: 'Will you run pilot studies for this project?',
-                type: 'radio',
-                inline: true,
-                className: 'smaller',
-                show: values => values['anaesthesia'],
-                options: [
-                  {
-                    label: 'Yes',
-                    value: true,
-                    reveal: {
-                      name: 'experimental-design-pilot-studies-description',
-                      label: 'Describe what you will do in your pilot studies.',
-                      hint: 'You may find the NC3Rs\' Guidance On Pilot Studies helpful when you\'re answering this question.',
-                      type: 'texteditor'
-                    }
-                  },
-                  {
-                    label: 'No',
-                    value: false
-                  }
-                ]
-              }
-            ]
-          }
         ]
       },
       benefits: {
@@ -730,6 +662,12 @@ export default {
             name: 'benefit-who',
             label: 'Who or what will benefit from these outputs?',
             hint: 'The impact of these outputs may be seen in the short-term, or they may not be fully realised until you\'ve completed the project. Consider all timescales in your answer.',
+            type: 'texteditor'
+          },
+          {
+            name: 'benefit-maximise-outputs',
+            label: 'How will you look to maximise the outputs of this work?',
+            hint: 'For example, collaboration, dissemination of new knowledge, or publication of unsuccessful approaches.',
             type: 'texteditor'
           }
         ]
@@ -1312,8 +1250,13 @@ export default {
         nts: true,
         fields: [
           {
+            name: 'project-harms-animals',
+            label: 'Explain why you are using these types of animals and your choice of life stages.',
+            type: 'texteditor'
+          },
+          {
             name: 'project-harms-summary',
-            label: 'Typically, what will be done to an animal used in your project.',
+            label: 'Typically, what will be done to an animal used in your project?',
             hint: 'For example, injections and procedures. Include any relevant information about the duration of experiments and the number of procedures.',
             type: 'texteditor'
           },
@@ -1337,7 +1280,131 @@ export default {
           {
             name: 'fate-of-animals',
             label: 'What will happen to animals at the end of their use in this project?',
-            type: 'texteditor'
+            type: 'checkbox',
+            className: 'smaller',
+            options: [
+              {
+                label: 'Kept alive',
+                value: 'kept-alive',
+                reveal: [
+                  {
+                    name: 'kept-alive-animals',
+                    label: 'What types of animals will you keep alive?',
+                    type: 'texteditor'
+                  },
+                  {
+                    name: 'keeping-animals-alive-determine',
+                    label: 'What criteria will the veterinary surgeon use to determine whether animals can be kept alive?',
+                    type: 'texteditor'
+                  },
+                  {
+                    name: 'keeping-animals-alive-supervised',
+                    label: 'Are there any limitations on the period of time that animals that have been kept alive can be held under the supervision of the veterinary surgeon?',
+                    type: 'texteditor'
+                  }
+                ]
+              },
+              {
+                label: 'Set free',
+                value: 'set-free',
+                reveal: [
+                  {
+                    name: 'setting-free-health',
+                    label: 'How will an animal\'s health be assessed to determine whether it can be set free?',
+                    type: 'texteditor'
+                  },
+                  {
+                    name: 'setting-free-vet',
+                    label: 'Will a veterinary surgeon perform this assessment?',
+                    type: 'radio',
+                    inline: true,
+                    className: 'smaller',
+                    options: [
+                      {
+                        label: 'Yes',
+                        value: true
+                      },
+                      {
+                        label: 'No',
+                        value: false,
+                        reveal: {
+                          name: 'setting-free-competence',
+                          label: 'How will you ensure the competence of the person responsible for assessing whether animals can be set free?',
+                          type: 'texteditor'
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    name: 'setting-free-ensure-not-harmful',
+                    label: 'How will you ensure that setting animals free will not be harmful to other species, the environment, and human health?',
+                    type: 'texteditor'
+                  },
+                  {
+                    name: 'setting-free-rehabilitate',
+                    label: 'Will you attempt to rehabilitate animals before setting them free? If so, how?',
+                    type: 'texteditor'
+                  },
+                  {
+                    name: 'setting-free-socialise',
+                    label: 'Will you attempt to socialise any animals that you have set free? If so, how?',
+                    type: 'texteditor'
+                  },
+                  {
+                    name: 'setting-free-wellbeing',
+                    label: 'What arrangements will be made to assure their welfare during transport, particularly if they are being moved after the start of regulated procedures?',
+                    type: 'texteditor'
+                  },
+                  {
+                    name: 'setting-free-recapturing',
+                    label: 'What is the likelihood of inadvertently re-capturing and re-using animals that have been set free?',
+                    type: 'texteditor'
+                  },
+                  {
+                    name: 'setting-free-lost',
+                    label: 'If animals are lost to the study or not re-captured, how will you determine whether your project is complete?',
+                    hint: 'This information is important to ensure that the use of these animals is recorded in the return of procedures, and is considered when determining the actual severity of your protocols.',
+                    type: 'texteditor'
+                  }
+                ]
+              },
+              {
+                label: 'Rehomed',
+                value: 'rehomed',
+                reveal: [
+                  {
+                    name: 'rehoming-types',
+                    label: 'What types of animals do you intend to re-home?',
+                    hint: 'Also state the protocols on which they will have been used.',
+                    type: 'texteditor'
+                  },
+                  {
+                    name: 'rehoming-healthy',
+                    label: 'How will you make sure that an animal’s health allows it to be rehomed?',
+                    type: 'texteditor'
+                  },
+                  {
+                    name: 'rehoming-harmful',
+                    label: 'How will you ensure that rehoming does not pose a danger to public health, animal health, or the environment?',
+                    type: 'texteditor'
+                  },
+                  {
+                    name: 'rehoming-socialisation',
+                    label: 'What scheme is in place to ensure socialisation when an animal is rehomed?',
+                    type: 'texteditor'
+                  },
+                  {
+                    name: 'rehoming-other',
+                    label: 'What other measures will you take to safeguard an animal’s wellbeing when it is rehomed?',
+                    type: 'texteditor'
+                  }
+                ]
+              },
+              {
+                label: 'Used in other projects',
+                value: 'used-in-other-projects'
+              }
+            ]
           }
         ]
       }
@@ -1373,6 +1440,17 @@ export default {
           {
             name: 'nhps',
             label: 'Why do you need to use non-human primates to achieve your objectives?',
+            type: 'texteditor'
+          },
+          {
+            name: 'nhps-justification',
+            label: 'Explain how the project is for one of the permitted reasons.',
+            hint: `The permitted reasons for the use of non-human primates are:
+
+* basic research
+* translational or applied research for the avoidance, prevention, diagnosis or treatment of debilitating or potentially life-threatening clinical conditions or their effects in man
+* the development, manufacture or testing of the quality, effectiveness and safety of drugs for the avoidance, prevention, diagnosis or treatment of debilitating or potentially life-threatening clinical conditions or their effects in man
+* research aimed at preserving the species of animal subjected to regulated procedures`,
             type: 'texteditor'
           },
           {
@@ -1470,11 +1548,23 @@ export default {
               {
                 label: 'Yes',
                 value: true,
-                reveal: {
-                  name: 'endangered-animals-justification',
-                  label: 'Why can’t you achieve your objectives without using endangered animals?',
-                  type: 'texteditor'
-                }
+                reveal: [
+                  {
+                    name: 'endangered-animals-justification',
+                    label: 'Why can’t you achieve your objectives without using endangered animals?',
+                    type: 'texteditor'
+                  },
+                  {
+                    name: 'endangered-animals-permitted',
+                    label: 'Explain how the project is for one of the permitted reasons.',
+                    hint: `The permitted reasons for the use of endangered animals are:
+
+  * translational or applied research for the avoidance, prevention, diagnosis or treatment of disease, ill-health or other abnormality, or their effects, in man, animals or plants
+  * the development, manufacture or testing of the quality, effectiveness and safety of drugs, feed-stuffs or any other substances or products for the avoidance, prevention, diagnosis or treatment of disease, ill-health or other abnormality, or their effects, in man, animals or plants or assessment, detection, regulation or modification of physiological conditions in man, animals or plants or the improvement of the welfare of animals or of the production conditions for animals reared for  agricultural purposes
+  * research aimed at the preservation of the species`,
+                    type: 'texteditor'
+                  }
+                ]
               },
               {
                 label: 'No',
@@ -1651,91 +1741,13 @@ export default {
           }
         ]
       },
-      'setting-animals-free': {
-        title: 'Setting animals free',
-        show: values => some(values.protocols, protocol => {
-          return castArray(protocol.fate).includes('set-free');
-        }),
-        steps: [
-          {
-            title: 'Setting animals free - 1 of 2',
-            intro: 'You are seeing this section because you will be setting animals free at the end of a project. To change this, go to Protocols.',
-            fields: [
-              {
-                name: 'setting-free-health',
-                label: 'How will an animal\'s health be assessed to determine whether it can be set free?',
-                type: 'texteditor'
-              },
-              {
-                name: 'setting-free-vet',
-                label: 'Will a veterinary surgeon perform this assessment?',
-                type: 'radio',
-                inline: true,
-                className: 'smaller',
-                options: [
-                  {
-                    label: 'Yes',
-                    value: true
-                  },
-                  {
-                    label: 'No',
-                    value: false,
-                    reveal: {
-                      name: 'setting-free-competence',
-                      label: 'How will you ensure the competence of the person responsible for assessing whether animals can be set free?',
-                      type: 'texteditor'
-                    }
-                  }
-                ]
-              },
-              {
-                name: 'setting-free-ensure-not-harmful',
-                label: 'How will you ensure that setting animals free will not be harmful to other species, the environment, and human health?',
-                type: 'texteditor'
-              },
-              {
-                name: 'setting-free-rehabilitate',
-                label: 'Will you attempt to rehabilitate animals before setting them free? If so, how?',
-                type: 'texteditor'
-              },
-              {
-                name: 'setting-free-socialise',
-                label: 'Will you attempt to socialise any animals that you have set free? If so, how?',
-                type: 'texteditor'
-              }
-            ]
-          },
-          {
-            title: 'Setting animals free - 2 of 2',
-            intro: 'You are seeing this section because you will be setting animals free at the end of a protocol or project. To change this, go to Protocols.',
-            fields: [
-              {
-                name: 'setting-free-wellbeing',
-                label: 'What arrangements will be made to assure their welfare during transport, particularly if they are being moved after the start of regulated procedures?',
-                type: 'texteditor'
-              },
-              {
-                name: 'setting-free-recapturing',
-                label: 'What is the likelihood of inadvertently re-capturing and re-using animals that have been set free?',
-                type: 'texteditor'
-              },
-              {
-                name: 'setting-free-lost',
-                label: 'If animals are lost to the study or not re-captured, how will you determine whether your project is complete?',
-                hint: 'This information is important to ensure that the use of these animals is recorded in the return of procedures, and is considered when determining the actual severity of your protocols.',
-                type: 'texteditor'
-              }
-            ]
-          }
-        ]
-      },
       'feral-animals': {
         title: 'Feral animals',
         fields: [
           {
             name: 'feral-animals',
             label: 'Will you be using any feral animals in your project?',
-            hint: 'Feral animals are animals from a domesticated species that are now living in a natural or wild state.',
+            hint: 'A feral animal is an animal living in the wild but descended from domesticated individuals.',
             type: 'radio',
             inline: true,
             className: 'smaller',
@@ -1743,12 +1755,23 @@ export default {
               {
                 label: 'Yes',
                 value: true,
-                reveal: {
-                  name: 'feral-animals-justification',
-                  label: 'Why can’t you achieve your objectives without using feral animals?',
-                  hint: 'For example, it may be essential to protect the health or welfare of that species or to avoid a serious threat to human or animal health or the environment.',
-                  type: 'texteditor'
-                }
+                reveal: [
+                  {
+                    name: 'feral-animals-justification',
+                    label: 'Why can\'t you use non-feral animals to achieve your objectives?',
+                    type: 'texteditor'
+                  },
+                  {
+                    name: 'feral-animals-essential',
+                    label: 'Why is the use of feral animals essential to protect the health or welfare of that species or to avoid a serious threat to human or animal health or the environment?',
+                    type: 'texteditor'
+                  },
+                  {
+                    name: 'feral-animals-procedures',
+                    label: 'Which procedures will be carried out on feral animals? And under which protocols?',
+                    type: 'texteditor'
+                  }
+                ]
               },
               {
                 label: 'No',
@@ -1820,73 +1843,40 @@ export default {
           }
         ]
       },
-      'keeping-animals-alive': {
-        title: 'Keeping animals alive',
-        intro: 'You are seeing this section because you will be keeping animals alive at the end of a protocol or project. To change this, go to Protocols.',
-        show: values => some(values.protocols, protocol => {
-          return castArray(protocol.fate).includes('kept-alive');
-        }),
-        fields: [
-          {
-            name: 'keeping-animals-alive-determine',
-            label: 'How will you determine whether animals can be kept alive at the end of the project?',
-            type: 'texteditor'
-          },
-          {
-            name: 'keeping-animals-alive-supervised',
-            label: 'Will animals that have been kept alive be held and supervised by a veterinary surgeon?',
-            hint: 'If they will be, include any limitations on the length of time that certain animals can be held and monitored.',
-            type: 'texteditor'
-          }
-        ]
-      },
       'reusing-animals': {
         title: 'Re-using animals',
-        intro: 'You are seeing this section because you will be re-using at the end of a protocol or project. To change this, go to Protocols.',
-        show: values => some(values.protocols, protocol => {
-          return castArray(protocol.fate).includes('re-used');
-        }),
         fields: [
           {
-            name: 'reusing-why',
-            label: 'Why do you intend to re-use animals?',
-            hint: 'Explain how you balanced the needs of refining and reducing animal use before making your decision.',
-            type: 'texteditor'
-          },
-          {
-            name: 'reusing-limitations',
-            label: 'What are the relevant limitations on re-using animals for this project?',
-            hint: 'For example, there may be a maximum number of times that an animal can be re-used, or a set of performance standards that requires a limit on re-use.',
-            type: 'texteditor'
-          }
-        ]
-      },
-      'rehoming-animals': {
-        title: 'Rehoming animals',
-        intro: 'You are seeing this section because you are applying for the authority to rehome animals at the end of a project. To change this, go to Protocols.',
-        show: values => some(values.protocols, protocol => {
-          return castArray(protocol.fate).includes('re-homed');
-        }),
-        fields: [
-          {
-            name: 'rehoming-healthy',
-            label: 'How will you make sure that an animal\'s health allows it to be rehomed?',
-            type: 'texteditor'
-          },
-          {
-            name: 'rehoming-harmful',
-            label: 'How will you ensure that rehoming does not pose a danger to public health, animal health, or the environment?',
-            type: 'texteditor'
-          },
-          {
-            name: 'rehoming-socialisation',
-            label: 'What scheme is in place to ensure socialisation when an animal is rehomed?',
-            type: 'texteditor'
-          },
-          {
-            name: 'rehoming-other',
-            label: 'What other measures will you take to safeguard an animal\'s wellbeing when it is rehomed?',
-            type: 'texteditor'
+            name: '',
+            label: 'Will you be re-using animals?',
+            type: 'radio',
+            className: 'smaller',
+            inline: true,
+            options: [
+              {
+                label: 'Yes',
+                value: true,
+                reveal: [
+                  {
+                    name: 'reusing-which',
+                    label: 'What types of animals will you be re-using?',
+                    type: 'texteditor'
+                  },
+                  {
+                    name: 'reusing-why',
+                    label: 'Why do you intend to re-use animals?',
+                    hint: 'Explain how you balanced the needs of refining and reducing animal use before making your decision.',
+                    type: 'texteditor'
+                  },
+                  {
+                    name: 'reusing-limitations',
+                    label: 'What are the relevant limitations on re-using animals for this project?',
+                    hint: 'For example, there may be a maximum number of times that an animal can be re-used, or a set of performance standards that requires a limit on re-use.',
+                    type: 'texteditor'
+                  }
+                ]
+              }
+            ]
           }
         ]
       },
@@ -1952,6 +1942,11 @@ export default {
         nts: true,
         fields: [
           {
+            name: 'replacement-why',
+            label: 'Why do you need to use animals to achieve the aim of your project?',
+            type: 'texteditor'
+          },
+          {
             name: 'replacement-alternatives',
             label: 'Which non-animal alternatives did you consider for use in this project?',
             type: 'texteditor'
@@ -2007,6 +2002,11 @@ export default {
             name: 'refinement-explaination',
             label: 'How will you refine the methods and procedures you\'re using as this project progresses?',
             hint: 'Potential refinements include increased monitoring, post-operative care, pain management, and training of animals.',
+            type: 'texteditor'
+          },
+          {
+            name: 'refinement-published-guidance',
+            label: 'What published best practice guidance will be followed to ensure experiments are conducted in most refined way?',
             type: 'texteditor'
           }
         ]

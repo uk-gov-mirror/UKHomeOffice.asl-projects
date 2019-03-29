@@ -18,6 +18,7 @@ import RTEditor from './editor';
 import { isKeyHotkey } from 'is-hotkey';
 import Icon from 'react-icons-kit';
 import defer from 'lodash/defer';
+import ReactMarkdown from 'react-markdown'
 
 import { Block } from 'slate';
 
@@ -241,7 +242,7 @@ class TextEditor extends RTEditor {
         </label>
         {this.props.hint && (
           <span id={`${this.props.name}-hint`} className='govuk-hint'>
-            {this.props.hint}
+            <ReactMarkdown source={this.props.hint} />
           </span>
         )}
         {this.props.error && (

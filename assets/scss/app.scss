@@ -25,6 +25,16 @@ $assetPath: '/public';
     }
   }
 
+  .govuk-hint {
+    ul {
+      padding-left: $govuk-gutter * 2;
+
+      li {
+        list-style-position: outside;
+      }
+    }
+  }
+
   .gutter {
     margin-bottom: $govuk-gutter;
   }
