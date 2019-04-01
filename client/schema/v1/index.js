@@ -1823,7 +1823,7 @@ each other.`,
         title: 'Re-using animals',
         fields: [
           {
-            name: '',
+            name: 'reusing-animals',
             label: 'Will you be re-using animals?',
             type: 'radio',
             className: 'smaller',
@@ -1851,6 +1851,10 @@ each other.`,
                     type: 'texteditor'
                   }
                 ]
+              },
+              {
+                label: 'No',
+                value: false
               }
             ]
           }
