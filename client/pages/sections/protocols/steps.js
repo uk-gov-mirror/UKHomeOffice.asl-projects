@@ -16,7 +16,9 @@ import Fieldset from '../../../components/fieldset';
 class Step extends Component {
   removeItem = e => {
     e.preventDefault();
-    this.props.removeItem();
+    if (window.confirm('Are you sure you want to remove this step?')) {
+      this.props.removeItem();
+    }
   }
 
   setCompleted = (completed, e) => {
