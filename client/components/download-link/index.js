@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import classnames from 'classnames';
 import docxRenderer from './renderers/docx';
 import pplRenderer from './renderers/ppl';
+import pdfRenderer from './renderers/pdf';
 import schema from '../../schema';
 
 const mapStateToProps = (state, props) => {
@@ -19,7 +20,16 @@ const mapStateToProps = (state, props) => {
 class DownloadLink extends React.Component {
   generate = () => {
     return Promise.resolve()
-      .then(() => this.props.renderer === 'ppl' ? pplRenderer : docxRenderer)
+      .then(() => {
+        switch (this.props.renderer) {
+          case 'ppl':
+            return pplRenderer;
+          case 'docx':
+            return docxRenderer;
+          case 'pdf':
+            return pdfRenderer;
+        }
+      })
       .then(renderer => renderer.render(this.props));
   };
 
