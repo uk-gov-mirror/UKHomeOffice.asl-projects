@@ -12,9 +12,9 @@ const ObjectivesReview = ({ playback, values, steps, goto, readonly }) => (
         <Fragment>
           <Banner>
             <h2>Please review your answers for</h2>
-            <h1>Strategy</h1>
+            <h1>Action plan</h1>
           </Banner>
-          <h1>Strategy</h1>
+          <h1>Action plan</h1>
           <Playback playback={playback} />
         </Fragment>
       )
