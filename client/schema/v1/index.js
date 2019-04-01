@@ -568,10 +568,8 @@ export default {
               },
               {
                 name: 'objective-relation',
-                label: 'How do each of these objectives relate to each other?',
-                hint: `Outline any interdependencies, stop:go points, and milestones. If you are
-using findings and results from other projects, explain how this work will
-help you achieve the objectives of this project.
+                label: 'How do each of these objectives relate to each other and help you to achieve your aim?',
+                hint: `Outline any interdependencies, stop:go points, and milestones. Include any key in vitro, ex vivo or in silico work, clinical findings, or results from epidemiological studies carried out under other projects that will enable you to achieve your objectives.
 
 Consider including images (.jpg and .png files) of annotated flow charts
 and decision trees in your action plan to illustrate how objectives relate to
@@ -1042,7 +1040,7 @@ each other.`,
                     value: false,
                     reveal: {
                       name: 'quantitative-data-pilot-studies',
-                      label: 'Will this protocol use pilot studies',
+                      label: 'Will this protocol use pilot studies?',
                       type: 'radio',
                       className: 'smaller',
                       inline: true,
@@ -1986,7 +1984,7 @@ each other.`,
           },
           {
             name: 'refinement-published-guidance',
-            label: 'What published best practice guidance will be followed to ensure experiments are conducted in most refined way?',
+            label: 'What published best practice guidance will you follow to ensure experiments are conducted in the most refined way?',
             type: 'texteditor'
           }
         ]
