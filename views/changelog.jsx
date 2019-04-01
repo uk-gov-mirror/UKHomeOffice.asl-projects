@@ -9,7 +9,7 @@ class Index extends React.Component {
         <div className="govuk-width-container">
           <h1>Changelog</h1>
 
-          <h2>Version 3.0.0 - X.X.X</h2>
+          <h2>Version 3.0.2 - 1st April 2019</h2>
           <ul>
             <li>Feature: confirm protocol/step removal</li>
             <li>Feature: infer primary establishment</li>
