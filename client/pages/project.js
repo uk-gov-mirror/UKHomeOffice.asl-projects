@@ -20,7 +20,6 @@ const Index = ({ establishment, project, onComplete = () => window.alert('Submit
         <DownloadLink project={project.id} label="Word (.docx)" renderer="docx" />
         <DownloadLink project={project.id} label="Backup (.ppl)" renderer="ppl" />
       </span>
-      <a href="/">Back to project list</a>
     </p>
     <ApplicationSummary onComplete={onComplete} />
   </Fragment>
