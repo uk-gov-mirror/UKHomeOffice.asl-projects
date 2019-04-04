@@ -3,7 +3,7 @@
   "version": "3.0.2",
   "description": "ASL PPL prototype",
   "main": "client/external.js",
-  "styles": "assets/scss/app.scss",
+  "styles": "assets/scss/projects.scss",
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon -r dotenv/config -e js,jsx index.js",
