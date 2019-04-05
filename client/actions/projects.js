@@ -72,9 +72,17 @@ export function updateProject(project) {
   }
 }
 
+export function updateSavedProject(project) {
+  return {
+    type: types.UPDATE_SAVED_PROJECT,
+    project
+  }
+}
+
 const debouncedUpdate = debounce((id, data, dispatch) => {
   return database()
     .then(db => db.update(id, data))
+    .then(() => updateSavedProject(data))
     // TODO: notify user autosaved.
     .catch(err => dispatch({ type: types.ERROR, err }))
 }, 500, { maxWait: 5000 })
