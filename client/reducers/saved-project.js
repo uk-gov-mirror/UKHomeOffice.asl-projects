@@ -1,10 +1,10 @@
 import * as types from '../actions/types';
 
-const project = (state = {}, action) => {
+const savedProject = (state = {}, action) => {
   switch (action.type) {
     case types.LOAD_PROJECT:
-    case types.UPDATE_PROJECT:
     case types.SET_PROJECT:
+    case types.UPDATE_SAVED_PROJECT:
       return {
         ...action.project
       };
@@ -12,4 +12,4 @@ const project = (state = {}, action) => {
   return state;
 }
 
-export default project;
+export default savedProject;
