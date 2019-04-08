@@ -5,32 +5,64 @@ import SPECIES from '../../../constants/species';
 
 // 600px seems to be roughly 100% page width (inside the margins)
 const MAX_IMAGE_WIDTH = 600;
-const MAX_IMAGE_HEIGHT = 600;
+const MAX_IMAGE_HEIGHT = 800;
 
 const addStyles = doc => {
-  doc.Styles.createParagraphStyle('Heading1', 'Heading 1')
+
+  doc.Styles.createParagraphStyle('Question', 'Question')
+    .basedOn('Normal')
+    .next('Normal')
+    .quickFormat()
+    .size(24)
+    .indent(800)
+    .bold()
+    .color('#3B3B3B')
+    .font('Helvetica')
+    .spacing({ before: 200, after: 50 });
+
+  doc.Styles.createParagraphStyle('SectionTitle', 'Section Title')
     .basedOn('Normal')
     .next('Normal')
     .quickFormat()
     .size(40)
     .bold()
+    .color('#8F23B3')
     .font('Helvetica')
-    .spacing({ before: 360, after: 240 });
+    .spacing({ before: 100, after: 400 });
 
-  doc.Styles.createParagraphStyle('Heading2', 'Heading 2')
+  doc.Styles.createParagraphStyle('ProtocolSectionTitle', 'Protocol Section Title')
+    .basedOn('Normal')
+    .next('Normal')
+    .quickFormat()
+    .size(34)
+    .bold()
+    .color('#005EA5')
+    .font('Helvetica')
+    .spacing({ before: 300, after: 300 });
+
+  doc.Styles.createParagraphStyle('Heading1', 'Heading 1')
     .basedOn('Normal')
     .next('Normal')
     .quickFormat()
     .size(36)
     .bold()
     .font('Helvetica')
-    .spacing({ before: 400, after: 200 });
+    .spacing({ before: 360, after: 400 });
+
+  doc.Styles.createParagraphStyle('Heading2', 'Heading 2')
+    .basedOn('Normal')
+    .next('Normal')
+    .quickFormat()
+    .size(32)
+    .bold()
+    .font('Helvetica')
+    .spacing({ before: 400, after: 300 });
 
   doc.Styles.createParagraphStyle('Heading3', 'Heading 3')
     .basedOn('Normal')
     .next('Normal')
     .quickFormat()
-    .size(30)
+    .size(28)
     .bold()
     .font('Helvetica')
     .spacing({ before: 400, after: 200 });
@@ -43,6 +75,15 @@ const addStyles = doc => {
     .font('Helvetica')
     .spacing({ before: 200, after: 200 });
 
+  doc.Styles.createParagraphStyle('ListParagraph', 'List Paragraph')
+    .basedOn('Normal')
+    .next('Normal')
+    .quickFormat()
+    .size(24)
+    .font('Helvetica')
+    .spacing({ before: 100, after: 100 });
+
+
   doc.Styles.createParagraphStyle('aside', 'Aside')
     .basedOn('Body')
     .next('Body')
@@ -51,7 +92,7 @@ const addStyles = doc => {
     .color('999999')
     .italics();
 
-    doc.Styles.createParagraphStyle('footerText', 'Footer Text')
+  doc.Styles.createParagraphStyle('footerText', 'Footer Text')
     .basedOn('Normal')
     .next('Normal')
     .quickFormat()
@@ -127,7 +168,7 @@ const renderNode = (doc, node) => {
     case 'paragraph':
       paragraph = new Paragraph();
       node.nodes[0].leaves.forEach(leaf => {
-        text = new TextRun(leaf.text.trim());
+        text = new TextRun(leaf.text);
         if (text) {
           leaf.marks.forEach(mark => {
             switch (mark.type) {
@@ -244,8 +285,8 @@ const renderDeclaration = (/*doc, field, values, value*/) => {
 };
 
 const renderDuration = (doc, value) => {
-  let years = value.years > 1 ? 'Years' : 'Year';
-  let months = value.months > 1 ? 'Months' : 'Month';
+  let years = value.years === 1 ? 'Year' : 'Years';
+  let months = value.months === 1 ? 'Month' : 'Months';
   doc.createParagraph(`${value.years} ${years} ${value.months} ${months}`).style('body');
 };
 
@@ -269,7 +310,7 @@ const renderField = (doc, field, values) => {
     return renderDeclaration(doc, field, values, value);
   }
 
-  doc.createParagraph(field.label).heading3();
+  doc.createParagraph(field.label).style('Question');
 
   if (field.type === 'species-selector') {
     return renderSpeciesSelector(doc, values, value);
@@ -325,7 +366,7 @@ const renderFields = (doc, subsection, values, fields) => {
 }
 
 const renderProtocol = (doc, name, section, values) => {
-  doc.createParagraph(section.title).heading2();
+  doc.createParagraph(section.title).style('ProtocolSectionTitle');
 
   switch (name) {
     case 'steps':
@@ -343,7 +384,12 @@ const renderProtocol = (doc, name, section, values) => {
 };
 
 const renderProtocolsSection = (doc, subsection, values) => {
-  (values['protocols'] || []).forEach(protocolValues => {
+  const protocols = values['protocols'] || [];
+  protocols.forEach((protocolValues, index) => {
+    const title = doc.createParagraph(`Protocol ${index + 1}`).style('ProtocolSectionTitle'); 
+    if (index > 0) {
+      title.pageBreakBefore();  
+    }
     renderField(doc, subsection.fields[0], protocolValues);
 
     map(subsection.sections, (section, name) => renderProtocol(doc, name, section, protocolValues))
@@ -353,7 +399,7 @@ const renderProtocolsSection = (doc, subsection, values) => {
 let isFirstSection = true;
 
 const renderSubsection = (doc, subsection, values) => {
-  const sectionTitle = new Paragraph(subsection.title).heading2();
+  const sectionTitle = new Paragraph(subsection.title).style('SectionTitle');
 
   if (!isFirstSection) {
     sectionTitle.pageBreakBefore();
@@ -377,7 +423,11 @@ const renderSection = (doc, section, values) => {
 };
 
 const renderDocument = (doc, sections, values) => {
-  doc.createParagraph(values.title).heading1();
+  
+  const now = new Date();
+
+  doc.createParagraph(values.title).style('SectionTitle');
+  doc.createParagraph(`Document exported on ${now}`).style('body').pageBreak();
 
   sections = sections.filter(s => s.name !== 'nts');
 
