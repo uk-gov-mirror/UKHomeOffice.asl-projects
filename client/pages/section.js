@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
+import isEmpty from 'lodash/isEmpty';
 import { updateAndSave } from '../actions/projects';
 import DefaultSection from './sections';
 import SectionsLink from '../components/sections-link';
@@ -41,7 +42,7 @@ const mapDispatchToProps = (dispatch, { onUpdate }) => {
 class Section extends React.Component {
 
   render() {
-    if (!this.props.project) {
+    if (!this.props.project || isEmpty(this.props.project)) {
       return null;
     }
 
