@@ -237,7 +237,7 @@ const renderSpeciesSelector = (doc, values, value) => {
     ...other
   ]);
 
-  if (!value.lenth) {
+  if (!value.length) {
     return renderNull(doc);
   }
 
