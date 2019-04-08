@@ -198,7 +198,8 @@ class TextEditor extends RTEditor {
     const file = event.target.files[0];
     if (file) {
       if (file.size > MAX_IMAGE_SIZE) {
-        return this.props.throwError('Image too large. Image files must be less than ${MAX_IMAGE_SIZE} bytes');
+        const actual = Math.round(file.size / 1024);
+        return this.props.throwError(`Image too large. Image files must be less than 1024kb. This image: ${actual}kb`);
       }
 
       const reader = new FileReader();
