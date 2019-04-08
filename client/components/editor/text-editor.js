@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import classnames from 'classnames';
 import { Editor } from 'slate-react';
 import {
@@ -20,9 +21,12 @@ import Icon from 'react-icons-kit';
 import defer from 'lodash/defer';
 import ReactMarkdown from 'react-markdown'
 
+import { throwError } from '../../actions/messages';
+
 import { Block } from 'slate';
 
 const DEFAULT_NODE = 'paragraph';
+const MAX_IMAGE_SIZE = 1024 * 1024; // 1mb
 
 const isBoldHotkey = isKeyHotkey('mod+b');
 const isItalicHotkey = isKeyHotkey('mod+i');
@@ -191,20 +195,24 @@ class TextEditor extends RTEditor {
 
   onClickImage = event => {
     event.preventDefault();
-    const reader = new FileReader();
+    const file = event.target.files[0];
+    if (file) {
+      if (file.size > MAX_IMAGE_SIZE) {
+        const actual = Math.round(file.size / 1024);
+        return this.props.throwError(`Image too large. Image files must be less than 1024kb. This image: ${actual}kb`);
+      }
 
-    reader.addEventListener(
-      'load',
-      () => {
-        const src = reader.result;
-        if (!src) return;
-        this.editor.command(insertImage, src);
-      },
-      false
-    );
-
-    if (event.target.files[0]) {
-      reader.readAsDataURL(event.target.files[0]);
+      const reader = new FileReader();
+      reader.addEventListener(
+        'load',
+        () => {
+          const src = reader.result;
+          if (!src) return;
+          this.editor.command(insertImage, src);
+        },
+        false
+      );
+      reader.readAsDataURL(file);
     }
     event.target.value = '';
   };
@@ -284,4 +292,12 @@ class TextEditor extends RTEditor {
   }
 }
 
-export default TextEditor;
+const mapStateToProps = () => ({});
+
+const mapDispatchToProps = dispatch => {
+  return {
+    throwError: message => dispatch(throwError(message))
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TextEditor);
