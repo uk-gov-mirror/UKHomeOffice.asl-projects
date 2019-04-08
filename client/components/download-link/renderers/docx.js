@@ -384,18 +384,12 @@ const renderProtocol = (doc, name, section, values) => {
 };
 
 const renderProtocolsSection = (doc, subsection, values) => {
-  let counter = 1;
-
-  (values['protocols'] || []).forEach(protocolValues => {
-
-  if (counter == 1) {
-    doc.createParagraph("Protocol " + counter).style('ProtocolSectionTitle'); 
-    counter ++;
-  } else {
-    doc.createParagraph("Protocol " + counter).style('ProtocolSectionTitle').pageBreakBefore();  
-    counter ++;
-  }
-
+  const protocols = values['protocols'] || [];
+  protocols.forEach((protocolValues, index) => {
+    const title = doc.createParagraph(`Protocol ${index + 1}`).style('ProtocolSectionTitle'); 
+    if (index > 0) {
+      title.pageBreakBefore();  
+    }
     renderField(doc, subsection.fields[0], protocolValues);
 
     map(subsection.sections, (section, name) => renderProtocol(doc, name, section, protocolValues))
