@@ -424,11 +424,10 @@ const renderSection = (doc, section, values) => {
 
 const renderDocument = (doc, sections, values) => {
   
-  let now = new Date();
-  let dateExported = "Document exported on " + now;
+  const now = new Date();
 
   doc.createParagraph(values.title).style('SectionTitle');
-  doc.createParagraph(dateExported).style('body').pageBreak();
+  doc.createParagraph(`Document exported on ${now}`).style('body').pageBreak();
 
   sections = sections.filter(s => s.name !== 'nts');
 
