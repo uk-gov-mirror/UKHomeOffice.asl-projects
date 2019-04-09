@@ -8,6 +8,12 @@ class Index extends React.Component {
       <main className="main govuk-main-wrapper" id="content">
         <div className="govuk-width-container">
           <h1>Changelog</h1>
+          
+          <h2>Version 3.0.5 - 9th April 2019</h2>
+          <ul>
+            <li>Feature: style improvements to exported Word document</li>
+            <li>Fixed: issue with species selection being exported into Word</li>
+          </ul>
 
           <h2>Version 3.0.2 - 1st April 2019</h2>
           <ul>
