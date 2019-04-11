@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Legacy from './legacy';
-import Modern from './modern';
+import Legacy from './v0';
+import Modern from './v1';
 
 const PDF = ({ schemaVersion }) => {
   if (schemaVersion === 0) {
