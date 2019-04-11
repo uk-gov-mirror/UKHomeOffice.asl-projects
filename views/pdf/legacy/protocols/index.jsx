@@ -1,7 +1,19 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
-import LEGACY_SPECIES from '../../constants/legacy-species';
-import { ReviewTextEditor } from '../../components/editor/index'
+import LEGACY_SPECIES from '../../../../client/constants/legacy-species';
+import { ReviewTextEditor } from '../../../../client/components/editor/index';
+import SummaryTable from './summary-table';
+
+const Field = ({ label, value }) => (
+  <Fragment>
+    <h3>{ label }</h3>
+    {
+      value
+        ? <ReviewTextEditor value={value} />
+        : <p><em>No answer provided</em></p>
+    }
+  </Fragment>
+)
 
 const Protocol = ({ protocol, number }) => (
   <div className="protocol">
@@ -33,15 +45,11 @@ const Protocol = ({ protocol, number }) => (
       </table>
     </div>
     <div className="protocol-content">
-      <h2>Continued use</h2>
-      <ReviewTextEditor value={protocol['continued-use']} />
-      <h2>Reuse</h2>
-      <ReviewTextEditor value={protocol.reuse} />
-      <h2>Protocol steps</h2>
-      <ReviewTextEditor value={protocol.steps} />
-      <h2>Expected adverse effects, refinement controls and humane end-points</h2>
-      <ReviewTextEditor value={protocol['adverse-effects']} />
-      <h2>Fate of animals not killed at the end of this protocol</h2>
+      <Field label="Continued use" value={protocol['continued-use']} />
+      <Field label="Reuse" value={protocol.reuse} />
+      <Field label="Protocol steps" value={protocol.steps} />
+      <Field label="Expected adverse effects, refinement controls and humane end-points" value={protocol['adverse-effects']} />
+      <h3>Fate of animals not killed at the end of this protocol</h3>
       <dl>
         <dt>Continued use in another protocol under this or another project licence: </dt>
         <dd>{(protocol.fate || []).includes('continued-use') ? 'YES' : 'NO'}</dd>
@@ -53,23 +61,22 @@ const Protocol = ({ protocol, number }) => (
         <dd>{(protocol.fate || []).includes('rehomed') ? 'YES' : 'NO'}</dd>
       </dl>
 
-      <h3>Details</h3>
-      <ReviewTextEditor value={1} />
+      <Field label="Details" value={protocol['fate-justification']} />
 
       <p className="end">{`( End of protocol ${number} )`}</p>
     </div>
   </div>
 )
 
-const PDF = ({ protocols = [], schemaVersion }) => {
-  if (schemaVersion !== 0) {
-    console.error('PDF generation is currently only supported for legacy PPLs');
-    return null;
-  }
+const PDF = ({ protocols = [] }) => {
   return (
     <Fragment>
       <h1>E. PROTOCOLS</h1>
-      <h2 className="protocol-details">Protocol details</h2>
+      <h2 className="subtitle">Summary table</h2>
+      <div className="summary-table">
+        <SummaryTable protocols={protocols} />
+      </div>
+      <h2 className="subtitle">Protocol details</h2>
       {
         protocols.map((protocol, index) => <Protocol key={index} protocol={ protocol } number={ index + 1 } />)
       }
@@ -77,9 +84,6 @@ const PDF = ({ protocols = [], schemaVersion }) => {
   )
 }
 
-const mapStateToProps = ({ project, application: { schemaVersion } }) => ({
-  protocols: project.protocols,
-  schemaVersion
-});
+const mapStateToProps = ({ project }) => ({ protocols: project.protocols });
 
 export default connect(mapStateToProps)(PDF);

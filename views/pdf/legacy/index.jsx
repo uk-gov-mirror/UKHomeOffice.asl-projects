@@ -1,8 +1,8 @@
 import React from 'react';
 import Protocols from './protocols';
 
-const PDF = () => (
+const Legacy = () => (
   <Protocols />
-)
+);
 
-export default PDF;
+export default Legacy;
