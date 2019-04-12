@@ -9,17 +9,17 @@ const Modern = ({ project }) => (
   <Fragment>
     {
       Object.values(schema).map(section => (
-        <Fragment>
+        <section className="section">
           <h1>{section.title}</h1>
           {
             map(section.subsections, (subsection, key) => <StaticSection section={subsection} subsection={true} />)
           }
-        </Fragment>
+        </section>
       ))
     }
   </Fragment>
 )
 
-const mapStateToProps = ({ project }) => ({ project })
+const mapStateToProps = ({ project }) => ({ project });
 
 export default connect(mapStateToProps)(Modern);
