@@ -17,7 +17,7 @@ pipeline:
     secrets:
       - npm_auth_token
     commands:
-      - npx @lennym/ciaudit
+      - npm audit --audit-level critical
     when:
       event:
         - push

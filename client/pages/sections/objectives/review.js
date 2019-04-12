@@ -24,7 +24,7 @@ const ObjectivesReview = ({ playback, values, steps, goto, readonly }) => (
     <p className="grey">It should be possible to determine, in five years’ time, whether or not your objectives were met, assuming all lines of enquiry are pursued.</p>
     <hr />
     {
-      values.objectives.map((objective, index) => (
+      (values.objectives || []).map((objective, index) => (
         <div className="objective-review" key={index}>
           <h2>Objective {index + 1}</h2>
           <Review
