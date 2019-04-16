@@ -71,12 +71,9 @@ const Protocol = ({ protocol, number }) => (
 const PDF = ({ protocols = [] }) => {
   return (
     <Fragment>
-      <h1>E. PROTOCOLS</h1>
-      <h2 className="subtitle">Summary table</h2>
       <div className="summary-table">
         <SummaryTable protocols={protocols} />
       </div>
-      <h2 className="subtitle">Protocol details</h2>
       {
         protocols.map((protocol, index) => <Protocol key={index} protocol={ protocol } number={ index + 1 } />)
       }
