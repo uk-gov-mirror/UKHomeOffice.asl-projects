@@ -29,8 +29,8 @@ export default {
           },
           {
             name: 'project-aim',
-            label: 'What\'s the overall aim of this project?',
-            playback: 'Overall aim of this project',
+            label: 'What\'s the aim of this project?',
+            playback: 'Aim of this project',
             type: 'texteditor'
           },
           {
@@ -58,15 +58,15 @@ export default {
                   className: 'smaller',
                   options: [
                     {
-                      label: '(i) Avoidance, prevention, diagnosis or treatment of disease, ill-health  or abnormality, or their effects, in man, animals or plants.',
+                      label: '(i) Avoidance, prevention, diagnosis or treatment of disease, ill-health  or abnormality, or their effects, in man, animals or plants',
                       value: 'translational-research-1',
                     },
                     {
-                      label: '(ii) Assessment, detection, regulation or modification of physiological conditions in man, animals or plants.',
+                      label: '(ii) Assessment, detection, regulation or modification of physiological conditions in man, animals or plants',
                       value: 'translational-research-2'
                     },
                     {
-                      label: '(iii) Improvement of the welfare of animals or of the production conditions for animals reared for agricultural purposes.',
+                      label: '(iii) Improvement of the welfare of animals or of the production conditions for animals reared for agricultural purposes',
                       value: 'translational-research-3'
                     }
                   ]
@@ -77,19 +77,19 @@ export default {
                 value: 'safety-of-drugs'
               },
               {
-                label: '(d) Protection of the natural environment in the interests of the health or welfare of man or animals.',
+                label: '(d) Protection of the natural environment in the interests of the health or welfare of man or animals',
                 value: 'protection-of-environment'
               },
               {
-                label: '(e) Research aimed at preserving the species of animal subjected to regulated procedures as part of the programme of work.',
+                label: '(e) Research aimed at preserving the species of animal subjected to regulated procedures as part of the programme of work',
                 value: 'preservation-of-species'
               },
               {
-                label: '(f) Higher education or training for the acquisition, maintenance or improvement of vocational skills.',
+                label: '(f) Higher education or training for the acquisition, maintenance or improvement of vocational skills',
                 value: 'higher-education'
               },
               {
-                label: '(g) Forensic enquiries.',
+                label: '(g) Forensic enquiries',
                 value: 'forensic-enquiries'
               }
             ]
@@ -178,7 +178,7 @@ export default {
         fields: [
           {
             name: 'funding-how',
-            label: 'How will your project be funded?',
+            label: 'How do you plan to fund your work?',
             hint: 'If you do not have full funding, explain how you will stage your work and the likelihood of you obtaining further funding.',
             type: 'texteditor'
           },
@@ -478,7 +478,7 @@ export default {
         fields: [
           {
             name: 'scientific-knowledge-summary',
-            label: 'Briefly summarise the current state of scientific knowledge in this area of work to show how you arrived at the starting point of this project.',
+            label: 'Summarise the current state of scientific knowledge in this area of work to show how you arrived at the starting point of this project.',
             hint: 'Be specific and relevant to your project aim - there\'s no need for a detailed overview of the entire field. Include any relevant non-animal research if it has contributed to the starting point of your project.',
             type: 'texteditor'
           },
@@ -710,7 +710,7 @@ each other.`,
               },
               {
                 name: 'objectives',
-                label: 'Which of your objectives will this protocol cover?',
+                label: 'Which of your objectives will this protocol address?',
                 hint: 'Select all that apply.',
                 type: 'objective-selector'
               },
@@ -1231,7 +1231,7 @@ each other.`,
           {
             name: 'project-harms-summary',
             label: 'Typically, what will be done to an animal used in your project?',
-            hint: 'For example, injections and procedures. Include any relevant information about the duration of experiments and the number of procedures.',
+            hint: 'For example, injections and surgical procedures. Include any relevant information about the duration of experiments and the number of procedures.',
             type: 'texteditor'
           },
           {
@@ -1839,12 +1839,12 @@ each other.`,
                   {
                     name: 'reusing-why',
                     label: 'Why do you intend to re-use animals?',
-                    hint: 'Explain how you balanced the needs of refining and reducing animal use before making your decision.',
+                    hint: 'Explain how you will balance the needs of refining and reducing animal use before making your decision.',
                     type: 'texteditor'
                   },
                   {
                     name: 'reusing-limitations',
-                    label: 'What are the relevant limitations on re-using animals for this project?',
+                    label: 'What are the limitations on re-using animals for this project?',
                     hint: 'For example, there may be a maximum number of times that an animal can be re-used, or a set of performance standards that requires a limit on re-use.',
                     type: 'texteditor'
                   }
