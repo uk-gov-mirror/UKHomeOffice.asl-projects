@@ -1,6 +1,10 @@
 import saveAs from 'file-saver';
 import { Document, Packer, Paragraph, TextRun, Numbering } from '@joefitter/docx';
-import { flatten, isUndefined, isNull, map } from 'lodash';
+import flatten from 'lodash/flatten';
+import isUndefined from 'lodash/isUndefined';
+import isNull from 'lodash/isNull';
+import map from 'lodash/map';
+import get from 'lodash/get';
 import SPECIES from '../../../constants/species';
 
 // 600px seems to be roughly 100% page width (inside the margins)
@@ -386,9 +390,9 @@ const renderProtocol = (doc, name, section, values) => {
 const renderProtocolsSection = (doc, subsection, values) => {
   const protocols = values['protocols'] || [];
   protocols.forEach((protocolValues, index) => {
-    const title = doc.createParagraph(`Protocol ${index + 1}`).style('ProtocolSectionTitle'); 
+    const title = doc.createParagraph(`Protocol ${index + 1}`).style('ProtocolSectionTitle');
     if (index > 0) {
-      title.pageBreakBefore();  
+      title.pageBreakBefore();
     }
     renderField(doc, subsection.fields[0], protocolValues);
 
@@ -422,16 +426,37 @@ const renderSection = (doc, section, values) => {
   );
 };
 
+const renderNtsSection = (doc, section, values, sections) => {
+  const sectionTitle = new Paragraph(section.title).style('SectionTitle');
+  sectionTitle.pageBreakBefore();
+  doc.addParagraph(sectionTitle);
+  const subsections = sections.map(s => s.subsections).reduce((obj, values) => {
+    return {
+      ...obj,
+      ...values
+    }
+  }, {});
+  get(section, 'subsections[nts-review].sections', []).forEach(s => {
+    let fields;
+    const subsection = subsections[s.section];
+    if (s.fields) {
+      fields = subsection.fields.filter(field => s.fields.includes(field.name));
+    }
+    doc.createParagraph(s.title).style('SectionTitle');
+    renderFields(doc, subsection, values, fields);
+  });
+}
+
 const renderDocument = (doc, sections, values) => {
-  
   const now = new Date();
 
   doc.createParagraph(values.title).style('SectionTitle');
   doc.createParagraph(`Document exported on ${now}`).style('body').pageBreak();
 
-  sections = sections.filter(s => s.name !== 'nts');
-
   sections.forEach(section => {
+    if (section.name === 'nts') {
+      return renderNtsSection(doc, section, values, sections);
+    }
     renderSection(doc, section, values);
   });
 
