@@ -4,7 +4,7 @@ import Repeater from '../../../components/repeater';
 import Fieldset from '../../../components/fieldset';
 import Controls from '../../../components/controls';
 
-const Establishment = ({ index, fields, updateItem, values, advance, retreat, active, length, goto }) => (
+const Establishment = ({ prefix, index, fields, updateItem, values, advance, retreat, active, length, goto }) => (
   <div className={classnames({ hidden: index !== active })}>
     <h1>About other establishments - {index + 1} of {length}</h1>
     <div className="playback">
@@ -19,6 +19,7 @@ const Establishment = ({ index, fields, updateItem, values, advance, retreat, ac
     <Fieldset
       fields={fields}
       values={values}
+      prefix={prefix}
       onFieldChange={(key, value) => updateItem({ [key]: value })}
     />
     <Controls onContinue={advance} onExit={retreat} exitLabel="Back" />

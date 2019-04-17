@@ -230,6 +230,7 @@ export default {
             show: values => values['other-establishments'] === true && values['other-establishments-list'] && values['other-establishments-list'].length,
             component: Establishments,
             name: 'establishments',
+            repeats: true,
             fields: [
               {
                 name: 'establishment-about',
@@ -393,6 +394,7 @@ export default {
             component: Poles,
             show: values => values.poles === true,
             name: 'polesList',
+            repeats: true,
             fields: [
               {
                 name: 'title',
@@ -559,6 +561,7 @@ export default {
             intro: 'There are several useful resources to help you plan your experiments. It is recommended that you read the ARRIVE or PREPARE guidelines, or use the NC3Rs\' Experimental Design Assistant before answering the questions in this section.',
             component: Objectives,
             repeat: 'objectives',
+            repeats: true,
             fields: [
               {
                 name: 'title',

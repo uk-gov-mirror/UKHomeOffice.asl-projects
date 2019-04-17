@@ -43,7 +43,7 @@ class Step extends Component {
   componentDidMount() {
     if (this.props.protocolState && !isUndefined(this.props.protocolState.sectionItem)) {
       const activeStep = this.props.protocolState.sectionItem;
-      if (activeStep === this.props.index) {
+      if (activeStep === this.props.values.id) {
         this.props.updateItem({ completed: false })
       }
     }
@@ -99,6 +99,8 @@ class Step extends Component {
             <ReviewFields
               fields={fields.filter(f => f.name !== 'title')}
               values={values}
+              prefix={this.props.prefix}
+              addComment={this.props.addComment}
               editLink={`0#${this.props.prefix}`}
             />
             {

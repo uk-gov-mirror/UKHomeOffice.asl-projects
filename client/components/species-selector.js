@@ -65,6 +65,7 @@ class SpeciesSelector extends Component {
                 fields={getFields(options, name)}
                 values={values}
                 onFieldChange={onFieldChange}
+                noComments={true}
               />
             </details>
           ))

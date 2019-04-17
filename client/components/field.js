@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Fragment, Component } from 'react';
 import { connect } from 'react-redux';
 
 import isEqual from 'lodash/isEqual';
@@ -18,6 +18,7 @@ import Duration from './duration';
 import { TextEditor } from './editor';
 
 import Fieldset from './fieldset';
+import Comments from './comments';
 
 class Field extends Component {
 
@@ -192,4 +193,17 @@ const mapStateToProps = ({ project, settings }, { name, conditional, optionsFrom
   };
 }
 
-export default connect(mapStateToProps)(Field);
+const ConnectedField = connect(mapStateToProps)(Field);
+
+const FieldGroup = props => {
+  return (
+    <Fragment>
+      <ConnectedField {...props} />
+      {
+        !props.noComments && <Comments field={props.name} />
+      }
+    </Fragment>
+  )
+}
+
+export default FieldGroup;

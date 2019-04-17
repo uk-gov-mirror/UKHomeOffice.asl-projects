@@ -268,6 +268,7 @@ export default {
     subsections: {
       protocols: {
         title: 'Protocols',
+        name: 'protocols',
         component: Protocols,
         review: ProtocolsReview,
         fields: [

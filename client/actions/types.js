@@ -12,4 +12,6 @@ export const DELETE_PROJECT = 'DELETE_PROJECT';
 export const SHOW_MESSAGE = 'SHOW_MESSAGE';
 export const HIDE_MESSAGE = 'HIDE_MESSAGE';
 
+export const ADD_COMMENT = 'ADD_COMMENT';
+
 export const ERROR = 'ERROR';

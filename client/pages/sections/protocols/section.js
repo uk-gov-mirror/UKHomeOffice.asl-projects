@@ -40,6 +40,8 @@ class Section extends PureComponent {
               <ReviewFields
                 fields={fields}
                 values={values}
+                addComment={this.props.addComment}
+                prefix={this.props.prefix}
                 editLink={`0#${this.props.prefix}`}
               />
             )

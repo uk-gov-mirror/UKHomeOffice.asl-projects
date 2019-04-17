@@ -6,15 +6,41 @@ import map from 'lodash/map';
 import pickBy from 'lodash/pickBy';
 import every from 'lodash/every';
 import some from 'lodash/some';
+import omit from 'lodash/omit';
+import mapValues from 'lodash/mapValues';
+import flatten from 'lodash/flatten';
 
 import { Button } from '@ukhomeoffice/react-components';
 
 import { INCOMPLETE, PARTIALLY_COMPLETE, COMPLETE } from '../constants/completeness';
 import schema from '../schema'
+import { flattenReveals, getNewComments } from '../helpers';
 
-const mapStateToProps = ({ project, application: { schemaVersion, readonly } }) => {
+import NewComments from './new-comments';
+
+const getFields = subsection => {
+  if (!subsection.repeats && subsection.fields && subsection.fields.length) {
+    return subsection.fields
+  }
+  else if (subsection.steps) {
+    return flatten(subsection.steps.filter(s => !s.repeats).map(step => step.fields))
+  }
+  else return []
+}
+
+const mapStateToProps = ({ project, comments, application: { schemaVersion, readonly } }) => {
+
+  const fieldsBySection = Object.values(schema[schemaVersion]).map(section => section.subsections).reduce((obj, subsections) => {
+    return {
+      ...obj,
+      ...mapValues(subsections, subsection => flattenReveals(getFields(subsection), project).map(field => field.name))
+    }
+  }, {});
+
   return {
     readonly,
+    newComments: getNewComments(comments),
+    fieldsBySection: omit(fieldsBySection, 'protocols'),
     legacy: schemaVersion === 0,
     values: project,
     sections: schema[schemaVersion]
@@ -73,6 +99,29 @@ class ApplicationSummary extends React.Component {
     return !section.show || section.show(this.props.values);
   }
 
+  getComments = subsection => {
+    let newComments = 0;
+
+    const repeaters = {
+      protocols: /^protocol\./,
+      establishments: /^establishments\./,
+      poles: /^pole\./,
+      'action-plan': /objectives\./
+    }
+
+    if (repeaters[subsection]) {
+      newComments += flatten(Object.keys(this.props.newComments)
+        .filter(key => key.match(repeaters[subsection]))
+        .map(key => this.props.newComments[key])).length;
+    }
+
+    newComments += (this.props.fieldsBySection[subsection] || []).reduce((total, field) => {
+      return total + (this.props.newComments[field] || []).length
+    }, 0);
+
+    return <NewComments comments={newComments} />
+  }
+
   render() {
     if (!this.props.values) {
       return null;
@@ -98,11 +147,14 @@ class ApplicationSummary extends React.Component {
                     const subsection = section.subsections[key];
                     return <tr key={key}>
                       <td><Link to={`/${key}`}>{ subsection.title }</Link></td>
-                      {
-                        !this.props.readonly
-                          ? <td>{ this.completeBadge(this.complete(subsection, key)) }</td>
-                          : <td></td>
-                      }
+                      <td>
+                        {
+                          this.getComments(key)
+                        }
+                        {
+                          !this.props.readonly && this.completeBadge(this.complete(subsection, key))
+                        }
+                      </td>
                     </tr>
                   })
                 }
