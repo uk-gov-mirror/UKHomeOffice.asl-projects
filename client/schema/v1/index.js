@@ -670,7 +670,7 @@ each other.`,
               {
                 name: 'description',
                 label: 'Briefly describe the purposes of this protocol',
-                hint: 'Include any relevant regulatory guidelines that may apply.',
+                hint: 'Ensure that you include any relevant regulatory guidelines.',
                 type: 'texteditor'
               },
               {
@@ -859,6 +859,7 @@ each other.`,
                               {
                                 name: 'gaas-harmful-control',
                                 label: 'How will you control the harms associated with these phenotypes?',
+                                hint: 'Ensure that you include any relevant humane endpoints.',
                                 type: 'texteditor'
                               }
                             ]
@@ -954,7 +955,7 @@ each other.`,
                       },
                       {
                         name: 'prevent-adverse-effects',
-                        label: 'How will you attempt to prevent any of these adverse effects?​',
+                        label: 'How will you monitor for, control, and limit any of these adverse effects?​',
                         hint: 'If adverse effects can\'t be prevented, how will you attempt to ameliorate their initial signs?',
                         type: 'texteditor'
                       },
@@ -991,7 +992,7 @@ each other.`,
               },
               {
                 name: 'experience-endpoints',
-                label: 'Describe any general humane endpoints that you may apply during the protocol.',
+                label: 'Describe any general humane endpoints that you will apply during the protocol.',
                 hint: 'These will be in addition to the endpoints stated for each step.',
                 type: 'texteditor'
               }
@@ -1152,6 +1153,7 @@ each other.`,
                       {
                         name: 'dosing-regimen',
                         label: 'How will you determine an appropriate dosing regimen?​',
+                        hint: 'Include routes, dosage volumes, frequencies, and durations.',
                         type: 'texteditor'
                       }
                     ]
@@ -1873,7 +1875,7 @@ each other.`,
                 value: true,
                 reveal: {
                   name: 'commercial-slaughter-hygiene',
-                  label: 'How will you ensure that these animals are healthy and meet commercial standards for meat hygiene?',
+                  label: 'How will you ensure that these animals are healthy and meet commercial requirements for meat hygiene to enable them to enter the food chain?',
                   hint: 'Include any relevant information about drug withdrawal times.',
                   type: 'texteditor'
                 }
@@ -1978,7 +1980,7 @@ each other.`,
           },
           {
             name: 'refinement-explaination',
-            label: 'How will you refine the methods and procedures you\'re using as this project progresses?',
+            label: 'How will you refine the procedures you\'re using to minimise harm for the animals?',
             hint: 'Potential refinements include increased monitoring, post-operative care, pain management, and training of animals.',
             type: 'texteditor'
           },
