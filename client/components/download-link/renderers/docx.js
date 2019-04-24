@@ -171,27 +171,29 @@ const renderNode = (doc, node) => {
 
     case 'paragraph':
       paragraph = new Paragraph();
-      node.nodes[0].leaves.forEach(leaf => {
-        text = new TextRun(leaf.text);
-        if (text) {
-          leaf.marks.forEach(mark => {
-            switch (mark.type) {
-              case 'bold':
-                text.bold();
-                break;
+      node.nodes.forEach(childNode => {
+        childNode.leaves.forEach(leaf => {
+          text = new TextRun(leaf.text);
+          if (text) {
+            (leaf.marks || []).forEach(mark => {
+              switch (mark.type) {
+                case 'bold':
+                  text.bold();
+                  break;
 
-              case 'italic':
-                text.italics();
-                break;
+                case 'italic':
+                  text.italics();
+                  break;
 
-              case 'underlined':
-                text.underline();
-                break;
-            }
-          });
-          paragraph.style('body');
-          paragraph.addRun(text);
-        }
+                case 'underlined':
+                  text.underline();
+                  break;
+              }
+            });
+            paragraph.style('body');
+            paragraph.addRun(text);
+          }
+        });
       });
       doc.addParagraph(paragraph);
       break;
