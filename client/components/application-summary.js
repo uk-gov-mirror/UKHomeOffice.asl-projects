@@ -104,7 +104,7 @@ class ApplicationSummary extends React.Component {
 
     if (subsection.repeats) {
       newComments += flatten(Object.keys(this.props.newComments)
-        .filter(key => key.match(new RegExp(`^${subsection.repeats}\.`)))
+        .filter(key => key.match(new RegExp(`^${subsection.repeats}\\.`)))
         .map(key => this.props.newComments[key])).length;
     }
 
