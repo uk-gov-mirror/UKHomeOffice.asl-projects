@@ -197,6 +197,7 @@ export default {
       establishments: {
         title: 'Establishments',
         review: EstablishmentsReview,
+        repeats: 'establishments',
         steps: [
           {
             fields: [
@@ -363,6 +364,7 @@ export default {
       poles: {
         title: 'Places other than a licensed establishment (POLEs)',
         review: PolesReview,
+        repeats: 'polesList',
         steps: [
           {
             fields: [
@@ -553,6 +555,7 @@ export default {
       'action-plan': {
         title: 'Action plan',
         playback: 'project-aim',
+        repeats: 'objectives',
         review: ObjectivesReview,
         steps: [
           {
@@ -659,6 +662,7 @@ each other.`,
         name: 'protocols',
         component: Protocols,
         review: ProtocolsReview,
+        repeats: 'protocol',
         fields: [
           {
             name: 'title',

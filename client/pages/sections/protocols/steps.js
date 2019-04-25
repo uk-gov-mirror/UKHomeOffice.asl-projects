@@ -100,7 +100,6 @@ class Step extends Component {
               fields={fields.filter(f => f.name !== 'title')}
               values={values}
               prefix={this.props.prefix}
-              addComment={this.props.addComment}
               editLink={`0#${this.props.prefix}`}
             />
             {

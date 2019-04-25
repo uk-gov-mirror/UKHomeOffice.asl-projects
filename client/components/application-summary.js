@@ -99,23 +99,16 @@ class ApplicationSummary extends React.Component {
     return !section.show || section.show(this.props.values);
   }
 
-  getComments = subsection => {
+  getComments = (key, subsection) => {
     let newComments = 0;
 
-    const repeaters = {
-      protocols: /^protocol\./,
-      establishments: /^establishments\./,
-      poles: /^pole\./,
-      'action-plan': /objectives\./
-    }
-
-    if (repeaters[subsection]) {
+    if (subsection.repeats) {
       newComments += flatten(Object.keys(this.props.newComments)
-        .filter(key => key.match(repeaters[subsection]))
+        .filter(key => key.match(new RegExp(`^${subsection.repeats}\.`)))
         .map(key => this.props.newComments[key])).length;
     }
 
-    newComments += (this.props.fieldsBySection[subsection] || []).reduce((total, field) => {
+    newComments += (this.props.fieldsBySection[key] || []).reduce((total, field) => {
       return total + (this.props.newComments[field] || []).length
     }, 0);
 
@@ -149,7 +142,7 @@ class ApplicationSummary extends React.Component {
                       <td><Link to={`/${key}`}>{ subsection.title }</Link></td>
                       <td>
                         {
-                          this.getComments(key)
+                          this.getComments(key, subsection)
                         }
                         {
                           !this.props.readonly && this.completeBadge(this.complete(subsection, key))
