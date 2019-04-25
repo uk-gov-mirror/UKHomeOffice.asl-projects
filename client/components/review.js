@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { ReviewTextEditor } from './editor';
 import speciesOptions from '../constants/species';
 
+import Comments from './comments';
 import flatten from 'lodash/flatten';
 import values from 'lodash/values';
 import isUndefined from 'lodash/isUndefined';
@@ -129,6 +130,7 @@ class Review extends React.Component {
       <div className="review">
         <h3>{this.props.label}</h3>
         {this.replay()}
+        <Comments field={`${this.props.prefix || ''}${this.props.name}`} collapsed={!this.props.readonly} />
         {
           !this.props.readonly && (
             <Fragment>

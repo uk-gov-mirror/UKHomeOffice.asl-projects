@@ -6,6 +6,7 @@ import classnames from 'classnames';
 import Expandable from '../../../components/expandable';
 import Completable from '../../../components/completable';
 import Complete from '../../../components/complete';
+import NewComments from '../../../components/new-comments';
 import Sections from './sections';
 
 class ProtocolSections extends PureComponent {
@@ -42,14 +43,19 @@ class ProtocolSections extends PureComponent {
       sections,
       index,
       updateItem,
-      editable
+      editable,
+      newComments
     } = this.props;
 
     const severityField = sections.details.fields.find(field => field.name === 'severity');
     const severityOption = severityField.options && severityField.options.find(option => option.value === values.severity);
 
+    const numberOfNewComments = Object.values(newComments)
+      .reduce((total, comments) => (comments || []).length, 0);
+
     return (
       <section className={classnames('protocol', { complete: values.complete })}>
+        <NewComments comments={numberOfNewComments} />
         <Expandable expanded={this.state.expanded} onHeaderClick={this.toggleExpanded}>
           <Completable status={values.complete ? 'complete' : 'incomplete'}>
             <h2 className="title inline-block">
@@ -75,6 +81,7 @@ class ProtocolSections extends PureComponent {
                 <Fragment>
                   <Complete
                     type="protocol"
+                    newComments={newComments}
                     complete={values.complete}
                     onChange={this.setCompleted}
                     buttonClassName="button-secondary"

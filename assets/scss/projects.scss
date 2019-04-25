@@ -1,5 +1,6 @@
 @import "editor";
 @import "images";
+$light-green: #26A197;
 
 #ppl-drafting-tool {
   .page-header {
@@ -263,6 +264,10 @@
 
     &.complete {
       background: $blue;
+    }
+
+    &.comments {
+      background: $light-green;
     }
   }
 
@@ -698,6 +703,8 @@
   }
 
   .species-selector {
+    margin-bottom: $govuk-gutter;
+
     .govuk-form-group {
       margin-bottom: $govuk-gutter !important;
     }
@@ -752,5 +759,135 @@
       }
     }
 
+  }
+
+  .comments.expanding-panel {
+    margin-bottom: $govuk-gutter;
+    border-top: 3px solid $govuk-border-colour;
+    border-bottom: 3px solid $govuk-border-colour;
+    position: relative;
+
+    &.has-new {
+      border-color: $light-green;
+
+      &:before {
+        border-bottom-color: $light-green;
+      }
+    }
+
+    &:last-child {
+      border-bottom: 3px solid $govuk-border-colour;
+
+      &.has-new {
+        border-color: $light-green;
+      }
+    }
+
+    &:before {
+      content: '';
+      position: absolute;
+      left: 20px;
+      top: -15px;
+      width: 0;
+      height: 0;
+      border: 15px solid transparent;
+      border-bottom-color: $govuk-border-colour;
+      border-top: 0;
+    }
+
+    h3 {
+      margin-left: 0.5em;
+
+      &:before {
+        content: '';
+        margin-right: 0.5em;
+        background: $comments;
+        background-size: 100%;
+        vertical-align: middle;
+        display: inline-block;
+        width: 1.5em;
+        height: 1.5em;
+      }
+    }
+
+    .comment {
+      border: 3px solid $govuk-border-colour;
+      border-radius: $govuk-gutter-half;
+      border-top-left-radius: 0;
+      margin-bottom: $govuk-gutter;
+      position: relative;
+      background-color: $white;
+      margin-right: $govuk-gutter;
+
+      .header {
+        border-bottom: 3px solid $govuk-border-colour;
+        padding: $govuk-gutter-half / 2 $govuk-gutter-half;
+      }
+
+      .content {
+        padding: $govuk-gutter-half / 2 $govuk-gutter-half;
+      }
+
+      &:before {
+      	content: '';
+      	position: absolute;
+      	left: 0;
+      	top: 0;
+      	width: 0;
+      	height: 0;
+      	border: 20px solid transparent;
+      	border-top-color: $govuk-border-colour;
+      	border-bottom: 0;
+      	border-right: 0;
+      	margin-left: -20px;
+      	margin-top: -3px;
+      }
+
+      &:after {
+      	content: '';
+      	position: absolute;
+      	left: 0;
+      	top: 0;
+      	width: 0;
+      	height: 0;
+      	border: 20px solid transparent;
+      	border-top-color: $white;
+      	border-bottom: 0;
+      	border-right: 0;
+      	margin-left: -13px;
+      	margin-top: -0px;
+      }
+
+      &.mine {
+        border-top-left-radius: $govuk-gutter-half;
+        border-top-right-radius: 0;
+        margin-left: $govuk-gutter;
+        margin-right: 0;
+
+        &:before, &:after {
+          right: 0;
+          border-left: 0;
+          border-right: 20px solid transparent;
+          left: auto;
+          margin-right: -20px;
+        }
+
+        &:after {
+          margin-right: -13px;
+        }
+      }
+
+      &.isNew {
+        border-color: $light-green;
+
+        &:before {
+          border-top-color: $light-green;
+        }
+
+        .header {
+          border-color: $light-green;
+        }
+      }
+    }
   }
 }

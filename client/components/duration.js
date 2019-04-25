@@ -61,6 +61,7 @@ class Duration extends Component {
           fields={this.getFields()}
           onFieldChange={this.onChange}
           values={this.state}
+          noComments={true}
         />
       </div>
     )

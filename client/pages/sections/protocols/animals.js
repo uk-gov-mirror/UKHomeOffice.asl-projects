@@ -54,6 +54,7 @@ class Animal extends Component {
               <ReviewFields
                 fields={fields}
                 values={values}
+                prefix={prefix}
                 editLink={`0#${prefix}`}
               />
             )

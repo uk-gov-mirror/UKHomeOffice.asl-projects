@@ -18,6 +18,7 @@ const LocationSelector = ({
         ...establishments,
         ...poles
       ]}
+      noComments={true}
     />
     <Link to="/settings">Add new establishment</Link>
     <Link to="../poles">Add new POLE</Link>
