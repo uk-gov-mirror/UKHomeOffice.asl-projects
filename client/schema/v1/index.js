@@ -1818,7 +1818,7 @@ each other.`,
               },
               {
                 name: 'nmbas-people',
-                label: 'How will you ensure there are sufficient staff present throughout the use of NMBAs (including recovery periods) who are competent to use NMBAs in these types of animal?',
+                label: 'How will you ensure there are sufficient staff present throughout the use of NMBAs (including recovery periods) who are competent to use them in these types of animal?',
                 type: 'texteditor'
               },
               {
