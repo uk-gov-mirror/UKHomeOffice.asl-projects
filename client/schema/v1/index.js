@@ -30,6 +30,7 @@ export default {
           {
             name: 'project-aim',
             label: 'What\'s the aim of this project?',
+            hint: 'Keep this to a short one or two sentence summary.',
             playback: 'Aim of this project',
             type: 'texteditor'
           },
@@ -265,7 +266,7 @@ export default {
                     value: false,
                     reveal: {
                       name: 'establishments-care-conditions-justification',
-                      label: 'If any of your establishments do not meet these requirements, explain how you will ensure that housing, husbandry, and care conditions are appropriate for your project.',
+                      label: 'If any establishment does not meet these requirements, or if any type of animal you\'re using is not listed in the Code of Practice, explain how you will ensure that housing, husbandry, and care conditions are appropriate for your project.',
                       type: 'texteditor'
                     }
                   }
@@ -432,23 +433,25 @@ export default {
                         type: 'texteditor'
                       },
                       {
+                        name: 'poles-transfer-delivery',
+                        label: 'How might the movement of animals between a POLE and a licensed establishment affect the scientific delivery of this project?',
+                        type: 'texteditor'
+                      },
+                      {
                         name: 'poles-transfer-condition',
                         label: 'How will you ensure that animals are in a suitable condition to be transported?',
+                        hint: 'Include all checks that will be made for suitability and what will happen to animals that are not suitable to be transported.',
                         type: 'texteditor'
                       },
                       {
                         name: 'poles-transfer-responsibility',
                         label: 'Who will be responsible for checking the animals before they are transported?',
+                        hint: 'This does not need to be a Named Veterinary Surgeon.',
                         type: 'texteditor'
                       },
                       {
                         name: 'poles-transfer-checks',
-                        label: 'How will you ensure the competence of this person to make the appropriate checks?',
-                        type: 'texteditor'
-                      },
-                      {
-                        name: 'poles-transfer-delivery',
-                        label: 'How might the movement of animals between a POLE and a licensed establishment affect the scientific delivery of this project?',
+                        label: 'How will you ensure that this person is competent to make the appropriate checks?',
                         type: 'texteditor'
                       },
                       {
@@ -490,7 +493,7 @@ export default {
           },
           {
             name: 'clinical-condition',
-            label: 'Does your project mainly involve translational or veterinary clinical applications?',
+            label: 'Does your project mainly involve translational and/or veterinary clinical applications?',
             type: 'radio',
             inline: true,
             className: 'smaller',
@@ -535,7 +538,7 @@ export default {
                 reveal: [
                   {
                     name: 'expiring-yes',
-                    label: 'Please state the licence number and expiry date of any of these licences.',
+                    label: 'Please state the licence number and expiry date of all these licences.',
                     type: 'texteditor'
                   }
                 ]
@@ -600,7 +603,7 @@ each other.`,
           },
           {
             name: 'experimental-design-sexes',
-            label: 'Will you use animals of both sexes in this project?',
+            label: 'Will any of your protocols or experiments only use animals of a single sex?',
             type: 'radio',
             inline: true,
             className: 'smaller',
@@ -1402,6 +1405,7 @@ each other.`,
           {
             name: 'domestic',
             label: 'What are the scientific reasons for using cats, dogs, or equidae in your project?',
+            hint: 'A licence cannot be granted unless the scientific objectives or research questions can only be achieved or answered by the use of cats, dogs or equidae. This includes instances when it is not practicable to obtain other types of animal).',
             type: 'texteditor'
           }
         ]
@@ -1413,13 +1417,13 @@ each other.`,
         fields: [
           {
             name: 'nhps',
-            label: 'Why do you need to use non-human primates to achieve your objectives?',
+            label: 'Why do you need to use non-human primates, rather than any other type of animal, to achieve your objectives?',
             type: 'texteditor'
           },
           {
             name: 'nhps-justification',
-            label: 'Explain how the project is for one of the permitted reasons.',
-            hint: `The permitted reasons for the use of non-human primates are:
+            label: 'Explain how the project is for one of the permitted purposes.',
+            hint: `The permitted purposes for the use of non-human primates are:
 
 * basic research
 * translational or applied research for the avoidance, prevention, diagnosis or treatment of debilitating or potentially life-threatening clinical conditions or their effects in man
@@ -1439,7 +1443,7 @@ each other.`,
                 value: true,
                 reveal: {
                   name: 'wild-caught-primates-justification',
-                  label: 'Why can\'t you achieve your objectives without using wild-caught primates?',
+                  label: 'Why can\'t you achieve your objectives without using wild-caught non-human primates?',
                   type: 'texteditor'
                 }
               },
@@ -1495,7 +1499,8 @@ each other.`,
                 reveal: [
                   {
                     name: 'purpose-bred-sourced',
-                    label: 'Where will you source animals from that have not been purpose bred?',
+                    label: 'Where will you obtain non-purpose bred animals from?',
+                    hint: 'Consider the source of all species you plan to use, as this information will help assess the impact on the scientific output and the quality of the animal.'
                     type: 'texteditor'
                   },
                   {
@@ -1530,8 +1535,8 @@ each other.`,
                   },
                   {
                     name: 'endangered-animals-permitted',
-                    label: 'Explain how the project is for one of the permitted reasons.',
-                    hint: `The permitted reasons for the use of endangered animals are:
+                    label: 'Explain how the project is for one of the permitted purposes.',
+                    hint: `The permitted purposes for the use of endangered animals are:
 
   * translational or applied research for the avoidance, prevention, diagnosis or treatment of disease, ill-health or other abnormality, or their effects, in man, animals or plants
   * the development, manufacture or testing of the quality, effectiveness and safety of drugs, feed-stuffs or any other substances or products for the avoidance, prevention, diagnosis or treatment of disease, ill-health or other abnormality, or their effects, in man, animals or plants or assessment, detection, regulation or modification of physiological conditions in man, animals or plants or the improvement of the welfare of animals or of the production conditions for animals reared for  agricultural purposes
@@ -1804,8 +1809,7 @@ each other.`,
               },
               {
                 name: 'nmbas-people',
-                label: 'How will you ensure there are sufficient staff present who are competent to use NMBAs in these types of animal?',
-                hint: 'This also includes recovery periods.',
+                label: 'How will you ensure there are sufficient staff present throughout the use of NMBAs (including recovery periods) who are competent to use NMBAs in these types of animal?',
                 type: 'texteditor'
               },
               {
@@ -1873,7 +1877,7 @@ each other.`,
                 value: true,
                 reveal: {
                   name: 'commercial-slaughter-hygiene',
-                  label: 'How will you ensure that these animals are healthy and meet commercial standards for meat hygiene?',
+                  label: 'How will you ensure that these animals are healthy and meet commercial standards for meat hygiene to enable them to enter the food chain?',
                   hint: 'Include any relevant information about drug withdrawal times.',
                   type: 'texteditor'
                 }
