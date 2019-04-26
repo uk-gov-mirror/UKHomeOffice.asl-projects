@@ -1414,7 +1414,7 @@ each other.`,
           {
             name: 'domestic',
             label: 'What are the scientific reasons for using cats, dogs, or equidae in your project?',
-            hint: 'A licence cannot be granted unless the scientific objectives or research questions can only be achieved or answered by the use of cats, dogs or equidae. This includes instances when it is not practicable to obtain other types of animal).',
+            hint: 'A licence cannot be granted unless the scientific objectives or research questions can only be achieved or answered by the use of cats, dogs or equidae. This includes instances when it is not practicable to obtain other types of animal.',
             type: 'texteditor'
           }
         ]
@@ -1509,7 +1509,7 @@ each other.`,
                   {
                     name: 'purpose-bred-sourced',
                     label: 'Where will you obtain non-purpose bred animals from?',
-                    hint: 'Consider the source of all species you plan to use, as this information will help assess the impact on the scientific output and the quality of the animal.',
+                    hint: 'Consider the source of all animals you plan to use, as this information will help assess the impact on the scientific output and the quality of the animal.',
                     type: 'texteditor'
                   },
                   {
