@@ -66,7 +66,7 @@ const EstablishmentsReview = ({ fields, values, goto, retreat, readonly, schemaV
                   {...fields.find(f => f.name === 'establishments-care-conditions').options[1].reveal}
                   value={values['establishments-care-conditions-justification']}
                   onEdit={retreat}
-                  />
+                />
               )
             }
           </Fragment>

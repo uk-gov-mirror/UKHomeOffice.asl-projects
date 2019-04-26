@@ -29,6 +29,7 @@ export default {
     subsections: {
       establishments: {
         title: 'Establishments',
+        repeats: 'establishments',
         review: EstablishmentsReview,
         steps: [
           {
@@ -268,8 +269,10 @@ export default {
     subsections: {
       protocols: {
         title: 'Protocols',
+        name: 'protocols',
         component: Protocols,
         review: ProtocolsReview,
+        repeats: 'protocols',
         fields: [
           {
             name: 'title',

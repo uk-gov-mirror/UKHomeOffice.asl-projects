@@ -2,11 +2,15 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
 
+import pickBy from 'lodash/pickBy';
+
 import ProtocolSections from './protocol-sections';
 
 import Fieldset from '../../../components/fieldset';
 import Repeater from '../../../components/repeater';
 import Controls from '../../../components/controls';
+
+import { getNewComments } from '../../../helpers';
 
 const Form = ({
   index,
@@ -46,12 +50,12 @@ class Protocol extends PureComponent {
     const parts = this.props.location.hash.split('.');
 
     const protocolState = {
-      activeProtocol: parseInt(parts[1], 10),
+      activeProtocol: parts[1],
       fieldName: parts[parts.length - 1]
     }
     if (parts.length === 5) {
       protocolState.section = parts[2],
-      protocolState.sectionItem = parseInt(parts[3], 10)
+      protocolState.sectionItem = parts[3]
     }
 
     return protocolState;
@@ -61,11 +65,16 @@ class Protocol extends PureComponent {
     if (!protocolState) {
       return false;
     }
-    return protocolState.activeProtocol === this.props.index;
+    return protocolState.activeProtocol === this.props.values.id;
   }
 
   render() {
     const { editable } = this.props;
+
+    const newComments = pickBy(this.props.newComments, (comments, key) => {
+      const re = new RegExp(`^protocol.${this.props.values.id}`);
+      return key.match(re);
+    });
 
     const protocolState = this.getProtocolState();
     const isActive = this.isActive(protocolState);
@@ -77,6 +86,7 @@ class Protocol extends PureComponent {
       />
       : <ProtocolSections
           {...this.props}
+          newComments={newComments}
           protocolState={isActive && protocolState}
           onToggleActive={this.toggleActive}
         />
@@ -117,6 +127,6 @@ class Protocols extends PureComponent {
   }
 }
 
-const mapStateToProps = ({ project: { protocols } }) => ({ protocols });
+const mapStateToProps = ({ comments, project: { protocols } }) => ({ protocols, newComments: getNewComments(comments) });
 
 export default connect(mapStateToProps)(Protocols);

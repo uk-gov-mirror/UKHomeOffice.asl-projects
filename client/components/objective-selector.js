@@ -13,6 +13,7 @@ const ObjectiveSelector = ({
       type="checkbox"
       className="smaller"
       options={objectives}
+      noComments={true}
     />
     <Link to="../strategy">Add new objective</Link>
   </div>

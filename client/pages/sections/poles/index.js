@@ -4,7 +4,7 @@ import Repeater from '../../../components/repeater';
 import Fieldset from '../../../components/fieldset';
 import Controls from '../../../components/controls';
 
-const Pole = ({ index, fields, values, updateItem, removeItem, length }) => (
+const Pole = ({ index, fields, values, updateItem, removeItem, length, prefix }) => (
   <Fragment>
     <div className="panel gutter">
       {
@@ -14,6 +14,7 @@ const Pole = ({ index, fields, values, updateItem, removeItem, length }) => (
       <Fieldset
         fields={fields}
         values={values}
+        prefix={prefix}
         onFieldChange={(key, value) => updateItem({ [key]: value })}
       />
     </div>
