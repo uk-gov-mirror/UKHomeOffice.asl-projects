@@ -1500,7 +1500,7 @@ each other.`,
                   {
                     name: 'purpose-bred-sourced',
                     label: 'Where will you obtain non-purpose bred animals from?',
-                    hint: 'Consider the source of all species you plan to use, as this information will help assess the impact on the scientific output and the quality of the animal.'
+                    hint: 'Consider the source of all species you plan to use, as this information will help assess the impact on the scientific output and the quality of the animal.',
                     type: 'texteditor'
                   },
                   {
