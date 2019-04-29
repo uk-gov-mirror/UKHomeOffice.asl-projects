@@ -623,7 +623,7 @@ each other.`,
                 value: false,
                 reveal: {
                   name: 'experimental-design-sexes-justification',
-                  label: 'Why will you not use animals of both sexes?',
+                  label: 'Why will you not use animals of both sexes in some protocols or experiments?',
                   type: 'texteditor'
                 }
               }
@@ -1968,12 +1968,13 @@ each other.`,
           {
             name: 'reduction-steps',
             label: 'What steps did you take during the experimental design phase to reduce the number of animals being used in this project?',
+            hint: 'Include advice taken from local statisticians, online tools (such as the NC3Rs\' Experimental Design Assistant), or regulatory requirements.',
             type: 'texteditor'
           },
           {
             name: 'reduction-review',
-            label: 'How will you review these estimates as the project progresses',
-            hint: 'This may include pilot studies, computer modelling, or sharing of tissue.',
+            label: 'What measures, apart from good experimental design, will you use to optimise the number of animals you plan to use in your project.',
+            hint: 'This may include efficient breeding, pilot studies, computer modelling, or sharing of tissue.',
             type: 'texteditor'
           }
         ]
