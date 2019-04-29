@@ -8,6 +8,7 @@ import message from './message';
 import settings from './settings';
 import comments from './comments';
 import changed from './changed';
+import amends from './amends';
 
 const rootReducer = combineReducers({
   projects,
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
   message,
   settings,
   comments,
-  changed
+  changed,
+  amends
 });
 
 export default rootReducer;

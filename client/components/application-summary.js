@@ -29,7 +29,7 @@ const getFields = subsection => {
   else return []
 }
 
-const mapStateToProps = ({ project, comments, application: { schemaVersion, readonly, showComments, user }, changed }) => {
+const mapStateToProps = ({ project, comments, application: { schemaVersion, readonly, showComments, user }, changed, amends }) => {
 
   const fieldsBySection = Object.values(schema[schemaVersion]).map(section => section.subsections).reduce((obj, subsections) => {
     return {
@@ -37,7 +37,6 @@ const mapStateToProps = ({ project, comments, application: { schemaVersion, read
       ...mapValues(subsections, subsection => flattenReveals(getFields(subsection), project).map(field => field.name))
     }
   }, {});
-
   return {
     readonly,
     showComments,
@@ -46,7 +45,8 @@ const mapStateToProps = ({ project, comments, application: { schemaVersion, read
     legacy: schemaVersion === 0,
     values: project,
     sections: schema[schemaVersion],
-    changed: changed
+    changed,
+    amends
   };
 }
 
@@ -100,8 +100,11 @@ class ApplicationSummary extends React.Component {
 
   changed = (key) => {
     const fields = this.props.fieldsBySection[key] || [];
-    if(this.props.changed.includes(key) || this.props.changed.some(k=> fields.includes(k) )) {
+    if(this.props.changed.includes(key) || this.props.changed.some(k=> fields.includes(k))) {
       return CHANGED;
+    }
+    else if(this.props.amends.includes(key) || this.props.amends.some(k=> fields.includes(k) )) {
+      return AMENDED;
     }
   }
 
@@ -110,7 +113,7 @@ class ApplicationSummary extends React.Component {
       case CHANGED:
         return <span className="badge changed">changed</span>;
       case AMENDED:
-        return <span className="badge amended">amended</span>;
+        return <span className="badge">amended</span>;
       default:
         return null;
     }

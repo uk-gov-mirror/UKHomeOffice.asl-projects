@@ -1,6 +1,7 @@
 @import "editor";
 @import "images";
 $light-green: #26A197;
+$pink: #ff1493;
 
 #ppl-drafting-tool {
   .page-header {
@@ -271,7 +272,7 @@ $light-green: #26A197;
     }
 
     &.changed {
-      background: #ff1493;
+      background: $pink;
     }
   }
 
