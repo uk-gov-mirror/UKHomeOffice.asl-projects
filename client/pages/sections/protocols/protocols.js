@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import classnames from 'classnames';
 
 import pickBy from 'lodash/pickBy';
+import mapKeys from 'lodash/mapKeys';
 
 import ProtocolSections from './protocol-sections';
 
@@ -71,10 +72,13 @@ class Protocol extends PureComponent {
   render() {
     const { editable } = this.props;
 
-    const newComments = pickBy(this.props.newComments, (comments, key) => {
-      const re = new RegExp(`^protocol.${this.props.values.id}`);
-      return key.match(re);
-    });
+    const newComments = mapKeys(
+      pickBy(this.props.newComments, (comments, key) => {
+        const re = new RegExp(`^protocol.${this.props.values.id}`);
+        return key.match(re);
+      }),
+      (value, key) => key.replace(`protocol.${this.props.values.id}.`, '')
+    );
 
     const protocolState = this.getProtocolState();
     const isActive = this.isActive(protocolState);
@@ -127,6 +131,6 @@ class Protocols extends PureComponent {
   }
 }
 
-const mapStateToProps = ({ comments, project: { protocols } }) => ({ protocols, newComments: getNewComments(comments) });
+const mapStateToProps = ({ comments, project: { protocols }, application: { user } }) => ({ protocols, newComments: getNewComments(comments, user) });
 
 export default connect(mapStateToProps)(Protocols);

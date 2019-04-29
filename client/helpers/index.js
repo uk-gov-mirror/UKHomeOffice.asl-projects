@@ -13,8 +13,8 @@ export const getScrollPos = (elem, offset = 0) => {
   return Math.round(box.top + scrollTop - clientTop) + offset;
 };
 
-export const getNewComments = comments => {
-  const filterNew = field => field.filter(comment => comment.isNew);
+export const getNewComments = (comments, user) => {
+  const filterNew = field => field.filter(comment => comment.isNew && comment.author !== user);
   return pickBy(mapValues(comments, filterNew), filterNew);
 }
 

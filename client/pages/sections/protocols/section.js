@@ -18,13 +18,11 @@ class Section extends PureComponent {
       advance,
       sectionsLength,
       sectionIndex,
-      editable,
-      title
+      editable
     } = this.props;
 
     return (
       <Fragment>
-        { title && <h3>{title}</h3> }
         { label && <h4>{label}</h4> }
         {
           editable

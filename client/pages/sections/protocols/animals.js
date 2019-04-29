@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 
+import { v4 } from 'uuid';
+
 import { Button } from '@ukhomeoffice/react-components';
 
 import some from 'lodash/some';
@@ -88,7 +90,7 @@ class Animals extends Component {
       if (some(speciesDetails, sd => sd.name === item)) {
         return;
       }
-      speciesDetails.push({ name: item })
+      speciesDetails.push({ name: item, id: v4() })
     });
 
     this.props.onFieldChange('speciesDetails', speciesDetails);
@@ -132,7 +134,7 @@ class Animals extends Component {
       if (some(speciesDetails, sd => sd.name === item)) {
         return;
       }
-      speciesDetails.push({ name: item })
+      speciesDetails.push({ name: item, id: v4() })
     });
 
     return speciesDetails.filter(s => species.includes(s.name) && proj.includes(s.name))
@@ -177,7 +179,7 @@ class Animals extends Component {
         }
         <Repeater
           items={items}
-          type="animals"
+          type="speciesDetails"
           prefix={prefix}
           onSave={speciesDetails => updateItem({ speciesDetails })}
           addAnother={false}

@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 
+import pick from 'lodash/pick';
+import pickBy from 'lodash/pickBy';
 import size from 'lodash/size';
 import flatten from 'lodash/flatten';
+
 import Accordion from '../../../components/accordion';
 import ExpandingPanel from '../../../components/expanding-panel';
+import NewComments from '../../../components/new-comments';
+
+import { flattenReveals } from '../../../helpers';
 
 import Section from './section';
 import Steps from './steps';
@@ -50,11 +56,41 @@ const getOpenSection = (protocolState, editable, sections) => {
   });
 }
 
-const ProtocolSections = ({ sections, protocolState, editable, ...props }) => (
+const getBadge = (section, newComments, values) => {
+  let relevantComments;
+  if (section.repeats) {
+    const re = new RegExp(`^${section.repeats}\\.`);
+    relevantComments = pickBy(newComments, (value, key) => key.match(re))
+  } else {
+    relevantComments = pick(newComments, flattenReveals(section.fields, values).map(field => field.name))
+  }
+  const numberOfNewComments = Object.values(relevantComments).reduce((total, comments) => total + (comments || []).length, 0);
+  return numberOfNewComments
+    ? (
+      <Fragment>
+        <NewComments comments={numberOfNewComments} />
+        <br />
+      </Fragment>
+    )
+    : null
+}
+
+const getTitle = (section, newComments, values) => (
+  <Fragment>
+    {
+      getBadge(section, newComments, values)
+    }
+    {
+      section.title
+    }
+  </Fragment>
+)
+
+const ProtocolSections = ({ sections, protocolState, editable, newComments, ...props }) => (
   <Accordion openOne scrollToActive open={getOpenSection(protocolState, editable, sections)}>
     {
       Object.keys(sections).map((section, sectionIndex) => (
-        <ExpandingPanel key={section} title={sections[section].title}>
+        <ExpandingPanel key={section} title={getTitle(sections[section], newComments, props.values)}>
           {
             getSection(section, { ...props, protocolState, editable, ...sections[section], sectionsLength: size(sections), sectionIndex })
           }
