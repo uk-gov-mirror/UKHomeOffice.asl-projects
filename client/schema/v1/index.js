@@ -680,7 +680,7 @@ each other.`,
               {
                 name: 'description',
                 label: 'Briefly describe the purposes of this protocol',
-                hint: 'Ensure that you include any relevant regulatory guidelines.',
+                hint: 'Ensure that you state any relevant regulatory guidelines.',
                 type: 'texteditor'
               },
               {
@@ -779,7 +779,7 @@ each other.`,
               {
                 name: 'continued-use',
                 label: 'Will any animals coming on to this protocol be classed as ‘continued use’?',
-                hint: '‘Continued use’ describes animals that have had procedures applied to them in order to be used in a particular protocol. For example, genetically altered animals that have been bred for scientific use.',
+                hint: '‘Continued use’ describes animals that are specificially genetically altered and bred for scientific use or animals that have had procedures applied to them in order to be prepared for use in this protocol.',
                 type: 'radio',
                 options: [
                   {
@@ -825,8 +825,8 @@ each other.`,
               },
               {
                 name: 'maximum-times-used',
-                label: 'What is the maximum number of times that this protocol will be used on this type of animal?',
-                hint: 'Count the number of first time uses of a naive animal, then add this to the number of instances of re-use (if relevant).',
+                label: 'What is the maximum number of uses of this protocol on this type of animal?',
+                hint: 'For example, you will use 200 mice during a protocol. Each animal will go through the protocol once, but 100 of them will have it applied twice. Therefore, the total number of uses would be 300.',
                 type: 'text'
               }
             ]
@@ -863,13 +863,13 @@ each other.`,
                             reveal: [
                               {
                                 name: 'gaas-harmful-justification',
-                                label: 'Why are each of these significant phenotypes scientifically necessary?',
+                                label: 'Why are each of these harmful phenotypes necessary?',
                                 type: 'texteditor'
                               },
                               {
                                 name: 'gaas-harmful-control',
-                                label: 'How will you control the harms associated with these phenotypes?',
-                                hint: 'Ensure that you include any relevant humane endpoints.',
+                                label: 'How will you minimise the harms associated with these phenotypes?',
+                                hint: 'Ensure that you include any humane endpoints that you will use.',
                                 type: 'texteditor'
                               }
                             ]
@@ -892,14 +892,14 @@ each other.`,
           },
           steps: {
             title: 'Steps',
-            hint: 'A step can be a single procedure or a combination of procedures to achieve an outcome. You will be able to reorder your steps at any time before you send your application to the Home Office.',
+            hint: 'A step can be a single procedure or a combination of procedures to achieve an outcome. You will be able to reorder your steps at any time before you send your application to the Home Office, but they should be broadly chronological, with the final step being a method of killing or the last regulated procedure.',
             footer: 'Once you’ve created a list of steps, you need to add information about adverse effects, controls and limitations, and humane endpoints to each one.​',
             fields: [
               {
                 name: 'title',
                 type: 'texteditor',
                 label: 'Describe the procedures that will be carried out during this step.',
-                hint: 'To ensure that an adequate harm benefit assessment can be carried out, please provide a clear and explicit explanation of each step.'
+                hint: 'Explain where one or more steps are repeated in one experiment, list any alternative techniques within a step (e.g. dosing routes), and include all procedures performed under terminal anaesthesia.\n\nWhen describing the technical aspects of a step, be broad enough to be flexible when the variation does not impact on animal welfare (e.g. use "antibiotic" instead of "penicillin"). Finally, avoid specifying volumes and frequencies when they do not impact on animal welfare.'
               },
               {
                 name: 'code',
