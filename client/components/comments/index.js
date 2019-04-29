@@ -67,7 +67,7 @@ class Comments extends Component {
           }
           {
             !!active.length && !!previous.length && (
-              <p><Button className="link" onClick={this.toggleShowPrevious}>{ showPrevious ? 'Hide' : 'Show' }</Button> {previous.length} previous comments</p>
+              <p><Button className="link" onClick={this.toggleShowPrevious}>{ showPrevious ? 'Hide' : 'Show' } {previous.length} previous comments</Button></p>
             )
           }
           {
