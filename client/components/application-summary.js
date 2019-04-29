@@ -28,8 +28,7 @@ const getFields = subsection => {
   else return []
 }
 
-const mapStateToProps = ({ project, comments, application: { schemaVersion, readonly } }) => {
-
+const mapStateToProps = ({ project, comments, application: { schemaVersion, readonly, showComments, user } }) => {
   const fieldsBySection = Object.values(schema[schemaVersion]).map(section => section.subsections).reduce((obj, subsections) => {
     return {
       ...obj,
@@ -39,7 +38,8 @@ const mapStateToProps = ({ project, comments, application: { schemaVersion, read
 
   return {
     readonly,
-    newComments: getNewComments(comments),
+    showComments,
+    newComments: getNewComments(comments, user),
     fieldsBySection: omit(fieldsBySection, 'protocols'),
     legacy: schemaVersion === 0,
     values: project,
@@ -142,7 +142,7 @@ class ApplicationSummary extends React.Component {
                       <td><Link to={`/${key}`}>{ subsection.title }</Link></td>
                       <td>
                         {
-                          this.getComments(key, subsection)
+                          this.props.showComments && this.getComments(key, subsection)
                         }
                         {
                           !this.props.readonly && this.completeBadge(this.complete(subsection, key))

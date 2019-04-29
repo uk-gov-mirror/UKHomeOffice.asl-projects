@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import v4 from 'uuid/v4';
 import classnames from 'classnames';
 import Repeater from '../../../components/repeater';
 import Fieldset from '../../../components/fieldset';
@@ -53,11 +54,12 @@ class Establishments extends Component {
     const { save, project, ...props } = this.props;
     const { active } = this.state;
 
-    const items = project.establishments || project['other-establishments-list'].map(name => ({ name }))
+    const items = project.establishments || project['other-establishments-list'].map(name => ({ name, id: v4() }))
 
     return (
       <Repeater
         items={items}
+        type="establishments"
         addAnother={false}
         onSave={establishments => save({ establishments })}
       >

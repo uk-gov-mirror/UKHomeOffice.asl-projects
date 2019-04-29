@@ -63,10 +63,10 @@ class Comments extends Component {
       >
         <Fragment>
           {
-            showPrevious && previous.map((comment, index) => <Comment index={index} key={index} { ...comment } user={this.props.user} />)
+            (showPrevious || !active.length) && previous.map((comment, index) => <Comment index={index} key={index} { ...comment } user={this.props.user} />)
           }
           {
-            !!previous.length && (
+            !!active.length && !!previous.length && (
               <p><Button className="link" onClick={this.toggleShowPrevious}>{ showPrevious ? 'Hide' : 'Show' }</Button> {previous.length} previous comments</p>
             )
           }

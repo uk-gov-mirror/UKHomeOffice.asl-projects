@@ -506,6 +506,13 @@ $light-green: #26A197;
       cursor: pointer;
     }
 
+    .expanding-panel {
+      .badge.comments {
+        position: relative;
+        top: -14px;
+      }
+    }
+
     &.complete {
       > .expandable {
         > .header {

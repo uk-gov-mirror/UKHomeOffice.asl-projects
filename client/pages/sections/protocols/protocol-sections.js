@@ -51,7 +51,7 @@ class ProtocolSections extends PureComponent {
     const severityOption = severityField.options && severityField.options.find(option => option.value === values.severity);
 
     const numberOfNewComments = Object.values(newComments)
-      .reduce((total, comments) => (comments || []).length, 0);
+      .reduce((total, comments) => total + (comments || []).length, 0);
 
     return (
       <section className={classnames('protocol', { complete: values.complete })}>
@@ -81,7 +81,6 @@ class ProtocolSections extends PureComponent {
                 <Fragment>
                   <Complete
                     type="protocol"
-                    newComments={newComments}
                     complete={values.complete}
                     onChange={this.setCompleted}
                     buttonClassName="button-secondary"
