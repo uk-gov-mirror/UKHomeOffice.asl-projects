@@ -992,19 +992,13 @@ each other.`,
             fields: [
               {
                 name: 'experience-summary',
-                label: 'Summarise the overall severity of the experience of an animal being used in this protocol.',
-                hint: 'This may be different to the severity category of the project that you are proposing.',
-                type: 'texteditor'
-              },
-              {
-                name: 'experience-proportion',
-                label: 'What is the approximate proportion of animals being used in this protocol that you expect to suffer the most?',
-                hint: 'When determining higher levels of severity, consider the cumulative effect of any combinations of procedures that you may carry out in the protocol.',
+                label: 'Summarise the typical experience or end-to-end scenario for an animal being used in this protocol.',
+                hint: 'Consider the cumulative effect of any combinations of procedures that you may carry out.',
                 type: 'texteditor'
               },
               {
                 name: 'experience-endpoints',
-                label: 'Describe any general humane endpoints that you will apply during the protocol.',
+                label: 'Describe the general humane endpoints that you will apply during the protocol.',
                 hint: 'These will be in addition to the endpoints stated for each step.',
                 type: 'texteditor'
               }
@@ -1113,11 +1107,11 @@ each other.`,
           },
           justification: {
             title: 'Protocol justification',
-            label: 'Why is each type of animal and experimental model proposed in this protocol',
+            label: 'Why is each type of animal, experimental model and/or method selected for this protocol:',
             fields: [
               {
                 name: 'most-appropriate',
-                label: 'a) the best scientifically?​',
+                label: 'a) the most appropriate scientific approach?​',
                 type: 'texteditor'
               },
               {
@@ -1127,7 +1121,7 @@ each other.`,
               },
               {
                 name: 'scientific-endpoints',
-                label: 'What is the scientific need for the expected clinical signs for each experimental model in this protocol?',
+                label: 'For each model and/or method, what is the scientific need for the expected clinical signs?',
                 type: 'texteditor'
               },
               {
@@ -1141,14 +1135,8 @@ each other.`,
                 type: 'texteditor'
               },
               {
-                name: 'minimise-duration',
-                label: 'How will you minimise the duration and intensity of suffering for animals in this protocol?',
-                hint: 'For example, monitoring animals appropriately over the course of the experiment.',
-                type: 'texteditor'
-              },
-              {
                 name: 'justification-substances',
-                label: 'Will you be administering substances for testing that will alter an animal’s physiology during this project?',
+                label: 'Will you be administering substances for experimental purposes?',
                 type: 'radio',
                 className: 'smaller',
                 inline: true,
@@ -1159,7 +1147,8 @@ each other.`,
                     reveal: [
                       {
                         name: 'substances-suitibility',
-                        label: 'How will you assess the suitability of substances given to the particular strain or type of animal you will be using?',
+                        label: 'How will you assess the suitability of these substances, and minimise the unnecessary harms arising from their administration given the particular strain or type of animal you will be using?',
+                        hint: 'When assessing suitability, state how you will consider toxicity, efficacy, and sterility.',
                         type: 'texteditor'
                       },
                       {
@@ -1207,7 +1196,7 @@ each other.`,
                           value: 'other',
                           reveal: {
                             name: 'method-and-justification',
-                            label: 'For each method, explain why this is scientifically necessary and how you will ensure that suffering is minimised.',
+                            label: 'For each non-schedule 1 method, explain why this is necessary.',
                             type: 'texteditor'
                           }
                         }
@@ -1219,13 +1208,17 @@ each other.`,
                     value: 'kept-alive'
                   },
                   {
-                    label: 'Continued use on another protocol',
+                    label: 'Continued use on another protocol in this project',
                     value: 'continued-use',
                     reveal: {
                       name: 'continued-use-relevant-project',
-                      label: 'Please state the relevant project and protocol.',
+                      label: 'Please state the relevant protocol.',
                       type: 'texteditor'
                     }
+                  },
+                  {
+                    label: 'Continued use on other projects',
+                    value: 'continued-use-2'
                   }
                 ]
               }
@@ -1250,8 +1243,8 @@ each other.`,
           },
           {
             name: 'project-harms-effects',
-            label: 'What are the expected impacts or adverse effects for an animal during your project?',
-            hint: 'Examples can include pain, inactivity, or abnormal behaviour. State the estimated duration of these effects on an animal.',
+            label: 'What are the expected impacts and/or adverse effects for the animals during your project?',
+            hint: 'Examples can include pain, weight loss, tumours, or abnormal behaviour. State the estimated duration of these effects on an animal.',
             type: 'texteditor'
           },
           {
@@ -1282,7 +1275,7 @@ each other.`,
                   },
                   {
                     name: 'keeping-animals-alive-determine',
-                    label: 'What criteria will the veterinary surgeon use to determine whether animals can be kept alive?',
+                    label: 'What criteria will the veterinary surgeon, or competent person trained by a veterinary surgeon, use to determine whether animals can be kept alive?',
                     type: 'texteditor'
                   },
                   {
@@ -1330,7 +1323,7 @@ each other.`,
                   },
                   {
                     name: 'setting-free-rehabilitate',
-                    label: 'Will you attempt to rehabilitate animals before setting them free? If so, how?',
+                    label: 'Will you rehabilitate animals before setting them free? If so, how?',
                     type: 'texteditor'
                   },
                   {
@@ -1339,13 +1332,8 @@ each other.`,
                     type: 'texteditor'
                   },
                   {
-                    name: 'setting-free-wellbeing',
-                    label: 'What arrangements will be made to assure their welfare during transport, particularly if they are being moved after the start of regulated procedures?',
-                    type: 'texteditor'
-                  },
-                  {
                     name: 'setting-free-recapturing',
-                    label: 'What is the likelihood of inadvertently re-capturing and re-using animals that have been set free?',
+                    label: 'How will you prevent inadvertent re-use of animals that have been released at the end of procedures?',
                     type: 'texteditor'
                   },
                   {
@@ -1363,7 +1351,7 @@ each other.`,
                   {
                     name: 'rehoming-types',
                     label: 'What types of animals do you intend to re-home?',
-                    hint: 'Also state the protocols on which they will have been used.',
+                    hint: 'Also state the protocols on which they would have been used.',
                     type: 'texteditor'
                   },
                   {
@@ -1820,7 +1808,7 @@ each other.`,
               },
               {
                 name: 'nmbas-people',
-                label: 'How will you ensure there are sufficient staff present throughout the use of NMBAs (including recovery periods) who are competent to use them in these types of animal?',
+                label: 'How will you ensure there are sufficient staff present throughout the use of NMBAs (including during recovery periods) who are competent to use them in these types of animal?',
                 type: 'texteditor'
               },
               {
