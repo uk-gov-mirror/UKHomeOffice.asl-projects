@@ -5,7 +5,7 @@ import Fieldset from '../../../components/fieldset';
 import Controls from '../../../components/controls';
 import Playback from '../../../components/playback';
 
-const Objective = ({ index, fields, length, values, removeItem, updateItem }) => (
+const Objective = ({ index, fields, length, values, removeItem, updateItem, prefix }) => (
   <div className="objective">
     {
       length > 1 && <a href="#" className="float-right" onClick={removeItem}>Remove</a>
@@ -14,6 +14,7 @@ const Objective = ({ index, fields, length, values, removeItem, updateItem }) =>
     <Fieldset
       fields={fields.filter(f => f.objective)}
       values={values}
+      prefix={prefix}
       onFieldChange={(key, value) => updateItem({ [key]: value })}
     />
   </div>

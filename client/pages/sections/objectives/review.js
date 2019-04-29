@@ -31,6 +31,7 @@ const ObjectivesReview = ({ playback, values, steps, goto, readonly }) => (
             key={index}
             {...steps[0].fields.find(f => f.name === 'title')}
             value={objective.title}
+            prefix={`objectives.${objective.id}.`}
             onEdit={() => goto(0)}
           />
           <hr />

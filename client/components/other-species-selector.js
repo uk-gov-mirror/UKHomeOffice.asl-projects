@@ -55,6 +55,7 @@ class OtherSpecies extends Component {
                   type="text"
                   value={item}
                   onChange={value => this.updateItem(value, index)}
+                  noComments={true}
                 />
               </div>
               <Button

@@ -35,11 +35,13 @@ const ReviewSection = ({ title, fields, values, readonly }) => (
                   <Review
                     {...fields.find(f => f.name === 'title')}
                     value={pole.title}
+                    prefix={`pole.${pole.id}.`}
                     editLink="/poles/1#title"
                   />
                   <Review
                     {...fields.find(f => f.name === 'pole-info')}
                     value={pole['pole-info']}
+                    prefix={`pole.${pole.id}.`}
                     editLink="/poles/1#pole-info"
                   />
                 </div>
