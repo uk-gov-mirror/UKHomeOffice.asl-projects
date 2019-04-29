@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { v4 } from 'uuid';
+import v4 from 'uuid/v4';
 import classnames from 'classnames';
 import Repeater from '../../../components/repeater';
 import Fieldset from '../../../components/fieldset';

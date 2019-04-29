@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-
-import { v4 } from 'uuid';
+import v4 from 'uuid/v4';
 
 import { Button } from '@ukhomeoffice/react-components';
 
