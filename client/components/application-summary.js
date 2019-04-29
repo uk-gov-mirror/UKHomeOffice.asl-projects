@@ -13,6 +13,7 @@ import flatten from 'lodash/flatten';
 import { Button } from '@ukhomeoffice/react-components';
 
 import { INCOMPLETE, PARTIALLY_COMPLETE, COMPLETE } from '../constants/completeness';
+import { CHANGED, AMENDED } from '../constants/change';
 import schema from '../schema'
 import { flattenReveals, getNewComments } from '../helpers';
 
@@ -28,7 +29,8 @@ const getFields = subsection => {
   else return []
 }
 
-const mapStateToProps = ({ project, comments, application: { schemaVersion, readonly, showComments, user } }) => {
+const mapStateToProps = ({ project, comments, application: { schemaVersion, readonly, showComments, user }, changed }) => {
+
   const fieldsBySection = Object.values(schema[schemaVersion]).map(section => section.subsections).reduce((obj, subsections) => {
     return {
       ...obj,
@@ -43,7 +45,8 @@ const mapStateToProps = ({ project, comments, application: { schemaVersion, read
     fieldsBySection: omit(fieldsBySection, 'protocols'),
     legacy: schemaVersion === 0,
     values: project,
-    sections: schema[schemaVersion]
+    sections: schema[schemaVersion],
+    changed: changed
   };
 }
 
@@ -90,6 +93,24 @@ class ApplicationSummary extends React.Component {
         return <span className="badge complete">complete</span>;
       case PARTIALLY_COMPLETE:
         return <span className="badge incomplete">incomplete</span>;
+      default:
+        return null;
+    }
+  }
+
+  changed = (key) => {
+    const fields = this.props.fieldsBySection[key] || [];
+    if(this.props.changed.includes(key) || this.props.changed.some(k=> fields.includes(k) )) {
+      return CHANGED;
+    }
+  }
+
+  changedBadge = change => {
+    switch (change) {
+      case CHANGED:
+        return <span className="badge changed">changed</span>;
+      case AMENDED:
+        return <span className="badge amended">amended</span>;
       default:
         return null;
     }
@@ -148,6 +169,14 @@ class ApplicationSummary extends React.Component {
                           !this.props.readonly && this.completeBadge(this.complete(subsection, key))
                         }
                       </td>
+                      {
+                        !this.props.readonly
+                          ? <td>{ this.completeBadge(this.complete(subsection, key)) }</td>
+                          : <td></td>
+                      }
+                      {
+                        <td>{ this.changedBadge(this.changed(key)) }</td>
+                      }
                     </tr>
                   })
                 }

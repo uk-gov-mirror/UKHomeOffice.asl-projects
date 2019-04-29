@@ -269,6 +269,10 @@ $light-green: #26A197;
     &.comments {
       background: $light-green;
     }
+
+    &.changed {
+      background: #ff1493;
+    }
   }
 
   .import-active {
