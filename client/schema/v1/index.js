@@ -825,7 +825,7 @@ each other.`,
               },
               {
                 name: 'maximum-times-used',
-                label: 'What is the maximum number of uses of this protocol on this type of animal??',
+                label: 'What is the maximum number of uses of this protocol on this type of animal?',
                 hint: 'For example, you will use 200 mice during a protocol. Each animal will go through the protocol once, but 100 of them will have it applied twice. Therefore, the total number of uses would be 300.',
                 type: 'text'
               }
