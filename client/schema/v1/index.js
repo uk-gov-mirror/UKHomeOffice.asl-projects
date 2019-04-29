@@ -1214,11 +1214,11 @@ each other.`,
                       name: 'continued-use-relevant-project',
                       label: 'Please state the relevant protocol.',
                       type: 'texteditor'
-                    },
-                    {
-                      label: 'Continued use on other projects',
-                      value: 'continued-use-2',
                     }
+                  },
+                  {
+                    label: 'Continued use on other projects',
+                    value: 'continued-use-2'
                   }
                 ]
               }
