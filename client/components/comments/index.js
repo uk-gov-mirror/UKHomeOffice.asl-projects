@@ -27,6 +27,12 @@ class Comments extends Component {
     showPrevious: false
   }
 
+  componentWillReceiveProps(newProps) {
+    if (some(newProps.comments, comment => comment.isNew)) {
+      this.setState({ expanded: true })
+    }
+  }
+
   toggleExpanded = () => {
     this.setState({ expanded: !this.state.expanded });
   }

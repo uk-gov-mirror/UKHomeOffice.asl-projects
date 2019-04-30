@@ -4,6 +4,8 @@ import { addComment } from '../../actions/comments';
 import { Button, TextArea } from '@ukhomeoffice/react-components'
 
 class AddComment extends Component {
+  _isMounted = false
+
   state = {
     comment: '',
     adding: false
@@ -20,7 +22,19 @@ class AddComment extends Component {
       field: this.props.field,
       comment: this.state.comment
     })
-      .then(() => this.setState({ comment: '' }));
+      .then(() => {
+        if (this._isMounted) {
+          this.setState({ comment: '' })
+        }
+      });
+  }
+
+  componentDidMount() {
+    this._isMounted = true;
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   toggleAdding = () => {
