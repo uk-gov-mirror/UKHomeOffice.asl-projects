@@ -15,7 +15,7 @@ const ObjectiveSelector = ({
       options={objectives}
       noComments={true}
     />
-    <Link to="../strategy">Add new objective</Link>
+  <Link to="../action-plan">Add new objective</Link>
   </div>
 );
 
