@@ -98,12 +98,13 @@ class ApplicationSummary extends React.Component {
     }
   }
 
-  changed = (key) => {
+  changed = (key, subsection) => {
+
     const fields = this.props.fieldsBySection[key] || [];
-    if(this.props.changed.includes(key) || this.props.changed.some(k=> fields.includes(k))) {
+    if(this.props.changed.includes(key) || this.props.changed.some(k=> fields.includes(k)) || this.props.changed.includes(subsection.repeats)) {
       return CHANGED;
     }
-    else if(this.props.amends.includes(key) || this.props.amends.some(k=> fields.includes(k) )) {
+    else if(this.props.amends.includes(key) || this.props.amends.some(k=> fields.includes(k) || this.props.amends.includes(subsection.repeats) )) {
       return AMENDED;
     }
   }
@@ -169,17 +170,12 @@ class ApplicationSummary extends React.Component {
                           this.props.showComments && this.getComments(key, subsection)
                         }
                         {
+                          this.changedBadge(this.changed(key, subsection))
+                        }
+                        {
                           !this.props.readonly && this.completeBadge(this.complete(subsection, key))
                         }
                       </td>
-                      {
-                        !this.props.readonly
-                          ? <td>{ this.completeBadge(this.complete(subsection, key)) }</td>
-                          : <td></td>
-                      }
-                      {
-                        <td>{ this.changedBadge(this.changed(key)) }</td>
-                      }
                     </tr>
                   })
                 }
