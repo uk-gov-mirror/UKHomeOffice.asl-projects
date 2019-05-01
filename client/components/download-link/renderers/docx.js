@@ -309,6 +309,43 @@ const renderHorizontalRule = doc => {
   doc.createParagraph('___________________________________________________________________');
 };
 
+const renderAnimalQuantities = (doc, values) => {
+  const species = [
+    ...flatten((values.species || []).map(s => {
+      if (s.indexOf('other') > -1) {
+        return values[`species-${s}`];
+      }
+      return s;
+    })),
+    ...(values['species-other'] || [])
+  ].map(s => {
+    const opt = flatten(Object.values(SPECIES)).find(species => species.value === s);
+    return {
+      key: species && species.value,
+      title: opt ? opt.label : s,
+      value: values[`reduction-quantities-${s}`]
+    }
+  });
+
+  if (!species.length) {
+    return renderNull(doc);
+  }
+
+  const paragraph = new Paragraph();
+  paragraph.style('body');
+
+  species.map(s => {
+    paragraph.addRun(new TextRun(`${s.title}: `).bold());
+    s.value
+      ? paragraph.addRun(new TextRun(s.value))
+      : paragraph.addRun(new TextRun('No answer provided').italics())
+  });
+
+  doc.addParagraph(paragraph);
+  renderHorizontalRule(doc);
+  return;
+};
+
 const renderField = (doc, field, values) => {
   const value = values[field.name];
 
@@ -320,6 +357,10 @@ const renderField = (doc, field, values) => {
 
   if (field.type === 'species-selector') {
     return renderSpeciesSelector(doc, values, value);
+  }
+
+  if (field.type === 'animal-quantities') {
+    return renderAnimalQuantities(doc, values);
   }
 
   if (isUndefined(value) || isNull(value)) {
