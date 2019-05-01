@@ -19,56 +19,55 @@ const commentDeleted = ({ id, field }) => ({
   field
 });
 
-export const addComment = comment => (dispatch, getState) => {
-  const state = getState();
-  const basename = state.application.basename.replace(/\/edit?/, '');
-  return fetch(`${basename}/comment`, {
-    method: 'POST',
+const sendMessage = ({ method, data, url }) => {
+  const params = {
+    method,
     credentials: 'include',
-    json: comment
-  })
-    .response
+    json: data
+  };
+  return Promise.resolve()
+    .then(() => fetch(url, params).response)
     .then(response => {
       return response.json()
         .then(json => {
           if (response.status > 399) {
-            const err = new Error(json.message || `Failed to add comment with status code: ${response.status}`);
+            const err = new Error(json.message || `Action failed with status code: ${response.status}`);
             err.status = response.status;
             Object.assign(err, json);
             throw err;
           }
-          return json
-        })
-        .then(({ id }) => {
-          dispatch(commentAdded({ ...comment, id, author: state.application.user }));
+          return json;
         });
-    })
-    .catch(err => {
-      console.error(err);
-      dispatch(throwError('Error posting comment, please try again'));
     });
 };
 
+export const addComment = comment => (dispatch, getState) => {
+  const state = getState();
+  const params = {
+    url: `${state.application.basename.replace(/\/edit?/, '')}/comment`,
+    method: 'POST',
+    data: comment
+  }
+  return Promise.resolve()
+    .then(() => sendMessage(params))
+    .then(({ id }) => {
+      dispatch(commentAdded({ ...comment, id, author: state.application.user }));
+    })
+    .catch(err => {
+      console.error(err);
+      dispatch(throwError('Error posting comment'));
+    });
+}
+
 export const deleteComment = ({ id, field }) => (dispatch, getState) => {
   const state = getState();
-  const basename = state.application.basename.replace(/\/edit?/, '');
-  return fetch(`${basename}/comment/${id}`, {
-    method: 'DELETE',
-    credentials: 'include'
-  })
-    .response
-    .then(response => {
-      return response.json()
-        .then(json => {
-          if (response.status > 399) {
-            const err = new Error(json.message || `Failed delete comment with status code: ${response.status}`);
-            err.status = response.status;
-            Object.assign(err, json);
-            throw err;
-          }
-        })
-        .then(() => dispatch(commentDeleted({ id, field })));
-    })
+  const params = {
+    url: `${state.application.basename.replace(/\/edit?/, '')}/comment/${id}`,
+    method: 'DELETE'
+  };
+  return Promise.resolve()
+    .then(() => sendMessage(params))
+    .then(() => dispatch(commentDeleted({ id, field })))
     .catch(err => {
       console.error(err);
       dispatch(throwError('Error deleting comment'));
