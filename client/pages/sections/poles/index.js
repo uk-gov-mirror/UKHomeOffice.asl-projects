@@ -27,7 +27,7 @@ const Poles = ({ title, save, advance, exit, ...props }) => {
       <h1>{ title }</h1>
       <h2>Specify the details of each POLE that you will be using.</h2>
       <p className="grey">If you can’t specify a grid reference for a POLE, include details that allows it to be easily identified for inspection. This could be an address of a site or a postcode of a farm.</p>
-      <p className="grey">If you can only add generic information at this stage, you must be able to provide specific location details at the request of an inspector.</p>
+      <p className="grey">If you can only add generic information at this stage, provide a general description of the types of areas you are considering.</p>
       <Repeater
         items={props.values.polesList}
         type="POLE"
