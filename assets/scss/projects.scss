@@ -45,7 +45,7 @@ $light-green: #26A197;
     cursor: default;
   }
 
-  h1, h2, h3 {
+  h1, h2:not(.govuk-fieldset__heading), h3 {
     margin-bottom: 1em;
   }
 
