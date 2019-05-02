@@ -1,2 +1,2 @@
-export const CHANGED = 'CHANGED';
-export const AMENDED = 'AMENDED';
+export const LATEST = 'LATEST';
+export const GRANTED = 'GRANTED';

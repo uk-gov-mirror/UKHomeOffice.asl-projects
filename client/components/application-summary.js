@@ -13,7 +13,7 @@ import flatten from 'lodash/flatten';
 import { Button } from '@ukhomeoffice/react-components';
 
 import { INCOMPLETE, PARTIALLY_COMPLETE, COMPLETE } from '../constants/completeness';
-import { CHANGED, AMENDED } from '../constants/change';
+import { LATEST, GRANTED } from '../constants/change';
 import schema from '../schema'
 import { flattenReveals, getNewComments } from '../helpers';
 
@@ -29,7 +29,7 @@ const getFields = subsection => {
   else return []
 }
 
-const mapStateToProps = ({ project, comments, application: { schemaVersion, readonly, showComments, user }, changed, amends }) => {
+const mapStateToProps = ({ project, comments, application: { schemaVersion, readonly, showComments, user }, changes : {latest, granted} }) => {
 
   const fieldsBySection = Object.values(schema[schemaVersion]).map(section => section.subsections).reduce((obj, subsections) => {
     return {
@@ -45,8 +45,8 @@ const mapStateToProps = ({ project, comments, application: { schemaVersion, read
     legacy: schemaVersion === 0,
     values: project,
     sections: schema[schemaVersion],
-    changed,
-    amends
+    latest,
+    granted
   };
 }
 
@@ -99,21 +99,20 @@ class ApplicationSummary extends React.Component {
   }
 
   changed = (key, subsection) => {
-
     const fields = this.props.fieldsBySection[key] || [];
-    if(this.props.changed.includes(key) || this.props.changed.some(k=> fields.includes(k)) || this.props.changed.includes(subsection.repeats)) {
-      return CHANGED;
+    if(this.props.latest.includes(key) || this.props.latest.some(k=> fields.includes(k)) || this.props.latest.includes(subsection.repeats)) {
+      return LATEST;
     }
-    else if(this.props.amends.includes(key) || this.props.amends.some(k=> fields.includes(k) || this.props.amends.includes(subsection.repeats) )) {
-      return AMENDED;
+    else if(this.props.granted.includes(key) || this.props.granted.some(k=> fields.includes(k) || this.props.granted.includes(subsection.repeats) )) {
+      return GRANTED;
     }
   }
 
   changedBadge = change => {
     switch (change) {
-      case CHANGED:
+      case LATEST:
         return <span className="badge changed">changed</span>;
-      case AMENDED:
+      case GRANTED:
         return <span className="badge">amended</span>;
       default:
         return null;

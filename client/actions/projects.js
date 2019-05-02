@@ -72,6 +72,13 @@ export function updateProject(project) {
   }
 }
 
+export function addChange(changes) {
+  return {
+    type: types.ADD_CHANGE,
+    changes
+  }
+}
+
 export function updateSavedProject(project) {
   return {
     type: types.UPDATE_SAVED_PROJECT,
