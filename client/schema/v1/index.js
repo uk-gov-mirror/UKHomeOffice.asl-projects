@@ -486,7 +486,7 @@ export default {
           {
             name: 'scientific-knowledge-summary',
             label: 'Summarise the current state of scientific knowledge in this area of work to show how you arrived at the starting point of this project.',
-            hint: 'Be specific and relevant to your project aim - there\'s no need for a detailed overview of the entire field. Include any relevant non-animal research if it has contributed to the starting point of your project.',
+            hint: 'Be specific and relevant to your project aim - there\'s no need for a detailed overview of the entire field. Include any relevant non-animal research if it has contributed to the starting point of your project.\n\n Provide any appropriate references, in Harvard style, that are necessary to explain the work.',
             type: 'texteditor'
           },
           {
@@ -623,7 +623,7 @@ each other.`,
                 value: false,
                 reveal: {
                   name: 'experimental-design-sexes-justification',
-                  label: 'Why will you not use animals of both sexes in some protocols or experiments?',
+                  label: 'Why will you use animals of a single sex in some protocols or experiments?',
                   type: 'texteditor'
                 }
               }
@@ -685,7 +685,7 @@ each other.`,
               },
               {
                 name: 'severity',
-                label: 'What is the prospective severity of this protocol?',
+                label: 'Given the controls and limitations in place, what is the highest severity that an animal could experience in this protocol?',
                 type: 'radio',
                 options: [
                   {
@@ -1107,7 +1107,7 @@ each other.`,
           },
           justification: {
             title: 'Protocol justification',
-            label: 'Why is each type of animal, experimental model and/or method selected for this protocol:',
+            label: 'Why is each type of animal, experimental model, and/or method selected for this protocol:',
             fields: [
               {
                 name: 'most-appropriate',
@@ -1350,7 +1350,7 @@ each other.`,
                 reveal: [
                   {
                     name: 'rehoming-types',
-                    label: 'What types of animals do you intend to re-home?',
+                    label: 'What types of animals do you intend to rehome?',
                     hint: 'Also state the protocols on which they would have been used.',
                     type: 'texteditor'
                   },
@@ -1404,7 +1404,7 @@ each other.`,
           {
             name: 'domestic',
             label: 'What are the scientific reasons for using cats, dogs, or equidae in your project?',
-            hint: 'A licence cannot be granted unless the scientific objectives or research questions can only be achieved or answered by the use of cats, dogs or equidae. This includes instances when it is not practicable to obtain other types of animal.',
+            hint: 'A licence cannot be granted unless your scientific objectives or research questions can only be achieved or answered by the use of cats, dogs or equidae. This includes instances when it is not practicable to obtain other types of animal.',
             type: 'texteditor'
           }
         ]
@@ -1455,6 +1455,12 @@ each other.`,
           {
             name: 'marmoset-colony',
             label: 'Will all marmosets be sourced from a self-sustaining colony?',
+            hint: `This is a colony that is kept in captivity in a way that:
+
+* ensures animals are accustomed to humans.
+* consists only of animals that have been bred in captivity.
+* is sustained only by animals bred within the same colony, or animals that are sourced from another self-sustanining colony.`,
+
             type: 'radio',
             inline: true,
             className: 'smaller',
@@ -1518,7 +1524,7 @@ each other.`,
         fields: [
           {
             name: 'endangered-animals',
-            label: 'Will you be using any endangered animals?',
+            label: 'Will you be using any endangered animals (excluding non-human primates)?',
             type: 'radio',
             inline: true,
             className: 'smaller',
@@ -1577,6 +1583,7 @@ each other.`,
                       {
                         name: 'wild-animals-caught',
                         label: 'How will these animals be captured?',
+                        hint: 'Explain how each method is the most refined for the animal type or purpose of the study. Also include any relevant considerations around trapping, including the frequency of checks and trap positioning.',
                         type: 'texteditor'
                       },
                       {
@@ -1586,7 +1593,7 @@ each other.`,
                       },
                       {
                         name: 'non-target-species-capture-methods',
-                        label: 'Will your capture methods catch non target species?',
+                        label: 'Will your capture methods catch non-target animals?',
                         type: 'radio',
                         inline: true,
                         className: 'smaller',
@@ -1596,7 +1603,7 @@ each other.`,
                             value: true,
                             reveal: {
                               name: 'non-target-species-capture-methods-minimise-suffering',
-                              label: 'How will you manage this to minimise the suffering for the animal?',
+                              label: 'How will you minimise the risk of capturing non-target animals, including strays and animals of a different sex?',
                               type: 'texteditor'
                             }
                           },
@@ -1613,7 +1620,8 @@ each other.`,
                       },
                       {
                         name: 'wild-animals-examine',
-                        label: 'How will you examine and treat any animals that are found to be ill or injured at the time of capture?',
+                        label: 'How will you examine any animals that are found to be ill or injured at the time of capture?',
+                        hint: 'Include details about what will be done with these animals after they have been examined.',
                         type: 'texteditor'
                       },
                       {
@@ -1654,12 +1662,13 @@ each other.`,
             fields: [
               {
                 name: 'wild-animals-transport',
-                label: 'If sick animals are to be treated, how will you transport them to minimise harms if necessary to provide treatment?',
+                label: 'If sick or injured animals are to be treated, how will you transport them for treatment?',
+                hint: 'Include how you will ensure that any potential harms during their transport will be minimised.',
                 type: 'texteditor'
               },
               {
                 name: 'wild-animals-killing-method',
-                label: 'If sick animals are to be killed, which method will you use?',
+                label: 'If sick or injured animals are to be humanely killed, which methods will you use?',
                 type: 'texteditor'
               },
               {
@@ -1669,7 +1678,7 @@ each other.`,
               },
               {
                 name: 'wild-animals-devices',
-                label: 'If devices are being used, will they remain attached to or implanted in animals?',
+                label: 'Will any devices be attached to or implanted in animals during this project?',
                 hint: 'For example, any device used to identify, track, and monitor an animal’s behaviour in its natural habitat.',
                 type: 'radio',
                 inline: true,
@@ -1681,7 +1690,7 @@ each other.`,
                     reveal: [
                       {
                         name: 'wild-animals-devices-effects',
-                        label: 'How will any adverse effect from the device\'s attachment or implantation be minimised?',
+                        label: 'How will any adverse effects from a device\'s attachment or implantation be minimised?',
                         type: 'texteditor'
                       },
                       {
@@ -1692,7 +1701,7 @@ each other.`,
                       },
                       {
                         name: 'wild-animals-devices-environment-effects',
-                        label: 'What is the potential effect on the animals, other animals, the environment and human health if the devices cannot be removed?',
+                        label: 'If animals will not have devices removed, what are the potential effects on them, other animals, the environment and human health?',
                         type: 'texteditor'
                       }
                     ]
