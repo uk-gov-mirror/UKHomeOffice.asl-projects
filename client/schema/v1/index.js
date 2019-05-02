@@ -184,9 +184,26 @@ export default {
             type: 'texteditor'
           },
           {
-            name: 'funding-reviewed',
-            label: 'Has this application been peer reviewed by an external funder?',
-            type: 'texteditor'
+            name: 'funding-basic-translational',
+            label: 'Will this work support basic or translational research, or non-regulatory drug or device development?',
+            type: 'radio',
+            inline: true,
+            className: 'smaller',
+            options: [
+              {
+                label: 'Yes',
+                value: true,
+                reveal: {
+                  name: 'funding-reviewed',
+                  label: 'Were any grant applications for this work peer reviewed? If so, by whom?',
+                  type: 'texteditor'
+                }
+              },
+              {
+                label: 'No',
+                value: false
+              }
+            ]
           }
         ]
       }
@@ -484,20 +501,8 @@ export default {
         title: 'Scientific background',
         fields: [
           {
-            name: 'scientific-knowledge-summary',
-            label: 'Summarise the current state of scientific knowledge in this area of work to show how you arrived at the starting point of this project.',
-            hint: 'Be specific and relevant to your project aim - there\'s no need for a detailed overview of the entire field. Include any relevant non-animal research if it has contributed to the starting point of your project.\n\n Provide any appropriate references, in Harvard style, that are necessary to explain the work.',
-            type: 'texteditor'
-          },
-          {
-            name: 'scientific-knowledge-details',
-            label: 'What new knowledge do you hope to discover that will address a gap in fundamental scientific knowledge or meet a clinical need?',
-            hint: 'Refer to the basis for any scientific hypotheses you plan to test during this project.',
-            type: 'texteditor'
-          },
-          {
-            name: 'clinical-condition',
-            label: 'Does your project mainly involve translational and/or veterinary clinical applications?',
+            name: 'scientific-background-basic-translational',
+            label: 'Will this work support basic or translational research, or non-regulatory drug or device development?',
             type: 'radio',
             inline: true,
             className: 'smaller',
@@ -507,18 +512,254 @@ export default {
                 value: true,
                 reveal: [
                   {
-                    name: 'condition-severity',
-                    label: 'How prevalent and severe are the relevant clinical conditions?',
+                    name: 'scientific-knowledge-summary',
+                    label: 'Briefly summarise the current state of scientific knowledge in this area of work to show how you arrived at the starting point of this project.',
+                    hint: 'Be specific and relevant to your project aim - there\'s no need for a detailed overview of the entire field. Include any relevant non-animal research if it has contributed to the starting point of your project.',
                     type: 'texteditor'
                   },
                   {
-                    name: 'condition-treatments-problems',
-                    label: 'What are the problems with current treatments which mean that further work is necessary?',
+                    name: 'scientific-knowledge-details',
+                    label: 'What new knowledge do you hope to discover that will address a gap in fundamental scientific knowledge or meet a clinical need?',
+                    hint: 'Refer to the basis for any scientific hypotheses you plan to test during this project.',
                     type: 'texteditor'
                   },
                   {
-                    name: 'condition-scientific-approach',
-                    label: 'What is the scientific basis for your proposed approach?',
+                    name: 'clinical-condition',
+                    label: 'Does your project mainly involve translational or veterinary clinical applications?',
+                    type: 'radio',
+                    inline: true,
+                    className: 'smaller',
+                    options: [
+                      {
+                        label: 'Yes',
+                        value: true,
+                        reveal: [
+                          {
+                            name: 'condition-severity',
+                            label: 'How prevalent and severe are the relevant clinical conditions?',
+                            type: 'texteditor'
+                          },
+                          {
+                            name: 'condition-treatments-problems',
+                            label: 'What are the problems with current treatments which mean that further work is necessary?',
+                            type: 'texteditor'
+                          },
+                          {
+                            name: 'condition-scientific-approach',
+                            label: 'What is the scientific basis for your proposed approach?',
+                            type: 'texteditor'
+                          }
+                        ]
+                      },
+                      {
+                        label: 'No',
+                        value: false
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                label: 'No',
+                value: false
+              }
+            ]
+          },
+          {
+            name: 'scientific-background-producing-data',
+            label: 'Will you be producing data primarily for regulatory authorities that use standardised protocol frameworks?',
+            type: 'radio',
+            inline: true,
+            className: 'smaller',
+            options: [
+              {
+                label: 'Yes',
+                value: true,
+                reveal: [
+                  {
+                    name: 'scientific-background-producing-data-substances',
+                    label: 'What substances or devices will undergo regulatory testing?',
+                    type: 'texteditor'
+                  },
+                  {
+                    name: 'scientific-background-producing-data-service',
+                    label: 'Will this testing be offered as a service to others?',
+                    type: 'radio',
+                    inline: true,
+                    className: 'smaller',
+                    options: [
+                      {
+                        label: 'Yes',
+                        value: true,
+                        reveal: [
+                          {
+                            name: 'scientific-background-producing-data-service-nature',
+                            label: 'What is the nature of the service you wish to provide?',
+                            type: 'texteditor'
+                          },
+                          {
+                            name: 'scientific-background-producing-data-service-who',
+                            label: 'Who will you provide the service to?',
+                            type: 'texteditor'
+                          },
+                          {
+                            name: 'scientific-background-producing-data-service-how',
+                            label: 'In general terms, how will those using your service use the data that your produce?',
+                            type: 'texteditor'
+                          },
+                          {
+                            name: 'scientific-background-producing-data-service-what',
+                            label: 'What are the likely demands for the service over the lifetime of the project?',
+                            type: 'texteditor'
+                          }
+                        ]
+                      },
+                      {
+                        label: 'No',
+                        value: false
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                label: 'No',
+                value: false
+              }
+            ]
+          },
+          {
+            name: 'scientific-background-non-regulatory',
+            label: 'Will you be undertaking non-regulatory testing or screening as a service to others?',
+            type: 'radio',
+            inline: true,
+            className: 'smaller',
+            options: [
+              {
+                label: 'Yes',
+                value: true,
+                reveal: [
+                  {
+                    name: 'scientific-background-non-regulatory-what',
+                    label: 'What service do you wish to provide?',
+                    type: 'texteditor'
+                  },
+                  {
+                    name: 'scientific-background-non-regulatory-who',
+                    label: 'Who will you provide the service to?',
+                    type: 'texteditor'
+                  },
+                  {
+                    name: 'scientific-background-non-regulatory-how',
+                    label: 'In general terms, how will your clients use the data or other outputs that you produce?',
+                    type: 'texteditor'
+                  },
+                  {
+                    name: 'scientific-background-non-regulatory-select',
+                    label: 'How will you select the most appropriate scientific model or method?',
+                    type: 'texteditor'
+                  },
+                  {
+                    name: 'scientific-background-non-regulatory-demands',
+                    label: 'What are the likely demands for the service over the lifetime of the project?',
+                    type: 'texteditor'
+                  },
+                  {
+                    name: 'scientific-background-non-regulatory-condition',
+                    label: 'Does this project relate directly to a clinical condition?',
+                    type: 'radio',
+                    inline: true,
+                    className: 'smaller',
+                    options: [
+                      {
+                        label: 'Yes',
+                        value: true,
+                        reveal: [
+                          {
+                            name: 'scientific-background-non-regulatory-condition-severe',
+                            label: 'How prevalent and severe are the relevant clinical conditions?',
+                            type: 'texteditor'
+                          },
+                          {
+                            name: 'scientific-background-non-regulatory-condition-problems',
+                            label: 'What are the problems with current treatments which mean that further work is necessary?',
+                            type: 'texteditor'
+                          }
+                        ]
+                      },
+                      {
+                        label: 'No',
+                        value: false
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                label: 'No',
+                value: false
+              }
+            ]
+          },
+          {
+            name: 'scientific-background-genetically-altered',
+            label: 'Will you be producing genetically altered or surgically prepared animals/animal products using standardised protocol frameworks as a service to others?',
+            type: 'radio',
+            inline: true,
+            className: 'smaller',
+            options: [
+              {
+                label: 'Yes',
+                value: true,
+                reveal: [
+                  {
+                    name: 'scientific-background-genetically-altered-producs',
+                    label: 'What products do you wish to provide?',
+                    type: 'texteditor'
+                  },
+                  {
+                    name: 'scientific-background-genetically-altered-service',
+                    label: 'Who will you provide a service to?',
+                    type: 'texteditor'
+                  },
+                  {
+                    name: 'scientific-background-genetically-altered-how',
+                    label: 'In general terms, how will those using your service use the product?',
+                    hint: 'This can include advancing scientific knowledge, or to benefit humans, animals, or the environment.',
+                    type: 'texteditor'
+                  },
+                  {
+                    name: 'scientific-background-genetically-altered-what',
+                    label: 'What are the likely demands for the products over the lifetime of the project?',
+                    type: 'texteditor'
+                  }
+                ]
+              },
+              {
+                label: 'No',
+                value: false
+              }
+            ]
+          },
+          {
+            name: 'scientific-background-vaccines',
+            label: 'Will you be manufacturing vaccines and medicines for medical or veterinary use?',
+            type: 'radio',
+            inline: true,
+            className: 'smaller',
+            options: [
+              {
+                label: 'Yes',
+                value: true,
+                reveal: [
+                  {
+                    name: 'scientific-background-vaccines-how',
+                    label: 'How will these products benefit human health, animal health, or the environment?',
+                    type: 'texteditor'
+                  },
+                  {
+                    name: 'scientific-background-vaccines-what',
+                    label: 'What are the likely demands for the products over the lifetime of the project?',
                     type: 'texteditor'
                   }
                 ]
@@ -594,6 +835,252 @@ each other.`,
                 name: 'objectives-alternatives',
                 label: 'Where relevant, how will you seek to use or develop non-animal alternatives for all or part of your work?',
                 type: 'texteditor'
+              },
+              {
+                name: 'objectives-regulatory-authorities',
+                label: 'Will you be producing data primarily for regulatory authorities that use standardised protocol frameworks?',
+                type: 'radio',
+                inline: true,
+                className: 'smaller',
+                options: [
+                  {
+                    label: 'Yes',
+                    value: true,
+                    reveal: [
+                      {
+                        name: 'objectives-regulatory-authorities-tests',
+                        label: 'What tests will be performed for regulatory purposes?',
+                        hint: 'State under which guidelines, and for which regulators.',
+                        type: 'texteditor'
+                      },
+                      {
+                        name: 'objectives-regulatory-authorities-in-vivo',
+                        label: 'How have you determined that an in vivo test is required by the regulator and that non-animal alternatives cannot be used?',
+                        type: 'texteditor'
+                      },
+                      {
+                        name: 'objectives-regulatory-authorities-how',
+                        label: 'How will you deal with requests to use tests not required by the UK or EU?',
+                        type: 'texteditor'
+                      },
+                      {
+                        name: 'objectives-regulatory-authorities-glp',
+                        label: 'Will all regulatory testing be conducted in compliance with GLP standards?',
+                        hint: 'If not, explain why this is not required.',
+                        type: 'texteditor'
+                      },
+                      {
+                        name: 'objectives-regulatory-authorities-service',
+                        label: 'Will this testing be offered as a service to others?',
+                        type: 'radio',
+                        inline: true,
+                        className: 'smaller',
+                        options: [
+                          {
+                            label: 'Yes',
+                            value: true,
+                            reveal: [
+                              {
+                                name: 'objectives-regulatory-authorities-service-process',
+                                label: 'What is your process for accepting or rejecting work?',
+                                type: 'texteditor'
+                              },
+                              {
+                                name: 'objectives-regulatory-authorities-service-criteria',
+                                label: 'What specific criteria will you use to decide whether to accept or reject work?',
+                                type: 'texteditor'
+                              },
+                              {
+                                name: 'objectives-regulatory-authorities-service-others',
+                                label: 'Will others help you make decisions about accepting or rejecting work?',
+                                hint: 'If so, who and how?',
+                                type: 'texteditor'
+                              }
+                            ]
+                          },
+                          {
+                            label: 'No',
+                            value: false
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    label: 'No',
+                    value: false
+                  }
+                ]
+              },
+              {
+                name: 'objectives-non-regulatory',
+                label: 'Will you be undertaking non-regulatory testing or screening as a service to others?',
+                type: 'radio',
+                inline: true,
+                className: 'smaller',
+                options: [
+                  {
+                    label: 'Yes',
+                    value: true,
+                    reveal: [
+                      {
+                        name: 'objectives-non-regulatory-process',
+                        label: 'What is your process for accepting or rejecting work?',
+                        type: 'texteditor'
+                      },
+                      {
+                        name: 'objectives-non-regulatory-criteria',
+                        label: 'What specific criteria will you use to decide whether to accept or reject work?',
+                        type: 'texteditor'
+                      },
+                      {
+                        name: 'objectives-non-regulatory-others',
+                        label: 'Will others help you make decisions about accepting or rejecting work?',
+                        hint: 'If so, who and how?'
+                      }
+                    ]
+                  },
+                  {
+                    label: 'No',
+                    value: false
+                  }
+                ]
+              },
+              {
+                name: 'objectives-genetically-altered',
+                label: 'Will you be producing genetically altered or surgically prepared animals/animal products using standardised protocol frameworks as a service to others?',
+                type: 'radio',
+                inline: true,
+                className: 'smaller',
+                options: [
+                  {
+                    label: 'Yes',
+                    value: true,
+                    reveal: [
+                      {
+                        name: 'objectives-genetically-altered-quality',
+                        label: 'How do you assure the quality of the products?',
+                        type: 'texteditor'
+                      },
+                      {
+                        name: 'objectives-genetically-altered-supply',
+                        label: 'How will you match the supply of your products with demand?',
+                        type: 'texteditor'
+                      },
+                      {
+                        name: 'objectives-genetically-altered-service',
+                        label: 'Will these products be offered as a service to others?',
+                        type: 'radio',
+                        inline: true,
+                        className: 'smaller',
+                        options: [
+                          {
+                            label: 'Yes',
+                            value: true,
+                            reveal: [
+                              {
+                                name: 'objectives-genetically-altered-service-process',
+                                label: 'What is your process for accepting or rejecting work?',
+                                type: 'texteditor'
+                              },
+                              {
+                                name: 'objectives-genetically-altered-service-criteria',
+                                label: 'What specific criteria will you use to decide whether to accept or reject work?',
+                                type: 'texteditor'
+                              },
+                              {
+                                name: 'objectives-genetically-altered-service-others',
+                                label: 'Will others help you make decisions about accepting or rejecting work?',
+                                hint: 'If so, who and how?',
+                                type: 'texteditor'
+                              }
+                            ]
+                          },
+                          {
+                            label: 'No',
+                            value: false
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    label: 'No',
+                    value: false
+                  }
+                ]
+              },
+              {
+                name: 'objectives-vaccines',
+                label: 'Will you be manufacturing vaccines and medicines for medical or veterinary use?',
+                type: 'radio',
+                inline: true,
+                className: 'smaller',
+                options: [
+                  {
+                    label: 'Yes',
+                    value: true,
+                    reveal: [
+                      {
+                        name: 'objectives-vaccines-criteria',
+                        label: 'What specific criteria will you use to decide whether to accept or reject work?',
+                        type: 'texteditor'
+                      },
+                      {
+                        name: 'objectives-vaccines-glp',
+                        label: 'Will all manufacturing be conducted in compliance with GLP standards?',
+                        hint: 'If not, explain why this is not required.',
+                        type: 'texteditor'
+                      },
+                      {
+                        name: 'objectives-vaccines-describe',
+                        label: 'Describe how animals are used throughout the manufacturing process.',
+                        type: 'texteditor'
+                      },
+                      {
+                        name: 'objectives-vaccines-tests',
+                        label: 'What animal-based tests do you need to undertake on your products, and for which regulator?',
+                        type: 'texteditor'
+                      },
+                      {
+                        name: 'objectives-vaccines-quality',
+                        label: 'How do you assure the quality of your products?',
+                        type: 'texteditor'
+                      },
+                      {
+                        name: 'objectives-vaccines-supply',
+                        label: 'How will you match the supply of your products with demand?',
+                        type: 'texteditor'
+                      },
+                      {
+                        name: 'objectives-vaccines-refined',
+                        label: 'Will you use animals to develop and validate more refined methods or non-animal alternatives?',
+                        type: 'radio',
+                        inline: true,
+                        className: 'smaller',
+                        options: [
+                          {
+                            label: 'Yes',
+                            value: true,
+                            reveal: {
+                              name: 'objectives-vaccines-refined-explain',
+                              label: 'Explain the type of work you will do, and indicate which steps in the manufacturing process this relates to.',
+                              type: 'texteditor'
+                            }
+                          },
+                          {
+                            label: 'No',
+                            value: false
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    label: 'No',
+                    value: false
+                  }
+                ]
               }
             ]
           }
@@ -646,6 +1133,28 @@ each other.`,
             label: 'Who or what will benefit from these outputs?',
             hint: 'The impact of these outputs may be seen in the short-term, or they may not be fully realised until you\'ve completed the project. Consider all timescales in your answer.',
             type: 'texteditor'
+          },
+          {
+            name: 'benefit-service',
+            label: 'Will this work be offered as a service to others?',
+            type: 'radio',
+            inline: true,
+            className: 'smaller',
+            options: [
+              {
+                label: 'Yes',
+                value: true,
+                reveal: {
+                  name: 'benefit-service-benefits',
+                  label: 'What are the benefits of offering this work as a service?',
+                  type: 'texteditor'
+                }
+              },
+              {
+                label: 'No',
+                value: false
+              }
+            ]
           },
           {
             name: 'benefit-maximise-outputs',
