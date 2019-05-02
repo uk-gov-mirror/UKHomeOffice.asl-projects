@@ -100,10 +100,10 @@ class ApplicationSummary extends React.Component {
 
   changed = (key, subsection) => {
     const fields = this.props.fieldsBySection[key] || [];
-    if(this.props.latest.includes(key) || this.props.latest.some(k=> fields.includes(k)) || this.props.latest.includes(subsection.repeats)) {
+    if (this.props.latest.includes(key) || this.props.latest.some(k => fields.includes(k)) || this.props.latest.includes(subsection.repeats)) {
       return LATEST;
     }
-    else if(this.props.granted.includes(key) || this.props.granted.some(k=> fields.includes(k) || this.props.granted.includes(subsection.repeats) )) {
+    else if (this.props.granted.includes(key) || this.props.granted.some(k => fields.includes(k) || this.props.granted.includes(subsection.repeats))) {
       return GRANTED;
     }
   }
