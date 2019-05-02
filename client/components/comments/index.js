@@ -1,25 +1,12 @@
 import React, { Component, Fragment } from 'react';
-import classnames from 'classnames';
-import ReactMarkdown from 'react-markdown';
 import { connect } from 'react-redux';
-import format from 'date-fns/format';
+import classnames from 'classnames';
 import some from 'lodash/some';
 import partition from 'lodash/partition';
 import { Button } from '@ukhomeoffice/react-components';
 import ExpandingPanel from '../expanding-panel';
 import AddComment from './add-comment';
-
-const Comment = ({ author, createdAt, comment, index, isNew, user }) => (
-  <div className={classnames('comment', { isNew, mine: user === author })}>
-    <div className="header">
-      <strong>{`${index + 1}. ${author}`}</strong>
-      <span className="float-right">{ createdAt ? format(createdAt, 'DD/MM/YYYY') : 'New' }</span>
-    </div>
-    <div className="content">
-      <ReactMarkdown>{comment}</ReactMarkdown>
-    </div>
-  </div>
-)
+import Comment from './comment';
 
 class Comments extends Component {
   state = {
@@ -69,7 +56,7 @@ class Comments extends Component {
       >
         <Fragment>
           {
-            (showPrevious || !active.length) && previous.map((comment, index) => <Comment index={index} key={index} { ...comment } user={this.props.user} />)
+            (showPrevious || !active.length) && previous.map((comment, index) => <Comment index={index} key={index} field={field} { ...comment } />)
           }
           {
             !!active.length && !!previous.length && (
@@ -77,7 +64,7 @@ class Comments extends Component {
             )
           }
           {
-            active.map((comment, index) => <Comment index={index + (previous.length || 0)} key={index} { ...comment } user={this.props.user} />)
+            active.map((comment, index) => <Comment index={index + (previous.length || 0)} key={index} field={field} { ...comment } />)
           }
           {
             commentable && <AddComment field={field} />
@@ -88,11 +75,10 @@ class Comments extends Component {
   }
 }
 
-const mapStateToProps = ({ comments, application: { commentable, showComments, user } }, { field }) => ({
+const mapStateToProps = ({ comments, application: { commentable, showComments } }, { field }) => ({
   comments: comments[field],
   commentable,
-  showComments,
-  user
+  showComments
 });
 
 export default connect(mapStateToProps)(Comments);

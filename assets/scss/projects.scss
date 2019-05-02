@@ -895,6 +895,24 @@ $light-green: #26A197;
           border-color: $light-green;
         }
       }
+
+      &.deleted {
+        border-color: $govuk-border-colour;
+        color: $govuk-border-colour;
+
+        .header {
+          border-color: $govuk-border-colour;
+        }
+
+        &:before {
+          border-top-color: $govuk-border-colour;
+        }
+
+        * {
+          border-color: $govuk-border-colour;
+          color: $govuk-border-colour;
+        }
+      }
     }
   }
 }
