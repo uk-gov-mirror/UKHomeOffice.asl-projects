@@ -6,9 +6,13 @@ const INITIAL_STATE = {
 };
 
 const changedItems = (state = [], action) => {
-
-  const changes = action.changes.filter(c => !state.includes(c));
-  return [...state, ...changes];
+  if (state.includes(action.change)) {
+    return state;
+  }
+  return [
+    ...state,
+    action.change
+  ];
 };
 
 const changes = (state = INITIAL_STATE, action) => {

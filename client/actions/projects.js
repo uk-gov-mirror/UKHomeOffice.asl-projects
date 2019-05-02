@@ -72,10 +72,10 @@ export function updateProject(project) {
   }
 }
 
-export function addChange(changes) {
+export function addChange(change) {
   return {
     type: types.ADD_CHANGE,
-    changes
+    change
   }
 }
 
