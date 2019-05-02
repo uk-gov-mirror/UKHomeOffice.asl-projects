@@ -841,7 +841,7 @@ each other.`,
                 label: 'Will you be producing data primarily for regulatory authorities that use standardised protocol frameworks?',
                 type: 'radio',
                 inline: true,
-                className: 'inline',
+                className: 'smaller',
                 options: [
                   {
                     label: 'Yes',
