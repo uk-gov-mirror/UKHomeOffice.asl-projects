@@ -33,7 +33,7 @@ class ExpandingPanel extends Component {
   }
 
   componentDidUpdate() {
-    if (this.props.scrollToActive && this.props.open) {
+    if (this.props.scrollToActive && this.props.open && !this.props.alwaysUpdate) {
       this.scrollToTop();
     }
   }

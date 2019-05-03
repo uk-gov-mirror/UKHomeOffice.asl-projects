@@ -8,6 +8,8 @@ import StaticSection from '../components/static-section';
 import SideNav from '../components/side-nav';
 import Header from '../components/header';
 import schema from '../schema';
+import { getConditions } from '../helpers';
+import CONDITIONS from '../constants/conditions';
 
 const mapStateToProps = ({ project, application: { schemaVersion, readonly, establishment } }, { match: { params } }) => {
   const section = Object.values(schema[schemaVersion]).reduce((found, section) => {
@@ -30,12 +32,7 @@ const mapStateToProps = ({ project, application: { schemaVersion, readonly, esta
 const mapDispatchToProps = (dispatch, { onUpdate }) => {
   const update = onUpdate || updateAndSave;
   return {
-    update: (data, value) => {
-      if (typeof data === 'string') {
-        return dispatch(update({ [data]: value }));
-      }
-      return dispatch(update(data));
-    }
+    update: data => dispatch(update(data))
   };
 };
 
@@ -73,7 +70,13 @@ class Section extends React.Component {
           { ...this.props }
           title={ title }
           section={ section }
-          save={ (...args) => this.props.update(...args) }
+          save={(data, value) => {
+            if (typeof data === 'string') {
+              data = { [data]: value };
+            }
+            const conditions = getConditions({ ...this.props.project, ...data }, CONDITIONS.project);
+            return this.props.update({ ...data, conditions });
+          }}
           exit={ () => this.props.history.push('/') }
           fields={ fields }
           step={ step }

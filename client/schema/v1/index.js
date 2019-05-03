@@ -7,6 +7,7 @@ import Establishments from '../../pages/sections/establishments';
 import EstablishmentsReview from '../../pages/sections/establishments/review';
 import Poles from '../../pages/sections/poles';
 import PolesReview from '../../pages/sections/poles/review';
+import Conditions from '../../pages/sections/conditions';
 
 import SPECIES from '../../constants/species';
 
@@ -1716,6 +1717,10 @@ each other.`,
                 ]
               }
             ]
+          },
+          conditions: {
+            title: 'Additional conditions and authorisations',
+            show: props => props.showConditions
           }
         }
       },
@@ -2539,6 +2544,16 @@ each other.`,
             title: 'Refinement'
           }
         ]
+      }
+    }
+  },
+  conditions: {
+    title: 'Additional conditions and authorisations',
+    show: props => props.showConditions,
+    subsections: {
+      conditions: {
+        title: 'Additional conditions and authorisations',
+        review: Conditions
       }
     }
   }

@@ -16,6 +16,8 @@ import Section from './section';
 import Steps from './steps';
 import Animals from './animals';
 import LegacyAnimals from './legacy-animals';
+import Conditions from '../../../components/conditions';
+import { updateConditions } from '../../../actions/projects';
 
 const getSection = (section, props) => {
   switch(section) {
@@ -25,6 +27,12 @@ const getSection = (section, props) => {
       return props.schemaVersion === 0
         ? <LegacyAnimals {...props} />
         : <Animals {...props} />
+      case 'conditions':
+      return <Conditions
+        type="protocol"
+        saveConditions={props.updateProtocolConditions}
+        conditions={props.values.conditions}
+      />
     default:
       return <Section {...props} />
   }
@@ -78,7 +86,7 @@ const getBadge = (section, newComments, values) => {
 const getTitle = (section, newComments, values) => (
   <Fragment>
     {
-      getBadge(section, newComments, values)
+      section.fields && getBadge(section, newComments, values)
     }
     {
       section.title
@@ -89,8 +97,8 @@ const getTitle = (section, newComments, values) => (
 const ProtocolSections = ({ sections, protocolState, editable, newComments, ...props }) => (
   <Accordion openOne scrollToActive open={getOpenSection(protocolState, editable, sections)}>
     {
-      Object.keys(sections).map((section, sectionIndex) => (
-        <ExpandingPanel key={section} title={getTitle(sections[section], newComments, props.values)}>
+      Object.keys(sections).filter(section => !sections[section].show || sections[section].show(props)).map((section, sectionIndex) => (
+        <ExpandingPanel alwaysUpdate={section === 'conditions'} key={section} title={getTitle(sections[section], newComments, props.values)}>
           {
             getSection(section, { ...props, protocolState, editable, ...sections[section], sectionsLength: size(sections), sectionIndex })
           }
@@ -100,6 +108,11 @@ const ProtocolSections = ({ sections, protocolState, editable, newComments, ...p
   </Accordion>
 )
 
-const mapStateToProps = ({ application: { schemaVersion } }) => ({ schemaVersion })
+const mapStateToProps = ({ application: { schemaVersion, showConditions } }) => ({ schemaVersion, showConditions });
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    updateProtocolConditions: conditions => dispatch(updateConditions(conditions, ownProps.values.id))
+  }
+}
 
-export default connect(mapStateToProps)(ProtocolSections);
+export default connect(mapStateToProps, mapDispatchToProps)(ProtocolSections);

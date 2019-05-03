@@ -920,4 +920,12 @@ $pink: #ff1493;
       }
     }
   }
+
+  .conditions {
+    .condition {
+      p.condition-text {
+        white-space: pre-wrap;
+      }
+    }
+  }
 }

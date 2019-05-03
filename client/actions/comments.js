@@ -1,4 +1,4 @@
-import fetch from 'r2';
+import sendMessage from './messaging';
 import { throwError } from './messages';
 
 import { ADD_COMMENT, DELETE_COMMENT } from './types';
@@ -18,28 +18,6 @@ const commentDeleted = ({ id, field }) => ({
   id,
   field
 });
-
-const sendMessage = ({ method, data, url }) => {
-  const params = {
-    method,
-    credentials: 'include',
-    json: data
-  };
-  return Promise.resolve()
-    .then(() => fetch(url, params).response)
-    .then(response => {
-      return response.json()
-        .then(json => {
-          if (response.status > 399) {
-            const err = new Error(json.message || `Action failed with status code: ${response.status}`);
-            err.status = response.status;
-            Object.assign(err, json);
-            throw err;
-          }
-          return json;
-        });
-    });
-};
 
 export const addComment = comment => (dispatch, getState) => {
   const state = getState();
