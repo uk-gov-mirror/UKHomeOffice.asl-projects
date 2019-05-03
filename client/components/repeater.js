@@ -17,12 +17,6 @@ class Repeater extends Component {
     }
   }
 
-  componentWillReceiveProps({ items }) {
-    if (items) {
-      this.setState({ items })
-    }
-  }
-
   componentDidMount() {
     if (!this.props.initCollapsed && !this.state.items.length) {
       this.addItem();
