@@ -53,10 +53,7 @@ class Repeater extends Component {
   }
 
   update(items) {
-    return new Promise(resolve => {
-      this.setState({ items }, resolve)
-    })
-      .then(this.save);
+    this.setState({ items }, this.save)
   }
 
   save() {

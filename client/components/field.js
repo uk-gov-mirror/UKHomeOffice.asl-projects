@@ -24,14 +24,12 @@ import Comments from './comments';
 class Field extends Component {
 
   onChange(value) {
-    const prefix = this.props.prefix !== '' ? `${this.props.prefix}.` : '';
-    this.props.addChange(`${prefix}${this.props.name}`);
+    this.props.addChange(this.props.name);
     return this.props.onChange && this.props.onChange(value);
   }
 
   onSave(value) {
-    const prefix = this.props.prefix !== '' ? `${this.props.prefix}.` : '';
-    this.props.addChange(`${prefix}${this.props.name}`);
+    this.props.addChange(this.props.name);
     return this.props.onSave && this.props.onSave(value);
   }
 
