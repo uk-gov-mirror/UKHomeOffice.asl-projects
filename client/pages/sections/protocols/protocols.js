@@ -15,7 +15,6 @@ import { getNewComments } from '../../../helpers';
 
 const Form = ({
   index,
-  name,
   updateItem,
   exit,
   toggleActive,
@@ -27,7 +26,7 @@ const Form = ({
     <Fieldset
       { ...props }
       fields={props.fields}
-      prefix={`${prefix}${name}-${index}-`}
+      prefix={prefix}
       onFieldChange={(key, value) => updateItem({ [key]: value })}
     />
     <Controls onContinue={toggleActive} onExit={exit} exitDisabled={true} />
