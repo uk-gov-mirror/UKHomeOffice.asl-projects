@@ -9,7 +9,7 @@ class Index extends React.Component {
         <div className="govuk-width-container">
           <h1>Changelog</h1>
 
-          <h2>Version 3.3.1 - 3rd May 2019</h2>
+          <h2>Version 3.4.1 - 3rd May 2019</h2>
           <ul>
             <li>Feature: add questions for non-research licences</li>
             <li>Feature: add hint text markdown support for all fields</li>
