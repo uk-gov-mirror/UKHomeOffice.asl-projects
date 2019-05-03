@@ -13,6 +13,8 @@ class Index extends React.Component {
           <ul>
             <li>Feature: add questions for non-research licences</li>
             <li>Feature: add hint text markdown support for all fields</li>
+            <li>Fixed: include NTS questions in document export</li>
+            <li>Fixed: layout of questions in protocols - experimental design</li>
           </ul>
 
           <h2>Version 3.0.5 - 9th April 2019</h2>
