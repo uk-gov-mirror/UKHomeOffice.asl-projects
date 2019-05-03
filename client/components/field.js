@@ -1,6 +1,7 @@
 import React, { Fragment, Component } from 'react';
 import { connect } from 'react-redux';
 
+import { addChange } from '../actions/projects';
 import isEqual from 'lodash/isEqual';
 import isUndefined from 'lodash/isUndefined';
 import castArray from 'lodash/castArray';
@@ -23,10 +24,14 @@ import Comments from './comments';
 class Field extends Component {
 
   onChange(value) {
+    const prefix = this.props.prefix !== '' ? `${this.props.prefix}.` : '';
+    this.props.addChange(`${prefix}${this.props.name}`);
     return this.props.onChange && this.props.onChange(value);
   }
 
   onSave(value) {
+    const prefix = this.props.prefix !== '' ? `${this.props.prefix}.` : '';
+    this.props.addChange(`${prefix}${this.props.name}`);
     return this.props.onSave && this.props.onSave(value);
   }
 
@@ -193,7 +198,7 @@ const mapStateToProps = ({ project, settings }, { name, conditional, optionsFrom
   };
 }
 
-const ConnectedField = connect(mapStateToProps)(Field);
+const ConnectedField = connect(mapStateToProps, { addChange })(Field);
 
 const FieldGroup = props => {
   return (

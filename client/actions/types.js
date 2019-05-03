@@ -15,4 +15,6 @@ export const HIDE_MESSAGE = 'HIDE_MESSAGE';
 export const ADD_COMMENT = 'ADD_COMMENT';
 export const DELETE_COMMENT = 'DELETE_COMMENT';
 
+export const ADD_CHANGE = 'ADD_CHANGE';
+
 export const ERROR = 'ERROR';

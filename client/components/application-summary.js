@@ -13,6 +13,7 @@ import flatten from 'lodash/flatten';
 import { Button } from '@ukhomeoffice/react-components';
 
 import { INCOMPLETE, PARTIALLY_COMPLETE, COMPLETE } from '../constants/completeness';
+import { LATEST, GRANTED } from '../constants/change';
 import schema from '../schema'
 import { flattenReveals, getNewComments } from '../helpers';
 
@@ -28,14 +29,14 @@ const getFields = subsection => {
   else return []
 }
 
-const mapStateToProps = ({ project, comments, application: { schemaVersion, readonly, showComments, user } }) => {
+const mapStateToProps = ({ project, comments, application: { schemaVersion, readonly, showComments, user }, changes : {latest, granted} }) => {
+
   const fieldsBySection = Object.values(schema[schemaVersion]).map(section => section.subsections).reduce((obj, subsections) => {
     return {
       ...obj,
       ...mapValues(subsections, subsection => flattenReveals(getFields(subsection), project).map(field => field.name))
     }
   }, {});
-
   return {
     readonly,
     showComments,
@@ -43,7 +44,9 @@ const mapStateToProps = ({ project, comments, application: { schemaVersion, read
     fieldsBySection: omit(fieldsBySection, 'protocols'),
     legacy: schemaVersion === 0,
     values: project,
-    sections: schema[schemaVersion]
+    sections: schema[schemaVersion],
+    latest,
+    granted
   };
 }
 
@@ -90,6 +93,27 @@ class ApplicationSummary extends React.Component {
         return <span className="badge complete">complete</span>;
       case PARTIALLY_COMPLETE:
         return <span className="badge incomplete">incomplete</span>;
+      default:
+        return null;
+    }
+  }
+
+  changed = (key, subsection) => {
+    const fields = this.props.fieldsBySection[key] || [];
+    if (this.props.latest.includes(key) || this.props.latest.some(k => fields.includes(k)) || this.props.latest.includes(subsection.repeats)) {
+      return LATEST;
+    }
+    else if (this.props.granted.includes(key) || this.props.granted.some(k => fields.includes(k) || this.props.granted.includes(subsection.repeats))) {
+      return GRANTED;
+    }
+  }
+
+  changedBadge = change => {
+    switch (change) {
+      case LATEST:
+        return <span className="badge changed">changed</span>;
+      case GRANTED:
+        return <span className="badge">amended</span>;
       default:
         return null;
     }
@@ -143,6 +167,9 @@ class ApplicationSummary extends React.Component {
                       <td>
                         {
                           this.props.showComments && this.getComments(key, subsection)
+                        }
+                        {
+                          this.changedBadge(this.changed(key, subsection))
                         }
                         {
                           !this.props.readonly && this.completeBadge(this.complete(subsection, key))

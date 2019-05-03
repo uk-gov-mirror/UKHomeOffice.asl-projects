@@ -7,6 +7,7 @@ import application from './application';
 import message from './message';
 import settings from './settings';
 import comments from './comments';
+import changes from './changes';
 
 const rootReducer = combineReducers({
   projects,
@@ -15,7 +16,8 @@ const rootReducer = combineReducers({
   application,
   message,
   settings,
-  comments
+  comments,
+  changes
 });
 
 export default rootReducer;
