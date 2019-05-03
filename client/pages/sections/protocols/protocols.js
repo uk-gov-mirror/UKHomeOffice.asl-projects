@@ -15,7 +15,6 @@ import { getNewComments } from '../../../helpers';
 
 const Form = ({
   index,
-  name,
   updateItem,
   exit,
   toggleActive,
