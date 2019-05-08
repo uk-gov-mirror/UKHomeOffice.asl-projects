@@ -34,7 +34,7 @@ class Objectives extends Component {
       <p className="grey">It should be possible to determine, in five years’ time, whether or not your objectives were met, assuming all lines of enquiry are pursued.</p>
       <Repeater
         items={this.props.values.objectives || []}
-        type="objective"
+        type="objectives"
         onSave={objectives => this.props.save({ objectives })}
       >
         <Objective {...this.props}/>

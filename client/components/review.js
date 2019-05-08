@@ -10,6 +10,7 @@ import flatten from 'lodash/flatten';
 import values from 'lodash/values';
 import isUndefined from 'lodash/isUndefined';
 import isNull from 'lodash/isNull';
+import { LATEST, GRANTED } from '../constants/change';
 
 class Review extends React.Component {
   replay() {
@@ -125,10 +126,34 @@ class Review extends React.Component {
     );
   }
 
+  changed = (key) => {
+
+    if (this.props.latest.includes(key)) {
+      return LATEST;
+    }
+    else if (this.props.granted.includes(key)) {
+      return GRANTED;
+    }
+  }
+
+  changedBadge = change => {
+    switch (change) {
+      case LATEST:
+        return <span className="badge changed">changed</span>;
+      case GRANTED:
+        return <span className="badge">amended</span>;
+      default:
+        return null;
+    }
+  }
+
   render() {
     return (
       <div className="review">
         <h3>{this.props.label}</h3>
+        {
+          this.changedBadge(this.changed(`${this.props.prefix || ''}${this.props.name}`))
+        }
         {this.replay()}
         <Comments field={`${this.props.prefix || ''}${this.props.name}`} collapsed={!this.props.readonly} />
         {
@@ -149,6 +174,6 @@ class Review extends React.Component {
   }
 }
 
-const mapStateToProps = ({ project, settings, application: { readonly } }) => ({ project, settings, readonly });
+const mapStateToProps = ({ project, settings, application: { readonly }, changes : {latest, granted} }) => ({ project, settings, readonly, latest, granted });
 
 export default connect(mapStateToProps)(Review);

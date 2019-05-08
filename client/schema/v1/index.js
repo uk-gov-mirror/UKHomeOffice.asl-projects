@@ -1174,7 +1174,7 @@ each other.`,
         name: 'protocols',
         component: Protocols,
         review: ProtocolsReview,
-        repeats: 'protocol',
+        repeats: 'protocols',
         fields: [
           {
             name: 'title',
