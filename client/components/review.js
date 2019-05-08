@@ -127,7 +127,6 @@ class Review extends React.Component {
   }
 
   changed = (key) => {
-
     if (this.props.latest.includes(key)) {
       return LATEST;
     }
@@ -136,8 +135,9 @@ class Review extends React.Component {
     }
   }
 
-  changedBadge = change => {
-    switch (change) {
+  changedBadge = () => {
+    const key = `${this.props.prefix || ''}${this.props.name}`;
+    switch (this.changed(key)) {
       case LATEST:
         return <span className="badge changed">changed</span>;
       case GRANTED:
@@ -152,7 +152,7 @@ class Review extends React.Component {
       <div className="review">
         <h3>{this.props.label}</h3>
         {
-          this.changedBadge(this.changed(`${this.props.prefix || ''}${this.props.name}`))
+          this.changedBadge()
         }
         {this.replay()}
         <Comments field={`${this.props.prefix || ''}${this.props.name}`} collapsed={!this.props.readonly} />
