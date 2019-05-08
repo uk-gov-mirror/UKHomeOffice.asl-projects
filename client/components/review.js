@@ -126,18 +126,17 @@ class Review extends React.Component {
     );
   }
 
-  changed = (key) => {
-    if (this.props.latest.includes(key)) {
+  changed = () => {
+    if (this.props.changedFromLatest) {
       return LATEST;
     }
-    else if (this.props.granted.includes(key)) {
+    else if (this.props.changedFromGranted) {
       return GRANTED;
     }
   }
 
   changedBadge = () => {
-    const key = `${this.props.prefix || ''}${this.props.name}`;
-    switch (this.changed(key)) {
+    switch (this.changed()) {
       case LATEST:
         return <span className="badge changed">changed</span>;
       case GRANTED:
@@ -174,6 +173,12 @@ class Review extends React.Component {
   }
 }
 
-const mapStateToProps = ({ project, settings, application: { readonly }, changes : {latest, granted} }) => ({ project, settings, readonly, latest, granted });
+
+const mapStateToProps = ({ project, settings, application: { readonly }, changes : {latest, granted} }, { name, prefix }) => {
+  const key = `${prefix || ''}${name}`;
+  const changedFromGranted = granted.includes(key);
+  const changedFromLatest = latest.includes(key);
+  return { project, settings, readonly, changedFromLatest, changedFromGranted };
+}
 
 export default connect(mapStateToProps)(Review);
