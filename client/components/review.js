@@ -125,10 +125,21 @@ class Review extends React.Component {
     );
   }
 
+  changedBadge = () => {
+    if (this.props.changedFromLatest) {
+      return <span className="badge changed">changed</span>;
+    }
+    if (this.props.changedFromGranted) {
+      return <span className="badge">amended</span>;
+    }
+    return null;
+  }
+
   render() {
     return (
       <div className="review">
         <h3>{this.props.label}</h3>
+        {this.changedBadge()}
         {this.replay()}
         <Comments field={`${this.props.prefix || ''}${this.props.name}`} collapsed={!this.props.readonly} />
         {
@@ -149,6 +160,12 @@ class Review extends React.Component {
   }
 }
 
-const mapStateToProps = ({ project, settings, application: { readonly } }) => ({ project, settings, readonly });
+
+const mapStateToProps = ({ project, settings, application: { readonly }, changes : {latest, granted} }, { name, prefix }) => {
+  const key = `${prefix || ''}${name}`;
+  const changedFromGranted = granted.includes(key);
+  const changedFromLatest = latest.includes(key);
+  return { project, settings, readonly, changedFromLatest, changedFromGranted };
+}
 
 export default connect(mapStateToProps)(Review);

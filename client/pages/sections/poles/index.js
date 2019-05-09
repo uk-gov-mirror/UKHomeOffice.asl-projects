@@ -30,7 +30,7 @@ const Poles = ({ title, save, advance, exit, ...props }) => {
       <p className="grey">If you can only add generic information at this stage, provide a general description of the types of areas you are considering.</p>
       <Repeater
         items={props.values.polesList}
-        type="POLE"
+        type="polesList"
         onSave={poles => save({ polesList: poles })}
       >
         <Pole {...props} />

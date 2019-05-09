@@ -110,8 +110,7 @@ class Protocols extends PureComponent {
     const { protocols, editable } = this.props;
     return (
       <Repeater
-        type="protocol"
-        name="protocols"
+        type="protocols"
         items={protocols}
         onSave={this.save}
         addAnother={editable}
