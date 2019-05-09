@@ -10,7 +10,6 @@ import flatten from 'lodash/flatten';
 import values from 'lodash/values';
 import isUndefined from 'lodash/isUndefined';
 import isNull from 'lodash/isNull';
-import { LATEST, GRANTED } from '../constants/change';
 
 class Review extends React.Component {
   replay() {
@@ -126,33 +125,21 @@ class Review extends React.Component {
     );
   }
 
-  changed = () => {
-    if (this.props.changedFromLatest) {
-      return LATEST;
-    }
-    else if (this.props.changedFromGranted) {
-      return GRANTED;
-    }
-  }
-
   changedBadge = () => {
-    switch (this.changed()) {
-      case LATEST:
-        return <span className="badge changed">changed</span>;
-      case GRANTED:
-        return <span className="badge">amended</span>;
-      default:
-        return null;
+    if (this.props.changedFromLatest) {
+      return <span className="badge changed">changed</span>;
     }
+    if (this.props.changedFromGranted) {
+      return <span className="badge">amended</span>;
+    }
+    return null;
   }
 
   render() {
     return (
       <div className="review">
         <h3>{this.props.label}</h3>
-        {
-          this.changedBadge()
-        }
+        {this.changedBadge()}
         {this.replay()}
         <Comments field={`${this.props.prefix || ''}${this.props.name}`} collapsed={!this.props.readonly} />
         {
