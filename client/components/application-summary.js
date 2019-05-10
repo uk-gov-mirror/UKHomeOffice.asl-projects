@@ -37,11 +37,11 @@ const mapStateToProps = ({
     readonly,
     showComments,
     user,
-    showConditions,
-    changes: {
-      latest,
-      granted
-    }
+    showConditions
+  },
+  changes: {
+    latest,
+    granted
   }
 }) => {
   const fieldsBySection = Object.values(schema[schemaVersion]).map(section => section.subsections).reduce((obj, subsections) => {
