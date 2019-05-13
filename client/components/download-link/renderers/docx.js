@@ -404,10 +404,10 @@ const renderFields = (doc, subsection, values, fields) => {
   steps.forEach(step => {
     if (step.name === 'polesList' || step.name === 'establishments' || step.name === 'objectives') {
       (values[step.name] || []).forEach(v => {
-        step.fields.forEach(field => renderField(doc, field, v));
+        (step.fields || []).forEach(field => renderField(doc, field, v));
       });
     } else {
-      step.fields.forEach(field => renderField(doc, field, values));
+      (step.fields || []).forEach(field => renderField(doc, field, values));
     }
   });
 }
