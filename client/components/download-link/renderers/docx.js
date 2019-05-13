@@ -1,3 +1,4 @@
+import 'regenerator-runtime/runtime';
 import saveAs from 'file-saver';
 import { Document, Packer, Paragraph, TextRun, Numbering } from '@joefitter/docx';
 import flatten from 'lodash/flatten';
