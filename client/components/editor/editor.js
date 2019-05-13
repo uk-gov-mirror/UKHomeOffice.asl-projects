@@ -71,6 +71,8 @@ class Editor extends Component {
         return <em {...attributes}>{children}</em>;
       case 'underlined':
         return <u {...attributes}>{children}</u>;
+      case 'comment':
+        return <span className="comment" {...attributes}>{children}</span>;
       default:
         return next();
     }

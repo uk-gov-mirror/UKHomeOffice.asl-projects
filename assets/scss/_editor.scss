@@ -1,3 +1,5 @@
+@import "images";
+
 .editor {
   margin-top: $govuk-gutter / 2;
   background-color: $white;
@@ -101,6 +103,21 @@
       // top: 0;
     }
   }
+}
+
+.comment {
+  &:before {
+    content: '';
+    margin: 0 0.2em;
+    background: $comments;
+    background-size: 100%;
+    vertical-align: middle;
+    display: inline-block;
+    width: 1.5em;
+    height: 1.5em;
+  }
+  border-bottom: 3px solid #ffbf47;
+  background-color: #fff2d3;
 }
 
 .readonly {
