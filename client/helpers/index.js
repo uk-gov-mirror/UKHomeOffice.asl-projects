@@ -2,6 +2,30 @@ import flatten from 'lodash/flatten';
 import castArray from 'lodash/castArray';
 import pickBy from 'lodash/pickBy';
 import mapValues from 'lodash/mapValues';
+import map from 'lodash/map';
+
+export const getConditions = (values, conditions, project) => {
+  const customConditions = (values.conditions || [])
+    .filter(condition => condition.edited);
+
+  const newConditions = [];
+  conditions = map(conditions, (condition, key) => ({ ...condition, key }))
+
+  conditions.forEach(condition => {
+    const customCondition = customConditions.find(c => c.key === condition.key);
+    const path = `${condition.key}.versions.${condition.versions.length - 1}`;
+    if (customCondition) {
+      newConditions.push({
+        ...customCondition,
+        path: condition.path
+      })
+    } else if (condition.include && condition.include(values, project)) {
+      newConditions.push({ key: condition.key, path });
+    }
+  });
+
+  return newConditions;
+}
 
 export const getScrollPos = (elem, offset = 0) => {
   const box = elem.getBoundingClientRect();

@@ -29,8 +29,21 @@ const getFields = subsection => {
   else return []
 }
 
-const mapStateToProps = ({ project, comments, application: { schemaVersion, readonly, showComments, user }, changes : {latest, granted} }) => {
-
+const mapStateToProps = ({
+  project,
+  comments,
+  application: {
+    schemaVersion,
+    readonly,
+    showComments,
+    user,
+    showConditions
+  },
+  changes: {
+    latest,
+    granted
+  }
+}) => {
   const fieldsBySection = Object.values(schema[schemaVersion]).map(section => section.subsections).reduce((obj, subsections) => {
     return {
       ...obj,
@@ -40,6 +53,7 @@ const mapStateToProps = ({ project, comments, application: { schemaVersion, read
   return {
     readonly,
     showComments,
+    showConditions,
     newComments: getNewComments(comments, user),
     fieldsBySection: omit(fieldsBySection, 'protocols'),
     legacy: schemaVersion === 0,
@@ -57,7 +71,7 @@ class ApplicationSummary extends React.Component {
       return true;
     }
     const subsections = map(
-      map(this.props.sections, section => pickBy(section.subsections, this.sectionVisible))
+      map(pickBy(this.props.sections, section => !section.show || section.show(this.props)), section => pickBy(section.subsections, this.sectionVisible))
         .reduce((obj, values) => ({ ...obj, ...values }), {}),
       this.complete
     );
@@ -146,7 +160,7 @@ class ApplicationSummary extends React.Component {
     return (
       <Fragment>
         {
-          Object.keys(this.props.sections).map(key => {
+          Object.keys(this.props.sections).filter(section => !this.props.sections[section].show || this.props.sections[section].show(this.props)).map(key => {
             const section = this.props.sections[key];
             const subsections = Object.keys(section.subsections)
               .filter(subsection => this.sectionVisible(section.subsections[subsection]));

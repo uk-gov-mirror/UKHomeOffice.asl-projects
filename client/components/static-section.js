@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import flatten from 'lodash/flatten';
 import ReviewFields from './review-fields';
 
-const StaticSection = ({ section, project, fields = [], subsection = false }) => {
+const StaticSection = ({ section, project, fields = [], subsection = false, ...props }) => {
   const Component = section.review || ReviewFields;
   return (
     <Fragment>
@@ -12,7 +12,7 @@ const StaticSection = ({ section, project, fields = [], subsection = false }) =>
           ? <h2>{section.title}</h2>
           : <h2>{section.title}</h2>
       }
-      <Component {...section} fields={fields} values={project} />
+      <Component {...section} fields={fields} values={project} {...props} />
     </Fragment>
   )
 }

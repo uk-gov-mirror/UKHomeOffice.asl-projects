@@ -11,11 +11,11 @@ const sectionVisible = (section, values) => {
   return !section.show || section.show(values);
 }
 
-const SideNav = ({ sections, project }) => (
+const SideNav = ({ sections, project, ...props }) => (
   <nav className="sidebar-nav section-nav">
     <SectionLink />
     {
-      map(sections, (section, key) =>
+      map(pickBy(sections, section => !section.show || section.show(props)), (section, key) =>
         <ExpandingPanel key={key} title={section.title}>
           {
             map(pickBy(section.subsections, s => sectionVisible(s, project)), (subsection, key) => {
@@ -28,6 +28,6 @@ const SideNav = ({ sections, project }) => (
   </nav>
 )
 
-const mapStateToProps = ({ application: { schemaVersion }, project }) => ({ sections: schema[schemaVersion], project })
+const mapStateToProps = ({ application: { schemaVersion, showConditions }, project }) => ({ sections: schema[schemaVersion], project, showConditions })
 
 export default connect(mapStateToProps)(SideNav);

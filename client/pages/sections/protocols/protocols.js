@@ -11,7 +11,8 @@ import Fieldset from '../../../components/fieldset';
 import Repeater from '../../../components/repeater';
 import Controls from '../../../components/controls';
 
-import { getNewComments } from '../../../helpers';
+import { getNewComments, getConditions } from '../../../helpers';
+import CONDITIONS from '../../../constants/conditions';
 
 const Form = ({
   index,
@@ -98,6 +99,18 @@ class Protocol extends PureComponent {
 
 class Protocols extends PureComponent {
   save = protocols => {
+    if (!this.props.readonly) {
+      protocols = protocols.map(protocol => {
+        const conds = getConditions(protocol, CONDITIONS.protocol, this.props.project);
+        if (conds) {
+          return {
+            ...protocol,
+            conditions: conds
+          }
+        }
+        return protocol;
+      });
+    }
     this.props.save({ protocols });
   }
 
@@ -129,6 +142,6 @@ class Protocols extends PureComponent {
   }
 }
 
-const mapStateToProps = ({ comments, project: { protocols }, application: { user } }) => ({ protocols, newComments: getNewComments(comments, user) });
+const mapStateToProps = ({ comments, project: { protocols }, application: { user, readonly } }) => ({ protocols, newComments: getNewComments(comments, user), readonly });
 
 export default connect(mapStateToProps)(Protocols);

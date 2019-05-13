@@ -1,10 +1,12 @@
 import omit from 'lodash/omit';
 import debounce from 'lodash/debounce';
+import cloneDeep from 'lodash/cloneDeep';
 
 import * as types from './types';
 import database from '../database';
-
+import { throwError } from './messages';
 import { showMessage } from './messages';
+import sendMessage from './messaging';
 
 export function loadProjects() {
   return dispatch => {
@@ -102,4 +104,39 @@ export function updateAndSave(data) {
     const id = project.id;
     return debouncedUpdate(id, newState, dispatch);
   };
+}
+
+export function updateConditions(conditions, protocolId) {
+  return (dispatch, getState) => {
+    const { application: { basename }, project } = getState();
+    const params = {
+      method: 'PUT',
+      url: `${basename.replace(/\/edit?/, '')}/conditions`,
+      data: {
+        conditions,
+        protocolId
+      }
+    };
+    return Promise.resolve()
+      .then(() => sendMessage(params))
+      .then(() => {
+        const newState = cloneDeep(project);
+        if (protocolId) {
+          newState.protocols = newState.protocols.map(protocol => {
+            if (protocol.id === protocolId) {
+              return { ...protocol, conditions }
+            }
+            return protocol;
+          })
+        } else {
+          newState.conditions = conditions;
+        }
+        dispatch(updateProject(newState));
+        dispatch(showMessage('Condition/authorisation updated'))
+      })
+      .catch(err => {
+        console.error(err);
+        dispatch(throwError('Error updating conditions'));
+      });
+  }
 }
