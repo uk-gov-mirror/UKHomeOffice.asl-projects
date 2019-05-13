@@ -948,7 +948,7 @@ each other.`,
               },
               {
                 name: 'objectives-genetically-altered',
-                label: 'Will you be producing genetically altered or surgically prepared animals/animal products using standardised protocol frameworks as a service to others?',
+                label: 'Will you be producing genetically altered or surgically prepared animals/animal products using standardised protocol frameworks?',
                 type: 'radio',
                 inline: true,
                 className: 'smaller',
@@ -1022,11 +1022,6 @@ each other.`,
                     value: true,
                     reveal: [
                       {
-                        name: 'objectives-vaccines-criteria',
-                        label: 'What specific criteria will you use to decide whether to accept or reject work?',
-                        type: 'texteditor'
-                      },
-                      {
                         name: 'objectives-vaccines-glp',
                         label: 'Will all manufacturing be conducted in compliance with GLP standards?',
                         hint: 'If not, explain why this is not required.',
@@ -1050,6 +1045,11 @@ each other.`,
                       {
                         name: 'objectives-vaccines-supply',
                         label: 'How will you match the supply of your products with demand?',
+                        type: 'texteditor'
+                      },
+                      {
+                        name: 'objectives-vaccines-criteria',
+                        label: 'What specific criteria will you use to decide whether to accept or reject work?',
                         type: 'texteditor'
                       },
                       {
