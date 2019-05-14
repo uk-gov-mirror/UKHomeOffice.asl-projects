@@ -72,13 +72,13 @@ export default {
             fields: [
               {
                 name: 'establishment-about',
-                label: 'Why do you need to use this secondary establishment?',
+                label: 'Why do you need to use this other establishment?',
                 type: 'texteditor',
                 repeats: true
               },
               {
                 name: 'establishment-supervisor',
-                label: 'Who will supervise work at this secondary establishment?',
+                label: 'Who will supervise work at this other establishment?',
                 type: 'texteditor',
                 repeats: true
               }
