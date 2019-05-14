@@ -13,6 +13,10 @@ $pink: #ff1493;
     }
   }
 
+  a[href="#"]:visited {
+    color: $govuk-link-colour;
+  }
+
   .flex {
     display: flex;
 
@@ -925,6 +929,60 @@ $pink: #ff1493;
     .condition {
       p.condition-text {
         white-space: pre-wrap;
+      }
+    }
+  }
+
+  .other-legal-condition {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    white-space: pre-wrap;
+
+    .clamp {
+      > * {
+        display: none;
+
+        &:first-child {
+          display: inherit;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+
+      > ul, ol {
+        li {
+          display: none;
+
+          &:first-child {
+            display: inherit;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+      }
+    }
+
+    a.expand {
+      &:before {
+        font-size: 1em;
+        line-height: 1em;
+        display: inline-block;
+        margin-right: $govuk-gutter / 4;
+      }
+
+      &[aria-expanded=false] {
+        &:before {
+          content: '►';
+        }
+      }
+
+      &[aria-expanded=true] {
+        &:before {
+          content: '▲';
+        }
       }
     }
   }

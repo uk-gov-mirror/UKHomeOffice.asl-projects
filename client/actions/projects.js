@@ -106,21 +106,54 @@ export function updateAndSave(data) {
   };
 }
 
+const doConditionsUpdate = (data, dispatch, state) => {
+  const { application: { basename } } = state;
+  const params = {
+    method: 'PUT',
+    url: `${basename.replace(/\/edit?/, '')}/conditions`,
+    data
+  };
+  return Promise.resolve()
+    .then(() => sendMessage(params))
+    .catch(err => {
+      console.error(err);
+      dispatch(throwError('Error updating conditions'));
+    });
+}
+
+export function updateInspectorConditions(inspectorAdded) {
+  return (dispatch, getState) => {
+    const state = getState();
+    const conditions = [
+      ...inspectorAdded,
+      ...(state.project.conditions || []).filter(condition => !condition.inspectorAdded)
+    ];
+    return doConditionsUpdate({ conditions }, dispatch, state)
+      .then(() => {
+        const newState = {
+          ...state.project,
+          conditions
+        }
+        dispatch(updateProject(newState));
+        dispatch(updateSavedProject(newState));
+        dispatch(showMessage('Condition/authorisation updated'))
+      })
+  }
+}
+
 export function updateConditions(conditions, protocolId) {
   return (dispatch, getState) => {
-    const { application: { basename }, project } = getState();
-    const params = {
-      method: 'PUT',
-      url: `${basename.replace(/\/edit?/, '')}/conditions`,
-      data: {
-        conditions,
-        protocolId
-      }
-    };
-    return Promise.resolve()
-      .then(() => sendMessage(params))
+    const state = getState();
+    const data = {
+      conditions: [
+        ...(state.project.conditions || []).filter(condition => condition.inspectorAdded),
+        ...conditions.filter(condition => !condition.inspectorAdded)
+      ],
+      protocolId
+    }
+    return doConditionsUpdate(data, dispatch, state)
       .then(() => {
-        const newState = cloneDeep(project);
+        const newState = cloneDeep(state.project);
         if (protocolId) {
           newState.protocols = newState.protocols.map(protocol => {
             if (protocol.id === protocolId) {
@@ -135,9 +168,5 @@ export function updateConditions(conditions, protocolId) {
         dispatch(updateSavedProject(newState));
         dispatch(showMessage('Condition/authorisation updated'))
       })
-      .catch(err => {
-        console.error(err);
-        dispatch(throwError('Error updating conditions'));
-      });
   }
 }

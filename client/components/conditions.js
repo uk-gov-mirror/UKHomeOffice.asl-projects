@@ -2,50 +2,27 @@ import React, { Fragment, Component } from 'react';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
 import get from 'lodash/get';
-import { Button, TextArea } from '@ukhomeoffice/react-components';
+import { Button } from '@ukhomeoffice/react-components';
 import CONDITIONS from '../constants/conditions';
 
-class Condition extends Component {
+import Editable from './editable';
 
+class Condition extends Component {
   state = {
-    editing: !this.props.edited && !this.props.content,
-    content: this.props.edited || this.props.content
+    editing: false
   }
 
   toggleEditing = () => {
     this.setState({ editing: !this.state.editing })
   }
 
-  componentWillReceiveProps(newProps) {
-    if (newProps.content !== this.props.content || newProps.edited !== this.props.edited) {
-      this.setState({ content: newProps.edited || newProps.content });
-    }
+  save = edited => {
+    this.submitChange({ edited })
+      .then(() => this.setState({ editing: false }))
   }
 
-  onChange = e => {
-    const content = e.target.value;
-    this.setState({ content })
-  }
-
-  save = () => {
-    if (!!this.state.content && this.state.content !== '') {
-      this.submitChange({ edited: this.state.content })
-        .then(() => this.setState({ editing: false }))
-    } else {
-      window.alert('No changes made');
-    }
-  }
-
-  reset = () => {
-    const hasChanged = this.state.content !== (this.props.edited || this.props.content);
-    if (hasChanged) {
-      if (window.confirm('Are you sure')) {
-        this.submitChange({ edited: this.props.edited })
-          .then(() => this.setState({ editing: false }))
-      }
-    } else {
-      this.setState({ editing: false });
-    }
+  cancel = () => {
+    this.setState({ editing: false });
   }
 
   submitChange = data => {
@@ -53,10 +30,8 @@ class Condition extends Component {
   }
 
   revert = () => {
-    if (window.confirm('Are you sure')) {
-      this.submitChange({ edited: null })
-        .then(() => this.setState({ editing: false }))
-    }
+    this.submitChange({ edited: null })
+      .then(() => this.setState({ editing: false }))
   }
 
   restore = () => {
@@ -68,8 +43,10 @@ class Condition extends Component {
   }
 
   render() {
-    const { title, deleted, updating, edited } = this.props;
-    const { editing, content } = this.state;
+    const { title, deleted, updating, edited, content } = this.props;
+    const { editing } = this.state;
+
+    const displayContent = edited || content;
 
     return (
       <div className={classnames('condition', { deleted })}>
@@ -88,25 +65,17 @@ class Condition extends Component {
               <Fragment>
                 {
                   editing && this.props.editConditions
-                    ? (
-                      <Fragment>
-                        <TextArea
-                          type="textarea"
-                          value={content}
-                          onChange={this.onChange}
-                        />
-                        <p className="control-panel">
-                          <Button disabled={updating} onClick={this.save}>Save</Button>
-                          <Button disabled={updating} onClick={this.reset} className="link">Cancel</Button>
-                          {
-                            edited && <Button disabled={updating} onClick={this.revert} className="link">Revert to default</Button>
-                          }
-                        </p>
-                      </Fragment>
-                    )
+                    ? <Editable
+                      content={displayContent}
+                      edited={!!edited}
+                      updating={updating}
+                      onSave={this.save}
+                      onCancel={this.cancel}
+                      onRevert={this.revert}
+                    />
                     : (
                       <Fragment>
-                        <p className="condition-text">{content}</p>
+                        <p className="condition-text">{displayContent}</p>
                         {
                           this.props.editConditions && (
                             <p><Button disabled={updating} className="link" onClick={this.toggleEditing}>Edit</Button> | <Button disabled={updating} className="link" onClick={this.remove}>Remove</Button></p>
@@ -127,8 +96,7 @@ class Conditions extends Component {
 
   state = {
     updating: false,
-    adding: false,
-    content: ''
+    adding: false
   }
 
   save = (key, data) => {
@@ -153,24 +121,22 @@ class Conditions extends Component {
     if (!this.props.editConditions) {
       return;
     }
-    if (custom && window.confirm('Are you sure?')) {
-      this.setState({ updating: true })
-      return this.props.saveConditions(this.props.conditions.filter(condition => condition.key !== key))
-        .then(() => this.setState({ updating: false }))
+    if (custom) {
+      if (window.confirm('Are you sure?')) {
+        this.setState({ updating: true })
+        return this.props.saveConditions(this.props.conditions.filter(condition => condition.key !== key))
+          .then(() => this.setState({ updating: false }))
+      }
+    } else {
+      this.save(key, { deleted: true });
     }
-    this.save(key, { deleted: true });
   }
 
   toggleAdding = () => {
     this.setState({ adding: !this.state.adding });
   }
 
-  updateNewCondition = e => {
-    const content = e.target.value;
-    this.setState({ content });
-  }
-
-  addCondition = () => {
+  addCondition = edited => {
     if (!this.props.editConditions) {
       return;
     }
@@ -180,11 +146,11 @@ class Conditions extends Component {
       {
         key: `custom-${this.props.conditions.length}`,
         custom: true,
-        content: this.state.content
+        edited
       }
     ])
       .then(() => {
-        this.setState({ adding: false, content: '', updating: false })
+        this.setState({ adding: false, updating: false })
       });
   }
 
@@ -218,16 +184,12 @@ class Conditions extends Component {
         {
           adding
             ? (
-              <Fragment>
-                <TextArea
-                  type="textarea"
-                  value={content}
-                  onChange={this.updateNewCondition}
-                />
-                <p>
-                  <Button disabled={updating} onClick={this.addCondition}>Save</Button>
-                </p>
-              </Fragment>
+              <Editable
+                content={content}
+                updating={updating}
+                onSave={this.addCondition}
+                onCancel={this.cancel}
+              />
             )
             : editConditions && <Button disabled={updating} className="button-secondary" onClick={this.toggleAdding}>Add another</Button>
         }
@@ -236,6 +198,17 @@ class Conditions extends Component {
   }
 }
 
-const mapStateToProps = ({ application: { showConditions, editConditions } }, { conditions = [] }) => ({ showConditions, editConditions, conditions });
+const mapStateToProps = ({
+  application: {
+    showConditions,
+    editConditions
+  }
+}, {
+  conditions = []
+}) => ({
+  showConditions,
+  editConditions,
+  conditions: conditions.filter(condition => !condition.inspectorAdded)
+});
 
 export default connect(mapStateToProps)(Conditions);
