@@ -24,13 +24,23 @@ import Comments from './comments';
 class Field extends Component {
 
   onChange(value) {
-    this.props.addChange(this.props.name);
-    return this.props.onChange && this.props.onChange(value);
+    return Promise.resolve()
+      .then(() => {
+        return this.props.addChange && this.props.addChange(this.props.name);
+      })
+      .then(() => {
+        return this.props.onChange && this.props.onChange(value);
+      });
   }
 
   onSave(value) {
-    this.props.addChange(this.props.name);
-    return this.props.onSave && this.props.onSave(value);
+    return Promise.resolve()
+      .then(() => {
+        return this.props.addChange && this.props.addChange(this.props.name);
+      })
+      .then(() => {
+        return this.props.onSave && this.props.onSave(value);
+      });
   }
 
   mapOptions(options = []) {

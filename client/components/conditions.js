@@ -1,12 +1,11 @@
-import React, { Fragment, Component } from 'react';
+import React, { Fragment, Component, PureComponent } from 'react';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
 import get from 'lodash/get';
-import { Button } from '@ukhomeoffice/react-components';
+import { Button, TextArea } from '@ukhomeoffice/react-components';
 import CONDITIONS from '../constants/conditions';
-import Field from './field';
 
-class Condition extends Component {
+class Condition extends PureComponent {
 
   state = {
     editing: !this.props.edited && !this.props.content,
@@ -17,13 +16,24 @@ class Condition extends Component {
     this.setState({ editing: !this.state.editing })
   }
 
-  onChange = content => {
+  componentWillReceiveProps(newProps) {
+    if (newProps.content !== this.props.content || newProps.edited !== this.props.edited) {
+      this.setState({ content: newProps.edited || newProps.content });
+    }
+  }
+
+  onChange = e => {
+    const content = e.target.value;
     this.setState({ content })
   }
 
   save = () => {
-    this.submitChange({ edited: this.state.content })
-      .then(() => this.setState({ editing: false }))
+    if (!!this.state.content && this.state.content !== '') {
+      this.submitChange({ edited: this.state.content })
+        .then(() => this.setState({ editing: false }))
+    } else {
+      window.alert('No changes made');
+    }
   }
 
   reset = () => {
@@ -39,7 +49,7 @@ class Condition extends Component {
   }
 
   submitChange = data => {
-    return this.props.onSave(data)
+    return this.props.onSave(this.props.id, data)
   }
 
   revert = () => {
@@ -51,6 +61,10 @@ class Condition extends Component {
 
   restore = () => {
     this.submitChange({ deleted: false })
+  }
+
+  remove = () => {
+    this.props.remove(this.props.id, this.props.custom);
   }
 
   render() {
@@ -76,11 +90,10 @@ class Condition extends Component {
                   editing && this.props.editConditions
                     ? (
                       <Fragment>
-                        <Field
+                        <TextArea
                           type="textarea"
                           value={content}
                           onChange={this.onChange}
-                          noComments
                         />
                         <p className="control-panel">
                           <Button disabled={updating} onClick={this.save}>Save</Button>
@@ -96,7 +109,7 @@ class Condition extends Component {
                         <p className="condition-text">{content}</p>
                         {
                           this.props.editConditions && (
-                            <p><Button disabled={updating} className="link" onClick={this.toggleEditing}>Edit</Button> | <Button disabled={updating} className="link" onClick={this.props.remove}>Remove</Button></p>
+                            <p><Button disabled={updating} className="link" onClick={this.toggleEditing}>Edit</Button> | <Button disabled={updating} className="link" onClick={this.remove}>Remove</Button></p>
                           )
                         }
                       </Fragment>
@@ -152,7 +165,8 @@ class Conditions extends Component {
     this.setState({ adding: !this.state.adding });
   }
 
-  updateNewCondition = content => {
+  updateNewCondition = e => {
+    const content = e.target.value;
     this.setState({ content });
   }
 
@@ -178,7 +192,7 @@ class Conditions extends Component {
     if (!this.props.showConditions) {
       return null;
     }
-    const { conditions = [], editConditions } = this.props
+    const { conditions, editConditions } = this.props
     const { updating, adding, content } = this.state;
 
     return (
@@ -189,13 +203,15 @@ class Conditions extends Component {
             const { title, content } = template;
             return <Condition
               key={condition.key}
+              id={condition.key}
               editConditions={this.props.editConditions}
               updating={updating}
               title={title}
+              custom={condition.custom}
               content={content}
               {...condition}
-              onSave={data => this.save(condition.key, data)}
-              remove={() => this.remove(condition.key, condition.custom)}
+              onSave={this.save}
+              remove={this.remove}
             />
           })
         }
@@ -203,11 +219,10 @@ class Conditions extends Component {
           adding
             ? (
               <Fragment>
-                <Field
+                <TextArea
                   type="textarea"
                   value={content}
                   onChange={this.updateNewCondition}
-                  noComments
                 />
                 <p>
                   <Button disabled={updating} onClick={this.addCondition}>Save</Button>
@@ -221,6 +236,6 @@ class Conditions extends Component {
   }
 }
 
-const mapStateToProps = ({ application: { showConditions, editConditions } }) => ({ showConditions, editConditions })
+const mapStateToProps = ({ application: { showConditions, editConditions } }, { conditions = [] }) => ({ showConditions, editConditions, conditions });
 
 export default connect(mapStateToProps)(Conditions);

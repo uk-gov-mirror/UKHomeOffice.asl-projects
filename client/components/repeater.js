@@ -17,8 +17,15 @@ class Repeater extends Component {
     }
   }
 
+  componentWillReceiveProps({ items }) {
+    if (items) {
+      this.setState({ items })
+    }
+  }
+
   componentDidMount() {
-    if (!this.props.initCollapsed && !this.state.items.length) {
+    if (this.props.addOnInit && !this.state.items.length) {
+      console.log('ADDING ITEM')
       this.addItem();
     }
   }
@@ -112,7 +119,7 @@ class Repeater extends Component {
 
 Repeater.defaultProps = {
   type: 'item',
-  initCollapsed: false,
+  addOnInit: true,
   addAnother: true,
   onBeforeAdd: () => Promise.resolve(),
   onAfterAdd: () => Promise.resolve(),

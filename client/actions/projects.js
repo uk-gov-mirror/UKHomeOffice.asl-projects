@@ -131,7 +131,9 @@ export function updateConditions(conditions, protocolId) {
         } else {
           newState.conditions = conditions;
         }
+        console.log(newState);
         dispatch(updateProject(newState));
+        dispatch(updateSavedProject(newState));
         dispatch(showMessage('Condition/authorisation updated'))
       })
       .catch(err => {
