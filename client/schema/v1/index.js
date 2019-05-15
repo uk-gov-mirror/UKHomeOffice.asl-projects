@@ -1097,7 +1097,7 @@ each other.`,
           },
           {
             name: 'experimental-design-sexes',
-            label: 'Will any of your protocols or experiments only use animals of a single sex?',
+            label: 'Will all of your protocols or experiments use animals of both sexes?',
             type: 'radio',
             inline: true,
             className: 'smaller',
