@@ -182,6 +182,7 @@ class Animals extends Component {
           prefix={prefix}
           onSave={speciesDetails => updateItem({ speciesDetails })}
           addAnother={false}
+          addOnInit={false}
         >
           <Animal
             {...this.props}

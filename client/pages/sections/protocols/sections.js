@@ -27,7 +27,7 @@ const getSection = (section, props) => {
       return props.schemaVersion === 0
         ? <LegacyAnimals {...props} />
         : <Animals {...props} />
-      case 'conditions':
+    case 'conditions':
       return <Conditions
         type="protocol"
         saveConditions={props.updateProtocolConditions}
