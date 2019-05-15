@@ -25,7 +25,6 @@ class Repeater extends Component {
 
   componentDidMount() {
     if (this.props.addOnInit && !this.state.items.length) {
-      console.log('ADDING ITEM')
       this.addItem();
     }
   }

@@ -1,11 +1,11 @@
-import React, { Fragment, Component, PureComponent } from 'react';
+import React, { Fragment, Component } from 'react';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
 import get from 'lodash/get';
 import { Button, TextArea } from '@ukhomeoffice/react-components';
 import CONDITIONS from '../constants/conditions';
 
-class Condition extends PureComponent {
+class Condition extends Component {
 
   state = {
     editing: !this.props.edited && !this.props.content,
