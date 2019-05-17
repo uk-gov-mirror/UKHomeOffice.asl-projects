@@ -8,6 +8,7 @@ import EstablishmentsReview from '../../pages/sections/establishments/review';
 import Poles from '../../pages/sections/poles';
 import PolesReview from '../../pages/sections/poles/review';
 import Conditions from '../../pages/sections/conditions';
+import OtherLegalText from '../../pages/sections/other-legal-text';
 
 import SPECIES from '../../constants/species';
 
@@ -2554,6 +2555,16 @@ each other.`,
       conditions: {
         title: 'Additional conditions and authorisations',
         review: Conditions
+      }
+    }
+  },
+  other: {
+    title: 'Other legal text',
+    show: props => props.showConditions,
+    subsections: {
+      other: {
+        title: 'Other legal conditions',
+        review: OtherLegalText
       }
     }
   }
