@@ -1,17 +1,24 @@
 import React, { Fragment } from 'react';
 import { HashLink as Link } from 'react-router-hash-link';
 import { connect } from 'react-redux';
+import { fetchQuestionVersions } from '../actions/projects';
 
 import { ReviewTextEditor } from './editor';
 import speciesOptions from '../constants/species';
 
 import Comments from './comments';
+import DiffWindow from './diff-window';
 import flatten from 'lodash/flatten';
 import values from 'lodash/values';
 import isUndefined from 'lodash/isUndefined';
 import isNull from 'lodash/isNull';
 
 class Review extends React.Component {
+
+  componentDidMount() {
+    this.props.fetchQuestionVersions(`${this.props.prefix || ''}${this.props.name}`);
+  }
+
   replay() {
     let value = this.props.value;
     let options;
@@ -140,6 +147,7 @@ class Review extends React.Component {
       <div className="review">
         <h3>{this.props.label}</h3>
         {this.changedBadge()}
+        {(this.props.changedFromLatest || this.props.changedFromGranted) && <DiffWindow versions={this.props.questionVersions}/>}
         {this.replay()}
         <Comments field={`${this.props.prefix || ''}${this.props.name}`} collapsed={!this.props.readonly} />
         {
@@ -161,11 +169,17 @@ class Review extends React.Component {
 }
 
 
-const mapStateToProps = ({ project, settings, application: { readonly }, changes : {latest, granted} }, { name, prefix }) => {
+const mapStateToProps = ({ project, settings, application: { readonly }, changes : {latest, granted}, questionVersions }, { name, prefix, versions }) => {
   const key = `${prefix || ''}${name}`;
   const changedFromGranted = granted.includes(key);
   const changedFromLatest = latest.includes(key);
-  return { project, settings, readonly, changedFromLatest, changedFromGranted };
+  return { project, settings, readonly, changedFromLatest, changedFromGranted, questionVersions };
 }
 
-export default connect(mapStateToProps)(Review);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchQuestionVersions: key => dispatch(fetchQuestionVersions(key))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Review);

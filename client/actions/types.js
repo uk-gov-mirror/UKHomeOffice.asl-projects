@@ -16,5 +16,5 @@ export const ADD_COMMENT = 'ADD_COMMENT';
 export const DELETE_COMMENT = 'DELETE_COMMENT';
 
 export const ADD_CHANGE = 'ADD_CHANGE';
-
+export const LOAD_QUESTION_VERSIONS = 'LOAD_QUESTION_VERSIONS';
 export const ERROR = 'ERROR';

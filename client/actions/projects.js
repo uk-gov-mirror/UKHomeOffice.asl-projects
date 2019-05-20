@@ -170,3 +170,19 @@ export function updateConditions(conditions, protocolId) {
       })
   }
 }
+
+export function fetchQuestionVersions(key) {
+
+  return (dispatch, getState) => {
+    const { application: { basename } } = getState();
+
+    const params = {
+      url: `${basename}/question/${key}`
+    }
+
+    return Promise.resolve()
+      .then(() => sendMessage(params))
+      .then(versions => dispatch({ type: types.LOAD_QUESTION_VERSIONS, versions }))
+      .catch(error => dispatch({ type: types.ERROR, error }));
+  }
+}
