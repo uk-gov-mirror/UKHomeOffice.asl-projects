@@ -169,7 +169,7 @@ class Review extends React.Component {
 }
 
 
-const mapStateToProps = ({ project, settings, application: { readonly }, changes : {latest, granted}, questionVersions }, { name, prefix, versions }) => {
+const mapStateToProps = ({ project, settings, application: { readonly }, changes : {latest, granted}, questionVersions }, { name, prefix }) => {
   const key = `${prefix || ''}${name}`;
   const changedFromGranted = granted.includes(key);
   const changedFromLatest = latest.includes(key);
