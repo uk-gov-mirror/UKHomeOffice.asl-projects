@@ -34,7 +34,7 @@ export default {
       ]
     },
     'continued-use': {
-      include: protocol => (protocol.fate || []).includes('continued-use'),
+      include: protocol => some(protocol.speciesDetails, species => species['continued-use']),
       type: 'authorisation',
       versions: [
         {
@@ -44,7 +44,7 @@ export default {
       ]
     },
     'continued-use-off-protocol': {
-      include: protocol => some(protocol.speciesDetails, species => species['continued-use']),
+      include: protocol => (protocol.fate || []).includes('continued-use'),
       type: 'authorisation',
       versions: [
         {
