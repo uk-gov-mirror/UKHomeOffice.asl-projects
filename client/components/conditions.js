@@ -72,7 +72,7 @@ class Condition extends Component {
                       onSave={this.save}
                       onCancel={this.cancel}
                       onRevert={this.revert}
-                      custom={custom}
+                      showRevert={!custom}
                     />
                     : (
                       <Fragment>
