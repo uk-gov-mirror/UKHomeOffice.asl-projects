@@ -52,7 +52,7 @@ class Editable extends Component {
           <Button disabled={updating} onClick={this.save}>Save</Button>
           <Button disabled={updating} onClick={this.cancel} className="link">Cancel</Button>
           {
-            edited && !custom && <Button disabled={updating} onClick={this.revert} className="link">Revert * to *  default</Button>
+            edited && !custom && <Button disabled={updating} onClick={this.revert} className="link">Revert to default</Button>
           }
         </p>
       </Fragment>
