@@ -182,7 +182,7 @@ export function fetchQuestionVersions(key) {
 
     return Promise.resolve()
       .then(() => sendMessage(params))
-      .then(versions => dispatch({ type: types.LOAD_QUESTION_VERSIONS, versions }))
+      .then(versions => dispatch({ type: types.LOAD_QUESTION_VERSIONS, versions, key }))
       .catch(error => dispatch({ type: types.ERROR, error }));
   }
 }

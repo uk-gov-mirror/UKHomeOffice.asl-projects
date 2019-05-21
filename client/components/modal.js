@@ -1,16 +1,21 @@
 import React, { Component } from 'react';
 
 class Modal extends Component {
+  close = e => {
+    if (e.target.className === 'modal') {
+      this.props.onClose()
+    }
+  }
 
-  render() {
+  render () {
+    const { children } = this.props;
     return (
-      <div className='modal'>
-        <div className='govuk-grid-row'>
-          <p>{this.props.versions.granted}</p>
-          <p>{this.props.versions.previous}</p>
+      <div className="modal" onClick={this.close}>
+        <div className="modal-content">
+          { children }
         </div>
       </div>
-    );
+    )
   }
 }
 

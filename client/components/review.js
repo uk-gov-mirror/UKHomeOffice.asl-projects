@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import { HashLink as Link } from 'react-router-hash-link';
 import { connect } from 'react-redux';
-import { fetchQuestionVersions } from '../actions/projects';
 
 import { ReviewTextEditor } from './editor';
 import speciesOptions from '../constants/species';
@@ -13,10 +12,16 @@ import values from 'lodash/values';
 import isUndefined from 'lodash/isUndefined';
 import isNull from 'lodash/isNull';
 
+import { Button } from '@ukhomeoffice/react-components';
+
 class Review extends React.Component {
 
-  componentDidMount() {
-    this.props.fetchQuestionVersions(`${this.props.prefix || ''}${this.props.name}`);
+  state = {
+    modalOpen: false
+  }
+
+  toggleModal = () => {
+    this.setState({ modalOpen: !this.state.modalOpen });
   }
 
   replay() {
@@ -143,12 +148,32 @@ class Review extends React.Component {
   }
 
   render() {
+    const { modalOpen } = this.state;
     return (
       <div className="review">
         <h3>{this.props.label}</h3>
-        {this.changedBadge()}
-        {(this.props.changedFromLatest || this.props.changedFromGranted) && <DiffWindow versions={this.props.questionVersions}/>}
-        {this.replay()}
+        {
+          this.changedBadge()
+        }
+        {
+          (this.props.changedFromLatest || this.props.changedFromGranted) && (
+            <Fragment>
+              {
+                modalOpen
+                  ? <DiffWindow
+                    {...this.props}
+                    onClose={this.toggleModal}
+                    name={`${this.props.prefix}${this.props.name}`}
+                  />
+                  : <Button className="link" onClick={this.toggleModal}>Show comparison</Button>
+              }
+            </Fragment>
+
+          )
+        }
+        {
+          this.replay()
+        }
         <Comments field={`${this.props.prefix || ''}${this.props.name}`} collapsed={!this.props.readonly} />
         {
           !this.props.readonly && (
@@ -169,17 +194,11 @@ class Review extends React.Component {
 }
 
 
-const mapStateToProps = ({ project, settings, application: { readonly }, changes : {latest, granted}, questionVersions }, { name, prefix }) => {
+const mapStateToProps = ({ project, settings, application: { readonly }, changes : {latest, granted} }, { name, prefix }) => {
   const key = `${prefix || ''}${name}`;
   const changedFromGranted = granted.includes(key);
   const changedFromLatest = latest.includes(key);
-  return { project, settings, readonly, changedFromLatest, changedFromGranted, questionVersions };
+  return { project, settings, readonly, changedFromLatest, changedFromGranted };
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchQuestionVersions: key => dispatch(fetchQuestionVersions(key))
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Review);
+export default connect(mapStateToProps)(Review);
