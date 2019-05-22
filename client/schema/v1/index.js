@@ -1050,11 +1050,6 @@ each other.`,
                         type: 'texteditor'
                       },
                       {
-                        name: 'objectives-vaccines-criteria',
-                        label: 'What specific criteria will you use to decide whether to accept or reject work?',
-                        type: 'texteditor'
-                      },
-                      {
                         name: 'objectives-vaccines-refined',
                         label: 'Will you use animals to develop and validate more refined methods or non-animal alternatives?',
                         type: 'radio',
