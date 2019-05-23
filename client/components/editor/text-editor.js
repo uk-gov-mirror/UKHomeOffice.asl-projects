@@ -197,6 +197,10 @@ class TextEditor extends RTEditor {
     event.preventDefault();
     const file = event.target.files[0];
     if (file) {
+      if (!file.type.match(/^image\/*/)) {
+        return this.props.throwError('Only images can be added');
+      }
+
       if (file.size > MAX_IMAGE_SIZE) {
         const actual = Math.round(file.size / 1024);
         return this.props.throwError(`Image too large. Image files must be less than 1024kb. This image: ${actual}kb`);
