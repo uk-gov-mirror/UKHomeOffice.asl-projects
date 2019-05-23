@@ -867,7 +867,7 @@ each other.`,
                       },
                       {
                         name: 'objectives-regulatory-authorities-glp',
-                        label: 'Will all regulatory testing be conducted in compliance with GLP standards?',
+                        label: 'Will all regulatory testing be conducted in compliance with GMP standards?',
                         hint: 'If not, explain why this is not required.',
                         type: 'texteditor'
                       },
@@ -1025,7 +1025,7 @@ each other.`,
                     reveal: [
                       {
                         name: 'objectives-vaccines-glp',
-                        label: 'Will all manufacturing be conducted in compliance with GLP standards?',
+                        label: 'Will all manufacturing be conducted in compliance with GMP standards?',
                         hint: 'If not, explain why this is not required.',
                         type: 'texteditor'
                       },
@@ -1047,11 +1047,6 @@ each other.`,
                       {
                         name: 'objectives-vaccines-supply',
                         label: 'How will you match the supply of your products with demand?',
-                        type: 'texteditor'
-                      },
-                      {
-                        name: 'objectives-vaccines-criteria',
-                        label: 'What specific criteria will you use to decide whether to accept or reject work?',
                         type: 'texteditor'
                       },
                       {
