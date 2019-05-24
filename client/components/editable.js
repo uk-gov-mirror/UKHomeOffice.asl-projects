@@ -39,7 +39,7 @@ class Editable extends Component {
   }
 
   render () {
-    const { edited, updating } = this.props;
+    const { edited, updating, showRevert } = this.props;
     const { content } = this.state;
 
     return (
@@ -52,7 +52,7 @@ class Editable extends Component {
           <Button disabled={updating} onClick={this.save}>Save</Button>
           <Button disabled={updating} onClick={this.cancel} className="link">Cancel</Button>
           {
-            edited && <Button disabled={updating} onClick={this.revert} className="link">Revert to default</Button>
+            edited && showRevert && <Button disabled={updating} onClick={this.revert} className="link">Revert to default</Button>
           }
         </p>
       </Fragment>

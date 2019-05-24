@@ -43,7 +43,7 @@ class Condition extends Component {
   }
 
   render() {
-    const { title, deleted, updating, edited, content } = this.props;
+    const { title, deleted, updating, edited, content, custom } = this.props;
     const { editing } = this.state;
 
     const displayContent = edited || content;
@@ -72,6 +72,7 @@ class Condition extends Component {
                       onSave={this.save}
                       onCancel={this.cancel}
                       onRevert={this.revert}
+                      showRevert={!custom}
                     />
                     : (
                       <Fragment>
