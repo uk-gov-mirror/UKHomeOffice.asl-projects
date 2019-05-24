@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
 
 class Modal extends Component {
+  componentDidMount() {
+    document.getElementsByTagName('html')[0].classList.add('modal-open');
+  }
+
+  componentWillUnmount() {
+    document.getElementsByTagName('html')[0].classList.remove('modal-open');
+  }
+
   close = e => {
     if (e.target.className === 'modal') {
-      this.props.onClose()
+      this.props.onClose(e)
     }
   }
 

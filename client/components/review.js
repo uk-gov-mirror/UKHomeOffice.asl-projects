@@ -12,17 +12,7 @@ import values from 'lodash/values';
 import isUndefined from 'lodash/isUndefined';
 import isNull from 'lodash/isNull';
 
-import { Button } from '@ukhomeoffice/react-components';
-
 class Review extends React.Component {
-
-  state = {
-    modalOpen: false
-  }
-
-  toggleModal = () => {
-    this.setState({ modalOpen: !this.state.modalOpen });
-  }
 
   replay() {
     let value = this.props.value;
@@ -148,7 +138,6 @@ class Review extends React.Component {
   }
 
   render() {
-    const { modalOpen } = this.state;
     return (
       <div className="review">
         <h3>{this.props.label}</h3>
@@ -156,25 +145,19 @@ class Review extends React.Component {
           this.changedBadge()
         }
         {
-          (this.props.changedFromLatest || this.props.changedFromGranted) && (
-            <Fragment>
-              {
-                modalOpen
-                  ? <DiffWindow
-                    {...this.props}
-                    onClose={this.toggleModal}
-                    name={`${this.props.prefix}${this.props.name}`}
-                  />
-                  : <Button className="link" onClick={this.toggleModal}>Show comparison</Button>
-              }
-            </Fragment>
-
+          this.props.readonly && (this.props.changedFromLatest || this.props.changedFromGranted) && (
+            <DiffWindow
+              {...this.props}
+              name={`${this.props.prefix}${this.props.name}`}
+            />
           )
         }
         {
           this.replay()
         }
-        <Comments field={`${this.props.prefix || ''}${this.props.name}`} collapsed={!this.props.readonly} />
+        {
+          !this.props.noComments && <Comments field={`${this.props.prefix || ''}${this.props.name}`} collapsed={!this.props.readonly} />
+        }
         {
           !this.props.readonly && (
             <Fragment>
