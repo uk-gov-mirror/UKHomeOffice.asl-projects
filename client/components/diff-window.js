@@ -60,7 +60,7 @@ class DiffWindow extends React.Component {
                       )
                       : (
                         <Fragment>
-                          <h3>{previous ? 'Previous version' : 'Granted licence'}</h3>
+                          <h3>{granted ? 'Current licence' : 'Previous version'}</h3>
                           <div className="panel light-grey">
                             <Review
                               options={this.props.options}

@@ -27,8 +27,11 @@ html.modal-open, html.modal-open body {
     background-color: rgba(0, 0, 0, 0.7);
 
     .modal-content {
-      margin: $govuk-gutter;
+      margin: 10vh auto;
+      max-height: 80vh;
+      width: 80vw;
       background-color: white;
+      overflow: scroll;
     }
 
     h1 {
@@ -37,7 +40,8 @@ html.modal-open, html.modal-open body {
 
     .close {
       vertical-align: super;
-      
+      font-weight: normal;
+
       &:before {
         content: '';
         margin-right: 0.5em;
