@@ -6,12 +6,14 @@ import { ReviewTextEditor } from './editor';
 import speciesOptions from '../constants/species';
 
 import Comments from './comments';
+import DiffWindow from './diff-window';
 import flatten from 'lodash/flatten';
 import values from 'lodash/values';
 import isUndefined from 'lodash/isUndefined';
 import isNull from 'lodash/isNull';
 
 class Review extends React.Component {
+
   replay() {
     let value = this.props.value;
     let options;
@@ -139,9 +141,23 @@ class Review extends React.Component {
     return (
       <div className="review">
         <h3>{this.props.label}</h3>
-        {this.changedBadge()}
-        {this.replay()}
-        <Comments field={`${this.props.prefix || ''}${this.props.name}`} collapsed={!this.props.readonly} />
+        {
+          this.changedBadge()
+        }
+        {
+          this.props.readonly && (this.props.changedFromLatest || this.props.changedFromGranted) && (
+            <DiffWindow
+              {...this.props}
+              name={`${this.props.prefix}${this.props.name}`}
+            />
+          )
+        }
+        {
+          this.replay()
+        }
+        {
+          !this.props.noComments && <Comments field={`${this.props.prefix || ''}${this.props.name}`} collapsed={!this.props.readonly} />
+        }
         {
           !this.props.readonly && (
             <Fragment>

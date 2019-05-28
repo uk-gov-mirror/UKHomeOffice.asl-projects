@@ -8,6 +8,7 @@ import message from './message';
 import settings from './settings';
 import comments from './comments';
 import changes from './changes';
+import questionVersions from './question-versions';
 
 const rootReducer = combineReducers({
   projects,
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
   message,
   settings,
   comments,
-  changes
+  changes,
+  questionVersions
 });
 
 export default rootReducer;

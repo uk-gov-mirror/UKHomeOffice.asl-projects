@@ -3,6 +3,10 @@
 $light-green: #26A197;
 $pink: #ff1493;
 
+html.modal-open, html.modal-open body {
+  overflow: hidden;
+}
+
 #ppl-drafting-tool {
   .page-header {
     background-color: $background;
@@ -10,6 +14,91 @@ $pink: #ff1493;
     h2, h3 {
       margin-bottom: $govuk-gutter/4;
       font-weight: normal;
+    }
+  }
+
+  .modal {
+    z-index: 100;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+
+    .modal-content {
+      margin: 10vh auto;
+      max-height: 80vh;
+      width: 80vw;
+      background-color: white;
+      overflow: scroll;
+    }
+
+    h1 {
+      display: inline;
+    }
+
+    .close {
+      vertical-align: super;
+      font-weight: normal;
+
+      &:before {
+        content: '';
+        margin-right: 0.5em;
+        background: $close;
+        background-size: 100%;
+        vertical-align: middle;
+        display: inline-block;
+        width: 1.5em;
+        height: 1.5em;
+      }
+    }
+  }
+
+  .modal-trigger {
+    margin-left: $govuk-gutter-half;
+
+    &:before {
+      content: '';
+      margin-right: 0.5em;
+      background: $copy;
+      background-size: 100%;
+      vertical-align: middle;
+      display: inline-block;
+      width: 1.5em;
+      height: 1.5em;
+    }
+  }
+
+  .govuk-tabs {
+    ul {
+      margin: 0 0 $govuk-gutter 0;
+      padding: 0;
+      border-bottom: 2px solid govuk-colour('grey-2');
+      list-style: none;
+
+      li {
+        display: inline-block;
+
+        a {
+          display: block;
+          height: 2.25em;
+          line-height: 2.25em;
+          margin-bottom: -2px;
+          padding: 0 $govuk-gutter;
+        }
+
+        &.active a {
+          border: solid 2px govuk-colour('grey-2');
+          border-bottom: none;
+          padding-bottom: 2px;
+          color: #0b0c0c;
+          text-decoration: none;
+          pointer-events: none;
+          background-color: $background;
+          cursor: default;
+        }
+      }
     }
   }
 
@@ -333,6 +422,38 @@ $pink: #ff1493;
 
     &.yellow-bg {
       background-color: $ho-focus;
+    }
+
+    &.light-grey {
+      background-color: $light-grey;
+    }
+  }
+
+  .diff-window {
+    .diff-window-header {
+      @extend .panel;
+      border-bottom: 1px solid $dark-grey;
+
+      h1 {
+        margin: 0;
+      }
+    }
+
+    .diff-window-body {
+      @extend .panel;
+      background-color: white;
+
+      .govuk-tabs {
+        ul {
+          margin: 0;
+        }
+      }
+    }
+
+    .diff-window-footer {
+      @extend .panel;
+      background-color: white;
+      border-top: 1px solid $dark-grey;
     }
   }
 
