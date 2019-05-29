@@ -381,6 +381,7 @@ const renderField = (doc, field, values) => {
 
     case 'text':
     case 'textarea':
+    case 'declaration':
       renderText(doc, value);
       break;
 

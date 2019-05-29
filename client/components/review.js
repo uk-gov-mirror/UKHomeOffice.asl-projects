@@ -80,6 +80,16 @@ class Review extends React.Component {
         </ul>
       );
     }
+    if (this.props.type === 'declaration') {
+      return <p>
+        {
+          this.props.value
+            ? 'Yes'
+            : 'No'
+        }
+      </p>
+    }
+
     if (this.props.type === 'animal-quantities') {
       const species = [
         ...flatten((this.props.project.species || []).map(s => {
