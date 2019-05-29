@@ -31,6 +31,7 @@ const Poles = ({ title, save, advance, exit, ...props }) => {
       <Repeater
         items={props.values.polesList}
         type="polesList"
+        singular="POLE"
         onSave={poles => save({ polesList: poles })}
       >
         <Pole {...props} />

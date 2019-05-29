@@ -35,6 +35,7 @@ class Objectives extends Component {
       <Repeater
         items={this.props.values.objectives || []}
         type="objectives"
+        singular="objective"
         onSave={objectives => this.props.save({ objectives })}
       >
         <Objective {...this.props}/>

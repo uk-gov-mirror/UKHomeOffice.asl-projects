@@ -119,6 +119,7 @@ const Steps = ({ values, prefix, updateItem, advance, editable, ...props }) => {
       <br />
       <Repeater
         type="step"
+        singular="step"
         prefix={prefix}
         items={values.steps}
         onSave={steps => updateItem({ steps })}
