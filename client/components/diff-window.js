@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
+import isUndefined from 'lodash/isUndefined';
 import { fetchQuestionVersions } from '../actions/projects';
 import Modal from './modal';
 import Review from './review'
@@ -41,7 +42,7 @@ class DiffWindow extends React.Component {
               <div className="govuk-grid-row">
                 <div className="govuk-grid-column-one-half">
                   {
-                    previous && granted
+                    !isUndefined(previous) && !isUndefined(granted)
                       ? (
                         <Fragment>
                           <Tabs active={this.state.active}>
@@ -60,12 +61,12 @@ class DiffWindow extends React.Component {
                       )
                       : (
                         <Fragment>
-                          <h3>{granted ? 'Current licence' : 'Previous version'}</h3>
+                          <h3>{isUndefined(previous) ? 'Current licence' : 'Previous version'}</h3>
                           <div className="panel light-grey">
                             <Review
                               options={this.props.options}
                               type={this.props.type}
-                              value={previous ? previous : granted}
+                              value={isUndefined(previous) ? granted : previous}
                               noComments
                             />
                           </div>
