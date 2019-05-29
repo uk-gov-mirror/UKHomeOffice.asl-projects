@@ -183,6 +183,21 @@ class Field extends Component {
         onSave={ value => this.onSave(value) }
       />;
     }
+    if (this.props.type === 'declaration') {
+      return <CheckboxGroup
+        options={[{
+          label: this.props.label,
+          value: true
+        }]}
+        label=""
+        className="smaller"
+        name={this.props.name}
+        hint={this.props.hint}
+        value={this.props.value}
+        error={this.props.error}
+        onChange={ e => this.onChange(e.target.checked) }
+      />
+    }
     return <Input
       className={ this.props.className }
       type={ this.props.type || 'text' }

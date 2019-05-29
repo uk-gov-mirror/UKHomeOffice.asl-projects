@@ -2208,15 +2208,8 @@ each other.`,
               },
               {
                 name: 'wild-animals-declaration',
-                label: '',
-                type: 'checkbox',
-                className: 'smaller',
-                options: [
-                  {
-                    label: 'I confirm that I have, or will have, all necessary permissions from other regulators in place before commencing any work involving animals taken from the wild.',
-                    value: 'yes'
-                  }
-                ]
+                label: 'I confirm that I have, or will have, all necessary permissions from other regulators in place before commencing any work involving animals taken from the wild.',
+                type: 'declaration',
               }
             ]
           }
