@@ -124,6 +124,7 @@ class Protocols extends PureComponent {
     return (
       <Repeater
         type="protocols"
+        singular="protocol"
         items={protocols}
         onSave={this.save}
         addAnother={editable}

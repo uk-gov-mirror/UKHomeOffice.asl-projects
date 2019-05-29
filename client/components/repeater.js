@@ -83,7 +83,7 @@ class Repeater extends Component {
   }
 
   render() {
-    const addButton = <Button className="block add-another button-secondary" onClick={this.addItem}>{`Add another ${this.props.type}`}</Button>
+    const addButton = <Button className="block add-another button-secondary" onClick={this.addItem}>{`Add another ${this.props.singular}`}</Button>
     return (
       <Fragment>
         {
@@ -118,6 +118,7 @@ class Repeater extends Component {
 
 Repeater.defaultProps = {
   type: 'item',
+  singular: 'item',
   addOnInit: true,
   addAnother: true,
   onBeforeAdd: () => Promise.resolve(),
