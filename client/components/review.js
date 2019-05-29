@@ -148,6 +148,8 @@ class Review extends React.Component {
           this.props.readonly && (this.props.changedFromLatest || this.props.changedFromGranted) && (
             <DiffWindow
               {...this.props}
+              changedFromLatest={this.props.changedFromLatest}
+              changedFromGranted={this.props.changedFromGranted}
               name={`${this.props.prefix}${this.props.name}`}
             />
           )
