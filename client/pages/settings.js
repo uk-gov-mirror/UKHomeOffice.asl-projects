@@ -54,7 +54,7 @@ class Settings extends Component {
         <h1>Settings</h1>
         <h3>Your establishments</h3>
         <span className='govuk-hint'>
-          Please add all establishments where your projects may take place. You will be able to define them as primary and other establishments in each application.
+          Please add all establishments where your projects may take place. You will be able to define them as primary and additional establishments in each application.
         </span>
         {
           establishments.map((est, index) => (
