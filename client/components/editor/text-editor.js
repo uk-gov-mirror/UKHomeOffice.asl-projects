@@ -20,6 +20,7 @@ import { isKeyHotkey } from 'is-hotkey';
 import Icon from 'react-icons-kit';
 import defer from 'lodash/defer';
 import ReactMarkdown from 'react-markdown'
+import debounce from 'lodash/debounce';
 
 import { throwError } from '../../actions/messages';
 
@@ -68,11 +69,15 @@ class TextEditor extends RTEditor {
     this.editor = editor;
   };
 
-  onChange = ({ value }) => {
+  save = () => {
+    const { value } = this.state;
     const jsonVal = JSON.stringify(value.toJSON())
     const notNull = jsonVal !== JSON.stringify(this.getInitialValue().toJSON());
-    this.setState({ value });
-    this.props.onChange(notNull ? jsonVal : null);
+    this.props.onChange(notNull ? jsonVal : null)
+  }
+
+  onChange = ({ value }) => {
+    this.setState({ value }, debounce(this.save, 500, { maxWait: 5000 }));
   };
 
   onFocus = (self, editor, next) => {

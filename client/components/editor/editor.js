@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Value } from 'slate';
 
-class Editor extends Component {
+class Editor extends PureComponent {
 
   getInitialValue = () => Value.fromJSON({
     document: {
@@ -30,8 +30,6 @@ class Editor extends Component {
       : this.getInitialValue(),
     focus: false
   };
-
-
 
   renderNode = (props, editor, next) => {
     const { attributes, children, node, isFocused } = props;
