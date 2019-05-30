@@ -23,7 +23,7 @@ import Comments from './comments';
 
 class Field extends Component {
 
-  onChange(value) {
+  onChange = value => {
     return Promise.resolve()
       .then(() => {
         return this.props.showChanges && this.props.addChange && this.props.addChange(this.props.name);
@@ -50,19 +50,6 @@ class Field extends Component {
         )
       }
     })
-  }
-
-  shouldComponentUpdate(newProps) {
-    if (this.props.type === 'texteditor') {
-      return JSON.stringify(this.props.value) !== JSON.stringify(newProps.value);
-    }
-    // if the field contains a reveal, trigger a rerender.
-    // This could be improved by traversing reveals and detecting
-    // changes in children, but the render is relatively cheap.
-    if (this.props.options && some(this.props.options, opt => opt && opt.reveal)) {
-      return true;
-    }
-    return !isEqual(this.props, newProps);
   }
 
   render() {
@@ -170,7 +157,7 @@ class Field extends Component {
         hint={ this.props.hint }
         value={ this.props.value }
         error={ this.props.error }
-        onChange={ value => this.onChange(value) }
+        onChange={ this.onChange }
       />;
     }
     if (this.props.type === 'declaration') {
