@@ -72,7 +72,7 @@ class TextEditor extends RTEditor {
     const jsonVal = JSON.stringify(value.toJSON())
     const notNull = jsonVal !== JSON.stringify(this.getInitialValue().toJSON());
     this.setState({ value });
-    this.props.onSave(notNull ? jsonVal : null);
+    this.props.onChange(notNull ? jsonVal : null);
   };
 
   onFocus = (self, editor, next) => {

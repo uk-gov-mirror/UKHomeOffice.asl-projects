@@ -33,16 +33,6 @@ class Field extends Component {
       });
   }
 
-  onSave(value) {
-    return Promise.resolve()
-      .then(() => {
-        return this.props.showChanges && this.props.addChange && this.props.addChange(this.props.name);
-      })
-      .then(() => {
-        return this.props.onSave && this.props.onSave(value);
-      });
-  }
-
   mapOptions(options = []) {
     return options.filter(Boolean).map(option => {
       if (!option.reveal) {
@@ -180,7 +170,7 @@ class Field extends Component {
         hint={ this.props.hint }
         value={ this.props.value }
         error={ this.props.error }
-        onSave={ value => this.onSave(value) }
+        onChange={ value => this.onChange(value) }
       />;
     }
     return <Input
