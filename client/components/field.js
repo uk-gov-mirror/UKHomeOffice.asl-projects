@@ -2,10 +2,8 @@ import React, { Fragment, Component } from 'react';
 import { connect } from 'react-redux';
 
 import { addChange } from '../actions/projects';
-import isEqual from 'lodash/isEqual';
 import isUndefined from 'lodash/isUndefined';
 import castArray from 'lodash/castArray';
-import some from 'lodash/some';
 import every from 'lodash/every';
 
 import { Input, Select, TextArea, RadioGroup, CheckboxGroup } from '@ukhomeoffice/react-components';
