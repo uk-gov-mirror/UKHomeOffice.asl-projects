@@ -72,13 +72,13 @@ export default {
             fields: [
               {
                 name: 'establishment-about',
-                label: 'Why do you need to use this other establishment?',
+                label: 'Why do you need to use this additional establishment?',
                 type: 'texteditor',
                 repeats: true
               },
               {
                 name: 'establishment-supervisor',
-                label: 'Who will supervise work at this other establishment?',
+                label: 'Who will supervise work at this additional establishment?',
                 type: 'texteditor',
                 repeats: true
               }
@@ -179,7 +179,7 @@ export default {
                 }
               },
               {
-                label: '(c) Development, manufacture or testing of the quality, effectiveness and safety of drugs, foodstuffs and feedstuffs or any other substances or products, with one of the following aims mentioned in paragraph (b)',
+                label: '(c) Development, manufacture or testing of the quality, effectiveness and safety of drugs, foodstuffs and feedstuffs or any other substances or products, with one of the aims mentioned in purpose (b)',
                 value: 'purpose-c'
               },
               {
