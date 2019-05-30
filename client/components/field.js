@@ -26,20 +26,10 @@ class Field extends Component {
   onChange(value) {
     return Promise.resolve()
       .then(() => {
-        return this.props.addChange && this.props.addChange(this.props.name);
+        return this.props.showChanges && this.props.addChange && this.props.addChange(this.props.name);
       })
       .then(() => {
         return this.props.onChange && this.props.onChange(value);
-      });
-  }
-
-  onSave(value) {
-    return Promise.resolve()
-      .then(() => {
-        return this.props.addChange && this.props.addChange(this.props.name);
-      })
-      .then(() => {
-        return this.props.onSave && this.props.onSave(value);
       });
   }
 
@@ -180,7 +170,7 @@ class Field extends Component {
         hint={ this.props.hint }
         value={ this.props.value }
         error={ this.props.error }
-        onSave={ value => this.onSave(value) }
+        onChange={ value => this.onChange(value) }
       />;
     }
     if (this.props.type === 'declaration') {
@@ -211,11 +201,12 @@ class Field extends Component {
   }
 }
 
-const mapStateToProps = ({ project, settings }, { name, conditional, optionsFromSettings, options, value }) => {
+const mapStateToProps = ({ project, settings, application }, { name, conditional, optionsFromSettings, options, value }) => {
   options = optionsFromSettings ? settings[optionsFromSettings] : options;
 
   return {
     options,
+    showChanges: !application.newApplication,
     value: !isUndefined(value) ? value : project[name],
     show: !conditional || every(Object.keys(conditional), key => conditional[key] === project[key])
   };

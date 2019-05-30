@@ -14,7 +14,6 @@ const Fieldset = ({ fields, onFieldChange, values, noComments, prefix = '' }) =>
           values={ values }
           prefix={ prefix }
           onChange={ value => onFieldChange(field.name, value) }
-          onSave={ value => onFieldChange(field.name, value) }
           onFieldChange={onFieldChange}
           noComments={noComments}
         />
