@@ -41,7 +41,6 @@ class ProtocolSections extends PureComponent {
     const {
       values,
       sections,
-      index,
       updateItem,
       editable,
       newComments
@@ -58,9 +57,7 @@ class ProtocolSections extends PureComponent {
         <NewComments comments={numberOfNewComments} />
         <Expandable expanded={this.state.expanded} onHeaderClick={this.toggleExpanded}>
           <Completable status={values.complete ? 'complete' : 'incomplete'}>
-            <h2 className="title inline-block">
-              <span className="larger">{index + 1}. </span>{values.title}
-            </h2>
+            <h2 className="title inline-block">{values.title}</h2>
             {
               editable && <a href="#" className="inline-block" onClick={this.toggleActive}>Edit title</a>
             }
