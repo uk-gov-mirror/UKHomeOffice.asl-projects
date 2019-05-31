@@ -2,6 +2,7 @@ import Establishments from '../../pages/sections/establishments';
 import EstablishmentsReview from '../../pages/sections/establishments/review';
 import Protocols from '../../pages/sections/protocols';
 import ProtocolsReview from '../../pages/sections/protocols/review';
+import OtherLegalText from '../../pages/sections/other-legal-text';
 
 export default {
   introductions: {
@@ -583,6 +584,16 @@ export default {
             ]
           }
         ]
+      }
+    }
+  },
+  other: {
+    title: 'Other legal text',
+    show: props => props.showConditions,
+    subsections: {
+      other: {
+        title: 'Other legal conditions',
+        review: OtherLegalText
       }
     }
   }

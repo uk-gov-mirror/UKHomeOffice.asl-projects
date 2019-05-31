@@ -8,6 +8,7 @@ import get from 'lodash/get';
 import ReactMarkdown from 'react-markdown';
 import { updateInspectorConditions } from '../../actions/projects';
 import CONDITIONS from '../../constants/conditions';
+import LEGACY_CONDITIONS from '../../constants/legacy-conditions';
 import Field from '../../components/field';
 import Editable from '../../components/editable';
 import Playback from '../../components/playback';
@@ -82,9 +83,11 @@ class Condition extends Component {
   }
 }
 
-const mapValues = values => {
-  return Object.keys(CONDITIONS.inspector).map(key => {
-    const condition = CONDITIONS.inspector[key];
+const mapValues = (values, schemaVersion) => {
+  const conditions = schemaVersion === 0 ? LEGACY_CONDITIONS : CONDITIONS;
+
+  return Object.keys(conditions.inspector).map(key => {
+    const condition = conditions.inspector[key];
     const savedVal = values.find(v => v.key === key);
     if (savedVal) {
       const { title, content } = get(condition, savedVal.path, {});
@@ -108,7 +111,7 @@ const mapValues = values => {
 
 class OtherLegalText extends Component {
   state = {
-    values: mapValues(this.props.values),
+    values: mapValues(this.props.values, this.props.schemaVersion),
     updating: false,
   }
 
@@ -211,12 +214,14 @@ const mapStateToProps = ({
   },
   application: {
     showConditions,
-    editConditions
+    editConditions,
+    schemaVersion
   }
 }) => {
   return {
     showConditions,
     editConditions,
+    schemaVersion,
     values: (conditions || []).filter(condition => condition.inspectorAdded)
   }
 }
