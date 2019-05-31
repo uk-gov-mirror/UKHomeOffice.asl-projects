@@ -8,7 +8,7 @@ export default {
       type: 'condition',
       versions: [
         {
-          title: 'NMBAa',
+          title: 'NMBAs',
           content: 'All work under authority of this protocol involving the use of neuromuscular blocking agents must be carried out in accordance with the Home Office guidelines'
         }
       ]
