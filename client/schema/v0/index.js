@@ -19,6 +19,16 @@ export default {
             name: 'duration',
             label: 'Licence duration',
             type: 'duration'
+          },
+          {
+            name: 'continuation-licence-number',
+            label: 'Project continuation - previous licence number',
+            type: 'text'
+          },
+          {
+            name: 'continuation-expiry-date',
+            label: 'Project continuation - previous licence expiry date',
+            type: 'text'
           }
         ]
       }
