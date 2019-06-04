@@ -28,7 +28,7 @@ export default {
           {
             name: 'continuation-expiry-date',
             label: 'Project continuation - previous licence expiry date',
-            type: 'text'
+            type: 'date'
           }
         ]
       }

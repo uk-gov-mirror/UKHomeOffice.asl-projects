@@ -11,6 +11,7 @@ import flatten from 'lodash/flatten';
 import values from 'lodash/values';
 import isUndefined from 'lodash/isUndefined';
 import isNull from 'lodash/isNull';
+import formatDate from 'date-fns/format';
 
 class Review extends React.Component {
 
@@ -37,6 +38,11 @@ class Review extends React.Component {
         </dl>
       )
     }
+
+    if (value && this.props.type === 'date') {
+      return formatDate(value, 'DD/MM/YYYY');
+    }
+
     if (this.props.type === 'species-selector') {
       const project = this.props.project;
       const other = project[`${this.props.name}-other`] || [];
