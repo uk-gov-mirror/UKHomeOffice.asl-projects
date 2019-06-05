@@ -40,7 +40,7 @@ class Review extends React.Component {
     }
 
     if (value && this.props.type === 'date') {
-      return formatDate(value, 'DD/MM/YYYY');
+      return formatDate(value, 'DD MMMM YYYY');
     }
 
     if (this.props.type === 'species-selector') {
