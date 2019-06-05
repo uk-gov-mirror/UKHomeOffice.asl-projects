@@ -83,16 +83,17 @@ class Condition extends Component {
   }
 }
 
-const mapValues = (values, schemaVersion) => {
-  const conditions = schemaVersion === 0 ? LEGACY_CONDITIONS : CONDITIONS;
+const mapValues = (values, isLegacy) => {
+  const conditions = isLegacy ? LEGACY_CONDITIONS : CONDITIONS;
 
-  return Object.keys(conditions.inspector).map(key => {
+  return Object.keys(conditions.inspector).filter(key => key !== 'custom').map(key => {
     const condition = conditions.inspector[key];
     const savedVal = values.find(v => v.key === key);
     if (savedVal) {
       const { title, content } = get(condition, savedVal.path, {});
       return {
         ...savedVal,
+        checked: isLegacy || savedVal.checked,
         title,
         content
       };
@@ -111,7 +112,7 @@ const mapValues = (values, schemaVersion) => {
 
 class OtherLegalText extends Component {
   state = {
-    values: mapValues(this.props.values, this.props.schemaVersion),
+    values: mapValues(this.props.values, this.props.isLegacy),
     updating: false,
   }
 
@@ -172,24 +173,31 @@ class OtherLegalText extends Component {
     const { values, updating } = this.state;
     return this.props.editConditions
       ? (
-        <Field
-          type="checkbox"
-          className="smaller"
-          options={values.map(condition => {
-            return {
-              value: condition.key,
-              label: <Condition
-                {...condition}
-                id={condition.key}
-                onSave={this.save}
-                updating={updating}
-              />
-            }
-          })}
-          value={values.filter(v => v.checked).map(value => value.key)}
-          onChange={this.onChange}
-          noComments
-        />
+        <Fragment>
+          <Field
+            type="checkbox"
+            className="smaller"
+            options={values.map(condition => {
+              return {
+                value: condition.key,
+                label: <Condition
+                  {...condition}
+                  id={condition.key}
+                  onSave={this.save}
+                  updating={updating}
+                />
+              }
+            })}
+            value={values.filter(v => v.checked).map(value => value.key)}
+            onChange={this.onChange}
+            noComments
+          />
+          <Condition
+            title={LEGACY_CONDITIONS.inspector.custom.title}
+            updating={updating}
+            content={this.props.values.find(value => value.key === 'custom').edited || 'No answer provided'}
+          />
+        </Fragment>
       )
       : (
         <Fragment>
@@ -221,7 +229,7 @@ const mapStateToProps = ({
   return {
     showConditions,
     editConditions,
-    schemaVersion,
+    isLegacy: schemaVersion === 0,
     values: (conditions || []).filter(condition => condition.inspectorAdded)
   }
 }

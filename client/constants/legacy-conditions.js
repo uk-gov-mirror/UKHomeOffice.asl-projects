@@ -28,12 +28,8 @@ export default {
       ]
     },
     custom: {
-      type: 'Other',
-      versions: [
-        {
-          title: 'Special conditions for this licence'
-        }
-      ]
+      type: 'other',
+      title: 'Special conditions for this licence'
     }
   }
 };
