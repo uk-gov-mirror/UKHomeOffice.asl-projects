@@ -45,14 +45,20 @@ class Section extends React.Component {
 
     if (this.props.readonly) {
       return (
-        <div className="govuk-grid-row">
-          <div className="govuk-grid-column-one-third">
-            <SideNav />
+        <Fragment>
+          <Header
+            title={this.props.project.title || 'Untitled project'}
+            subtitle={this.props.establishment}
+          />
+          <div className="govuk-grid-row">
+            <div className="govuk-grid-column-one-third">
+              <SideNav />
+            </div>
+            <div className="govuk-grid-column-two-thirds">
+              <StaticSection section={this.props.options} />
+            </div>
           </div>
-          <div className="govuk-grid-column-two-thirds">
-            <StaticSection section={this.props.options} />
-          </div>
-        </div>
+        </Fragment>
       );
     }
 
