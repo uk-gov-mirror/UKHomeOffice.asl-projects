@@ -1127,7 +1127,7 @@ each other.`,
           },
           {
             name: 'benefit-who',
-            label: 'Who or what will benefit from these outputs?',
+            label: 'Who or what will benefit from these outputs, and how?',
             hint: 'The impact of these outputs may be seen in the short-term, or they may not be fully realised until you\'ve completed the project. Consider all timescales in your answer.',
             type: 'texteditor'
           },
@@ -2478,7 +2478,7 @@ each other.`,
           },
           {
             name: 'refinement-explaination',
-            label: 'How will you refine the procedures you\'re using to minimise harm for the animals?',
+            label: 'How will you refine the procedures you\'re using to minimise the welfare costs (harms) for the animals?',
             hint: 'Potential refinements include increased monitoring, post-operative care, pain management, and training of animals.',
             type: 'texteditor'
           },
