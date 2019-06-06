@@ -33,7 +33,7 @@ class DiffWindow extends React.Component {
         <Modal onClose={this.toggleModal}>
           <div className="diff-window">
             <div className="diff-window-header">
-              <h1>Compare</h1>
+              <h1>See what&apos;s changed</h1>
               <a href="#" className="float-right close" onClick={this.toggleModal}>Close</a>
             </div>
             <div className="diff-window-body">
@@ -74,7 +74,7 @@ class DiffWindow extends React.Component {
                   }
                 </div>
                 <div className="govuk-grid-column-one-half">
-                  <h3>This version</h3>
+                  <h3>Proposed</h3>
                   <div className="panel light-grey">
                     <Review
                       options={this.props.options}
@@ -92,7 +92,7 @@ class DiffWindow extends React.Component {
           </div>
         </Modal>
       )
-      : <a href="#" className="modal-trigger" onClick={this.toggleModal}>Show comparison</a>
+      : <a href="#" className="modal-trigger" onClick={this.toggleModal}>See what&apos;s changed</a>
   }
 }
 
