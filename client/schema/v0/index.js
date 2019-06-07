@@ -532,5 +532,37 @@ export default {
         ]
       }
     }
+  },
+  additionalConditions: {
+    title: 'Additional conditions',
+    subsections: {
+      'retrospective-assessment': {
+        title: 'Retrospective assessment',
+        fields: [
+          {
+            name: 'retrospective-assessment-required',
+            label: 'Does this licence require a retrospective assessment?',
+            type: 'radio',
+            inline: true,
+            className: 'smaller',
+            options: [
+              {
+                label: 'The Secretary of State has determined that a retrospective assessment of this licence is required and should be submitted before the date below or earlier if the licence is revoked.',
+                value: true,
+                reveal: {
+                  name: 'retrospective-assessment-date',
+                  label: 'Assessment before',
+                  type: 'date'
+                }
+              },
+              {
+                label: 'The Secretary of State has determined that a retrospective assessment of this licence is not required.',
+                value: false
+              }
+            ]
+          }
+        ]
+      }
+    }
   }
 }
