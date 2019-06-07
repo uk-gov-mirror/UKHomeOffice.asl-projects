@@ -21,15 +21,36 @@ export default {
             type: 'duration'
           },
           {
-            name: 'continuation-licence-number',
-            label: 'Project continuation - previous licence number',
-            type: 'text'
-          },
-          {
-            name: 'continuation-expiry-date',
-            label: 'Project continuation - previous licence expiry date',
-            type: 'date'
+            name: 'continuation',
+            label: 'Is this a continuation of a previous project licence that has expired?',
+            type: 'radio',
+            inline: true,
+            className: 'smaller',
+            show: values => values['continuation'] === true,
+            options: [
+              {
+                label: 'Yes',
+                value: true,
+                reveal: [
+                  {
+                    name: 'continuation-licence-number',
+                    label: 'Previous licence number',
+                    type: 'text'
+                  },
+                  {
+                    name: 'continuation-expiry-date',
+                    label: 'Expired on',
+                    type: 'date'
+                  }
+                ]
+              },
+              {
+                label: 'No',
+                value: false
+              }
+            ]
           }
+
         ]
       }
     }
