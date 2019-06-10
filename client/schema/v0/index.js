@@ -39,7 +39,7 @@ export default {
                   },
                   {
                     name: 'continuation-expiry-date',
-                    label: 'Expired on',
+                    label: 'Expiry on',
                     type: 'date'
                   }
                 ]
