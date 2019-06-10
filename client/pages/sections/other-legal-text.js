@@ -163,9 +163,12 @@ class OtherLegalText extends Component {
   }
 
   render () {
+    if (!this.props.showConditions) {
+      return null;
+    }
     const { values, updating } = this.state;
-    return (
-      <Fragment>
+    return this.props.editConditions
+      ? (
         <Field
           type="checkbox"
           className="smaller"
@@ -184,14 +187,36 @@ class OtherLegalText extends Component {
           onChange={this.onChange}
           noComments
         />
-      </Fragment>
-    )
+      )
+      : (
+        <Fragment>
+          {
+            values.filter(v => v.checked).map((v, index) => (
+              <Fragment key={index}>
+                {
+                  v.title && <h3>{v.title}</h3>
+                }
+                <ReactMarkdown>{ v.edited || v.content }</ReactMarkdown>
+              </Fragment>
+            ))
+          }
+        </Fragment>
+      )
   }
 }
 
-const mapStateToProps = ({ project: { conditions } }) => {
+const mapStateToProps = ({
+  project: {
+    conditions
+  },
+  application: {
+    showConditions,
+    editConditions
+  }
+}) => {
   return {
-    conditions,
+    showConditions,
+    editConditions,
     values: (conditions || []).filter(condition => condition.inspectorAdded)
   }
 }
