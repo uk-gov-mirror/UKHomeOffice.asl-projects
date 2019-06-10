@@ -22,7 +22,7 @@ export default {
           },
           {
             name: 'continuation',
-            label: 'Is this a continuation of a project licence that has expired?',
+            label: 'Is this a continuation of previous project licence?',
             type: 'radio',
             inline: true,
             className: 'smaller',
