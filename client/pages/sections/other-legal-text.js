@@ -191,8 +191,8 @@ class OtherLegalText extends Component {
       : (
         <Fragment>
           {
-            values.filter(v => v.checked).map(v => (
-              <Fragment>
+            values.filter(v => v.checked).map((v, index) => (
+              <Fragment key={index}>
                 {
                   v.title && <h3>{v.title}</h3>
                 }
