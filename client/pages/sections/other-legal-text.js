@@ -6,11 +6,14 @@ import last from 'lodash/last';
 import get from 'lodash/get';
 
 import ReactMarkdown from 'react-markdown';
-import { updateInspectorConditions } from '../../actions/projects';
+import { updateInspectorConditions, updateRetrospectiveAssessment } from '../../actions/projects';
 import CONDITIONS from '../../constants/conditions';
+import LEGACY_CONDITIONS from '../../constants/legacy-conditions';
 import Field from '../../components/field';
+import Fieldset from '../../components/fieldset';
 import Editable from '../../components/editable';
 import Playback from '../../components/playback';
+import ReviewFields from '../../components/review-fields';
 
 class Condition extends Component {
   state = {
@@ -44,7 +47,7 @@ class Condition extends Component {
   }
 
   render () {
-    const { title, id, content, edited, playback, updating } = this.props;
+    const { title, id, content, edited, playback, updating, allowEmpty } = this.props;
     const { expanded, editing } = this.state;
     const displayContent = edited || content;
     return (
@@ -61,11 +64,16 @@ class Condition extends Component {
                 onCancel={this.cancel}
                 onRevert={this.revert}
                 showRevert={true}
+                allowEmpty={allowEmpty}
               />
             )
             : (
               <Fragment>
-                <ReactMarkdown id={id} className={classnames('light', { clamp: !expanded })}>{displayContent}</ReactMarkdown>
+                {
+                  displayContent && displayContent !== ''
+                    ? <ReactMarkdown id={id} className={classnames('light', { clamp: !expanded })}>{displayContent}</ReactMarkdown>
+                    : <em>No answer provided</em>
+                }
                 {
                   playback && <Playback field={playback} />
                 }
@@ -82,19 +90,22 @@ class Condition extends Component {
   }
 }
 
-const mapValues = values => {
-  return Object.keys(CONDITIONS.inspector).map(key => {
-    const condition = CONDITIONS.inspector[key];
+const mapValues = (values, isLegacy) => {
+  const conditions = isLegacy ? LEGACY_CONDITIONS : CONDITIONS;
+
+  return Object.keys(conditions.inspector).map(key => {
+    const condition = conditions.inspector[key];
     const savedVal = values.find(v => v.key === key);
     if (savedVal) {
       const { title, content } = get(condition, savedVal.path, {});
       return {
         ...savedVal,
+        checked: isLegacy || savedVal.checked,
         title,
         content
       };
     }
-    const { title, content } = last(condition.versions);
+    const { title, content } = last(condition.versions) || {};
     return {
       key,
       title,
@@ -108,14 +119,14 @@ const mapValues = values => {
 
 class OtherLegalText extends Component {
   state = {
-    values: mapValues(this.props.values),
+    conditions: mapValues(this.props.conditions, this.props.isLegacy),
     updating: false,
   }
 
-  onChange = values => {
+  onChange = conditions => {
     this.setState({
-      values: this.state.values.map(value => {
-        if (values.includes(value.key)) {
+      conditions: this.state.conditions.map(value => {
+        if (conditions.includes(value.key)) {
           return {
             ...value,
             checked: true
@@ -129,15 +140,32 @@ class OtherLegalText extends Component {
     }, this.persist)
   }
 
+  updateCustom = (key, { edited }) => {
+    let { conditions } = this.state;
+    if (!conditions.find(condition => condition.key === 'custom')) {
+      return new Promise(resolve => {
+        this.setState({
+          conditions: [
+            ...conditions,
+            { key: 'custom', edited }
+          ]
+        }, resolve)
+      })
+        .then(this.persist);
+    }
+    return this.save(key, { edited });
+  }
+
   persist = () => {
     this.setState({ updating: true });
+    const conditions = this.props.isLegacy ? LEGACY_CONDITIONS : CONDITIONS;
     this.props.saveConditions(
-      this.state.values
+      this.state.conditions
         .filter(value => value.checked || value.edited)
         .map(value => ({
           key: value.key,
           checked: value.checked,
-          path: `versions[${CONDITIONS.inspector[value.key].versions.length - 1}]`,
+          path: value.key !== 'custom' && `versions[${conditions.inspector[value.key].versions.length - 1}]`,
           edited: value.edited,
           inspectorAdded: true
         }))
@@ -148,7 +176,7 @@ class OtherLegalText extends Component {
   save = (key, data) => {
     return new Promise(resolve => {
       this.setState({
-        values: this.state.values.map(condition => {
+        conditions: this.state.conditions.map(condition => {
           if (condition.key === key) {
             return {
               ...condition,
@@ -162,43 +190,93 @@ class OtherLegalText extends Component {
       .then(this.persist)
   }
 
+  saveRetro = (key, data) => {
+    const values = this.props.values.retrospectiveAssessment;
+    this.props.saveRetrospectiveAssessment({
+      ...values,
+      [key]: data
+    })
+  }
+
   render () {
-    if (!this.props.showConditions) {
+    const { showConditions, isLegacy } = this.props;
+    if (!showConditions) {
       return null;
     }
-    const { values, updating } = this.state;
+    const { conditions, updating } = this.state;
     return this.props.editConditions
       ? (
-        <Field
-          type="checkbox"
-          className="smaller"
-          options={values.map(condition => {
-            return {
-              value: condition.key,
-              label: <Condition
-                {...condition}
-                id={condition.key}
-                onSave={this.save}
-                updating={updating}
-              />
-            }
-          })}
-          value={values.filter(v => v.checked).map(value => value.key)}
-          onChange={this.onChange}
-          noComments
-        />
+        <Fragment>
+          <Field
+            type="checkbox"
+            className="smaller"
+            disabled={updating}
+            options={conditions.filter(condition => condition.key !== 'custom').map(condition => {
+              return {
+                value: condition.key,
+                label: <Condition
+                  {...condition}
+                  id={condition.key}
+                  onSave={this.save}
+                  updating={updating}
+                />
+              }
+            })}
+            value={conditions.filter(v => v.checked).map(value => value.key)}
+            onChange={this.onChange}
+            noComments
+          />
+          {
+            isLegacy && (
+              <Fragment>
+                <div className="govuk-form-group">
+                  <Condition
+                    title={<h3>{LEGACY_CONDITIONS.inspector.custom.title}</h3>}
+                    updating={updating}
+                    id="custom"
+                    onSave={this.updateCustom}
+                    content={(conditions.find(value => value.key === 'custom') || {}).edited}
+                    allowEmpty
+                  />
+                </div>
+                <h2>Retrospective assessment</h2>
+                <Fieldset
+                  fields={this.props.fields}
+                  values={this.props.values.retrospectiveAssessment}
+                  onFieldChange={this.saveRetro}
+                  noComments
+                />
+              </Fragment>
+            )
+          }
+        </Fragment>
       )
       : (
         <Fragment>
           {
-            values.filter(v => v.checked).map((v, index) => (
+            conditions.filter(v => v.checked).map((v, index) => (
               <Fragment key={index}>
                 {
                   v.title && <h3>{v.title}</h3>
                 }
+                {
+                  isLegacy && v.key === 'custom' && <h3>{LEGACY_CONDITIONS.inspector.custom.title}</h3>
+                }
                 <ReactMarkdown>{ v.edited || v.content }</ReactMarkdown>
               </Fragment>
             ))
+          }
+          {
+            isLegacy && (
+              <Fragment>
+                <h2>Retrospective assessment</h2>
+                <ReviewFields
+                  fields={this.props.fields}
+                  values={this.props.values.retrospectiveAssessment || {}}
+                  noComments
+                />
+              </Fragment>
+            )
           }
         </Fragment>
       )
@@ -207,22 +285,27 @@ class OtherLegalText extends Component {
 
 const mapStateToProps = ({
   project: {
-    conditions
+    conditions,
+    ...values
   },
   application: {
     showConditions,
-    editConditions
+    editConditions,
+    schemaVersion
   }
 }) => {
   return {
     showConditions,
     editConditions,
-    values: (conditions || []).filter(condition => condition.inspectorAdded)
+    isLegacy: schemaVersion === 0,
+    conditions: (conditions || []).filter(condition => condition.inspectorAdded),
+    values
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
+    saveRetrospectiveAssessment: retrospectiveAssessment => dispatch(updateRetrospectiveAssessment(retrospectiveAssessment)),
     saveConditions: conditions => dispatch(updateInspectorConditions(conditions))
   }
 }

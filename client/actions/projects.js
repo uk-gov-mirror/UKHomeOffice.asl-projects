@@ -121,6 +121,22 @@ const doConditionsUpdate = (data, dispatch, state) => {
     });
 }
 
+export function updateRetrospectiveAssessment(retrospectiveAssessment) {
+  return (dispatch, getState) => {
+    const state = getState();
+    const newState = {
+      ...state.project,
+      retrospectiveAssessment
+    };
+    dispatch(updateProject(newState));
+    return doConditionsUpdate({ retrospectiveAssessment }, dispatch, state)
+      .then(() => {
+        dispatch(updateSavedProject(newState));
+        dispatch(showMessage('Retrospective assessment details saved'))
+      })
+  }
+}
+
 export function updateInspectorConditions(inspectorAdded) {
   return (dispatch, getState) => {
     const state = getState();

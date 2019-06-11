@@ -6,7 +6,14 @@ import isUndefined from 'lodash/isUndefined';
 import castArray from 'lodash/castArray';
 import every from 'lodash/every';
 
-import { Input, Select, TextArea, RadioGroup, CheckboxGroup } from '@ukhomeoffice/react-components';
+import {
+  Input,
+  Select,
+  TextArea,
+  RadioGroup,
+  CheckboxGroup,
+  DateInput
+} from '@ukhomeoffice/react-components';
 
 import OtherSpecies from './other-species-selector';
 import SpeciesSelector from './species-selector';
@@ -95,6 +102,17 @@ class Field extends Component {
         error={ this.props.error }
         onChange={ e => this.onChange(e.target.value) }
       />;
+    }
+    if (this.props.type === 'date') {
+      return <DateInput
+        className={ this.props.className }
+        hint={ this.props.hint }
+        name={ this.props.name }
+        label={ this.props.label }
+        value={ this.props.value || '' }
+        error={ this.props.error }
+        onChange={value => this.onChange(value) }
+      />
     }
     if (this.props.type === 'radio') {
       return <RadioGroup

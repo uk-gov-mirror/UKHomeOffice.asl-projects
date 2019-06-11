@@ -13,7 +13,7 @@ class Editable extends Component {
 
   save = e => {
     e.preventDefault();
-    if (!!this.state.content && this.state.content !== '') {
+    if ((!!this.state.content && this.state.content !== '' ) || this.props.allowEmpty) {
       this.props.onSave(this.state.content)
     } else {
       window.alert('Condition/authorisation cannot be empty');
