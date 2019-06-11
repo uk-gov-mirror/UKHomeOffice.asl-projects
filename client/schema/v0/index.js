@@ -557,9 +557,11 @@ export default {
   },
   additionalConditions: {
     title: 'Additional conditions',
+    show: props => props.showConditions,
     subsections: {
-      'retrospective-assessment': {
-        title: 'Retrospective assessment',
+      'additional-conditions': {
+        title: 'Additional conditions',
+        review: OtherLegalText,
         fields: [
           {
             name: 'retrospective-assessment-required',
@@ -569,7 +571,8 @@ export default {
             className: 'smaller',
             options: [
               {
-                label: 'The Secretary of State has determined that a retrospective assessment of this licence is required and should be submitted before the date below or earlier if the licence is revoked.',
+                label: 'Yes',
+                review: 'The Secretary of State has determined that a retrospective assessment of this licence is required and should be submitted before the date below or earlier if the licence is revoked.',
                 value: true,
                 reveal: {
                   name: 'retrospective-assessment-date',
@@ -578,22 +581,13 @@ export default {
                 }
               },
               {
-                label: 'The Secretary of State has determined that a retrospective assessment of this licence is not required.',
+                label: 'No',
+                review: 'The Secretary of State has determined that a retrospective assessment of this licence is not required.',
                 value: false
               }
             ]
           }
         ]
-      }
-    }
-  },
-  other: {
-    title: 'Other legal text',
-    show: props => props.showConditions,
-    subsections: {
-      other: {
-        title: 'Other legal conditions',
-        review: OtherLegalText
       }
     }
   }
