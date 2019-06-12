@@ -3,6 +3,7 @@ import EstablishmentsReview from '../../pages/sections/establishments/review';
 import Protocols from '../../pages/sections/protocols';
 import ProtocolsReview from '../../pages/sections/protocols/review';
 import OtherLegalText from '../../pages/sections/other-legal-text';
+import LEGACY_SPECIES from '../../constants/legacy-species';
 
 export default {
   introductions: {
@@ -326,6 +327,13 @@ export default {
           animals: {
             title: 'Type of animals',
             fields: [
+              {
+                name: 'speciesId',
+                label: 'Animal type',
+                type: 'select',
+                className: 'smaller',
+                options: LEGACY_SPECIES
+              },
               {
                 name: 'genetically-altered',
                 label: 'Are some of these animals genetically altered?',
