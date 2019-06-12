@@ -69,6 +69,10 @@ class Editor extends PureComponent {
         return <em {...attributes}>{children}</em>;
       case 'underlined':
         return <u {...attributes}>{children}</u>;
+      case 'superscript':
+        return <sup {...attributes}>{children}</sup>;
+      case 'subscript':
+        return <sub {...attributes}>{children}</sub>;
       case 'comment':
         return <span className="comment" {...attributes}>{children}</span>;
       default:
