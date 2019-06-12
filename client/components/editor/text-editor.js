@@ -14,6 +14,8 @@ import {
   ic_format_list_bulleted,
   ic_image
 } from 'react-icons-kit/md/';
+import {superscript, subscript} from 'react-icons-kit/fa/';
+
 import { FormatToolbar } from './index';
 import RTEditor from './editor';
 import { isKeyHotkey } from 'is-hotkey';
@@ -33,6 +35,8 @@ const isBoldHotkey = isKeyHotkey('mod+b');
 const isItalicHotkey = isKeyHotkey('mod+i');
 const isUnderlinedHotkey = isKeyHotkey('mod+u');
 const isCodeHotkey = isKeyHotkey('mod+`');
+const isSuperscriptHotkey = isKeyHotkey('mod+=');
+const isSubscriptHotkey = isKeyHotkey('mod+shift++');
 
 function insertImage(editor, src, target) {
   if (target) {
@@ -237,6 +241,10 @@ class TextEditor extends RTEditor {
       mark = 'underlined';
     } else if (isCodeHotkey(event)) {
       mark = 'code';
+    } else if (isSuperscriptHotkey(event)) {
+      mark = 'superscript';
+    } else if (isSubscriptHotkey(event)) {
+      mark = 'subscript';
     } else {
       return next();
     }
@@ -279,6 +287,8 @@ class TextEditor extends RTEditor {
             {this.renderBlockButton('numbered-list', ic_format_list_numbered)}
             {this.renderBlockButton('bulleted-list', ic_format_list_bulleted)}
             {this.renderBlockButton('input-file', ic_image)}
+            {this.renderMarkButton('superscript', superscript)}
+            {this.renderMarkButton('subscript', subscript)}
           </FormatToolbar>
           <Editor
             spellCheck

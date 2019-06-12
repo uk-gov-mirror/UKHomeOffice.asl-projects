@@ -189,6 +189,14 @@ const renderNode = (doc, node) => {
                 case 'underlined':
                   text.underline();
                   break;
+
+                case 'subscript':
+                  text.subScript();
+                  break;
+
+                case 'superscript':
+                  text.superScript();
+                  break;
               }
             });
             paragraph.style('body');
