@@ -2,53 +2,45 @@ import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Button } from '@ukhomeoffice/react-components';
 import Fieldset from '../../../components/fieldset';
+import Repeater from '../../../components/repeater';
 import ReviewFields from '../../../components/review-fields';
-import LEGACY_SPECIES from '../../../constants/legacy-species';
 
-const getFields = fields => {
-  return [{
-    name: 'species',
-    label: '',
-    type: 'checkbox',
-    className: 'smaller',
-    options: LEGACY_SPECIES.map(({ label, value }) => {
-      return {
-        label,
-        value,
-        reveal: fields.map(f => ({ ...f, name: `${value}-${f.name}` }))
-      }
-    })
-  }]
-}
-
-const LegacyAnimals = ({ onFieldChange, values, fields, prefix, advance, editable }) => (
+const LegacyAnimal = ({ updateItem, values, editable, prefix, fields, index }) => (
   <Fragment>
     {
       editable
-        ? (
-          <Fieldset
-            prefix={prefix}
-            fields={getFields(fields)}
-            values={values}
-            onFieldChange={onFieldChange}
-          />
-        )
-        : values.species && values.species.length
-          ? values.species.map(id => {
-            const species = LEGACY_SPECIES.find(s => s.value === id);
-            return (
-              <Fragment key={id}>
-                <h3>{species && species.label}</h3>
-                <ReviewFields
-                  fields={fields.map(f => ({ ...f, name: `${id}-${f.name}` }))}
-                  values={values}
-                  editLink={`0#${prefix}`}
-                />
-              </Fragment>
-            )
-          })
-          : <em>No species selected</em>
+        ? <Fieldset
+          prefix={prefix}
+          fields={fields}
+          values={values}
+          index={index}
+          type="species"
+          onFieldChange={(key, value) => updateItem({ [key]: value })}
+        />
+        : <ReviewFields
+          fields={fields}
+          values={values}
+          editLink={`0#${prefix}`}
+        />
     }
+    <hr />
+  </Fragment>
+)
+
+const LegacyAnimals = ({ updateItem, values, fields, prefix, advance, editable, index }) => (
+  <Fragment>
+    <Repeater
+      items={values.species}
+      addAnother={editable}
+      onSave={species => updateItem({ species })}
+      prefix={prefix}
+      index={index}
+    >
+      <LegacyAnimal
+        editable={editable}
+        fields={fields}
+      />
+    </Repeater>
     {
       editable && <Button className="button-secondary" onClick={advance}>Next section</Button>
     }

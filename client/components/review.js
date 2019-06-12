@@ -18,13 +18,13 @@ class Review extends React.Component {
   replay() {
     let value = this.props.value;
     let options;
-    if (this.props.type === 'checkbox' || this.props.type === 'radio') {
+    if (['checkbox', 'radio', 'select'].includes(this.props.type)) {
       options = this.props.optionsFromSettings
         ? this.props.settings[this.props.optionsFromSettings]
         : this.props.options;
     }
 
-    if (this.props.type === 'radio' && !isUndefined(value)) {
+    if ((this.props.type === 'radio' || this.props.type === 'select') && !isUndefined(value)) {
       value = options.find(option => !isUndefined(option.value) ? option.value === value : option === value)
     }
 
