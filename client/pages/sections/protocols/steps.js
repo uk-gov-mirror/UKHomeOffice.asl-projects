@@ -7,7 +7,7 @@ import { Button } from '@ukhomeoffice/react-components';
 
 import every from 'lodash/every';
 import isUndefined from 'lodash/isUndefined';
-import { ReviewTextEditor } from '../../../components/editor';
+import TextEditor from '../../../components/editor';
 
 import ReviewFields from '../../../components/review-fields';
 import Repeater from '../../../components/repeater';
@@ -78,7 +78,7 @@ class Step extends Component {
             }
           </h3>
           {
-            completed && values.title && <ReviewTextEditor value={values.title} />
+            completed && values.title && <TextEditor value={values.title} readOnly={true} />
           }
         </Fragment>
         {

@@ -21,7 +21,7 @@ import AnimalQuantities from './animal-quantities';
 import LocationSelector from './location-selector';
 import ObjectiveSelector from './objective-selector';
 import Duration from './duration';
-import { TextEditor } from './editor';
+import TextEditor from './editor';
 
 import Fieldset from './fieldset';
 import Comments from './comments';

@@ -178,7 +178,7 @@ class ApplicationSummary extends React.Component {
                     const subsection = section.subsections[key];
                     return <tr key={key}>
                       <td><Link to={`/${key}`}>{ subsection.title }</Link></td>
-                      <td>
+                      <td className="controls">
                         {
                           this.props.showComments && this.getComments(key, subsection)
                         }

@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { HashLink as Link } from 'react-router-hash-link';
 import { connect } from 'react-redux';
 
-import { ReviewTextEditor } from './editor';
+import TextEditor from './editor';
 import speciesOptions from '../constants/species';
 
 import Comments from './comments';
@@ -131,7 +131,7 @@ class Review extends React.Component {
       </dl>
     }
     if (this.props.type === 'texteditor' && this.props.value) {
-      return <ReviewTextEditor {...this.props} />;
+      return <TextEditor {...this.props} readOnly={true} />;
     }
     if (!isUndefined(value) && !isNull(value) && value !== '') {
       return <p>{value.review || value.label || value}</p>;

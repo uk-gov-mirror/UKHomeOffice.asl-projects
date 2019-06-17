@@ -81,7 +81,7 @@ class Index extends React.Component {
               <td>
                 <DownloadLink project={project.id} label="Backup (.ppl)" renderer="ppl" />
               </td>
-              <td>
+              <td className="controls">
                 <button onClick={() => this.props.remove(project.id)} className="govuk-button">Remove</button>
               </td>
             </tr>
