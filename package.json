@@ -36,7 +36,7 @@
     "@babel/preset-env": "^7.3.1",
     "@babel/preset-react": "^7.0.0",
     "@joefitter/docx": "^4.7.0",
-    "@joefitter/slate-edit-table": "0.0.1",
+    "@joefitter/slate-edit-table": "0.0.2",
     "@ukhomeoffice/frontend-toolkit": "^2.8.1",
     "@ukhomeoffice/react-components": "^0.7.5",
     "babel-loader": "^8.0.5",
