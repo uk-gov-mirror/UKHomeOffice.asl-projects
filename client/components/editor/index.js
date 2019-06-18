@@ -128,7 +128,6 @@ class TextEditor extends Component {
             plugins={plugins}
             value={value}
             onChange={this.onChange}
-            onKeyDown={this.onKeyDown}
             name={this.props.name}
             key={this.props.name}
             readOnly={this.props.readOnly}
