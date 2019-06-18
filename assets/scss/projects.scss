@@ -303,7 +303,8 @@ html.modal-open, html.modal-open body {
     .govuk-button {
       margin: 0;
     }
-    td:last-child {
+    
+    td.controls {
       text-align: right;
 
       > * {

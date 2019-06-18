@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import LEGACY_SPECIES from '../../../../client/constants/legacy-species';
-import { ReviewTextEditor } from '../../../../client/components/editor/index';
+import TextEditor from '../../../../client/components/editor/index';
 import SummaryTable from './summary-table';
 
 const Field = ({ label, value }) => (
@@ -9,7 +9,7 @@ const Field = ({ label, value }) => (
     <h3>{ label }</h3>
     {
       value
-        ? <ReviewTextEditor value={value} />
+        ? <TextEditor value={value} readOnly={true} />
         : <p><em>No answer provided</em></p>
     }
   </Fragment>

@@ -40,10 +40,17 @@
   a {
     color: $blue;
   }
+
   .format-toolbar {
     display: flex;
     border-bottom: solid 1.7px $dark-grey;
     padding: $govuk-gutter / 3;
+
+    .table-controls {
+      button {
+        margin-left: 5px;
+      }
+    }
   }
   .tooltip-icon-button {
     cursor: pointer;
@@ -101,6 +108,39 @@
       right: 0;
       // text-align: right;
       // top: 0;
+    }
+  }
+
+  table {
+    border: 1px solid $govuk-border-colour;
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: $govuk-gutter;
+    background-color: white;
+
+    tr {
+      border: none;
+      border-bottom: 1px solid $govuk-border-colour;
+      border-right: 1px solid $govuk-border-colour;
+
+      &:first-child td {
+        background: #f5f5f5;
+        font-weight: bold;
+      }
+
+      td {
+        border: 1px solid $govuk-border-colour;
+        border-top: none;
+        border-bottom: none;
+        border-right: none;
+        word-break: break-all;
+        padding: 10px 20px;
+      }
+    }
+
+
+    td p {
+      margin: 0;
     }
   }
 
