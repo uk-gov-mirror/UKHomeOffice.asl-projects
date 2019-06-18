@@ -28,4 +28,5 @@ export const onKeyDown = (event, editor, next) => {
 
   event.preventDefault();
   editor.toggleMark(mark);
+  return next();
 };
