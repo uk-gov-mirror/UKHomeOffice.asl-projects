@@ -1526,7 +1526,7 @@ each other.`,
                     reveal: [
                       {
                         name: 'quantitative-data-guideline',
-                        label: 'Will your experimental design be determined by a regulatory guideline or similar?',
+                        label: 'Will your experimental design be determined by a regulatory guideline?',
                         type: 'radio',
                         className: 'smaller',
                         inline: true,
