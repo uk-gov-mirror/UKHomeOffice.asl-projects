@@ -61,29 +61,30 @@ class Field extends Component {
     if (!this.props.show) {
       return null;
     }
+    const { label, hint } = this.props.altLabels ? this.props.alt : this.props;
     if (this.props.fallbackLink && this.props.options && !this.props.options.length) {
       return <a href={this.props.fallbackLink.url}>{this.props.fallbackLink.label}</a>
     }
     if (this.props.type === 'animal-quantities') {
-      return <AnimalQuantities {...this.props} />;
+      return <AnimalQuantities {...this.props} label={label} hint={hint} />;
     }
     if (this.props.type === 'species-selector') {
-      return <SpeciesSelector {...this.props} />;
+      return <SpeciesSelector {...this.props} label={label} hint={hint} />;
     }
     if (this.props.type === 'location-selector') {
-      return <LocationSelector {...this.props} />;
+      return <LocationSelector {...this.props} label={label} hint={hint} />;
     }
     if (this.props.type === 'objective-selector') {
-      return <ObjectiveSelector {...this.props} />;
+      return <ObjectiveSelector {...this.props} label={label} hint={hint} />;
     }
     if (this.props.type === 'other-species-selector') {
-      return <OtherSpecies {...this.props} />;
+      return <OtherSpecies {...this.props} label={label} hint={hint} />;
     }
     if (this.props.type === 'duration') {
       return <Duration
         name={ this.props.name }
-        label={ this.props.label }
-        hint={ this.props.hint }
+        label={ label }
+        hint={ hint }
         error={ this.props.error }
         min={ this.props.min }
         max={ this.props.max }
@@ -94,9 +95,9 @@ class Field extends Component {
     if (this.props.type === 'select') {
       return <Select
         className={ this.props.className }
-        hint={ this.props.hint }
+        label={ label }
+        hint={ hint }
         name={ this.props.name }
-        label={ this.props.label }
         options={ this.props.options }
         value={ this.props.value }
         error={ this.props.error }
@@ -106,9 +107,9 @@ class Field extends Component {
     if (this.props.type === 'date') {
       return <DateInput
         className={ this.props.className }
-        hint={ this.props.hint }
+        label={ label }
+        hint={ hint }
         name={ this.props.name }
-        label={ this.props.label }
         value={ this.props.value || '' }
         error={ this.props.error }
         onChange={value => this.onChange(value) }
@@ -117,9 +118,9 @@ class Field extends Component {
     if (this.props.type === 'radio') {
       return <RadioGroup
         className={ this.props.className }
-        hint={ this.props.hint }
+        label={ label }
+        hint={ hint }
         name={ this.props.name }
-        label={ this.props.label }
         options={ this.mapOptions(this.props.options) }
         value={ this.props.value }
         error={ this.props.error }
@@ -139,9 +140,9 @@ class Field extends Component {
     if (this.props.type === 'checkbox') {
       return <CheckboxGroup
         className={ this.props.className }
-        hint={ this.props.hint }
+        label={ label }
+        hint={ hint }
         name={ this.props.name }
-        label={ this.props.label }
         options={ this.mapOptions(this.props.options) }
         value={ this.props.value }
         error={ this.props.error }
@@ -158,9 +159,9 @@ class Field extends Component {
     if (this.props.type === 'textarea') {
       return <TextArea
         className={ this.props.className }
-        hint={ this.props.hint }
+        label={ label }
+        hint={ hint }
         name={ this.props.name }
-        label={ this.props.label }
         value={ this.props.value || '' }
         error={ this.props.error }
         onChange={ e => this.onChange(e.target.value) }
@@ -169,8 +170,8 @@ class Field extends Component {
     if (this.props.type === 'texteditor') {
       return <TextEditor
         name={ this.props.name }
-        label={ this.props.label }
-        hint={ this.props.hint }
+        label={ label }
+        hint={ hint }
         value={ this.props.value }
         error={ this.props.error }
         onChange={ this.onChange }
@@ -185,7 +186,7 @@ class Field extends Component {
         label=""
         className="smaller"
         name={this.props.name}
-        hint={this.props.hint}
+        hint={hint}
         value={this.props.value}
         error={this.props.error}
         onChange={ e => this.onChange(e.target.checked) }
@@ -194,9 +195,9 @@ class Field extends Component {
     return <Input
       className={ this.props.className }
       type={ this.props.type || 'text' }
-      hint={ this.props.hint }
+      label={ label }
+      hint={ hint }
       name={ this.props.name }
-      label={ this.props.label }
       value={ this.props.value || '' }
       error={ this.props.error }
       onChange={ e => this.onChange(e.target.value) }
@@ -209,8 +210,8 @@ const mapStateToProps = ({ project, settings, application }, { name, conditional
 
   return {
     options,
-    showChanges: !application.newApplication,
-    value: !isUndefined(value) ? value : project[name],
+    showChanges: application && !application.newApplication,
+    value: !isUndefined(value) ? value : project && project[name],
     show: !conditional || every(Object.keys(conditional), key => conditional[key] === project[key])
   };
 }

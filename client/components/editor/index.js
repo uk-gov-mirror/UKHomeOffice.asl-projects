@@ -11,7 +11,7 @@ import debounce from 'lodash/debounce';
 import { throwError } from '../../actions/messages';
 
 import FormatToolbar from './format-toolbar';
-import initialValue from './initial-value'
+import initialValue from './initial-value.json'
 import Blocks from './blocks';
 import Marks from './marks';
 import Image from './image';

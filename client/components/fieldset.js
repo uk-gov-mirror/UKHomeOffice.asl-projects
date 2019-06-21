@@ -2,7 +2,7 @@ import React from 'react';
 
 import Field from './field';
 
-const Fieldset = ({ fields, onFieldChange, values, noComments, prefix = '' }) => (
+const Fieldset = ({ fields, onFieldChange, values, noComments, altLabels, prefix = '' }) => (
   <fieldset>
     {
       fields.map(field => {
@@ -16,6 +16,7 @@ const Fieldset = ({ fields, onFieldChange, values, noComments, prefix = '' }) =>
           onChange={ value => onFieldChange(field.name, value) }
           onFieldChange={onFieldChange}
           noComments={noComments}
+          altLabels={altLabels}
         />
       })
     }

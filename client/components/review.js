@@ -154,9 +154,10 @@ class Review extends React.Component {
   }
 
   render() {
+    const { label } = this.props.altLabels ? this.props.alt : this.props;
     return (
       <div className="review">
-        <h3>{this.props.label}</h3>
+        <h3>{label}</h3>
         {
           this.changedBadge()
         }
@@ -195,11 +196,17 @@ class Review extends React.Component {
 }
 
 
-const mapStateToProps = ({ project, settings, application: { readonly }, changes : {latest, granted} }, { name, prefix }) => {
-  const key = `${prefix || ''}${name}`;
+const mapStateToProps = ({ project, settings, application: { readonly } = {}, changes : { latest = [], granted = [] } = {} }, ownProps) => {
+  const key = `${ownProps.prefix || ''}${ownProps.name}`;
   const changedFromGranted = granted.includes(key);
   const changedFromLatest = latest.includes(key);
-  return { project, settings, readonly, changedFromLatest, changedFromGranted };
+  return {
+    project,
+    settings,
+    readonly: ownProps.readonly || readonly,
+    changedFromLatest,
+    changedFromGranted
+  };
 }
 
 export default connect(mapStateToProps)(Review);

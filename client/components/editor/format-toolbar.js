@@ -52,7 +52,7 @@ class FormatToolbar extends Component {
 
     return (
       <button
-        onMouseDown={event => this.onClickBlock(event, type)}
+        onClick={event => this.onClickBlock(event, type)}
         className={classnames('tooltip-icon-button', { active: isActive })}
       >
         <Icon icon={icon} />
@@ -64,7 +64,7 @@ class FormatToolbar extends Component {
     const isActive = this.hasMark(type);
     return (
       <button
-        onMouseDown={event => this.onClickMark(event, type)}
+        onClick={event => this.onClickMark(event, type)}
         className={classnames('tooltip-icon-button', { active: isActive })}
       >
         <Icon icon={icon} />
@@ -100,15 +100,15 @@ class FormatToolbar extends Component {
     return this.props.inTable
       ? (
         <div className="table-controls">
-          <button onMouseDown={this.emit('insertColumn')}>Insert Column</button>
-          <button onMouseDown={this.emit('insertRow')}>Insert Row</button>
-          <button onMouseDown={this.emit('removeColumn')}>Remove Column</button>
-          <button onMouseDown={this.emit('removeRow')}>Remove Row</button>
-          <button onMouseDown={this.emit('removeTable')}>Remove Table</button>
+          <button onClick={this.emit('insertColumn')}>Insert Column</button>
+          <button onClick={this.emit('insertRow')}>Insert Row</button>
+          <button onClick={this.emit('removeColumn')}>Remove Column</button>
+          <button onClick={this.emit('removeRow')}>Remove Row</button>
+          <button onClick={this.emit('removeTable')}>Remove Table</button>
         </div>
       )
       : (
-        <button className="tooltip-icon-button" onMouseDown={this.emit('insertTable')}>
+        <button className="tooltip-icon-button" onClick={this.emit('insertTable')}>
           <Icon icon={table2} />
         </button>
       )
