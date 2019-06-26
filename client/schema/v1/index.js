@@ -485,7 +485,7 @@ export default {
                       },
                       {
                         name: 'poles-transfer-arrangements',
-                        label: 'What arrangements been made to ensure animals can be safely transported and that any permits necessary to transport the species under study are/will be held?',
+                        label: 'What arrangements have been made to ensure animals can be safely transported and that any permits necessary to transport the species under study are/will be held?',
                         type: 'texteditor'
                       },
                       {
@@ -1900,7 +1900,7 @@ each other.`,
                 value: false,
                 reveal: {
                   name: 'nhps-justification',
-                  label: 'Explain how the project is for one of the permitted purposes. (ie: existing permitted purposes question from non-human primates)',
+                  label: 'Explain how the project is for one of the permitted purposes.',
                   hint: `The permitted purposes for the use of non-human primates are:
 * basic research
 * translational or applied research for the avoidance, prevention, diagnosis or treatment of debilitating or potentially life-threatening clinical conditions or their effects in man
@@ -2155,7 +2155,7 @@ each other.`,
                     value: true,
                     reveal: {
                       name: 'wild-animals-poor-health-justification',
-                      label: 'Explain why it is scientifically necessary to use animals that are injured or in poor health during your project?',
+                      label: 'Explain why it is scientifically necessary to use animals that are injured or in poor health during your project.',
                       type: 'texteditor'
                     }
                   },
@@ -2185,6 +2185,7 @@ each other.`,
               {
                 name: 'wild-animals-marked',
                 label: 'Will animals be marked, or otherwise identified, during the project?',
+                hint: 'Consider both regulated and non-regulated procedures in your answer.',
                 type: 'radio',
                 className: 'smaller',
                 inline: true,
