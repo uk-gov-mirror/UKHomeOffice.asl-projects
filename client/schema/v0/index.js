@@ -1,5 +1,6 @@
-import Establishments from '../../pages/sections/establishments';
-import EstablishmentsReview from '../../pages/sections/establishments/review';
+import Repeater from '../../pages/sections/repeater';
+import RepeaterReview from '../../pages/sections/repeater/review';
+
 import Protocols from '../../pages/sections/protocols';
 import ProtocolsReview from '../../pages/sections/protocols/review';
 import OtherLegalText from '../../pages/sections/other-legal-text';
@@ -62,8 +63,10 @@ export default {
     subsections: {
       establishments: {
         title: 'Establishments',
-        repeats: 'establishments',
-        review: EstablishmentsReview,
+        repeats: 'other-establishments-list',
+        singular: 'Secondary establishment',
+        review: RepeaterReview,
+        enable: 'other-establishments',
         steps: [
           {
             fields: [
@@ -76,19 +79,7 @@ export default {
                 options: [
                   {
                     label: 'Yes',
-                    value: true,
-                    reveal: {
-                      name: 'other-establishments-list',
-                      label: '',
-                      type: 'checkbox',
-                      className: 'smaller',
-                      optionsFromSettings: 'establishments',
-                      without: 'primary-establishment',
-                      fallbackLink: {
-                        url: '/settings',
-                        label: 'Please add another establishment'
-                      }
-                    }
+                    value: true
                   },
                   {
                     label: 'No',
@@ -99,21 +90,24 @@ export default {
             ]
           },
           {
-            show: values => values['other-establishments'] === true && values['other-establishments-list'] && values['other-establishments-list'].length,
-            component: Establishments,
-            name: 'establishments',
+            show: values => values['other-establishments'],
+            component: Repeater,
+            repeats: 'other-establishments-list',
             fields: [
+              {
+                name: 'name',
+                label: 'Establishment name',
+                type: 'text'
+              },
               {
                 name: 'establishment-about',
                 label: 'Why do you need to use this additional establishment?',
-                type: 'texteditor',
-                repeats: true
+                type: 'texteditor'
               },
               {
                 name: 'establishment-supervisor',
                 label: 'Who will supervise work at this additional establishment?',
-                type: 'texteditor',
-                repeats: true
+                type: 'texteditor'
               }
             ]
           }

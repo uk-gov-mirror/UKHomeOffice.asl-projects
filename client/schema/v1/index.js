@@ -3,10 +3,8 @@ import Protocols from '../../pages/sections/protocols';
 import ProtocolsReview from '../../pages/sections/protocols/review';
 import Objectives from '../../pages/sections/objectives';
 import ObjectivesReview from '../../pages/sections/objectives/review';
-import Establishments from '../../pages/sections/establishments';
-import EstablishmentsReview from '../../pages/sections/establishments/review';
-import Poles from '../../pages/sections/poles';
-import PolesReview from '../../pages/sections/poles/review';
+import Repeater from '../../pages/sections/repeater';
+import RepeaterReview from '../../pages/sections/repeater/review';
 import Conditions from '../../pages/sections/conditions';
 import OtherLegalText from '../../pages/sections/other-legal-text';
 
@@ -239,8 +237,10 @@ export default {
     subsections: {
       establishments: {
         title: 'Establishments',
-        review: EstablishmentsReview,
-        repeats: 'establishments',
+        review: RepeaterReview,
+        repeats: 'other-establishments-list',
+        singular: 'Secondary establishment',
+        enable: 'other-establishments',
         steps: [
           {
             fields: [
@@ -253,14 +253,7 @@ export default {
                 options: [
                   {
                     label: 'Yes',
-                    value: true,
-                    reveal: {
-                      name: 'other-establishments-list',
-                      label: '',
-                      type: 'checkbox',
-                      className: 'smaller',
-                      optionsFromSettings: 'establishments'
-                    }
+                    value: true
                   },
                   {
                     label: 'No',
@@ -271,23 +264,25 @@ export default {
             ]
           },
           {
-            show: values => values['other-establishments'] === true && values['other-establishments-list'] && values['other-establishments-list'].length,
-            component: Establishments,
-            name: 'establishments',
-            repeats: true,
+            component: Repeater,
+            show: values => values['other-establishments'],
+            repeats: 'other-establishments-list',
             fields: [
+              {
+                name: 'name',
+                label: 'Establishment name',
+                type: 'text'
+              },
               {
                 name: 'establishment-about',
                 label: 'Why do you need to carry out work at this establishment?',
                 hint: 'For example, there may be important specialised equipment at this location that is not available at your primary establishment.',
-                type: 'texteditor',
-                repeats: true
+                type: 'texteditor'
               },
               {
                 name: 'establishment-supervisor',
                 label: 'Who will be responsible for supervising your work at this establishment?',
-                type: 'texteditor',
-                repeats: true
+                type: 'texteditor'
               }
             ]
           },
@@ -406,8 +401,10 @@ export default {
       },
       poles: {
         title: 'Places other than a licensed establishment (POLEs)',
-        review: PolesReview,
+        review: RepeaterReview,
         repeats: 'polesList',
+        singular: 'POLE',
+        enable: 'poles',
         steps: [
           {
             fields: [
@@ -436,10 +433,13 @@ export default {
             ]
           },
           {
-            component: Poles,
+            component: Repeater,
+            repeats: 'polesList',
             show: values => values.poles === true,
-            name: 'polesList',
-            repeats: true,
+            subtitle: 'Specify the details of each POLE that you will be using.',
+            intro: `If you can’t specify a grid reference for a POLE, include details that allows it to be easily identified for inspection. This could be an address of a site or a postcode of a farm.
+
+If you can only add generic information at this stage, provide a general description of the types of areas you are considering.`,
             fields: [
               {
                 name: 'title',
