@@ -1885,7 +1885,7 @@ each other.`,
                     type: 'texteditor'
                   },
                   {
-                    name: 'nhps-endangered-permitted-purposes',
+                    name: 'nhps-justification',
                     label: 'Explain how the project is for one of the permitted purposes.',
                     hint: `The permitted purposes for the use of endangered non-human primates are:
 * translational or applied research for the avoidance, prevention, diagnosis or treatment of debilitating or potentially life-threatening clinical conditions or their effects in man
@@ -1899,7 +1899,7 @@ each other.`,
                 label: 'No',
                 value: false,
                 reveal: {
-                  name: 'nhps-endangered-no-permitted-purposes',
+                  name: 'nhps-justification',
                   label: 'Explain how the project is for one of the permitted purposes. (ie: existing permitted purposes question from non-human primates)',
                   hint: `The permitted purposes for the use of non-human primates are:
 * basic research
@@ -1910,17 +1910,6 @@ each other.`,
                 }
               }
             ]
-          },
-          {
-            name: 'nhps-justification',
-            label: 'Explain how the project is for one of the permitted purposes.',
-            hint: `The permitted purposes for the use of non-human primates are:
-
-* basic research
-* translational or applied research for the avoidance, prevention, diagnosis or treatment of debilitating or potentially life-threatening clinical conditions or their effects in man
-* the development, manufacture or testing of the quality, effectiveness and safety of drugs for the avoidance, prevention, diagnosis or treatment of debilitating or potentially life-threatening clinical conditions or their effects in man
-* research aimed at preserving the species of animal subjected to regulated procedures`,
-            type: 'texteditor'
           },
           {
             name: 'wild-caught-primates',
