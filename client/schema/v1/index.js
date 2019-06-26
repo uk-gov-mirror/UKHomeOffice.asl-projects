@@ -2354,7 +2354,7 @@ each other.`,
       },
       'reusing-animals': {
         title: 'Re-using animals',
-        show: project => some(project.protocols, protocol => protocol.reuse),
+        show: project => some(project.protocols, protocol => some(protocol.speciesDetails, species => species.reuse)),
         intro: 'You are seeing this section because you will be re-using animals during your project. If this is not correct, you can change this in Protocols.',
         fields: [
           {
