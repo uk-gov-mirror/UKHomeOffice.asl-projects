@@ -15,6 +15,7 @@ const ReviewRepeater = ({ items = [], singular, fields, name, step }) => (
             {
               fields.map(field => (
                 <Review
+                  key={field.name}
                   {...field}
                   value={item[field.name]}
                   prefix={`${name}.${item.id}.`}
@@ -29,7 +30,7 @@ const ReviewRepeater = ({ items = [], singular, fields, name, step }) => (
   </Fragment>
 );
 
-const ReviewSection = ({ title, steps, fields, values, readonly, singular, enable }) => (
+const ReviewSection = ({ title, steps, values, readonly, singular, enable }) => (
   <Fragment>
     {
       !readonly && (
@@ -41,8 +42,8 @@ const ReviewSection = ({ title, steps, fields, values, readonly, singular, enabl
     }
     {
       steps.map((step, index) => step.repeats
-        ? values[enable] && <ReviewRepeater items={values[step.repeats]} fields={step.fields} step={index} name={step.repeats} singular={singular} />
-        : <ReviewFields fields={step.fields} values={values} step={index} />
+        ? values[enable] && <ReviewRepeater key={index} items={values[step.repeats]} fields={step.fields} step={index} name={step.repeats} singular={singular} />
+        : <ReviewFields fields={step.fields} key={index} values={values} step={index} />
       )
     }
 
