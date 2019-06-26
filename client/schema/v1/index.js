@@ -463,6 +463,11 @@ export default {
                 type: 'texteditor'
               },
               {
+                name: 'poles-environment',
+                label: 'How will work at each POLE be done in the most environmentally sensitive manner?',
+                type: 'texteditor'
+              },
+              {
                 name: 'poles-transfer',
                 label: 'Will any animals be moved between a POLE and a licensed establishment during this project?',
                 type: 'radio',
@@ -476,6 +481,11 @@ export default {
                       {
                         name: 'poles-transfer-justification',
                         label: 'Why do you need to move animals between a POLE and a licensed establishment?',
+                        type: 'texteditor'
+                      },
+                      {
+                        name: 'poles-transfer-arrangements',
+                        label: 'What arrangements been made to ensure animals can be safely transported and that any permits necessary to transport the species under study are/will be held?',
                         type: 'texteditor'
                       },
                       {
@@ -1237,6 +1247,11 @@ each other.`,
                 className: 'smaller'
               },
               {
+                name: 'severity-proportion',
+                label: 'What proportion of animals will experience this severity?',
+                type: 'texteditor'
+              },
+              {
                 name: 'severity-details',
                 label: 'Why are you proposing this severity category?',
                 type: 'texteditor'
@@ -1331,6 +1346,11 @@ each other.`,
                 className: 'smaller'
               },
               {
+                name: 'maximum-animals',
+                label: 'What is the maximum number of animals that will be used on this protocol?',
+                type: 'text'
+              },
+              {
                 name: 'reuse',
                 label: 'Will you be re-using animals on to this protocol?',
                 hint: '‘Re-use’ describes using animals again for a new experiment when you could equally use a naïve animal to get the same results.',
@@ -1339,11 +1359,19 @@ each other.`,
                   {
                     label: 'Yes',
                     value: true,
-                    reveal: {
-                      name: 'reuse-details',
-                      label: 'Describe any procedure that may have been applied to these animals, and why you are choosing to re-use them.',
-                      type: 'texteditor'
-                    }
+                    reveal: [
+                      {
+                        name: 'reuse-details',
+                        label: 'Describe any procedure that may have been applied to these animals, and why you are choosing to re-use them.',
+                        type: 'texteditor'
+                      },
+                      {
+                        name: 'maximum-times-used',
+                        label: 'What is the maximum number of uses of this protocol per animal?',
+                        hint: 'For example, if some animals will go through this protocol three more times after their first use, the number of uses will be four.',
+                        type: 'text'
+                      }
+                    ]
                   },
                   {
                     label: 'No',
@@ -1352,12 +1380,6 @@ each other.`,
                 ],
                 inline: true,
                 className: 'smaller'
-              },
-              {
-                name: 'maximum-times-used',
-                label: 'What is the maximum number of uses of this protocol on this type of animal?',
-                hint: 'For example, you will use 200 mice during a protocol. Each animal will go through the protocol once, but 100 of them will have it applied twice. Therefore, the total number of uses would be 300.',
-                type: 'text'
               }
             ]
           },
@@ -1433,32 +1455,21 @@ each other.`,
                 hint: 'Explain where one or more steps are repeated in one experiment, list any alternative techniques within a step (e.g. dosing routes), and include all procedures performed under terminal anaesthesia.\n\nWhen describing the technical aspects of a step, be broad enough to be flexible when the variation does not impact on animal welfare (e.g. use "antibiotic" instead of "penicillin"). Finally, avoid specifying volumes and frequencies when they do not impact on animal welfare.'
               },
               {
-                name: 'code',
-                label: 'Select the anaesthetic codes that apply to this step.',
-                type: 'checkbox',
+                name: 'nmbas',
+                label: 'Will this step involve the use of neuromuscular blocking agents (NMBAs)?',
+                type: 'radio',
+                className: 'smaller',
+                inline: true,
                 options: [
                   {
-                    label: 'AA (no anaesthesia)',
-                    value: 'aa'
+                    label: 'Yes',
+                    value: true
                   },
                   {
-                    label: 'AB (general anaesthesia with recovery)',
-                    value: 'ab'
-                  },
-                  {
-                    label: 'AB-L (local anaesthesia)',
-                    value: 'abl'
-                  },
-                  {
-                    label: 'AC (non-recovery general anaesthesia)​',
-                    value: 'ac'
-                  },
-                  {
-                    label: 'AD (neuromuscular blocking agent)',
-                    value: 'ad'
+                    label: 'No',
+                    value: false
                   }
-                ],
-                className: 'smaller'
+                ]
               },
               {
                 name: 'optional',
@@ -1693,6 +1704,7 @@ each other.`,
                   {
                     label: 'Killed',
                     value: 'killed',
+                    hint: 'Ensure that the methods of killing to be used are described in the final step of this protocol.',
                     reveal: {
                       label: '',
                       review: 'Method of killing',
@@ -1776,126 +1788,44 @@ each other.`,
         nts: true,
         fields: [
           {
-            name: 'fate-of-animals',
-            label: 'What will happen to animals at the end of their use in this project?',
-            type: 'checkbox',
+            name: 'fate-of-animals-nts',
+            label: 'Will any animals not be killed at the end of this project?',
+            hint: 'Ensure that any methods of killing to be used are described in the final step of each protocol.',
+            type: 'radio',
             className: 'smaller',
+            inline: true,
             options: [
               {
-                label: 'Kept alive',
-                value: 'kept-alive',
-                reveal: [
-                  {
-                    name: 'kept-alive-animals',
-                    label: 'What types of animals will you keep alive?',
-                    type: 'texteditor'
-                  },
-                  {
-                    name: 'keeping-animals-alive-determine',
-                    label: 'What criteria will the veterinary surgeon, or competent person trained by a veterinary surgeon, use to determine whether animals can be kept alive?',
-                    type: 'texteditor'
-                  },
-                  {
-                    name: 'keeping-animals-alive-supervised',
-                    label: 'Are there any limitations on the period of time that animals that have been kept alive can be held under the supervision of the veterinary surgeon?',
-                    type: 'texteditor'
-                  }
-                ]
+                label: 'Yes',
+                value: true,
+                reveal: {
+                  name: 'fate-of-animals',
+                  label: 'What will happen to animals at the end of their use in this project?',
+                  type: 'checkbox',
+                  className: 'smaller',
+                  options: [
+                    {
+                      label: 'Kept alive',
+                      value: 'kept-alive'
+                    },
+                    {
+                      label: 'Set free',
+                      value: 'set-free'
+                    },
+                    {
+                      label: 'Rehomed',
+                      value: 'rehomed'
+                    },
+                    {
+                      label: 'Used in other projects',
+                      value: 'used-in-other-projects'
+                    }
+                  ]
+                }
               },
               {
-                label: 'Set free',
-                value: 'set-free',
-                reveal: [
-                  {
-                    name: 'setting-free-health',
-                    label: 'How will an animal\'s health be assessed to determine whether it can be set free?',
-                    type: 'texteditor'
-                  },
-                  {
-                    name: 'setting-free-vet',
-                    label: 'Will a veterinary surgeon perform this assessment?',
-                    type: 'radio',
-                    inline: true,
-                    className: 'smaller',
-                    options: [
-                      {
-                        label: 'Yes',
-                        value: true
-                      },
-                      {
-                        label: 'No',
-                        value: false,
-                        reveal: {
-                          name: 'setting-free-competence',
-                          label: 'How will you ensure the competence of the person responsible for assessing whether animals can be set free?',
-                          type: 'texteditor'
-                        }
-                      }
-                    ]
-                  },
-                  {
-                    name: 'setting-free-ensure-not-harmful',
-                    label: 'How will you ensure that setting animals free will not be harmful to other species, the environment, and human health?',
-                    type: 'texteditor'
-                  },
-                  {
-                    name: 'setting-free-rehabilitate',
-                    label: 'Will you rehabilitate animals before setting them free? If so, how?',
-                    type: 'texteditor'
-                  },
-                  {
-                    name: 'setting-free-socialise',
-                    label: 'Will you attempt to socialise any animals that you have set free? If so, how?',
-                    type: 'texteditor'
-                  },
-                  {
-                    name: 'setting-free-recapturing',
-                    label: 'How will you prevent inadvertent re-use of animals that have been released at the end of procedures?',
-                    type: 'texteditor'
-                  },
-                  {
-                    name: 'setting-free-lost',
-                    label: 'If animals are lost to the study or not re-captured, how will you determine whether your project is complete?',
-                    hint: 'This information is important to ensure that the use of these animals is recorded in the return of procedures, and is considered when determining the actual severity of your protocols.',
-                    type: 'texteditor'
-                  }
-                ]
-              },
-              {
-                label: 'Rehomed',
-                value: 'rehomed',
-                reveal: [
-                  {
-                    name: 'rehoming-types',
-                    label: 'What types of animals do you intend to rehome?',
-                    hint: 'Also state the protocols on which they would have been used.',
-                    type: 'texteditor'
-                  },
-                  {
-                    name: 'rehoming-healthy',
-                    label: 'How will you make sure that an animal’s health allows it to be rehomed?',
-                    type: 'texteditor'
-                  },
-                  {
-                    name: 'rehoming-harmful',
-                    label: 'How will you ensure that rehoming does not pose a danger to public health, animal health, or the environment?',
-                    type: 'texteditor'
-                  },
-                  {
-                    name: 'rehoming-socialisation',
-                    label: 'What scheme is in place to ensure socialisation when an animal is rehomed?',
-                    type: 'texteditor'
-                  },
-                  {
-                    name: 'rehoming-other',
-                    label: 'What other measures will you take to safeguard an animal’s wellbeing when it is rehomed?',
-                    type: 'texteditor'
-                  }
-                ]
-              },
-              {
-                label: 'Used in other projects',
-                value: 'used-in-other-projects'
+                label: 'No',
+                value: false
               }
             ]
           }
@@ -1935,6 +1865,51 @@ each other.`,
             name: 'nhps',
             label: 'Why do you need to use non-human primates, rather than any other type of animal, to achieve your objectives?',
             type: 'texteditor'
+          },
+          {
+            name: 'nhps-endangered',
+            label: 'Are any of these non-human primates endangered?',
+            hint: 'Endangered animals are any of the species listed on Annex A of Council Regulation 338/97 and are not bred in captivity.',
+            type: 'radio',
+            className: 'smaller',
+            inline: true,
+            options: [
+              {
+                label: 'Yes',
+                value: true,
+                reveal: [
+                  {
+                    name: 'nhps-endangered-justification',
+                    label: 'Why can\'t you achieve your objectives by using non-human primates that are not endangered?',
+                    hint: 'Also explain how you will comply with other regulations including CITES.',
+                    type: 'texteditor'
+                  },
+                  {
+                    name: 'nhps-endangered-permitted-purposes',
+                    label: 'Explain how the project is for one of the permitted purposes.',
+                    hint: `The permitted purposes for the use of endangered non-human primates are:
+* translational or applied research for the avoidance, prevention, diagnosis or treatment of debilitating or potentially life-threatening clinical conditions or their effects in man
+* the development, manufacture or testing of the quality, effectiveness and safety of drugs for the avoidance, prevention, diagnosis or treatment of debilitating or potentially life-threatening clinical conditions or their effects in man
+* research aimed at preserving the species of animal subjected to regulated procedures.`,
+                    type: 'texteditor'
+                  }
+                ]
+              },
+              {
+                label: 'No',
+                value: false,
+                reveal: {
+                  name: 'nhps-endangered-no-permitted-purposes',
+                  label: 'Explain how the project is for one of the permitted purposes. (ie: existing permitted purposes question from non-human primates)',
+                  hint: `The permitted purposes for the use of non-human primates are:
+* basic research
+* translational or applied research for the avoidance, prevention, diagnosis or treatment of debilitating or potentially life-threatening clinical conditions or their effects in man
+* the development, manufacture or testing of the quality, effectiveness and safety of drugs for the avoidance, prevention, diagnosis or treatment of debilitating or potentially life-threatening clinical conditions or their effects in man
+* research aimed at preserving the species of animal subjected to regulated procedures`,
+                  type: 'texteditor'
+                }
+              }
+            ]
           },
           {
             name: 'nhps-justification',
@@ -2041,7 +2016,8 @@ each other.`,
         fields: [
           {
             name: 'endangered-animals',
-            label: 'Will you be using any endangered animals (excluding non-human primates)?',
+            label: 'Will you be using any endangered animals, apart from non-human primates?',
+            hint: 'Endangered animals are any of the species listed on Annex A of Council Regulation 338/97 and are not bred in captivity.',
             type: 'radio',
             inline: true,
             className: 'smaller',
@@ -2053,16 +2029,16 @@ each other.`,
                   {
                     name: 'endangered-animals-justification',
                     label: 'Why can’t you achieve your objectives without using endangered animals?',
+                    hint: 'Also explain how you will comply with other regulations including CITES.',
                     type: 'texteditor'
                   },
                   {
                     name: 'endangered-animals-permitted',
                     label: 'Explain how the project is for one of the permitted purposes.',
                     hint: `The permitted purposes for the use of endangered animals are:
-
-  * translational or applied research for the avoidance, prevention, diagnosis or treatment of disease, ill-health or other abnormality, or their effects, in man, animals or plants
-  * the development, manufacture or testing of the quality, effectiveness and safety of drugs, feed-stuffs or any other substances or products for the avoidance, prevention, diagnosis or treatment of disease, ill-health or other abnormality, or their effects, in man, animals or plants or assessment, detection, regulation or modification of physiological conditions in man, animals or plants or the improvement of the welfare of animals or of the production conditions for animals reared for  agricultural purposes
-  * research aimed at the preservation of the species`,
+* translational or applied research for the avoidance, prevention, diagnosis or treatment of debilitating or potentially life-threatening clinical conditions or their effects in man
+* the development, manufacture or testing of the quality, effectiveness and safety of drugs for the avoidance, prevention, diagnosis or treatment of debilitating or potentially life-threatening clinical conditions or their effects in man
+* research aimed at preserving the species of animal subjected to regulated procedures.`,
                     type: 'texteditor'
                   }
                 ]
@@ -2118,11 +2094,18 @@ each other.`,
                           {
                             label: 'Yes',
                             value: true,
-                            reveal: {
-                              name: 'non-target-species-capture-methods-minimise-suffering',
-                              label: 'How will you minimise the risk of capturing non-target animals, including strays and animals of a different sex?',
-                              type: 'texteditor'
-                            }
+                            reveal: [
+                              {
+                                name: 'non-target-species-capture-methods-minimise-suffering',
+                                label: 'How will you minimise the risk of capturing non-target animals, including strays and animals of a different sex?',
+                                type: 'texteditor'
+                              },
+                              {
+                                name: 'non-target-species-capture-methods-fate',
+                                label: 'What will you do with any non-target animals that you capture?',
+                                type: 'texteditor'
+                              }
+                            ]
                           },
                           {
                             label: 'No',
@@ -2170,6 +2153,28 @@ each other.`,
                     value: false
                   }
                 ]
+              },
+              {
+                name: 'wild-animals-poor-health',
+                label: 'Is it necessary to use animals that are injured or in poor health during your project?',
+                type: 'radio',
+                className: 'smaller',
+                inline: true,
+                options: [
+                  {
+                    label: 'Yes',
+                    value: true,
+                    reveal: {
+                      name: 'wild-animals-poor-health-justification',
+                      label: 'Explain why it is scientifically necessary to use animals that are injured or in poor health during your project?',
+                      type: 'texteditor'
+                    }
+                  },
+                  {
+                    label: 'No',
+                    value: false
+                  }
+                ]
               }
             ]
           },
@@ -2189,9 +2194,27 @@ each other.`,
                 type: 'texteditor'
               },
               {
-                name: 'wild-animals-identify',
-                label: 'How will animals be identified?',
-                type: 'texteditor'
+                name: 'wild-animals-marked',
+                label: 'Will animals be marked, or otherwise identified, during the project?',
+                type: 'radio',
+                className: 'smaller',
+                inline: true,
+                options: [
+                  {
+                    label: 'Yes',
+                    value: true,
+                    reveal: {
+                      name: 'wild-animals-identify',
+                      label: 'How will animals be identified?',
+                      hint: 'State which methods may cause more than momentary pain, distress, or lasting harm to an animal.',
+                      type: 'texteditor'
+                    }
+                  },
+                  {
+                    label: 'No',
+                    value: false
+                  }
+                ]
               },
               {
                 name: 'wild-animals-devices',
@@ -2286,7 +2309,7 @@ each other.`,
       nmbas: {
         title: 'Neuromuscular blocking agents (NMBAs)',
         show: values => some(values.protocols, protocol => {
-          return some(protocol.steps, step => step.code && step.code.includes('ad'));
+          return some(protocol.steps, step => step.nmbas);
         }),
         linkTo: 'protocols',
         steps: [
@@ -2341,42 +2364,20 @@ each other.`,
       },
       'reusing-animals': {
         title: 'Re-using animals',
+        show: project => some(project.protocols, protocol => protocol.reuse),
+        intro: 'You are seeing this section because you will be re-using animals during your project. If this is not correct, you can change this in Protocols.',
         fields: [
           {
-            name: 'reusing-animals',
-            label: 'Will you be re-using animals?',
-            type: 'radio',
-            className: 'smaller',
-            inline: true,
-            options: [
-              {
-                label: 'Yes',
-                value: true,
-                reveal: [
-                  {
-                    name: 'reusing-which',
-                    label: 'What types of animals will you be re-using?',
-                    type: 'texteditor'
-                  },
-                  {
-                    name: 'reusing-why',
-                    label: 'Why do you intend to re-use animals?',
-                    hint: 'Explain how you will balance the needs of refining and reducing animal use before making your decision.',
-                    type: 'texteditor'
-                  },
-                  {
-                    name: 'reusing-limitations',
-                    label: 'What are the limitations on re-using animals for this project?',
-                    hint: 'For example, there may be a maximum number of times that an animal can be re-used, or a set of performance standards that requires a limit on re-use.',
-                    type: 'texteditor'
-                  }
-                ]
-              },
-              {
-                label: 'No',
-                value: false
-              }
-            ]
+            name: 'reusing-why',
+            label: 'Why do you intend to re-use animals?',
+            hint: 'Explain how you will balance the needs of refining and reducing animal use before making your decision.',
+            type: 'texteditor'
+          },
+          {
+            name: 'reusing-limitations',
+            label: 'What are the limitations on re-using animals for this project?',
+            hint: 'For example, there may be a maximum number of times that an animal can be re-used, or a set of performance standards that requires a limit on re-use.',
+            type: 'texteditor'
           }
         ]
       },
@@ -2427,6 +2428,118 @@ each other.`,
                 value: false
               }
             ]
+          }
+        ]
+      },
+      'keeping-alive': {
+        title: 'Keeping animals alive',
+        show: project => (project['fate-of-animals'] || []).includes('kept-alive'),
+        fields: [
+          {
+            name: 'kept-alive-animals',
+            label: 'What types of animals will you keep alive?',
+            type: 'texteditor'
+          },
+          {
+            name: 'keeping-animals-alive-determine',
+            label: 'What criteria will the veterinary surgeon, or competent person trained by a veterinary surgeon, use to determine whether animals can be kept alive?',
+            type: 'texteditor'
+          },
+          {
+            name: 'keeping-animals-alive-supervised',
+            label: 'Are there any limitations on the period of time that animals that have been kept alive can be held under the supervision of the veterinary surgeon?',
+            type: 'texteditor'
+          }
+        ]
+      },
+      'setting-free': {
+        title: 'Setting animals free',
+        show: project => (project['fate-of-animals'] || []).includes('set-free'),
+        fields: [
+          {
+            name: 'setting-free-health',
+            label: 'How will an animal\'s health be assessed to determine whether it can be set free?',
+            type: 'texteditor'
+          },
+          {
+            name: 'setting-free-vet',
+            label: 'Will a veterinary surgeon perform this assessment?',
+            type: 'radio',
+            inline: true,
+            className: 'smaller',
+            options: [
+              {
+                label: 'Yes',
+                value: true
+              },
+              {
+                label: 'No',
+                value: false,
+                reveal: {
+                  name: 'setting-free-competence',
+                  label: 'How will you ensure the competence of the person responsible for assessing whether animals can be set free?',
+                  type: 'texteditor'
+                }
+              }
+            ]
+          },
+          {
+            name: 'setting-free-ensure-not-harmful',
+            label: 'How will you ensure that setting animals free will not be harmful to other species, the environment, and human health?',
+            type: 'texteditor'
+          },
+          {
+            name: 'setting-free-rehabilitate',
+            label: 'Will you rehabilitate animals before setting them free? If so, how?',
+            type: 'texteditor'
+          },
+          {
+            name: 'setting-free-socialise',
+            label: 'Will you attempt to socialise any animals that you have set free? If so, how?',
+            type: 'texteditor'
+          },
+          {
+            name: 'setting-free-recapturing',
+            label: 'How will you prevent inadvertent re-use of animals that have been released at the end of procedures?',
+            type: 'texteditor'
+          },
+          {
+            name: 'setting-free-lost',
+            label: 'If animals are lost to the study or not re-captured, how will you determine whether your project is complete?',
+            hint: 'This information is important to ensure that the use of these animals is recorded in the return of procedures, and is considered when determining the actual severity of your protocols.',
+            type: 'texteditor'
+          }
+        ]
+      },
+      rehoming: {
+        title: 'Rehoming animals',
+        show: project => (project['fate-of-animals'] || []).includes('rehomed'),
+        fields: [
+          {
+            name: 'rehoming-types',
+            label: 'What types of animals do you intend to rehome?',
+            hint: 'Also state the protocols on which they would have been used.',
+            type: 'texteditor'
+          },
+          {
+            name: 'rehoming-healthy',
+            label: 'How will you make sure that an animal’s health allows it to be rehomed?',
+            type: 'texteditor'
+          },
+          {
+            name: 'rehoming-harmful',
+            label: 'How will you ensure that rehoming does not pose a danger to public health, animal health, or the environment?',
+            type: 'texteditor'
+          },
+          {
+            name: 'rehoming-socialisation',
+            label: 'What scheme is in place to ensure socialisation when an animal is rehomed?',
+            type: 'texteditor'
+          },
+          {
+            name: 'rehoming-other',
+            label: 'What other measures will you take to safeguard an animal’s wellbeing when it is rehomed?',
+            type: 'texteditor'
           }
         ]
       }
@@ -2497,6 +2610,17 @@ each other.`,
             name: 'refinement-models',
             label: 'Which animal models and methods will you use during this project?',
             hint: 'Explain why these models and methods cause the least pain, suffering, distress, or lasting harm to the animals.',
+            type: 'texteditor'
+          },
+          {
+            name: 'refinement-less-sentient',
+            label: 'Why can’t you use animals that are less sentient?',
+            hint: 'For example, animals at a more immature life stage, species that are less sentient, or animals that have been terminally anaesthetised?',
+            type: 'texteditor'
+          },
+          {
+            name: 'refinement-3rs-advances',
+            label: 'How will you stay informed about advances in the 3Rs, and implement these advances effectively, during the project?',
             type: 'texteditor'
           },
           {

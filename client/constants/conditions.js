@@ -4,7 +4,7 @@ import intersection from 'lodash/intersection';
 export default {
   protocol: {
     nmbas: {
-      include: protocol => some(protocol.steps, step => (step.code || []).includes('ad')),
+      include: protocol => some(protocol.steps, step => step.nmbas),
       type: 'condition',
       versions: [
         {
