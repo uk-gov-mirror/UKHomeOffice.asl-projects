@@ -238,7 +238,7 @@ export default {
       establishments: {
         title: 'Establishments',
         review: RepeaterReview,
-        repeats: 'other-establishments-list',
+        repeats: 'establishments',
         singular: 'Secondary establishment',
         enable: 'other-establishments',
         steps: [
@@ -266,10 +266,10 @@ export default {
           {
             component: Repeater,
             show: values => values['other-establishments'],
-            repeats: 'other-establishments-list',
+            repeats: 'establishments',
             fields: [
               {
-                name: 'name',
+                name: 'establishment-name',
                 label: 'Establishment name',
                 type: 'text'
               },
@@ -317,7 +317,7 @@ export default {
       },
       'transfer-of-animals': {
         title: 'Transfer and movement of animals',
-        show: values => values['other-establishments'] && values['other-establishments-list'] && values['other-establishments-list'].length,
+        show: values => values['other-establishments'] && values.establishments && values.establishments.length,
         fields: [
           {
             name: 'transfer',

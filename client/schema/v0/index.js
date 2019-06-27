@@ -63,7 +63,7 @@ export default {
     subsections: {
       establishments: {
         title: 'Establishments',
-        repeats: 'other-establishments-list',
+        repeats: 'establishments',
         singular: 'Secondary establishment',
         review: RepeaterReview,
         enable: 'other-establishments',
@@ -92,10 +92,10 @@ export default {
           {
             show: values => values['other-establishments'],
             component: Repeater,
-            repeats: 'other-establishments-list',
+            repeats: 'establishments',
             fields: [
               {
-                name: 'name',
+                name: 'establishment-name',
                 label: 'Establishment name',
                 type: 'text'
               },

@@ -23,6 +23,18 @@ const Item = ({ index, fields, values, updateItem, removeItem, length, prefix, s
   </Fragment>
 )
 
+const getItems = (values, repeats) => {
+  const items = values[repeats];
+  if (items && items.length) {
+    return items;
+  }
+  // b/c - map previously selected additional establishments.
+  if (repeats === 'establishments') {
+    const otherEstablishments = values['other-establishments-list'];
+    return (otherEstablishments || []).map(est => ({ 'establishment-name': est, id: uuid() }))
+  }
+}
+
 const Items = ({ title, save, subtitle, intro, advance, repeats, exit, ...props }) => {
   return (
     <Fragment>
@@ -34,7 +46,7 @@ const Items = ({ title, save, subtitle, intro, advance, repeats, exit, ...props 
         intro && <ReactMarkdown className="grey">{intro}</ReactMarkdown>
       }
       <Repeater
-        items={(props.values[repeats] || []).map(item => typeof item === 'string' ? { name: item, id: uuid() } : item)}
+        items={getItems(props.values, repeats)}
         type={repeats}
         singular={props.singular}
         onSave={items => save({ [repeats]: items })}
