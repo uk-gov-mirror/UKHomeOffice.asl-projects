@@ -239,7 +239,7 @@ export default {
         title: 'Establishments',
         review: RepeaterReview,
         repeats: 'establishments',
-        singular: 'Secondary establishment',
+        singular: 'Additional establishment',
         enable: 'other-establishments',
         steps: [
           {
