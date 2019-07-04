@@ -1346,11 +1346,6 @@ each other.`,
                 className: 'smaller'
               },
               {
-                name: 'maximum-animals',
-                label: 'What is the maximum number of animals that will be used on this protocol?',
-                type: 'text'
-              },
-              {
                 name: 'reuse',
                 label: 'Will you be re-using animals on to this protocol?',
                 hint: '‘Re-use’ describes using animals again for a new experiment when you could equally use a naïve animal to get the same results.',
@@ -1364,12 +1359,6 @@ each other.`,
                         name: 'reuse-details',
                         label: 'Describe any procedure that may have been applied to these animals, and why you are choosing to re-use them.',
                         type: 'texteditor'
-                      },
-                      {
-                        name: 'maximum-times-used',
-                        label: 'What is the maximum number of uses of this protocol per animal?',
-                        hint: 'For example, if some animals will go through this protocol three more times after their first use, the number of uses will be four.',
-                        type: 'text'
                       }
                     ]
                   },
@@ -1380,6 +1369,17 @@ each other.`,
                 ],
                 inline: true,
                 className: 'smaller'
+              },
+              {
+                name: 'maximum-animals',
+                label: 'What is the maximum number of animals that will be used on this protocol?',
+                type: 'text'
+              },
+              {
+                name: 'maximum-times-used',
+                label: 'What is the maximum number of uses of this protocol per animal?',
+                hint: 'For example, if some animals will go through this protocol three more times after their first use, the number of uses will be four.',
+                type: 'text'
               }
             ]
           },

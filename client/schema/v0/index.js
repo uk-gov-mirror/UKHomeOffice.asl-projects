@@ -64,7 +64,7 @@ export default {
       establishments: {
         title: 'Establishments',
         repeats: 'establishments',
-        singular: 'Secondary establishment',
+        singular: 'Additional establishment',
         review: RepeaterReview,
         enable: 'other-establishments',
         steps: [
