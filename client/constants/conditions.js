@@ -212,9 +212,9 @@ Genetically altered animals may not be re-homed.`
       versions: [
         {
           title: 'Establishment licences not meeting Code of Practice',
-          content: 'If an establishment does not meet the requirements laid out in the Code of Practice for the housing and care of animals bred, supplied, or used for scentific purposes, the following conditions apply:
+          content: `If an establishment does not meet the requirements laid out in the Code of Practice for the housing and care of animals bred, supplied, or used for scentific purposes, the following conditions apply:
 
-          <<INSERT conditions HERE>>>
+          <<INSERT conditions HERE>>>`
         }
       ]
     }
