@@ -6,9 +6,13 @@ class Editable extends Component {
     content: this.props.content
   }
 
+  static defaultProps = {
+    onChange: () => {}
+  }
+
   onChange = e => {
     const content = e.target.value;
-    this.setState({ content });
+    this.setState({ content }, () => this.props.onChange(content));
   }
 
   save = e => {
@@ -49,7 +53,7 @@ class Editable extends Component {
           onChange={this.onChange}
         />
         <p className="control-panel">
-          <Button disabled={updating} onClick={this.save}>Save</Button>
+          <Button disabled={updating} onClick={this.save} className="button-secondary">Save</Button>
           <Button disabled={updating} onClick={this.cancel} className="link">Cancel</Button>
           {
             edited && showRevert && <Button disabled={updating} onClick={this.revert} className="link">Revert to default</Button>

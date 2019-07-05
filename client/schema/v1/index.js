@@ -6,7 +6,7 @@ import ObjectivesReview from '../../pages/sections/objectives/review';
 import Repeater from '../../pages/sections/repeater';
 import RepeaterReview from '../../pages/sections/repeater/review';
 import Conditions from '../../pages/sections/conditions';
-import OtherLegalText from '../../pages/sections/other-legal-text';
+import Authorisations from '../../pages/sections/authorisations';
 
 import SPECIES from '../../constants/species';
 
@@ -1755,8 +1755,16 @@ each other.`,
             ]
           },
           conditions: {
-            title: 'Additional conditions and authorisations',
-            show: props => props.showConditions
+            title: 'Additional conditions',
+            show: props => props.showConditions,
+            singular: 'Additional condition',
+            items: 'Additional conditions'
+          },
+          authorisations: {
+            title: 'Authorisations',
+            show: props => props.showConditions,
+            singular: 'Authorisation',
+            items: 'Authorisations'
           }
         }
       },
@@ -2679,22 +2687,42 @@ each other.`,
     }
   },
   conditions: {
-    title: 'Additional conditions and authorisations',
+    title: 'Additional conditions',
     show: props => props.showConditions,
     subsections: {
       conditions: {
-        title: 'Additional conditions and authorisations',
+        title: 'Additional conditions',
+        addMore: 'Add more conditions',
+        intro: `Additional conditions have been added automatically according to the selections made by the applicant.
+
+Please review all sections of this application before making a recommendation.`,
+        emptyIntro: `No additional conditions have been added to this licence.
+
+If you want to add a condition, you will need to create one.`,
+        emptyIntroReadOnly: 'No additional conditions have been added to this licence.',
+        type: 'condition',
+        singular: 'Additional condition',
         review: Conditions
       }
     }
   },
-  other: {
-    title: 'Other legal text',
+  authorisations: {
+    title: 'Authorisations',
     show: props => props.showConditions,
     subsections: {
-      other: {
-        title: 'Other legal conditions',
-        review: OtherLegalText
+      authorisations: {
+        title: 'Authorisations',
+        addMore: 'Add more authorisations',
+        intro: `Authorisations have been added automatically according to the selections made by the applicant.
+
+Please review all sections of this application before making a recommendation.`,
+        emptyIntro: `No authorisations have been added to this licence.
+
+If you want to add an authorisation, you will need to create one.`,
+        emptyIntroReadOnly: 'No authorisations have been added to this licence.',
+        type: 'authorisation',
+        singular: 'Authorisation',
+        review: Authorisations
       }
     }
   }

@@ -24,7 +24,7 @@ export default {
       ]
     },
     reuse: {
-      include: protocol => (protocol.fate || []).includes('reuse'),
+      include: protocol => some(protocol.speciesDetails, species => species.reuse),
       type: 'authorisation',
       versions: [
         {
@@ -217,7 +217,7 @@ export default {
   },
   inspector: {
     regtox: {
-      type: 'Other',
+      type: 'authorisation',
       versions: [
         {
           title: 'Regulatory Toxicology',
@@ -301,7 +301,7 @@ For studies requested for other worldwide authorities, for example the US Food a
       ]
     },
     'retrospective-assessment-negative': {
-      type: 'other',
+      type: 'condition',
       versions: [
         {
           title: 'Retrospective assessment (negative)',
@@ -310,7 +310,7 @@ For studies requested for other worldwide authorities, for example the US Food a
       ]
     },
     'retrospective-assessment': {
-      type: 'other',
+      type: 'condition',
       versions: [
         {
           title: 'Retrospective assessment (positive)',
@@ -320,7 +320,7 @@ For studies requested for other worldwide authorities, for example the US Food a
     },
     places: {
       checked: true,
-      type: 'other',
+      type: 'authorisation',
       versions: [
         {
           title: 'Places',

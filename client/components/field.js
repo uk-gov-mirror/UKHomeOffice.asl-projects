@@ -47,10 +47,16 @@ class Field extends Component {
         ...option,
         reveal: (
           <div className="govuk-inset-text">
-            <Fieldset
-              {...this.props}
-              fields={castArray(option.reveal)}
-            />
+            {
+              option.reveal.component
+                ? option.reveal.component
+                : (
+                  <Fieldset
+                    {...this.props}
+                    fields={castArray(option.reveal)}
+                  />
+                )
+            }
           </div>
         )
       }

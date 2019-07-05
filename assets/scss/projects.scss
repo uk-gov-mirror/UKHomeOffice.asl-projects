@@ -3,6 +3,11 @@
 $light-green: #26A197;
 $pink: #ff1493;
 
+@mixin purple-inset {
+  border-left: 8px solid $ho-brand;
+  padding-left: $govuk-gutter-half;
+}
+
 html.modal-open, html.modal-open body {
   overflow: hidden;
 }
@@ -303,7 +308,7 @@ html.modal-open, html.modal-open body {
     .govuk-button {
       margin: 0;
     }
-    
+
     td.controls {
       text-align: right;
 
@@ -1047,15 +1052,22 @@ html.modal-open, html.modal-open body {
     }
   }
 
+  .purple-inset {
+    @include purple-inset;
+    margin-bottom: $govuk-gutter;
+  }
+
   .conditions {
     .condition {
+      @include purple-inset;
+
       p.condition-text {
         white-space: pre-wrap;
       }
     }
   }
 
-  .other-legal-condition {
+  .add-condition {
     display: table;
     table-layout: fixed;
     width: 100%;
