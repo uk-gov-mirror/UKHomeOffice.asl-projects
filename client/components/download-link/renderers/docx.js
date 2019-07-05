@@ -121,18 +121,19 @@ const renderNode = (doc, node) => {
 
   let text;
   let paragraph;
+  const getContent = input => get(input, 'nodes[0].leaves[0].text', get(input, 'nodes[0].text')).trim()
 
   switch (node.type) {
     case 'heading-one':
-      doc.createParagraph(node.nodes[0].leaves[0].text.trim()).heading1();
+      doc.createParagraph(getContent(node)).heading1();
       break;
 
     case 'heading-two':
-      doc.createParagraph(node.nodes[0].leaves[0].text.trim()).heading2();
+      doc.createParagraph(getContent(node)).heading2();
       break;
 
     case 'block-quote':
-      doc.createParagraph(node.nodes[0].leaves[0].text.trim()).style('aside');
+      doc.createParagraph(getContent(node)).style('aside');
       break;
 
     case 'numbered-list': {
@@ -146,7 +147,7 @@ const renderNode = (doc, node) => {
           return renderNode(doc, n);
         }
         // TODO: the item may have marks
-        text = new TextRun(n.nodes[0].leaves[0].text.trim()).size(24);
+        text = new TextRun(getContent(n)).size(24);
         const paragraph = new Paragraph();
         paragraph.setNumbering(concrete, 0);
         paragraph.style('body');
@@ -162,7 +163,7 @@ const renderNode = (doc, node) => {
           return renderNode(doc, n);
         }
         // TODO: the item may have marks
-        text = new TextRun(n.nodes[0].leaves[0].text.trim()).size(24);
+        text = new TextRun(getContent(n)).size(24);
         const paragraph = new Paragraph();
         paragraph.style('body').bullet();
         paragraph.addRun(text);
@@ -173,7 +174,8 @@ const renderNode = (doc, node) => {
     case 'paragraph':
       paragraph = new Paragraph();
       node.nodes.forEach(childNode => {
-        childNode.leaves.forEach(leaf => {
+        const leaves = childNode.leaves || [childNode];
+        leaves.forEach(leaf => {
           text = new TextRun(leaf.text);
           if (text) {
             (leaf.marks || []).forEach(mark => {
