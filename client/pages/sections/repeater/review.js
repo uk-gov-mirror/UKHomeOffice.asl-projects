@@ -41,7 +41,7 @@ const ReviewSection = ({ title, steps, values, readonly, singular, enable }) => 
       )
     }
     {
-      steps.map((step, index) => step.repeats
+      steps.filter(s => !s.show || s.show(values)).map((step, index) => step.repeats
         ? values[enable] && <ReviewRepeater key={index} items={values[step.repeats]} fields={step.fields} step={index} name={step.repeats} singular={singular} />
         : <ReviewFields fields={step.fields} key={index} values={values} step={index} />
       )

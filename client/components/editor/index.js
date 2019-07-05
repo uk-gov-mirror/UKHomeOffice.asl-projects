@@ -41,7 +41,7 @@ class TextEditor extends Component {
   save = () => {
     const { value } = this.state;
     const jsonVal = JSON.stringify(value.toJSON())
-    const notNull = jsonVal !== JSON.stringify(initialValue);
+    const notNull = jsonVal !== JSON.stringify(Value.fromJSON(initialValue));
     this.props.onChange(notNull ? jsonVal : null)
   }
 

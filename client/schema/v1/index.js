@@ -267,22 +267,26 @@ export default {
             component: Repeater,
             show: values => values['other-establishments'],
             repeats: 'establishments',
+            singular: 'Establishment',
             fields: [
               {
                 name: 'establishment-name',
                 label: 'Establishment name',
-                type: 'text'
+                type: 'text',
+                repeats: true
               },
               {
                 name: 'establishment-about',
                 label: 'Why do you need to carry out work at this establishment?',
                 hint: 'For example, there may be important specialised equipment at this location that is not available at your primary establishment.',
-                type: 'texteditor'
+                type: 'texteditor',
+                repeats: true
               },
               {
                 name: 'establishment-supervisor',
                 label: 'Who will be responsible for supervising your work at this establishment?',
-                type: 'texteditor'
+                type: 'texteditor',
+                repeats: true
               }
             ]
           },
@@ -402,9 +406,6 @@ export default {
       poles: {
         title: 'Places other than a licensed establishment (POLEs)',
         review: RepeaterReview,
-        repeats: 'polesList',
-        singular: 'POLE',
-        enable: 'poles',
         steps: [
           {
             fields: [
@@ -435,6 +436,7 @@ export default {
           {
             component: Repeater,
             repeats: 'polesList',
+            singular: 'POLE',
             show: values => values.poles === true,
             subtitle: 'Specify the details of each POLE that you will be using.',
             intro: `If you can’t specify a grid reference for a POLE, include details that allows it to be easily identified for inspection. This could be an address of a site or a postcode of a farm.
@@ -444,12 +446,14 @@ If you can only add generic information at this stage, provide a general descrip
               {
                 name: 'title',
                 label: 'Name',
-                type: 'text'
+                type: 'text',
+                repeats: true
               },
               {
                 name: 'pole-info',
                 label: 'Details',
-                type: 'texteditor'
+                type: 'texteditor',
+                repeats: true
               }
             ]
           },
@@ -834,22 +838,23 @@ If you can only add generic information at this stage, provide a general descrip
       'action-plan': {
         title: 'Action plan',
         playback: 'project-aim',
-        repeats: 'objectives',
         review: ObjectivesReview,
         steps: [
           {
             name: 'objectives',
             title: 'Action plan - 1 of 2',
             intro: 'There are several useful resources to help you plan your experiments. It is recommended that you read the ARRIVE or PREPARE guidelines, or use the NC3Rs\' Experimental Design Assistant before answering the questions in this section.',
+            singular: 'Objective',
             component: Objectives,
-            repeat: 'objectives',
-            repeats: true,
+            repeats: 'objectives',
             fields: [
               {
                 name: 'title',
                 label: 'Title',
+                review: 'Objective title',
                 type: 'text',
-                objective: true
+                objective: true,
+                repeats: true
               },
               {
                 name: 'objective-relation',
