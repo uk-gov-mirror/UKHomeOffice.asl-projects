@@ -4,7 +4,6 @@ import { Document, Packer, Paragraph, TextRun, Numbering } from '@joefitter/docx
 import flatten from 'lodash/flatten';
 import isUndefined from 'lodash/isUndefined';
 import isNull from 'lodash/isNull';
-import map from 'lodash/map';
 import get from 'lodash/get';
 import SPECIES from '../../../constants/species';
 
@@ -215,16 +214,18 @@ const renderNode = (doc, node) => {
   }
 }
 
-const renderTextEditor = (doc, value) => {
+const renderTextEditor = (doc, value, noSeparator) => {
   const content = JSON.parse(value);
   const nodes = content.document.nodes;
 
   nodes.forEach(node => renderNode(doc, node));
 
-  renderHorizontalRule(doc);
+  if (!noSeparator) {
+    renderHorizontalRule(doc);
+  }
 };
 
-const renderRadio = (doc, field, values, value) => {
+const renderRadio = (doc, field, values, value, noSeparator) => {
   let option;
 
   if (field.options) {
@@ -234,14 +235,16 @@ const renderRadio = (doc, field, values, value) => {
   const label = option ? option.label : value;
   doc.createParagraph(label).style('body');
 
-  renderHorizontalRule(doc);
+  if (!noSeparator) {
+    renderHorizontalRule(doc);
+  }
 
   if (option && option.reveal) {
-    [].concat(option.reveal).forEach(reveal => renderField(doc, reveal, values));
+    [].concat(option.reveal).forEach(reveal => renderField(doc, reveal, values, null, true));
   }
 };
 
-const renderSpeciesSelector = (doc, values, value) => {
+const renderSpeciesSelector = (doc, values, value, noSeparator) => {
   const other = values['species-other'] || [];
   value = value || [];
   value = flatten([
@@ -268,24 +271,59 @@ const renderSpeciesSelector = (doc, values, value) => {
     doc.addParagraph(paragraph);
   });
 
-  renderHorizontalRule(doc);
+
+  if (!noSeparator) {
+    renderHorizontalRule(doc);
+  }
 };
 
-const renderSelector = (doc, value) => {
+const renderSelector = (doc, field, value, values, project, noSeparator) => {
   value = Array.isArray(value) ? value : [value];
 
+  if (field.type === 'objective-selector') {
+    const options = (project.objectives || []).map(o => o.title);
+    value = value.filter(v => options.includes(v));
+  }
+
+  if (field.type === 'location-selector') {
+    const options = [
+      ...(project.establishments || []).map(e => e.name),
+      ...(project.polesList || []).map(p => p.title)
+    ];
+    value = value.filter(v => options.includes(v));
+  }
+
+  if (!value.length) {
+    return renderNull(doc);
+  }
+
+  if (field.options) {
+    value = value.filter(v => field.options.map(o => o.value).includes(v))
+  }
+
   value.forEach(item => {
+    const opt = (field.options || []).find(o => o.value === item);
+    if (opt) {
+      item = opt.label;
+    }
     let text = new TextRun(item).size(24);
     const paragraph = new Paragraph();
     paragraph.style('body').bullet();
     paragraph.addRun(text);
     doc.addParagraph(paragraph);
+    if (opt && opt.reveal) {
+      [].concat(opt.reveal).forEach(reveal => {
+        renderField(doc, reveal, values, null, true)
+      });
+    }
   });
 
-  renderHorizontalRule(doc);
+  if (!noSeparator) {
+    renderHorizontalRule(doc);
+  }
 };
 
-const renderText = (doc, value) => {
+const renderText = (doc, value, noSeparator) => {
   if (typeof value === 'boolean') {
     value
       ? doc.createParagraph('Yes').style('body')
@@ -294,7 +332,9 @@ const renderText = (doc, value) => {
     doc.createParagraph(value).style('body');
   }
 
-  renderHorizontalRule(doc);
+  if (!noSeparator) {
+    renderHorizontalRule(doc);
+  }
 };
 
 const renderDeclaration = (/*doc, field, values, value*/) => {
@@ -307,12 +347,14 @@ const renderDuration = (doc, value) => {
   doc.createParagraph(`${value.years} ${years} ${value.months} ${months}`).style('body');
 };
 
-const renderNull = doc => {
+const renderNull = (doc, noSeparator) => {
   const paragraph = new Paragraph();
   paragraph.style('body');
   paragraph.addRun(new TextRun('No answer provided').italics());
   doc.addParagraph(paragraph);
-  renderHorizontalRule(doc);
+  if (!noSeparator) {
+    renderHorizontalRule(doc);
+  }
   return;
 }
 
@@ -320,7 +362,7 @@ const renderHorizontalRule = doc => {
   doc.createParagraph('___________________________________________________________________');
 };
 
-const renderAnimalQuantities = (doc, values) => {
+const renderAnimalQuantities = (doc, values, noSeparator) => {
   const species = [
     ...flatten((values.species || []).map(s => {
       if (s.indexOf('other') > -1) {
@@ -353,83 +395,95 @@ const renderAnimalQuantities = (doc, values) => {
   });
 
   doc.addParagraph(paragraph);
-  renderHorizontalRule(doc);
+  if (!noSeparator) {
+    renderHorizontalRule(doc);
+  }
   return;
 };
 
-const renderField = (doc, field, values) => {
+const renderField = (doc, field, values, project, noSeparator) => {
+  project = project || values;
   const value = values[field.name];
 
   if (!field.label && field.type === 'checkbox' && field.name.includes('declaration')) {
     return renderDeclaration(doc, field, values, value);
   }
 
-  doc.createParagraph(field.label).style('Question');
+  doc.createParagraph(field.review || field.label).style('Question')
+
+  if (field.hint) {
+    doc.createParagraph(field.hint).style('aside')
+  }
 
   if (field.type === 'species-selector') {
-    return renderSpeciesSelector(doc, values, value);
+    return renderSpeciesSelector(doc, values, value, noSeparator);
   }
 
   if (field.type === 'animal-quantities') {
-    return renderAnimalQuantities(doc, values);
+    return renderAnimalQuantities(doc, values, noSeparator);
   }
 
   if (isUndefined(value) || isNull(value)) {
-    return renderNull(doc);
+    return renderNull(doc, noSeparator);
   }
 
   switch (field.type) {
     case 'radio':
-      renderRadio(doc, field, values, value);
+      renderRadio(doc, field, values, value, noSeparator);
       break;
 
     case 'location-selector':
     case 'objective-selector':
     case 'checkbox':
-      renderSelector(doc, value);
+      renderSelector(doc, field, value, values, project, noSeparator);
       break;
 
     case 'text':
     case 'textarea':
     case 'declaration':
-      renderText(doc, value);
+      renderText(doc, value, noSeparator);
       break;
 
     case 'duration':
-      renderDuration(doc, value);
+      renderDuration(doc, value, noSeparator);
       break;
 
     case 'texteditor':
-      renderTextEditor(doc, value);
+      renderTextEditor(doc, value, noSeparator);
       break;
   }
 
 };
 
-const renderFields = (doc, subsection, values, fields) => {
+const renderFields = (doc, subsection, values, fields, project) => {
   if (fields) {
-    return fields.forEach(field => renderField(doc, field, values));
+    return fields.forEach(field => renderField(doc, field, values, project));
   }
 
   const steps = (subsection.steps) ? subsection.steps : [{ 'fields': subsection.fields }];
 
-  steps.forEach(step => {
-    if (step.name === 'polesList' || step.name === 'establishments' || step.name === 'objectives') {
-      (values[step.name] || []).forEach(v => {
-        (step.fields || []).forEach(field => renderField(doc, field, v));
+  steps.filter(step => !step.show || step.show(values)).forEach(step => {
+    if (step.repeats) {
+      (values[step.repeats] || []).forEach((v, index) => {
+        if (step.singular) {
+          doc.createParagraph(`${step.singular} ${index + 1}`).heading2();
+        }
+        (step.fields || []).filter(f => f.repeats).forEach(field => renderField(doc, field, v, project));
       });
+      (step.fields || []).filter(f => !f.repeats).forEach(field => renderField(doc, field, values, project));
     } else {
-      (step.fields || []).forEach(field => renderField(doc, field, values));
+      (step.fields || []).forEach(field => renderField(doc, field, values, project));
     }
   });
 }
 
-const renderProtocol = (doc, name, section, values) => {
+const renderProtocol = (doc, name, section, values, project) => {
   doc.createParagraph(section.title).style('ProtocolSectionTitle');
 
   switch (name) {
     case 'steps':
-      return (values.steps || []).forEach(stepValues => {
+      return (values.steps || []).forEach((stepValues, index) => {
+        doc.createParagraph(`Step ${index + 1} (${stepValues.optional ? 'optional' : 'mandatory'})`).heading2();
         renderFields(doc, section, stepValues);
       });
     case 'animals':
@@ -438,7 +492,7 @@ const renderProtocol = (doc, name, section, values) => {
         renderFields(doc, section, speciesValues, section.fields.filter(f => f.name !== 'species'));
       });
     default:
-      return renderFields(doc, section, values);
+      return renderFields(doc, section, values, null, project);
   }
 };
 
@@ -451,7 +505,9 @@ const renderProtocolsSection = (doc, subsection, values) => {
     }
     renderField(doc, subsection.fields[0], protocolValues);
 
-    map(subsection.sections, (section, name) => renderProtocol(doc, name, section, protocolValues))
+    Object.keys(subsection.sections)
+      .filter(k => !subsection.sections[k].show || subsection.sections[k].show(values))
+      .map(k => renderProtocol(doc, k, subsection.sections[k], protocolValues, values))
   });
 };
 
@@ -476,7 +532,7 @@ const renderSubsection = (doc, subsection, values) => {
 };
 
 const renderSection = (doc, section, values) => {
-  Object.values(section.subsections).forEach(
+  Object.values(section.subsections).filter(s => !s.show || s.show(values)).forEach(
     subsection => renderSubsection(doc, subsection, values)
   );
 };
@@ -508,7 +564,7 @@ const renderDocument = (doc, sections, values) => {
   doc.createParagraph(values.title).style('SectionTitle');
   doc.createParagraph(`Document exported on ${now}`).style('body').pageBreak();
 
-  sections.forEach(section => {
+  sections.filter(s => !s.show || s.show(values)).forEach(section => {
     if (section.name === 'nts') {
       return renderNtsSection(doc, section, values, sections);
     }

@@ -80,7 +80,7 @@ class Review extends React.Component {
 
       return (
         <ul>
-          {value.map(value => (
+          {value.filter(v => options.find(o => o.value === v)).map(value => (
             <li key={value}>{getValue(value)}</li>
           ))}
         </ul>
