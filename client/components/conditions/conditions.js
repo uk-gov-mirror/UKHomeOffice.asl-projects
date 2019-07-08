@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useState, Fragment } from 'react';
 import classnames from 'classnames';
 import ReactMarkdown from 'react-markdown';
 import { connect } from 'react-redux';
@@ -37,14 +37,14 @@ function Condition({
   const displayContent = edited || content;
 
   return (
-    <>
+    <Fragment>
       <h2>{singular} {index + 1}</h2>
       <div className={classnames('condition', { deleted })}>
         <h3>{title}</h3>
         {
           deleted
             ? (
-              <>
+              <Fragment>
                 <em>This {singular.toLowerCase()} has been removed</em>
                 <p>
                   <Button
@@ -55,10 +55,10 @@ function Condition({
                     Restore
                   </Button>
                 </p>
-              </>
+              </Fragment>
             )
             : (
-              <>
+              <Fragment>
                 {
                   editing && editConditions
                     ? <Editable
@@ -72,7 +72,7 @@ function Condition({
                     />
                   : <ReactMarkdown className="condition-text">{displayContent}</ReactMarkdown>
                 }
-              </>
+              </Fragment>
             )
         }
       </div>
@@ -97,7 +97,7 @@ function Condition({
           </p>
         )
       }
-    </>
+    </Fragment>
   );
 }
 

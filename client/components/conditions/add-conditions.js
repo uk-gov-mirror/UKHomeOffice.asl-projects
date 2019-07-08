@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from 'react';
+import React, { useState, useReducer, Fragment } from 'react';
 import { Button } from '@ukhomeoffice/react-components';
 import Condition from './condition';
 import Field from '../field';
@@ -9,10 +9,10 @@ function CustomConditions({ conditions, onUpdate, onAdd, onRemove }) {
   const handleOnUpdate = index => val => onUpdate(index, val);
 
   return (
-    <>
+    <Fragment>
       {
         conditions.map((condition, index) => (
-          <>
+          <Fragment key={index}>
             {
               index > 0 && (
                 <p>
@@ -26,13 +26,13 @@ function CustomConditions({ conditions, onUpdate, onAdd, onRemove }) {
               onChange={handleOnUpdate(index)}
               content={condition}
             />
-          </>
+        </Fragment>
         ))
       }
       <p>
         <Button className="link" onClick={onAdd}>Create another</Button>
       </p>
-    </>
+    </Fragment>
   );
 }
 
@@ -142,7 +142,7 @@ function AddConditions({
   }
 
   return (
-    <>
+    <Fragment>
       <h2>{title}</h2>
       <Field
         type="checkbox"
@@ -163,7 +163,7 @@ function AddConditions({
           </p>
         )
       }
-    </>
+    </Fragment>
   );
 }
 

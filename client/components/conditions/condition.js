@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import classnames from 'classnames';
 import ReactMarkdown from 'react-markdown';
 import Editable from '../editable';
@@ -68,7 +68,7 @@ const Condition = ({
             />
           )
           : (
-            <>
+            <Fragment>
               {
                 content && content !== ''
                   ? <ReactMarkdown id={id} className={classnames('light', { clamp: expandable && !expanded })}>{content}</ReactMarkdown>
@@ -92,7 +92,7 @@ const Condition = ({
                   </p>
                 )
               }
-            </>
+            </Fragment>
           )
       }
     </div>

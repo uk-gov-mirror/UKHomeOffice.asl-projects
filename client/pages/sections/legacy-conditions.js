@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { updateConditions, updateRetrospectiveAssessment } from '../../actions/projects';
 import AddConditions from '../../components/conditions/add-conditions';
@@ -48,11 +48,11 @@ function LegacyConditions({
   }
 
   return (
-    <>
+    <Fragment>
       {
         editConditions
           ? (
-            <>
+            <Fragment>
               <AddConditions
                 {...props}
                 controls={false}
@@ -76,10 +76,10 @@ function LegacyConditions({
                 onFieldChange={saveRetro}
                 noComments
               />
-            </>
+          </Fragment>
           )
           : (
-            <>
+            <Fragment>
               {
                 values.conditions.filter(c => c.key !== 'custom').map(condition => {
                   const content = LEGACY_CONDITIONS[condition.key];
@@ -107,10 +107,10 @@ function LegacyConditions({
                 values={values.retrospectiveAssessment}
                 noComments
               />
-            </>
+          </Fragment>
           )
       }
-    </>
+    </Fragment>
   )
 }
 

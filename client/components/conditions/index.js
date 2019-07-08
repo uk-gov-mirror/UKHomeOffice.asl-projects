@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import { connect } from 'react-redux';
 import ReactMarkdown from 'react-markdown';
 import { Button } from '@ukhomeoffice/react-components';
@@ -6,7 +6,7 @@ import { updateConditions } from '../../actions/projects';
 import Conditions from './conditions';
 import AddConditions from './add-conditions';
 
-const ConditionsPage = ({
+function ConditionsPage({
   values,
   type,
   intro,
@@ -15,7 +15,7 @@ const ConditionsPage = ({
   showConditions,
   editConditions,
   ...props
-}) => {
+}) {
   if (!showConditions) {
     return null;
   }
@@ -32,7 +32,7 @@ const ConditionsPage = ({
   }
 
   return (
-    <>
+    <Fragment>
       {
         editConditions && <ReactMarkdown className="grey">{conditions.length ? intro : emptyIntro}</ReactMarkdown>
       }
@@ -47,7 +47,7 @@ const ConditionsPage = ({
       />
       {
         editConditions && (
-          <>
+          <Fragment>
             {
               adding
                 ? <AddConditions
@@ -59,11 +59,11 @@ const ConditionsPage = ({
                 />
                 : <Button className="button-secondary" onClick={() => setAdding(!adding)}>Add more {props.title.toLowerCase()}</Button>
             }
-          </>
+          </Fragment>
         )
       }
-    </>
-  )
+    </Fragment>
+  );
 }
 
 export default connect(({ application: { showConditions, editConditions } }) => ({ showConditions, editConditions }), (dispatch, { type }) => ({

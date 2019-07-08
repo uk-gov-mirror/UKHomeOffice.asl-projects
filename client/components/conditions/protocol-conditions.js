@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import { connect } from 'react-redux';
 import uuid from 'uuid/v4';
 import { Button } from '@ukhomeoffice/react-components';
@@ -28,7 +28,7 @@ function ProtocolConditions(props) {
   }
 
   return (
-    <>
+    <Fragment>
       <p className="grey">
         {
           conditions.length
@@ -61,7 +61,7 @@ function ProtocolConditions(props) {
             }
           </Button>
       }
-    </>
+    </Fragment>
   )
 }
 
