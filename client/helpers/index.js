@@ -20,7 +20,7 @@ export const getConditions = (values, conditions, project) => {
         path: condition.path
       })
     } else if (condition.include && condition.include(values, project)) {
-      newConditions.push({ key: condition.key, path });
+      newConditions.push({ key: condition.key, path, type: condition.type });
     }
   });
 

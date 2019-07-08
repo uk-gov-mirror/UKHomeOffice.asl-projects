@@ -3,7 +3,7 @@ import RepeaterReview from '../../pages/sections/repeater/review';
 
 import Protocols from '../../pages/sections/protocols';
 import ProtocolsReview from '../../pages/sections/protocols/review';
-import OtherLegalText from '../../pages/sections/other-legal-text';
+import LegacyConditions from '../../pages/sections/legacy-conditions';
 import LEGACY_SPECIES from '../../constants/legacy-species';
 
 export default {
@@ -563,7 +563,9 @@ export default {
     subsections: {
       'additional-conditions': {
         title: 'Additional conditions',
-        review: OtherLegalText,
+        review: LegacyConditions,
+        singular: 'Additional condition',
+        customTitle: 'Special conditions for this licence',
         fields: [
           {
             name: 'retrospective-assessment-required',

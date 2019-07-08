@@ -137,52 +137,39 @@ export function updateRetrospectiveAssessment(retrospectiveAssessment) {
   }
 }
 
-export function updateInspectorConditions(inspectorAdded) {
+export function updateConditions(type, conditions, protocolId) {
   return (dispatch, getState) => {
     const state = getState();
-    const conditions = [
-      ...inspectorAdded,
-      ...(state.project.conditions || []).filter(condition => !condition.inspectorAdded)
-    ];
-    return doConditionsUpdate({ conditions }, dispatch, state)
-      .then(() => {
-        const newState = {
-          ...state.project,
-          conditions
-        }
-        dispatch(updateProject(newState));
-        dispatch(updateSavedProject(newState));
-        dispatch(showMessage('Condition/authorisation updated'))
-      })
-  }
-}
+    const newConditions = !protocolId
+      ? [
+        ...(state.project.conditions || []).filter(condition => condition.type !== type),
+        ...conditions
+      ]
+      : [
+        ...((state.project.protocols || [])
+          .find((p => p.id === protocolId) || {}).conditions || []).filter(condition => condition.type !== type),
+        ...conditions
+      ]
+    const data = type === 'legacy'
+      ? { conditions }
+      : { conditions: newConditions, protocolId }
 
-export function updateConditions(conditions, protocolId) {
-  return (dispatch, getState) => {
-    const state = getState();
-    const data = {
-      conditions: [
-        ...(state.project.conditions || []).filter(condition => condition.inspectorAdded),
-        ...conditions.filter(condition => !condition.inspectorAdded)
-      ],
-      protocolId
+    const newState = cloneDeep(state.project);
+    if (protocolId) {
+      newState.protocols = newState.protocols.map(protocol => {
+        if (protocol.id === protocolId) {
+          return { ...protocol, conditions: newConditions }
+        }
+        return protocol;
+      })
+    } else {
+      newState.conditions = type === 'legacy' ? conditions : newConditions;
     }
+    dispatch(updateProject(newState));
     return doConditionsUpdate(data, dispatch, state)
       .then(() => {
-        const newState = cloneDeep(state.project);
-        if (protocolId) {
-          newState.protocols = newState.protocols.map(protocol => {
-            if (protocol.id === protocolId) {
-              return { ...protocol, conditions }
-            }
-            return protocol;
-          })
-        } else {
-          newState.conditions = conditions;
-        }
-        dispatch(updateProject(newState));
         dispatch(updateSavedProject(newState));
-        dispatch(showMessage('Condition/authorisation updated'))
+        dispatch(showMessage(`${type === 'condition' ? 'Conditions': 'Authorisations'} synced`))
       })
   }
 }

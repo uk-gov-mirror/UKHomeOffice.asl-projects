@@ -16,8 +16,7 @@ import Section from './section';
 import Steps from './steps';
 import Animals from './animals';
 import LegacyAnimals from './legacy-animals';
-import Conditions from '../../../components/conditions';
-import { updateConditions } from '../../../actions/projects';
+import Conditions from '../../../components/conditions/protocol-conditions';
 
 const getSection = (section, props) => {
   switch(section) {
@@ -29,8 +28,14 @@ const getSection = (section, props) => {
         : <Animals {...props} />
     case 'conditions':
       return <Conditions
-        type="protocol"
-        saveConditions={props.updateProtocolConditions}
+        {...props}
+        type='condition'
+        conditions={props.values.conditions}
+      />
+    case 'authorisations':
+      return <Conditions
+        {...props}
+        type='authorisation'
         conditions={props.values.conditions}
       />
     default:
@@ -98,7 +103,7 @@ const ProtocolSections = ({ sections, protocolState, editable, newComments, ...p
   <Accordion openOne scrollToActive open={getOpenSection(protocolState, editable, sections)}>
     {
       Object.keys(sections).filter(section => !sections[section].show || sections[section].show(props)).map((section, sectionIndex) => (
-        <ExpandingPanel alwaysUpdate={section === 'conditions'} key={section} title={getTitle(sections[section], newComments, props.values)}>
+        <ExpandingPanel alwaysUpdate={section === 'conditions' || section === 'authorisations'} key={section} title={getTitle(sections[section], newComments, props.values)}>
           {
             getSection(section, { ...props, protocolState, editable, ...sections[section], sectionsLength: size(sections), sectionIndex })
           }
@@ -109,10 +114,5 @@ const ProtocolSections = ({ sections, protocolState, editable, newComments, ...p
 )
 
 const mapStateToProps = ({ application: { schemaVersion, showConditions } }) => ({ schemaVersion, showConditions });
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    updateProtocolConditions: conditions => dispatch(updateConditions(conditions, ownProps.values.id))
-  }
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProtocolSections);
+export default connect(mapStateToProps)(ProtocolSections);
