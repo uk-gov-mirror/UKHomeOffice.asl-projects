@@ -62,23 +62,50 @@ const ProjectSummary = ({
       <div className="granted-section">
         <h3>Project location</h3>
         <p className="legal">You are authorised to undertake this programme of scientific procedures at the following places:</p>
-        <ul>
-          <li>
-            <h3>Primary establishment</h3>
-            <p>{ name }</p>
-            <dl className="inline">
-              <dt>Establishment licence number: </dt>
-              <dd>{ licenceNumber }</dd>
-              <dt>Establishment licence holder: </dt>
-              <dd>{firstName} {lastName}</dd>
-              <dt>Address: </dt>
-              <dd>{ address }</dd>
-            </dl>
-          </li>
-          {
-            values.establishments && values.establishments.map((e, i) => <li key={i}>{e.name}</li>)
-          }
-        </ul>
+        <div className="granted-section">
+          <h3>Primary establishment</h3>
+          <p>{ name }</p>
+          <dl className="inline">
+            <dt>Establishment licence number: </dt>
+            <dd>{ licenceNumber }</dd>
+            <dt>Establishment licence holder: </dt>
+            <dd>{firstName} {lastName}</dd>
+            <dt>Address: </dt>
+            <dd>{ address }</dd>
+          </dl>
+        </div>
+        {
+          values.establishments && !!values.establishments.length && (
+            <div className="granted-section">
+              <h3>Additional establishments</h3>
+              <ul>
+                {
+                  values.establishments.map((e, i) => <li><strong>{e['establishment-name']}</strong></li>)
+                }
+              </ul>
+            </div>
+          )
+        }
+        {
+          values.polesList && !!values.polesList.length && (
+            <div className="granted-section">
+              <h3>Places other than a licensed establishment (POLEs):</h3>
+              <ul>
+                {
+                  values.polesList.map((p, i) => (
+                    <li>
+                      <strong>{p.title}</strong><br />
+                      <Review
+                        type="texteditor"
+                        value={p['pole-info']}
+                      />
+                    </li>
+                  ))
+                }
+              </ul>
+            </div>
+          )
+        }
       </div>
       <div className="granted-section">
         <h3>Granted authority</h3>
