@@ -85,7 +85,7 @@ class Review extends React.Component {
 
       return (
         <ul>
-          {value.filter(v => options.find(o => o.value === v)).map(value => (
+          {value.filter(v => (options || []).find(o => o.value === v)).map(value => (
             <li key={value}>{getValue(value)}</li>
           ))}
         </ul>
@@ -113,7 +113,7 @@ class Review extends React.Component {
       ].map(s => {
         const opt = flatten(values(speciesOptions)).find(species => species.value === s);
         return {
-          key: species && species.value,
+          key: s && s.value,
           title: opt ? opt.label : s,
           value: this.props.project[`${this.props.name}-${s}`]
         }

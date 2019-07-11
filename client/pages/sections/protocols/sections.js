@@ -5,6 +5,7 @@ import pick from 'lodash/pick';
 import pickBy from 'lodash/pickBy';
 import size from 'lodash/size';
 import flatten from 'lodash/flatten';
+import isUndefined from 'lodash/isUndefined';
 
 import Accordion from '../../../components/accordion';
 import ExpandingPanel from '../../../components/expanding-panel';
@@ -103,7 +104,7 @@ const getTitle = (section, newComments, values) => (
 )
 
 const sortGranted = (sections, isGranted) => (a, b) => {
-  if (!isGranted || !sections[a].granted) {
+  if (!isGranted || isUndefined(sections[a].granted)) {
     return true;
   }
   return sections[a].granted.order - sections[b].granted.order;
@@ -112,7 +113,7 @@ const sortGranted = (sections, isGranted) => (a, b) => {
 const ProtocolSections = ({ sections, protocolState, editable, newComments, ...props }) => (
   <Accordion openOne scrollToActive open={getOpenSection(protocolState, editable, sections)}>
     {
-      Object.keys(sections).sort(sortGranted(sections)).filter(section => !sections[section].show || sections[section].show(props)).map((section, sectionIndex) => (
+      Object.keys(sections).sort(sortGranted(sections, props.isGranted)).filter(section => !sections[section].show || sections[section].show(props)).map((section, sectionIndex) => (
         <ExpandingPanel alwaysUpdate={section === 'conditions' || section === 'authorisations'} key={section} title={getTitle(sections[section], newComments, props.values)}>
           {
             getSection(section, { ...props, protocolState, editable, ...sections[section], sectionsLength: size(sections), sectionIndex })
