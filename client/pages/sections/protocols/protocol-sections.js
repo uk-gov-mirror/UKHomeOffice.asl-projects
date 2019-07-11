@@ -43,17 +43,22 @@ class ProtocolSections extends PureComponent {
       sections,
       updateItem,
       editable,
-      newComments
+      newComments,
+      readonly
     } = this.props;
 
     const severityField = sections.details.fields.find(field => field.name === 'severity');
-    const severityOption = severityField.options && severityField.options.find(option => option.value === values.severity);
+    const severityOption = (severityField.options.find(option => option.value === values.severity) || {}).label;
 
     const numberOfNewComments = Object.values(newComments)
       .reduce((total, comments) => total + (comments || []).length, 0);
 
+    const speciesDetails = values.speciesDetails && values.speciesDetails.filter(s => s.name);
+
+    const na = <em>No answer provided</em>;
+
     return (
-      <section className={classnames('protocol', { complete: values.complete })}>
+      <section className={classnames('protocol', { complete: values.complete || readonly, readonly })}>
         <NewComments comments={numberOfNewComments} />
         <Expandable expanded={this.state.expanded} onHeaderClick={this.toggleExpanded}>
           <Completable status={values.complete ? 'complete' : 'incomplete'}>
@@ -61,11 +66,44 @@ class ProtocolSections extends PureComponent {
             {
               editable && <a href="#" className="inline-block" onClick={this.toggleActive}>Edit title</a>
             }
-            { severityOption &&
-              <dl className="inline">
-                <dt>Severity category: </dt>
-                <dd className="grey">{severityOption.label}</dd>
-              </dl>
+            <dl className="inline">
+              <dt>Severity category: </dt>
+              <dd className="grey">
+                {
+                  severityOption
+                    ? <strong>{severityOption}</strong>
+                    : <em>No answer provided</em>
+                }
+              </dd>
+            </dl>
+            {
+              values.gaas && <p>This protocol uses genetically altered (GA) animals</p>
+            }
+            {
+              speciesDetails && !!speciesDetails.length && (
+                <table className="govuk-table">
+                  <thead>
+                    <tr>
+                      <th>Animal types</th>
+                      <th>Est. max. no. of animals</th>
+                      <th>Max. no. of uses per animal</th>
+                      <th>Life stages</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {
+                      speciesDetails.map(species => (
+                        <tr key={species.id}>
+                          <td>{species.name}</td>
+                          <td>{species['maximum-animals'] || na}</td>
+                          <td>{species['maximum-times-used'] || na}</td>
+                          <td>{(species['life-stages'] || []).join(', ') || na}</td>
+                        </tr>
+                      ))
+                    }
+                  </tbody>
+                </table>
+              )
             }
           </Completable>
           <div>

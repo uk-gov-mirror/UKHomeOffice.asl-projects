@@ -3,6 +3,22 @@
 $light-green: #26A197;
 $pink: #ff1493;
 
+@mixin sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+}
+
+@mixin icon {
+  content: '';
+  margin-right: 0.5em;
+  background-size: 100%;
+  vertical-align: middle;
+  display: inline-block;
+  width: 1.2em;
+  height: 1.2em;
+}
+
 @mixin purple-inset {
   border-left: 8px solid $ho-brand;
   padding-left: $govuk-gutter-half;
@@ -201,14 +217,68 @@ html.modal-open, html.modal-open body {
     font-size: 0.8em;
   }
 
+  .legal {
+    font-size: 0.9em;
+  }
+
   .larger {
     font-size: 1.2em;
+  }
+
+  .granted-page {
+    &.action-plan {
+      .hint {
+        display: none;
+      }
+
+      hr {
+        display: none;
+      }
+
+      .review {
+        margin-bottom: $govuk-gutter * 2;
+      }
+
+      .objective-review {
+        h2 {
+          @extend h3;
+        }
+
+        .review {
+          h3 {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+
+  .granted-section {
+    margin-bottom: $govuk-gutter * 2;
+
+    .playback {
+      padding: 0;
+      border: none;
+    }
+  }
+
+  dl.inline {
+    margin: 0;
+    > * {
+      margin: 0;
+      padding: 0;
+      width: auto;
+    }
   }
 
   .no-wrap {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  .est-title {
+    margin-bottom: $govuk-gutter;
   }
 
   .protocols-section {
@@ -668,6 +738,19 @@ html.modal-open, html.modal-open body {
     }
   }
 
+  .protocol.readonly {
+    .expanding-panel {
+      header {
+        background-color: white;
+      }
+
+      .content {
+        padding: 0;
+        margin: 0;
+      }
+    }
+  }
+
   .accordion {
     margin-bottom: $govuk-gutter;
   }
@@ -730,17 +813,49 @@ html.modal-open, html.modal-open body {
     }
   }
 
+  .download-header {
+    background-color: white;
+    border-bottom: 4px solid $blue;
+    margin-bottom: $govuk-gutter;
+    padding: $govuk-gutter-half;
+
+    h3 {
+      margin-bottom: 0;
+    }
+
+    .govuk-grid-column-one-quarter {
+      border-left: 1px solid $dark-grey;
+
+      .download {
+        font-size: 1em;
+      }
+    }
+  }
+
   .sidebar-nav {
     border-top: 4px solid $blue;
+    background-color: white;
+
+    &.sticky {
+      @include sticky;
+    }
 
     > a {
       display: block;
       padding: $govuk-gutter-half;
       text-decoration: none;
 
+      > h3 {
+        margin-bottom: 0;
+      }
+
       &.active {
         background-color: $blue;
         color: $white;
+
+        h3 {
+          color: white;
+        }
       }
     }
   }
@@ -749,9 +864,7 @@ html.modal-open, html.modal-open body {
     display: flex;
 
     > nav {
-      position: -webkit-sticky;
-      position: sticky;
-      top: 0;
+      @include sticky;
       align-self: flex-start;
       flex-shrink: 0;
     }
@@ -773,18 +886,39 @@ html.modal-open, html.modal-open body {
     }
   }
 
+  .granted-header {
+    .download-granted {
+      &:before {
+        @include icon;
+        background-image: $download;
+      }
+    }
+  }
+
+  .granted-step {
+    .header {
+      background-color: $ho-brand;
+      color: white;
+      padding: $govuk-gutter-half;
+
+      h2 {
+        color: white;
+      }
+    }
+
+    .body {
+      background-color: $light-grey;
+      padding: $govuk-gutter-half;
+      border-bottom: 4px solid $ho-brand;
+    }
+  }
+
   .download {
     font-size: 1.2em;
     margin-left: 0.5em;
     &:before {
-      content: '';
-      margin-right: 0.5em;
-      background: $download;
-      background-size: 100%;
-      vertical-align: middle;
-      display: inline-block;
-      width: 1.2em;
-      height: 1.2em;
+      @include icon;
+      background-image: $download;
     }
     + .download {
       border-left: 1px solid;
@@ -902,6 +1036,10 @@ html.modal-open, html.modal-open body {
       }
     }
 
+  }
+
+  .back-to-top {
+    text-align: center;
   }
 
   .comments.expanding-panel {

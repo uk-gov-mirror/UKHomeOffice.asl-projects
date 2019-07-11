@@ -19,6 +19,9 @@ import LegacyAnimals from './legacy-animals';
 import Conditions from '../../../components/conditions/protocol-conditions';
 
 const getSection = (section, props) => {
+  if (props.isGranted && props.granted && props.granted.review) {
+    return <props.granted.review {...props} />
+  }
   switch(section) {
     case 'steps':
       return <Steps {...props} />
@@ -99,10 +102,17 @@ const getTitle = (section, newComments, values) => (
   </Fragment>
 )
 
+const sortGranted = (sections, isGranted) => (a, b) => {
+  if (!isGranted || !sections[a].granted) {
+    return true;
+  }
+  return sections[a].granted.order - sections[b].granted.order;
+}
+
 const ProtocolSections = ({ sections, protocolState, editable, newComments, ...props }) => (
   <Accordion openOne scrollToActive open={getOpenSection(protocolState, editable, sections)}>
     {
-      Object.keys(sections).filter(section => !sections[section].show || sections[section].show(props)).map((section, sectionIndex) => (
+      Object.keys(sections).sort(sortGranted(sections)).filter(section => !sections[section].show || sections[section].show(props)).map((section, sectionIndex) => (
         <ExpandingPanel alwaysUpdate={section === 'conditions' || section === 'authorisations'} key={section} title={getTitle(sections[section], newComments, props.values)}>
           {
             getSection(section, { ...props, protocolState, editable, ...sections[section], sectionsLength: size(sections), sectionIndex })
@@ -113,6 +123,19 @@ const ProtocolSections = ({ sections, protocolState, editable, newComments, ...p
   </Accordion>
 )
 
-const mapStateToProps = ({ application: { schemaVersion, showConditions } }) => ({ schemaVersion, showConditions });
+const mapStateToProps = ({
+  application: {
+    schemaVersion,
+    showConditions,
+    isGranted
+  }
+}, { sections }) => ({
+  schemaVersion,
+  showConditions,
+  isGranted,
+  sections: isGranted
+    ? pickBy(sections, section => section.granted)
+    : sections
+});
 
 export default connect(mapStateToProps)(ProtocolSections);

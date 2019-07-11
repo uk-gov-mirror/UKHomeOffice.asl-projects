@@ -8,6 +8,17 @@ import RepeaterReview from '../../pages/sections/repeater/review';
 import Conditions from '../../pages/sections/conditions';
 import Authorisations from '../../pages/sections/authorisations';
 
+// granted components
+import ProjectSummary from '../../pages/sections/granted/project-summary';
+import GrantedConditions from '../../pages/sections/granted/conditions';
+import GrantedAuthorisations from '../../pages/sections/granted/authorisations';
+import ActionPlan from '../../pages/sections/granted/action-plan';
+import Continued from '../../pages/sections/granted/protocol-continued';
+import Purpose from '../../pages/sections/granted/protocol-purpose';
+import ProtocolEstablishments from '../../pages/sections/granted/protocol-establishments';
+
+import GrantedSteps from '../../pages/sections/granted/protocol-steps';
+
 import SPECIES from '../../constants/species';
 
 import intersection from 'lodash/intersection';
@@ -20,7 +31,22 @@ export default {
     subsections: {
       introduction: {
         title: 'Introductory details',
+        grantedTitle: 'Project summary',
         nts: true,
+        granted: {
+          order: 0,
+          title: 'Project summary',
+          review: ProjectSummary,
+          licenceHolderLegal: `This **PROJECT LICENCE** allows the holder to carry out a programme of scientific procedures on living animals under the powers vested in him/her by the **ANIMALS (SCIENTIFIC PROCEDURES) ACT 1986.**
+
+The Secretary of State hereby licences the project licence holder to carry out the programme of work specified in the Schedule, subject to the restrictions and provisions contained in the Act and subject also to the limitations and conditions contained in this licence and to any other conditions that the Secretary of State may from time to time prescribe.`,
+          grantedAuthority: `This licence has been granted on the basis of information provided in an application for this licence.
+
+Under this project licence numbered PD11GH5BB the Secretary of State grants authority only for:
+* work to meet the aim of project specified on the Schedule;
+* the procedures and types of animal types specified in the Schedule; and
+* work at the place or places specified in the Schedule`
+        },
         fields: [
           {
             name: 'title',
@@ -837,6 +863,10 @@ If you can only add generic information at this stage, provide a general descrip
       },
       'action-plan': {
         title: 'Action plan',
+        granted: {
+          order: 3,
+          review: ActionPlan
+        },
         playback: 'project-aim',
         review: ObjectivesReview,
         steps: [
@@ -1206,6 +1236,9 @@ each other.`,
     subsections: {
       protocols: {
         title: 'Protocols',
+        granted: {
+          order: 4
+        },
         name: 'protocols',
         component: Protocols,
         review: ProtocolsReview,
@@ -1280,6 +1313,22 @@ each other.`,
                 type: 'texteditor'
               }
             ]
+          },
+          purpose: {
+            title: 'Purpose and outputs',
+            show: props => props.isGranted,
+            granted: {
+              order: 2,
+              review: Purpose
+            }
+          },
+          establishments: {
+            title: 'Establishments or POLEs',
+            show: props => props.isGranted,
+            granted: {
+              order: 3,
+              review: ProtocolEstablishments
+            }
           },
           animals: {
             title: 'Animals used in this protocol',
@@ -1390,6 +1439,9 @@ each other.`,
           },
           gaas: {
             title: 'Genetically altered animals (GAA)',
+            granted: {
+              order: 4
+            },
             fields: [
               {
                 name: 'gaas',
@@ -1447,11 +1499,23 @@ each other.`,
               }
             ]
           },
+          continued: {
+            show: props => props.isGranted,
+            title: 'Continued use and re-use',
+            granted: {
+              order: 5,
+              review: Continued
+            }
+          },
           steps: {
             title: 'Steps',
             hint: 'A step can be a single procedure or a combination of procedures to achieve an outcome. You will be able to reorder your steps at any time before you send your application to the Home Office, but they should be broadly chronological, with the final step being a method of killing or the last regulated procedure.',
             footer: 'Once you’ve created a list of steps, you need to add information about adverse effects, controls and limitations, and humane endpoints to each one.​',
             repeats: 'step',
+            granted: {
+              order: 6,
+              review: GrantedSteps
+            },
             fields: [
               {
                 name: 'title',
@@ -1534,6 +1598,9 @@ each other.`,
           },
           experience: {
             title: 'Animal experience',
+            granted: {
+              order: 7
+            },
             fields: [
               {
                 name: 'experience-summary',
@@ -1551,6 +1618,9 @@ each other.`,
           },
           experimentalDesign: {
             title: 'Experimental design',
+            granted: {
+              order: 8
+            },
             fields: [
               {
                 name: 'quantitative-data',
@@ -1637,6 +1707,9 @@ each other.`,
           justification: {
             title: 'Protocol justification',
             label: 'Why is each type of animal, experimental model, and/or method selected for this protocol:',
+            granted: {
+              order: 9
+            },
             fields: [
               {
                 name: 'most-appropriate',
@@ -1698,6 +1771,9 @@ each other.`,
           },
           fate: {
             title: 'Fate of animals',
+            granted: {
+              order: 10
+            },
             fields: [
               {
                 name: 'fate',
@@ -1758,13 +1834,19 @@ each other.`,
             title: 'Additional conditions',
             show: props => props.showConditions,
             singular: 'Additional condition',
-            items: 'Additional conditions'
+            items: 'Additional conditions',
+            granted: {
+              order: 0
+            }
           },
           authorisations: {
             title: 'Authorisations',
             show: props => props.showConditions,
             singular: 'Authorisation',
-            items: 'Authorisations'
+            items: 'Authorisations',
+            granted: {
+              order: 1
+            }
           }
         }
       },
@@ -2055,6 +2137,10 @@ each other.`,
       },
       'animals-taken-from-the-wild': {
         title: 'Animals taken from the wild',
+        granted: {
+          order: 5,
+          show: values => values['wild-animals'] === true
+        },
         steps: [
           {
             title: 'Animals taken from the wild - 1 of 2',
@@ -2692,6 +2778,15 @@ each other.`,
     subsections: {
       conditions: {
         title: 'Additional conditions',
+        granted: {
+          order: 1,
+          review: GrantedConditions,
+          title: 'Conditions',
+          subtitle: 'Additional conditions',
+          intro: `These additional conditions apply to the project as a whole.
+
+Additional conditions that are specific to a set of procedures can be found in each protocol.`
+        },
         addMore: 'Add more conditions',
         intro: `Additional conditions have been added automatically according to the selections made by the applicant.
 
@@ -2712,6 +2807,13 @@ If you want to add a condition, you will need to create one.`,
     subsections: {
       authorisations: {
         title: 'Authorisations',
+        granted: {
+          order: 2,
+          review: GrantedAuthorisations,
+          intro: `These authorisations apply to the project as a whole.
+
+Authorisations that are specific to a set of procedures can be found in each protocol.`
+        },
         addMore: 'Add more authorisations',
         intro: `Authorisations have been added automatically according to the selections made by the applicant.
 
