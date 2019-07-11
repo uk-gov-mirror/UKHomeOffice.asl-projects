@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import Field from './field';
 
 const LocationSelector = ({
+  establishment,
   establishments,
   poles,
   ...props
@@ -15,6 +16,7 @@ const LocationSelector = ({
       type="checkbox"
       className="smaller"
       options={[
+        establishment.name,
         ...establishments,
         ...poles
       ]}
@@ -25,7 +27,8 @@ const LocationSelector = ({
   </div>
 )
 
-const mapStateToProps = ({ project }) => ({
+const mapStateToProps = ({ project, application: { establishment } }) => ({
+  establishment,
   establishments: (project.establishments || []).filter(e => e['establishment-name']).map(e => e['establishment-name']),
   poles: (project.polesList || []).filter(p => p.title).map(p => p.title)
 });
