@@ -80,7 +80,7 @@ const ProjectSummary = ({
               <h3>Additional establishments</h3>
               <ul>
                 {
-                  values.establishments.map((e, i) => <li><strong>{e['establishment-name']}</strong></li>)
+                  values.establishments.map((e, i) => <li key={i}><strong>{e['establishment-name']}</strong></li>)
                 }
               </ul>
             </div>
@@ -93,7 +93,7 @@ const ProjectSummary = ({
               <ul>
                 {
                   values.polesList.map((p, i) => (
-                    <li>
+                    <li key={i}>
                       <strong>{p.title}</strong><br />
                       <Review
                         type="texteditor"
