@@ -6,7 +6,7 @@ import map from 'lodash/map';
 
 export const getConditions = (values, conditions, project) => {
   const customConditions = (values.conditions || [])
-    .filter(condition => condition.edited);
+    .filter(condition => condition.autoAdded && condition.edited);
 
   const newConditions = [];
   conditions = map(conditions, (condition, key) => ({ ...condition, key }))
@@ -20,11 +20,19 @@ export const getConditions = (values, conditions, project) => {
         path: condition.path
       })
     } else if (condition.include && condition.include(values, project)) {
-      newConditions.push({ key: condition.key, path, type: condition.type });
+      newConditions.push({
+        path,
+        key: condition.key,
+        type: condition.type,
+        autoAdded: true
+      });
     }
   });
 
-  return newConditions;
+  return [
+    ...(values.conditions || []).filter(condition => !condition.autoAdded),
+    ...newConditions
+  ];
 }
 
 export const getScrollPos = (elem, offset = 0) => {

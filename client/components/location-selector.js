@@ -20,13 +20,13 @@ const LocationSelector = ({
       ]}
       noComments={true}
     />
-    <Link to="/settings">Add new establishment</Link>
+    <Link to="../establishments">Add new establishment</Link>
     <Link to="../poles">Add new POLE</Link>
   </div>
 )
 
 const mapStateToProps = ({ project }) => ({
-  establishments: (project.establishments || []).filter(e => e.name).map(e => e.name),
+  establishments: (project.establishments || []).filter(e => e['establishment-name']).map(e => e['establishment-name']),
   poles: (project.polesList || []).filter(p => p.title).map(p => p.title)
 });
 

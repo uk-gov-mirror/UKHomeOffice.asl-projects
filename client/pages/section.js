@@ -16,6 +16,7 @@ const mapStateToProps = ({ project, application: { schemaVersion, readonly, esta
   section.fields = section.fields || [];
 
   return {
+    isLegacy: schemaVersion === 0,
     project,
     establishment,
     readonly,
@@ -69,7 +70,12 @@ class Section extends React.Component {
               data = { [data]: value };
             }
             const conditions = getConditions({ ...this.props.project, ...data }, CONDITIONS.project);
-            return this.props.update({ ...data, conditions });
+
+            this.props.update(data);
+
+            if (!this.props.isLegacy) {
+              this.props.update({ conditions })
+            }
           }}
           exit={ () => this.props.history.push('/') }
           fields={ fields }
