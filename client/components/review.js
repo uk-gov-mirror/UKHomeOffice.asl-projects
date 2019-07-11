@@ -137,7 +137,6 @@ class Review extends React.Component {
     }
     if (this.props.type === 'texteditor' && this.props.value) {
       if (this.props.value !== JSON.stringify(Value.fromJSON(initialValue).toJSON())) {
-        // console.log(this.props.value, JSON.stringify(Value.fromJSON(initialValue)))
         return <TextEditor {...this.props} readOnly={true} />;
       } else {
         value = null;
