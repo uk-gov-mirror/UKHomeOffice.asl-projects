@@ -28,6 +28,18 @@ import Comments from './comments';
 
 class Field extends Component {
 
+  state = {
+    value: this.props.value
+  }
+
+  onFieldChange = value => {
+    this.setState({ value }, this.save)
+  }
+
+  save = () => {
+    this.onChange(this.state.value);
+  }
+
   onChange = value => {
     return Promise.resolve()
       .then(() => {
@@ -67,6 +79,8 @@ class Field extends Component {
     if (!this.props.show) {
       return null;
     }
+    const { value } = this.state;
+
     const { label, hint } = this.props.altLabels ? this.props.alt : this.props;
     if (this.props.fallbackLink && this.props.options && !this.props.options.length) {
       return <a href={this.props.fallbackLink.url}>{this.props.fallbackLink.label}</a>
@@ -94,8 +108,8 @@ class Field extends Component {
         error={ this.props.error }
         min={ this.props.min }
         max={ this.props.max }
-        value={ this.props.value }
-        onChange={ val => this.onChange(val) }
+        value={ value }
+        onChange={ val => this.onFieldChange(val) }
       />;
     }
     if (this.props.type === 'select') {
@@ -105,9 +119,9 @@ class Field extends Component {
         hint={ hint }
         name={ this.props.name }
         options={ this.props.options }
-        value={ this.props.value }
+        value={ value }
         error={ this.props.error }
-        onChange={ e => this.onChange(e.target.value) }
+        onChange={ e => this.onFieldChange(e.target.value) }
       />;
     }
     if (this.props.type === 'date') {
@@ -116,9 +130,9 @@ class Field extends Component {
         label={ label }
         hint={ hint }
         name={ this.props.name }
-        value={ this.props.value || '' }
+        value={ value || '' }
         error={ this.props.error }
-        onChange={value => this.onChange(value) }
+        onChange={value => this.onFieldChange(value) }
       />
     }
     if (this.props.type === 'radio') {
@@ -128,7 +142,7 @@ class Field extends Component {
         hint={ hint }
         name={ this.props.name }
         options={ this.mapOptions(this.props.options) }
-        value={ this.props.value }
+        value={ value }
         error={ this.props.error }
         inline={ this.props.inline }
         onChange={ e => {
@@ -139,7 +153,7 @@ class Field extends Component {
           if (val === 'false') {
             val = false;
           }
-          this.onChange(val)
+          this.onFieldChange(val)
         }}
       />;
     }
@@ -150,15 +164,15 @@ class Field extends Component {
         hint={ hint }
         name={ this.props.name }
         options={ this.mapOptions(this.props.options) }
-        value={ this.props.value }
+        value={ value }
         error={ this.props.error }
         inline={ this.props.inline }
         onChange={ e => {
-          const values = [ ...(this.props.value || []) ];
+          const values = [ ...(value || []) ];
           if (values.includes(e.target.value)) {
             return this.onChange(values.filter(v => v !== e.target.value));
           }
-          this.onChange([ ...values, e.target.value ]);
+          this.onFieldChange([ ...values, e.target.value ]);
         }}
       />;
     }
@@ -168,9 +182,9 @@ class Field extends Component {
         label={ label }
         hint={ hint }
         name={ this.props.name }
-        value={ this.props.value || '' }
+        value={ value || '' }
         error={ this.props.error }
-        onChange={ e => this.onChange(e.target.value) }
+        onChange={ e => this.onFieldChange(e.target.value) }
       />;
     }
     if (this.props.type === 'texteditor') {
@@ -178,9 +192,9 @@ class Field extends Component {
         name={ this.props.name }
         label={ label }
         hint={ hint }
-        value={ this.props.value }
+        value={ value }
         error={ this.props.error }
-        onChange={ this.onChange }
+        onChange={ this.onFieldChange }
       />;
     }
     if (this.props.type === 'declaration') {
@@ -193,9 +207,9 @@ class Field extends Component {
         className="smaller"
         name={this.props.name}
         hint={hint}
-        value={this.props.value}
+        value={value}
         error={this.props.error}
-        onChange={ e => this.onChange(e.target.checked) }
+        onChange={ e => this.onFieldChange(e.target.checked) }
       />
     }
     return <Input
@@ -204,9 +218,9 @@ class Field extends Component {
       label={ label }
       hint={ hint }
       name={ this.props.name }
-      value={ this.props.value || '' }
+      value={ value || '' }
       error={ this.props.error }
-      onChange={ e => this.onChange(e.target.value) }
+      onChange={ e => this.onFieldChange(e.target.value)}
     />;
   }
 }
