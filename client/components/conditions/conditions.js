@@ -120,7 +120,7 @@ class Conditions extends Component {
         }
       }
       return condition;
-    })
+    });
     return this.props.saveConditions(conditions)
       .then(() => this.setState({ updating: false }))
   }

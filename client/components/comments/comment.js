@@ -6,6 +6,8 @@ import ReactMarkdown from 'react-markdown';
 import { Button } from '@ukhomeoffice/react-components';
 import { deleteComment } from '../../actions/comments';
 
+import { DATE_FORMAT } from '../../constants';
+
 const Comment = ({
   field,
   author,
@@ -22,7 +24,7 @@ const Comment = ({
     <div className="header">
       <strong>{`${index + 1}. ${author}`}</strong>
       {
-        !deleted && <span className="float-right">{ createdAt ? format(createdAt, 'DD/MM/YYYY') : 'New' }</span>
+        !deleted && <span className="float-right">{ createdAt ? format(createdAt, DATE_FORMAT.short) : 'New' }</span>
       }
     </div>
     <div className="content">

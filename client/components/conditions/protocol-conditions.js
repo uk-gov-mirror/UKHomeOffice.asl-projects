@@ -43,28 +43,34 @@ function ProtocolConditions(props) {
         scope="protocol"
       />
       {
-        adding
-          ? (
-            <Editable
-              onSave={handleSave}
-              onCancel={setAdding.bind(null, false)}
-            />
-          )
-          : <Button
-            className="button-secondary"
-            onClick={setAdding.bind(null, true)}
-          >
+        props.editConditions && (
+          <Fragment>
             {
-              conditions.length
-                ? `Add another ${props.singular.toLowerCase()}`
-                : `Add ${props.singular.toLowerCase()}`
+              adding
+                ? (
+                  <Editable
+                    onSave={handleSave}
+                    onCancel={setAdding.bind(null, false)}
+                  />
+                )
+                : <Button
+                  className="button-secondary"
+                  onClick={setAdding.bind(null, true)}
+                >
+                  {
+                    conditions.length
+                      ? `Add another ${props.singular.toLowerCase()}`
+                      : `Add ${props.singular.toLowerCase()}`
+                  }
+                </Button>
             }
-          </Button>
+          </Fragment>
+        )
       }
     </Fragment>
   )
 }
 
-export default connect(null, (dispatch, { type, values: { id } }) => ({
+export default connect(({ application: { editConditions } }) => ({ editConditions }), (dispatch, { type, values: { id } }) => ({
   saveConditions: conditions => dispatch(updateConditions(type, conditions, id))
 }))(ProtocolConditions);

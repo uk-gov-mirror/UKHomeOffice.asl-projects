@@ -287,7 +287,7 @@ const renderSelector = (doc, field, value, values, project, noSeparator) => {
 
   if (field.type === 'location-selector') {
     const options = [
-      ...(project.establishments || []).map(e => e.name),
+      ...(project.establishments || []).map(e => e['establishment-name']),
       ...(project.polesList || []).map(p => p.title)
     ];
     value = value.filter(v => options.includes(v));

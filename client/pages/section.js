@@ -4,28 +4,27 @@ import isEmpty from 'lodash/isEmpty';
 import { updateAndSave } from '../actions/projects';
 import DefaultSection from './sections';
 import SectionsLink from '../components/sections-link';
-import StaticSection from '../components/static-section';
-import SideNav from '../components/side-nav';
 import Header from '../components/header';
-import schema from '../schema';
+import Readonly from './readonly';
+import { getSubsections } from '../schema';
 import { getConditions } from '../helpers';
 import CONDITIONS from '../constants/conditions';
 
-const mapStateToProps = ({ project, application: { schemaVersion, readonly, establishment } }, { match: { params } }) => {
-  const section = Object.values(schema[schemaVersion]).reduce((found, section) => {
-    return found || section.subsections[params.section];
-  }, null);
+const mapStateToProps = ({ project, application: { schemaVersion, readonly, establishment, isGranted } }, { match: { params } }) => {
+  const section = getSubsections(schemaVersion)[params.section];
 
   section.fields = section.fields || [];
 
   return {
+    isLegacy: schemaVersion === 0,
     project,
     establishment,
     readonly,
     step: parseInt(params.step, 10) || 0,
     section: params.section,
     ...section,
-    options: section
+    options: section,
+    isGranted
   };
 };
 
@@ -44,22 +43,12 @@ class Section extends React.Component {
     }
 
     if (this.props.readonly) {
-      return (
-        <Fragment>
-          <Header
-            title={this.props.project.title || 'Untitled project'}
-            subtitle={this.props.establishment}
-          />
-          <div className="govuk-grid-row">
-            <div className="govuk-grid-column-one-third">
-              <SideNav />
-            </div>
-            <div className="govuk-grid-column-two-thirds">
-              <StaticSection section={this.props.options} />
-            </div>
-          </div>
-        </Fragment>
-      );
+      return <Readonly
+        establishment={this.props.establishment}
+        isGranted={this.props.isGranted}
+        project={this.props.project}
+        options={this.props.options}
+      />
     }
 
     const Component = this.props.component || DefaultSection;
@@ -81,7 +70,12 @@ class Section extends React.Component {
               data = { [data]: value };
             }
             const conditions = getConditions({ ...this.props.project, ...data }, CONDITIONS.project);
-            return this.props.update({ ...data, conditions });
+
+            this.props.update(data);
+
+            if (!this.props.isLegacy) {
+              this.props.update({ conditions })
+            }
           }}
           exit={ () => this.props.history.push('/') }
           fields={ fields }

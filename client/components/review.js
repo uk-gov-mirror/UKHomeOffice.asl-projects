@@ -1,8 +1,9 @@
 import React, { Fragment } from 'react';
 import { HashLink as Link } from 'react-router-hash-link';
+import { Value } from 'slate';
 import { connect } from 'react-redux';
-
 import TextEditor from './editor';
+import initialValue from './editor/initial-value.json';
 import speciesOptions from '../constants/species';
 
 import Comments from './comments';
@@ -12,6 +13,8 @@ import values from 'lodash/values';
 import isUndefined from 'lodash/isUndefined';
 import isNull from 'lodash/isNull';
 import formatDate from 'date-fns/format';
+
+import { DATE_FORMAT } from '../constants';
 
 class Review extends React.Component {
 
@@ -28,19 +31,19 @@ class Review extends React.Component {
       value = options.find(option => !isUndefined(option.value) ? option.value === value : option === value)
     }
 
-    if (value && this.props.type === 'duration') {
+    if (this.props.type === 'duration') {
       return (
         <dl className="inline">
           <dt>Years</dt>
-          <dd>{value.years || 0}</dd>
+          <dd>{(value || {}).years || 5}</dd>
           <dt>Months</dt>
-          <dd>{value.months || 0}</dd>
+          <dd>{(value || {}).months || 0}</dd>
         </dl>
       )
     }
 
     if (value && this.props.type === 'date') {
-      return formatDate(value, 'DD MMMM YYYY');
+      return formatDate(value, DATE_FORMAT.long);
     }
 
     if (this.props.type === 'species-selector') {
@@ -57,7 +60,11 @@ class Review extends React.Component {
         ...other
       ]);
     }
-    if (this.props.type === 'checkbox' || this.props.type === 'species-selector') {
+    if (this.props.type === 'checkbox' ||
+      this.props.type === 'species-selector' ||
+      this.props.type === 'location-selector' ||
+      this.props.type === 'objective-selector'
+    ) {
       value = value || [];
       if (!value.length) {
         return (
@@ -80,7 +87,7 @@ class Review extends React.Component {
 
       return (
         <ul>
-          {value.filter(v => options.find(o => o.value === v)).map(value => (
+          {value.filter(v => (options || []).find(o => o.value === v)).map(value => (
             <li key={value}>{getValue(value)}</li>
           ))}
         </ul>
@@ -108,7 +115,7 @@ class Review extends React.Component {
       ].map(s => {
         const opt = flatten(values(speciesOptions)).find(species => species.value === s);
         return {
-          key: species && species.value,
+          key: s && s.value,
           title: opt ? opt.label : s,
           value: this.props.project[`${this.props.name}-${s}`]
         }
@@ -131,7 +138,11 @@ class Review extends React.Component {
       </dl>
     }
     if (this.props.type === 'texteditor' && this.props.value) {
-      return <TextEditor {...this.props} readOnly={true} />;
+      if (this.props.value !== JSON.stringify(Value.fromJSON(initialValue).toJSON())) {
+        return <TextEditor {...this.props} readOnly={true} />;
+      } else {
+        value = null;
+      }
     }
     if (!isUndefined(value) && !isNull(value) && value !== '') {
       return <p>{value.review || value.label || value}</p>;
