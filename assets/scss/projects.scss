@@ -1258,4 +1258,19 @@ html.modal-open, html.modal-open body {
       }
     }
   }
+
+  // hack to always show sub-list for permissible purposes
+  // and to remove the checkbox for the reveal option
+  #permissible-purpose-translational-research {
+    & + label {
+      &:before,
+      &:after {
+        display: none;
+      }
+
+      & + .govuk-reveal {
+        display: block;
+      }
+    }
+  }
 }
