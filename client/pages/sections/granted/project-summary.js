@@ -24,15 +24,15 @@ const ProjectSummary = ({
   },
   fields
 }) => {
-  const ra = (values.conditions || []).find(c => /retrospective-assessment/.test(c.key));
+  const retrospectiveAssessment = (values.conditions || []).find(c => /retrospective-assessment/.test(c.key));
   return (
     <Fragment>
       {
-        ra && (
+        retrospectiveAssessment && (
           <div className="granted-section">
-            <h3>{ra.title}</h3>
+            <h3>{retrospectiveAssessment.title}</h3>
             <div className="purple-inset">
-              <p>{ra.content}</p>
+              <p>{retrospectiveAssessment.content}</p>
             </div>
           </div>
         )
