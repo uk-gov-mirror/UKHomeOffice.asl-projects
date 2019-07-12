@@ -55,7 +55,7 @@ class ProtocolSections extends PureComponent {
 
     const speciesDetails = values.speciesDetails && values.speciesDetails.filter(s => s.name);
 
-    const na = <em>No answer provided</em>;
+    const noAnswer = <em>No answer provided</em>;
 
     return (
       <section className={classnames('protocol', { complete: values.complete || readonly, readonly })}>
@@ -95,9 +95,9 @@ class ProtocolSections extends PureComponent {
                       speciesDetails.map(species => (
                         <tr key={species.id}>
                           <td>{species.name}</td>
-                          <td>{species['maximum-animals'] || na}</td>
-                          <td>{species['maximum-times-used'] || na}</td>
-                          <td>{(species['life-stages'] || []).join(', ') || na}</td>
+                          <td>{species['maximum-animals'] || noAnswer}</td>
+                          <td>{species['maximum-times-used'] || noAnswer}</td>
+                          <td>{(species['life-stages'] || []).join(', ') || noAnswer}</td>
                         </tr>
                       ))
                     }
