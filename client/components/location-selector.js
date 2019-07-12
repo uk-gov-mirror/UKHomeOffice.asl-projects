@@ -27,7 +27,7 @@ const LocationSelector = ({
   </div>
 )
 
-const mapStateToProps = ({ project, application: { establishment } }) => ({
+const mapStateToProps = ({ project, application: { establishment } }) => ({
   establishment,
   establishments: (project.establishments || []).filter(e => e['establishment-name']).map(e => e['establishment-name']),
   poles: (project.polesList || []).filter(p => p.title).map(p => p.title)
