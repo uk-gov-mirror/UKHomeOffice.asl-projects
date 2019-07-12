@@ -14,6 +14,8 @@ import isUndefined from 'lodash/isUndefined';
 import isNull from 'lodash/isNull';
 import formatDate from 'date-fns/format';
 
+import { DATE_FORMAT } from '../constants';
+
 class Review extends React.Component {
 
   replay() {
@@ -41,7 +43,7 @@ class Review extends React.Component {
     }
 
     if (value && this.props.type === 'date') {
-      return formatDate(value, 'DD MMMM YYYY');
+      return formatDate(value, DATE_FORMAT.long);
     }
 
     if (this.props.type === 'species-selector') {

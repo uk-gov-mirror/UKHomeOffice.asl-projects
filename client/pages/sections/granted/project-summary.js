@@ -4,6 +4,8 @@ import ReactMarkdown from 'react-markdown';
 import Review from '../../../components/review';
 import format from 'date-fns/format';
 
+import { DATE_FORMAT } from '../../../constants';
+
 const ProjectSummary = ({
   project,
   values,
@@ -53,11 +55,11 @@ const ProjectSummary = ({
       </div>
       <div className="granted-section">
         <h3>Date granted</h3>
-        <p>{format(project.issueDate, 'DD MMMM YYYY')}</p>
+        <p>{format(project.issueDate, DATE_FORMAT.long)}</p>
       </div>
       <div className="granted-section">
         <h3>Expiry date</h3>
-        <p>{format(project.expiryDate, 'DD MMMM YYYY')}</p>
+        <p>{format(project.expiryDate, DATE_FORMAT.long)}</p>
       </div>
       <div className="granted-section">
         <h3>Project location</h3>
