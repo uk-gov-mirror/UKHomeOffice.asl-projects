@@ -79,7 +79,7 @@ class Review extends React.Component {
       }
 
       const getValue = value => {
-        const v = options.find(option => option.value === value)
+        const v = (options || []).find(option => option.value === value)
         return v
           ? v.label
           : value
@@ -87,9 +87,11 @@ class Review extends React.Component {
 
       return (
         <ul>
-          {value.filter(v => (options || []).find(o => o.value === v)).map(value => (
-            <li key={value}>{getValue(value)}</li>
-          ))}
+          {
+            value.filter(v => options ? options.find(o => o.value === v) : true).map(value => (
+              <li key={value}>{getValue(value)}</li>
+            ))
+          }
         </ul>
       );
     }
