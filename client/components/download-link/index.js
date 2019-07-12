@@ -15,7 +15,7 @@ const mapStateToProps = (state, props) => {
   return {
     values,
     sections,
-    optionsFromSettings: state.settings
+    application: state.application
   };
 };
 
@@ -23,7 +23,7 @@ class DownloadLink extends React.Component {
   generate = () => {
     return Promise.resolve()
       .then(() => this.props.renderer === 'ppl' ? pplRenderer : docxRenderer)
-      .then(renderer => renderer.render(this.props));
+      .then(renderer => renderer(this.props.application).render(this.props));
   };
 
   render() {

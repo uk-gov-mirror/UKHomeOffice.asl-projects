@@ -32,6 +32,6 @@ const Index = ({
   </Fragment>
 };
 
-const mapStateToProps = ({ project, application: { establishment, isGranted, schemaVersion } }) => ({ project, establishment, isGranted, schemaVersion });
+const mapStateToProps = ({ project, application: { isGranted, schemaVersion } }) => ({ project, isGranted, schemaVersion });
 
 export default connect(mapStateToProps)(Index);
