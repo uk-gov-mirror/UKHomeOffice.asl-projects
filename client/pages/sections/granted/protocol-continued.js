@@ -15,12 +15,12 @@ const Continued = ({ values, schemaVersion }) => {
             <h2>Continued use</h2>
             <ReviewFields
               fields={fields.filter(f => f.name === 'continued-use')}
-              values={s['continued-use']}
+              values={s}
             />
             <h2>Re-use</h2>
             <ReviewFields
               fields={fields.filter(f => f.name === 'reuse')}
-              values={s.reuse}
+              values={s}
             />
           </Fragment>
         ))
