@@ -39,11 +39,15 @@ const Step = ({ id, index, fields, ...props }) => {
 
 const Steps = ({ values, fields }) => {
   const getStepTitle = title => {
+    const untitled = <em>Untitled step</em>;
+    if (!title) {
+      return untitled;
+    }
     const value = Value.fromJSON(JSON.parse(title));
     return value.document.text && value.document.text !== ''
       ? value.document.text
-      : <em>Untitled step</em>
-  }
+      : untitled;
+  };
 
   return (
     <div className="granted-steps">
