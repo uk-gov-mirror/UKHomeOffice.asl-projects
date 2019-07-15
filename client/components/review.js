@@ -162,6 +162,7 @@ class Review extends React.Component {
 
   render() {
     const { label } = this.props.altLabels ? this.props.alt : this.props;
+    const { hint } = this.props;
     return (
       <div className="review">
         <h3>{label}</h3>
@@ -177,6 +178,9 @@ class Review extends React.Component {
               name={`${this.props.prefix}${this.props.name}`}
             />
           )
+        }
+        {
+          hint && <p className="grey">{hint}</p>
         }
         {
           this.replay()
