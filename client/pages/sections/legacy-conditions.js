@@ -74,7 +74,7 @@ function LegacyConditions({
               <h2>Retrospective assessment</h2>
               <Fieldset
                 fields={fields}
-                values={values.retrospectiveAssessment}
+                values={values.retrospectiveAssessment || {}}
                 onFieldChange={saveRetro}
                 noComments
               />
@@ -83,7 +83,7 @@ function LegacyConditions({
           : (
             <Fragment>
               {
-                values.conditions.filter(c => c.key !== 'custom').map(condition => {
+                (values.conditions || []).filter(c => c.key !== 'custom').map(condition => {
                   const content = LEGACY_CONDITIONS[condition.key];
                   return (
                     <Condition
@@ -106,7 +106,7 @@ function LegacyConditions({
               <h2>Retrospective assessment</h2>
               <ReviewFields
                 fields={fields}
-                values={values.retrospectiveAssessment}
+                values={values.retrospectiveAssessment || {}}
                 noComments
               />
               <h2>Export of animals (transfer)</h2>
