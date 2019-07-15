@@ -11,7 +11,7 @@ function Readonly({ establishment, isGranted, project, options, schemaVersion, s
   return (
     <Fragment>
       {
-        isGranted && <h3 className="est-title">{establishment && establishment.name}</h3>
+        isGranted && establishment && <h3 className="est-title">{establishment.name}</h3>
       }
       {
         isGranted
