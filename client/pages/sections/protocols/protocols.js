@@ -110,8 +110,8 @@ class Protocols extends PureComponent {
         }
         return protocol;
       });
+      this.props.save({ protocols });
     }
-    this.props.save({ protocols });
   }
 
   edit = e => {
