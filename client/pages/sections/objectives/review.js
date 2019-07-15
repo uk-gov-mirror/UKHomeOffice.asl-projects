@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 
 import Review from '../../../components/review';
+import ReviewFields from '../../../components/review-fields';
 import Banner from '../../../components/banner';
 import Playback from '../../../components/playback';
 
@@ -38,13 +39,14 @@ const ObjectivesReview = ({ playback, values, steps, goto, readonly }) => (
         </div>
       ))
     }
+
     {
-      steps[1].fields.map((field, index) => (
-        <Review
+      steps.map((step, index) => (
+        <ReviewFields
           key={index}
-          {...field}
-          value={values[field.name]}
-          onEdit={() => goto(1)}
+          fields={step.fields.filter(f => !f.repeats)}
+          values={values}
+          step={index}
         />
       ))
     }
