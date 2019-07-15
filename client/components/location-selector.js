@@ -16,7 +16,7 @@ const LocationSelector = ({
       type="checkbox"
       className="smaller"
       options={[
-        ...(establishment && [establishment.name] || []),
+        ...(establishment ? [establishment.name] : []),
         ...establishments,
         ...poles
       ]}

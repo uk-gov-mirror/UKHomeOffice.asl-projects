@@ -288,7 +288,7 @@ export default application => {
 
     if (field.type === 'location-selector') {
       const options = [
-        ...(application.establishment && [application.establishment.name] || []),
+        ...(application.establishment ? [application.establishment.name] : []),
         ...(project.establishments || []).map(e => e['establishment-name']),
         ...(project.polesList || []).map(p => p.title)
       ];
