@@ -566,6 +566,14 @@ export default {
         review: LegacyConditions,
         singular: 'Additional condition',
         customTitle: 'Special conditions for this licence',
+        standardConditions: `Genetically altered rodents, genetically altered zebra fish and genetically altered Xenopus sp. bred and/or maintained under the authority of this project may be transferred to scientific establishments outside the United Kingdom only if:
+        
+1. The transfer will be made to a recognised scientific research establishment with a scientific requirement for genetically altered animals (or their controls) of that type; and where appropriate veterinary care can be provided as necessary; and
+2. Sending tissue, gametes or embryos is not practicable or carries a higher potential welfare cost than moving live animals; and
+3. Animals will be transported in accordance with all relevant regulations regarding welfare of animals in transit or the import or export of animals; and
+4. Animals will be inspected by a competent person before transfer; and
+5. A veterinary surgeon will confirm that he/she is not aware of any reason why these animals might suffer by virtue of the fact of being moved to another recognised scientific establishment.
+6. Any transport related problems with the welfare of the animals will be notified to the Home Office promptly.`,
         fields: [
           {
             name: 'retrospective-assessment-required',
