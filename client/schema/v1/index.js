@@ -1006,7 +1006,8 @@ each other.`,
                       {
                         name: 'objectives-non-regulatory-others',
                         label: 'Will others help you make decisions about accepting or rejecting work?',
-                        hint: 'If so, who and how?'
+                        hint: 'If so, who and how?',
+                        type: 'texteditor'
                       }
                     ]
                   },

@@ -3,7 +3,7 @@ import { HashLink as Link } from 'react-router-hash-link';
 import { Value } from 'slate';
 import { connect } from 'react-redux';
 import TextEditor from './editor';
-import initialValue from './editor/initial-value.json';
+import initialValue from './editor/initial-value';
 import speciesOptions from '../constants/species';
 
 import Comments from './comments';
@@ -140,7 +140,7 @@ class Review extends React.Component {
       </dl>
     }
     if (this.props.type === 'texteditor' && this.props.value) {
-      if (this.props.value !== JSON.stringify(Value.fromJSON(initialValue).toJSON())) {
+      if (this.props.value !== JSON.stringify(Value.fromJSON(initialValue('')).toJSON())) {
         return <TextEditor {...this.props} readOnly={true} />;
       } else {
         value = null;
