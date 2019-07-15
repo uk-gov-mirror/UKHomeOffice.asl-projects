@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
+import ReactMarkdown from 'react-markdown';
 import { updateConditions, updateRetrospectiveAssessment } from '../../actions/projects';
 import AddConditions from '../../components/conditions/add-conditions';
 import Condition from '../../components/conditions/condition';
@@ -14,6 +15,7 @@ function LegacyConditions({
   saveRetrospectiveAssessment,
   showConditions,
   editConditions,
+  standardConditions,
   ...props
 }) {
   if (!showConditions) {
@@ -107,7 +109,11 @@ function LegacyConditions({
                 values={values.retrospectiveAssessment}
                 noComments
               />
-          </Fragment>
+              <h2>Export of animals (transfer)</h2>
+              <div className="purple-inset">
+                <ReactMarkdown>{standardConditions}</ReactMarkdown>
+              </div>
+            </Fragment>
           )
       }
     </Fragment>
