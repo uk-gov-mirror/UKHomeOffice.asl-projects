@@ -10,7 +10,7 @@ function ProtocolConditions(props) {
   const [adding, setAdding] = useState(false);
   const [updating, setUpdating] = useState(false);
 
-  const conditions = props.conditions.filter(c => c.type === props.type);
+  const conditions = (props.conditions || []).filter(c => c.type === props.type);
 
   function handleSave(val) {
     setAdding(false);
