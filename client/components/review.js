@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import { HashLink as Link } from 'react-router-hash-link';
-import { Value } from 'slate';
 import { connect } from 'react-redux';
 import TextEditor from './editor';
 import speciesOptions from '../constants/species';
