@@ -11,14 +11,14 @@ function Readonly({ establishment, isGranted, project, options, schemaVersion, s
   return (
     <Fragment>
       {
-        isGranted && <h3 className="est-title">{establishment.name}</h3>
+        isGranted && establishment && <h3 className="est-title">{establishment.name}</h3>
       }
       {
         isGranted
           ? <DownloadHeader title={title} />
           : <Header
             title={title}
-            subtitle={establishment.name}
+            subtitle={establishment && establishment.name}
           />
       }
       <div className="govuk-grid-row">
