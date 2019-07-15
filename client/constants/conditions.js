@@ -221,7 +221,7 @@ Genetically altered animals may not be re-homed.`
   },
   inspector: {
     regtox: {
-      type: 'authorisation',
+      type: 'condition',
       versions: [
         {
           title: 'Regulatory toxicology',
