@@ -48,7 +48,7 @@ class ProtocolSections extends PureComponent {
     } = this.props;
 
     const severityField = sections.details.fields.find(field => field.name === 'severity');
-    const severityOption = (severityField.options.find(option => option.value === values.severity) || {}).label;
+    const severityOption = ((severityField.options || []).find(option => option.value === values.severity) || {}).label;
 
     const numberOfNewComments = Object.values(newComments)
       .reduce((total, comments) => total + (comments || []).length, 0);

@@ -25,7 +25,9 @@ const getSection = (section, props) => {
   }
   switch(section) {
     case 'steps':
-      return <Steps {...props} />
+      return props.schemaVersion === 0
+        ? <Section {...props} />
+        : <Steps {...props} />
     case 'animals':
       return props.schemaVersion === 0
         ? <LegacyAnimals {...props} />
