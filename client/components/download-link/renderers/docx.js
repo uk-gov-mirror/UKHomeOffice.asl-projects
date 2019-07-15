@@ -216,7 +216,13 @@ export default application => {
   }
 
   const renderTextEditor = (doc, value, noSeparator) => {
-    const content = JSON.parse(value);
+    let content;
+
+    try {
+      content = JSON.parse(value);
+    } catch(e) {
+      return renderText(doc, value, noSeparator);
+    }
     const nodes = content.document.nodes;
 
     nodes.forEach(node => renderNode(doc, node));
