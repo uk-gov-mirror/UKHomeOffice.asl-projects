@@ -1,4 +1,5 @@
 import React, { PureComponent, Fragment } from 'react';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
 import classnames from 'classnames';
@@ -44,8 +45,11 @@ class ProtocolSections extends PureComponent {
       updateItem,
       editable,
       newComments,
-      readonly
+      readonly,
+      schemaVersion
     } = this.props;
+
+    const isLegacy = schemaVersion === 0;
 
     const severityField = sections.details.fields.find(field => field.name === 'severity');
     const severityOption = ((severityField.options || []).find(option => option.value === values.severity) || {}).label;
@@ -66,16 +70,20 @@ class ProtocolSections extends PureComponent {
             {
               editable && <a href="#" className="inline-block" onClick={this.toggleActive}>Edit title</a>
             }
-            <dl className="inline">
-              <dt>Severity category: </dt>
-              <dd className="grey">
-                {
-                  severityOption
-                    ? <strong>{severityOption}</strong>
-                    : <em>No answer provided</em>
-                }
-              </dd>
-            </dl>
+            {
+              !isLegacy && (
+                <dl className="inline">
+                  <dt>Severity category: </dt>
+                  <dd className="grey">
+                    {
+                      severityOption
+                        ? <strong>{severityOption}</strong>
+                        : <em>No answer provided</em>
+                    }
+                  </dd>
+                </dl>
+              )
+            }
             {
               values.gaas && <p>This protocol uses genetically altered (GA) animals</p>
             }
@@ -131,4 +139,4 @@ class ProtocolSections extends PureComponent {
   }
 }
 
-export default withRouter(ProtocolSections);
+export default withRouter(connect(({ application: { schemaVersion } }) => ({ schemaVersion }))(ProtocolSections));
