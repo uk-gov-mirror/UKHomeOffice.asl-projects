@@ -11,7 +11,7 @@ import debounce from 'lodash/debounce';
 import { throwError } from '../../actions/messages';
 
 import FormatToolbar from './format-toolbar';
-import initialValue from './initial-value.json'
+import initialValue from './initial-value'
 import Blocks from './blocks';
 import Marks from './marks';
 import Image from './image';
@@ -27,21 +27,33 @@ const plugins = [
 ]
 
 class TextEditor extends Component {
+  constructor(props) {
+    super(props);
+    let value = this.props.value;
+    if (value) {
+      try {
+        value = JSON.parse(this.props.value)
+      } catch(e) {
+        value = initialValue(value);
+      }
+    } else {
+      value = initialValue('');
+    }
+
+    this.state = {
+      value: Value.fromJSON(value),
+      focus: false
+    }
+  }
+
   ref = editor => {
     this.editor = editor;
-  };
-
-  state = {
-    value: this.props.value
-      ? Value.fromJSON(JSON.parse(this.props.value))
-      : Value.fromJSON(initialValue),
-    focus: false
   };
 
   save = () => {
     const { value } = this.state;
     const jsonVal = JSON.stringify(value.toJSON())
-    const notNull = jsonVal !== JSON.stringify(Value.fromJSON(initialValue));
+    const notNull = jsonVal !== JSON.stringify(Value.fromJSON(initialValue('')));
     this.props.onChange(notNull ? jsonVal : null)
   }
 

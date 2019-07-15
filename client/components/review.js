@@ -1,9 +1,7 @@
 import React, { Fragment } from 'react';
 import { HashLink as Link } from 'react-router-hash-link';
-import { Value } from 'slate';
 import { connect } from 'react-redux';
 import TextEditor from './editor';
-import initialValue from './editor/initial-value.json';
 import speciesOptions from '../constants/species';
 
 import Comments from './comments';
@@ -140,11 +138,7 @@ class Review extends React.Component {
       </dl>
     }
     if (this.props.type === 'texteditor' && this.props.value) {
-      if (this.props.value !== JSON.stringify(Value.fromJSON(initialValue).toJSON())) {
-        return <TextEditor {...this.props} readOnly={true} />;
-      } else {
-        value = null;
-      }
+      return <TextEditor {...this.props} readOnly={true} />;
     }
     if (!isUndefined(value) && !isNull(value) && value !== '') {
       return <p>{value.review || value.label || value}</p>;
