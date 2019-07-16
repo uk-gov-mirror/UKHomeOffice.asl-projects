@@ -1,8 +1,10 @@
 import React, { Fragment } from 'react';
+import last from 'lodash/last';
 import { connect } from 'react-redux';
 import ReactMarkdown from 'react-markdown';
 import Review from '../../../components/review';
 import format from 'date-fns/format';
+import CONDITIONS from '../../../constants/conditions';
 
 import { DATE_FORMAT } from '../../../constants';
 
@@ -24,7 +26,8 @@ const ProjectSummary = ({
   },
   fields
 }) => {
-  const retrospectiveAssessment = (values.conditions || []).find(c => /retrospective-assessment/.test(c.key));
+  const retrospectiveAssessment = (values.conditions || []).find(c => /^retrospective-assessment$/.test(c.key)) ||
+    last(CONDITIONS.inspector['retrospective-assessment-negative'].versions);
   return (
     <Fragment>
       {
@@ -111,7 +114,7 @@ const ProjectSummary = ({
       </div>
       <div className="granted-section">
         <h3>Granted authority</h3>
-        <ReactMarkdown className="legal">{grantedAuthority}</ReactMarkdown>
+        <ReactMarkdown className="legal">{grantedAuthority(project.licenceNumber)}</ReactMarkdown>
       </div>
     </Fragment>
   );

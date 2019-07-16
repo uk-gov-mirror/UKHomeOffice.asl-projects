@@ -40,9 +40,9 @@ export default {
           licenceHolderLegal: `This **PROJECT LICENCE** allows the holder to carry out a programme of scientific procedures on living animals under the powers vested in him/her by the **ANIMALS (SCIENTIFIC PROCEDURES) ACT 1986.**
 
 The Secretary of State hereby licences the project licence holder to carry out the programme of work specified in the Schedule, subject to the restrictions and provisions contained in the Act and subject also to the limitations and conditions contained in this licence and to any other conditions that the Secretary of State may from time to time prescribe.`,
-          grantedAuthority: `This licence has been granted on the basis of information provided in an application for this licence.
+          grantedAuthority: licenceNumber => `This licence has been granted on the basis of information provided in an application for this licence.
 
-Under this project licence numbered PD11GH5BB the Secretary of State grants authority only for:
+Under this project licence numbered ${licenceNumber} the Secretary of State grants authority only for:
 * work to meet the aim of project specified on the Schedule;
 * the procedures and types of animal types specified in the Schedule; and
 * work at the place or places specified in the Schedule`
