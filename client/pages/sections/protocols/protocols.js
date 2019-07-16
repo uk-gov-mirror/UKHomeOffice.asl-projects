@@ -74,10 +74,10 @@ class Protocol extends PureComponent {
 
     const newComments = mapKeys(
       pickBy(this.props.newComments, (comments, key) => {
-        const re = new RegExp(`^protocol.${this.props.values.id}`);
+        const re = new RegExp(`^protocols.${this.props.values.id}`);
         return key.match(re);
       }),
-      (value, key) => key.replace(`protocol.${this.props.values.id}.`, '')
+      (value, key) => key.replace(`protocols.${this.props.values.id}.`, '')
     );
 
     const protocolState = this.getProtocolState();
