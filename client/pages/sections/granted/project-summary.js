@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import last from 'lodash/last';
 import { connect } from 'react-redux';
 import ReactMarkdown from 'react-markdown';
 import Review from '../../../components/review';
@@ -26,7 +27,7 @@ const ProjectSummary = ({
   fields
 }) => {
   const retrospectiveAssessment = (values.conditions || []).find(c => /^retrospective-assessment$/.test(c.key)) ||
-    CONDITIONS.inspector['retrospective-assessment-negative'].versions[CONDITIONS.inspector['retrospective-assessment-negative'].versions.length - 1];
+    last(CONDITIONS.inspector['retrospective-assessment-negative'].versions);
   return (
     <Fragment>
       {
