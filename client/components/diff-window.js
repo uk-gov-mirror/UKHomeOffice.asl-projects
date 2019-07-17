@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { fetchQuestionVersions } from '../actions/projects';
 import Modal from './modal';
-import Review from './review'
+import ReviewField from './review-field'
 import Tabs from './tabs';
 
 class DiffWindow extends React.Component {
@@ -49,7 +49,7 @@ class DiffWindow extends React.Component {
                             <a href="#" onClick={e => this.selectTab(e, 1)}>Previous version</a>
                           </Tabs>
                           <div className="panel light-grey">
-                            <Review
+                            <ReviewField
                               options={this.props.options}
                               type={this.props.type}
                               value={this.state.active === 0 ? granted : previous}
@@ -62,7 +62,7 @@ class DiffWindow extends React.Component {
                         <Fragment>
                           <h3>{changedFromGranted ? 'Current licence' : 'Previous version'}</h3>
                           <div className="panel light-grey">
-                            <Review
+                            <ReviewField
                               options={this.props.options}
                               type={this.props.type}
                               value={changedFromGranted ? granted : previous}
@@ -76,7 +76,7 @@ class DiffWindow extends React.Component {
                 <div className="govuk-grid-column-one-half">
                   <h3>Proposed</h3>
                   <div className="panel light-grey">
-                    <Review
+                    <ReviewField
                       options={this.props.options}
                       type={this.props.type}
                       value={this.props.value}
