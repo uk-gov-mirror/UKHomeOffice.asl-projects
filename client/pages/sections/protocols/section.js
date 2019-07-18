@@ -1,5 +1,4 @@
 import React, { PureComponent, Fragment } from 'react';
-import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
 import { Button } from '@ukhomeoffice/react-components';
@@ -18,11 +17,16 @@ class Section extends PureComponent {
       advance,
       sectionsLength,
       sectionIndex,
-      editable
+      editable,
+      pdf,
+      title
     } = this.props;
 
     return (
       <Fragment>
+        {
+          pdf && <h2>{title}</h2>
+        }
         { label && <h4>{label}</h4> }
         {
           editable
@@ -51,10 +55,4 @@ class Section extends PureComponent {
   }
 }
 
-const mapStateToProps = ({ project }, { index }) => {
-  return {
-    values: project.protocols[index]
-  };
-};
-
-export default withRouter(connect(mapStateToProps)(Section));
+export default withRouter(Section);

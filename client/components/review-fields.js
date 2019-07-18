@@ -23,7 +23,7 @@ const ReviewFields = ({ fields, values = {}, onEdit, editLink, project, prefix =
       castArray(values).map((item, i) => (
         <Fragment key={i}>
           {
-            item.name && <h2>{item.name}</h2>
+            item.name && <h2 className="group">{item.name}</h2>
           }
           {
             flattenReveals(fields.filter(field => fieldIncluded(field, project)), item).map(field => {

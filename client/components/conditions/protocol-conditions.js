@@ -29,6 +29,9 @@ function ProtocolConditions(props) {
 
   return (
     <Fragment>
+      {
+        props.pdf && <h2>{props.title}</h2>
+      }
       <p className="grey">
         {
           conditions.length

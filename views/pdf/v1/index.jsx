@@ -1,23 +1,37 @@
 import React, { Fragment } from 'react';
+import ReactMarkdown from 'react-markdown';
 import { connect } from 'react-redux';
 import map from 'lodash/map';
-import schema from '../../../client/schema/v1';
+import { getGrantedSubsections } from '../../../client/schema';
 import StaticSection from '../../../client/components/static-section';
+import STANDARD_CONDITIONS from '../../../client/constants/standard-conditions';
 
 const Modern = ({ project }) => (
   <Fragment>
+    <div className="logo"></div>
+    <h3 className="licence">Project licence</h3>
+    <h1 className="project-title">{project.title}</h1>
     {
-      Object.values(schema).map((section, index) => (
+      Object.values(getGrantedSubsections(1)).filter(s => !s.granted.show || s.granted.show(project)).sort((a, b) => a.granted.order - b.granted.order).map((section, index) => (
         <section className="section" key={index}>
-          <h1>{section.title}</h1>
-          {
-            map(section.subsections, (subsection) => (
-              <StaticSection section={subsection} subsection={true} />
-            ))
-          }
+          <StaticSection section={section} pdf />
         </section>
       ))
     }
+    <section className="section standard-conditions">
+      <h2>Standard conditions</h2>
+      <ol>
+        {
+          STANDARD_CONDITIONS.map(condition => (
+            <li>
+              <div className="purple-inset">
+                <ReactMarkdown>{condition}</ReactMarkdown>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
   </Fragment>
 )
 

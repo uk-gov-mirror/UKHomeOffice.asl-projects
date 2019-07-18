@@ -4,6 +4,9 @@ import Review from '../authorisations';
 
 const Authorisarions = ({ granted, ...props }) => (
   <Fragment>
+    {
+      props.pdf && <h2>{props.title}</h2>
+    }
     <ReactMarkdown className="grey">{granted.intro}</ReactMarkdown>
     <Review {...props} />
   </Fragment>

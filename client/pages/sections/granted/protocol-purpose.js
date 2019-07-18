@@ -8,10 +8,12 @@ const Purpose = ({ values, schemaVersion }) => {
   const fields = get(getSubsections(schemaVersion), 'protocols.sections.details.fields');
   const included = ['description', 'outputs'];
   return (
-    <ReviewFields
-      fields={fields.filter(f => included.includes(f.name))}
-      values={values}
-    />
+    <div className="protocol-purpose">
+      <ReviewFields
+        fields={fields.filter(f => included.includes(f.name))}
+        values={values}
+      />
+    </div>
   );
 };
 
