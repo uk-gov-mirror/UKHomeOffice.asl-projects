@@ -24,11 +24,12 @@ class Review extends React.Component {
 
   render() {
     const { label } = this.props.altLabels ? this.props.alt : this.props;
-    const { hint, isGranted, hideGrantedLabel } = this.props;
+    const { hint, isGranted, showGrantedLabel = true } = this.props;
+    const grantedLabel
     return (
       <div className="review">
         {
-          (!isGranted || !hideGrantedLabel) && <h3>{label}</h3>
+          (!isGranted || showGrantedLabel) && <h3>{label}</h3>
         }
         {
           this.changedBadge()

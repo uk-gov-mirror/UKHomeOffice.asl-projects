@@ -581,7 +581,7 @@ export default {
           {
             name: 'retrospective-assessment-required',
             label: 'Does this licence require a retrospective assessment?',
-            hideGrantedLabel: true,
+            showGrantedLabel: false,
             type: 'radio',
             inline: true,
             className: 'smaller',
