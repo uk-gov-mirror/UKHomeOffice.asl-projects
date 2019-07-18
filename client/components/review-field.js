@@ -83,7 +83,7 @@ class ReviewField extends React.Component {
       return (
         <ul>
           {
-            value.filter(v => options ? options.find(o => o.value === v) : true).map(value => (
+            value.filter(v => options && this.props.type !== 'species-selector' ? options.find(o => o.value === v) : true).map(value => (
               <li key={value}>{getValue(value)}</li>
             ))
           }
