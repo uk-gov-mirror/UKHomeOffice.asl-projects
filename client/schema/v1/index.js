@@ -16,6 +16,7 @@ import ActionPlan from '../../pages/sections/granted/action-plan';
 import Continued from '../../pages/sections/granted/protocol-continued';
 import Purpose from '../../pages/sections/granted/protocol-purpose';
 import ProtocolEstablishments from '../../pages/sections/granted/protocol-establishments';
+import GrantedProtocols from '../../pages/sections/granted/protocols';
 
 import GrantedSteps from '../../pages/sections/granted/protocol-steps';
 
@@ -25,7 +26,7 @@ import intersection from 'lodash/intersection';
 import some from 'lodash/some';
 import flatten from 'lodash/flatten';
 
-export default {
+const data = {
   introduction: {
     title: 'Project introduction',
     subsections: {
@@ -1238,7 +1239,17 @@ each other.`,
       protocols: {
         title: 'Protocols',
         granted: {
-          order: 4
+          review: GrantedProtocols,
+          order: 4,
+          anaesthesia: `Induction and maintenance of general or local anaesthesia, sedation or analgesia to mitigate the pain,
+suffering or distress associated with the performance of other regulated procedures is indicated using the
+following codes in protocols:
+
+* **AA** no anaesthesia
+* **AB** general anaesthesia with recovery
+* **AB-L** local anaesthesia
+* **AC** non-recovery general anaesthesia
+* **AD** under neuromuscular blockade`
         },
         name: 'protocols',
         component: Protocols,
@@ -1298,6 +1309,7 @@ each other.`,
               {
                 name: 'locations',
                 label: 'Select the establishments or POLEs where this protocol will be carried out.',
+                review: 'Locations where this protocol can be carried out',
                 hint: 'Select all that apply.',
                 type: 'location-selector'
               },
@@ -2786,7 +2798,8 @@ each other.`,
           subtitle: 'Additional conditions',
           intro: `These additional conditions apply to the project as a whole.
 
-Additional conditions that are specific to a set of procedures can be found in each protocol.`
+Additional conditions that are specific to a set of procedures can be found in each protocol.`,
+          pdf: 'These additional conditions apply to the project as a whole. Additional conditions that are specific to a set of procedures can be found in each protocol. Standard conditions that apply to all project licences can be found at the end of this document.'
         },
         addMore: 'Add more conditions',
         intro: `Additional conditions have been added automatically according to the selections made by the applicant.
@@ -2830,3 +2843,4 @@ If you want to add an authorisation, you will need to create one.`,
     }
   }
 }
+export default data;

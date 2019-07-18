@@ -1,15 +1,13 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Value } from 'slate';
-import pick from 'lodash/pick';
 import Review from '../../../components/review';
 import ReviewFields from '../../../components/review-fields';
 
 const Step = ({ id, index, fields, ...props }) => {
-  const bodyFields = ['adverse-effects', 'prevent-adverse-effects', 'endpoints'];
   return (
     <div className="granted-step" id={id}>
       <div className="header">
-        <h2>Step {index + 1} <span className="smaller">({ props.optional ? 'Optional' : 'Mandatory'})</span></h2>
+        <h2 className="step-number">Step {index + 1} <span className="smaller">({ props.optional ? 'Optional' : 'Mandatory'})</span></h2>
         <Review
           {...fields.find(f => f.name === 'title')}
           label=""
@@ -21,8 +19,8 @@ const Step = ({ id, index, fields, ...props }) => {
           props.adverse === true
             ? (
               <ReviewFields
-                fields={fields.filter(f => bodyFields.includes(f.name))}
-                values={pick(props, bodyFields)}
+                fields={fields.filter(f => f.name === 'adverse')}
+                values={props}
               />
             )
             : (
@@ -30,14 +28,18 @@ const Step = ({ id, index, fields, ...props }) => {
             )
         }
       </div>
-      <p className="back-to-top">
-        <a href="#step-index">Back to top</a>
-      </p>
+      {
+        !props.pdf && (
+          <p className="back-to-top">
+            <a href="#step-index">Back to top</a>
+          </p>
+        )
+      }
     </div>
   )
 }
 
-const Steps = ({ values, fields }) => {
+const Steps = ({ values, fields, pdf, number }) => {
   const getStepTitle = title => {
     const untitled = <em>Untitled step</em>;
     if (!title) {
@@ -51,20 +53,29 @@ const Steps = ({ values, fields }) => {
 
   return (
     <div className="granted-steps">
-      <h3 id="step-index">Index of steps</h3>
-      <ol>
-        {
-          values.steps.map(step => (
-            <li key={step.id}>
-              <a href={`#${step.id}`}>{getStepTitle(step.title)}</a><br />
-              <span>{step.optional ? 'Optional' : 'Mandatory'}</span>
-            </li>
-          ))
-        }
-      </ol>
-      <h3>You may perform these steps in any order</h3>
       {
-        values.steps.map((step, index) => <Step key={step.id} {...step} index={index} fields={fields} />)
+        pdf && <h2>{`Protocol ${number} steps`}</h2>
+      }
+      {
+        !pdf && (
+          <Fragment>
+            <h3 id="step-index">Index of steps</h3>
+            <ol>
+              {
+                values.steps.map(step => (
+                  <li key={step.id}>
+                    <a href={`#${step.id}`}>{getStepTitle(step.title)}</a><br />
+                    <span>{step.optional ? 'Optional' : 'Mandatory'}</span>
+                  </li>
+                ))
+              }
+            </ol>
+            <h3>You may perform these steps in any order</h3>
+          </Fragment>
+        )
+      }
+      {
+        values.steps.map((step, index) => <Step key={step.id} {...step} index={index} fields={fields} pdf={pdf} />)
       }
     </div>
   )

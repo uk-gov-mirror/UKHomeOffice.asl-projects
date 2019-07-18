@@ -24,48 +24,75 @@ const ProjectSummary = ({
       lastName
     }
   },
-  fields
+  fields,
+  pdf
 }) => {
   const retrospectiveAssessment = (values.conditions || []).find(c => /^retrospective-assessment$/.test(c.key)) ||
     last(CONDITIONS.inspector['retrospective-assessment-negative'].versions);
+
+  const retrospectiveAssessmentSection = (
+    <div className="granted-section">
+      <h2>{retrospectiveAssessment.title}</h2>
+      <div className="purple-inset">
+        <p>{retrospectiveAssessment.content}</p>
+      </div>
+    </div>
+  );
+
+  const grantedAuthoritySection = (
+    <div className="granted-section">
+      <h2>Granted authority</h2>
+      <ReactMarkdown className="legal">{grantedAuthority(project.licenceNumber)}</ReactMarkdown>
+    </div>
+  );
+
   return (
     <Fragment>
       {
-        retrospectiveAssessment && (
+        !pdf && retrospectiveAssessmentSection
+      }
+      {
+        !pdf && (
           <div className="granted-section">
-            <h3>{retrospectiveAssessment.title}</h3>
-            <div className="purple-inset">
-              <p>{retrospectiveAssessment.content}</p>
-            </div>
+            <h2>Project licence number</h2>
+            <p>{project.licenceNumber}</p>
           </div>
         )
       }
       <div className="granted-section">
-        <h3>Project licence number</h3>
-        <p>{project.licenceNumber}</p>
-      </div>
-      <div className="granted-section">
-        <h3>Project licence holder</h3>
-        <p>{`${project.licenceHolder.firstName} ${project.licenceHolder.lastName}`}</p>
+        <h2>Project licence holder</h2>
+        <p className="licence-holder">{`${project.licenceHolder.firstName} ${project.licenceHolder.lastName}`}</p>
         <ReactMarkdown className="legal">{licenceHolderLegal}</ReactMarkdown>
       </div>
+      {
+        pdf && grantedAuthoritySection
+      }
+      {
+        pdf && retrospectiveAssessmentSection
+      }
+      {
+        !pdf && (
+          <Fragment>
+            <div className="granted-section">
+              <Review
+                {...fields.find(f => f.name === 'duration')}
+                value={values.duration}
+                noComments
+              />
+            </div>
+            <div className="granted-section">
+              <h3>Date granted</h3>
+              <p>{format(project.issueDate, DATE_FORMAT.long)}</p>
+            </div>
+            <div className="granted-section">
+              <h3>Expiry date</h3>
+              <p>{format(project.expiryDate, DATE_FORMAT.long)}</p>
+            </div>
+          </Fragment>
+        )
+      }
       <div className="granted-section">
-        <Review
-          {...fields.find(f => f.name === 'duration')}
-          value={values.duration}
-          noComments
-        />
-      </div>
-      <div className="granted-section">
-        <h3>Date granted</h3>
-        <p>{format(project.issueDate, DATE_FORMAT.long)}</p>
-      </div>
-      <div className="granted-section">
-        <h3>Expiry date</h3>
-        <p>{format(project.expiryDate, DATE_FORMAT.long)}</p>
-      </div>
-      <div className="granted-section">
-        <h3>Project location</h3>
+        <h2>Project location</h2>
         <p className="legal">You are authorised to undertake this programme of scientific procedures at the following places:</p>
         <div className="granted-section">
           <h3>Primary establishment</h3>
@@ -112,10 +139,9 @@ const ProjectSummary = ({
           )
         }
       </div>
-      <div className="granted-section">
-        <h3>Granted authority</h3>
-        <ReactMarkdown className="legal">{grantedAuthority(project.licenceNumber)}</ReactMarkdown>
-      </div>
+      {
+        !pdf && grantedAuthoritySection
+      }
     </Fragment>
   );
 }

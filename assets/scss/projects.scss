@@ -719,6 +719,10 @@ html.modal-open, html.modal-open body {
       }
     }
 
+    h2.group {
+      display: none;
+    }
+
     &.complete {
       > .expandable {
         > .header {
@@ -896,10 +900,18 @@ html.modal-open, html.modal-open body {
   }
 
   .granted-step {
+    .grey {
+      display: none;
+    }
+
     .header {
       background-color: $ho-brand;
       color: white;
       padding: $govuk-gutter-half;
+
+      .grey {
+        display: none;
+      }
 
       h2 {
         color: white;

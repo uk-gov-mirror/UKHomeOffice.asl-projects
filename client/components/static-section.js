@@ -10,15 +10,21 @@ const StaticSection = ({ section, project, fields = [], isGranted, subsection = 
   return (
     <Fragment>
       {
-        subsection
-          ? <h2>{section.title}</h2>
-          : <h1>
+        !props.pdf && (
+          <Fragment>
             {
-              isGranted
-                ? (section.granted && section.granted.title) || section.title
-                : section.title
+              subsection
+                ? <h2>{section.title}</h2>
+                : <h1>
+                  {
+                    isGranted
+                      ? (section.granted && section.granted.title) || section.title
+                      : section.title
+                  }
+                </h1>
             }
-          </h1>
+          </Fragment>
+        )
       }
       <Component {...section} fields={fields} values={project} {...props} />
     </Fragment>

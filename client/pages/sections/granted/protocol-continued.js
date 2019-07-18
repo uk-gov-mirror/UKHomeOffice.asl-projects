@@ -4,10 +4,13 @@ import get from 'lodash/get';
 import ReviewFields from '../../../components/review-fields';
 import { getSubsections } from '../../../schema';
 
-const Continued = ({ values, schemaVersion }) => {
+const Continued = ({ values, schemaVersion, pdf, title }) => {
   const fields = get(getSubsections(schemaVersion), 'protocols.sections.animals.fields');
   return (
     <Fragment>
+      {
+        pdf && <h2>{ title }</h2>
+      }
       {
         (values.speciesDetails || []).map((s, i) => (
           <Fragment key={i}>
