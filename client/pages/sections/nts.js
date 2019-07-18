@@ -132,15 +132,19 @@ class NTSSummary extends Component {
                 </Fragment>
               ))
             }
-            <Complete
-              className="panel"
-              onChange={this.onCompleteChange}
-              complete={this.props.project['nts-review-complete']}
-              label="This section is complete"
-            >
-              <h2>Mark this section as complete?</h2>
-              <p>You can still edit this section later, but you will be unable to send this application to the Home Office until all sections are marked as complete.</p>
-            </Complete>
+            {
+              !this.props.readonly && (
+                <Complete
+                  className="panel"
+                  onChange={this.onCompleteChange}
+                  complete={this.props.project['nts-review-complete']}
+                  label="This section is complete"
+                >
+                  <h2>Mark this section as complete?</h2>
+                  <p>You can still edit this section later, but you will be unable to send this application to the Home Office until all sections are marked as complete.</p>
+                </Complete>
+              )
+            }
           </div>
         </div>
       </Fragment>
@@ -148,10 +152,11 @@ class NTSSummary extends Component {
   }
 }
 
-const mapStateToProps = ({ application: { schemaVersion }, project }) => ({
+const mapStateToProps = ({ application: { schemaVersion, readonly }, project }) => ({
   sectionsSettings: map(schema[schemaVersion], s => s.subsections)
     .reduce((obj, subsections) => ({ ...obj, ...subsections }), {}),
-  project
+  project,
+  readonly
 });
 
 export default connect(mapStateToProps)(NTSSummary);
