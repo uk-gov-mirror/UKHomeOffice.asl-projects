@@ -3,6 +3,7 @@ import RepeaterReview from '../../pages/sections/repeater/review';
 
 import Protocols from '../../pages/sections/protocols';
 import ProtocolsReview from '../../pages/sections/protocols/review';
+import GrantedProtocols from '../../pages/sections/granted/protocols';
 import LegacyConditions from '../../pages/sections/legacy-conditions';
 import LEGACY_SPECIES from '../../constants/legacy-species';
 
@@ -29,7 +30,6 @@ export default {
             type: 'radio',
             inline: true,
             className: 'smaller',
-            show: values => values['continuation'] === true,
             options: [
               {
                 label: 'Yes',
@@ -299,6 +299,9 @@ export default {
         name: 'protocol',
         component: Protocols,
         review: ProtocolsReview,
+        granted: {
+          review: GrantedProtocols
+        },
         repeats: 'protocol',
         fields: [
           {
@@ -567,7 +570,7 @@ export default {
         singular: 'Additional condition',
         customTitle: 'Special conditions for this licence',
         standardConditions: `Genetically altered rodents, genetically altered zebra fish and genetically altered Xenopus sp. bred and/or maintained under the authority of this project may be transferred to scientific establishments outside the United Kingdom only if:
-        
+
 1. The transfer will be made to a recognised scientific research establishment with a scientific requirement for genetically altered animals (or their controls) of that type; and where appropriate veterinary care can be provided as necessary; and
 2. Sending tissue, gametes or embryos is not practicable or carries a higher potential welfare cost than moving live animals; and
 3. Animals will be transported in accordance with all relevant regulations regarding welfare of animals in transit or the import or export of animals; and
@@ -578,6 +581,7 @@ export default {
           {
             name: 'retrospective-assessment-required',
             label: 'Does this licence require a retrospective assessment?',
+            showGrantedLabel: false,
             type: 'radio',
             inline: true,
             className: 'smaller',

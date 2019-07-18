@@ -5,16 +5,13 @@ import ReactMarkdown from 'react-markdown';
 import Review from '../../../components/review';
 import format from 'date-fns/format';
 import CONDITIONS from '../../../constants/conditions';
+import LEGAL from '../../../constants/legal';
 
 import { DATE_FORMAT } from '../../../constants';
 
 const ProjectSummary = ({
   project,
   values,
-  granted: {
-    licenceHolderLegal,
-    grantedAuthority
-  },
   establishment: {
     name,
     licenceNumber,
@@ -42,7 +39,7 @@ const ProjectSummary = ({
   const grantedAuthoritySection = (
     <div className="granted-section">
       <h2>Granted authority</h2>
-      <ReactMarkdown className="legal">{grantedAuthority(project.licenceNumber)}</ReactMarkdown>
+      <ReactMarkdown className="legal">{LEGAL.grantedAuthority(project.licenceNumber)}</ReactMarkdown>
     </div>
   );
 
@@ -62,7 +59,7 @@ const ProjectSummary = ({
       <div className="granted-section">
         <h2>Project licence holder</h2>
         <p className="licence-holder">{`${project.licenceHolder.firstName} ${project.licenceHolder.lastName}`}</p>
-        <ReactMarkdown className="legal">{licenceHolderLegal}</ReactMarkdown>
+        <ReactMarkdown className="legal">{LEGAL.licenceHolder}</ReactMarkdown>
       </div>
       {
         pdf && grantedAuthoritySection

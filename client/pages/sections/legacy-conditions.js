@@ -16,6 +16,7 @@ function LegacyConditions({
   showConditions,
   editConditions,
   standardConditions,
+  pdf,
   ...props
 }) {
   if (!showConditions) {
@@ -103,12 +104,18 @@ function LegacyConditions({
                 editable={false}
                 expandable={false}
               />
-              <h2>Retrospective assessment</h2>
-              <ReviewFields
-                fields={fields}
-                values={values.retrospectiveAssessment || {}}
-                noComments
-              />
+              {
+                !pdf && (
+                  <Fragment>
+                    <h2>Retrospective assessment</h2>
+                    <ReviewFields
+                      fields={fields}
+                      values={values.retrospectiveAssessment || {}}
+                      noComments
+                      />
+                  </Fragment>
+                )
+              }
               <h2>Export of animals (transfer)</h2>
               <div className="purple-inset">
                 <ReactMarkdown>{standardConditions}</ReactMarkdown>

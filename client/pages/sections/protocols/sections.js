@@ -107,7 +107,7 @@ const getTitle = (section, newComments, values) => (
 
 const sortGranted = (sections, isGranted) => (a, b) => {
   if (!isGranted || isUndefined(sections[a].granted)) {
-    return true;
+    return false;
   }
   return sections[a].granted.order - sections[b].granted.order;
 }
@@ -136,7 +136,8 @@ const mapStateToProps = ({
   schemaVersion,
   showConditions,
   isGranted,
-  sections: isGranted
+  // show all sections for legacy
+  sections: isGranted && schemaVersion !== 0
     ? pickBy(sections, section => section.granted)
     : sections
 });
