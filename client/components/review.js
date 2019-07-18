@@ -24,10 +24,12 @@ class Review extends React.Component {
 
   render() {
     const { label } = this.props.altLabels ? this.props.alt : this.props;
-    const { hint } = this.props;
+    const { hint, isGranted, hideGrantedLabel } = this.props;
     return (
       <div className="review">
-        <h3>{label}</h3>
+        {
+          (!isGranted || !hideGrantedLabel) && <h3>{label}</h3>
+        }
         {
           this.changedBadge()
         }
@@ -69,14 +71,15 @@ class Review extends React.Component {
 }
 
 
-const mapStateToProps = ({ application: { readonly } = {}, changes : { latest = [], granted = [] } = {} }, ownProps) => {
+const mapStateToProps = ({ application: { readonly, isGranted } = {}, changes : { latest = [], granted = [] } = {} }, ownProps) => {
   const key = `${ownProps.prefix || ''}${ownProps.name}`;
   const changedFromGranted = granted.includes(key);
   const changedFromLatest = latest.includes(key);
   return {
     readonly: ownProps.readonly || readonly,
     changedFromLatest,
-    changedFromGranted
+    changedFromGranted,
+    isGranted
   };
 }
 

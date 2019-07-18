@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import map from 'lodash/map';
 import { getGrantedSubsections } from '../../../client/schema';
 import StaticSection from '../../../client/components/static-section';
-import STANDARD_CONDITIONS from '../../../client/constants/standard-conditions';
+import StandardConditions from '../components/standard-conditions';
 
 const Modern = ({ project }) => (
   <Fragment>
@@ -18,20 +18,7 @@ const Modern = ({ project }) => (
         </section>
       ))
     }
-    <section className="section standard-conditions">
-      <h2>Standard conditions</h2>
-      <ol>
-        {
-          STANDARD_CONDITIONS.map(condition => (
-            <li>
-              <div className="purple-inset">
-                <ReactMarkdown>{condition}</ReactMarkdown>
-              </div>
-            </li>
-          ))
-        }
-      </ol>
-    </section>
+    <StandardConditions />
   </Fragment>
 )
 

@@ -5,10 +5,10 @@ import Fieldset from '../../../components/fieldset';
 import Repeater from '../../../components/repeater';
 import ReviewFields from '../../../components/review-fields';
 
-const LegacyAnimal = ({ updateItem, values, editable, prefix, fields, index }) => (
+const LegacyAnimal = ({ updateItem, values, readonly, prefix, fields, index }) => (
   <Fragment>
     {
-      editable
+      !readonly
         ? <Fieldset
           prefix={prefix}
           fields={fields}
@@ -27,26 +27,27 @@ const LegacyAnimal = ({ updateItem, values, editable, prefix, fields, index }) =
   </Fragment>
 )
 
-const LegacyAnimals = ({ updateItem, values, fields, prefix, advance, editable, index }) => (
+const LegacyAnimals = ({ updateItem, title, values, fields, prefix, advance, readonly, index }) => (
   <Fragment>
+    {
+      <h2>{title}</h2>
+    }
     <Repeater
       items={values.species}
-      addAnother={editable}
+      addAnother={!readonly}
       onSave={species => updateItem({ species })}
       prefix={prefix}
       index={index}
     >
       <LegacyAnimal
-        editable={editable}
+        readonly={readonly}
         fields={fields}
       />
     </Repeater>
     {
-      editable && <Button className="button-secondary" onClick={advance}>Next section</Button>
+      !readonly && <Button className="button-secondary" onClick={advance}>Next section</Button>
     }
   </Fragment>
 );
 
-const mapStateToProps = ({ project }, { index }) => ({ values: project.protocols[index] })
-
-export default connect(mapStateToProps)(LegacyAnimals);
+export default connect(({ application: { readonly } }) => ({ readonly }))(LegacyAnimals);

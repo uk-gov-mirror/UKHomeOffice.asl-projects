@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
+import LEGACY_SPECIES from '../../../constants/legacy-species';
 
-const SummaryTable = ({ protocols }) => (
+const SummaryTable = ({ protocols, isLegacy }) => (
   <div className="summary-table">
     <h3>Summary table</h3>
     <table>
@@ -9,8 +10,16 @@ const SummaryTable = ({ protocols }) => (
           <th>No.</th>
           <th>Protocol</th>
           <th>Animal types</th>
-          <th>Max. no. of animals</th>
-          <th>Max. no. of uses per animal</th>
+          {
+            isLegacy
+              ? <th>Est. numbers</th>
+              : (
+                <Fragment>
+                  <th>Max. no. of animals</th>
+                  <th>Max. no. of uses per animal</th>
+                </Fragment>
+              )
+          }
           <th>Life stages</th>
           <th>GA?</th>
           <th>Severity category</th>
@@ -18,32 +27,59 @@ const SummaryTable = ({ protocols }) => (
       </thead>
       <tbody>
         {
-          protocols.map((protocol, index) => (
-            (protocol.speciesDetails || []).map((species, speciesIndex) => (
+          (protocols || []).map((protocol, index) => {
+            const species = !isLegacy
+              ? (protocol.speciesDetails || []).filter(s => s.name)
+              : (protocol.species || []).map(s => {
+                return {
+                  ...s,
+                  name: LEGACY_SPECIES.find(ls => ls.value === s.speciesId).label
+                };
+              });
+            return species.map((s, speciesIndex) => (
               <tr key={index + speciesIndex}>
                 {
                   (speciesIndex === 0) && (
                     <Fragment>
-                      <td rowSpan={protocol.speciesDetails.length || 1}>{ index + 1 }</td>
-                      <td rowSpan={protocol.speciesDetails.length || 1}>{ protocol.title }</td>
+                      <td rowSpan={species.length || 1}>{ index + 1 }</td>
+                      <td rowSpan={species.length || 1}>{ protocol.title }</td>
                     </Fragment>
                   )
                 }
-                <td>{ species.name }</td>
-                <td>{ species['maximum-animals'] }</td>
-                <td>{ species['maximum-times-used'] }</td>
-                <td>{ (species['life-stages'] || []).join(', ') }</td>
+                <td>{ s.name }</td>
+                {
+                  isLegacy
+                    ? <td>{s.quantity}</td>
+                    : (
+                      <Fragment>
+                        <td>{ s['maximum-animals'] }</td>
+                        <td>{ s['maximum-times-used'] }</td>
+                      </Fragment>
+                    )
+                }
+                <td>
+                  {
+                    isLegacy
+                      ? s['life-stages']
+                      : (s['life-stages'] || []).join(', ')
+                    }
+                </td>
+                {
+                  isLegacy && <td>{s['genetically-altered'] === true ? 'Yes' : 'No'}</td>
+                }
                 {
                   speciesIndex === 0 && (
                     <Fragment>
-                      <td rowSpan={protocol.speciesDetails.length || 1}>{ protocol.gaas === true ? 'Yes' : 'No' }</td>
-                      <td rowSpan={protocol.speciesDetails.length || 1}>{ protocol.severity }</td>
+                      {
+                        !isLegacy && <td rowSpan={species.length || 1}>{ protocol.gaas === true ? 'Yes' : 'No' }</td>
+                      }
+                      <td rowSpan={species.length || 1}>{ protocol.severity }</td>
                     </Fragment>
                   )
                 }
               </tr>
             ))
-          ))
+          })
         }
       </tbody>
     </table>

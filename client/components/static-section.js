@@ -10,10 +10,10 @@ const StaticSection = ({ section, project, fields = [], isGranted, subsection = 
   return (
     <Fragment>
       {
-        !props.pdf && (
+        (!props.pdf || props.isLegacy) && (
           <Fragment>
             {
-              subsection
+              subsection || props.isLegacy
                 ? <h2>{section.title}</h2>
                 : <h1>
                   {
@@ -31,7 +31,7 @@ const StaticSection = ({ section, project, fields = [], isGranted, subsection = 
   )
 }
 
-const mapStateToProps = ({ project, application: { isGranted } }, { section }) => {
+const mapStateToProps = ({ project, application: { isGranted, schemaVersion } }, { section }) => {
   const fields = flatten([
     ...(section.fields || []),
     ...((section.steps || []).map(step => step.fields) || [])
@@ -40,7 +40,8 @@ const mapStateToProps = ({ project, application: { isGranted } }, { section }) =
   return {
     project,
     fields,
-    isGranted
+    isGranted,
+    isLegacy: schemaVersion === 0
   }
 }
 

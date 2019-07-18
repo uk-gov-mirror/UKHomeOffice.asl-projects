@@ -3,9 +3,18 @@ import ReactMarkdown from 'react-markdown';
 import { connect } from 'react-redux';
 import SummaryTable from './summary-table';
 import ProtocolSections from '../protocols/sections';
+import LEGACY_SPECIES from '../../../constants/legacy-species';
+import LEGAL from '../../../constants/legal';
 
-const Protocol = ({ protocol, number, sections }) => {
-  const species = protocol.speciesDetails.filter(s => s.name);
+const Protocol = ({ protocol, number, sections, isLegacy }) => {
+  const species = !isLegacy
+    ? (protocol.speciesDetails || []).filter(s => s.name)
+    : (protocol.species || []).map(s => {
+      return {
+        ...s,
+        name: LEGACY_SPECIES.find(ls => ls.value === s.speciesId).label
+      }
+    });
   return (
     <div className="protocol">
       <h3 className="protocol-number">Protocol {number}</h3>
@@ -21,8 +30,16 @@ const Protocol = ({ protocol, number, sections }) => {
               <thead>
                 <tr>
                   <th>Animal types</th>
-                  <th>Max. no. of animals</th>
-                  <th>Max. no. of uses per animal</th>
+                  {
+                    isLegacy
+                      ? <th>Est. numbers</th>
+                      : (
+                        <Fragment>
+                          <th>Max. no. of animals</th>
+                          <th>Max. no. of uses per animal</th>
+                        </Fragment>
+                      )
+                  }
                   <th>Life stages</th>
                 </tr>
               </thead>
@@ -31,9 +48,23 @@ const Protocol = ({ protocol, number, sections }) => {
                   species.map(s => (
                     <tr key={s.id}>
                       <td>{ s.name }</td>
-                      <td>{ s['maximum-animals'] }</td>
-                      <td>{ s['maximum-times-used'] }</td>
-                      <td>{ (s['life-stages'] || []).join(', ') }</td>
+                      {
+                        isLegacy
+                          ? <td>{s.quantity}</td>
+                          : (
+                            <Fragment>
+                              <td>{ s['maximum-animals'] }</td>
+                              <td>{ s['maximum-times-used'] }</td>
+                            </Fragment>
+                          )
+                      }
+                      <td>
+                        {
+                          isLegacy
+                            ? s['life-stages']
+                            : (s['life-stages'] || []).join(', ')
+                        }
+                      </td>
                     </tr>
                   ))
                 }
@@ -50,22 +81,38 @@ const Protocol = ({ protocol, number, sections }) => {
   )
 }
 
-const PDF = ({ protocols = [], granted, ...props }) => {
+const PDF = ({ protocols = [], isLegacy, ...props }) => {
   return (
     <Fragment>
-      <h2>{props.title}</h2>
-      <SummaryTable protocols={protocols} />
+      {
+        !isLegacy && <h2>{props.title}</h2>
+      }
+      <SummaryTable protocols={protocols} isLegacy={isLegacy} />
       <div className="anaesthetic-codes">
         <h2>Anaesthetic codes</h2>
-        <ReactMarkdown>{granted.anaesthesia}</ReactMarkdown>
+        <ReactMarkdown>{LEGAL.anaesthesia}</ReactMarkdown>
       </div>
       {
-        protocols.map((protocol, index) => <Protocol key={index} protocol={ protocol } number={ index + 1 } sections={props.sections} />)
+        protocols.map((protocol, index) => (
+          <Protocol
+            key={index}
+            protocol={protocol}
+            number={index + 1}
+            sections={props.sections}
+            isLegacy={isLegacy}
+          />
+        ))
       }
     </Fragment>
   )
 }
 
-const mapStateToProps = ({ project }) => ({ protocols: project.protocols });
+const mapStateToProps = ({
+  project,
+  application: { schemaVersion }
+}) => ({
+  protocols: project.protocols,
+  isLegacy: schemaVersion === 0
+});
 
 export default connect(mapStateToProps)(PDF);
