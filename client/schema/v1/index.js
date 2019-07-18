@@ -2747,6 +2747,7 @@ following codes in protocols:
       'nts-review': {
         title: 'Review',
         component: NTSSummary,
+        review: NTSSummary,
         sections: [
           {
             section: 'introduction',
