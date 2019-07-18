@@ -100,18 +100,22 @@ class NTSSummary extends Component {
       <Fragment>
         <NTS review={true} hideTitle={true} />
         <div className="nts-review">
-          <nav className="sidebar-nav">
-            {
-              this.props.sections.map(({ section, title }, index) => (
-                <a
-                  key={index}
-                  href="#"
-                  onClick={(e) => this.updateActiveSection(e, section)}
-                  className={classnames({ active: this.state.active === section })}
-                >{title}</a>
-              ))
-            }
-          </nav>
+          {
+            !this.props.readonly && (
+              <nav className="sidebar-nav">
+                {
+                  this.props.sections.map(({ section, title }, index) => (
+                    <a
+                      key={index}
+                      href="#"
+                      onClick={(e) => this.updateActiveSection(e, section)}
+                      className={classnames({ active: this.state.active === section })}
+                    >{title}</a>
+                  ))
+                }
+              </nav>
+            )
+          }
           <div className="content">
             {
               this.props.sections.map(({ section, title, fields }, index) => (
