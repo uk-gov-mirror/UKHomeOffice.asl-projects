@@ -170,7 +170,7 @@ class Field extends Component {
         onChange={ e => {
           const values = [ ...(value || []) ];
           if (values.includes(e.target.value)) {
-            return this.onChange(values.filter(v => v !== e.target.value));
+            return this.onFieldChange(values.filter(v => v !== e.target.value));
           }
           this.onFieldChange([ ...values, e.target.value ]);
         }}
