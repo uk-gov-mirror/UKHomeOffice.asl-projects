@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import classnames from 'classnames';
 import ReactMarkdown from 'react-markdown';
 import { connect } from 'react-redux';
 import map from 'lodash/map';
@@ -13,7 +14,7 @@ const Modern = ({ project }) => (
     <h1 className="project-title">{project.title}</h1>
     {
       Object.values(getGrantedSubsections(1)).filter(s => !s.granted.show || s.granted.show(project)).sort((a, b) => a.granted.order - b.granted.order).map((section, index) => (
-        <section className="section" key={index}>
+        <section className={classnames('section', section.name)} key={index}>
           <StaticSection section={section} pdf />
         </section>
       ))
