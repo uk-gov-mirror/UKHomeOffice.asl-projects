@@ -1427,7 +1427,7 @@ each other.`,
               {
                 name: 'maximum-times-used',
                 label: 'What is the maximum number of uses of this protocol per animal?',
-                hint: 'For example, if some animals will go through this protocol three more times after their first use, the number of uses will be four.',
+                hint: 'For example, if some animals will go through this protocol three more times after their first use, the number of uses will be four.\n\n If no animals will go through this protocol more than once, enter \'1\'.',
                 type: 'text'
               }
             ]
