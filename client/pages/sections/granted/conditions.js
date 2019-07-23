@@ -1,9 +1,9 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import Review from '../conditions';
 
 const Conditions = ({ granted, ...props }) => (
-  <Fragment>
+  <div className="granted-condition">
     {
       !props.pdf && (
         <p>
@@ -15,7 +15,7 @@ const Conditions = ({ granted, ...props }) => (
     <h2>{granted.subtitle}</h2>
     <ReactMarkdown className="grey">{granted.intro}</ReactMarkdown>
     <Review {...props} />
-  </Fragment>
+  </div>
 );
 
 export default Conditions;
