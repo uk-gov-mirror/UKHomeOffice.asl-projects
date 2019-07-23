@@ -59,6 +59,9 @@
     &.active {
       color: $blue;
     }
+    &[disabled] {
+      color: $mid-grey;
+    }
   }
   img {
     display: block;
@@ -183,5 +186,18 @@
 .review {
   > [data-slate-editor] {
     pointer-events: none;
+  }
+}
+
+.current-item {
+  position: relative;
+
+  &:after {
+    position: absolute;
+    content: '';
+    border: 2px solid #d9edff;
+    left: -25px;
+    height: 100%;
+    top: 0;
   }
 }
