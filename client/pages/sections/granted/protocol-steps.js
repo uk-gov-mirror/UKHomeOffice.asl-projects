@@ -24,7 +24,7 @@ const Step = ({ id, index, fields, ...props }) => {
               />
             )
             : (
-              <h3>No adverse effects have been noted for this step</h3>
+              <h3>This step will have no adverse effects.</h3>
             )
         }
       </div>

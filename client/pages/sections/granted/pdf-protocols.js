@@ -35,7 +35,7 @@ const Protocol = ({ protocol, number, sections, isLegacy }) => {
                       ? <th>Est. numbers</th>
                       : (
                         <Fragment>
-                          <th>Max. no. of animals</th>
+                          <th>Est. max. no. of animals</th>
                           <th>Max. no. of uses per animal</th>
                         </Fragment>
                       )
