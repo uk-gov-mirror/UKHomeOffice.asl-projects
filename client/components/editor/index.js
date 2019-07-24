@@ -143,6 +143,8 @@ class TextEditor extends Component {
             name={this.props.name}
             key={this.props.name}
             readOnly={this.props.readOnly}
+            decorateNode={this.props.decorateNode}
+            renderDecoration={this.props.renderDecoration}
           />
         </div>
       </div>
