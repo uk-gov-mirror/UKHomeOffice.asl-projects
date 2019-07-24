@@ -42,31 +42,27 @@ class DiffWindow extends React.Component {
 
     const diffs = diffWords(before.document.text, after.document.text);
 
-    const removed = diffs.reduce((arr, d, i) => {
-      if (i > 0) {
-        if (!d.added) {
-          const prev = last(arr);
-          const start = prev.start + prev.count;
-          return [...arr, { ...d, start, count: d.value.length }];
-        }
-        return arr;
+    const removed = diffs.reduce((arr, d) => {
+      // ignore additions
+      if (!d.added) {
+        const prev = last(arr);
+        const start = prev ? prev.start + prev.count : 0;
+        return [...arr, { ...d, start, count: d.value.length }];
       }
-      return [{ ...d, start: 0, count: d.value.length }];
+      return arr;
     }, []).filter(d => d.removed);
 
-    const added = diffs.reduce((arr, d, i) => {
-      if (i > 0) {
-        if (!d.removed) {
-          const prev = last(arr);
-          const start = prev.start + prev.count;
-          return [...arr, { ...d, start, count: d.value.length }];
-        }
-        return arr;
+    const added = diffs.reduce((arr, d) => {
+      // ignore removals
+      if (!d.removed) {
+        const prev = last(arr);
+        const start = prev ? prev.start + prev.count : 0;
+        return [...arr, { ...d, start, count: d.value.length }];
       }
-      return [{ ...d, start: 0, count: d.value.length }];
+      return arr;
     }, []).filter(d => d.added);
-    return { added, removed };
 
+    return { added, removed };
   }
 
   decorateNode(diff, state) {
