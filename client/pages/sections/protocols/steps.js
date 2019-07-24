@@ -78,7 +78,7 @@ class Step extends Component {
             }
           </h3>
           {
-            completed && values.title && <TextEditor value={values.title} readOnly={true} />
+            completed && values.title && <TextEditor value={values.title} readOnly={true} key={values.title} />
           }
         </Fragment>
         {
