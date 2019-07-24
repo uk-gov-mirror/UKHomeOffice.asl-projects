@@ -16,7 +16,6 @@ following codes in protocols:
 
 * **AA** no anaesthesia
 * **AB** general anaesthesia with recovery
-* **AB-L** local anaesthesia
 * **AC** non-recovery general anaesthesia
 * **AD** under neuromuscular blockade`
 };

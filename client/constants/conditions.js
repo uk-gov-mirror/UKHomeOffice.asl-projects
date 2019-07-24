@@ -308,7 +308,7 @@ For studies requested for other worldwide authorities, for example the US Food a
       type: 'condition',
       versions: [
         {
-          title: 'Retrospective assessment',
+          title: 'Retrospective assessment not required',
           content: 'The Secretary of State has determined that a retrospective assessment of this licence is not required.'
         }
       ]
@@ -317,7 +317,7 @@ For studies requested for other worldwide authorities, for example the US Food a
       type: 'condition',
       versions: [
         {
-          title: 'Retrospective assessment',
+          title: 'Retrospective assessment required',
           content: 'The Secretary of State has determined that a retrospective review of this licence is required, and should be submitted within 6 months of the licence\'s revocation date.'
         }
       ]
