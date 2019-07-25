@@ -67,7 +67,7 @@ class TextEditor extends Component {
   };
 
   onBlur = (self, editor, next) => {
-    next()
+    next();
     defer(() => this.setState({ focus: false }));
   };
 
