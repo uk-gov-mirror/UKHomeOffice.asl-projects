@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from 'react';
-import { connect } from 'react-redux';
 import classnames from 'classnames';
 import { Editor } from 'slate-react';
 import { Value } from 'slate';
@@ -8,22 +7,23 @@ import ReactMarkdown from 'react-markdown'
 import defer from 'lodash/defer';
 import debounce from 'lodash/debounce';
 
-import { throwError } from '../../actions/messages';
-
 import FormatToolbar from './format-toolbar';
 import initialValue from './initial-value'
 import Blocks from './blocks';
 import Marks from './marks';
 import Image from './image';
 import Table from './table';
+import List from './list';
 
 const tablePlugin = Table();
+const listPlugin = List();
 
 const plugins = [
   Blocks(),
   Marks(),
   Image(),
-  tablePlugin
+  tablePlugin,
+  listPlugin
 ]
 
 class TextEditor extends Component {
@@ -72,11 +72,7 @@ class TextEditor extends Component {
   };
 
   command = (func, ...args) => {
-    try {
-      this.editor[func] && this.editor[func](...args)
-    } catch (err) {
-      this.props.throwError(err.message);
-    }
+    this.editor[func] && this.editor[func](...args);
   }
 
   query = (func, ...args) => {
@@ -129,7 +125,7 @@ class TextEditor extends Component {
                 value={this.state.value}
                 inTable={tablePlugin.queries.isSelectionInTable(value)}
                 query={this.query}
-                emit={this.command}
+                command={this.command}
               />
             )
           }
@@ -145,6 +141,8 @@ class TextEditor extends Component {
             readOnly={this.props.readOnly}
             decorateNode={this.props.decorateNode}
             renderDecoration={this.props.renderDecoration}
+            onFocus={this.onFocus}
+            onBlur={this.onBlur}
           />
         </div>
       </div>
@@ -152,10 +150,4 @@ class TextEditor extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    throwError: message => dispatch(throwError(message))
-  };
-}
-
-export default connect(null, mapDispatchToProps)(TextEditor);
+export default TextEditor;
