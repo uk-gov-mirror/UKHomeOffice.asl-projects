@@ -822,16 +822,41 @@ html.modal-open, html.modal-open body {
     border-bottom: 4px solid $blue;
     margin-bottom: $govuk-gutter;
     padding: $govuk-gutter-half;
+    position: relative;
 
-    h3 {
-      margin-bottom: 0;
+    .left {
+      overflow: hidden;
+      padding-right: 1em;
+
+      h2 {
+        font-weight: normal;
+        margin-bottom: 0;
+      }
     }
 
-    .govuk-grid-column-one-quarter {
-      border-left: 1px solid $dark-grey;
+    .right {
+      float: right;
+      border-left: 1px solid $mid-grey;
+      padding-left: 1em;
 
       .download {
         font-size: 1em;
+      }
+    }
+
+    .download-modal {
+      position: absolute;
+      border-bottom: 4px solid $blue;
+      padding: $govuk-gutter-half;
+      top: 100%;
+      right: 0;
+      background-color: white;
+
+      .close {
+        position: absolute;
+        top: -1em;
+        right: 1em;
+        text-decoration: none;
       }
     }
   }

@@ -4,7 +4,6 @@ import isEmpty from 'lodash/isEmpty';
 import { updateAndSave } from '../actions/projects';
 import DefaultSection from './sections';
 import SectionsLink from '../components/sections-link';
-import Header from '../components/header';
 import Readonly from './readonly';
 import { getSubsections } from '../schema';
 import { getConditions } from '../helpers';
@@ -57,10 +56,6 @@ class Section extends React.Component {
     return (
       <Fragment>
         <SectionsLink />
-        <Header
-          title={this.props.project.title || 'Untitled project'}
-          subtitle={this.props.establishment && this.props.establishment.name}
-        />
         <Component
           { ...this.props }
           title={ title }
