@@ -21,15 +21,7 @@ const Index = ({
     return <Redirect to={`/${Object.keys(subsections)[0]}`} />;
   }
 
-  return <Fragment>
-    <p className="controls">
-      <span className="float-right">Download as:
-        <DownloadLink project={project.id} label="Word (.docx)" renderer="docx" />
-        <DownloadLink project={project.id} label="Backup (.ppl)" renderer="ppl" />
-      </span>
-    </p>
-    <ApplicationSummary onComplete={onComplete} />
-  </Fragment>
+  return <ApplicationSummary onComplete={onComplete} />
 };
 
 const mapStateToProps = ({ project, application: { isGranted, schemaVersion } }) => ({ project, isGranted, schemaVersion });

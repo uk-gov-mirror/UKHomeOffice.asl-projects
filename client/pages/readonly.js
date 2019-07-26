@@ -10,17 +10,6 @@ function Readonly({ establishment, isGranted, project, options, schemaVersion, s
   const title = project.title || 'Untitled project';
   return (
     <Fragment>
-      {
-        isGranted && establishment && <h3 className="est-title">{establishment.name}</h3>
-      }
-      {
-        isGranted
-          ? <DownloadHeader title={title} />
-          : <Header
-            title={title}
-            subtitle={establishment && establishment.name}
-          />
-      }
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-one-third">
           <SideNav
