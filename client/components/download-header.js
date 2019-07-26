@@ -1,10 +1,12 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, Fragment } from 'react';
 import { connect } from 'react-redux';
+import DownloadLink from './download-link';
 
-function DownloadHeader({ title, isGranted }) {
+function DownloadHeader({ title, isGranted, drafting, id, basename }) {
   const [modalShowing, updateModalShowing] = useState(false);
   const container = useRef(null);
   const download = useRef(null);
+  basename = basename.replace(/\/edit/, '');
 
   // project title could span multiple lines, adjust download position accordingly
   useEffect(() => {
@@ -26,8 +28,21 @@ function DownloadHeader({ title, isGranted }) {
         {
           modalShowing && (
             <div className="download-modal">
-              <a className="close" href="#" onClick={toggleModal}>✕</a>
-              <a href="pdf">{`As PDF ${isGranted ? 'licence' : 'preview'}`}</a> | <a href="docx">As Word document</a>
+              {
+                drafting
+                  ? (
+                    <Fragment>
+                      <DownloadLink project={id} label="Word (.docx)" renderer="docx" />
+                      <DownloadLink project={id} label="Backup (.ppl)" renderer="ppl" />
+                    </Fragment>
+                  )
+                  : (
+                    <Fragment>
+                      <a className="close" href="#" onClick={toggleModal}>✕</a>
+                      <a href={`${basename}/pdf`}>{`As PDF ${isGranted ? 'licence' : 'preview'}`}</a> | <a href={`${basename}/docx`}>As Word document</a>
+                    </Fragment>
+                  )
+              }
             </div>
           )
         }
@@ -37,12 +52,13 @@ function DownloadHeader({ title, isGranted }) {
       </div>
     </div>
   );
-};
+}
 
 export default connect(({
-  project: { title },
+  project: { title, id },
   application: { isGranted }
 }) => ({
   title,
+  id,
   isGranted
 }))(DownloadHeader);

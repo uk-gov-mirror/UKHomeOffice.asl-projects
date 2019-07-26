@@ -1,10 +1,9 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
 import { getGrantedSubsections } from '../schema'
 import ApplicationSummary from '../components/application-summary';
-import DownloadLink from '../components/download-link';
 
 const Index = ({
   project,
