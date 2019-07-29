@@ -5,6 +5,7 @@ import Protocols from '../../pages/sections/protocols';
 import ProtocolsReview from '../../pages/sections/protocols/review';
 import GrantedProtocols from '../../pages/sections/granted/protocols';
 import LegacyConditions from '../../pages/sections/legacy-conditions';
+import IntroductionReview from '../../pages/sections/legacy-introduction-review';
 import LEGACY_SPECIES from '../../constants/legacy-species';
 
 export default {
@@ -13,6 +14,7 @@ export default {
     subsections: {
       introduction: {
         title: 'Introductory details',
+        review: IntroductionReview,
         fields: [
           {
             label: 'Project title',
