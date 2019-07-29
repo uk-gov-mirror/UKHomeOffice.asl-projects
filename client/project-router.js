@@ -15,11 +15,13 @@ const ProjectRouter = ({ basename, onUpdate, onComplete, drafting }) => {
 
   useEffect(() => {
     if (drafting) {
-      return () => {}
+      return null;
     }
+
     const licenceStatusBanner = document.querySelector('.licence-status-banner');
     const showHide = licenceStatusBanner.querySelector('.toggle-switch a');
     const statusDetails = licenceStatusBanner.querySelector('.status-details');
+
     showHide.onclick = () => {
       if (statusShowing) {
         statusDetails.classList.add('hidden');
@@ -32,6 +34,9 @@ const ProjectRouter = ({ basename, onUpdate, onComplete, drafting }) => {
       }
       toggleStatusShowing();
     }
+    return () => {
+      showHide.onclick = null;
+    };
   });
 
   return (
