@@ -279,6 +279,29 @@ export default (application, sections, values) => {
     }
   };
 
+  const renderPermissiblePurpose = (doc, field, value, values) => {
+    value = value = Array.isArray(value) ? value : [value];
+    const children = values[field.options.find(opt => opt.reveal).reveal.name];
+    if (!value.length && !children.length) {
+      return renderNull(doc)
+    }
+
+    field.options.filter(opt => value.includes(opt.value) || (opt.reveal && children.length)).forEach(opt => {
+      const text = new TextRun(opt.label).size(24);
+      const paragraph = new Paragraph();
+      paragraph.style('body').bullet();
+      paragraph.addRun(text);
+      doc.addParagraph(paragraph);
+      if (opt && opt.reveal) {
+        [].concat(opt.reveal).forEach(reveal => {
+          renderField(doc, reveal, values, null, true)
+        });
+      }
+    });
+
+    renderHorizontalRule(doc);
+  }
+
   const renderSelector = (doc, field, value, values, project, noSeparator) => {
     value = Array.isArray(value) ? value : [value];
 
@@ -439,6 +462,10 @@ export default (application, sections, values) => {
       case 'objective-selector':
       case 'checkbox':
         renderSelector(doc, field, value, values, project, noSeparator);
+        break;
+
+      case 'permissible-purpose':
+        renderPermissiblePurpose(doc, field, value, values);
         break;
 
       case 'text':

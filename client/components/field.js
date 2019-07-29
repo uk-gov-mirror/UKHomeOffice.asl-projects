@@ -157,7 +157,7 @@ class Field extends Component {
         }}
       />;
     }
-    if (this.props.type === 'checkbox') {
+    if (this.props.type === 'checkbox' || this.props.type === 'permissible-purpose') {
       return <CheckboxGroup
         className={ this.props.className }
         label={ label }
