@@ -19,6 +19,11 @@ const ProjectRouter = ({ basename, onUpdate, onComplete, drafting }) => {
     }
 
     const licenceStatusBanner = document.querySelector('.licence-status-banner');
+
+    if (!licenceStatusBanner) {
+      return;
+    }
+
     const showHide = licenceStatusBanner.querySelector('.toggle-switch a');
     const statusDetails = licenceStatusBanner.querySelector('.status-details');
 
