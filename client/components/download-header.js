@@ -39,7 +39,7 @@ function DownloadHeader({ title, isGranted, drafting, id, basename }) {
                   : (
                     <Fragment>
                       <a className="close" href="#" onClick={toggleModal}>✕</a>
-                      <a href={`${basename}/pdf`}>{`As PDF ${isGranted ? 'licence' : 'preview'}`}</a> | <a href={`${basename}/docx`}>As Word document</a>
+                      <a href={`${basename}/pdf`}>As PDF</a> | <a href={`${basename}/docx`}>As Word (.docx)</a>
                     </Fragment>
                   )
               }
