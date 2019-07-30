@@ -60,7 +60,7 @@ const data = {
           {
             name: 'permissible-purpose',
             label: 'Which permissible purposes apply to this project?',
-            type: 'checkbox',
+            type: 'permissible-purpose',
             className: 'smaller',
             options: [
               {

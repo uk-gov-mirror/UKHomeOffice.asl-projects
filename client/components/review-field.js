@@ -16,7 +16,7 @@ class ReviewField extends React.Component {
   render() {
     let value = this.props.value;
     let options;
-    if (['checkbox', 'radio', 'select'].includes(this.props.type)) {
+    if (['checkbox', 'radio', 'select', 'permissible-purpose'].includes(this.props.type)) {
       options = this.props.optionsFromSettings
         ? this.props.settings[this.props.optionsFromSettings]
         : this.props.options;
@@ -54,6 +54,40 @@ class ReviewField extends React.Component {
         }),
         ...other
       ]);
+    }
+    if (this.props.type === 'permissible-purpose') {
+      const childrenName = options.find(o => o.reveal).reveal.name;
+      const hasChildren = o => o.reveal && this.props.project[o.reveal.name] && this.props.project[o.reveal.name].length;
+      if (
+        (value && value.length) ||
+        (this.props.project[childrenName] && this.props.project[childrenName].length)
+      ) {
+        return (
+          <ul>
+            {
+              options
+                .filter(o => value.includes(o.value) || hasChildren(o))
+                .map((o, i) => (
+                  <Fragment key={i}>
+                    <li>{o.label}</li>
+                    {
+                      hasChildren(o) && (
+                        <ul>
+                          {
+                            this.props.project[o.reveal.name].map((val, index) => {
+                              return <li key={index}>{o.reveal.options.find(opt => opt.value === val).label}</li>
+                            })
+                          }
+                        </ul>
+                      )
+                    }
+                  </Fragment>
+                ))
+            }
+          </ul>
+        )
+      }
+      return <em>None selected</em>
     }
     if (this.props.type === 'checkbox' ||
       this.props.type === 'species-selector' ||
