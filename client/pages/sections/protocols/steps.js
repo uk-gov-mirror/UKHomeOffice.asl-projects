@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component, Fragment, createRef } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
@@ -14,17 +14,48 @@ import Repeater from '../../../components/repeater';
 import Fieldset from '../../../components/fieldset';
 
 class Step extends Component {
+  constructor(options) {
+    super(options);
+    this.step = createRef();
+  }
+
   removeItem = e => {
     e.preventDefault();
     if (window.confirm('Are you sure you want to remove this step?')) {
+      this.scrollToPrevious();
       this.props.removeItem();
     }
   }
 
-  setCompleted = (completed, e) => {
-    if (e) {
-      e.preventDefault();
-    }
+  scrollToPrevious = () => {
+    const index = this.props.index ? this.props.index - 1 : 0;
+    const step = document.querySelectorAll('.steps .step')[index];
+    window.scrollTo({
+      top: step.offsetTop,
+      left: 0
+    });
+  }
+
+  scrollToStep = () => {
+    window.scrollTo({
+      top: this.step.current.offsetTop,
+      left: 0
+    });
+  }
+
+  saveStep = e => {
+    e.preventDefault();
+    this.setCompleted(true);
+    this.scrollToStep();
+  }
+
+  editStep = e => {
+    e.preventDefault();
+    this.setCompleted(false);
+    this.scrollToStep();
+  }
+
+  setCompleted = completed => {
     this.props.updateItem({ completed });
   }
 
@@ -55,7 +86,10 @@ class Step extends Component {
     const completed = !editable || values.completed;
 
     return (
-      <section className={classnames('step', { completed, editable })}>
+      <section
+        className={classnames('step', { completed, editable })}
+        ref={this.step}
+      >
         <Fragment>
           {
             editable && completed && (
@@ -90,7 +124,7 @@ class Step extends Component {
                 onFieldChange={(key, value) => updateItem({ [key]: value })}
                 values={values}
               />
-              <Button onClick={() => this.setCompleted(true)}>Save step</Button>
+              <Button onClick={this.saveStep}>Save step</Button>
               {
                 length > 1 && <Button className="link" onClick={this.removeItem}>Remove step</Button>
               }
@@ -103,7 +137,7 @@ class Step extends Component {
               editLink={`0#${this.props.prefix}`}
             />
             {
-              editable && <a href="#" onClick={(e) => this.setCompleted(false, e)}>Edit step</a>
+              editable && <a href="#" onClick={this.editStep}>Edit step</a>
             }
           </div>
         }
