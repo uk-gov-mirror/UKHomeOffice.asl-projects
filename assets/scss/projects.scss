@@ -1096,8 +1096,17 @@ html.modal-open, html.modal-open body {
 
   }
 
-  .back-to-top {
+  .steps-back-to-top {
     text-align: center;
+  }
+
+  .step-index {
+    overflow: hidden;
+
+    .step-index-item a {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
   }
 
   .comments.expanding-panel {

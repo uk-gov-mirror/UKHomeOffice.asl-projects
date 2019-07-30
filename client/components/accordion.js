@@ -53,13 +53,13 @@ class Accordion extends React.Component {
   }
 
   render() {
-    let { closeAll, openAll, openOne } = this.props;
+    let { closeAll, openAll, openOne, toggleAll = true } = this.props;
     closeAll = closeAll || 'Close all';
     openAll = openAll || 'Open all';
     return (
       <div className="accordion">
         {
-          !openOne && <p className="toggles">
+          !openOne && toggleAll && <p className="toggles">
             <a href="#" onClick={this.toggleAll}>{ this.allOpen() ? closeAll : openAll }</a>
           </p>
         }
