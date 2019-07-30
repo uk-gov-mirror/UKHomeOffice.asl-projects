@@ -112,7 +112,7 @@ class Step extends Component {
   }
 }
 
-const Steps = ({ values, prefix, updateItem, advance, editable, ...props }) => {
+const Steps = ({ values, prefix, updateItem, editable, ...props }) => {
   return (
     <div className="steps">
       <p className="grey">{props.hint}</p>
@@ -131,9 +131,6 @@ const Steps = ({ values, prefix, updateItem, advance, editable, ...props }) => {
           { ...props }
         />
       </Repeater>
-      {
-        editable && <Button onClick={advance} className="button-secondary">Next section</Button>
-      }
     </div>
   )
 }

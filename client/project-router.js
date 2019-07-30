@@ -15,7 +15,7 @@ const ProjectRouter = ({ basename, onUpdate, onComplete, drafting }) => {
 
   useEffect(() => {
     if (drafting) {
-      return null;
+      return;
     }
 
     const licenceStatusBanner = document.querySelector('.licence-status-banner');

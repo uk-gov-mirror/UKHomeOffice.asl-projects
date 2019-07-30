@@ -42,7 +42,7 @@ html.modal-open, html.modal-open body {
     .duration {
       margin-bottom: 1em;
     }
-    
+
     &.readonly {
       .review {
         margin-bottom: 2em;
@@ -769,6 +769,15 @@ html.modal-open, html.modal-open body {
 
   .accordion {
     margin-bottom: $govuk-gutter;
+
+    .toggles {
+      text-align: right;
+      margin: 0;
+
+      button {
+        margin: 0;
+      }
+    }
   }
 
   .expanding-panel {
