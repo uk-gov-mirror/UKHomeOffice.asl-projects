@@ -199,9 +199,6 @@ class Animals extends Component {
             onFieldChange={this.props.save}
           />
         }
-        {
-          editable && <Button onClick={this.saveAnimalsAndAdvance}  className="button-secondary">Next section</Button>
-        }
       </Fragment>
     )
   }

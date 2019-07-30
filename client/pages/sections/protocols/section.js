@@ -47,9 +47,6 @@ class Section extends PureComponent {
               />
             )
         }
-        {
-          editable && sectionIndex + 1 < sectionsLength && <Button className="button-secondary" onClick={advance}>Next section</Button>
-        }
       </Fragment>
     );
   }

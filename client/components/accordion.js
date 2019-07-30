@@ -37,7 +37,8 @@ class Accordion extends React.Component {
     return every(open);
   }
 
-  toggleAll() {
+  toggleAll = e => {
+    e.preventDefault();
     if (this.allOpen()) {
       return this.setState({ open: this.state.open.map(() => false) });
     }
@@ -58,7 +59,9 @@ class Accordion extends React.Component {
     return (
       <div className="accordion">
         {
-          !openOne && <p className="toggles"><button onClick={() => this.toggleAll()}>{ this.allOpen() ? closeAll : openAll }</button></p>
+          !openOne && <p className="toggles">
+            <a href="#" onClick={this.toggleAll}>{ this.allOpen() ? closeAll : openAll }</a>
+          </p>
         }
         {
           castArray(this.props.children).map((child, i) => child && React.cloneElement(child, {

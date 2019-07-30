@@ -44,9 +44,6 @@ const LegacyAnimals = ({ updateItem, title, values, fields, prefix, advance, rea
         fields={fields}
       />
     </Repeater>
-    {
-      !readonly && <Button className="button-secondary" onClick={advance}>Next section</Button>
-    }
   </Fragment>
 );
 
