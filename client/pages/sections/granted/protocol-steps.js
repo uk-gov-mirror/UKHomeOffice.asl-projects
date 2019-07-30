@@ -30,8 +30,8 @@ const Step = ({ id, index, fields, ...props }) => {
       </div>
       {
         !props.pdf && (
-          <p className="back-to-top">
-            <a href="#step-index">Back to top</a>
+          <p className="steps-back-to-top">
+            <a href="#step-index">Back to steps index</a>
           </p>
         )
       }
@@ -62,8 +62,9 @@ const Steps = ({ values, fields, pdf, number }) => {
             <h3 id="step-index">Index of steps</h3>
             <ol>
               {
-                values.steps.map(step => (
-                  <li key={step.id}>
+                values.steps.map((step, index) => (
+                  <li key={step.id} className="step-index-item">
+                    <span>{index + 1}. </span>
                     <a href={`#${step.id}`}>{getStepTitle(step.title)}</a><br />
                     <span>{step.optional ? 'Optional' : 'Mandatory'}</span>
                   </li>

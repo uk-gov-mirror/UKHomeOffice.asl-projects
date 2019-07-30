@@ -113,7 +113,7 @@ const sortGranted = (sections, isGranted) => (a, b) => {
 }
 
 const ProtocolSections = ({ sections, protocolState, editable, newComments, ...props }) => (
-  <Accordion open={getOpenSection(protocolState, editable, sections)}>
+  <Accordion open={getOpenSection(protocolState, editable, sections)} toggleAll={!props.pdf}>
     {
       Object.keys(sections).sort(sortGranted(sections, props.isGranted)).filter(section => !sections[section].show || sections[section].show(props)).map((section, sectionIndex) => (
         <ExpandingPanel alwaysUpdate={section === 'conditions' || section === 'authorisations'} key={section} title={getTitle(sections[section], newComments, props.values)}>
