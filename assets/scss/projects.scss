@@ -38,6 +38,18 @@ html.modal-open, html.modal-open body {
     }
   }
 
+  .introduction-review {
+    .duration {
+      margin-bottom: 1em;
+    }
+    
+    &.readonly {
+      .review {
+        margin-bottom: 2em;
+      }
+    }
+  }
+
   .modal {
     z-index: 100;
     position: fixed;
