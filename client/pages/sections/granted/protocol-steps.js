@@ -60,10 +60,11 @@ const Steps = ({ values, fields, pdf, number }) => {
         !pdf && (
           <Fragment>
             <h3 id="step-index">Index of steps</h3>
-            <ol className="step-index">
+            <ol>
               {
-                values.steps.map(step => (
+                values.steps.map((step, index) => (
                   <li key={step.id} className="step-index-item">
+                    <span>{index + 1}. </span>
                     <a href={`#${step.id}`}>{getStepTitle(step.title)}</a><br />
                     <span>{step.optional ? 'Optional' : 'Mandatory'}</span>
                   </li>

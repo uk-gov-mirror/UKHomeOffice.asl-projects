@@ -1100,13 +1100,10 @@ html.modal-open, html.modal-open body {
     text-align: center;
   }
 
-  .step-index {
+  .step-index-item {
+    white-space: nowrap;
     overflow: hidden;
-
-    .step-index-item a {
-      white-space: nowrap;
-      text-overflow: ellipsis;
-    }
+    text-overflow: ellipsis;
   }
 
   .comments.expanding-panel {
