@@ -112,7 +112,7 @@ class Step extends Component {
   }
 }
 
-const Steps = ({ values, prefix, updateItem, advance, editable, ...props }) => {
+const Steps = ({ values, prefix, updateItem, editable, ...props }) => {
   return (
     <div className="steps">
       <p className="grey">{props.hint}</p>

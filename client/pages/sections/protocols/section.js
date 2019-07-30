@@ -1,8 +1,6 @@
 import React, { PureComponent, Fragment } from 'react';
 import { withRouter } from 'react-router';
 
-import { Button } from '@ukhomeoffice/react-components';
-
 import Fieldset from '../../../components/fieldset'
 import ReviewFields from '../../../components/review-fields';
 
@@ -14,9 +12,6 @@ class Section extends PureComponent {
       values,
       onFieldChange,
       prefix,
-      advance,
-      sectionsLength,
-      sectionIndex,
       editable,
       pdf,
       title

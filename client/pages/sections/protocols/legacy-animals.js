@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
-import { Button } from '@ukhomeoffice/react-components';
 import Fieldset from '../../../components/fieldset';
 import Repeater from '../../../components/repeater';
 import ReviewFields from '../../../components/review-fields';
@@ -27,7 +26,7 @@ const LegacyAnimal = ({ updateItem, values, readonly, prefix, fields, index }) =
   </Fragment>
 )
 
-const LegacyAnimals = ({ updateItem, title, values, fields, prefix, advance, readonly, index }) => (
+const LegacyAnimals = ({ updateItem, title, values, fields, prefix, readonly, index }) => (
   <Fragment>
     {
       <h2>{title}</h2>
