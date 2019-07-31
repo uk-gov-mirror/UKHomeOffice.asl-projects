@@ -44,7 +44,10 @@ class Repeater extends Component {
     ))
   }
 
-  removeItem(index) {
+  removeItem(index, event) {
+    if (event) {
+      event.preventDefault();
+    }
     return Promise.resolve()
       .then(this.props.onBeforeRemove)
       .then(() => this.update(this.state.items.filter((item, i) => index !== i)))
@@ -98,7 +101,7 @@ class Repeater extends Component {
                 index,
                 key: item.id,
                 updateItem,
-                removeItem: () => this.removeItem(index),
+                removeItem: e => this.removeItem(index, e),
                 moveUp: () => this.moveUp(index),
                 moveDown: () => this.moveDown(index),
                 values: item,
