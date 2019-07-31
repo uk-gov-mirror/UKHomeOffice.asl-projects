@@ -96,6 +96,7 @@ class Repeater extends Component {
               return React.cloneElement(child, {
                 ...child.props,
                 index,
+                key: item.id,
                 updateItem,
                 removeItem: () => this.removeItem(index),
                 moveUp: () => this.moveUp(index),
