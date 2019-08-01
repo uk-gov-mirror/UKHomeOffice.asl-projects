@@ -554,7 +554,7 @@ export default (application, sections, values) => {
 
     doc.addParagraph(sectionTitle);
 
-    if(subsection.name === 'protocols') {
+    if(subsection.name === 'protocol' || subsection.name === 'protocols') {
       renderProtocolsSection(doc, subsection, values);
     } else {
       renderFields(doc, subsection, values);
