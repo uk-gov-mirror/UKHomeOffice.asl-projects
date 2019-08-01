@@ -3,7 +3,7 @@ import last from 'lodash/last';
 import { connect } from 'react-redux';
 import ReactMarkdown from 'react-markdown';
 import Review from '../../../components/review';
-import format from 'date-fns/format';
+import { formatDate } from '../../../../lib/utils';
 import CONDITIONS from '../../../constants/conditions';
 import LEGAL from '../../../constants/legal';
 
@@ -79,11 +79,11 @@ const ProjectSummary = ({
             </div>
             <div className="granted-section">
               <h3>Date granted</h3>
-              <p>{format(project.issueDate, DATE_FORMAT.long)}</p>
+              <p>{formatDate(project.issueDate, DATE_FORMAT.long)}</p>
             </div>
             <div className="granted-section">
               <h3>Expiry date</h3>
-              <p>{format(project.expiryDate, DATE_FORMAT.long)}</p>
+              <p>{formatDate(project.expiryDate, DATE_FORMAT.long)}</p>
             </div>
           </Fragment>
         )
