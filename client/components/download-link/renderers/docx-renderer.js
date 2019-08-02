@@ -508,7 +508,7 @@ export default (application, sections, values) => {
     ].map(s => {
       const opt = flatten(Object.values(SPECIES)).find(species => species.value === s);
       return {
-        key: species && species.value,
+        key: s && s.value,
         title: opt ? opt.label : s,
         value: values[`reduction-quantities-${s}`]
       }
