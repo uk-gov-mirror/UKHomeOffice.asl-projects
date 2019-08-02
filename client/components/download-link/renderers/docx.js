@@ -1,5 +1,5 @@
 import saveAs from 'file-saver';
-import { Packer } from '@joefitter/docx';
+import { Packer } from 'docx';
 import renderer from './docx-renderer';
 
 const pack = (doc, filename) => {
