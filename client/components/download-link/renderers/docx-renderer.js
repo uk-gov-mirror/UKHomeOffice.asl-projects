@@ -121,61 +121,61 @@ export default (application, sections, values) => {
     return doc;
   };
 
+  const tableToMatrix = table => {
+    const rows = table.nodes;
+    let rowspans = [];
+    let colcount = 0;
+
+    // calculate the actual dimensions of the table
+    rows.forEach((row, rowIndex) => {
+      const cells = row.nodes;
+
+      colcount = Math.max(
+        colcount,
+        cells.slice(0, -1).map(cell => get(cell, 'data.colSpan', 1) || 1).reduce((sum, num) => sum + num, 1) + rowspans.length
+      );
+
+      // reduce rowspans by one for next row.
+      rowspans = [
+        ...rowspans,
+        ...cells.map(cell => get(cell, 'data.rowSpan', 1) || rows.length - rowIndex)
+      ]
+        .map(s => s - 1)
+        .filter(Boolean);
+    });
+
+    const matrix = Array(rows.length).fill().map(() => Array(colcount).fill(undefined));
+
+    let rowspanStore = {};
+    rows.forEach((row, rowIndex) => {
+      let spanOffset = 0;
+      row.nodes.forEach((cell, colIndex) => {
+        colIndex += spanOffset;
+        // increase index and offset if previous row rowspan is active for col
+        while (get(rowspanStore, colIndex, 0)) {
+          spanOffset += 1;
+          colIndex += 1;
+        }
+
+        // store rowspan to be taken into account in the next row
+        rowspanStore[colIndex] = get(cell, 'data.rowSpan', 1) || rows.length - rowIndex;
+        const colspan = get(cell, 'data.colSpan', 1) || colcount - colIndex;
+
+        // increase offset for next cell
+        spanOffset += (colspan - 1);
+
+        // store in correct position
+        matrix[rowIndex][colIndex] = cell;
+      });
+
+      // reduce rowspans by one for next row.
+      rowspanStore = pickBy(mapValues(rowspanStore, s => s - 1), Boolean);
+    });
+
+    return matrix;
+  }
+
   const renderTable = (doc, node) => {
-    const tableToMatrix = table => {
-      const rows = table.nodes;
-      let rowspans = [];
-      let colcount = 0;
-
-      // calculate the actual dimensions of the table
-      rows.forEach((row, rowIndex) => {
-        const cells = row.nodes;
-
-        colcount = Math.max(
-          colcount,
-          cells.slice(0, -1).map(cell => get(cell, 'data.colSpan', 1) || 1).reduce((sum, num) => sum + num, 1) + rowspans.length
-        );
-
-        // reduce rowspans by one for next row.
-        rowspans = [
-          ...rowspans,
-          ...cells.map(cell => get(cell, 'data.rowSpan', 1) || rows.length - rowIndex)
-        ]
-          .map(s => s - 1)
-          .filter(Boolean);
-      });
-
-      const matrix = Array(rows.length).fill().map(() => Array(colcount).fill(undefined));
-
-      let rowspanStore = {};
-      rows.forEach((row, rowIndex) => {
-        let spanOffset = 0;
-        row.nodes.forEach((cell, colIndex) => {
-          colIndex += spanOffset;
-          // increase index and offset if previous row rowspan is active for col
-          while (get(rowspanStore, colIndex, 0)) {
-            spanOffset += 1;
-            colIndex += 1;
-          }
-
-          // store rowspan to be taken into account in the next row
-          rowspanStore[colIndex] = get(cell, 'data.rowSpan', 1) || rows.length - rowIndex;
-          const colspan = get(cell, 'data.colSpan', 1) || colcount - colIndex;
-
-          // increase offset for next cell
-          spanOffset += (colspan - 1);
-
-          // store in correct position
-          matrix[rowIndex][colIndex] = cell;
-        });
-
-        // reduce rowspans by one for next row.
-        rowspanStore = pickBy(mapValues(rowspanStore, s => s - 1), Boolean);
-      });
-
-      return matrix;
-    }
-
     const matrix = tableToMatrix(node);
     const rowcount = matrix.length;
     const colcount = matrix[0].length;
