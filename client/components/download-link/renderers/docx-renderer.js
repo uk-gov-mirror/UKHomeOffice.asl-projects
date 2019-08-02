@@ -389,7 +389,7 @@ export default (application, sections, values) => {
 
   const renderPermissiblePurpose = (doc, field, value, values) => {
     value = value = Array.isArray(value) ? value : [value];
-    const children = values[field.options.find(opt => opt.reveal).reveal.name];
+    const children = values[field.options.find(opt => opt.reveal).reveal.name] || [];
     if (!value.length && !children.length) {
       return renderNull(doc)
     }
