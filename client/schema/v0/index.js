@@ -60,6 +60,24 @@ export default {
       }
     }
   },
+  applicantInformation: {
+    title: 'Applicant information',
+    subsections: {
+      experience: {
+        title: 'Experience',
+        fields: [
+          {
+            name: 'experience-knowledge',
+            label: 'What relevant scientific knowledge or education do you have?',
+            alt: {
+              label: 'What relevant scientific knowledge or education does this person have?'
+            },
+            type: 'texteditor'
+          }
+        ]
+      }
+    }
+  },
   projectLocation: {
     title: 'Project location',
     subsections: {
@@ -325,6 +343,7 @@ export default {
           },
           animals: {
             title: 'Type of animals',
+            repeats: 'species',
             fields: [
               {
                 name: 'speciesId',
