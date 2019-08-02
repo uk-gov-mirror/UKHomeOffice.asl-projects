@@ -50,7 +50,6 @@
     "express-enforces-ssl": "^1.1.0",
     "express-react-views": "^0.11.0",
     "file-saver": "^2.0.0",
-    "image-size": "^0.7.4",
     "immutable": "^3.8.2",
     "mdn-polyfills": "^5.15.0",
     "moment": "^2.22.2",
