@@ -1,4 +1,5 @@
 import { Document, Paragraph, TextRun, Numbering, Indent, Table } from 'docx';
+import imageSize from 'image-size';
 import flatten from 'lodash/flatten';
 import isUndefined from 'lodash/isUndefined';
 import isNull from 'lodash/isNull';
@@ -756,21 +757,22 @@ export default (application, sections, values) => {
             return Promise.resolve(node);
           }
 
-          return new Promise(resolve => {
-            const image = new Image();
-            image.src = node.data.src;
-
-            image.onload = () => {
-              const dimensions = scaleAndPreserveAspectRatio(
-                image.naturalWidth,
-                image.naturalHeight,
-                MAX_IMAGE_WIDTH,
-                MAX_IMAGE_HEIGHT
-              );
-              node.data.width = dimensions.width;
-              node.data.height = dimensions.height;
-              resolve(node);
-            };
+          return new Promise((resolve, reject) => {
+            // const image = new Image();
+            imageSize(node.data.src, (err, dimensions) => {
+              if (err) {
+                reject(err);
+                dimensions = scaleAndPreserveAspectRatio(
+                  dimensions.width,
+                  dimensions.height,
+                  MAX_IMAGE_WIDTH,
+                  MAX_IMAGE_HEIGHT
+                );
+                node.data.width = dimensions.width;
+                node.data.height = dimensions.height;
+                resolve(node);
+              }
+            });
           });
         });
 
