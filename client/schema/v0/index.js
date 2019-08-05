@@ -75,7 +75,17 @@ export default {
             type: 'texteditor'
           }
         ]
-      }
+      },
+      resources: {
+        title: 'Resources',
+        fields: [
+          {
+            name: 'other-resources',
+            label: 'State the expertise and other resources available to you, whether this work has been peer-reviewed, and how the project will be funded.',
+            type: 'texteditor'
+          }
+        ]
+      },
     }
   },
   projectLocation: {
