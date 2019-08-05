@@ -353,7 +353,6 @@ export default {
           },
           animals: {
             title: 'Type of animals',
-            repeats: 'species',
             fields: [
               {
                 name: 'speciesId',
