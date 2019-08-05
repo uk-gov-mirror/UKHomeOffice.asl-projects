@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
-import { formatDate } from '../../../lib/utils';
+import { formatDate } from '../../helpers';
 import ReviewFields from '../../components/review-fields';
 import Banner from '../../components/banner';
 import { DATE_FORMAT } from '../../constants';

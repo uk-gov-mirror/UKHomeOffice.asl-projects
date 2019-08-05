@@ -3,6 +3,9 @@ import castArray from 'lodash/castArray';
 import pickBy from 'lodash/pickBy';
 import mapValues from 'lodash/mapValues';
 import map from 'lodash/map';
+import dateFormatter from 'date-fns/format';
+
+export const formatDate = (date, format) => (date ? dateFormatter(date, format) : '-');
 
 export const getConditions = (values, conditions, project) => {
   const customConditions = (values.conditions || [])

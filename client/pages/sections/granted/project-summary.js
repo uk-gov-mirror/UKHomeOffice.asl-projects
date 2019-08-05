@@ -3,7 +3,7 @@ import last from 'lodash/last';
 import { connect } from 'react-redux';
 import ReactMarkdown from 'react-markdown';
 import Review from '../../../components/review';
-import { formatDate } from '../../../../lib/utils';
+import { formatDate } from '../../../helpers';
 import CONDITIONS from '../../../constants/conditions';
 import LEGAL from '../../../constants/legal';
 
