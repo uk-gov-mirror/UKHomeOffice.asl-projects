@@ -171,19 +171,7 @@ export default (application, sections, values, updateImageDimensions) => {
     return matrix;
   }
 
-  const renderTable = (doc, node) => {
-    const matrix = tableToMatrix(node);
-    const rowcount = matrix.length;
-    const colcount = matrix[0].length;
-
-    const table = new Table({
-      rows: rowcount,
-      columns: colcount,
-      // setting to a large % enforces equal-width columns
-      columnWidths: Array(matrix[0].length).fill('500%')
-    });
-
-    // first pass - add content to cells
+  const populateTable = (matrix, table) => {
     matrix.forEach((row, rowIndex) => {
       row.forEach((cell, colIndex) => {
         if (cell) {
@@ -191,8 +179,11 @@ export default (application, sections, values, updateImageDimensions) => {
         }
       });
     });
+  }
 
-    // second pass - merge rows
+  const mergeCells = (matrix, table) => {
+    populateTable(matrix, table);
+    // merge rows
     matrix.forEach((row, rowIndex) => {
       row.forEach((cell, colIndex) => {
         const rowSpan = get(cell, 'data.rowSpan');
@@ -201,8 +192,7 @@ export default (application, sections, values, updateImageDimensions) => {
         }
       });
     });
-
-    // third pass - merge cols
+    // merge cols
     matrix.forEach((row, rowIndex) => {
       row.forEach((cell, colIndex) => {
         const colSpan = get(cell, 'data.colSpan');
@@ -211,9 +201,34 @@ export default (application, sections, values, updateImageDimensions) => {
         }
       });
     });
+  };
+
+  const initTable = matrix => {
+    const rowcount = matrix.length;
+    const colcount = matrix[0].length;
+
+    return new Table({
+      rows: rowcount,
+      columns: colcount,
+      // setting to a large % enforces equal-width columns
+      columnWidths: Array(colcount).fill('500%')
+    });
+  };
+
+  const renderTable = (doc, node) => {
+    const matrix = tableToMatrix(node);
+    let table = initTable(matrix);
+
+    try {
+      mergeCells(matrix, table);
+    } catch (err) {
+      console.log('Failed to merge cells', err);
+      table = initTable(matrix);
+      populateTable(matrix, table);
+    }
 
     doc.addTable(table);
-  }
+  };
 
   const renderNode = (doc, node, depth = 0, paragraph) => {
     let text;
