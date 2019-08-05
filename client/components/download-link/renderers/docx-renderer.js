@@ -7,11 +7,7 @@ import pickBy from 'lodash/pickBy';
 import mapValues from 'lodash/mapValues';
 import SPECIES from '../../../constants/species';
 
-// 600px seems to be roughly 100% page width (inside the margins)
-const MAX_IMAGE_WIDTH = 600;
-const MAX_IMAGE_HEIGHT = 800;
-
-export default (application, sections, values) => {
+export default (application, sections, values, updateImageDimensions) => {
 
   const numbering = new Numbering();
   const abstract = numbering.createAbstractNumbering();
@@ -733,11 +729,6 @@ export default (application, sections, values) => {
     return Promise.all(promises).then(() => obj);
   };
 
-  const scaleAndPreserveAspectRatio = (srcWidth, srcHeight, maxWidth, maxHeight) => {
-    const ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
-    return { width: srcWidth * ratio, height: srcHeight * ratio };
-  }
-
   const addImageDimensions = values => {
     return traverse(values, (value) => {
       if (typeof value !== 'string') {
@@ -756,22 +747,7 @@ export default (application, sections, values) => {
             return Promise.resolve(node);
           }
 
-          return new Promise(resolve => {
-            const image = new Image();
-            image.src = node.data.src;
-
-            image.onload = () => {
-              const dimensions = scaleAndPreserveAspectRatio(
-                image.naturalWidth,
-                image.naturalHeight,
-                MAX_IMAGE_WIDTH,
-                MAX_IMAGE_HEIGHT
-              );
-              node.data.width = dimensions.width;
-              node.data.height = dimensions.height;
-              resolve(node);
-            };
-          });
+          return updateImageDimensions(node);
         });
 
         return Promise.all(nodePromises)
