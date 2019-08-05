@@ -10,9 +10,10 @@ const Protocol = ({ protocol, number, sections, isLegacy }) => {
   const species = !isLegacy
     ? (protocol.speciesDetails || []).filter(s => s.name)
     : (protocol.species || []).map(s => {
+      const matched = LEGACY_SPECIES.find(ls => ls.value === s.speciesId);
       return {
         ...s,
-        name: LEGACY_SPECIES.find(ls => ls.value === s.speciesId).label
+        name: matched ? matched.label : '-'
       }
     });
   return (
