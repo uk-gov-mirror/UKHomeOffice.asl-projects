@@ -7,7 +7,7 @@ import flatten from 'lodash/flatten';
 import values from 'lodash/values';
 import isUndefined from 'lodash/isUndefined';
 import isNull from 'lodash/isNull';
-import { formatDate } from '../../lib/utils';
+import { formatDate } from '../helpers';
 import { DATE_FORMAT } from '../constants';
 
 class ReviewField extends React.Component {
