@@ -60,6 +60,34 @@ export default {
       }
     }
   },
+  applicantInformation: {
+    title: 'Applicant information',
+    subsections: {
+      experience: {
+        title: 'Experience',
+        fields: [
+          {
+            name: 'experience-knowledge',
+            label: 'What relevant scientific knowledge or education do you have?',
+            alt: {
+              label: 'What relevant scientific knowledge or education does this person have?'
+            },
+            type: 'texteditor'
+          }
+        ]
+      },
+      resources: {
+        title: 'Resources',
+        fields: [
+          {
+            name: 'other-resources',
+            label: 'State the expertise and other resources available to you, whether this work has been peer-reviewed, and how the project will be funded.',
+            type: 'texteditor'
+          }
+        ]
+      },
+    }
+  },
   projectLocation: {
     title: 'Project location',
     subsections: {
