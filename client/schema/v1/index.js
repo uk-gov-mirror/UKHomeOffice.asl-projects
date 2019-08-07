@@ -1290,7 +1290,7 @@ each other.`,
               },
               {
                 name: 'locations',
-                label: 'Select the establishments or POLEs where this protocol will be carried out.',
+                label: 'Select the establishments and POLEs where this protocol will be carried out.',
                 review: 'Locations where this protocol can be carried out',
                 hint: 'Select all that apply.',
                 type: 'location-selector'
@@ -1318,7 +1318,7 @@ each other.`,
             }
           },
           establishments: {
-            title: 'Establishments or POLEs',
+            title: 'Establishments and POLEs',
             show: props => props.isGranted,
             granted: {
               order: 3,
