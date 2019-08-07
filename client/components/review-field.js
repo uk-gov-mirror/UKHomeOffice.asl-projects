@@ -167,7 +167,7 @@ class ReviewField extends React.Component {
         }
       </dl>
     }
-    if (this.props.type === 'texteditor' && this.props.value) {
+    if (this.props.type === 'texteditor') {
       return <TextEditor {...this.props} readOnly={true} />;
     }
     if (!isUndefined(value) && !isNull(value) && value !== '') {

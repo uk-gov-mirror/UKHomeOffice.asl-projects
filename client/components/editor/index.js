@@ -27,6 +27,14 @@ const plugins = [
   listPlugin
 ];
 
+const serialiseValue = value => {
+  const jsonVal = JSON.stringify(value.toJSON());
+  if (jsonVal === JSON.stringify(Value.fromJSON(initialValue('')))) {
+    return null;
+  }
+  return jsonVal;
+};
+
 const normaliseValue = value => {
   // if value is falsy, init with empty value
   if (!value) {
@@ -63,9 +71,7 @@ class TextEditor extends Component {
 
   save = () => {
     const { value } = this.state;
-    const jsonVal = JSON.stringify(value.toJSON())
-    const notNull = jsonVal !== JSON.stringify(Value.fromJSON(initialValue('')));
-    this.props.onChange(notNull ? jsonVal : null)
+    this.props.onChange(serialiseValue(value));
   }
 
   onChange = ({ value }) => {
@@ -98,6 +104,9 @@ class TextEditor extends Component {
 
   render() {
     const { value } = this.state;
+    if (this.props.readOnly && !serialiseValue(value)) {
+      return <em>No answer provided</em>;
+    }
     return (
       <div
         className={classnames(
