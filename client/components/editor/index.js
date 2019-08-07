@@ -2,8 +2,9 @@ import React, { Component, Fragment } from 'react';
 import classnames from 'classnames';
 import { Editor } from 'slate-react';
 import { Value } from 'slate';
-import ReactMarkdown from 'react-markdown'
+import ReactMarkdown from 'react-markdown';
 
+import get from 'lodash/get';
 import defer from 'lodash/defer';
 import debounce from 'lodash/debounce';
 
@@ -24,21 +25,31 @@ const plugins = [
   Image(),
   tablePlugin,
   listPlugin
-]
+];
+
+const normaliseValue = value => {
+  // if value is falsy, init with empty value
+  if (!value) {
+    return initialValue('');
+  }
+  try {
+    // try and parse value
+    value = JSON.parse(value)
+  } catch(e) {
+    // if value is unable to be JSON parsed, set it as a single text node
+    value = initialValue(value);
+  }
+  // if structure is empty and incomplete, init with empty value
+  if (get(value, 'document.nodes.length') === 0) {
+    value = initialValue('');
+  }
+  return value;
+}
 
 class TextEditor extends Component {
   constructor(props) {
     super(props);
-    let value = this.props.value;
-    if (value) {
-      try {
-        value = JSON.parse(this.props.value)
-      } catch(e) {
-        value = initialValue(value);
-      }
-    } else {
-      value = initialValue('');
-    }
+    const value = normaliseValue(this.props.value);
 
     this.state = {
       value: Value.fromJSON(value),
