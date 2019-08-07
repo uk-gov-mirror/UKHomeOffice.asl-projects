@@ -7,6 +7,9 @@ import flatten from 'lodash/flatten';
 import values from 'lodash/values';
 import isUndefined from 'lodash/isUndefined';
 import isNull from 'lodash/isNull';
+import isInteger from 'lodash/isInteger';
+import get from 'lodash/get';
+
 import { formatDate } from '../helpers';
 import { DATE_FORMAT } from '../constants';
 
@@ -26,12 +29,25 @@ class ReviewField extends React.Component {
     }
 
     if (this.props.type === 'duration') {
+      let months = get(value, 'months');
+      let years = get(value, 'years');
+      months = isInteger(months) ? months : 0;
+      years = isInteger(years) ? years : 5;
+
+      if (months > 12) {
+        months = 0;
+      }
+      
+      if (years >= 5 || (!months && !years)) {
+        years = 5;
+        months = 0;
+      }
       return (
         <dl className="inline">
           <dt>Years</dt>
-          <dd>{(value || {}).years || 5}</dd>
+          <dd>{years}</dd>
           <dt>Months</dt>
-          <dd>{(value || {}).months || 0}</dd>
+          <dd>{months}</dd>
         </dl>
       )
     }
