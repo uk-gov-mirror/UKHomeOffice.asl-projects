@@ -1,5 +1,5 @@
 import Repeater from '../../pages/sections/repeater';
-import RepeaterReview from '../../pages/sections/repeater/review';
+import LegacyEstablishments from '../../pages/sections/legacy-establishments';
 
 import Protocols from '../../pages/sections/protocols';
 import ProtocolsReview from '../../pages/sections/protocols/review';
@@ -95,7 +95,7 @@ export default {
         title: 'Establishments',
         repeats: 'establishments',
         singular: 'Additional establishment',
-        review: RepeaterReview,
+        review: LegacyEstablishments,
         enable: 'other-establishments',
         steps: [
           {
