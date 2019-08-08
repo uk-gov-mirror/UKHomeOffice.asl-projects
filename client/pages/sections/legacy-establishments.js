@@ -1,36 +1,29 @@
-
-import React, {Fragment} from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import RepeaterReview from './repeater/review';
 
-const LegacyEstablishments = ({ title, steps, values, readonly, singular, enable,
-          establishment: {
-            name,
-            licenceNumber,
-            address,
-            licenceHolder: {
-              firstName,
-              lastName
-            }
-          }
-}) => {
+const LegacyEstablishments = ({ establishment, ...props }) => {
+
+  const {
+    name,
+    licenceNumber
+  } = establishment;
+
   return (
     <Fragment>
-       <dl className="inline">
-          <dt>Primary establishment: </dt>
-          <dd>{ name }</dd>
-          <dt>Establishment licence number: </dt>
-          <dd>{ licenceNumber }</dd>
-          <dt>Establishment licence holder: </dt>
-          <dd>{firstName} {lastName}</dd>
-          <dt>Address: </dt>
-          <dd>{ address }</dd>
-        </dl>
-      <RepeaterReview title={title} steps={steps} values={values} readonly={readonly} singular={singular} enable={enable} />
+      <h2>Primary establishment</h2>
+      <dl className="inline">
+      <dt>Establishment name: </dt>
+      <dd>{ name }</dd>
+      <dt>Licence number: </dt>
+      <dd>{ licenceNumber }</dd>
+      </dl>
+      <br/>
+      <RepeaterReview {...props} />
     </Fragment>
   )
 }
 
-const mapStateToProps = ({ project, application: { readonly, establishment } }) => ({ project, readonly, establishment });
+const mapStateToProps = ({ application: { establishment } }) => ({ establishment });
 
 export default connect(mapStateToProps)(LegacyEstablishments);
