@@ -11,14 +11,15 @@ const LegacyEstablishments = ({ establishment, ...props }) => {
 
   return (
     <Fragment>
+      <div className="granted-section">
       <h2>Primary establishment</h2>
       <dl className="inline">
-      <dt>Establishment name: </dt>
-      <dd>{ name }</dd>
-      <dt>Licence number: </dt>
-      <dd>{ licenceNumber }</dd>
+        <dt>Establishment name: </dt>
+        <dd>{ name }</dd>
+        <dt>Licence number: </dt>
+        <dd>{ licenceNumber }</dd>
       </dl>
-      <br/>
+      </div>
       <RepeaterReview {...props} />
     </Fragment>
   )
