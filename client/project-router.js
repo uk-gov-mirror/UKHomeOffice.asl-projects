@@ -18,7 +18,7 @@ const ProjectRouter = ({ basename, onUpdate, onComplete, drafting }) => {
   useEffect(() => {
     window.onbeforeunload = () => {
       if (isSyncing) {
-        return 'Data is currently syncing, if you leave this page your recent changes may not be saved.';
+        return 'Data is currently being saved, if you leave this page your recent changes may not be saved.';
       }
     }
 
