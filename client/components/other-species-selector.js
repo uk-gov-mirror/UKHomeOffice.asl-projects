@@ -8,8 +8,8 @@ import Field from './field';
 
 class OtherSpecies extends Component {
   state = {
-    items: this.props.values && this.props.values.length
-      ? this.props.values
+    items: this.props.value && this.props.value.length
+      ? this.props.value
       : [null]
   }
 
