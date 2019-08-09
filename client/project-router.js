@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { useSelector } from 'react-redux'
 
 import DownloadHeader from './components/download-header';
 import ScrollToTop from './components/scroll-to-top';
@@ -8,10 +9,35 @@ import Project from './pages/project';
 
 const ProjectRouter = ({ basename, onUpdate, onComplete, drafting }) => {
   const [statusShowing, setStatusShowing] = useState(true);
+  const isSyncing = useSelector(state => state.application.isSyncing);
 
   function toggleStatusShowing() {
     setStatusShowing(!statusShowing);
   }
+
+  useEffect(() => {
+    window.onbeforeunload = () => {
+      if (isSyncing) {
+        return 'Data is currently syncing, if you leave this page your recent changes may not be saved.';
+      }
+    }
+
+    const nextSteps = document.querySelector('#page-component > a.govuk-button');
+
+    if (isSyncing) {
+      nextSteps.setAttribute('disabled', true);
+      nextSteps.onclick = () => false;
+    } else {
+      nextSteps.removeAttribute('disabled');
+      nextSteps.onclick = null;
+    }
+
+    return () => {
+      window.onbeforeunload = null;
+      nextSteps.removeAttribute('disabled');
+      nextSteps.onclick = null;
+    }
+  })
 
   useEffect(() => {
     if (drafting) {

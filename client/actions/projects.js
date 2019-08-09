@@ -1,6 +1,8 @@
 import omit from 'lodash/omit';
 import debounce from 'lodash/debounce';
 import cloneDeep from 'lodash/cloneDeep';
+import isEqual from 'lodash/isEqual';
+import get from 'lodash/get';
 
 import * as types from './types';
 import database from '../database';
@@ -88,6 +90,18 @@ export function updateSavedProject(project) {
   }
 }
 
+export function isSyncing() {
+  return {
+    type: types.IS_SYNCING
+  }
+}
+
+export function doneSyncing() {
+  return {
+    type: types.DONE_SYNCING
+  }
+}
+
 const debouncedUpdate = debounce((id, data, dispatch) => {
   return database()
     .then(db => db.update(id, data))
@@ -106,18 +120,34 @@ export function updateAndSave(data) {
   };
 }
 
-const doConditionsUpdate = (data, dispatch, state) => {
-  const { application: { basename } } = state;
+const sync = (dispatch, getState, field, extra = {}) => {
+  const state = getState();
+  const oldValue = get(state.savedProject, field);
+  const newValue = get(state.project, field);
+
+  if (isEqual(oldValue, newValue)) {
+    dispatch(doneSyncing());
+    return Promise.resolve();
+  }
+  dispatch(isSyncing());
+
+  const { application: { basename } } = getState();
   const params = {
     method: 'PUT',
     url: `${basename.replace(/\/edit?/, '')}/conditions`,
-    data
+    data: {
+      [field]: newValue,
+      ...extra
+    }
   };
+
   return Promise.resolve()
     .then(() => sendMessage(params))
+    .then(() => dispatch(updateSavedProject(state.project)))
+    .then(() => sync(dispatch, getState, field, extra))
     .catch(err => {
       console.error(err);
-      dispatch(throwError('Error updating conditions'));
+      sync(dispatch, getState, field, extra);
     });
 }
 
@@ -129,11 +159,11 @@ export function updateRetrospectiveAssessment(retrospectiveAssessment) {
       retrospectiveAssessment
     };
     dispatch(updateProject(newState));
-    return doConditionsUpdate({ retrospectiveAssessment }, dispatch, state)
-      .then(() => {
-        dispatch(updateSavedProject(newState));
-        dispatch(showMessage('Retrospective assessment details saved'))
-      })
+    if (!state.application.isSyncing) {
+      return sync(dispatch, getState, 'retrospectiveAssessment')
+        .then(() => dispatch(showMessage('Retrospective assessment details saved')))
+        .catch(() => dispatch(throwError('Data sync failed')))
+    }
   }
 }
 
@@ -150,9 +180,6 @@ export function updateConditions(type, conditions, protocolId) {
           .find((p => p.id === protocolId) || {}).conditions || []).filter(condition => condition.type !== type),
         ...conditions
       ]
-    const data = type === 'legacy'
-      ? { conditions }
-      : { conditions: newConditions, protocolId }
 
     const newState = cloneDeep(state.project);
     if (protocolId) {
@@ -166,11 +193,11 @@ export function updateConditions(type, conditions, protocolId) {
       newState.conditions = type === 'legacy' ? conditions : newConditions;
     }
     dispatch(updateProject(newState));
-    return doConditionsUpdate(data, dispatch, state)
-      .then(() => {
-        dispatch(updateSavedProject(newState));
-        dispatch(showMessage(`${type === 'condition' ? 'Conditions': 'Authorisations'} synced`))
-      })
+    if (!state.application.isSyncing) {
+      return sync(dispatch, getState, 'conditions', protocolId && { protocolId })
+        .then(() => dispatch(showMessage(`${type === 'condition' ? 'Conditions': 'Authorisations'} synced`)))
+        .catch(() => dispatch(throwError('Data sync failed')))
+    }
   }
 }
 
