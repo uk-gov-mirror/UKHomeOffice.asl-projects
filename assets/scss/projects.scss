@@ -1043,6 +1043,10 @@ html.modal-open, html.modal-open body {
     .govuk-form-group {
       margin-bottom: $govuk-gutter !important;
     }
+
+    .species-selector-other .govuk-button {
+      margin-bottom: 32px;
+    }
   }
 
   .add-more-animals {
