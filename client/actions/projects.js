@@ -159,7 +159,7 @@ const sync = (dispatch, getState, fields, extra = {}) => {
 
 const debouncedSync = debounce((dispatch, getState, extra) => {
   return sync(dispatch, getState, ['conditions', 'retrospectiveAssessment'], extra)
-}, 1000, { maxWait: 5000 });
+}, 1000, { maxWait: 5000, leading: true });
 
 export function updateRetrospectiveAssessment(retrospectiveAssessment) {
   return (dispatch, getState) => {
