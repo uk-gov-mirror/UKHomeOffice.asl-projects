@@ -14,7 +14,7 @@ class ConnectProject extends Component {
   }
   render() {
     return (
-      <ProjectRouter basename={`/project/${this.props.match.params.id}`} drafting />
+      <ProjectRouter basename={`/project/${this.props.match.params.id}`} />
     );
   }
 }

@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import isEmpty from 'lodash/isEmpty';
-import { updateAndSave } from '../actions/projects';
+import { indexedDBSync, ajaxSync } from '../actions/projects';
 import DefaultSection from './sections';
 import SectionsLink from '../components/sections-link';
 import Readonly from './readonly';
@@ -27,8 +27,8 @@ const mapStateToProps = ({ project, application: { schemaVersion, readonly, esta
   };
 };
 
-const mapDispatchToProps = (dispatch, { onUpdate }) => {
-  const update = onUpdate || updateAndSave;
+const mapDispatchToProps = (dispatch, { drafting }) => {
+  const update = drafting ? indexedDBSync : ajaxSync;
   return {
     update: data => dispatch(update(data))
   };

@@ -1,15 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { useSelector } from 'react-redux'
+import { useSelector, shallowEqual } from 'react-redux'
 
 import DownloadHeader from './components/download-header';
 import ScrollToTop from './components/scroll-to-top';
 import Section from './pages/section';
 import Project from './pages/project';
 
-const ProjectRouter = ({ basename, onUpdate, onComplete, drafting }) => {
+const selector = ({
+  application: {
+    isSyncing,
+    basename,
+    drafting
+  }
+}) => ({ isSyncing, basename, drafting });
+
+const ProjectRouter = () => {
   const [statusShowing, setStatusShowing] = useState(true);
-  const isSyncing = useSelector(state => state.application.isSyncing);
+  const {
+    isSyncing,
+    basename,
+    drafting
+  } = useSelector(selector, shallowEqual);
 
   function toggleStatusShowing() {
     setStatusShowing(!statusShowing);
@@ -83,10 +95,10 @@ const ProjectRouter = ({ basename, onUpdate, onComplete, drafting }) => {
   return (
     <BrowserRouter basename={basename}>
       <ScrollToTop>
-        <DownloadHeader drafting={drafting} basename={basename} />
+        <DownloadHeader basename={basename} />
         <Switch>
-          <Route path="/:section/:step?" render={ props => <Section { ...props} onUpdate={onUpdate} /> } />
-          <Route path="/" render={ props => <Project {...props} onComplete={onComplete} /> }  />
+          <Route path="/:section/:step?" render={props => <Section { ...props } drafting={drafting} />} />
+          <Route path="/" component={Project} />
         </Switch>
       </ScrollToTop>
     </BrowserRouter>

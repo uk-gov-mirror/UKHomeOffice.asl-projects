@@ -1,11 +1,36 @@
 import React, { useState, useRef, useEffect, Fragment } from 'react';
-import { connect } from 'react-redux';
+import { useSelector, shallowEqual } from 'react-redux';
 import DownloadLink from './download-link';
 
-function DownloadHeader({ title, isGranted, drafting, id, basename }) {
+const selector = (({
+  project: { title, id },
+  application: {
+    isGranted,
+    basename,
+    drafting
+  }
+}) => ({
+  id,
+  title,
+  isGranted,
+  basename,
+  drafting
+}))
+
+export default function DownloadHeader() {
   const [modalShowing, updateModalShowing] = useState(false);
   const container = useRef(null);
   const download = useRef(null);
+
+  const props = useSelector(selector, shallowEqual);
+  const {
+    id,
+    title,
+    isGranted,
+    drafting,
+  } = props;
+  let { basename } = props;
+
   basename = basename.replace(/\/edit/, '');
 
   // project title could span multiple lines, adjust download position accordingly
@@ -53,12 +78,3 @@ function DownloadHeader({ title, isGranted, drafting, id, basename }) {
     </div>
   );
 }
-
-export default connect(({
-  project: { title, id },
-  application: { isGranted }
-}) => ({
-  title,
-  id,
-  isGranted
-}))(DownloadHeader);

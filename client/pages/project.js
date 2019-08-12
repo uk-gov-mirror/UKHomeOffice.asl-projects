@@ -8,8 +8,7 @@ import ApplicationSummary from '../components/application-summary';
 const Index = ({
   project,
   isGranted,
-  schemaVersion,
-  onComplete = () => window.alert('Submitting to ASRU through this tool is not currently supported.')
+  schemaVersion
 }) => {
   if (!project) {
     return null
@@ -20,7 +19,7 @@ const Index = ({
     return <Redirect to={`/${Object.keys(subsections)[0]}`} />;
   }
 
-  return <ApplicationSummary onComplete={onComplete} />
+  return <ApplicationSummary />
 };
 
 const mapStateToProps = ({ project, application: { isGranted, schemaVersion } }) => ({ project, isGranted, schemaVersion });

@@ -12,7 +12,7 @@ import configureStore from './store';
 import { loadProjects } from './actions/projects';
 import { loadSettings } from './actions/settings';
 
-const store = configureStore();
+const store = configureStore({ application: { drafting: true } });
 
 store.dispatch(loadSettings())
   .then(() => store.dispatch(loadProjects()))

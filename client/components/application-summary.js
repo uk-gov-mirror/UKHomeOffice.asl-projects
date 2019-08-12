@@ -37,7 +37,9 @@ const mapStateToProps = ({
     readonly,
     showComments,
     user,
-    showConditions
+    showConditions,
+    basename,
+    drafting
   }
 }) => {
   const fieldsBySection = Object.values(schema[schemaVersion]).map(section => section.subsections).reduce((obj, subsections) => {
@@ -54,7 +56,9 @@ const mapStateToProps = ({
     fieldsBySection: omit(fieldsBySection, 'protocols'),
     legacy: schemaVersion === 0,
     values: project,
-    sections: schema[schemaVersion]
+    sections: schema[schemaVersion],
+    basename,
+    drafting
   };
 }
 
@@ -126,6 +130,13 @@ class ApplicationSummary extends React.Component {
     return <NewComments comments={newComments} />
   }
 
+  onComplete = () => {
+    if (this.props.drafting) {
+      return window.alert('Submitting to ASRU through this tool is not currently supported.')
+    }
+    window.location.href = `${this.props.basename}/submit`;
+  }
+
   render() {
     if (!this.props.values) {
       return null;
@@ -180,7 +191,7 @@ class ApplicationSummary extends React.Component {
               }
               <Button
                 disabled={!this.isCompleted()}
-                onClick={this.props.onComplete}
+                onClick={this.onComplete}
               >Continue</Button>
             </Fragment>
           )
