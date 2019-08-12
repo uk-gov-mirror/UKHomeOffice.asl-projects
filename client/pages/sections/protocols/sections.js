@@ -11,7 +11,7 @@ import Accordion from '../../../components/accordion';
 import ExpandingPanel from '../../../components/expanding-panel';
 import NewComments from '../../../components/new-comments';
 
-import { flattenReveals } from '../../../helpers';
+import { flattenReveals, changed } from '../../../helpers';
 
 import Section from './section';
 import Steps from './steps';
@@ -113,16 +113,6 @@ const sortGranted = (sections, isGranted) => (a, b) => {
   return sections[a].granted.order - sections[b].granted.order;
 }
 
-const changed = (subsection, latest, granted) => {
-  const fields = subsection.fields.map(field => field.name) || [];
-  if(fields.some(k=> latest.some(l=> l.includes(k)))) {
-    return LATEST;
-  }
-  if(fields.some(k=> granted.some(l=> l.includes(k)))) {
-    return GRANTED;
-  }
-}
-
 const changedBadge = change => {
   switch (change) {
     case LATEST:
@@ -135,14 +125,13 @@ const changedBadge = change => {
 }
 
 const ProtocolSections = ({ sections, protocolState, editable, newComments, ...props }) =>  {
-
   return (
   <Accordion open={getOpenSection(protocolState, editable, sections)} toggleAll={!props.pdf}>
     {
       Object.keys(sections).sort(sortGranted(sections, props.isGranted)).filter(section => !sections[section].show || sections[section].show(props)).map((section, sectionIndex) => (
         <Fragment key={section}>
         {
-          changedBadge(changed(sections[section], props.latest, props.granted))
+          changedBadge(changed(sections[section].fields.map(field => field.name), props.latest, props.granted))
         }
         <ExpandingPanel alwaysUpdate={section === 'conditions' || section === 'authorisations'} key={section} title={getTitle(sections[section], newComments, props.values)}>
           {

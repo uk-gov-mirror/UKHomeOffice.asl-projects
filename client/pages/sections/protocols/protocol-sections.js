@@ -9,20 +9,9 @@ import Completable from '../../../components/completable';
 import Complete from '../../../components/complete';
 import NewComments from '../../../components/new-comments';
 import Sections from './sections';
-
+import { changed } from '../../../helpers';
 import { LATEST, GRANTED } from '../../../constants/change';
 
-const changed = (sections, latest, granted) => {
-
-  const fields = Object.values(sections).map(s => s.fields.map(field => field.name)) || [];
-
-  if(fields.some(k=> latest.some(l=> l.includes(k)))) {
-    return LATEST;
-  }
-  if(fields.some(k=> granted.some(l=> l.includes(k)))) {
-    return GRANTED;
-  }
-}
 
 const changedBadge = change => {
   switch (change) {
@@ -88,11 +77,13 @@ class ProtocolSections extends PureComponent {
 
     const noAnswer = <em>No answer provided</em>;
 
+    const fields = Object.values(sections).map(s => s.fields.map(field => field.name)) || [];
+
     return (
       <section className={classnames('protocol', { complete: values.complete || readonly, readonly })}>
         <NewComments comments={numberOfNewComments} />
         {
-          changedBadge(changed(sections, latest, granted))
+          changedBadge(changed(fields, latest, granted))
         }
         <Expandable expanded={this.state.expanded} onHeaderClick={this.toggleExpanded}>
           <Completable status={values.complete ? 'complete' : 'incomplete'}>
