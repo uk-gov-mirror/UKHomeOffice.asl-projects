@@ -102,7 +102,7 @@ class ReviewField extends React.Component {
           </ul>
         )
       }
-      return <em>None selected</em>
+      return <p><em>None selected</em></p>;
     }
     if (this.props.type === 'checkbox' ||
       this.props.type === 'species-selector' ||
