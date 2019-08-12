@@ -10,6 +10,31 @@ import Complete from '../../../components/complete';
 import NewComments from '../../../components/new-comments';
 import Sections from './sections';
 
+import { LATEST, GRANTED } from '../../../constants/change';
+
+const changed = (sections, latest, granted) => {
+
+  const fields = Object.values(sections).map(s => s.fields.map(field => field.name)) || [];
+
+  if(fields.some(k=> latest.some(l=> l.includes(k)))) {
+    return LATEST;
+  }
+  if(fields.some(k=> granted.some(l=> l.includes(k)))) {
+    return GRANTED;
+  }
+}
+
+const changedBadge = change => {
+  switch (change) {
+    case LATEST:
+      return <span className="badge changed">changed</span>;
+    case GRANTED:
+      return <span className="badge">amended</span>;
+    default:
+      return null;
+  }
+}
+
 class ProtocolSections extends PureComponent {
   state = {
     expanded: this.props.editable && (this.props.protocolState || !this.props.values.complete)
@@ -46,7 +71,9 @@ class ProtocolSections extends PureComponent {
       editable,
       newComments,
       readonly,
-      schemaVersion
+      schemaVersion,
+      latest,
+      granted
     } = this.props;
 
     const isLegacy = schemaVersion === 0;
@@ -64,6 +91,9 @@ class ProtocolSections extends PureComponent {
     return (
       <section className={classnames('protocol', { complete: values.complete || readonly, readonly })}>
         <NewComments comments={numberOfNewComments} />
+        {
+          changedBadge(changed(sections, latest, granted))
+        }
         <Expandable expanded={this.state.expanded} onHeaderClick={this.toggleExpanded}>
           <Completable status={values.complete ? 'complete' : 'incomplete'}>
             <h2 className="title inline-block">{values.title}</h2>
@@ -139,4 +169,6 @@ class ProtocolSections extends PureComponent {
   }
 }
 
-export default withRouter(connect(({ application: { schemaVersion } }) => ({ schemaVersion }))(ProtocolSections));
+const mapStateToProps = ({ application: { schemaVersion }, changes: { latest, granted }}) => ({ schemaVersion, latest, granted});
+
+export default withRouter(connect(mapStateToProps)(ProtocolSections));

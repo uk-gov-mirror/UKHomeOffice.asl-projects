@@ -18,6 +18,7 @@ import Steps from './steps';
 import Animals from './animals';
 import LegacyAnimals from './legacy-animals';
 import Conditions from '../../../components/conditions/protocol-conditions';
+import { LATEST, GRANTED } from '../../../constants/change';
 
 const getSection = (section, props) => {
   if (props.isGranted && props.granted && props.granted.review) {
@@ -112,25 +113,57 @@ const sortGranted = (sections, isGranted) => (a, b) => {
   return sections[a].granted.order - sections[b].granted.order;
 }
 
-const ProtocolSections = ({ sections, protocolState, editable, newComments, ...props }) => (
+const changed = (subsection, latest, granted) => {
+  const fields = subsection.fields.map(field => field.name) || [];
+  if(fields.some(k=> latest.some(l=> l.includes(k)))) {
+    return LATEST;
+  }
+  if(fields.some(k=> granted.some(l=> l.includes(k)))) {
+    return GRANTED;
+  }
+}
+
+const changedBadge = change => {
+  switch (change) {
+    case LATEST:
+      return <span className="badge changed">changed</span>;
+    case GRANTED:
+      return <span className="badge">amended</span>;
+    default:
+      return null;
+  }
+}
+
+const ProtocolSections = ({ sections, protocolState, editable, newComments, ...props }) =>  {
+
+  return (
   <Accordion open={getOpenSection(protocolState, editable, sections)} toggleAll={!props.pdf}>
     {
       Object.keys(sections).sort(sortGranted(sections, props.isGranted)).filter(section => !sections[section].show || sections[section].show(props)).map((section, sectionIndex) => (
+        <Fragment key={section}>
+        {
+          changedBadge(changed(sections[section], props.latest, props.granted))
+        }
         <ExpandingPanel alwaysUpdate={section === 'conditions' || section === 'authorisations'} key={section} title={getTitle(sections[section], newComments, props.values)}>
           {
             getSection(section, { ...props, protocolState, editable, ...sections[section], sectionsLength: size(sections), sectionIndex })
           }
         </ExpandingPanel>
+        </Fragment>
       ))
     }
   </Accordion>
-)
+)}
 
 const mapStateToProps = ({
   application: {
     schemaVersion,
     showConditions,
     isGranted
+  },
+  changes: {
+    latest,
+    granted
   }
 }, { sections }) => ({
   schemaVersion,
@@ -139,7 +172,9 @@ const mapStateToProps = ({
   // show all sections for legacy
   sections: isGranted && schemaVersion !== 0
     ? pickBy(sections, section => section.granted)
-    : sections
+    : sections,
+  latest,
+  granted
 });
 
 export default connect(mapStateToProps)(ProtocolSections);
