@@ -1,6 +1,9 @@
 export const LOAD_SETTINGS = 'LOAD_SETTINGS';
 export const UPDATE_SETTINGS = 'UPDATE_SETTINGS';
 
+export const IS_SYNCING = 'IS_SYNCING';
+export const DONE_SYNCING = 'DONE_SYNCING';
+
 export const SET_PROJECT = 'SET_PROJECT';
 export const LOAD_PROJECT = 'LOAD_PROJECT';
 export const LOAD_PROJECTS = 'LOAD_PROJECTS';

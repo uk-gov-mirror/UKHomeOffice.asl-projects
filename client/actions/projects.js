@@ -1,10 +1,11 @@
 import omit from 'lodash/omit';
 import debounce from 'lodash/debounce';
 import cloneDeep from 'lodash/cloneDeep';
+import isEqual from 'lodash/isEqual';
+import pick from 'lodash/pick'
 
 import * as types from './types';
 import database from '../database';
-import { throwError } from './messages';
 import { showMessage } from './messages';
 import sendMessage from './messaging';
 
@@ -88,6 +89,18 @@ export function updateSavedProject(project) {
   }
 }
 
+export function isSyncing() {
+  return {
+    type: types.IS_SYNCING
+  }
+}
+
+export function doneSyncing() {
+  return {
+    type: types.DONE_SYNCING
+  }
+}
+
 const debouncedUpdate = debounce((id, data, dispatch) => {
   return database()
     .then(db => db.update(id, data))
@@ -106,20 +119,47 @@ export function updateAndSave(data) {
   };
 }
 
-const doConditionsUpdate = (data, dispatch, state) => {
-  const { application: { basename } } = state;
+const shouldSync = (state, fields = []) => {
+  if (state.application.isSyncing) {
+    return false;
+  }
+  const hasDiff = !isEqual(pick(state.savedProject, fields), pick(state.project, fields));
+  return hasDiff;
+};
+
+const sync = (dispatch, getState, fields, extra = {}) => {
+  const state = getState();
+
+  if (!shouldSync(state, fields)) {
+    return Promise.resolve();
+  }
+
+  dispatch(isSyncing());
+
   const params = {
     method: 'PUT',
-    url: `${basename.replace(/\/edit?/, '')}/conditions`,
-    data
-  };
+    url: `${state.application.basename.replace(/\/edit?/, '')}/conditions`,
+    data: {
+      ...pick(state.project, fields),
+      ...extra
+    }
+  }
+
   return Promise.resolve()
     .then(() => sendMessage(params))
+    .then(() => dispatch(doneSyncing()))
+    .then(() => dispatch(updateSavedProject(state.project)))
+    .then(() => sync(dispatch, getState, fields, extra))
     .catch(err => {
       console.error(err);
-      dispatch(throwError('Error updating conditions'));
+      dispatch(doneSyncing());
+      return sync(dispatch, getState, fields, extra);
     });
-}
+};
+
+const debouncedSync = debounce((dispatch, getState, extra) => {
+  return sync(dispatch, getState, ['conditions', 'retrospectiveAssessment'], extra)
+}, 1000, { maxWait: 5000, leading: true });
 
 export function updateRetrospectiveAssessment(retrospectiveAssessment) {
   return (dispatch, getState) => {
@@ -129,11 +169,7 @@ export function updateRetrospectiveAssessment(retrospectiveAssessment) {
       retrospectiveAssessment
     };
     dispatch(updateProject(newState));
-    return doConditionsUpdate({ retrospectiveAssessment }, dispatch, state)
-      .then(() => {
-        dispatch(updateSavedProject(newState));
-        dispatch(showMessage('Retrospective assessment details saved'))
-      })
+    return debouncedSync(dispatch, getState);
   }
 }
 
@@ -150,9 +186,6 @@ export function updateConditions(type, conditions, protocolId) {
           .find((p => p.id === protocolId) || {}).conditions || []).filter(condition => condition.type !== type),
         ...conditions
       ]
-    const data = type === 'legacy'
-      ? { conditions }
-      : { conditions: newConditions, protocolId }
 
     const newState = cloneDeep(state.project);
     if (protocolId) {
@@ -166,11 +199,7 @@ export function updateConditions(type, conditions, protocolId) {
       newState.conditions = type === 'legacy' ? conditions : newConditions;
     }
     dispatch(updateProject(newState));
-    return doConditionsUpdate(data, dispatch, state)
-      .then(() => {
-        dispatch(updateSavedProject(newState));
-        dispatch(showMessage(`${type === 'condition' ? 'Conditions': 'Authorisations'} synced`))
-      })
+    return debouncedSync(dispatch, getState, protocolId && { protocolId })
   }
 }
 

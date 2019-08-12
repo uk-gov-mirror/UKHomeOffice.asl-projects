@@ -127,8 +127,17 @@ function LegacyConditions({
   )
 }
 
-export default connect(
-  ({ application: { schemaVersion, showConditions, editConditions } }) => ({ isLegacy: schemaVersion === 0, showConditions, editConditions }),
+export default connect(({
+  application: {
+    schemaVersion,
+    showConditions,
+    editConditions
+  }
+}) => ({
+  isLegacy: schemaVersion === 0,
+  showConditions,
+  editConditions
+}),
   dispatch => ({
     saveRetrospectiveAssessment: retrospectiveAssessment => dispatch(updateRetrospectiveAssessment(retrospectiveAssessment)),
     saveConditions: conditions => dispatch(updateConditions('legacy', conditions))
