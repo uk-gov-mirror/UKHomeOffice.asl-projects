@@ -9,20 +9,7 @@ import Completable from '../../../components/completable';
 import Complete from '../../../components/complete';
 import NewComments from '../../../components/new-comments';
 import Sections from './sections';
-import { changed } from '../../../helpers';
-import { LATEST, GRANTED } from '../../../constants/change';
-
-
-const changedBadge = change => {
-  switch (change) {
-    case LATEST:
-      return <span className="badge changed">changed</span>;
-    case GRANTED:
-      return <span className="badge">amended</span>;
-    default:
-      return null;
-  }
-}
+import ChangedBadge from '../../../components/changed-badge';
 
 class ProtocolSections extends PureComponent {
   state = {
@@ -82,9 +69,7 @@ class ProtocolSections extends PureComponent {
     return (
       <section className={classnames('protocol', { complete: values.complete || readonly, readonly })}>
         <NewComments comments={numberOfNewComments} />
-        {
-          changedBadge(changed(fields, latest, granted))
-        }
+        <ChangedBadge fields={fields} latest={latest} granted={granted} />
         <Expandable expanded={this.state.expanded} onHeaderClick={this.toggleExpanded}>
           <Completable status={values.complete ? 'complete' : 'incomplete'}>
             <h2 className="title inline-block">{values.title}</h2>

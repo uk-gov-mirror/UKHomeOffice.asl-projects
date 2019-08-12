@@ -4,7 +4,6 @@ import pickBy from 'lodash/pickBy';
 import mapValues from 'lodash/mapValues';
 import map from 'lodash/map';
 import dateFormatter from 'date-fns/format';
-import { LATEST, GRANTED } from '../constants/change';
 
 export const formatDate = (date, format) => (date ? dateFormatter(date, format) : '-');
 
@@ -76,12 +75,3 @@ export const flattenReveals = (fields, values) => {
     ])
   }, []);
 };
-
-export const changed = (fields, latest, granted) => {
-  if(fields.some(k=> latest.some(l=> l.includes(k)))) {
-    return LATEST;
-  }
-  if(fields.some(k=> granted.some(l=> l.includes(k)))) {
-    return GRANTED;
-  }
-}
