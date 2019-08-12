@@ -28,18 +28,18 @@ const ProjectRouter = ({ basename, onUpdate, onComplete, drafting }) => {
     if (isSyncing) {
       nextSteps.setAttribute('disabled', true);
       nextSteps.onclick = () => false;
-      statusMessage && statusMessage.innerText = 'Saving...';
+      statusMessage && (statusMessage.innerText = 'Saving...');
     } else {
       nextSteps.removeAttribute('disabled');
       nextSteps.onclick = null;
-      statusMessage && statusMessage.innerText = '';
+      statusMessage && (statusMessage.innerText = '');
     }
 
     return () => {
       window.onbeforeunload = null;
       nextSteps.removeAttribute('disabled');
       nextSteps.onclick = null;
-      statusMessage && statusMessage.innerText = '';
+      statusMessage && (statusMessage.innerText = '');
     }
   })
 
