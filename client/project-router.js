@@ -26,19 +26,25 @@ const ProjectRouter = ({ basename, onUpdate, onComplete, drafting }) => {
     const statusMessage = document.querySelector('#page-component > p.next-steps > span.status-message');
 
     if (isSyncing) {
-      nextSteps.setAttribute('disabled', true);
-      nextSteps.onclick = () => false;
+      if (nextSteps) {
+        nextSteps.setAttribute('disabled', true);
+        nextSteps.onclick = () => false;
+      }
       statusMessage && (statusMessage.innerText = 'Saving...');
     } else {
-      nextSteps.removeAttribute('disabled');
-      nextSteps.onclick = null;
+      if (nextSteps) {
+        nextSteps.removeAttribute('disabled');
+        nextSteps.onclick = null;
+      }
       statusMessage && (statusMessage.innerText = '');
     }
 
     return () => {
       window.onbeforeunload = null;
-      nextSteps.removeAttribute('disabled');
-      nextSteps.onclick = null;
+      if (nextSteps) {
+        nextSteps.removeAttribute('disabled');
+        nextSteps.onclick = null;
+      }
       statusMessage && (statusMessage.innerText = '');
     }
   })
