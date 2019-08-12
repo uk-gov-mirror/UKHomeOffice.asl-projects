@@ -22,20 +22,24 @@ const ProjectRouter = ({ basename, onUpdate, onComplete, drafting }) => {
       }
     }
 
-    const nextSteps = document.querySelector('#page-component > a.govuk-button');
+    const nextSteps = document.querySelector('#page-component > p.next-steps > a');
+    const statusMessage = document.querySelector('#page-component > p.next-steps > span.status-message');
 
     if (isSyncing) {
       nextSteps.setAttribute('disabled', true);
       nextSteps.onclick = () => false;
+      statusMessage.innerText = 'Saving...';
     } else {
       nextSteps.removeAttribute('disabled');
       nextSteps.onclick = null;
+      statusMessage.innerText = '';
     }
 
     return () => {
       window.onbeforeunload = null;
       nextSteps.removeAttribute('disabled');
       nextSteps.onclick = null;
+      statusMessage.innerText = '';
     }
   })
 
