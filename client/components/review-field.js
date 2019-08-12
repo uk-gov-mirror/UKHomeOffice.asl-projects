@@ -37,7 +37,7 @@ class ReviewField extends React.Component {
       if (months > 12) {
         months = 0;
       }
-      
+
       if (years >= 5 || (!months && !years)) {
         years = 5;
         months = 0;
@@ -53,7 +53,7 @@ class ReviewField extends React.Component {
     }
 
     if (value && this.props.type === 'date') {
-      return formatDate(value, DATE_FORMAT.long);
+      return <p>{ formatDate(value, DATE_FORMAT.long) }</p>;
     }
 
     if (this.props.type === 'species-selector') {
