@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-const ChangedBadge = ({ fields, latest, granted }) => {
+const ChangedBadge = ({ fields = [], latest = [], granted = [] }) => {
   if (fields.some(field => latest.some(change => change.includes(field)))) {
     return <span className="badge changed">changed</span>;
   }
