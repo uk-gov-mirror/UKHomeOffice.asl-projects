@@ -29,7 +29,7 @@ export default function DownloadHeader() {
     isGranted,
     drafting,
   } = props;
-  let { basename } = props;
+  let { basename = window.location.href } = props;
 
   basename = basename.replace(/\/edit/, '');
 

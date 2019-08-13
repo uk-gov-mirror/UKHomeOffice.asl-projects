@@ -95,7 +95,7 @@ const ProjectRouter = () => {
   return (
     <BrowserRouter basename={basename}>
       <ScrollToTop>
-        <DownloadHeader basename={basename} />
+        <DownloadHeader />
         <Switch>
           <Route path="/:section/:step?" render={props => <Section { ...props } drafting={drafting} />} />
           <Route path="/" component={Project} />
