@@ -2228,30 +2228,30 @@ each other.`,
                             }
                           }
                         ]
+                      },
+                      {
+                        name: 'wild-animals-poor-health',
+                        label: 'Is it necessary to use animals that are injured or in poor health during your project?',
+                        type: 'radio',
+                        className: 'smaller',
+                        inline: true,
+                        options: [
+                          {
+                            label: 'Yes',
+                            value: true,
+                            reveal: {
+                              name: 'wild-animals-poor-health-justification',
+                              label: 'Explain why it is scientifically necessary to use animals that are injured or in poor health during your project.',
+                              type: 'texteditor'
+                            }
+                          },
+                          {
+                            label: 'No',
+                            value: false
+                          }
+                        ]
                       }
                     ]
-                  },
-                  {
-                    label: 'No',
-                    value: false
-                  }
-                ]
-              },
-              {
-                name: 'wild-animals-poor-health',
-                label: 'Is it necessary to use animals that are injured or in poor health during your project?',
-                type: 'radio',
-                className: 'smaller',
-                inline: true,
-                options: [
-                  {
-                    label: 'Yes',
-                    value: true,
-                    reveal: {
-                      name: 'wild-animals-poor-health-justification',
-                      label: 'Explain why it is scientifically necessary to use animals that are injured or in poor health during your project.',
-                      type: 'texteditor'
-                    }
                   },
                   {
                     label: 'No',
