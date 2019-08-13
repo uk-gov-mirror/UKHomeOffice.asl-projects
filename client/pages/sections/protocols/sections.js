@@ -119,7 +119,7 @@ const ProtocolSections = ({ sections, protocolState, editable, newComments, ...p
     {
       Object.keys(sections).sort(sortGranted(sections, props.isGranted)).filter(section => !sections[section].show || sections[section].show(props)).map((section, sectionIndex) => (
         <Fragment key={section}>
-          <ChangedBadge fields={sections[section].fields.map(field => field.name)} latest={props.latest} granted={props.granted} />
+          <ChangedBadge fields={sections[section].fields.map(field => field.name)} />
           <ExpandingPanel alwaysUpdate={section === 'conditions' || section === 'authorisations'} key={section} title={getTitle(sections[section], newComments, props.values)}>
             {
               getSection(section, { ...props, protocolState, editable, ...sections[section], sectionsLength: size(sections), sectionIndex })
@@ -136,10 +136,6 @@ const mapStateToProps = ({
     schemaVersion,
     showConditions,
     isGranted
-  },
-  changes: {
-    latest,
-    granted
   }
 }, { sections }) => ({
   schemaVersion,
@@ -148,9 +144,7 @@ const mapStateToProps = ({
   // show all sections for legacy
   sections: isGranted && schemaVersion !== 0
     ? pickBy(sections, section => section.granted)
-    : sections,
-  latest,
-  granted
+    : sections
 });
 
 export default connect(mapStateToProps)(ProtocolSections);

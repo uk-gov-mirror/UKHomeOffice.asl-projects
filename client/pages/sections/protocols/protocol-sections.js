@@ -47,9 +47,7 @@ class ProtocolSections extends PureComponent {
       editable,
       newComments,
       readonly,
-      schemaVersion,
-      latest,
-      granted
+      schemaVersion
     } = this.props;
 
     const isLegacy = schemaVersion === 0;
@@ -69,7 +67,7 @@ class ProtocolSections extends PureComponent {
     return (
       <section className={classnames('protocol', { complete: values.complete || readonly, readonly })}>
         <NewComments comments={numberOfNewComments} />
-        <ChangedBadge fields={fields} latest={latest} granted={granted} />
+        <ChangedBadge fields={fields} />
         <Expandable expanded={this.state.expanded} onHeaderClick={this.toggleExpanded}>
           <Completable status={values.complete ? 'complete' : 'incomplete'}>
             <h2 className="title inline-block">{values.title}</h2>
@@ -145,6 +143,6 @@ class ProtocolSections extends PureComponent {
   }
 }
 
-const mapStateToProps = ({ application: { schemaVersion }, changes: { latest, granted }}) => ({ schemaVersion, latest, granted});
+const mapStateToProps = ({ application: { schemaVersion }}) => ({ schemaVersion });
 
 export default withRouter(connect(mapStateToProps)(ProtocolSections));

@@ -1,15 +1,16 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-class ChangedBadge extends React.Component {
-  render() {
-    if (this.props.fields.some( k=> this.props.latest.some( l=> l.includes(k)))) {
-      return <span className="badge changed">changed</span>;
-    }
-    if (this.props.fields.some( k=> this.props.granted.some( l=> l.includes(k)))) {
-      return <span className="badge">amended</span>;
-    }
-    return null;
+const ChangedBadge = ({ fields, latest, granted }) => {
+  if (fields.some(field => latest.some(change => change.includes(field)))) {
+    return <span className="badge changed">changed</span>;
   }
-}
+  if (fields.some(field => granted.some(change => change.includes(field)))) {
+    return <span className="badge">amended</span>;
+  }
+  return null;
+};
 
-export default ChangedBadge;
+const mapStateToProps = ({changes: { latest, granted }}) => ({ latest, granted });
+
+export default connect(mapStateToProps)(ChangedBadge);
