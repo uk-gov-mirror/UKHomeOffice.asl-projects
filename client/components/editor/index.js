@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
 import classnames from 'classnames';
 import { Editor } from 'slate-react';
 import { Value } from 'slate';
@@ -7,6 +8,8 @@ import ReactMarkdown from 'react-markdown';
 import get from 'lodash/get';
 import defer from 'lodash/defer';
 import debounce from 'lodash/debounce';
+
+import { throwError } from '../../actions/messages';
 
 import FormatToolbar from './format-toolbar';
 import initialValue from './initial-value'
@@ -89,7 +92,11 @@ class TextEditor extends Component {
   };
 
   command = (func, ...args) => {
-    this.editor[func] && this.editor[func](...args);
+    try {
+      this.editor[func] && this.editor[func](...args);
+    } catch (err) {
+      this.props.throwError(err.message || 'Something went wrong');
+    }
   }
 
   query = (func, ...args) => {
@@ -170,4 +177,4 @@ class TextEditor extends Component {
   }
 }
 
-export default TextEditor;
+export default connect(null, { throwError })(TextEditor);
