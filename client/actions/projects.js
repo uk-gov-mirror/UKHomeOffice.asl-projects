@@ -3,11 +3,14 @@ import debounce from 'lodash/debounce';
 import cloneDeep from 'lodash/cloneDeep';
 import isEqual from 'lodash/isEqual';
 import pick from 'lodash/pick'
+import { diff, applyChange } from 'deep-diff';
 
 import * as types from './types';
 import database from '../database';
 import { showMessage } from './messages';
 import sendMessage from './messaging';
+
+const CONDITIONS_FIELDS = ['conditions', 'retrospectiveAssessment'];
 
 export function loadProjects() {
   return dispatch => {
@@ -109,7 +112,7 @@ const debouncedUpdate = debounce((id, data, dispatch) => {
     .catch(err => dispatch({ type: types.ERROR, err }))
 }, 500, { maxWait: 5000 })
 
-export function updateAndSave(data) {
+export function indexedDBSync(data) {
   return (dispatch, getState) => {
     const project = getState().project;
     const newState = { ...project, ...data };
@@ -119,28 +122,29 @@ export function updateAndSave(data) {
   };
 }
 
-const shouldSync = (state, fields = []) => {
+const shouldSyncConditions = state => {
   if (state.application.isSyncing) {
     return false;
   }
-  const hasDiff = !isEqual(pick(state.savedProject, fields), pick(state.project, fields));
+  const hasDiff = !isEqual(pick(state.savedProject, CONDITIONS_FIELDS), pick(state.project, CONDITIONS_FIELDS));
   return hasDiff;
 };
 
-const sync = (dispatch, getState, fields, extra = {}) => {
+const syncConditions = (dispatch, getState, extra = {}) => {
   const state = getState();
 
-  if (!shouldSync(state, fields)) {
+  if (!shouldSyncConditions(state)) {
     return Promise.resolve();
   }
 
   dispatch(isSyncing());
 
   const params = {
+    state,
     method: 'PUT',
-    url: `${state.application.basename.replace(/\/edit?/, '')}/conditions`,
+    url: `${state.application.basename}/conditions`,
     data: {
-      ...pick(state.project, fields),
+      ...pick(state.project, CONDITIONS_FIELDS),
       ...extra
     }
   }
@@ -149,16 +153,64 @@ const sync = (dispatch, getState, fields, extra = {}) => {
     .then(() => sendMessage(params))
     .then(() => dispatch(doneSyncing()))
     .then(() => dispatch(updateSavedProject(state.project)))
-    .then(() => sync(dispatch, getState, fields, extra))
+    .then(() => syncConditions(dispatch, getState, extra))
     .catch(err => {
       console.error(err);
       dispatch(doneSyncing());
-      return sync(dispatch, getState, fields, extra);
+      return syncConditions(dispatch, getState, extra);
     });
 };
 
-const debouncedSync = debounce((dispatch, getState, extra) => {
-  return sync(dispatch, getState, ['conditions', 'retrospectiveAssessment'], extra)
+const shouldSyncProject = state => {
+  if (state.application.isSyncing) {
+    return false;
+  }
+  return !isEqual(state.savedProject, state.project);
+};
+
+const applyPatches = (source, patches = []) => {
+  const patched = cloneDeep(source);
+  patches.forEach(p => {
+    applyChange(patched, p);
+  });
+  return patched;
+};
+
+const syncProject = (dispatch, getState) => {
+  const state = getState();
+
+  if (!shouldSyncProject(state)) {
+    return Promise.resolve();
+  }
+
+  dispatch(isSyncing());
+
+  const patch = diff(state.savedProject, state.project);
+
+  const params = {
+    state,
+    method: 'PUT',
+    url: state.application.basename,
+    data: patch
+  };
+
+  return Promise.resolve()
+    .then(() => sendMessage(params))
+    .then(() => dispatch(doneSyncing()))
+    .then(() => {
+      const patched = applyPatches(state.savedProject, patch);
+      dispatch(updateSavedProject(patched));
+    })
+    .then(() => syncProject(dispatch, getState))
+    .catch(err => {
+      console.error(err);
+      dispatch(doneSyncing());
+      return syncProject(dispatch, getState);
+    });
+}
+
+const debouncedSyncConditions = debounce((dispatch, getState, extra) => {
+  return syncConditions(dispatch, getState, extra)
 }, 1000, { maxWait: 5000, leading: true });
 
 export function updateRetrospectiveAssessment(retrospectiveAssessment) {
@@ -169,7 +221,7 @@ export function updateRetrospectiveAssessment(retrospectiveAssessment) {
       retrospectiveAssessment
     };
     dispatch(updateProject(newState));
-    return debouncedSync(dispatch, getState);
+    return debouncedSyncConditions(dispatch, getState);
   }
 }
 
@@ -199,17 +251,18 @@ export function updateConditions(type, conditions, protocolId) {
       newState.conditions = type === 'legacy' ? conditions : newConditions;
     }
     dispatch(updateProject(newState));
-    return debouncedSync(dispatch, getState, protocolId && { protocolId })
+    return debouncedSyncConditions(dispatch, getState, protocolId && { protocolId })
   }
 }
 
 export function fetchQuestionVersions(key) {
 
   return (dispatch, getState) => {
-    const { application: { basename } } = getState();
+    const state = getState();
 
     const params = {
-      url: `${basename}/question/${key}`
+      state,
+      url: `question/${key}`
     }
 
     return Promise.resolve()
@@ -218,3 +271,17 @@ export function fetchQuestionVersions(key) {
       .catch(error => dispatch({ type: types.ERROR, error }));
   }
 }
+
+const debouncedSyncProject = debounce((...args) => {
+  return syncProject(...args);
+}, 1000, { maxWait: 5000, leading: true });
+
+export const ajaxSync = props => {
+  return (dispatch, getState) => {
+    const { project } = getState();
+    const newState = { ...project, ...props };
+
+    dispatch(updateProject(newState));
+    return debouncedSyncProject(dispatch, getState);
+  };
+};
