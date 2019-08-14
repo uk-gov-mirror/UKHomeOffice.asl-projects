@@ -62,7 +62,7 @@ class ProtocolSections extends PureComponent {
 
     const noAnswer = <em>No answer provided</em>;
 
-    const fields = Object.values(sections).map(s => s.fields.map(field => field.name)) || [];
+    const fields = Object.values(sections).map(s => (s.fields || []).map(field => field.name));
 
     return (
       <section className={classnames('protocol', { complete: values.complete || readonly, readonly })}>
