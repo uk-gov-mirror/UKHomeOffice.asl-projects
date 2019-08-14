@@ -7,7 +7,7 @@ import { diff, applyChange } from 'deep-diff';
 
 import * as types from './types';
 import database from '../database';
-import { showMessage } from './messages';
+import { showMessage, throwError } from './messages';
 import sendMessage from './messaging';
 
 const CONDITIONS_FIELDS = ['conditions', 'retrospectiveAssessment'];
@@ -104,6 +104,18 @@ export function doneSyncing() {
   }
 }
 
+export function syncError() {
+  return {
+    type: types.SYNC_ERROR
+  }
+}
+
+export function syncErrorResolved() {
+  return {
+    type: types.SYNC_ERROR_RESOLVED
+  }
+}
+
 const debouncedUpdate = debounce((id, data, dispatch) => {
   return database()
     .then(db => db.update(id, data))
@@ -155,9 +167,8 @@ const syncConditions = (dispatch, getState, extra = {}) => {
     .then(() => dispatch(updateSavedProject(state.project)))
     .then(() => syncConditions(dispatch, getState, extra))
     .catch(err => {
-      console.error(err);
-      dispatch(doneSyncing());
-      return syncConditions(dispatch, getState, extra);
+      return onSyncError(syncConditions, err, dispatch, getState, extra)
+      // return syncConditions(dispatch, getState, extra);
     });
 };
 
@@ -174,6 +185,14 @@ const applyPatches = (source, patches = []) => {
     applyChange(patched, p);
   });
   return patched;
+};
+
+const onSyncError = (func, err, dispatch, getState, ...args) => {
+  console.error(err);
+  dispatch(doneSyncing());
+  dispatch(syncError());
+  dispatch(throwError('Failed to save, trying again'));
+  return setTimeout(() => func(dispatch, getState, ...args), 1000);
 };
 
 const syncProject = (dispatch, getState) => {
@@ -196,16 +215,19 @@ const syncProject = (dispatch, getState) => {
 
   return Promise.resolve()
     .then(() => sendMessage(params))
-    .then(() => dispatch(doneSyncing()))
+    .then(() => {
+      dispatch(doneSyncing())
+      if (state.application.syncError) {
+        dispatch(showMessage('Saved successfully'))
+      }
+    })
     .then(() => {
       const patched = applyPatches(state.savedProject, patch);
       dispatch(updateSavedProject(patched));
     })
     .then(() => syncProject(dispatch, getState))
     .catch(err => {
-      console.error(err);
-      dispatch(doneSyncing());
-      return syncProject(dispatch, getState);
+      onSyncError(syncProject, err, dispatch, getState)
     });
 }
 

@@ -9,6 +9,7 @@ export default ({ method, data, url }) => {
   return Promise.resolve()
     .then(() => fetch(url, params).response)
     .then(response => {
+      console.log(response);
       return response.json()
         .then(json => {
           if (response.status > 399) {

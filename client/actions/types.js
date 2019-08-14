@@ -3,6 +3,8 @@ export const UPDATE_SETTINGS = 'UPDATE_SETTINGS';
 
 export const IS_SYNCING = 'IS_SYNCING';
 export const DONE_SYNCING = 'DONE_SYNCING';
+export const SYNC_ERROR = 'SYNC_ERROR';
+export const SYNC_ERROR_RESOLVED = 'SYNC_ERROR_RESOLVED';
 
 export const SET_PROJECT = 'SET_PROJECT';
 export const LOAD_PROJECT = 'LOAD_PROJECT';
