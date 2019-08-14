@@ -46,7 +46,7 @@ class OtherSpecies extends Component {
       <Fragment>
         {
           items.map((item, index) => (
-            <div key={index} className="flex">
+            <div key={index} className="flex species-selector-other">
               <div className="grow">
                 <Field
                   label={index === 0 && label}
