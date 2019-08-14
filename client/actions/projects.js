@@ -10,6 +10,8 @@ import database from '../database';
 import { showMessage } from './messages';
 import sendMessage from './messaging';
 
+const CONDITIONS_FIELDS = ['conditions', 'retrospectiveAssessment'];
+
 export function loadProjects() {
   return dispatch => {
     return database()
@@ -120,18 +122,18 @@ export function indexedDBSync(data) {
   };
 }
 
-const shouldSyncConditions = (state, fields = []) => {
+const shouldSyncConditions = state => {
   if (state.application.isSyncing) {
     return false;
   }
-  const hasDiff = !isEqual(pick(state.savedProject, fields), pick(state.project, fields));
+  const hasDiff = !isEqual(pick(state.savedProject, CONDITIONS_FIELDS), pick(state.project, CONDITIONS_FIELDS));
   return hasDiff;
 };
 
-const syncConditions = (dispatch, getState, fields, extra = {}) => {
+const syncConditions = (dispatch, getState, extra = {}) => {
   const state = getState();
 
-  if (!shouldSyncConditions(state, fields)) {
+  if (!shouldSyncConditions(state)) {
     return Promise.resolve();
   }
 
@@ -142,7 +144,7 @@ const syncConditions = (dispatch, getState, fields, extra = {}) => {
     method: 'PUT',
     url: `${state.application.basename}/conditions`,
     data: {
-      ...pick(state.project, fields),
+      ...pick(state.project, CONDITIONS_FIELDS),
       ...extra
     }
   }
@@ -151,11 +153,11 @@ const syncConditions = (dispatch, getState, fields, extra = {}) => {
     .then(() => sendMessage(params))
     .then(() => dispatch(doneSyncing()))
     .then(() => dispatch(updateSavedProject(state.project)))
-    .then(() => syncConditions(dispatch, getState, fields, extra))
+    .then(() => syncConditions(dispatch, getState, extra))
     .catch(err => {
       console.error(err);
       dispatch(doneSyncing());
-      return syncConditions(dispatch, getState, fields, extra);
+      return syncConditions(dispatch, getState, extra);
     });
 };
 
@@ -208,7 +210,7 @@ const syncProject = (dispatch, getState) => {
 }
 
 const debouncedSyncConditions = debounce((dispatch, getState, extra) => {
-  return syncConditions(dispatch, getState, ['conditions', 'retrospectiveAssessment'], extra)
+  return syncConditions(dispatch, getState, extra)
 }, 1000, { maxWait: 5000, leading: true });
 
 export function updateRetrospectiveAssessment(retrospectiveAssessment) {
