@@ -9,6 +9,7 @@ import Completable from '../../../components/completable';
 import Complete from '../../../components/complete';
 import NewComments from '../../../components/new-comments';
 import Sections from './sections';
+import ChangedBadge from '../../../components/changed-badge';
 
 class ProtocolSections extends PureComponent {
   state = {
@@ -61,9 +62,12 @@ class ProtocolSections extends PureComponent {
 
     const noAnswer = <em>No answer provided</em>;
 
+    const fields = Object.values(sections).map(s => s.fields.map(field => field.name)) || [];
+
     return (
       <section className={classnames('protocol', { complete: values.complete || readonly, readonly })}>
         <NewComments comments={numberOfNewComments} />
+        <ChangedBadge fields={fields} />
         <Expandable expanded={this.state.expanded} onHeaderClick={this.toggleExpanded}>
           <Completable status={values.complete ? 'complete' : 'incomplete'}>
             <h2 className="title inline-block">{values.title}</h2>
@@ -139,4 +143,6 @@ class ProtocolSections extends PureComponent {
   }
 }
 
-export default withRouter(connect(({ application: { schemaVersion } }) => ({ schemaVersion }))(ProtocolSections));
+const mapStateToProps = ({ application: { schemaVersion }}) => ({ schemaVersion });
+
+export default withRouter(connect(mapStateToProps)(ProtocolSections));

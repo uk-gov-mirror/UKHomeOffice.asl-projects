@@ -18,6 +18,7 @@ import Steps from './steps';
 import Animals from './animals';
 import LegacyAnimals from './legacy-animals';
 import Conditions from '../../../components/conditions/protocol-conditions';
+import ChangedBadge from '../../../components/changed-badge';
 
 const getSection = (section, props) => {
   if (props.isGranted && props.granted && props.granted.review) {
@@ -112,19 +113,23 @@ const sortGranted = (sections, isGranted) => (a, b) => {
   return sections[a].granted.order - sections[b].granted.order;
 }
 
-const ProtocolSections = ({ sections, protocolState, editable, newComments, ...props }) => (
+const ProtocolSections = ({ sections, protocolState, editable, newComments, ...props }) =>  {
+  return (
   <Accordion open={getOpenSection(protocolState, editable, sections)} toggleAll={!props.pdf}>
     {
       Object.keys(sections).sort(sortGranted(sections, props.isGranted)).filter(section => !sections[section].show || sections[section].show(props)).map((section, sectionIndex) => (
-        <ExpandingPanel alwaysUpdate={section === 'conditions' || section === 'authorisations'} key={section} title={getTitle(sections[section], newComments, props.values)}>
-          {
-            getSection(section, { ...props, protocolState, editable, ...sections[section], sectionsLength: size(sections), sectionIndex })
-          }
-        </ExpandingPanel>
+        <Fragment key={section}>
+          <ChangedBadge fields={sections[section].fields.map(field => field.name)} />
+          <ExpandingPanel alwaysUpdate={section === 'conditions' || section === 'authorisations'} key={section} title={getTitle(sections[section], newComments, props.values)}>
+            {
+              getSection(section, { ...props, protocolState, editable, ...sections[section], sectionsLength: size(sections), sectionIndex })
+            }
+          </ExpandingPanel>
+        </Fragment>
       ))
     }
   </Accordion>
-)
+)}
 
 const mapStateToProps = ({
   application: {

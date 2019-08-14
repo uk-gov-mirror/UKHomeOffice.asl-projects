@@ -13,11 +13,11 @@ import flatten from 'lodash/flatten';
 import { Button } from '@ukhomeoffice/react-components';
 
 import { INCOMPLETE, PARTIALLY_COMPLETE, COMPLETE } from '../constants/completeness';
-import { LATEST, GRANTED } from '../constants/change';
 import schema from '../schema'
 import { flattenReveals, getNewComments } from '../helpers';
 
 import NewComments from './new-comments';
+import ChangedBadge from './changed-badge';
 
 const getFields = subsection => {
   if (!subsection.repeats && subsection.fields && subsection.fields.length) {
@@ -38,10 +38,6 @@ const mapStateToProps = ({
     showComments,
     user,
     showConditions
-  },
-  changes: {
-    latest,
-    granted
   }
 }) => {
   const fieldsBySection = Object.values(schema[schemaVersion]).map(section => section.subsections).reduce((obj, subsections) => {
@@ -58,9 +54,7 @@ const mapStateToProps = ({
     fieldsBySection: omit(fieldsBySection, 'protocols'),
     legacy: schemaVersion === 0,
     values: project,
-    sections: schema[schemaVersion],
-    latest,
-    granted
+    sections: schema[schemaVersion]
   };
 }
 
@@ -112,27 +106,6 @@ class ApplicationSummary extends React.Component {
     }
   }
 
-  changed = (key, subsection) => {
-    const fields = this.props.fieldsBySection[key] || [];
-    if (this.props.latest.includes(key) || this.props.latest.some(k => fields.includes(k)) || this.props.latest.includes(subsection.repeats)) {
-      return LATEST;
-    }
-    else if (this.props.granted.includes(key) || this.props.granted.some(k => fields.includes(k) || this.props.granted.includes(subsection.repeats))) {
-      return GRANTED;
-    }
-  }
-
-  changedBadge = change => {
-    switch (change) {
-      case LATEST:
-        return <span className="badge changed">changed</span>;
-      case GRANTED:
-        return <span className="badge">amended</span>;
-      default:
-        return null;
-    }
-  }
-
   sectionVisible = section => {
     return !section.show || section.show(this.props.values);
   }
@@ -176,15 +149,17 @@ class ApplicationSummary extends React.Component {
                 {
                   subsections.map(key => {
                     const subsection = section.subsections[key];
+                    const fields = Object.values(this.props.fieldsBySection[key] || []);
+                    if(subsection.repeats) {
+                      fields.push(subsection.repeats);
+                    }
                     return <tr key={key}>
                       <td><Link to={`/${key}`}>{ subsection.title }</Link></td>
                       <td className="controls">
                         {
                           this.props.showComments && this.getComments(key, subsection)
                         }
-                        {
-                          this.changedBadge(this.changed(key, subsection))
-                        }
+                        <ChangedBadge fields={fields} />
                         {
                           !this.props.readonly && this.completeBadge(this.complete(subsection, key))
                         }
