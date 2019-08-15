@@ -1,14 +1,11 @@
-import {
-  IS_SYNCING,
-  DONE_SYNCING,
-  SET_BASENAME
-} from '../actions/types';
+import * as types from '../actions/types';
 
 const INITIAL_STATE = {
   schemaVersion: 1,
   readonly: false,
   establishment: null,
-  isSyncing: false
+  isSyncing: false,
+  syncError: false
 };
 
 export default function applicationReducer(state = INITIAL_STATE, action) {
@@ -17,20 +14,30 @@ export default function applicationReducer(state = INITIAL_STATE, action) {
     state = { ...INITIAL_STATE, ...state, hydrated: true };
   }
   switch (action.type) {
-    case IS_SYNCING:
+    case types.IS_SYNCING:
       return {
         ...state,
         isSyncing: true
       }
-    case DONE_SYNCING:
+    case types.DONE_SYNCING:
       return {
         ...state,
         isSyncing: false
       }
-    case SET_BASENAME:
+    case types.SET_BASENAME:
       return {
         ...state,
         basename: action.basename
+      }
+    case types.SYNC_ERROR:
+      return {
+        ...state,
+        syncError: true
+      }
+    case types.SYNC_ERROR_RESOLVED:
+      return {
+        ...state,
+        syncError: false
       }
     default:
       return state;

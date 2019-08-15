@@ -1,21 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import { hideMessage } from '../actions/messages';
 
 const mapStateToProps = state => {
   return { ...state.message };
 }
-const mapDispatchToProps = () => {
-  return {};
-}
 
 class Create extends React.Component {
+
+  onClick = () => {
+    this.props.hideMessage();
+  }
 
   alert() {
     if (!this.props.message) {
       return;
     }
-    return <div className={`alert alert-${this.props.type}`} key="alert">
+    return <div className={`alert alert-${this.props.type}`} key="alert" onClick={this.onClick}>
       <div className="govuk-width-container">
         <p>{ this.props.message }</p>
       </div>
@@ -34,4 +36,4 @@ class Create extends React.Component {
 
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Create);
+export default connect(mapStateToProps, { hideMessage })(Create);
