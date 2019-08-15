@@ -168,7 +168,6 @@ const syncConditions = (dispatch, getState, extra = {}) => {
     .then(() => syncConditions(dispatch, getState, extra))
     .catch(err => {
       return onSyncError(syncConditions, err, dispatch, getState, extra)
-      // return syncConditions(dispatch, getState, extra);
     });
 };
 
