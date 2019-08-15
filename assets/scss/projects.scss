@@ -725,9 +725,14 @@ html.modal-open, html.modal-open body {
     }
 
     .expanding-panel {
-      .badge.comments {
+      .badge {
         position: relative;
         top: -14px;
+
+        &:last-child:after {
+          content: '\A';
+          white-space: pre;
+        }
       }
     }
 

@@ -76,7 +76,7 @@ const getOpenSection = (protocolState, editable, sections) => {
   });
 }
 
-const getBadge = (section, newComments, values) => {
+const getBadges = (section, newComments, values) => {
   let relevantComments;
   if (section.repeats) {
     const re = new RegExp(`^${section.repeats}\\.`);
@@ -85,20 +85,23 @@ const getBadge = (section, newComments, values) => {
     relevantComments = pick(newComments, flattenReveals(section.fields, values).map(field => field.name))
   }
   const numberOfNewComments = Object.values(relevantComments).reduce((total, comments) => total + (comments || []).length, 0);
-  return numberOfNewComments
-    ? (
-      <Fragment>
-        <NewComments comments={numberOfNewComments} />
-        <br />
-      </Fragment>
-    )
-    : null
+
+  return (
+    <Fragment>
+      {
+        !!numberOfNewComments && <NewComments comments={numberOfNewComments} />
+      }
+      {
+        section.fields && <ChangedBadge fields={section.fields.map(f => f.name)} />
+      }
+    </Fragment>
+  )
 }
 
 const getTitle = (section, newComments, values) => (
   <Fragment>
     {
-      section.fields && getBadge(section, newComments, values)
+      section.fields && getBadges(section, newComments, values)
     }
     {
       section.title
@@ -120,17 +123,13 @@ const ProtocolSections = ({ sections, protocolState, editable, newComments, ...p
       Object.keys(sections)
         .sort(sortGranted(sections, props.isGranted))
         .filter(section => !sections[section].show || sections[section].show(props))
-        .map((section, sectionIndex) => {
-          const fields = (sections[section].fields || []).map(field => field.name);
-          return <Fragment key={section}>
-            <ChangedBadge fields={fields} />
-            <ExpandingPanel alwaysUpdate={section === 'conditions' || section === 'authorisations'} key={section} title={getTitle(sections[section], newComments, props.values)}>
-              {
-                getSection(section, { ...props, protocolState, editable, ...sections[section], sectionsLength: size(sections), sectionIndex })
-              }
-            </ExpandingPanel>
-          </Fragment>
-        })
+        .map((section, sectionIndex) => (
+          <ExpandingPanel alwaysUpdate={section === 'conditions' || section === 'authorisations'} key={section} title={getTitle(sections[section], newComments, props.values)}>
+            {
+              getSection(section, { ...props, protocolState, editable, ...sections[section], sectionsLength: size(sections), sectionIndex })
+            }
+          </ExpandingPanel>
+        ))
     }
   </Accordion>
 )}
