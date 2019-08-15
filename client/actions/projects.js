@@ -163,7 +163,13 @@ const syncConditions = (dispatch, getState, extra = {}) => {
 
   return Promise.resolve()
     .then(() => sendMessage(params))
-    .then(() => dispatch(doneSyncing()))
+    .then(() => {
+      dispatch(doneSyncing())
+      if (state.application.syncError) {
+        dispatch(syncErrorResolved());
+        dispatch(showMessage('Saved successfully'))
+      }
+    })
     .then(() => dispatch(updateSavedProject(state.project)))
     .then(() => syncConditions(dispatch, getState, extra))
     .catch(err => {
@@ -217,6 +223,7 @@ const syncProject = (dispatch, getState) => {
     .then(() => {
       dispatch(doneSyncing())
       if (state.application.syncError) {
+        dispatch(syncErrorResolved());
         dispatch(showMessage('Saved successfully'))
       }
     })
