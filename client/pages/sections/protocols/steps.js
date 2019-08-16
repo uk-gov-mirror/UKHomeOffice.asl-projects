@@ -12,6 +12,7 @@ import TextEditor from '../../../components/editor';
 import ReviewFields from '../../../components/review-fields';
 import Repeater from '../../../components/repeater';
 import Fieldset from '../../../components/fieldset';
+import ChangedBadge from '../../../components/changed-badge';
 
 class Step extends Component {
   constructor(options) {
@@ -84,12 +85,12 @@ class Step extends Component {
     const { prefix, index, fields, values, updateItem, length, editable } = this.props;
 
     const completed = !editable || values.completed;
-
     return (
       <section
         className={classnames('step', { completed, editable })}
         ref={this.step}
       >
+        <ChangedBadge fields={[ prefix.substr(0, prefix.length - 1) ]} />
         <Fragment>
           {
             editable && completed && (
@@ -152,7 +153,7 @@ const Steps = ({ values, prefix, updateItem, editable, ...props }) => {
       <p className="grey">{props.hint}</p>
       <br />
       <Repeater
-        type="step"
+        type="steps"
         singular="step"
         prefix={prefix}
         items={values.steps}

@@ -62,7 +62,17 @@ class ProtocolSections extends PureComponent {
 
     const noAnswer = <em>No answer provided</em>;
 
-    const fields = Object.values(sections).map(s => (s.fields || []).map(field => field.name));
+    const fields = Object.values(sections)
+      .reduce((list, section) => {
+        if (section.repeats && values[section.repeats]) {
+          values[section.repeats].forEach(repeater => {
+            list.push.apply(list, (section.fields || []).map(f => `${section.repeats}.${repeater.id}.${f.name}`));
+          });
+          return list;
+        }
+        return list.concat((section.fields || []).map(field => field.name));
+      }, [])
+      .map(f => `protocols.${values.id}.${f}`);
 
     return (
       <section className={classnames('protocol', { complete: values.complete || readonly, readonly })}>

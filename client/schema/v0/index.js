@@ -332,7 +332,7 @@ export default {
         granted: {
           review: GrantedProtocols
         },
-        repeats: 'protocol',
+        repeats: 'protocols',
         fields: [
           {
             name: 'title',

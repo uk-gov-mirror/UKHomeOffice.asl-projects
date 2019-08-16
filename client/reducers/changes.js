@@ -6,13 +6,11 @@ const INITIAL_STATE = {
 };
 
 const changedItems = (state = [], action) => {
-  if (state.includes(action.change)) {
-    return state;
-  }
-  return [
-    ...state,
-    action.change
-  ];
+  const paths = action.change.split('.').map((_, i, arr) => arr.slice(0, i + 1).join('.'));
+
+  return paths.reduce((arr, path) => {
+    return arr.includes(path) ? arr : [ ...arr, path ];
+  }, state);
 };
 
 const changes = (state = INITIAL_STATE, action) => {
