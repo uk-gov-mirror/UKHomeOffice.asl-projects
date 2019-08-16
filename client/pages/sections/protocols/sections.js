@@ -76,6 +76,15 @@ const getOpenSection = (protocolState, editable, sections) => {
   });
 }
 
+const getFieldKeys = (section, values) => {
+  if (section.repeats) {
+    return (values[section.repeats] || []).reduce((list, repeater) => {
+      return list.concat((section.fields || []).map(f => `protocols.${values.id}.${section.repeats}.${repeater.id}.${f.name}`));
+    }, []);
+  }
+  return section.fields.map(f => `protocols.${values.id}.${f.name}`);
+};
+
 const getBadges = (section, newComments, values) => {
   let relevantComments;
   if (section.repeats) {
@@ -86,13 +95,15 @@ const getBadges = (section, newComments, values) => {
   }
   const numberOfNewComments = Object.values(relevantComments).reduce((total, comments) => total + (comments || []).length, 0);
 
+  const fields = getFieldKeys(section, values);
+
   return (
     <Fragment>
       {
         !!numberOfNewComments && <NewComments comments={numberOfNewComments} />
       }
       {
-        section.fields && <ChangedBadge fields={section.fields.map(f => f.name)} />
+        section.fields && <ChangedBadge fields={fields} />
       }
     </Fragment>
   )

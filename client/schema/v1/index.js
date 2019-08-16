@@ -1506,7 +1506,7 @@ each other.`,
             title: 'Steps',
             hint: 'A step can be a single procedure or a combination of procedures to achieve an outcome. You will be able to reorder your steps at any time before you send your application to the Home Office, but they should be broadly chronological, with the final step being a method of killing or the last regulated procedure.',
             footer: 'Once you’ve created a list of steps, you need to add information about adverse effects, controls and limitations, and humane endpoints to each one.​',
-            repeats: 'step',
+            repeats: 'steps',
             granted: {
               order: 6,
               review: GrantedSteps
