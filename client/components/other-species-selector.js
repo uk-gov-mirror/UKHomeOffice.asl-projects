@@ -43,7 +43,7 @@ class OtherSpecies extends Component {
     const { items } = this.state;
 
     return (
-      <Fragment>
+      <Fragment key={items.length}>
         {
           items.map((item, index) => (
             <div key={index} className="flex species-selector-other">
