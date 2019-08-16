@@ -48,8 +48,7 @@ class SpeciesSelector extends Component {
       onFieldChange,
       label,
       name,
-      hint,
-      summary
+      hint
     } = this.props;
     return (
       <div className="species-selector">
@@ -59,7 +58,7 @@ class SpeciesSelector extends Component {
         }
         {
           map(species, (options, code) => (
-            <details open={this.isOpen(options)}>
+            <details open={this.isOpen(options)} key={code}>
               <summary>{SPECIES_CATEGORIES[code]}</summary>
               <Fieldset
                 fields={getFields(options, name)}
