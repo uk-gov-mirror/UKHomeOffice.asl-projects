@@ -8,6 +8,7 @@ import ReactMarkdown from 'react-markdown';
 import get from 'lodash/get';
 import defer from 'lodash/defer';
 import debounce from 'lodash/debounce';
+import isEqual from 'lodash/isEqual';
 
 import { throwError } from '../../actions/messages';
 
@@ -72,13 +73,16 @@ class TextEditor extends Component {
     this.editor = editor;
   };
 
-  save = () => {
+  save = debounce(() => {
     const { value } = this.state;
-    this.props.onChange(serialiseValue(value));
-  }
+    this.props.onChange && this.props.onChange(serialiseValue(value));
+  }, 500, { maxWait: 5000, leading: true })
 
   onChange = ({ value }) => {
-    this.setState({ value }, debounce(this.save, 500, { maxWait: 5000 }));
+    const old = this.state.value;
+    const hasChanged = !isEqual(old.toJSON(), value.toJSON());
+
+    this.setState({ value }, () => hasChanged && this.save());
   };
 
   onFocus = (self, editor, next) => {
@@ -106,7 +110,11 @@ class TextEditor extends Component {
     if (!this.editor[func]) {
       throw new Error(`Query "${func}" is not defined`)
     }
-    return this.editor[func](...args)
+    try {
+      return this.editor[func](...args);
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   render() {
