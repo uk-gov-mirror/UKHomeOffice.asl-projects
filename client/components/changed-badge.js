@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 const ChangedBadge = ({ fields = [], latest = [], granted = [] }) => {
-
   const changedFrom = source => source.length && fields.some(field => source.some(change => change === field));
 
   if (changedFrom(latest)) {
