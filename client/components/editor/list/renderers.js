@@ -1,8 +1,8 @@
 import React from 'react';
 
 const renderBlock = (props, editor, next) => {
-  const { attributes, children, node } = props;
-  const isCurrentItem = editor.getItemsAtRange().contains(node);
+  const { attributes, children, node, readOnly } = props;
+  const isCurrentItem = !readOnly && editor.getItemsAtRange().contains(node);
 
   switch (node.type) {
     case 'bulleted-list':
