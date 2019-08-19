@@ -29,7 +29,7 @@ export default {
       versions: [
         {
           title: 'Re-use',
-          content: '<<<INSERT animal type(s) HERE>>> that have been kept alive and maintained under the supervision  of the NVS at <<<INSERT place HERE.>>> may be re-used in this protocol, provided that all criteria in section 14 of the Animals (Scientific Procedures) Act and in this project licence are fulfilled.'
+          content: '<<<INSERT animal type(s) HERE>>> that have been kept alive and maintained under the supervision of the NVS at <<<INSERT place HERE>>> may be re-used in this protocol, provided that all criteria in section 14 of the Animals (Scientific Procedures) Act and in this project licence are fulfilled.'
         }
       ]
     },
