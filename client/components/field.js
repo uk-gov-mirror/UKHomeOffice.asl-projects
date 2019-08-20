@@ -17,6 +17,7 @@ import {
 
 import OtherSpecies from './other-species-selector';
 import SpeciesSelector from './species-selector';
+import LegacySpeciesSelector from './legacy-species-selector';
 import AnimalQuantities from './animal-quantities';
 import LocationSelector from './location-selector';
 import ObjectiveSelector from './objective-selector';
@@ -90,6 +91,9 @@ class Field extends Component {
     }
     if (this.props.type === 'species-selector') {
       return <SpeciesSelector {...this.props} label={label} hint={hint} />;
+    }
+    if (this.props.type === 'legacy-species-selector') {
+      return <LegacySpeciesSelector {...this.props} label={label} hint={hint} />;
     }
     if (this.props.type === 'location-selector') {
       return <LocationSelector {...this.props} label={label} hint={hint} />;

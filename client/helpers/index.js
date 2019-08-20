@@ -4,6 +4,7 @@ import pickBy from 'lodash/pickBy';
 import mapValues from 'lodash/mapValues';
 import map from 'lodash/map';
 import dateFormatter from 'date-fns/format';
+import LEGACY_SPECIES from '../constants/legacy-species';
 
 export const formatDate = (date, format) => (date ? dateFormatter(date, format) : '-');
 
@@ -52,6 +53,15 @@ export const getNewComments = (comments, user) => {
   const filterNew = field => field.filter(comment => comment.isNew && comment.author !== user);
   return pickBy(mapValues(comments, filterNew), filterNew);
 }
+
+export const getLegacySpeciesLabel = species => {
+  const matched = LEGACY_SPECIES.find(s => s.value === species.speciesId);
+  let label = matched && matched.label;
+  if (label === 'Other species') {
+    label = species['other-species-type'];
+  }
+  return label;
+};
 
 export const flattenReveals = (fields, values) => {
   return fields.reduce((arr, item) => {

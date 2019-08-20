@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import LEGACY_SPECIES from '../../../constants/legacy-species';
+import { getLegacySpeciesLabel } from '../../../helpers';
 
 const SummaryTable = ({ protocols, isLegacy }) => (
   <div className="summary-table">
@@ -31,10 +31,10 @@ const SummaryTable = ({ protocols, isLegacy }) => (
             const species = !isLegacy
               ? (protocol.speciesDetails || []).filter(s => s.name)
               : (protocol.species || []).map(s => {
-                const matched = LEGACY_SPECIES.find(ls => ls.value === s.speciesId);
+                const label = getLegacySpeciesLabel(s);
                 return {
                   ...s,
-                  name: matched ? matched.label : '-'
+                  name: label || '-'
                 };
               });
             return species.map((s, speciesIndex) => (

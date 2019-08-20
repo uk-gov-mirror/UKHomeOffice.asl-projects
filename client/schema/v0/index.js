@@ -6,7 +6,6 @@ import ProtocolsReview from '../../pages/sections/protocols/review';
 import GrantedProtocols from '../../pages/sections/granted/protocols';
 import LegacyConditions from '../../pages/sections/legacy-conditions';
 import IntroductionReview from '../../pages/sections/legacy-introduction-review';
-import LEGACY_SPECIES from '../../constants/legacy-species';
 
 export default {
   introductions: {
@@ -351,16 +350,15 @@ export default {
               }
             ]
           },
-          animals: {
+          'legacy-animals': {
             title: 'Type of animals',
             repeats: 'species',
             fields: [
               {
                 name: 'speciesId',
                 label: 'Animal type',
-                type: 'select',
-                className: 'smaller',
-                options: LEGACY_SPECIES
+                type: 'legacy-species-selector',
+                className: 'smaller'
               },
               {
                 name: 'genetically-altered',

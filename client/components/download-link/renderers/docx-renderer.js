@@ -6,6 +6,7 @@ import get from 'lodash/get';
 import pickBy from 'lodash/pickBy';
 import mapValues from 'lodash/mapValues';
 import SPECIES from '../../../constants/species';
+import { getLegacySpeciesLabel } from '../../../helpers';
 
 export default (application, sections, values, updateImageDimensions) => {
 
@@ -365,6 +366,11 @@ export default (application, sections, values, updateImageDimensions) => {
     }
   };
 
+  const renderLegacySpecies = (doc, values, value, noSeparator) => {
+    const label = getLegacySpeciesLabel(values);
+    return renderText(doc, label, noSeparator);
+  }
+
   const renderSpeciesSelector = (doc, values, value, noSeparator) => {
     const other = values['species-other'] || [];
     value = value || [];
@@ -564,6 +570,10 @@ export default (application, sections, values, updateImageDimensions) => {
       return renderSpeciesSelector(doc, values, value, noSeparator);
     }
 
+    if (field.type === 'legacy-species-selector') {
+      return renderLegacySpecies(doc, values, value, noSeparator);
+    }
+
     if (field.type === 'animal-quantities') {
       return renderAnimalQuantities(doc, values, noSeparator);
     }
@@ -639,6 +649,11 @@ export default (application, sections, values, updateImageDimensions) => {
         return (values.speciesDetails || []).forEach(speciesValues => {
           doc.createParagraph(speciesValues.name).heading2();
           renderFields(doc, section, speciesValues, section.fields.filter(f => f.name !== 'species'));
+        });
+      case 'legacy-animals':
+        return (values.species || []).forEach((speciesValues, index) => {
+          doc.createParagraph(`Animal type ${index + 1}`).heading2();
+          renderFields(doc, section, speciesValues, section.fields);
         });
       default:
         return renderFields(doc, section, values, null, project);

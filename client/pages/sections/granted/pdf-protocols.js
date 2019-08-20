@@ -3,17 +3,17 @@ import ReactMarkdown from 'react-markdown';
 import { connect } from 'react-redux';
 import SummaryTable from './summary-table';
 import ProtocolSections from '../protocols/sections';
-import LEGACY_SPECIES from '../../../constants/legacy-species';
+import { getLegacySpeciesLabel } from '../../../helpers';
 import LEGAL from '../../../constants/legal';
 
 const Protocol = ({ protocol, number, sections, isLegacy }) => {
   const species = !isLegacy
     ? (protocol.speciesDetails || []).filter(s => s.name)
     : (protocol.species || []).map(s => {
-      const matched = LEGACY_SPECIES.find(ls => ls.value === s.speciesId);
+      const label = getLegacySpeciesLabel(s);
       return {
         ...s,
-        name: matched ? matched.label : '-'
+        name: label || '-'
       }
     });
   return (
