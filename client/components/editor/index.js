@@ -110,11 +110,7 @@ class TextEditor extends Component {
     if (!this.editor[func]) {
       throw new Error(`Query "${func}" is not defined`)
     }
-    try {
-      return this.editor[func](...args);
-    } catch (e) {
-      console.error(e);
-    }
+    return this.editor[func](...args);
   }
 
   render() {
