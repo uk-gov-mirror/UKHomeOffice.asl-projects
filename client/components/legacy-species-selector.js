@@ -3,7 +3,7 @@ import Field from './field';
 import LEGACY_SPECIES from '../constants/legacy-species';
 
 export default function LegacySpeciesSelector(props) {
-  const otherSpeciesId = 28;
+  const otherSpeciesId = '28';
   const [isOtherSpecies, setIsOtherSpecies] = useState(props.value === otherSpeciesId);
 
   function onSpeciesChange(value) {

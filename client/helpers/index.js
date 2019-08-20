@@ -57,7 +57,7 @@ export const getNewComments = (comments, user) => {
 export const getLegacySpeciesLabel = species => {
   const matched = LEGACY_SPECIES.find(s => s.value === species.speciesId);
   let label = matched && matched.label;
-  if (label === 'Other species') {
+  if (species.speciesId === '28') {
     label = species['other-species-type'];
   }
   return label;
