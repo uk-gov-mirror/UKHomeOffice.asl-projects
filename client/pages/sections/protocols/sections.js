@@ -135,7 +135,7 @@ const ProtocolSections = ({ sections, protocolState, editable, newComments, ...p
         .sort(sortGranted(sections, props.isGranted))
         .filter(section => !sections[section].show || sections[section].show(props))
         .map((section, sectionIndex) => (
-          <ExpandingPanel alwaysUpdate={section === 'conditions' || section === 'authorisations'} key={section} title={getTitle(sections[section], newComments, props.values)}>
+          <ExpandingPanel alwaysUpdate={section === 'conditions' || section === 'authorisations'} key={section} title={getTitle(sections[section], newComments, props.values)} className={section.toLowerCase()}>
             {
               getSection(section, { ...props, protocolState, editable, ...sections[section], sectionsLength: size(sections), sectionIndex })
             }
