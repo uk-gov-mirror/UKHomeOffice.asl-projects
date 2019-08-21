@@ -50,7 +50,12 @@ class AddComment extends Component {
     return adding
       ? (
         <Fragment>
-          <TextArea type="textarea" label="Add new comment" value={comment} onChange={this.onChange} />
+          <TextArea
+            label="Add new comment"
+            value={comment}
+            onChange={this.onChange}
+            autoExpand={true}
+          />
           <p className="control-panel">
             <Button onClick={this.onSubmit}>Save</Button>
             <Button className="link" onClick={this.clear}>Discard</Button>

@@ -188,6 +188,7 @@ class Field extends Component {
         name={ this.props.name }
         value={ value || '' }
         error={ this.props.error }
+        autoExpand={ true }
         onChange={ e => this.onFieldChange(e.target.value) }
       />;
     }
