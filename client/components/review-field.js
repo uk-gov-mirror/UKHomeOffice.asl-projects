@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import TextEditor from './editor';
 import speciesOptions from '../constants/species';
+import { getLegacySpeciesLabel } from '../helpers';
 
 import flatten from 'lodash/flatten';
 import values from 'lodash/values';
@@ -54,6 +55,10 @@ class ReviewField extends React.Component {
 
     if (value && this.props.type === 'date') {
       return <p>{ formatDate(value, DATE_FORMAT.long) }</p>;
+    }
+
+    if (this.props.type === 'legacy-species-selector') {
+      value = getLegacySpeciesLabel(this.props.values);
     }
 
     if (this.props.type === 'species-selector') {

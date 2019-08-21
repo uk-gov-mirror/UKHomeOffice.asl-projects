@@ -4,10 +4,10 @@ import Fieldset from '../../../components/fieldset';
 import Repeater from '../../../components/repeater';
 import ReviewFields from '../../../components/review-fields';
 
-const LegacyAnimal = ({ updateItem, values, readonly, prefix, fields, index }) => (
+const LegacyAnimal = ({ updateItem, values, readonly, prefix, fields, index, editable }) => (
   <Fragment>
     {
-      !readonly
+      (!readonly && editable)
         ? <Fieldset
           prefix={prefix}
           fields={fields}
@@ -26,14 +26,12 @@ const LegacyAnimal = ({ updateItem, values, readonly, prefix, fields, index }) =
   </Fragment>
 )
 
-const LegacyAnimals = ({ updateItem, title, values, fields, prefix, readonly, index }) => (
+const LegacyAnimals = ({ updateItem, title, values, fields, prefix, readonly, index, editable }) => (
   <Fragment>
-    {
-      <h2>{title}</h2>
-    }
+    <h2>{title}</h2>
     <Repeater
       items={values.species}
-      addAnother={!readonly}
+      addAnother={!!editable}
       onSave={species => updateItem({ species })}
       prefix={prefix}
       index={index}
@@ -41,6 +39,7 @@ const LegacyAnimals = ({ updateItem, title, values, fields, prefix, readonly, in
       <LegacyAnimal
         readonly={readonly}
         fields={fields}
+        editable={editable}
       />
     </Repeater>
   </Fragment>

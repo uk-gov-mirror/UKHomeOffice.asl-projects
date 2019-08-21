@@ -33,6 +33,7 @@ const ReviewFields = ({ fields, values = {}, onEdit, editLink, project, prefix =
                 label={ field.review || field.label }
                 key={ field.name }
                 value={ item[field.name] }
+                values={ values }
                 editLink={ editLink
                   ? `${editLink}${field.name}`
                   : `${step}#${field.name}`

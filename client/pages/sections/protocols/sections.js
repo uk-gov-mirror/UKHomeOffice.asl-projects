@@ -30,9 +30,9 @@ const getSection = (section, props) => {
         ? <Section {...props} />
         : <Steps {...props} />
     case 'animals':
-      return props.schemaVersion === 0
-        ? <LegacyAnimals {...props} />
-        : <Animals {...props} />
+      return <Animals {...props} />
+    case 'legacy-animals':
+      return <LegacyAnimals {...props} />
     case 'conditions':
       return <Conditions
         {...props}
