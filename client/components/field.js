@@ -27,6 +27,7 @@ import TextEditor from './editor';
 import Fieldset from './fieldset';
 import Comments from './comments';
 
+import LegacyHolder from './legacy-holder';
 class Field extends Component {
 
   state = {
@@ -114,6 +115,18 @@ class Field extends Component {
         max={ this.props.max }
         value={ value }
         onChange={ val => this.onFieldChange(val) }
+      />;
+    }
+    if (this.props.type === 'holder') {
+      console.log('---------------------value begin---------------------');
+      console.log(value);
+      console.log('---------------------value end---------------------');
+      return <LegacyHolder
+        name={ this.props.name }
+        label={ label }
+        hint={ hint }
+        error={ this.props.error }
+        value={ value }
       />;
     }
     if (this.props.type === 'select') {

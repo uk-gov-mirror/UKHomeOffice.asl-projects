@@ -53,6 +53,12 @@ class ReviewField extends React.Component {
       )
     }
 
+    if (this.props.type === 'holder') {
+      return (
+      <a href={`/e/${this.props.establishment.id}/people/${this.props.licenceHolder.id}`}>{`${this.props.licenceHolder.firstName} ${this.props.licenceHolder.lastName}`}</a>
+      )
+    }
+
     if (value && this.props.type === 'date') {
       return <p>{ formatDate(value, DATE_FORMAT.long) }</p>;
     }
