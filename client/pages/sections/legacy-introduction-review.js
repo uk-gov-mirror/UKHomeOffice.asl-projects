@@ -6,7 +6,7 @@ import ReviewFields from '../../components/review-fields';
 import Banner from '../../components/banner';
 import { DATE_FORMAT } from '../../constants';
 
-const LegacyIntroduction = ({ fields, project, values, pdf, readonly, title, establishment }) => (
+const LegacyIntroduction = ({ fields, project, values, pdf, readonly, title }) => (
   <div className={classnames('introduction-review', { readonly })}>
     {
       !readonly && (
@@ -22,8 +22,6 @@ const LegacyIntroduction = ({ fields, project, values, pdf, readonly, title, est
     <ReviewFields
       values={values}
       fields={fields}
-      licenceHolder={project.licenceHolder}
-      establishment={establishment}
     />
     {
       readonly && !pdf && (
@@ -50,14 +48,11 @@ const LegacyIntroduction = ({ fields, project, values, pdf, readonly, title, est
   </div>
 )
 
-const mapStateToProps = (({
+export default connect(({
   project: values,
-  application: { project, readonly, establishment }
+  application: { project, readonly }
 }) => ({
   values,
   project,
-  readonly,
-  establishment
-}));
-
-export default connect(mapStateToProps)(LegacyIntroduction);
+  readonly
+}))(LegacyIntroduction);

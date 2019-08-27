@@ -26,11 +26,6 @@ export default {
             type: 'duration'
           },
           {
-            name: 'holder',
-            label: 'Licence holder',
-            type: 'holder'
-          },
-          {
             name: 'continuation',
             label: 'Is this a continuation of previous project licence?',
             type: 'radio',
