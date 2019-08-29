@@ -508,9 +508,15 @@ export default (application, sections, values, updateImageDimensions) => {
   };
 
   const renderDuration = (doc, value) => {
-    let years = value.years === 1 ? 'Year' : 'Years';
-    let months = value.months === 1 ? 'Month' : 'Months';
-    doc.createParagraph(`${value.years} ${years} ${value.months} ${months}`).style('body');
+    let months = 0;
+    let years = 5;
+    if(value) {
+      months = value.months;
+      years = value.years;
+    }
+    const yearsLabel = years === 1 ? 'Year' : 'Years';
+    const monthsLabel = months === 1 ? 'Month' : 'Months';
+    doc.createParagraph(`${years} ${yearsLabel} ${months} ${monthsLabel}`).style('body');
   };
 
   const renderNull = (doc, noSeparator) => {
@@ -593,6 +599,16 @@ export default (application, sections, values, updateImageDimensions) => {
       return renderAnimalQuantities(doc, values, noSeparator);
     }
 
+    if (field.type === 'duration') {
+      return renderDuration(doc, value, noSeparator);
+    }
+
+    if (field.type === 'holder') {
+      const firstName = application.licenceHolder ? application.licenceHolder.firstName : '';
+      const lastName = application.licenceHolder ? application.licenceHolder.lastName : '';
+      return renderText(doc, `${firstName} ${lastName}`, noSeparator);
+    }
+
     if (isUndefined(value) || isNull(value)) {
       return renderNull(doc, noSeparator);
     }
@@ -611,17 +627,15 @@ export default (application, sections, values, updateImageDimensions) => {
       case 'permissible-purpose':
         renderPermissiblePurpose(doc, field, value, values);
         break;
-
-      case 'text':
-      case 'textarea':
-      case 'declaration':
+      case 'text': {
         renderText(doc, value, noSeparator);
         break;
-
-      case 'duration':
-        renderDuration(doc, value, noSeparator);
+      }
+      case 'textarea':
+      case 'declaration': {
+        renderText(doc, value, noSeparator);
         break;
-
+      }
       case 'texteditor':
         renderTextEditor(doc, value, noSeparator);
         break;
