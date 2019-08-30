@@ -6,8 +6,11 @@ import ReviewFields from '../../components/review-fields';
 import Banner from '../../components/banner';
 import { DATE_FORMAT } from '../../constants';
 
-const LegacyIntroduction = ({ fields, project, values, pdf, readonly, title }) => (
-  <div className={classnames('introduction-review', { readonly })}>
+const LegacyIntroduction = ({ fields, project, values, pdf, readonly, title, establishment }) => {
+
+  const licenceHolder = project ? project.licenceHolder : undefined;
+
+  return(<div className={classnames('introduction-review', { readonly })}>
     {
       !readonly && (
         <Fragment>
@@ -22,6 +25,8 @@ const LegacyIntroduction = ({ fields, project, values, pdf, readonly, title }) =
     <ReviewFields
       values={values}
       fields={fields}
+      licenceHolder={licenceHolder}
+      establishment={establishment}
     />
     {
       readonly && !pdf && (
@@ -45,8 +50,8 @@ const LegacyIntroduction = ({ fields, project, values, pdf, readonly, title }) =
         </Fragment>
       )
     }
-  </div>
-)
+  </div>)
+}
 
 export default connect(({
   project: values,

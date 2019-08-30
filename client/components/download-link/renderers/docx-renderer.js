@@ -609,6 +609,11 @@ export default (application, sections, values, updateImageDimensions) => {
       return renderText(doc, `${firstName} ${lastName}`, noSeparator);
     }
 
+    if (field.type === 'licenceNumber') {
+      const licenceNumber = application.licenceNumber ? application.licenceNumber : '';
+      return renderText(doc, `${licenceNumber} `, noSeparator);
+    }
+
     if (isUndefined(value) || isNull(value)) {
       return renderNull(doc, noSeparator);
     }
@@ -649,14 +654,14 @@ export default (application, sections, values, updateImageDimensions) => {
     }
 
     const steps = (subsection.steps) ? subsection.steps : [{ 'fields': subsection.fields }];
-
     steps.filter(step => !step.show || step.show(values)).forEach(step => {
       if (step.repeats) {
         (values[step.repeats] || []).forEach((v, index) => {
           if (step.singular) {
             doc.createParagraph(`${step.singular} ${index + 1}`).heading2();
           }
-          (step.fields || []).filter(f => f.repeats).forEach(field => renderField(doc, field, v, project));
+          (step.fields || []).forEach(field => renderField(doc, field, v, project)
+          );
         });
         (step.fields || []).filter(f => !f.repeats).forEach(field => renderField(doc, field, values, project));
       } else {
