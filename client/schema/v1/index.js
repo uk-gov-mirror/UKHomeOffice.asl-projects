@@ -1555,6 +1555,7 @@ each other.`,
               {
                 name: 'adverse',
                 label: 'Do you expect this step to have any adverse effects for the animals?',
+                hint: 'Do not list uncommon or unlikely adverse effects, or effects from procedures that will cause no more than transient discomfort and no lasting harm. For example, an intravenous injection of a small volume of an innocuous substance.',
                 type: 'radio',
                 inline: true,
                 className: 'smaller',
@@ -1566,7 +1567,7 @@ each other.`,
                       {
                         name: 'adverse-effects',
                         label: 'What are the likely adverse effects of this step?​',
-                        hint: 'State the signs of each adverse effect, including the likely incidence, and the anticipated degree and duration of suffering.',
+                        hint: 'State the expected adverse effect, including the likely incidence, and the anticipated degree and duration of suffering.',
                         type: 'texteditor'
                       },
                       {
