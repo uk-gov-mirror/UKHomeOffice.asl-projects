@@ -10,47 +10,49 @@ const LegacyIntroduction = ({ fields, project, values, pdf, readonly, title, est
 
   const licenceHolder = project ? project.licenceHolder : undefined;
 
-  return(<div className={classnames('introduction-review', { readonly })}>
-    {
-      !readonly && (
-        <Fragment>
-          <Banner>
-            <h2>Please review your answers for</h2>
+  return (
+    <div className={classnames('introduction-review', { readonly })}>
+      {
+        !readonly && (
+          <Fragment>
+            <Banner>
+              <h2>Please review your answers for</h2>
+              <h1>{ title }</h1>
+            </Banner>
             <h1>{ title }</h1>
-          </Banner>
-          <h1>{ title }</h1>
-        </Fragment>
-      )
-    }
-    <ReviewFields
-      values={values}
-      fields={fields}
-      licenceHolder={licenceHolder}
-      establishment={establishment}
-    />
-    {
-      readonly && !pdf && (
-        <Fragment>
-          {
-            project.issueDate && (
-              <div className="granted-section">
-                <h3>Date granted</h3>
-                <p>{formatDate(project.issueDate, DATE_FORMAT.long)}</p>
-              </div>
-            )
-          }
-          {
-            project.expiryDate && (
-              <div className="granted-section">
-                <h3>Expiry date</h3>
-                <p>{formatDate(project.expiryDate, DATE_FORMAT.long)}</p>
-              </div>
-            )
-          }
-        </Fragment>
-      )
-    }
-  </div>)
+          </Fragment>
+        )
+      }
+      <ReviewFields
+        values={values}
+        fields={fields}
+        licenceHolder={licenceHolder}
+        establishment={establishment}
+      />
+      {
+        readonly && !pdf && (
+          <Fragment>
+            {
+              project.issueDate && (
+                <div className="granted-section">
+                  <h3>Date granted</h3>
+                  <p>{formatDate(project.issueDate, DATE_FORMAT.long)}</p>
+                </div>
+              )
+            }
+            {
+              project.expiryDate && (
+                <div className="granted-section">
+                  <h3>Expiry date</h3>
+                  <p>{formatDate(project.expiryDate, DATE_FORMAT.long)}</p>
+                </div>
+              )
+            }
+          </Fragment>
+        )
+      }
+    </div>
+  );
 }
 
 export default connect(({

@@ -510,7 +510,7 @@ export default (application, sections, values, updateImageDimensions) => {
   const renderDuration = (doc, value) => {
     let months = 0;
     let years = 5;
-    if(value) {
+    if (value) {
       months = value.months;
       years = value.years;
     }
@@ -632,15 +632,13 @@ export default (application, sections, values, updateImageDimensions) => {
       case 'permissible-purpose':
         renderPermissiblePurpose(doc, field, value, values);
         break;
-      case 'text': {
-        renderText(doc, value, noSeparator);
-        break;
-      }
+
+      case 'text':
       case 'textarea':
-      case 'declaration': {
+      case 'declaration':
         renderText(doc, value, noSeparator);
         break;
-      }
+
       case 'texteditor':
         renderTextEditor(doc, value, noSeparator);
         break;
@@ -654,14 +652,14 @@ export default (application, sections, values, updateImageDimensions) => {
     }
 
     const steps = (subsection.steps) ? subsection.steps : [{ 'fields': subsection.fields }];
+
     steps.filter(step => !step.show || step.show(values)).forEach(step => {
       if (step.repeats) {
         (values[step.repeats] || []).forEach((v, index) => {
           if (step.singular) {
             doc.createParagraph(`${step.singular} ${index + 1}`).heading2();
           }
-          (step.fields || []).forEach(field => renderField(doc, field, v, project)
-          );
+          (step.fields || []).forEach(field => renderField(doc, field, v, project));
         });
         (step.fields || []).filter(f => !f.repeats).forEach(field => renderField(doc, field, values, project));
       } else {
