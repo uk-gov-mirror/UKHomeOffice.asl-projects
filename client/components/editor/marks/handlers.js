@@ -7,8 +7,16 @@ const isCodeHotkey = isKeyHotkey('mod+`');
 const isSuperscriptHotkey = isKeyHotkey('mod+=');
 const isSubscriptHotkey = isKeyHotkey('mod+shift++');
 
+const isClearCommentHotkey = isKeyHotkey('mod+k');
+
+
 export const onKeyDown = (event, editor, next) => {
   let mark;
+
+  if (isClearCommentHotkey(event)) {
+    editor.removeMark('comment');
+    return next();
+  }
 
   if (isBoldHotkey(event)) {
     mark = 'bold';
