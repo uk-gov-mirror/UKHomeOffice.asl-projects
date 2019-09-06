@@ -124,7 +124,7 @@ export default (application, sections, values, updateImageDimensions) => {
     let colcount = 0;
 
     // calculate the actual dimensions of the table
-    rows.forEach((row, rowIndex) => {
+    rows.forEach(row => {
       const cells = row.nodes;
 
       colcount = Math.max(
@@ -135,7 +135,7 @@ export default (application, sections, values, updateImageDimensions) => {
       // reduce rowspans by one for next row.
       rowspans = [
         ...rowspans,
-        ...cells.map(cell => get(cell, 'data.rowSpan', 1) || rows.length - rowIndex)
+        ...cells.map(cell => get(cell, 'data.rowSpan', 1) || 1)
       ]
         .map(s => s - 1)
         .filter(Boolean);
@@ -155,8 +155,8 @@ export default (application, sections, values, updateImageDimensions) => {
         }
 
         // store rowspan to be taken into account in the next row
-        rowspanStore[colIndex] = get(cell, 'data.rowSpan', 1) || rows.length - rowIndex;
-        const colspan = get(cell, 'data.colSpan', 1) || colcount - colIndex;
+        rowspanStore[colIndex] = get(cell, 'data.rowSpan', 1) || 1;
+        const colspan = get(cell, 'data.colSpan', 1) || 1;
 
         // increase offset for next cell
         spanOffset += (colspan - 1);
