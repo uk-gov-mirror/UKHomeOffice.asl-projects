@@ -135,7 +135,12 @@ export default (application, sections, values, updateImageDimensions) => {
       // reduce rowspans by one for next row.
       rowspans = [
         ...rowspans,
-        ...cells.map(cell => get(cell, 'data.rowSpan', 1) || rows.length - rowIndex)
+        ...cells.map(cell => {
+          const rs = get(cell, 'data.rowSpan', 1);
+          // All falsy values _except_ 0 should be 1
+          // rowspan === 0 => fill the rest of the table
+          return rs || (rs === 0 ? rows.length - rowIndex : 1);
+        })
       ]
         .map(s => s - 1)
         .filter(Boolean);
@@ -155,8 +160,10 @@ export default (application, sections, values, updateImageDimensions) => {
         }
 
         // store rowspan to be taken into account in the next row
-        rowspanStore[colIndex] = get(cell, 'data.rowSpan', 1) || rows.length - rowIndex;
-        const colspan = get(cell, 'data.colSpan', 1) || colcount - colIndex;
+        const rs = get(cell, 'data.rowSpan', 1);
+        const cs = get(cell, 'data.colSpan', 1);
+        rowspanStore[colIndex] = rs || (rs === 0 ? rows.length - rowIndex : 1);
+        const colspan = cs || (cs === 0 ? colcount - colIndex : 1);
 
         // increase offset for next cell
         spanOffset += (colspan - 1);
