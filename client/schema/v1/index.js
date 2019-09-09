@@ -1554,7 +1554,7 @@ each other.`,
               },
               {
                 name: 'adverse',
-                label: 'Do you expect this step to have any adverse effects for the animals?',
+                label: 'Do you expect this step to have adverse effects for the animals that are more than mild and transient?',
                 hint: 'Do not list uncommon or unlikely adverse effects, or effects from procedures that will cause no more than transient discomfort and no lasting harm. For example, an intravenous injection of a small volume of an innocuous substance.',
                 type: 'radio',
                 inline: true,
