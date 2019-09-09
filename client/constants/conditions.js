@@ -322,16 +322,6 @@ For studies requested for other worldwide authorities, for example the US Food a
         }
       ]
     },
-    places: {
-      checked: true,
-      type: 'authorisation',
-      versions: [
-        {
-          title: 'Places',
-          content: 'You are authorised to undertake this programme of scientific procedures at the following place(s)'
-        }
-      ]
-    },
     'batch-testing': {
       type: 'condition',
       versions: [
