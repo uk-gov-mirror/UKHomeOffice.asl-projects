@@ -11,6 +11,7 @@ pipeline:
       event:
         - push
         - pull_request
+        - tag
 
   audit:
     image: node:10
@@ -22,6 +23,7 @@ pipeline:
       event:
         - push
         - pull_request
+        - tag
   compile:
     image: node:10
     secrets:
@@ -32,6 +34,7 @@ pipeline:
       event:
         - push
         - pull_request
+        - tag
 
   publish:
     image: node:10
