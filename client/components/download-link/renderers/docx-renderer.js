@@ -334,6 +334,14 @@ export default (application, sections, values, updateImageDimensions) => {
       case 'image':
         doc.createImage(node.data.src, node.data.width, node.data.height);
         break;
+
+      default:
+        // if there is no matching type then it's probably a denormalised text node with no wrapping paragraph
+        // attempt to render with the node wrapped in a paragraph
+        if (node.text) {
+          renderNode(doc, { object: 'block', type: 'paragraph', nodes: [ node ] }, depth, paragraph)
+        }
+
     }
   }
 
