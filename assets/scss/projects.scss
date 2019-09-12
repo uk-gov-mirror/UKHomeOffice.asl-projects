@@ -9,16 +9,6 @@ $pink: #ff1493;
   top: 0;
 }
 
-@mixin icon {
-  content: '';
-  margin-right: 0.5em;
-  background-size: 100%;
-  vertical-align: middle;
-  display: inline-block;
-  width: 1.2em;
-  height: 1.2em;
-}
-
 @mixin purple-inset {
   border-left: 8px solid $ho-brand;
   padding-left: $govuk-gutter-half;
@@ -843,50 +833,6 @@ html.modal-open, html.modal-open body {
     }
   }
 
-  .download-header {
-    background-color: white;
-    border-bottom: 4px solid $blue;
-    margin-bottom: $govuk-gutter;
-    padding: $govuk-gutter-half;
-    position: relative;
-
-    .left {
-      overflow: hidden;
-      padding-right: 1em;
-
-      h2 {
-        font-weight: normal;
-        margin-bottom: 0;
-      }
-    }
-
-    .right {
-      float: right;
-      border-left: 1px solid $mid-grey;
-      padding-left: 1em;
-
-      .download {
-        font-size: 1em;
-      }
-    }
-
-    .download-modal {
-      position: absolute;
-      border-bottom: 4px solid $blue;
-      padding: $govuk-gutter-half;
-      top: 100%;
-      right: 0;
-      background-color: white;
-
-      .close {
-        position: absolute;
-        top: -1em;
-        right: 1em;
-        text-decoration: none;
-      }
-    }
-  }
-
   .sidebar-nav {
     border-top: 4px solid $blue;
     background-color: white;
@@ -941,15 +887,6 @@ html.modal-open, html.modal-open body {
     }
   }
 
-  .granted-header {
-    .download-granted {
-      &:before {
-        @include icon;
-        background-image: $download;
-      }
-    }
-  }
-
   .granted-step {
     .grey {
       display: none;
@@ -973,19 +910,6 @@ html.modal-open, html.modal-open body {
       background-color: $light-grey;
       padding: $govuk-gutter-half;
       border-bottom: 4px solid $ho-brand;
-    }
-  }
-
-  .download {
-    font-size: 1.2em;
-    margin-left: 0.5em;
-    &:before {
-      @include icon;
-      background-image: $download;
-    }
-    + .download {
-      border-left: 1px solid;
-      padding-left: 0.5em;
     }
   }
 
