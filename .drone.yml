@@ -22,16 +22,6 @@ pipeline:
       event:
         - push
         - pull_request
-  compile:
-    image: node:10
-    secrets:
-      - npm_auth_token
-    commands:
-      - npm run build --production
-    when:
-      event:
-        - push
-        - pull_request
 
   publish:
     image: node:10
