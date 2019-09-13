@@ -96,10 +96,12 @@ const ProjectRouter = () => {
     };
   });
 
+  const downloadBasename = basename.replace(/\/edit/, '');
+
   return (
     <BrowserRouter basename={basename}>
       <ScrollToTop>
-        <DownloadHeader model={project} licenceType="ppl" isGranted={isGranted} basename={basename} />
+        <DownloadHeader model={project} licenceType="ppl" isGranted={isGranted} basename={downloadBasename} />
         <Switch>
           <Route path="/:section/:step?" render={props => <Section { ...props } drafting={drafting} />} />
           <Route path="/" component={Project} />
