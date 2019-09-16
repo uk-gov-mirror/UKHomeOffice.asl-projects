@@ -519,6 +519,13 @@ export default (application, sections, values, updateImageDimensions) => {
     doc.createParagraph(`${years} ${yearsLabel} ${months} ${monthsLabel}`).style('body');
   };
 
+  const renderLicenceHolder = (doc, noSeparator) => {
+    const firstName = application.licenceHolder ? application.licenceHolder.firstName : '';
+    const lastName = application.licenceHolder ? application.licenceHolder.lastName : '';
+    doc.createParagraph('Licence holder').style('Question');
+    renderText(doc, `${firstName} ${lastName}`, noSeparator);
+  };
+
   const renderNull = (doc, noSeparator) => {
     const paragraph = new Paragraph();
     paragraph.style('body');
@@ -600,12 +607,6 @@ export default (application, sections, values, updateImageDimensions) => {
       case 'duration':
         renderDuration(doc, value, noSeparator);
         break;
-      case 'holder': {
-        const firstName = application.licenceHolder ? application.licenceHolder.firstName : '';
-        const lastName = application.licenceHolder ? application.licenceHolder.lastName : '';
-        renderText(doc, `${firstName} ${lastName}`, noSeparator);
-        break;
-      }
       case 'licenceNumber': {
         const licenceNumber = application.licenceNumber ? application.licenceNumber : '';
         renderText(doc, `${licenceNumber} `, noSeparator);
@@ -631,8 +632,13 @@ export default (application, sections, values, updateImageDimensions) => {
       case 'permissible-purpose':
         renderPermissiblePurpose(doc, field, value, values);
         break;
-
-      case 'text':
+      case 'text': {
+        renderText(doc, value, noSeparator);
+        if (field.name === 'title') {
+          renderLicenceHolder(doc);
+        }
+        break;
+      }
       case 'textarea':
       case 'declaration':
         renderText(doc, value, noSeparator);
