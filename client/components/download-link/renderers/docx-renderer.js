@@ -587,31 +587,30 @@ export default (application, sections, values, updateImageDimensions) => {
       doc.createParagraph(field.hint).style('aside')
     }
 
-    if (field.type === 'species-selector') {
-      return renderSpeciesSelector(doc, values, value, noSeparator);
-    }
-
-    if (field.type === 'legacy-species-selector') {
-      return renderLegacySpecies(doc, values, value, noSeparator);
-    }
-
-    if (field.type === 'animal-quantities') {
-      return renderAnimalQuantities(doc, values, noSeparator);
-    }
-
-    if (field.type === 'duration') {
-      return renderDuration(doc, value, noSeparator);
-    }
-
-    if (field.type === 'holder') {
-      const firstName = application.licenceHolder ? application.licenceHolder.firstName : '';
-      const lastName = application.licenceHolder ? application.licenceHolder.lastName : '';
-      return renderText(doc, `${firstName} ${lastName}`, noSeparator);
-    }
-
-    if (field.type === 'licenceNumber') {
-      const licenceNumber = application.licenceNumber ? application.licenceNumber : '';
-      return renderText(doc, `${licenceNumber} `, noSeparator);
+    switch (field.type) {
+      case 'species-selector':
+        renderSpeciesSelector(doc, values, value, noSeparator);
+        break;
+      case 'legacy-species-selector':
+        renderLegacySpecies(doc, values, value, noSeparator);
+        break;
+      case 'animal-quantities':
+        renderAnimalQuantities(doc, values, noSeparator);
+        break;
+      case 'duration':
+        renderDuration(doc, value, noSeparator);
+        break;
+      case 'holder': {
+        const firstName = application.licenceHolder ? application.licenceHolder.firstName : '';
+        const lastName = application.licenceHolder ? application.licenceHolder.lastName : '';
+        renderText(doc, `${firstName} ${lastName}`, noSeparator);
+        break;
+      }
+      case 'licenceNumber': {
+        const licenceNumber = application.licenceNumber ? application.licenceNumber : '';
+        renderText(doc, `${licenceNumber} `, noSeparator);
+        break;
+      }
     }
 
     if (isUndefined(value) || isNull(value)) {
