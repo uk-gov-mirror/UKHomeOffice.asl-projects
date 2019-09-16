@@ -1,26 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { useSelector, shallowEqual } from 'react-redux'
+import { DownloadHeader } from '@asl/components';
 
-import DownloadHeader from './components/download-header';
 import ScrollToTop from './components/scroll-to-top';
 import Section from './pages/section';
 import Project from './pages/project';
 
 const selector = ({
+  project,
   application: {
     isSyncing,
     basename,
-    drafting
+    drafting,
+    isGranted
   }
-}) => ({ isSyncing, basename, drafting });
+}) => ({ project, isSyncing, basename, drafting, isGranted });
 
 const ProjectRouter = () => {
   const [statusShowing, setStatusShowing] = useState(true);
   const {
+    project,
     isSyncing,
     basename,
-    drafting
+    drafting,
+    isGranted
   } = useSelector(selector, shallowEqual);
 
   function toggleStatusShowing() {
@@ -92,10 +96,12 @@ const ProjectRouter = () => {
     };
   });
 
+  const downloadBasename = basename.replace(/\/edit$/, '');
+
   return (
     <BrowserRouter basename={basename}>
       <ScrollToTop>
-        <DownloadHeader />
+        <DownloadHeader model={project} licenceType="ppl" isGranted={isGranted} basename={downloadBasename} />
         <Switch>
           <Route path="/:section/:step?" render={props => <Section { ...props } drafting={drafting} />} />
           <Route path="/" component={Project} />
