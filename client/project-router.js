@@ -96,7 +96,7 @@ const ProjectRouter = () => {
     };
   });
 
-  const downloadBasename = basename.replace(/\/edit/, '');
+  const downloadBasename = basename.replace(/\/edit$/, '');
 
   return (
     <BrowserRouter basename={basename}>
