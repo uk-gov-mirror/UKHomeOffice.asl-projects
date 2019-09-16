@@ -21,6 +21,11 @@ export default {
             type: 'text'
           },
           {
+            name: 'holder',
+            label: 'Licence holder',
+            type: 'holder'
+          },
+          {
             name: 'duration',
             label: 'Licence duration',
             type: 'duration'
