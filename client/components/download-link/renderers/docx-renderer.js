@@ -218,8 +218,8 @@ export default (application, sections, values, updateImageDimensions) => {
     return new Table({
       rows: rowcount,
       columns: colcount,
-      // setting to a large % enforces equal-width columns
-      columnWidths: Array(colcount).fill('500%')
+      // setting to a large number enforces equal-width columns
+      columnWidths: Array(colcount).fill('10000')
     });
   };
 
