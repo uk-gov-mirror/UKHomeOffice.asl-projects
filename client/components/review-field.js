@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
+import { Link } from '@asl/components';
 import TextEditor from './editor';
 import speciesOptions from '../constants/species';
 import { getLegacySpeciesLabel } from '../helpers';
@@ -53,11 +54,9 @@ class ReviewField extends React.Component {
       )
     }
 
-    if (this.props.type === 'holder' && this.props.licenceHolder) {
+    if (!value && this.props.licenceHolder) {
       return (
-        <a href={`/e/${this.props.establishment.id}/people/${this.props.licenceHolder.id}`}>
-          {`${this.props.licenceHolder.firstName} ${this.props.licenceHolder.lastName}`}
-        </a>
+        <Link page="profile.view" profileId={this.props.licenceHolder.id} establishmentId={this.props.establishment.id} label={`${this.props.licenceHolder.firstName} ${this.props.licenceHolder.lastName}`} />
       );
     }
 

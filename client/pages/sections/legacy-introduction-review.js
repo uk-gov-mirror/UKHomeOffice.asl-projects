@@ -6,9 +6,10 @@ import ReviewFields from '../../components/review-fields';
 import Banner from '../../components/banner';
 import { DATE_FORMAT } from '../../constants';
 
-const LegacyIntroduction = ({ fields, project, values, pdf, readonly, title, establishment }) => {
+const LegacyIntroduction = ({ fields, project, values, pdf, readonly, title }) => {
 
-  const licenceHolder = project ? project.licenceHolder : undefined;
+  const licenceHolder = project ? project.licenceHolder : null;
+  const establishment = project ? project.establishment : null;
 
   return (
     <div className={classnames('introduction-review', { readonly })}>
