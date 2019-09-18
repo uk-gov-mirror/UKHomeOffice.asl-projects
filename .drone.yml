@@ -11,6 +11,7 @@ pipeline:
       event:
         - push
         - pull_request
+        - tag
 
   audit:
     image: node:10
