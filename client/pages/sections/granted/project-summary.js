@@ -1,10 +1,9 @@
 import React, { Fragment } from 'react';
-import last from 'lodash/last';
 import { connect } from 'react-redux';
 import ReactMarkdown from 'react-markdown';
 import Review from '../../../components/review';
+import RA from '../../../components/retrospective-assessment';
 import { formatDate } from '../../../helpers';
-import CONDITIONS from '../../../constants/conditions';
 import LEGAL from '../../../constants/legal';
 
 import { DATE_FORMAT } from '../../../constants';
@@ -24,17 +23,6 @@ const ProjectSummary = ({
   fields,
   pdf
 }) => {
-  const retrospectiveAssessment = (values.conditions || []).find(c => /^retrospective-assessment$/.test(c.key)) ||
-    last(CONDITIONS.inspector['retrospective-assessment-negative'].versions);
-
-  const retrospectiveAssessmentSection = (
-    <div className="granted-section">
-      <h2>{retrospectiveAssessment.title}</h2>
-      <div className="purple-inset">
-        <p>{retrospectiveAssessment.content}</p>
-      </div>
-    </div>
-  );
 
   const grantedAuthoritySection = (
     <div className="granted-section">
@@ -46,7 +34,11 @@ const ProjectSummary = ({
   return (
     <Fragment>
       {
-        !pdf && retrospectiveAssessmentSection
+        !pdf && (
+          <div className="granted-section">
+            <RA />
+          </div>
+        )
       }
       {
         !pdf && (
@@ -65,7 +57,11 @@ const ProjectSummary = ({
         pdf && grantedAuthoritySection
       }
       {
-        pdf && retrospectiveAssessmentSection
+        pdf && (
+          <div className="granted-section">
+            <RA />
+          </div>
+        )
       }
       {
         !pdf && (

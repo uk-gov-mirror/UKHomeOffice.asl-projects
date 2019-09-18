@@ -5,6 +5,7 @@ import { Button } from '@ukhomeoffice/react-components';
 import { updateConditions } from '../../actions/projects';
 import Conditions from './conditions';
 import AddConditions from './add-conditions';
+import RA from '../retrospective-assessment';
 
 function ConditionsPage({
   values,
@@ -14,6 +15,7 @@ function ConditionsPage({
   emptyIntroReadOnly,
   showConditions,
   editConditions,
+  showRA,
   ...props
 }) {
   if (!showConditions) {
@@ -39,10 +41,19 @@ function ConditionsPage({
       {
         !editConditions && !conditions.length && <ReactMarkdown className="grey">{emptyIntroReadOnly}</ReactMarkdown>
       }
+      {
+        showRA && (
+          <Fragment>
+            <h2>Additional condition 1</h2>
+            <RA />
+          </Fragment>
+        )
+      }
       <Conditions
         scope="project"
         type={type}
         conditions={conditions}
+        startIndex={showRA ? 1 : 0}
         {...props}
       />
       {

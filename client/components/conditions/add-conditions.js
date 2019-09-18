@@ -74,6 +74,7 @@ function AddConditions({
   isLegacy,
   controls,
   conditions: c,
+  showTitle = true,
   onFieldChange = () => {}
 }) {
   const [conditions, setConditions] = useState(isLegacy ? c : getConditions(type, omit));
@@ -143,7 +144,9 @@ function AddConditions({
 
   return (
     <Fragment>
-      <h2>{title}</h2>
+      {
+        showTitle && <h2>{title}</h2>
+      }
       <Field
         type="checkbox"
         className="smaller"

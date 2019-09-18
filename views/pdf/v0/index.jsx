@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import ReactMarkdown from 'react-markdown';
 import { getSubsections } from '../../../client/schema';
 import StaticSection from '../../../client/components/static-section';
-import ReviewFields from '../../../client/components/review-fields';
+import RA from '../../../client/components/retrospective-assessment';
 import StandardConditions from '../components/standard-conditions';
 import LEGAL from '../../../client/constants/legal';
 
@@ -28,13 +28,7 @@ const Legacy = ({ project, values }) => {
       </div>
       <div className="granted-section">
         <h2>Retrospective assessment</h2>
-        <div className="purple-inset">
-          <ReviewFields
-            fields={raFields}
-            values={values.retrospectiveAssessment || {}}
-            noComments
-          />
-        </div>
+        <RA showTitle={false} />
       </div>
       {
         Object.keys(sections).map((key, index) => {

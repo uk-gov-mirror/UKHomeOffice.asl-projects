@@ -16,7 +16,7 @@ function Condition({
   content,
   custom,
   inspectorAdded,
-  index,
+  number,
   singular,
   onSave,
   onRemove,
@@ -38,7 +38,7 @@ function Condition({
 
   return (
     <Fragment>
-      <h2>{singular} {index + 1}</h2>
+      <h2>{singular} {number}</h2>
       <div className={classnames('condition', { deleted })}>
         <h3>{title}</h3>
         {
@@ -144,13 +144,14 @@ class Conditions extends Component {
     if (!this.props.showConditions) {
       return null;
     }
-    const { conditions, editConditions } = this.props;
+    const { conditions, editConditions, startIndex = 0 } = this.props;
     const { updating } = this.state;
 
     return (
       <div className="conditions">
         {
-          conditions.map((condition, index) => {
+          // ra conditions used to be added to the conditions array, we dont want to show them here.
+          conditions.filter(c => !c.key.match(/^retrospective-assessment/)).map((condition, index) => {
             const template = get(CONDITIONS[this.props.scope], condition.path, {});
             const { title, content } = template;
             return <Condition
@@ -159,7 +160,7 @@ class Conditions extends Component {
               editConditions={editConditions}
               updating={updating}
               title={title}
-              index={index}
+              number={index + 1 + startIndex}
               custom={condition.custom}
               content={content}
               {...condition}

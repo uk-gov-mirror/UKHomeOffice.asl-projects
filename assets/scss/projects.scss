@@ -1202,10 +1202,17 @@ html.modal-open, html.modal-open body {
   .conditions {
     .condition {
       @include purple-inset;
+      margin-bottom: $govuk-gutter;
 
       p.condition-text {
         white-space: pre-wrap;
       }
+    }
+  }
+
+  .retrospective-assessment {
+    .control-panel {
+      margin-top: 0;
     }
   }
 
