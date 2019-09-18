@@ -230,12 +230,11 @@ class Field extends Component {
   }
 }
 
-const mapStateToProps = ({ project, settings, application }, { name, conditional, optionsFromSettings, options, value }) => {
+const mapStateToProps = ({ project, settings, application }, { name, conditional, optionsFromSettings, options, value, onFieldChange }) => {
   options = optionsFromSettings ? settings[optionsFromSettings] : options;
-
   return {
     options,
-    showChanges: application && !application.newApplication,
+    showChanges: !!onFieldChange && application && !application.newApplication,
     value: !isUndefined(value) ? value : project && project[name],
     show: !conditional || every(Object.keys(conditional), key => conditional[key] === project[key])
   };
