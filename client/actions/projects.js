@@ -209,7 +209,8 @@ const syncProject = (dispatch, getState) => {
 
   dispatch(isSyncing());
 
-  const patch = diff(state.savedProject, state.project);
+  const patch = diff(state.savedProject, state.project)
+    .map(d => d.kind === 'edit' ? omit(d, 'lhs') : d);
 
   const params = {
     state,
