@@ -147,6 +147,7 @@ function AddConditions({
       <Field
         type="checkbox"
         className="smaller"
+        name="conditions"
         options={options}
         value={[
           ...conditions.filter(c => c.checked).map(c => c.key),
