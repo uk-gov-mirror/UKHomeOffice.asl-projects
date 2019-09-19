@@ -9,7 +9,7 @@ import SPECIES from '../../../constants/species';
 import { getLegacySpeciesLabel } from '../../../helpers';
 
 export default (application, sections, values, updateImageDimensions) => {
-
+  const insertAtIndex = (arr, index, item) => [...arr.slice(0, index), item, ...arr.slice(index)];
   const numbering = new Numbering();
   const abstract = numbering.createAbstractNumbering();
 
@@ -519,13 +519,6 @@ export default (application, sections, values, updateImageDimensions) => {
     doc.createParagraph(`${years} ${yearsLabel} ${months} ${monthsLabel}`).style('body');
   };
 
-  const renderLicenceHolder = (doc, noSeparator) => {
-    const firstName = application.licenceHolder ? application.licenceHolder.firstName : '';
-    const lastName = application.licenceHolder ? application.licenceHolder.lastName : '';
-    doc.createParagraph('Licence holder').style('Question');
-    renderText(doc, `${firstName} ${lastName}`, noSeparator);
-  };
-
   const renderNull = (doc, noSeparator) => {
     const paragraph = new Paragraph();
     paragraph.style('body');
@@ -632,16 +625,15 @@ export default (application, sections, values, updateImageDimensions) => {
       case 'permissible-purpose':
         renderPermissiblePurpose(doc, field, value, values);
         break;
-      case 'text': {
-        renderText(doc, value, noSeparator);
-        if (field.name === 'title') {
-          renderLicenceHolder(doc);
-        }
-        break;
-      }
+
+      case 'text':
       case 'textarea':
       case 'declaration':
         renderText(doc, value, noSeparator);
+        break;
+
+      case 'holder':
+        renderText(doc, `${value.firstName} ${value.lastName}`, noSeparator);
         break;
 
       case 'texteditor':
@@ -833,6 +825,15 @@ export default (application, sections, values, updateImageDimensions) => {
     .then(() => addImageDimensions(values))
     .then(() => new Document())
     .then(doc => addStyles(doc))
-    .then(doc => renderDocument(doc, sections, values))
+    .then(doc => {
+      const field = {
+        label: 'Licence holder',
+        name: 'holder',
+        type: 'holder'
+      };
+      sections[0].subsections['introduction'].fields = insertAtIndex(sections[0].subsections['introduction'].fields, 1, field);
+      values['holder'] = application.licenceHolder;
+      return renderDocument(doc, sections, values);
+    })
     .then(doc => addPageNumbers(doc))
 }
