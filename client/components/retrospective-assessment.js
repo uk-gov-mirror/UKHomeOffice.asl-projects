@@ -9,8 +9,25 @@ import { Button } from '@ukhomeoffice/react-components';
 import Field from './field';
 import RetrospectiveAssessment from '../constants/retrospective-assessment';
 
+const nopes = [
+  'prosimians',
+  'marmosets',
+  'cynomolgus',
+  'rhesus',
+  'vervets',
+  'baboons',
+  'squirrel-monkeys',
+  'other-old-world',
+  'other-new-world',
+  'apes',
+  'beagles',
+  'other-dogs',
+  'cats',
+  'horses'
+];
+
 function raApplies(project) {
-  return !!intersection(project.species, ['dog', 'cat', 'nhp', 'equidae']).length ||
+  return !!intersection(project.species, nopes).length ||
     project['endangered-animals'] ||
     some(project.protocols, p => (p.severity || '').match(/severe/ig));
 }
