@@ -589,21 +589,16 @@ export default (application, sections, values, updateImageDimensions) => {
 
     switch (field.type) {
       case 'species-selector':
-        renderSpeciesSelector(doc, values, value, noSeparator);
-        break;
+        return renderSpeciesSelector(doc, values, value, noSeparator);
       case 'legacy-species-selector':
-        renderLegacySpecies(doc, values, value, noSeparator);
-        break;
+        return renderLegacySpecies(doc, values, value, noSeparator);
       case 'animal-quantities':
-        renderAnimalQuantities(doc, values, noSeparator);
-        break;
+        return renderAnimalQuantities(doc, values, noSeparator);
       case 'duration':
-        renderDuration(doc, value, noSeparator);
-        break;
+        return renderDuration(doc, value, noSeparator);
       case 'licenceNumber': {
         const licenceNumber = application.licenceNumber ? application.licenceNumber : '';
-        renderText(doc, `${licenceNumber} `, noSeparator);
-        break;
+        return renderText(doc, `${licenceNumber} `, noSeparator);
       }
     }
 
@@ -613,32 +608,26 @@ export default (application, sections, values, updateImageDimensions) => {
 
     switch (field.type) {
       case 'radio':
-        renderRadio(doc, field, values, value, noSeparator);
-        break;
+        return renderRadio(doc, field, values, value, noSeparator);
 
       case 'location-selector':
       case 'objective-selector':
       case 'checkbox':
-        renderSelector(doc, field, value, values, project, noSeparator);
-        break;
+        return renderSelector(doc, field, value, values, project, noSeparator);
 
       case 'permissible-purpose':
-        renderPermissiblePurpose(doc, field, value, values);
-        break;
+        return renderPermissiblePurpose(doc, field, value, values);
 
       case 'text':
       case 'textarea':
       case 'declaration':
-        renderText(doc, value, noSeparator);
-        break;
+        return renderText(doc, value, noSeparator);
 
       case 'holder':
-        renderText(doc, `${value.firstName} ${value.lastName}`, noSeparator);
-        break;
+        return renderText(doc, `${value.firstName} ${value.lastName}`, noSeparator);
 
       case 'texteditor':
-        renderTextEditor(doc, value, noSeparator);
-        break;
+        return renderTextEditor(doc, value, noSeparator);
     }
 
   };
