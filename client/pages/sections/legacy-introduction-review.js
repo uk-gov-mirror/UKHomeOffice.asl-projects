@@ -10,7 +10,7 @@ const insertAtIndex = (arr, index, item) => [...arr.slice(0, index), item, ...ar
 
 const LegacyIntroduction = ({ fields, project, values, pdf, readonly, title }) => {
 
-  if (readonly) {
+  if (readonly && !pdf) {
     const licenceHolder = project ? project.licenceHolder : null;
     const establishment = project ? project.establishment : null;
     const field = {
