@@ -26,7 +26,7 @@ import intersection from 'lodash/intersection';
 import some from 'lodash/some';
 import flatten from 'lodash/flatten';
 
-const data = {
+export default () => ({
   introduction: {
     title: 'Project introduction',
     subsections: {
@@ -2826,5 +2826,4 @@ If you want to add an authorisation, you will need to create one.`,
       }
     }
   }
-}
-export default data;
+});

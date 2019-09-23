@@ -9,6 +9,7 @@ import settings from './settings';
 import comments from './comments';
 import changes from './changes';
 import questionVersions from './question-versions';
+import staticData from './static';
 
 const rootReducer = combineReducers({
   projects,
@@ -19,7 +20,8 @@ const rootReducer = combineReducers({
   settings,
   comments,
   changes,
-  questionVersions
+  questionVersions,
+  static: staticData
 });
 
 export default rootReducer;

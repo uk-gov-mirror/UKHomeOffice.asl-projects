@@ -9,7 +9,6 @@ import SPECIES from '../../../constants/species';
 import { getLegacySpeciesLabel } from '../../../helpers';
 
 export default (application, sections, values, updateImageDimensions) => {
-
   const numbering = new Numbering();
   const abstract = numbering.createAbstractNumbering();
 
@@ -508,9 +507,15 @@ export default (application, sections, values, updateImageDimensions) => {
   };
 
   const renderDuration = (doc, value) => {
-    let years = value.years === 1 ? 'Year' : 'Years';
-    let months = value.months === 1 ? 'Month' : 'Months';
-    doc.createParagraph(`${value.years} ${years} ${value.months} ${months}`).style('body');
+    let months = 0;
+    let years = 5;
+    if (value) {
+      months = value.months || months;
+      years = value.years || years;
+    }
+    const yearsLabel = years === 1 ? 'Year' : 'Years';
+    const monthsLabel = months === 1 ? 'Month' : 'Months';
+    doc.createParagraph(`${years} ${yearsLabel} ${months} ${monthsLabel}`).style('body');
   };
 
   const renderNull = (doc, noSeparator) => {
@@ -581,16 +586,19 @@ export default (application, sections, values, updateImageDimensions) => {
       doc.createParagraph(field.hint).style('aside')
     }
 
-    if (field.type === 'species-selector') {
-      return renderSpeciesSelector(doc, values, value, noSeparator);
-    }
-
-    if (field.type === 'legacy-species-selector') {
-      return renderLegacySpecies(doc, values, value, noSeparator);
-    }
-
-    if (field.type === 'animal-quantities') {
-      return renderAnimalQuantities(doc, values, noSeparator);
+    switch (field.type) {
+      case 'species-selector':
+        return renderSpeciesSelector(doc, values, value, noSeparator);
+      case 'legacy-species-selector':
+        return renderLegacySpecies(doc, values, value, noSeparator);
+      case 'animal-quantities':
+        return renderAnimalQuantities(doc, values, noSeparator);
+      case 'duration':
+        return renderDuration(doc, value, noSeparator);
+      case 'licenceNumber': {
+        const licenceNumber = application.licenceNumber ? application.licenceNumber : '';
+        return renderText(doc, `${licenceNumber} `, noSeparator);
+      }
     }
 
     if (isUndefined(value) || isNull(value)) {
@@ -599,32 +607,26 @@ export default (application, sections, values, updateImageDimensions) => {
 
     switch (field.type) {
       case 'radio':
-        renderRadio(doc, field, values, value, noSeparator);
-        break;
+        return renderRadio(doc, field, values, value, noSeparator);
 
       case 'location-selector':
       case 'objective-selector':
       case 'checkbox':
-        renderSelector(doc, field, value, values, project, noSeparator);
-        break;
+        return renderSelector(doc, field, value, values, project, noSeparator);
 
       case 'permissible-purpose':
-        renderPermissiblePurpose(doc, field, value, values);
-        break;
+        return renderPermissiblePurpose(doc, field, value, values);
 
       case 'text':
       case 'textarea':
       case 'declaration':
-        renderText(doc, value, noSeparator);
-        break;
+        return renderText(doc, value, noSeparator);
 
-      case 'duration':
-        renderDuration(doc, value, noSeparator);
-        break;
+      case 'holder':
+        return renderText(doc, `${value.firstName} ${value.lastName}`, noSeparator);
 
       case 'texteditor':
-        renderTextEditor(doc, value, noSeparator);
-        break;
+        return renderTextEditor(doc, value, noSeparator);
     }
 
   };
@@ -642,7 +644,7 @@ export default (application, sections, values, updateImageDimensions) => {
           if (step.singular) {
             doc.createParagraph(`${step.singular} ${index + 1}`).heading2();
           }
-          (step.fields || []).filter(f => f.repeats).forEach(field => renderField(doc, field, v, project));
+          (step.fields || []).forEach(field => renderField(doc, field, v, project));
         });
         (step.fields || []).filter(f => !f.repeats).forEach(field => renderField(doc, field, values, project));
       } else {
@@ -739,6 +741,15 @@ export default (application, sections, values, updateImageDimensions) => {
 
   const renderDocument = (doc, sections, values) => {
     const now = new Date();
+
+    // inject the project licence holder into introductory details
+    const field = {
+      label: 'Licence holder',
+      name: 'holder',
+      type: 'holder'
+    };
+    sections[0].subsections['introduction'].fields.splice(1, 0, field);
+    values['holder'] = application.licenceHolder;
 
     doc.createParagraph(values.title).style('SectionTitle');
     doc.createParagraph(`Document exported on ${now}`).style('body').pageBreak();

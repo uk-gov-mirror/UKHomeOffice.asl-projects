@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
+import { Link } from '@asl/components';
 import TextEditor from './editor';
 import speciesOptions from '../constants/species';
 import { getLegacySpeciesLabel } from '../helpers';
@@ -51,6 +52,12 @@ class ReviewField extends React.Component {
           <dd>{months}</dd>
         </dl>
       )
+    }
+
+    if (value && this.props.type === 'holder') {
+      return (
+        <Link page="profile.view" profileId={value.licenceHolder.id} establishmentId={value.establishment.id} label={`${value.licenceHolder.firstName} ${value.licenceHolder.lastName}`} />
+      );
     }
 
     if (value && this.props.type === 'date') {

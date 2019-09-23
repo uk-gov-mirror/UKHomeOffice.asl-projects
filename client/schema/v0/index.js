@@ -7,7 +7,7 @@ import GrantedProtocols from '../../pages/sections/granted/protocols';
 import LegacyConditions from '../../pages/sections/legacy-conditions';
 import IntroductionReview from '../../pages/sections/legacy-introduction-review';
 
-export default {
+export default () => ({
   introductions: {
     title: 'Project introduction',
     subsections: {
@@ -636,4 +636,4 @@ export default {
       }
     }
   }
-}
+});
