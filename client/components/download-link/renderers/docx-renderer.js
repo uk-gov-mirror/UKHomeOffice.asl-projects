@@ -9,7 +9,6 @@ import SPECIES from '../../../constants/species';
 import { getLegacySpeciesLabel } from '../../../helpers';
 
 export default (application, sections, values, updateImageDimensions) => {
-  const insertAtIndex = (arr, index, item) => [...arr.slice(0, index), item, ...arr.slice(index)];
   const numbering = new Numbering();
   const abstract = numbering.createAbstractNumbering();
 
@@ -743,6 +742,15 @@ export default (application, sections, values, updateImageDimensions) => {
   const renderDocument = (doc, sections, values) => {
     const now = new Date();
 
+    // inject the project licence holder into introductory details
+    const field = {
+      label: 'Licence holder',
+      name: 'holder',
+      type: 'holder'
+    };
+    sections[0].subsections['introduction'].fields.splice(1, 0, field);
+    values['holder'] = application.licenceHolder;
+
     doc.createParagraph(values.title).style('SectionTitle');
     doc.createParagraph(`Document exported on ${now}`).style('body').pageBreak();
 
@@ -814,15 +822,6 @@ export default (application, sections, values, updateImageDimensions) => {
     .then(() => addImageDimensions(values))
     .then(() => new Document())
     .then(doc => addStyles(doc))
-    .then(doc => {
-      const field = {
-        label: 'Licence holder',
-        name: 'holder',
-        type: 'holder'
-      };
-      sections[0].subsections['introduction'].fields = insertAtIndex(sections[0].subsections['introduction'].fields, 1, field);
-      values['holder'] = application.licenceHolder;
-      return renderDocument(doc, sections, values);
-    })
+    .then(doc => renderDocument(doc, sections, values))
     .then(doc => addPageNumbers(doc))
 }

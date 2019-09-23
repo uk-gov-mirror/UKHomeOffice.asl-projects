@@ -6,8 +6,6 @@ import ReviewFields from '../../components/review-fields';
 import Banner from '../../components/banner';
 import { DATE_FORMAT } from '../../constants';
 
-const insertAtIndex = (arr, index, item) => [...arr.slice(0, index), item, ...arr.slice(index)];
-
 const LegacyIntroduction = ({ fields, project, values, pdf, readonly, title }) => {
 
   if (readonly && !pdf) {
@@ -23,7 +21,7 @@ const LegacyIntroduction = ({ fields, project, values, pdf, readonly, title }) =
       establishment
     };
 
-    fields = insertAtIndex(fields, 1, field);
+    fields.splice(1, 0, field);
     values.holder = value;
   }
 
