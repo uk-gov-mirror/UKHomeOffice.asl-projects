@@ -10,7 +10,8 @@ const versions = {
 };
 
 export function getGrantedSubsections(schemaVersion) {
-  return Object.values(versions[schemaVersion])
+  const schema = versions[schemaVersion];
+  return Object.values(schema())
     .reduce((sections, section) => {
       return {
         ...sections,
@@ -22,7 +23,8 @@ export function getGrantedSubsections(schemaVersion) {
 }
 
 export function getSubsections(schemaVersion) {
-  return Object.values(versions[schemaVersion])
+  const schema = versions[schemaVersion];
+  return Object.values(schema())
     .reduce((sections, section) => {
       return {
         ...sections,
