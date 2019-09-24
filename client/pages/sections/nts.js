@@ -9,7 +9,7 @@ import flatten from 'lodash/flatten';
 import Complete from '../../components/complete';
 import Review from '../../components/review';
 import NTS from '../../components/nts';
-import schema from '../../schema';
+import schemaMap from '../../schema';
 
 const OFFSET = 100;
 
@@ -156,11 +156,14 @@ class NTSSummary extends Component {
   }
 }
 
-const mapStateToProps = ({ application: { schemaVersion, readonly }, project }) => ({
-  sectionsSettings: map(schema[schemaVersion], s => s.subsections)
-    .reduce((obj, subsections) => ({ ...obj, ...subsections }), {}),
-  project,
-  readonly
-});
+const mapStateToProps = ({ application: { schemaVersion, readonly }, project }) => {
+  const schema = schemaMap[schemaVersion];
+  return {
+    sectionsSettings: map(schema(), s => s.subsections)
+      .reduce((obj, subsections) => ({ ...obj, ...subsections }), {}),
+    project,
+    readonly
+  };
+};
 
 export default connect(mapStateToProps)(NTSSummary);
