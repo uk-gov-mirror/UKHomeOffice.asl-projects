@@ -75,10 +75,19 @@ class Comments extends Component {
   }
 }
 
-const mapStateToProps = ({ comments, application: { commentable, showComments } }, { field }) => ({
-  comments: comments[field],
-  commentable,
-  showComments
-});
+const mapStateToProps = ({ comments, application: { commentable, showComments } }, { field }) => {
+  const name = field.split('.').pop();
+  let allComments = comments[field];
+  // backwards compatibility fix for some comments being saved without a prefix
+  // merge comments saved with unprefixed name and full name
+  if (name !== field) {
+    allComments = [].concat(comments[name]).concat(comments[field]).filter(Boolean);
+  }
+  return {
+    comments: allComments,
+    commentable,
+    showComments
+  }
+};
 
 export default connect(mapStateToProps)(Comments);

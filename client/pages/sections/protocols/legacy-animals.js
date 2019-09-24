@@ -17,6 +17,7 @@ const LegacyAnimal = ({ updateItem, values, readonly, prefix, fields, index, edi
           onFieldChange={(key, value) => updateItem({ [key]: value })}
         />
         : <ReviewFields
+          prefix={prefix}
           fields={fields}
           values={values}
           editLink={`0#${prefix}`}
