@@ -7,7 +7,7 @@ import map from 'lodash/map'
 import findKey from 'lodash/findKey';
 
 import Review from './review';
-import schema from '../schema';
+import schemaMap from '../schema';
 
 const getUrl = (id, section, step) => {
   let url = '';
@@ -39,7 +39,8 @@ const Playback = ({ project, step, history, field, section }) => {
 const mapStateToProps = ({ application: { schemaVersion }, project }, { playback }) => {
   let step;
   let field;
-  const subsections = map(schema[schemaVersion], section => section.subsections).reduce((obj, subsections) => ({ ...obj, ...subsections }), {});
+  const schema = schemaMap[schemaVersion];
+  const subsections = map(schema(), section => section.subsections).reduce((obj, subsections) => ({ ...obj, ...subsections }), {});
   const section = findKey(subsections, subsection => {
     if (subsection.steps) {
       return subsection.steps.find((s, index) => {

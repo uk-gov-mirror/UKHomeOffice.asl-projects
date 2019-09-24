@@ -4,13 +4,14 @@ import classnames from 'classnames';
 import isEmpty from 'lodash/isEmpty';
 import docxRenderer from './renderers/docx';
 import pplRenderer from './renderers/ppl';
-import schema from '../../schema';
+import schemaMap from '../../schema';
 
 const mapStateToProps = (state, props) => {
   const values = !isEmpty(state.project)
     ? state.project
     : state.projects.find(project => project.id === props.project);
-  const sections = Object.values(schema[state.application.schemaVersion]);
+  const schema = schemaMap[state.application.schemaVersion];
+  const sections = Object.values(schema());
 
   return {
     values,

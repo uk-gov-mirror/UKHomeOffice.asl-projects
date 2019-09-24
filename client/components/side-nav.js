@@ -5,7 +5,7 @@ import pickBy from 'lodash/pickBy';
 import classnames from 'classnames';
 import SectionLink from './sections-link';
 import ExpandingPanel from './expanding-panel';
-import schema, { getGrantedSubsections } from '../schema';
+import schemaMap, { getGrantedSubsections } from '../schema';
 
 const sectionVisible = (section, values) => {
   return !section.show || section.show(values);
@@ -33,9 +33,10 @@ const SideNav = ({ schemaVersion, project, isGranted, ...props }) => {
     }
   });
 
+  const schema = schemaMap[schemaVersion];
   const sections = isGranted
     ? getGrantedSubsections(schemaVersion)
-    : schema[schemaVersion];
+    : schema();
   return (
     <nav ref={nav} className={classnames('sidebar-nav', 'section-nav', { sticky: isGranted })}>
       {

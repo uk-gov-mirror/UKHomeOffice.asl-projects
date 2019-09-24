@@ -13,7 +13,7 @@ import flatten from 'lodash/flatten';
 import { Button } from '@ukhomeoffice/react-components';
 
 import { INCOMPLETE, PARTIALLY_COMPLETE, COMPLETE } from '../constants/completeness';
-import schema from '../schema'
+import schemaMap from '../schema'
 import { flattenReveals, getNewComments } from '../helpers';
 
 import NewComments from './new-comments';
@@ -42,7 +42,8 @@ const mapStateToProps = ({
     drafting
   }
 }) => {
-  const fieldsBySection = Object.values(schema[schemaVersion]).map(section => section.subsections).reduce((obj, subsections) => {
+  const schema = schemaMap[schemaVersion];
+  const fieldsBySection = Object.values(schema()).map(section => section.subsections).reduce((obj, subsections) => {
     return {
       ...obj,
       ...mapValues(subsections, subsection => flattenReveals(getFields(subsection), project).map(field => field.name))
@@ -56,7 +57,7 @@ const mapStateToProps = ({
     fieldsBySection: omit(fieldsBySection, 'protocols'),
     legacy: schemaVersion === 0,
     values: project,
-    sections: schema[schemaVersion],
+    sections: schema(),
     basename,
     drafting
   };
