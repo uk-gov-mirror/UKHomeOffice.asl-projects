@@ -114,9 +114,7 @@ const getTitle = (section, newComments, values) => (
     {
       section.fields && getBadges(section, newComments, values)
     }
-    {
-      section.title
-    }
+    <div>{ section.title }</div>
   </Fragment>
 )
 

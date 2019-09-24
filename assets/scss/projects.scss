@@ -715,13 +715,15 @@ html.modal-open, html.modal-open body {
     }
 
     .expanding-panel {
-      .badge {
-        position: relative;
-        top: -14px;
+      header {
+        .badge {
+          position: relative;
+          top: -14px;
 
-        &:last-child:after {
-          content: '\A';
-          white-space: pre;
+          &:last-child:after {
+            content: '\A';
+            white-space: pre;
+          }
         }
       }
     }
