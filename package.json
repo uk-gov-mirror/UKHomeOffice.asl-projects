@@ -59,7 +59,7 @@
     "morgan": "^1.9.1",
     "npm-sass": "^2.3.0",
     "r2": "^2.0.1",
-    "react": "^16.6.0",
+    "react": "^16.9.0",
     "react-addons-css-transition-group": "^15.6.2",
     "react-dom": "^16.6.0",
     "react-dropzone": "^7.0.1",
