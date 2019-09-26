@@ -1,10 +1,17 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import SideNav from '../components/side-nav';
 import StaticSection from '../components/static-section';
 
-function Readonly({ isGranted, project, options, schemaVersion, showConditions }) {
+import { keepAlive } from '../actions/session';
+
+function Readonly({ isGranted, project, options, schemaVersion, showConditions, keepAlive, location }) {
+
+  useEffect(() => {
+    keepAlive()
+  }, [location]);
+
   return (
     <Fragment>
       <div className="govuk-grid-row">
@@ -35,4 +42,10 @@ const mapStateToProps = ({
   showConditions
 });
 
-export default withRouter(connect(mapStateToProps)(Readonly));
+const mapDispatchToProps = dispatch => {
+  return {
+    keepAlive: () => dispatch(keepAlive())
+  };
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Readonly));
