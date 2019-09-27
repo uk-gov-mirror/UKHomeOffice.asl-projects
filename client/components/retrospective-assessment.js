@@ -62,13 +62,13 @@ const RetrospectiveAssessmentRequired = ({ showTitle = true }) => {
 };
 
 export default function RetrospectiveAssessment({ showTitle = true }) {
+  const { project, editConditions } = useSelector(selector, shallowEqual);
   const required = raApplies(project);
 
   if (required) {
     return <RetrospectiveAssessmentRequired showTitle={ showTitle } />;
   }
 
-  const { project, editConditions } = useSelector(selector, shallowEqual);
   const [isChanging, setIsChanging] = useState(false);
   const [raRequired, setRaRequired] = useState(getInitialState(project));
   const dispatch = useDispatch();
