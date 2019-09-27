@@ -50,7 +50,7 @@ function getInitialState(project) {
 
 const selector = ({ project, application: { editConditions } }) => ({ project, editConditions });
 
-const RetrospectiveAssessmentRequired = ({ showTitle = true }) = {
+const RetrospectiveAssessmentRequired = ({ showTitle = true }) => {
   return <div className="conditions retrospective-assessment">
     <div className="condition">
       {
