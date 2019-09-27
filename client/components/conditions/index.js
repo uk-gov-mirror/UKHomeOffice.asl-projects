@@ -22,7 +22,10 @@ function ConditionsPage({
     return null;
   }
   const [adding, setAdding] = useState(false);
-  const conditions = (values.conditions || []).filter(condition => condition.type === type);
+  const conditions = (values.conditions || [])
+    .filter(condition => condition.type === type)
+    // don't show deleted conditions in read-only mode
+    .filter(condition => editConditions || !condition.deleted);
 
   function save(vals) {
     setAdding(false);
