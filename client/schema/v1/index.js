@@ -2789,10 +2789,10 @@ Additional conditions that are specific to a set of procedures can be found in e
         intro: `Additional conditions have been added automatically according to the selections made by the applicant.
 
 Please review all sections of this application before making a recommendation.`,
-        emptyIntro: `No additional conditions have been added to this licence.
+        emptyIntro: `Additional conditions have been added automatically according to the selections made by the applicant.
 
-If you want to add a condition, you will need to create one.`,
-        emptyIntroReadOnly: 'No additional conditions have been added to this licence.',
+Please review all sections of this application before making a recommendation.`,
+        emptyIntroReadOnly: null,
         type: 'condition',
         singular: 'Additional condition',
         review: Conditions
