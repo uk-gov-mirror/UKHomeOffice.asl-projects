@@ -1,18 +1,15 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import ReactMarkdown from 'react-markdown';
-import { updateConditions, updateRetrospectiveAssessment } from '../../actions/projects';
+import { updateConditions } from '../../actions/projects';
 import AddConditions from '../../components/conditions/add-conditions';
 import Condition from '../../components/conditions/condition';
-import Fieldset from '../../components/fieldset';
-import ReviewFields from '../../components/review-fields';
+import RetrospectiveAssessment from '../../components/retrospective-assessment';
 import LEGACY_CONDITIONS from '../../constants/legacy-conditions';
 
 function LegacyConditions({
-  fields,
   values,
   customTitle,
-  saveRetrospectiveAssessment,
   showConditions,
   editConditions,
   standardConditions,
@@ -43,15 +40,11 @@ function LegacyConditions({
     ]);
   }
 
-  function saveRetro(key, data) {
-    saveRetrospectiveAssessment({
-      ...values.retrospectiveAssessment,
-      [key]: data
-    })
-  }
-
   return (
     <Fragment>
+      {
+        !pdf && <RetrospectiveAssessment />
+      }
       {
         editConditions
           ? (
@@ -61,6 +54,7 @@ function LegacyConditions({
                 controls={false}
                 conditions={conditions}
                 onFieldChange={handleConditionsChange}
+                showTitle={false}
               />
               <div className="govuk-form-group">
                 <Condition
@@ -72,13 +66,6 @@ function LegacyConditions({
                   allowEmpty
                 />
               </div>
-              <h2>Retrospective assessment</h2>
-              <Fieldset
-                fields={fields}
-                values={values.retrospectiveAssessment || {}}
-                onFieldChange={saveRetro}
-                noComments
-              />
           </Fragment>
           )
           : (
@@ -104,18 +91,6 @@ function LegacyConditions({
                 editable={false}
                 expandable={false}
               />
-              {
-                !pdf && (
-                  <Fragment>
-                    <h2>Retrospective assessment</h2>
-                    <ReviewFields
-                      fields={fields}
-                      values={values.retrospectiveAssessment || {}}
-                      noComments
-                      />
-                  </Fragment>
-                )
-              }
               <h2>Export of animals (transfer)</h2>
               <div className="purple-inset">
                 <ReactMarkdown>{standardConditions}</ReactMarkdown>
@@ -139,7 +114,6 @@ export default connect(({
   editConditions
 }),
   dispatch => ({
-    saveRetrospectiveAssessment: retrospectiveAssessment => dispatch(updateRetrospectiveAssessment(retrospectiveAssessment)),
     saveConditions: conditions => dispatch(updateConditions('legacy', conditions))
   })
 )(LegacyConditions);

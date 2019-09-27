@@ -605,34 +605,7 @@ export default () => ({
 3. Animals will be transported in accordance with all relevant regulations regarding welfare of animals in transit or the import or export of animals; and
 4. Animals will be inspected by a competent person before transfer; and
 5. A veterinary surgeon will confirm that he/she is not aware of any reason why these animals might suffer by virtue of the fact of being moved to another recognised scientific establishment.
-6. Any transport related problems with the welfare of the animals will be notified to the Home Office promptly.`,
-        fields: [
-          {
-            name: 'retrospective-assessment-required',
-            label: 'Does this licence require a retrospective assessment?',
-            showGrantedLabel: false,
-            type: 'radio',
-            inline: true,
-            className: 'smaller',
-            options: [
-              {
-                label: 'Yes',
-                review: 'The Secretary of State has determined that a retrospective assessment of this licence is required and should be submitted before the date below or earlier if the licence is revoked.',
-                value: true,
-                reveal: {
-                  name: 'retrospective-assessment-date',
-                  label: 'Assessment before',
-                  type: 'date'
-                }
-              },
-              {
-                label: 'No',
-                review: 'The Secretary of State has determined that a retrospective assessment of this licence is not required.',
-                value: false
-              }
-            ]
-          }
-        ]
+6. Any transport related problems with the welfare of the animals will be notified to the Home Office promptly.`
       }
     }
   }

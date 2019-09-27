@@ -1,13 +1,19 @@
 import React, { Fragment } from 'react';
-import last from 'lodash/last';
 import { connect } from 'react-redux';
 import ReactMarkdown from 'react-markdown';
 import Review from '../../../components/review';
+import RetrospectiveAssessment from '../../../components/retrospective-assessment';
 import { formatDate } from '../../../helpers';
-import CONDITIONS from '../../../constants/conditions';
 import LEGAL from '../../../constants/legal';
 
 import { DATE_FORMAT } from '../../../constants';
+
+const GrantedAuthoritySection = ({ project }) => (
+  <div className="granted-section">
+    <h2>Granted authority</h2>
+    <ReactMarkdown className="legal">{LEGAL.grantedAuthority(project.licenceNumber)}</ReactMarkdown>
+  </div>
+);
 
 const ProjectSummary = ({
   project,
@@ -24,36 +30,20 @@ const ProjectSummary = ({
   fields,
   pdf
 }) => {
-  const retrospectiveAssessment = (values.conditions || []).find(c => /^retrospective-assessment$/.test(c.key)) ||
-    last(CONDITIONS.inspector['retrospective-assessment-negative'].versions);
-
-  const retrospectiveAssessmentSection = (
-    <div className="granted-section">
-      <h2>{retrospectiveAssessment.title}</h2>
-      <div className="purple-inset">
-        <p>{retrospectiveAssessment.content}</p>
-      </div>
-    </div>
-  );
-
-  const grantedAuthoritySection = (
-    <div className="granted-section">
-      <h2>Granted authority</h2>
-      <ReactMarkdown className="legal">{LEGAL.grantedAuthority(project.licenceNumber)}</ReactMarkdown>
-    </div>
-  );
 
   return (
     <Fragment>
       {
-        !pdf && retrospectiveAssessmentSection
-      }
-      {
         !pdf && (
-          <div className="granted-section">
-            <h2>Project licence number</h2>
-            <p>{project.licenceNumber}</p>
-          </div>
+          <Fragment>
+            <div className="granted-section">
+              <RetrospectiveAssessment />
+            </div>
+            <div className="granted-section">
+              <h2>Project licence number</h2>
+              <p>{project.licenceNumber}</p>
+            </div>
+          </Fragment>
         )
       }
       <div className="granted-section">
@@ -62,10 +52,14 @@ const ProjectSummary = ({
         <ReactMarkdown className="legal">{LEGAL.licenceHolder}</ReactMarkdown>
       </div>
       {
-        pdf && grantedAuthoritySection
-      }
-      {
-        pdf && retrospectiveAssessmentSection
+        pdf && (
+          <Fragment>
+            <GrantedAuthoritySection project={project} />
+            <div className="granted-section">
+              <RetrospectiveAssessment />
+            </div>
+          </Fragment>
+        )
       }
       {
         !pdf && (
@@ -137,7 +131,7 @@ const ProjectSummary = ({
         }
       </div>
       {
-        !pdf && grantedAuthoritySection
+        !pdf && <GrantedAuthoritySection project={project} />
       }
     </Fragment>
   );
