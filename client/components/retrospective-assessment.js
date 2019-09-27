@@ -7,7 +7,7 @@ import isUndefined from 'lodash/isUndefined';
 import isPlainObject from 'lodash/isPlainObject';
 import { Button } from '@ukhomeoffice/react-components';
 import Field from './field';
-import RetrospectiveAssessment from '../constants/retrospective-assessment';
+import RAContent from '../constants/retrospective-assessment';
 
 const nopes = [
   'prosimians',
@@ -56,7 +56,7 @@ const RetrospectiveAssessmentRequired = ({ showTitle = true }) => {
       {
         showTitle && <h3>Retrospective assessment</h3>
       }
-      <p className="condition-text">{RetrospectiveAssessment.required}</p>
+      <p className="condition-text">{RAContent.required}</p>
     </div>
   </div>;
 };
@@ -104,7 +104,7 @@ export default function RetrospectiveAssessment({ showTitle = true }) {
                     label: (
                       <Fragment>
                         <h3>This project licence requires a retrospective assessment</h3>
-                        <p className="light">{RetrospectiveAssessment.required}</p>
+                        <p className="light">{RAContent.required}</p>
                       </Fragment>
                     ),
                     value: true
@@ -113,7 +113,7 @@ export default function RetrospectiveAssessment({ showTitle = true }) {
                     label: (
                       <Fragment>
                         <h3>This project licence does not require a retrospective assessment</h3>
-                        <p className="light">{RetrospectiveAssessment.notRequired}</p>
+                        <p className="light">{RAContent.notRequired}</p>
                       </Fragment>
                     ),
                     value: false
@@ -128,8 +128,8 @@ export default function RetrospectiveAssessment({ showTitle = true }) {
               <p className="condition-text">
                 {
                   raRequired
-                    ? RetrospectiveAssessment.required
-                    : RetrospectiveAssessment.notRequired
+                    ? RAContent.required
+                    : RAContent.notRequired
                 }
               </p>
             )
