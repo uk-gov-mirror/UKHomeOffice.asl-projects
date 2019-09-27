@@ -8,6 +8,13 @@ import LEGAL from '../../../constants/legal';
 
 import { DATE_FORMAT } from '../../../constants';
 
+const GrantedAuthoritySection = ({ project }) => (
+  <div className="granted-section">
+    <h2>Granted authority</h2>
+    <ReactMarkdown className="legal">{LEGAL.grantedAuthority(project.licenceNumber)}</ReactMarkdown>
+  </div>
+);
+
 const ProjectSummary = ({
   project,
   values,
@@ -24,28 +31,19 @@ const ProjectSummary = ({
   pdf
 }) => {
 
-  const grantedAuthoritySection = (
-    <div className="granted-section">
-      <h2>Granted authority</h2>
-      <ReactMarkdown className="legal">{LEGAL.grantedAuthority(project.licenceNumber)}</ReactMarkdown>
-    </div>
-  );
-
   return (
     <Fragment>
       {
         !pdf && (
-          <div className="granted-section">
-            <RA />
-          </div>
-        )
-      }
-      {
-        !pdf && (
-          <div className="granted-section">
-            <h2>Project licence number</h2>
-            <p>{project.licenceNumber}</p>
-          </div>
+          <Fragment>
+            <div className="granted-section">
+              <RA />
+            </div>
+            <div className="granted-section">
+              <h2>Project licence number</h2>
+              <p>{project.licenceNumber}</p>
+            </div>
+          </Fragment>
         )
       }
       <div className="granted-section">
@@ -54,13 +52,13 @@ const ProjectSummary = ({
         <ReactMarkdown className="legal">{LEGAL.licenceHolder}</ReactMarkdown>
       </div>
       {
-        pdf && grantedAuthoritySection
-      }
-      {
         pdf && (
-          <div className="granted-section">
-            <RA />
-          </div>
+          <Fragment>
+            <GrantedAuthoritySection project={project} />
+            <div className="granted-section">
+              <RA />
+            </div>
+          </Fragment>
         )
       }
       {
@@ -133,7 +131,7 @@ const ProjectSummary = ({
         }
       </div>
       {
-        !pdf && grantedAuthoritySection
+        !pdf && <GrantedAuthoritySection project={project} />
       }
     </Fragment>
   );
