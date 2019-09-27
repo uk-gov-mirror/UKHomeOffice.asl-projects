@@ -50,9 +50,25 @@ function getInitialState(project) {
 
 const selector = ({ project, application: { editConditions } }) => ({ project, editConditions });
 
+const RARequired = ({ showTitle = false }) = {
+  return <div className="conditions retrospective-assessment">
+    <div className="condition">
+      {
+        showTitle && <h3>Retrospective assessment</h3>
+      }
+      <p className="condition-text">{RetrospectiveAssessment.required}</p>
+    </div>
+  </div>;
+};
+
 export default function RA({ showTitle = true }) {
-  const { project, editConditions } = useSelector(selector, shallowEqual);
   const required = raApplies(project);
+
+  if (required) {
+    return <RARequired showTitle={ showTitle } />;
+  }
+
+  const { project, editConditions } = useSelector(selector, shallowEqual);
   const [isChanging, setIsChanging] = useState(false);
   const [raRequired, setRaRequired] = useState(getInitialState(project));
   const dispatch = useDispatch();
@@ -78,53 +94,49 @@ export default function RA({ showTitle = true }) {
           showTitle && <h3>Retrospective assessment</h3>
         }
         {
-          required
-            ? <p className="condition-text">{RetrospectiveAssessment.required}</p>
+          isChanging
+            ? (
+              <Field
+                type="radio"
+                className="smaller"
+                options={[
+                  {
+                    label: (
+                      <Fragment>
+                        <h3>This project licence requires a retrospective assessment</h3>
+                        <p className="light">{RetrospectiveAssessment.required}</p>
+                      </Fragment>
+                    ),
+                    value: true
+                  },
+                  {
+                    label: (
+                      <Fragment>
+                        <h3>This project licence does not require a retrospective assessment</h3>
+                        <p className="light">{RetrospectiveAssessment.notRequired}</p>
+                      </Fragment>
+                    ),
+                    value: false
+                  }
+                ]}
+                value={raRequired}
+                onChange={onFieldChange}
+                noComments
+              />
+            )
             : (
-              isChanging
-                ? (
-                  <Field
-                    type="radio"
-                    className="smaller"
-                    options={[
-                      {
-                        label: (
-                          <Fragment>
-                            <h3>This project licence requires a retrospective assessment</h3>
-                            <p className="light">{RetrospectiveAssessment.required}</p>
-                          </Fragment>
-                        ),
-                        value: true
-                      },
-                      {
-                        label: (
-                          <Fragment>
-                            <h3>This project licence does not require a retrospective assessment</h3>
-                            <p className="light">{RetrospectiveAssessment.notRequired}</p>
-                          </Fragment>
-                        ),
-                        value: false
-                      }
-                    ]}
-                    value={raRequired}
-                    onChange={onFieldChange}
-                    noComments
-                  />
-                )
-                : (
-                  <p className="condition-text">
-                    {
-                      raRequired
-                        ? RetrospectiveAssessment.required
-                        : RetrospectiveAssessment.notRequired
-                    }
-                  </p>
-                )
+              <p className="condition-text">
+                {
+                  raRequired
+                    ? RetrospectiveAssessment.required
+                    : RetrospectiveAssessment.notRequired
+                }
+              </p>
             )
         }
       </div>
       {
-        editConditions && !required && (
+        editConditions && (
           <p className="control-panel">
             {
               isChanging
