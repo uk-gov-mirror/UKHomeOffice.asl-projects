@@ -4,7 +4,7 @@ import ReactMarkdown from 'react-markdown';
 import { updateConditions } from '../../actions/projects';
 import AddConditions from '../../components/conditions/add-conditions';
 import Condition from '../../components/conditions/condition';
-import RA from '../../components/retrospective-assessment';
+import RetrospectiveAssessment from '../../components/retrospective-assessment';
 import LEGACY_CONDITIONS from '../../constants/legacy-conditions';
 
 function LegacyConditions({
@@ -43,7 +43,7 @@ function LegacyConditions({
   return (
     <Fragment>
       {
-        !pdf && <RA />
+        !pdf && <RetrospectiveAssessment />
       }
       {
         editConditions

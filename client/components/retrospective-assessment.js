@@ -50,7 +50,7 @@ function getInitialState(project) {
 
 const selector = ({ project, application: { editConditions } }) => ({ project, editConditions });
 
-const RARequired = ({ showTitle = false }) = {
+const RetrospectiveAssessmentRequired = ({ showTitle = true }) = {
   return <div className="conditions retrospective-assessment">
     <div className="condition">
       {
@@ -61,11 +61,11 @@ const RARequired = ({ showTitle = false }) = {
   </div>;
 };
 
-export default function RA({ showTitle = true }) {
+export default function RetrospectiveAssessment({ showTitle = true }) {
   const required = raApplies(project);
 
   if (required) {
-    return <RARequired showTitle={ showTitle } />;
+    return <RetrospectiveAssessmentRequired showTitle={ showTitle } />;
   }
 
   const { project, editConditions } = useSelector(selector, shallowEqual);

@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import ReactMarkdown from 'react-markdown';
 import Review from '../../../components/review';
-import RA from '../../../components/retrospective-assessment';
+import RetrospectiveAssessment from '../../../components/retrospective-assessment';
 import { formatDate } from '../../../helpers';
 import LEGAL from '../../../constants/legal';
 
@@ -37,7 +37,7 @@ const ProjectSummary = ({
         !pdf && (
           <Fragment>
             <div className="granted-section">
-              <RA />
+              <RetrospectiveAssessment />
             </div>
             <div className="granted-section">
               <h2>Project licence number</h2>
@@ -56,7 +56,7 @@ const ProjectSummary = ({
           <Fragment>
             <GrantedAuthoritySection project={project} />
             <div className="granted-section">
-              <RA />
+              <RetrospectiveAssessment />
             </div>
           </Fragment>
         )
