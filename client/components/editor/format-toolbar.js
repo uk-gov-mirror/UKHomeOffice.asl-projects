@@ -28,7 +28,7 @@ class FormatToolbar extends Component {
     return value.activeMarks.some(mark => mark.type == type);
   }
 
-  renderBlockButton = (type, icon) => {
+  renderBlockButton = (type, icon, tooltip) => {
     let isActive = this.props.query('hasBlock', type);
 
     if (type === 'input-file') {
@@ -37,6 +37,7 @@ class FormatToolbar extends Component {
           className={classnames('fileContainer tooltip-icon-button', {
             active: isActive
           })}
+          title={tooltip}
         >
           <input type='file' onChange={this.onClickImage} />
           <Icon icon={icon} />
@@ -48,18 +49,20 @@ class FormatToolbar extends Component {
       <button
         onClick={event => this.onClickBlock(event, type)}
         className={classnames('tooltip-icon-button', { active: isActive })}
+        title={tooltip}
       >
         <Icon icon={icon} />
       </button>
     );
   }
 
-  renderMarkButton = (type, icon) => {
+  renderMarkButton = (type, icon, tooltip) => {
     const isActive = this.hasMark(type);
     return (
       <button
         onClick={event => this.onClickMark(event, type)}
         className={classnames('tooltip-icon-button', { active: isActive })}
+        title={tooltip}
       >
         <Icon icon={icon} />
       </button>
@@ -98,7 +101,7 @@ class FormatToolbar extends Component {
         </div>
       )
       : (
-        <button className="tooltip-icon-button" onClick={this.command('insertTable')}>
+        <button className="tooltip-icon-button" onClick={this.command('insertTable')} title="Insert table">
           <Icon icon={table2} />
         </button>
       )
@@ -114,12 +117,14 @@ class FormatToolbar extends Component {
         <button
           className={classnames('tooltip-icon-button', { active: inBulleted })}
           onMouseDown={this.command(inBulleted ? 'unwrapList' : 'wrapInList', 'bulleted-list')}
+          title={inBulleted ? 'Remove bulleted list' : 'Bulleted list'}
         >
           <Icon icon={ic_format_list_bulleted} />
         </button>
         <button
           className={classnames('tooltip-icon-button', { active: inNumbered })}
           onMouseDown={this.command(inNumbered ? 'unwrapList' : 'wrapInList', 'numbered-list')}
+          title={inNumbered ? 'Remove numbered list' : 'Numbered list'}
         >
           <Icon icon={ic_format_list_numbered} />
         </button>
@@ -127,6 +132,7 @@ class FormatToolbar extends Component {
           className="tooltip-icon-button"
           disabled={!inList}
           onMouseDown={this.command('decreaseItemDepth')}
+          title="Decrease list indent"
         >
           <Icon icon={outdent} />
         </button>
@@ -134,6 +140,7 @@ class FormatToolbar extends Component {
           className="tooltip-icon-button"
           disabled={!inList}
           onMouseDown={this.command('increaseItemDepth')}
+          title="Increase list indent"
         >
           <Icon icon={indent} />
         </button>
@@ -144,16 +151,16 @@ class FormatToolbar extends Component {
   render () {
     return (
       <div className="format-toolbar">
-        {this.renderMarkButton('bold', ic_format_bold)}
-        {this.renderMarkButton('italic', ic_format_italic)}
-        {this.renderMarkButton('underlined', ic_format_underlined)}
-        {this.renderMarkButton('code', ic_code)}
-        {this.renderBlockButton('heading-one', ic_looks_one)}
-        {this.renderBlockButton('heading-two', ic_looks_two)}
-        {this.renderBlockButton('block-quote', ic_format_quote)}
-        {this.renderBlockButton('input-file', ic_image)}
-        {this.renderMarkButton('superscript', superscript)}
-        {this.renderMarkButton('subscript', subscript)}
+        {this.renderMarkButton('bold', ic_format_bold, 'Bold')}
+        {this.renderMarkButton('italic', ic_format_italic, 'Italic')}
+        {this.renderMarkButton('underlined', ic_format_underlined, 'Underlined')}
+        {this.renderMarkButton('code', ic_code, 'Code')}
+        {this.renderBlockButton('heading-one', ic_looks_one, 'Heading 1')}
+        {this.renderBlockButton('heading-two', ic_looks_two, 'Heading 2')}
+        {this.renderBlockButton('block-quote', ic_format_quote, 'Block quote')}
+        {this.renderBlockButton('input-file', ic_image, 'Insert image')}
+        {this.renderMarkButton('superscript', superscript, 'Superscript')}
+        {this.renderMarkButton('subscript', subscript, 'Subscript')}
         {this.renderTableToolbar()}
         {this.renderListToolbar()}
       </div>
