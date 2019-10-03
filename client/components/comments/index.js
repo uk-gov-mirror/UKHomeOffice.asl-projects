@@ -80,7 +80,8 @@ const mapStateToProps = ({ comments, application: { commentable, showComments } 
   let allComments = comments[field];
   // backwards compatibility fix for some comments being saved without a prefix
   // merge comments saved with unprefixed name and full name
-  if (name !== field) {
+  // whitelist the fields in legacy protocol animal questions as they are the only ones affected
+  if (name !== field && field.match(/^protocols\.[a-f0-9-]+\.item\./)) {
     allComments = [].concat(comments[name]).concat(comments[field]).filter(Boolean);
   }
   return {
