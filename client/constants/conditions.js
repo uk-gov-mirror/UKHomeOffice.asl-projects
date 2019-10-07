@@ -55,6 +55,7 @@ export default {
     },
     'continued-use-off-project': {
       include: protocol => (protocol.fate || []).includes('continued-use-2'),
+      type: 'authorisation',
       versions: [
         {
           title: 'Continued use off protocol on to another project',
