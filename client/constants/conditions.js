@@ -53,6 +53,16 @@ export default {
         }
       ]
     },
+    'continued-use-off-project': {
+      include: protocol => (protocol.fate || []).includes('continued-use-2'),
+      type: 'authorisation',
+      versions: [
+        {
+          title: 'Continued use off protocol on to another project',
+          content: '<<<INSERT animal type(s) HERE>>> may continue to be used on other projects authorised to use animals of this type.'
+        }
+      ]
+    }
   },
   project: {
     nmbas: {
