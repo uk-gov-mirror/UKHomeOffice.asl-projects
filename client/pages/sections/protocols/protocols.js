@@ -15,7 +15,7 @@ import { getNewComments, getConditions } from '../../../helpers';
 import CONDITIONS from '../../../constants/conditions';
 
 const Form = ({
-  index,
+  number,
   updateItem,
   exit,
   toggleActive,
@@ -23,7 +23,7 @@ const Form = ({
   ...props
 }) => (
   <div className={classnames('protocol', 'panel')}>
-    <h2>{`Protocol ${index + 1}`}</h2>
+    <h2>{`Protocol ${number + 1}`}</h2>
     <Fieldset
       { ...props }
       fields={props.fields}
@@ -35,6 +35,7 @@ const Form = ({
 );
 
 class Protocol extends PureComponent {
+
   state = {
     active: !this.props.values.title,
     complete: false
@@ -120,21 +121,53 @@ class Protocols extends PureComponent {
   }
 
   render() {
-    const { protocols, editable } = this.props;
+    const { protocols, editable, previousProtocols } = this.props;
+
+    const items = (protocols || []).filter(p => {
+      if (p.deleted === true) {
+        if (previousProtocols.showDeleted.includes(p.id)) {
+          return true;
+        }
+        return false;
+      }
+      return true;
+    });
+
     return (
       <Repeater
         type="protocols"
         singular="protocol"
-        items={protocols}
+        items={items}
         onSave={this.save}
         addAnother={editable}
         addButtonBefore={protocols && protocols.length > 0 && protocols[0].title}
         addButtonAfter={true}
+        softDelete={true}
         onAfterAdd={() => {
           window.scrollTo({
             top: document.body.scrollHeight,
             behavior: 'smooth'
           })
+        }}
+        onBeforeDuplicate={(items, id) => {
+          return items.map((item) => {
+            if (item.id === id) {
+              return {
+                ...item,
+                title: `${item.title} (Copy)`,
+                complete: false
+              }
+            }
+            return item
+          })
+        }}
+        onAfterDuplicate={(item, id) => {
+          const index = items.findIndex(i => i.id === id);
+          const protocol = document.querySelectorAll('.protocols-section .protocol')[index];
+          window.scrollTo({
+            top: protocol.offsetTop,
+            left: 0
+          });
         }}
       >
         <Protocol {...this.props} />
@@ -143,6 +176,6 @@ class Protocols extends PureComponent {
   }
 }
 
-const mapStateToProps = ({ comments, project: { protocols }, application: { user, readonly } }) => ({ protocols, newComments: getNewComments(comments, user), readonly });
+const mapStateToProps = ({ comments, project: { protocols }, application: { user, readonly, previousProtocols } }) => ({ protocols, newComments: getNewComments(comments, user), readonly, previousProtocols });
 
 export default connect(mapStateToProps)(Protocols);

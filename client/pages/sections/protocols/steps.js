@@ -1,5 +1,4 @@
 import React, { Component, Fragment, createRef } from 'react';
-import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
 import classnames from 'classnames'
@@ -82,7 +81,7 @@ class Step extends Component {
   }
 
   render() {
-    const { prefix, index, fields, values, updateItem, length, editable } = this.props;
+    const { prefix, index, fields, values, updateItem, length, editable, deleted } = this.props;
 
     const completed = !editable || values.completed;
     return (
@@ -93,7 +92,7 @@ class Step extends Component {
         <ChangedBadge fields={[ prefix.substr(0, prefix.length - 1) ]} />
         <Fragment>
           {
-            editable && completed && (
+            editable && completed && !deleted && (
               <div className="float-right">
                 {
                   length > 1 && (
@@ -117,7 +116,7 @@ class Step extends Component {
           }
         </Fragment>
         {
-          !completed
+          !completed && !deleted
             ? <Fragment>
               <Fieldset
                 fields={fields}
@@ -138,7 +137,7 @@ class Step extends Component {
               editLink={`0#${this.props.prefix}`}
             />
             {
-              editable && <a href="#" onClick={this.editStep}>Edit step</a>
+              editable && !deleted && <a href="#" onClick={this.editStep}>Edit step</a>
             }
           </div>
         }
@@ -158,11 +157,12 @@ const Steps = ({ values, prefix, updateItem, editable, ...props }) => {
         prefix={prefix}
         items={values.steps}
         onSave={steps => updateItem({ steps })}
-        addAnother={every(values.steps, step => step.completed)}
+        addAnother={!values.deleted && every(values.steps, step => step.completed)}
         { ...props }
       >
         <Step
           editable={editable}
+          deleted={values.deleted}
           { ...props }
         />
       </Repeater>
@@ -170,10 +170,4 @@ const Steps = ({ values, prefix, updateItem, editable, ...props }) => {
   )
 }
 
-const mapStateToProps = ({ project }, { index }) => {
-  return {
-    values: project.protocols[index]
-  }
-}
-
-export default withRouter(connect(mapStateToProps)(Steps));
+export default withRouter(Steps);

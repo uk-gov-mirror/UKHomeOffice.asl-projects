@@ -10,16 +10,19 @@ import Complete from '../../../components/complete';
 import NewComments from '../../../components/new-comments';
 import Sections from './sections';
 import ChangedBadge from '../../../components/changed-badge';
+import NewProtocolBadge from '../../../components/new-protocol-badge';
+import ReorderedBadge from '../../../components/reordered-badge';
 
 class ProtocolSections extends PureComponent {
   state = {
-    expanded: this.props.editable && (this.props.protocolState || !this.props.values.complete)
+    expanded: this.props.editable && !this.props.values.deleted && (this.props.protocolState || !this.props.values.complete)
   }
 
   delete = e => {
     e.preventDefault();
     if (window.confirm('Are you sure you want to remove this protocol?')) {
-      this.props.removeItem();
+      this.props.removeItem()
+        .then(() => this.setState({ expanded: false }));
     }
   }
 
@@ -39,9 +42,24 @@ class ProtocolSections extends PureComponent {
     this.props.onToggleActive();
   }
 
+  moveUp = e => {
+    e.preventDefault();
+    e.stopPropagation();
+    this.props.moveUp();
+  }
+
+  moveDown = e => {
+    e.preventDefault();
+    e.stopPropagation();
+    this.props.moveDown();
+  }
+
   render() {
     const {
       values,
+      number,
+      index,
+      length,
       sections,
       updateItem,
       editable,
@@ -75,14 +93,25 @@ class ProtocolSections extends PureComponent {
       .map(f => `protocols.${values.id}.${f}`);
 
     return (
-      <section className={classnames('protocol', { complete: values.complete || readonly, readonly })}>
+      <section className={classnames('protocol', { complete: values.complete || readonly, readonly, deleted: values.deleted })}>
+        {
+          values.deleted && <span className="badge deleted">removed</span>
+        }
         <NewComments comments={numberOfNewComments} />
-        <ChangedBadge fields={fields} />
+        {
+          !values.deleted && (
+            <Fragment>
+              <NewProtocolBadge id={values.id} />
+              <ReorderedBadge id={values.id} />
+              <ChangedBadge fields={fields} protocolId={values.id} />
+            </Fragment>
+          )
+        }
         <Expandable expanded={this.state.expanded} onHeaderClick={this.toggleExpanded}>
-          <Completable status={values.complete ? 'complete' : 'incomplete'}>
-            <h2 className="title inline-block">{values.title}</h2>
+          <Completable status={values.deleted ? 'deleted' : values.complete ? 'complete' : 'incomplete'}>
+            <h2 className="title inline-block">{values.deleted ? values.title : `${number + 1}: ${values.title}`}</h2>
             {
-              editable && <a href="#" className="inline-block" onClick={this.toggleActive}>Edit title</a>
+              editable && <a href="#" className={classnames('inline-block', { restore: values.deleted })} onClick={values.deleted ? this.props.restoreItem : this.toggleActive}>{values.deleted ? 'Restore' : 'Edit title'}</a>
             }
             {
               !isLegacy && (
@@ -134,7 +163,7 @@ class ProtocolSections extends PureComponent {
               onFieldChange={(key, value) => updateItem({ [key]: value })}
             />
             {
-              editable && (
+              editable && !values.deleted && (
                 <Fragment>
                   <Complete
                     type="protocol"
@@ -142,7 +171,13 @@ class ProtocolSections extends PureComponent {
                     onChange={this.setCompleted}
                     buttonClassName="button-secondary"
                   />
-                  <p><a href="#" onClick={this.delete}>Remove this protocol</a></p>
+                  <p>
+                    <span>Reorder: <a href="#" disabled={index === 0} onClick={this.moveUp}>Up</a> or <a href="#" disabled={index + 1 >= length} onClick={this.moveDown}>Down</a></span>
+                    <span> │ </span>
+                    <a href="#" onClick={this.props.duplicateItem}>Duplicate protocol</a>
+                    <span> │ </span>
+                    <a href="#" onClick={this.delete}>Remove protocol</a>
+                  </p>
                 </Fragment>
               )
             }

@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Button } from '@ukhomeoffice/react-components';
-import { v4 } from 'uuid';
+import uuid from 'uuid/v4';
+import cloneDeep from 'lodash/cloneDeep';
 
 class Repeater extends Component {
   constructor(props) {
@@ -8,6 +9,8 @@ class Repeater extends Component {
     this.addItem = this.addItem.bind(this);
     this.updateItem = this.updateItem.bind(this);
     this.removeItem = this.removeItem.bind(this);
+    this.restoreItem = this.restoreItem.bind(this);
+    this.duplicateItem = this.duplicateItem.bind(this);
     this.moveUp = this.moveUp.bind(this);
     this.moveDown = this.moveDown.bind(this);
     this.update = this.update.bind(this);
@@ -32,7 +35,7 @@ class Repeater extends Component {
   addItem() {
     return Promise.resolve()
       .then(this.props.onBeforeAdd)
-      .then(() => this.update([ ...this.state.items, { id: v4() } ]))
+      .then(() => this.update([ ...this.state.items, { id: uuid() } ]))
       .then(this.props.onAfterAdd)
       .catch(err => console.log(err));
   }
@@ -44,19 +47,77 @@ class Repeater extends Component {
     ))
   }
 
+  duplicateItem(index, event) {
+    if (event) {
+      event.preventDefault();
+    }
+    const items = cloneDeep(this.state.items);
+    const item = cloneDeep(items[index]);
+
+    function updateIds(obj) {
+      if (obj.id) {
+        obj.id = uuid();
+      }
+      Object.values(obj).forEach(val => {
+        if (Array.isArray(val)) {
+          val.forEach(updateIds);
+        }
+      });
+    }
+
+    updateIds(item);
+
+    items.splice(index + 1, 0, item);
+    return Promise.resolve()
+      .then(() => this.props.onBeforeDuplicate(items, item.id))
+      .then(items => this.update(items))
+      .then(() => this.props.onAfterDuplicate(item, item.id))
+      .catch(err => console.log(err));
+  }
+
   removeItem(index, event) {
     if (event) {
       event.preventDefault();
     }
     return Promise.resolve()
       .then(this.props.onBeforeRemove)
-      .then(() => this.update(this.state.items.filter((item, i) => index !== i)))
+      .then(() => {
+        if (this.props.softDelete) {
+          return this.update(this.state.items.map((item, i) => {
+            if (index === i) {
+              return { ...item, deleted: true };
+            }
+            return item;
+          }))
+        }
+        this.update(this.state.items.filter((item, i) => index !== i))
+      })
       .then(this.props.onAfterRemove)
       .catch(err => console.log(err));
   }
 
+  restoreItem(index, event) {
+    if (event) {
+      event.preventDefault();
+    }
+    return Promise.resolve()
+      .then(this.props.onBeforeRestore)
+      .then(() => this.update(this.state.items.map((item, i) => {
+        if (i === index) {
+          return {
+            ...item,
+            deleted: false
+          }
+        }
+        return item;
+      })))
+      .then(this.props.onAfterRestore)
+      .catch(err => console.log(err))
+  }
+
   update(items) {
-    this.setState({ items }, this.save)
+    return new Promise(resolve => this.setState({ items }, resolve))
+      .then(this.save)
   }
 
   save() {
@@ -102,12 +163,16 @@ class Repeater extends Component {
                 key: item.id,
                 updateItem,
                 removeItem: e => this.removeItem(index, e),
+                restoreItem: e => this.restoreItem(index, e),
+                duplicateItem: e => this.duplicateItem(index, e),
                 moveUp: () => this.moveUp(index),
                 moveDown: () => this.moveDown(index),
                 values: item,
                 prefix: `${this.props.prefix || ''}${this.props.type}.${item.id}.`,
                 length: this.state.items.length,
-                expanded: this.props.expanded && this.props.expanded[index]
+                expanded: this.props.expanded && this.props.expanded[index],
+                // get index ignoring previous deleted items
+                number: index - (this.state.items.slice(0, index).filter(i => i.deleted) || []).length
               })
             })
           )
@@ -125,10 +190,13 @@ Repeater.defaultProps = {
   singular: 'item',
   addOnInit: true,
   addAnother: true,
+  softDelete: false,
   onBeforeAdd: () => Promise.resolve(),
   onAfterAdd: () => Promise.resolve(),
   onBeforeRemove: () => Promise.resolve(),
-  onAfterRemove: () => Promise.resolve()
+  onAfterRemove: () => Promise.resolve(),
+  onBeforeDuplicate: items => Promise.resolve(items),
+  onAfterDuplicate: item => Promise.resolve(item)
 };
 
 export default Repeater;

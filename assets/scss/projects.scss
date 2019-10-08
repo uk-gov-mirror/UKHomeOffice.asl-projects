@@ -158,8 +158,9 @@ html.modal-open, html.modal-open body {
   }
 
   a[disabled] {
-    color: $govuk-secondary-text-colour;
-    cursor: default;
+    color: $govuk-secondary-text-colour !important;
+    cursor: default !important;
+    text-decoration: none !important;
   }
 
   h1, h2:not(.govuk-fieldset__heading), h3 {
@@ -433,6 +434,11 @@ html.modal-open, html.modal-open body {
     color: white;
     text-transform: uppercase;
     font-weight: bold;
+    margin-right: 5px;
+
+    &:last-of-type {
+      margin-right: 0;
+    }
 
     &.complete {
       background: $blue;
@@ -442,8 +448,14 @@ html.modal-open, html.modal-open body {
       background: $light-green;
     }
 
-    &.changed {
+    &.changed,
+    &.reordered,
+    &.created {
       background: $pink;
+    }
+
+    &.deleted {
+      background: $red;
     }
   }
 
@@ -635,6 +647,11 @@ html.modal-open, html.modal-open body {
     &.incomplete {
       background-color: $ho-focus;
     }
+
+    &.deleted {
+      background-color: $red;
+      color: $white !important;
+    }
   }
 
   .expandable {
@@ -737,9 +754,38 @@ html.modal-open, html.modal-open body {
         > .header {
           background-color: $blue;
 
-          * {
+          *:not(.restore) {
             color: $white;
           }
+        }
+      }
+    }
+
+    &.readonly {
+      .expanding-panel {
+        header {
+          background-color: white;
+        }
+
+        .content {
+          padding: 0;
+          margin: 0;
+        }
+      }
+    }
+
+    &.deleted {
+      > .expandable {
+        > .header {
+          background-color: $mid-grey;
+
+          *:not(.restore) {
+            color: lighten($dark-grey, 20%);
+          }
+        }
+
+        > .content * {
+          color: lighten($dark-grey, 20%);
         }
       }
     }
@@ -747,19 +793,6 @@ html.modal-open, html.modal-open body {
     .expandable {
       .content {
         background: $white;
-      }
-    }
-  }
-
-  .protocol.readonly {
-    .expanding-panel {
-      header {
-        background-color: white;
-      }
-
-      .content {
-        padding: 0;
-        margin: 0;
       }
     }
   }

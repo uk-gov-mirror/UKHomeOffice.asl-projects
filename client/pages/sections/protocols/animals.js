@@ -36,13 +36,13 @@ class Animal extends Component {
   }
 
   render() {
-    const { prefix, fields, values, updateItem, editable } = this.props;
+    const { prefix, fields, values, updateItem, editable, deleted } = this.props;
     const { expanded } = this.state;
     return (
       <Expandable className="no-bg" onHeaderClick={this.toggleExpanded} expanded={expanded}>
         <h3 className="title">{values.name}</h3>
         {
-          editable
+          editable && !deleted
             ? (
               <Fieldset
                 fields={fields}
@@ -56,6 +56,7 @@ class Animal extends Component {
                 fields={fields}
                 values={values}
                 prefix={prefix}
+                readonly={deleted}
                 editLink={`0#${prefix}`}
               />
             )
@@ -141,7 +142,7 @@ class Animals extends Component {
 
   render() {
 
-    const { prefix, editable, fields, onFieldChange, updateItem } = this.props;
+    const { prefix, editable, fields, onFieldChange, updateItem, values: { deleted } } = this.props;
 
     const { adding } = this.state;
 
@@ -167,7 +168,7 @@ class Animals extends Component {
     return (
       <Fragment>
         {
-          editable && (
+          editable && !deleted && (
             <Fieldset
               fields={speciesField}
               values={this.props.values}
@@ -186,14 +187,15 @@ class Animals extends Component {
         >
           <Animal
             {...this.props}
+            deleted={deleted}
             fields={fields.filter(f => f.section !== 'intro')}
           />
         </Repeater>
         {
-          editable && !adding && <div className="add-more-animals"><a href="#" onClick={this.toggleAdding}>Add more animal types</a></div>
+          editable && !adding && !deleted && <div className="add-more-animals"><a href="#" onClick={this.toggleAdding}>Add more animal types</a></div>
         }
         {
-          editable && adding && <AddSpecies
+          editable && adding && !deleted && <AddSpecies
             onContinueClicked={this.toggleAdding}
             values={this.props.project}
             onFieldChange={this.props.save}
@@ -204,12 +206,6 @@ class Animals extends Component {
   }
 }
 
-const mapStateToProps = ({ project }, ownProps) => {
-  const values = project.protocols[ownProps.index];
-  return {
-    project,
-    values
-  }
-}
+const mapStateToProps = ({ project }) => ({ project });
 
 export default connect(mapStateToProps)(Animals);
