@@ -5,7 +5,9 @@ import classnames from 'classnames';
 export default function NewProtocolBadge({ id }) {
   const { granted, previous } = useSelector(state => state.application.previousProtocols);
 
-  if (granted.includes(id) || (!granted.length && previous.includes(id))) {
+  const notNew = !granted.length && (!previous.length || previous.includes(id));
+
+  if (granted.includes(id) || notNew) {
     return null;
   }
 
