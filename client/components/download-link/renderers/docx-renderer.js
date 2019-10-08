@@ -125,17 +125,18 @@ export default (application, sections, values, updateImageDimensions) => {
     // calculate the actual dimensions of the table
     rows.forEach((row, rowIndex) => {
       const cells = row.nodes;
+      const columnsInRow = cells
+        .slice(0, -1)
+        .map(cell => parseInt(get(cell, 'data.colSpan', 1), 10) || 1)
+        .reduce((sum, num) => sum + num, 1);
 
-      colcount = Math.max(
-        colcount,
-        cells.slice(0, -1).map(cell => get(cell, 'data.colSpan', 1) || 1).reduce((sum, num) => sum + num, 1) + rowspans.length
-      );
+      colcount = Math.max(colcount, columnsInRow + rowspans.length);
 
       // reduce rowspans by one for next row.
       rowspans = [
         ...rowspans,
         ...cells.map(cell => {
-          const rs = get(cell, 'data.rowSpan', 1);
+          const rs = parseInt(get(cell, 'data.rowSpan', 1), 10);
           // All falsy values _except_ 0 should be 1
           // rowspan === 0 => fill the rest of the table
           return rs || (rs === 0 ? rows.length - rowIndex : 1);
@@ -159,8 +160,8 @@ export default (application, sections, values, updateImageDimensions) => {
         }
 
         // store rowspan to be taken into account in the next row
-        const rs = get(cell, 'data.rowSpan', 1);
-        const cs = get(cell, 'data.colSpan', 1);
+        const rs = parseInt(get(cell, 'data.rowSpan', 1), 10);
+        const cs = parseInt(get(cell, 'data.colSpan', 1), 10);
         rowspanStore[colIndex] = rs || (rs === 0 ? rows.length - rowIndex : 1);
         const colspan = cs || (cs === 0 ? colcount - colIndex : 1);
 
@@ -193,7 +194,7 @@ export default (application, sections, values, updateImageDimensions) => {
     // merge rows
     matrix.forEach((row, rowIndex) => {
       row.forEach((cell, colIndex) => {
-        const rowSpan = get(cell, 'data.rowSpan');
+        const rowSpan = parseInt(get(cell, 'data.rowSpan'), 10);
         if (rowSpan) {
           table.getColumn(colIndex).mergeCells(rowIndex, rowIndex + rowSpan - 1);
         }
@@ -202,7 +203,7 @@ export default (application, sections, values, updateImageDimensions) => {
     // merge cols
     matrix.forEach((row, rowIndex) => {
       row.forEach((cell, colIndex) => {
-        const colSpan = get(cell, 'data.colSpan');
+        const colSpan = parseInt(get(cell, 'data.colSpan'), 10);
         if (colSpan) {
           table.getRow(rowIndex).mergeCells(colIndex, colIndex + colSpan - 1);
         }
