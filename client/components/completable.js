@@ -7,12 +7,24 @@ const Completable = ({ status = 'incomplete', legacy, readonly, children }) => {
     return children;
   }
 
+  let label;
+
+  switch (status) {
+    case 'deleted':
+      label = 'Removed'
+      break;
+    case 'incomplete':
+      label = 'In progress';
+      break;
+    default:
+      label = 'Completed';
+      break;
+  }
+
   return (
     <Fragment>
       {
-        <label className={classnames('status-label', status)}>
-          { status === 'incomplete' ? 'In progress' : 'Completed' }
-        </label>
+        <label className={classnames('status-label', status)}>{ label }</label>
       }
       { children }
     </Fragment>

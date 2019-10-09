@@ -24,7 +24,7 @@ class Section extends PureComponent {
         }
         { label && <h4>{label}</h4> }
         {
-          editable
+          editable && !values.deleted
             ? (
               <Fieldset
                 fields={fields}
@@ -39,6 +39,7 @@ class Section extends PureComponent {
                 values={values}
                 prefix={this.props.prefix}
                 editLink={`0#${this.props.prefix}`}
+                readonly={values.deleted}
               />
             )
         }

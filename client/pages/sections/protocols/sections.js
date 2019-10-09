@@ -103,7 +103,7 @@ const getBadges = (section, newComments, values) => {
         !!numberOfNewComments && <NewComments comments={numberOfNewComments} />
       }
       {
-        section.fields && <ChangedBadge fields={fields} />
+        section.fields && <ChangedBadge fields={fields} protocolId={values.id} />
       }
     </Fragment>
   )
