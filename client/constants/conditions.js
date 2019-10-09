@@ -191,7 +191,7 @@ Genetically altered animals may not be re-homed.`
       versions: [
         {
           title: 'Continuation of work',
-          content: 'Authority is hereby given to transfer animals undergoing regulated procedures to this project, under the licence(s) specified below:'
+          content: 'Authority is hereby given to transfer, to this project, animals undergoing regulated procedures under the licence(s) <<<ADD LICENCE NUMBER(S) >>> (expires: <<<ADD EXPIRY DATE(S)>>>)'
         }
       ]
     },
