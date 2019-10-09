@@ -36,8 +36,7 @@ class Repeater extends Component {
     return Promise.resolve()
       .then(this.props.onBeforeAdd)
       .then(() => this.update([ ...this.state.items, { id: uuid() } ]))
-      .then(this.props.onAfterAdd)
-      .catch(err => console.log(err));
+      .then(this.props.onAfterAdd);
   }
 
   updateItem(index, updated) {
@@ -71,8 +70,7 @@ class Repeater extends Component {
     return Promise.resolve()
       .then(() => this.props.onBeforeDuplicate(items, item.id))
       .then(items => this.update(items))
-      .then(() => this.props.onAfterDuplicate(item, item.id))
-      .catch(err => console.log(err));
+      .then(() => this.props.onAfterDuplicate(item, item.id));
   }
 
   removeItem(index, event) {
@@ -92,8 +90,7 @@ class Repeater extends Component {
         }
         this.update(this.state.items.filter((item, i) => index !== i))
       })
-      .then(this.props.onAfterRemove)
-      .catch(err => console.log(err));
+      .then(this.props.onAfterRemove);
   }
 
   restoreItem(index, event) {
@@ -111,8 +108,7 @@ class Repeater extends Component {
         }
         return item;
       })))
-      .then(this.props.onAfterRestore)
-      .catch(err => console.log(err))
+      .then(this.props.onAfterRestore);
   }
 
   update(items) {
