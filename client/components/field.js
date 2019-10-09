@@ -87,22 +87,28 @@ class Field extends Component {
       return <a href={this.props.fallbackLink.url}>{this.props.fallbackLink.label}</a>
     }
     if (this.props.type === 'animal-quantities') {
-      return <AnimalQuantities {...this.props} label={label} hint={hint} />;
+      return <AnimalQuantities {...this.props} value={value} label={label} hint={hint} />;
     }
     if (this.props.type === 'species-selector') {
-      return <SpeciesSelector {...this.props} label={label} hint={hint} />;
+      return <SpeciesSelector
+        {...this.props}
+        value={value}
+        label={label}
+        hint={hint}
+        onChange={ this.onFieldChange }
+      />;
     }
     if (this.props.type === 'legacy-species-selector') {
-      return <LegacySpeciesSelector {...this.props} label={label} hint={hint} />;
+      return <LegacySpeciesSelector {...this.props} value={value} label={label} hint={hint} />;
     }
     if (this.props.type === 'location-selector') {
-      return <LocationSelector {...this.props} label={label} hint={hint} />;
+      return <LocationSelector {...this.props} value={value} label={label} hint={hint} />;
     }
     if (this.props.type === 'objective-selector') {
-      return <ObjectiveSelector {...this.props} label={label} hint={hint} />;
+      return <ObjectiveSelector {...this.props} value={value} label={label} hint={hint} />;
     }
     if (this.props.type === 'other-species-selector') {
-      return <OtherSpecies {...this.props} label={label} hint={hint} />;
+      return <OtherSpecies {...this.props} value={value} label={label} hint={hint} />;
     }
     if (this.props.type === 'duration') {
       return <Duration
