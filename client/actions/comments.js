@@ -1,11 +1,11 @@
 import sendMessage from './messaging';
 import { throwError } from './messages';
 
-import { ADD_COMMENT, DELETE_COMMENT } from './types';
+import { COMMENT_ADDED, COMMENT_EDITED, COMMENT_DELETED, REFRESH_COMMENTS } from './types';
 
 export const commentAdded = ({ comment, author, field, id }) => {
   return {
-    type: ADD_COMMENT,
+    type: COMMENT_ADDED,
     comment,
     author,
     field,
@@ -13,11 +13,27 @@ export const commentAdded = ({ comment, author, field, id }) => {
   }
 };
 
+export const commentEdited = ({ comment, field, id }) => {
+  return {
+    type: COMMENT_EDITED,
+    comment,
+    field,
+    id
+  }
+};
+
 const commentDeleted = ({ id, field }) => ({
-  type: DELETE_COMMENT,
+  type: COMMENT_DELETED,
   id,
   field
 });
+
+const refreshComments = comments => {
+  return {
+    type: REFRESH_COMMENTS,
+    comments
+  };
+};
 
 export const addComment = comment => (dispatch, getState) => {
   const state = getState();
@@ -34,6 +50,28 @@ export const addComment = comment => (dispatch, getState) => {
     .catch(err => {
       console.error(err);
       dispatch(throwError('Error posting comment'));
+    });
+}
+
+export const editComment = ({ id, field, comment }) => (dispatch, getState) => {
+  const state = getState();
+  const params = {
+    url: `${state.application.basename.replace(/\/edit?/, '')}/comment/${id}`,
+    method: 'PUT',
+    data: {
+      id,
+      field,
+      comment
+    }
+  };
+
+  return Promise.resolve()
+    .then(() => dispatch(commentEdited({ field, comment, id })))
+    .then(() => sendMessage(params))
+    .then(comments => dispatch(refreshComments(comments)))
+    .catch(err => {
+      console.error(err);
+      dispatch(throwError('Error updating comment'));
     });
 }
 

@@ -303,6 +303,7 @@ html.modal-open, html.modal-open body {
       color: $blue;
       background: none;
       box-shadow: none;
+      margin-right: $govuk-gutter-half;
     }
 
     &.button-secondary {

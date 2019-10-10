@@ -6,12 +6,14 @@ import partition from 'lodash/partition';
 import { Button } from '@ukhomeoffice/react-components';
 import ExpandingPanel from '../expanding-panel';
 import AddComment from './add-comment';
+import EditComment from './edit-comment';
 import Comment from './comment';
 
 class Comments extends Component {
   state = {
     expanded: !this.props.collapsed && some(this.props.comments, comment => comment.isNew),
-    showPrevious: false
+    showPrevious: false,
+    editing: false
   }
 
   componentWillReceiveProps(newProps) {
@@ -28,9 +30,17 @@ class Comments extends Component {
     this.setState({ showPrevious: !this.state.showPrevious });
   }
 
+  editComment = id => {
+    this.setState({ editing: id });
+  };
+
+  cancelEdit = () => {
+    this.setState({ editing: false });
+  };
+
   render() {
     const { comments = [], commentable, showComments, field } = this.props;
-    const { expanded, showPrevious } = this.state;
+    const { expanded, showPrevious, editing } = this.state;
 
     if (!showComments) {
       return null;
@@ -45,6 +55,7 @@ class Comments extends Component {
     }
 
     const [active, previous] = partition(comments, comment => comment.isNew);
+    const commentToEdit = active.find(comment => comment.id === editing);
 
     return (
       <ExpandingPanel
@@ -64,10 +75,15 @@ class Comments extends Component {
             )
           }
           {
-            active.map((comment, index) => <Comment index={index + (previous.length || 0)} key={index} field={field} { ...comment } />)
+            active.map((comment, index) => <Comment index={index + (previous.length || 0)} key={index} field={field} editComment={this.editComment} { ...comment } />)
           }
           {
-            commentable && <AddComment field={field} />
+            editing && commentToEdit &&
+              <EditComment field={field} comment={commentToEdit} key={commentToEdit.id} cancelEdit={this.cancelEdit} />
+          }
+          {
+            commentable &&
+              <AddComment field={field} />
           }
         </Fragment>
       </ExpandingPanel>
