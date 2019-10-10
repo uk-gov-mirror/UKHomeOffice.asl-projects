@@ -51,7 +51,7 @@ const getSection = (section, props) => {
 }
 
 const getFields = fields => {
-  return flatten(fields.map(field => {
+  return flatten((fields || []).map(field => {
     const reveals = field.options && field.options.map(opt => opt.reveal).filter(Boolean);
     if (!reveals) {
       return field
