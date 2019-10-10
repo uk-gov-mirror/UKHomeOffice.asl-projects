@@ -28,6 +28,13 @@ class DiffWindow extends React.Component {
     this.setState({ active })
   }
 
+  hasContentChanges(a, b) {
+    const before = Value.fromJSON(JSON.parse(a || '{}'));
+    const after = Value.fromJSON(JSON.parse(b || '{}'));
+
+    return before.document.text !== after.document.text;
+  }
+
   diff(a, b) {
     let before;
     let after;
@@ -140,6 +147,7 @@ class DiffWindow extends React.Component {
     }
 
     const changes = this.diff(before, this.props.value);
+    const hasContentChanges = this.hasContentChanges(before, this.props.value);
 
     if (this.props.loading) {
       return <div className="govuk-grid-row">
@@ -152,6 +160,13 @@ class DiffWindow extends React.Component {
     }
 
     return <Fragment>
+      {
+        !hasContentChanges && <div className="govuk-grid-row">
+          <div className="govuk-grid-column-full">
+            <p>This change consists only of formatting or styling changes. No difference will be shown below.</p>
+          </div>
+        </div>
+      }
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-one-half">
           {
