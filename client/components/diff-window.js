@@ -239,7 +239,7 @@ class DiffWindow extends React.Component {
   }
 }
 
-const mapStateToProps = ({ questionVersions }, { name }) => {
+const mapStateToProps = ({ questionVersions }, { name, value }) => {
   if (!questionVersions[name]) {
     return {
       loading: true,
@@ -252,8 +252,8 @@ const mapStateToProps = ({ questionVersions }, { name }) => {
     loading: false,
     previous,
     granted,
-    changedFromGranted: grantedId,
-    changedFromLatest: grantedId !== previousId
+    changedFromGranted: grantedId && granted !== value,
+    changedFromLatest: grantedId !== previousId && previous !== value
   };
 }
 
