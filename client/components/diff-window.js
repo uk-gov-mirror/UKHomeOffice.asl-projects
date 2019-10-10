@@ -17,6 +17,9 @@ class DiffWindow extends React.Component {
 
   toggleModal = e => {
     e.preventDefault();
+    if (this.props.loading) {
+      this.props.getPreviousVersions()
+    }
     this.setState({ modalOpen: !this.state.modalOpen });
   }
 
@@ -131,9 +134,8 @@ class DiffWindow extends React.Component {
     return next();
   }
 
-  render() {
+  compare() {
     const { previous, granted, changedFromLatest, changedFromGranted } = this.props;
-    const { modalOpen } = this.state;
 
     let before = changedFromGranted ? granted : previous;
 
@@ -142,6 +144,78 @@ class DiffWindow extends React.Component {
     }
 
     const changes = this.diff(before, this.props.value);
+
+    if (this.props.loading) {
+      return <div className="govuk-grid-row">
+        <div className="govuk-grid-column-full">
+          <div className="panel light-grey">
+            <p className="loading">Loading comparison</p>
+          </div>
+        </div>
+      </div>
+    }
+
+    return <Fragment>
+      <div className="govuk-grid-row">
+        <div className="govuk-grid-column-one-half">
+          {
+            changedFromLatest && changedFromGranted
+              ? (
+                <Fragment>
+                  <Tabs active={this.state.active}>
+                    <a href="#" onClick={e => this.selectTab(e, 0)}>Current licence</a>
+                    <a href="#" onClick={e => this.selectTab(e, 1)}>Previous version</a>
+                  </Tabs>
+                  <div className="panel light-grey">
+                    <ReviewField
+                      key={before}
+                      decorateNode={this.decorateNode(changes, 'before')}
+                      renderDecoration={this.renderDecoration}
+                      options={this.props.options}
+                      type={this.props.type}
+                      value={before}
+                      noComments
+                    />
+                  </div>
+                </Fragment>
+              )
+              : (
+                <Fragment>
+                  <h3>{changedFromGranted ? 'Current licence' : 'Previous version'}</h3>
+                  <div className="panel light-grey">
+                    <ReviewField
+                      decorateNode={this.decorateNode(changes, 'before')}
+                      renderDecoration={this.renderDecoration}
+                      options={this.props.options}
+                      type={this.props.type}
+                      value={before}
+                      noComments
+                    />
+                  </div>
+                </Fragment>
+              )
+          }
+        </div>
+        <div className="govuk-grid-column-one-half">
+          <h3>Proposed</h3>
+          <div className="panel light-grey">
+            <ReviewField
+              key={before}
+              decorateNode={this.decorateNode(changes, 'after')}
+              renderDecoration={this.renderDecoration}
+              options={this.props.options}
+              type={this.props.type}
+              value={this.props.value}
+              noComments
+            />
+          </div>
+        </div>
+      </div>
+    </Fragment>
+  }
+
+  render() {
+    const { modalOpen } = this.state;
 
     return modalOpen
       ? (
@@ -153,60 +227,7 @@ class DiffWindow extends React.Component {
             </div>
             <div className="diff-window-body">
               <h2>{this.props.label}</h2>
-              <div className="govuk-grid-row">
-                <div className="govuk-grid-column-one-half">
-                  {
-                    changedFromLatest && changedFromGranted
-                      ? (
-                        <Fragment>
-                          <Tabs active={this.state.active}>
-                            <a href="#" onClick={e => this.selectTab(e, 0)}>Current licence</a>
-                            <a href="#" onClick={e => this.selectTab(e, 1)}>Previous version</a>
-                          </Tabs>
-                          <div className="panel light-grey">
-                            <ReviewField
-                              decorateNode={this.decorateNode(changes, 'before')}
-                              renderDecoration={this.renderDecoration}
-                              options={this.props.options}
-                              type={this.props.type}
-                              value={before}
-                              noComments
-                            />
-                          </div>
-                        </Fragment>
-                      )
-                      : (
-                        <Fragment>
-                          <h3>{changedFromGranted ? 'Current licence' : 'Previous version'}</h3>
-                          <div className="panel light-grey">
-                            <ReviewField
-                              decorateNode={this.decorateNode(changes, 'before')}
-                              renderDecoration={this.renderDecoration}
-                              options={this.props.options}
-                              type={this.props.type}
-                              value={before}
-                              noComments
-                            />
-                          </div>
-                        </Fragment>
-                      )
-                  }
-                </div>
-                <div className="govuk-grid-column-one-half">
-                  <h3>Proposed</h3>
-                  <div className="panel light-grey">
-                    <ReviewField
-                      key={before}
-                      decorateNode={this.decorateNode(changes, 'after')}
-                      renderDecoration={this.renderDecoration}
-                      options={this.props.options}
-                      type={this.props.type}
-                      value={this.props.value}
-                      noComments
-                    />
-                  </div>
-                </div>
-              </div>
+              { this.compare() }
             </div>
             <div className="diff-window-footer">
               <h3><a href="#" className="float-right close" onClick={this.toggleModal}>Close</a></h3>
@@ -219,11 +240,21 @@ class DiffWindow extends React.Component {
 }
 
 const mapStateToProps = ({ questionVersions }, { name }) => {
-  const { previous, granted } = questionVersions[name] || {}
-  return {
-    previous,
-    granted
+  if (!questionVersions[name]) {
+    return {
+      loading: true,
+      changedFromGranted: false,
+      changedFromLatest: false
+    };
   }
+  const { previous, granted, grantedId, previousId } = questionVersions[name];
+  return {
+    loading: false,
+    previous,
+    granted,
+    changedFromGranted: grantedId,
+    changedFromLatest: grantedId !== previousId
+  };
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
