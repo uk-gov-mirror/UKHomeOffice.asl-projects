@@ -4,12 +4,12 @@ import { addComment } from '../../actions/comments';
 import { Button, TextArea } from '@ukhomeoffice/react-components'
 
 class AddComment extends Component {
-  _isMounted = false
+  _isMounted = false;
 
   state = {
     comment: '',
     adding: false
-  }
+  };
 
   onChange = e => {
     this.setState({
@@ -24,7 +24,7 @@ class AddComment extends Component {
     })
       .then(() => {
         if (this._isMounted) {
-          this.setState({ comment: '' })
+          this.setState({ comment: '', adding: false });
         }
       });
   }
@@ -55,6 +55,8 @@ class AddComment extends Component {
             value={comment}
             onChange={this.onChange}
             autoExpand={true}
+            name="add-new-comment"
+            autoFocus
           />
           <p className="control-panel">
             <Button onClick={this.onSubmit}>Save</Button>

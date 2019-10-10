@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
 import format from 'date-fns/format';
@@ -18,7 +18,8 @@ const Comment = ({
   isNew,
   user,
   deleted,
-  deleteComment
+  deleteComment,
+  editComment
 }) => (
   <div className={classnames('comment', { isNew, mine: user === author, deleted })}>
     <div className="header">
@@ -36,7 +37,10 @@ const Comment = ({
 
       {
         user === author && !deleted && (
-          <Button className="link" onClick={() => deleteComment({ field, id })}>Delete</Button>
+          <Fragment>
+            <Button className="link" onClick={() => editComment(id)}>Edit</Button>
+            <Button className="link" onClick={() => deleteComment({ field, id })}>Delete</Button>
+          </Fragment>
         )
       }
     </div>
