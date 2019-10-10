@@ -78,7 +78,7 @@ class Comments extends Component {
             active.map((comment, index) => <Comment index={index + (previous.length || 0)} key={index} field={field} editComment={this.editComment} { ...comment } />)
           }
           {
-            !!active.length && editing &&
+            editing && commentToEdit &&
               <EditComment field={field} comment={commentToEdit} key={commentToEdit.id} cancelEdit={this.cancelEdit} />
           }
           {
