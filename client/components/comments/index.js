@@ -55,7 +55,7 @@ class Comments extends Component {
     }
 
     const [active, previous] = partition(comments, comment => comment.isNew);
-    const commentToEdit = active.find(comment => comment.id === editing);
+    const commentToEdit = editing && active.find(comment => comment.id === editing);
 
     return (
       <ExpandingPanel
@@ -78,7 +78,7 @@ class Comments extends Component {
             active.map((comment, index) => <Comment index={index + (previous.length || 0)} key={index} field={field} editComment={this.editComment} { ...comment } />)
           }
           {
-            editing && commentToEdit &&
+            commentToEdit &&
               <EditComment field={field} id={commentToEdit.id} key={commentToEdit.id} value={commentToEdit.comment} cancel={this.cancelEdit} />
           }
           {
