@@ -79,7 +79,7 @@ class Comments extends Component {
           }
           {
             editing && commentToEdit &&
-              <EditComment field={field} id={commentToEdit.id} value={commentToEdit.comment} cancel={this.cancelEdit} />
+              <EditComment field={field} id={commentToEdit.id} key={commentToEdit.id} value={commentToEdit.comment} cancel={this.cancelEdit} />
           }
           {
             commentable &&
