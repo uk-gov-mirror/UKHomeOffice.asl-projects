@@ -3,26 +3,19 @@ import { useDispatch } from 'react-redux';
 import { Button, TextArea } from '@ukhomeoffice/react-components';
 import { editComment } from '../../actions/comments';
 
-const EditComment = ({commentToEdit, field, cancel}) => {
-  const [comment, setComment] = useState(commentToEdit);
+const EditComment = ({id, value, field, cancel}) => {
+  const [comment, setComment] = useState(value);
   const dispatch = useDispatch();
 
   const onChange = e => {
-    setComment({
-      ...comment,
-      comment: e.target.value
-    });
+    setComment(e.target.value);
   }
 
   const onSubmit = () => {
     dispatch(
-      editComment({
-        field: field,
-        comment: comment.comment,
-        id: comment.id
-      })
+      editComment({ id, comment, field })
     ).then(() => {
-      setComment(null);
+      setComment('');
       cancel();
     });
   }
@@ -35,10 +28,10 @@ const EditComment = ({commentToEdit, field, cancel}) => {
     <Fragment>
       <TextArea
         label="Edit comment"
-        value={comment.comment}
+        value={comment}
         onChange={onChange}
         autoExpand={true}
-        name={`edit-comment-${comment.id}`}
+        name={`edit-comment-${id}`}
         autoFocus
       />
       <p className="control-panel">
