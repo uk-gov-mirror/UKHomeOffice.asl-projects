@@ -1,8 +1,11 @@
 import React, { useState, Fragment } from 'react';
-import { Button, TextArea } from '@ukhomeoffice/react-components'
+import { useDispatch } from 'react-redux';
+import { Button, TextArea } from '@ukhomeoffice/react-components';
+import { editComment } from '../../actions/comments';
 
-const EditComment = ({commentToEdit, field, submitEdit, cancelEdit}) => {
+const EditComment = ({commentToEdit, field, cancel}) => {
   const [comment, setComment] = useState(commentToEdit);
+  const dispatch = useDispatch();
 
   const onChange = e => {
     setComment({
@@ -12,15 +15,16 @@ const EditComment = ({commentToEdit, field, submitEdit, cancelEdit}) => {
   }
 
   const onSubmit = () => {
-    submitEdit({
-      field: field,
-      comment: comment.comment,
-      id: comment.id
-    })
-      .then(() => {
-        setComment(null);
-        cancelEdit();
-      });
+    dispatch(
+      editComment({
+        field: field,
+        comment: comment.comment,
+        id: comment.id
+      })
+    ).then(() => {
+      setComment(null);
+      cancel();
+    });
   }
 
   if (!comment) {
@@ -39,7 +43,7 @@ const EditComment = ({commentToEdit, field, submitEdit, cancelEdit}) => {
       />
       <p className="control-panel">
         <Button onClick={onSubmit}>Save</Button>
-        <Button className="link" onClick={cancelEdit}>Discard changes</Button>
+        <Button className="link" onClick={cancel}>Discard changes</Button>
       </p>
     </Fragment>
   );
