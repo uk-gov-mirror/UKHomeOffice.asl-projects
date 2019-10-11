@@ -7,6 +7,7 @@ import { Button } from '@ukhomeoffice/react-components';
 import ExpandingPanel from '../expanding-panel';
 import AddComment from './add-comment';
 import EditComment from './edit-comment';
+import { editComment } from '../../actions/comments';
 import Comment from './comment';
 
 class Comments extends Component {
@@ -79,7 +80,7 @@ class Comments extends Component {
           }
           {
             editing && commentToEdit &&
-              <EditComment field={field} comment={commentToEdit} key={commentToEdit.id} cancelEdit={this.cancelEdit} />
+              <EditComment field={field} commentToEdit={commentToEdit} submitEdit={editComment} cancelEdit={this.cancelEdit} />
           }
           {
             commentable &&
