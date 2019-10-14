@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Banner from '../../../components/banner';
 import Complete from '../../../components/complete';
 import Protocols from './protocols';
+import ProtocolConditions from './protocol-conditions';
 
 class ProtocolsReview extends PureComponent {
   onCompleteChange = complete => {
@@ -23,7 +24,10 @@ class ProtocolsReview extends PureComponent {
           )
         }
 
-        <Protocols {...props} editable={false} />
+        <Fragment>
+          <ProtocolConditions />
+          <Protocols {...props} editable={false} />
+        </Fragment>
 
         {
           !readonly && (
