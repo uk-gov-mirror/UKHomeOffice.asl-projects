@@ -33,7 +33,7 @@ export default (application, sections, values, updateImageDimensions) => {
       .bold()
       .color('#8F23B3')
       .font('Helvetica')
-      .spacing({ before: 100, after: 400 });
+      .spacing({ before: 500, after: 300 });
 
     doc.Styles.createParagraphStyle('ProtocolSectionTitle', 'Protocol Section Title')
       .basedOn('Normal')
@@ -43,7 +43,7 @@ export default (application, sections, values, updateImageDimensions) => {
       .bold()
       .color('#005EA5')
       .font('Helvetica')
-      .spacing({ before: 300, after: 300 });
+      .spacing({ before: 500, after: 300 });
 
     doc.Styles.createParagraphStyle('Heading1', 'Heading 1')
       .basedOn('Normal')
@@ -681,10 +681,7 @@ export default (application, sections, values, updateImageDimensions) => {
   const renderProtocolsSection = (doc, subsection, values) => {
     const protocols = values['protocols'] || [];
     protocols.forEach((protocolValues, index) => {
-      const title = doc.createParagraph(`Protocol ${index + 1}`).style('ProtocolSectionTitle');
-      if (index > 0) {
-        title.pageBreakBefore();
-      }
+      doc.createParagraph(`Protocol ${index + 1}`).style('ProtocolSectionTitle');
       renderField(doc, subsection.fields[0], protocolValues);
 
       Object.keys(subsection.sections)
@@ -693,16 +690,8 @@ export default (application, sections, values, updateImageDimensions) => {
     });
   };
 
-  let isFirstSection = true;
-
   const renderSubsection = (doc, subsection, values) => {
     const sectionTitle = new Paragraph(subsection.title).style('SectionTitle');
-
-    if (!isFirstSection) {
-      sectionTitle.pageBreakBefore();
-    } else {
-      isFirstSection = false;
-    }
 
     doc.addParagraph(sectionTitle);
 
@@ -721,7 +710,6 @@ export default (application, sections, values, updateImageDimensions) => {
 
   const renderNtsSection = (doc, section, values, sections) => {
     const sectionTitle = new Paragraph(section.title).style('SectionTitle');
-    sectionTitle.pageBreakBefore();
     doc.addParagraph(sectionTitle);
     const subsections = sections.map(s => s.subsections).reduce((obj, values) => {
       return {
