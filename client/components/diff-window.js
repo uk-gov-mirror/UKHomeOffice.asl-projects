@@ -28,10 +28,6 @@ class DiffWindow extends React.Component {
     this.setState({ active })
   }
 
-  componentDidMount() {
-    this.props.getPreviousVersions()
-  }
-
   diff(a, b) {
     let before;
     let after;
