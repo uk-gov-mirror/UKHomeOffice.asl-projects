@@ -291,6 +291,10 @@ html.modal-open, html.modal-open body {
     }
   }
 
+  .protocol-conditions {
+    margin-bottom: $govuk-gutter;
+  }
+
   .subtitle {
     @extend .grey;
     @extend .light;
@@ -376,6 +380,7 @@ html.modal-open, html.modal-open body {
 
   details summary {
     color: $blue;
+    cursor: pointer;
   }
 
   table {

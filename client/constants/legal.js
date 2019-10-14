@@ -9,13 +9,5 @@ This licence does not authorise the project licence holder or any other person t
 Under this project licence numbered ${licenceNumber} the Secretary of State grants authority only for:
 * work to meet the aim of the project specified;
 * the procedures and types of animal types specified; and
-* work at the place or places specified in the licence`,
-  anaesthesia: `Induction and maintenance of general or local anaesthesia, sedation or analgesia to mitigate the pain,
-suffering or distress associated with the performance of other regulated procedures is indicated using the
-following codes in protocols:
-
-* **AA** no anaesthesia
-* **AB** general anaesthesia with recovery
-* **AC** non-recovery general anaesthesia
-* **AD** under neuromuscular blockade`
+* work at the place or places specified in the licence`
 };

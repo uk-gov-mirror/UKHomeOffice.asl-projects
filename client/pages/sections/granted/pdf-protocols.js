@@ -1,10 +1,9 @@
 import React, { Fragment } from 'react';
-import ReactMarkdown from 'react-markdown';
 import { connect } from 'react-redux';
 import SummaryTable from './summary-table';
 import ProtocolSections from '../protocols/sections';
+import ProtocolConditions from '../protocols/protocol-conditions';
 import { getLegacySpeciesLabel } from '../../../helpers';
-import LEGAL from '../../../constants/legal';
 
 const Protocol = ({ protocol, number, sections, isLegacy }) => {
   const species = !isLegacy
@@ -89,10 +88,7 @@ const PDF = ({ protocols = [], isLegacy, ...props }) => {
         !isLegacy && <h2>{props.title}</h2>
       }
       <SummaryTable protocols={protocols} isLegacy={isLegacy} />
-      <div className="anaesthetic-codes">
-        <h2>Anaesthetic codes</h2>
-        <ReactMarkdown>{LEGAL.anaesthesia}</ReactMarkdown>
-      </div>
+      <ProtocolConditions pdf={true} />
       {
         protocols.map((protocol, index) => (
           <Protocol
