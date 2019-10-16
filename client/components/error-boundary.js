@@ -16,7 +16,9 @@ export default class ErrorBoundary extends Component {
 
   render() {
     const {
-      message = 'Something went wrong',
+      message = 'Sorry, there is a problem with this question',
+      content = 'Try to refresh the page, if that doesn\'t resolve the problem send the error details below to',
+      email = <a href="mailto:aspelqueries@homeoffice.gov.uk">aspelqueries@homeoffice.gov.uk</a>,
       section = false,
       details
     } = this.props;
@@ -29,6 +31,7 @@ export default class ErrorBoundary extends Component {
               ? <h1>{ message }</h1>
               : <h3>{ message }</h3>
           }
+          <p>{content} {email}</p>
           <details>
             <summary>Error details:</summary>
             <p>{ details }</p>

@@ -13,7 +13,7 @@ const renderApp = initialState => {
   const store = configureStore(initialState);
   render(
     <ErrorBoundary
-      message="The application is unavailable"
+      message="Sorry, there is a problem with this page"
       section={true}
     >
       <Provider store={store}>

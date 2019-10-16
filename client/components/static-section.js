@@ -7,6 +7,7 @@ const StaticSection = ({ section, project, fields = [], isGranted, subsection = 
   const Component = isGranted
     ? (section.granted && section.granted.review) || section.review || ReviewFields
     : section.review || ReviewFields;
+
   return (
     <Fragment>
       {

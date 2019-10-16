@@ -486,6 +486,8 @@ html.modal-open, html.modal-open body {
 
     &.error {
       background-color: $white;
+      color: $govuk-text-colour;
+      text-align: left;
       padding: 2em;
       border: 2px solid $govuk-error-colour;
 

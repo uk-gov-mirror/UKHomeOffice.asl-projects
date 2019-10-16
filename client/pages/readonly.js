@@ -27,7 +27,7 @@ function Readonly({ isGranted, project, options, schemaVersion, showConditions, 
         </div>
         <div className="govuk-grid-column-two-thirds">
           <ErrorBoundary
-            message={`${options.title} could not be rendered`}
+            message="Sorry, there is a problem with this section"
             section={true}
             details={`Section: ${options.title}`}
           >

@@ -89,7 +89,6 @@ const ConnectedReview = connect(mapStateToProps)(Review)
 
 const SafeReview = props => (
   <ErrorBoundary
-    message="This field could not be rendered because of an error"
     details={`Field: ${props.name}`}
   >
     <ConnectedReview {...props} />

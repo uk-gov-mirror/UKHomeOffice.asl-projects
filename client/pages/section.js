@@ -59,7 +59,7 @@ class Section extends React.Component {
         <SectionsLink />
         <ErrorBoundary
           section={true}
-          message={`${this.props.title} could not be rendered`}
+          message="Sorry, there is a problem with this section"
           details={`Section: ${this.props.title}`}
         >
           <Component

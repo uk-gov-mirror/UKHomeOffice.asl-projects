@@ -263,7 +263,6 @@ const FieldGroup = props => {
 
 const SafeField = props => (
   <ErrorBoundary
-    message="This field could not be rendered because of an error"
     details={`Field: ${props.name}`}
   >
     <FieldGroup { ...props } />
