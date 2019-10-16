@@ -46,7 +46,7 @@ class Comments extends Component {
       return null;
     }
 
-    if (!comments.length && commentable) {
+    if (!comments.length && commentable && !editing) {
       return <AddComment field={field} />
     }
 
@@ -82,7 +82,7 @@ class Comments extends Component {
               <EditComment field={field} id={commentToEdit.id} key={commentToEdit.id} value={commentToEdit.comment} cancel={this.cancelEdit} />
           }
           {
-            commentable &&
+            commentable && !editing &&
               <AddComment field={field} />
           }
         </Fragment>
