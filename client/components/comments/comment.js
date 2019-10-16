@@ -36,7 +36,7 @@ const Comment = ({
       }
 
       {
-        user === author && !deleted && (
+        user === author && isNew && !deleted && (
           <Fragment>
             <Button className="link" onClick={() => editComment(id)}>Edit</Button>
             <Button className="link" onClick={() => deleteComment({ field, id })}>Delete</Button>
