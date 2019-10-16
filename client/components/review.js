@@ -6,6 +6,8 @@ import Comments from './comments';
 import DiffWindow from './diff-window';
 import ReviewField from './review-field';
 
+import ErrorBoundary from './error-boundary';
+
 class Review extends React.Component {
 
   replay() {
@@ -83,4 +85,15 @@ const mapStateToProps = ({ application: { readonly, isGranted } = {}, changes : 
   };
 }
 
-export default connect(mapStateToProps)(Review);
+const ConnectedReview = connect(mapStateToProps)(Review)
+
+const SafeReview = props => (
+  <ErrorBoundary
+    message="This field could not be rendered because of an error"
+    details={`Field: ${props.name}`}
+  >
+    <ConnectedReview {...props} />
+  </ErrorBoundary>
+);
+
+export default SafeReview;
