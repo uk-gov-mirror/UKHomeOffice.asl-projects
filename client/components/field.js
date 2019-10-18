@@ -27,6 +27,8 @@ import TextEditor from './editor';
 import Fieldset from './fieldset';
 import Comments from './comments';
 
+import ErrorBoundary from './error-boundary';
+
 class Field extends Component {
 
   state = {
@@ -259,4 +261,12 @@ const FieldGroup = props => {
   )
 }
 
-export default FieldGroup;
+const SafeField = props => (
+  <ErrorBoundary
+    details={`Field: ${props.name}`}
+  >
+    <FieldGroup { ...props } />
+  </ErrorBoundary>
+);
+
+export default SafeField;

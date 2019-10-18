@@ -3,6 +3,7 @@ import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import SideNav from '../components/side-nav';
 import StaticSection from '../components/static-section';
+import ErrorBoundary from '../components/error-boundary';
 
 import { keepAlive } from '../actions/session';
 
@@ -25,7 +26,13 @@ function Readonly({ isGranted, project, options, schemaVersion, showConditions, 
           <span>&nbsp;</span>
         </div>
         <div className="govuk-grid-column-two-thirds">
-          <StaticSection section={options} />
+          <ErrorBoundary
+            message="Sorry, there is a problem with this section"
+            section={true}
+            details={`Section: ${options.title}`}
+          >
+            <StaticSection section={options} />
+          </ErrorBoundary>
         </div>
       </div>
     </Fragment>

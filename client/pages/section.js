@@ -4,6 +4,7 @@ import isEmpty from 'lodash/isEmpty';
 import { indexedDBSync, ajaxSync } from '../actions/projects';
 import DefaultSection from './sections';
 import SectionsLink from '../components/sections-link';
+import ErrorBoundary from '../components/error-boundary';
 import Readonly from './readonly';
 import { getSubsections } from '../schema';
 import { getConditions } from '../helpers';
@@ -56,28 +57,34 @@ class Section extends React.Component {
     return (
       <Fragment>
         <SectionsLink />
-        <Component
-          { ...this.props }
-          title={ title }
-          section={ section }
-          save={(data, value) => {
-            if (typeof data === 'string') {
-              data = { [data]: value };
-            }
-            const conditions = getConditions({ ...this.props.project, ...data }, CONDITIONS.project);
+        <ErrorBoundary
+          section={true}
+          message="Sorry, there is a problem with this section"
+          details={`Section: ${this.props.title}`}
+        >
+          <Component
+            { ...this.props }
+            title={ title }
+            section={ section }
+            save={(data, value) => {
+              if (typeof data === 'string') {
+                data = { [data]: value };
+              }
+              const conditions = getConditions({ ...this.props.project, ...data }, CONDITIONS.project);
 
-            this.props.update(data);
+              this.props.update(data);
 
-            if (!this.props.isLegacy) {
-              this.props.update({ conditions })
-            }
-          }}
-          exit={ () => this.props.history.push('/') }
-          fields={ fields }
-          step={ step }
-          { ...rest }
-          onProgress={ step => this.props.history.push(`/${this.props.section}/${step}`) }
-        />
+              if (!this.props.isLegacy) {
+                this.props.update({ conditions })
+              }
+            }}
+            exit={ () => this.props.history.push('/') }
+            fields={ fields }
+            step={ step }
+            { ...rest }
+            onProgress={ step => this.props.history.push(`/${this.props.section}/${step}`) }
+          />
+        </ErrorBoundary>
       </Fragment>
     )
   }

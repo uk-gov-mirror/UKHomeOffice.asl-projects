@@ -483,6 +483,26 @@ html.modal-open, html.modal-open body {
     text-align: center;
     padding: 2em 0 1px;
     margin-bottom: 2em;
+
+    &.error {
+      background-color: $white;
+      color: $govuk-text-colour;
+      text-align: left;
+      padding: 2em;
+      border: 2px solid $govuk-error-colour;
+
+      details {
+        margin-top: 1em;
+        color: $govuk-text-colour;
+        text-align: left;
+        overflow: auto;
+      }
+
+      h1, h3 {
+        color: $govuk-error-colour;
+        margin: 0;
+      }
+    }
   }
 
   .block {
