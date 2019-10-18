@@ -16,12 +16,12 @@ const Comment = ({
   id,
   index,
   isNew,
-  user,
+  isMine,
   deleted,
   deleteComment,
   editComment
 }) => (
-  <div className={classnames('comment', { isNew, mine: user === author, deleted })}>
+  <div className={classnames('comment', { isNew, mine: isMine, deleted })}>
     <div className="header">
       <strong>{`${index + 1}. ${author}`}</strong>
       {
@@ -36,7 +36,7 @@ const Comment = ({
       }
 
       {
-        user === author && isNew && !deleted && (
+        isMine && isNew && !deleted && (
           <Fragment>
             <Button className="link" onClick={() => editComment(id)}>Edit</Button>
             <Button className="link" onClick={() => deleteComment({ field, id })}>Delete</Button>
@@ -47,6 +47,4 @@ const Comment = ({
   </div>
 );
 
-const mapStateToProps = ({ application: { user } }) => ({ user });
-
-export default connect(mapStateToProps, { deleteComment })(Comment);
+export default connect(null, { deleteComment })(Comment);
