@@ -50,7 +50,7 @@ export const getScrollPos = (elem, offset = 0) => {
 };
 
 export const getNewComments = (comments, user) => {
-  const filterNew = field => field.filter(comment => comment.isNew && comment.author !== user);
+  const filterNew = field => field.filter(comment => comment.isNew && comment.author !== user && !comment.deleted);
   return pickBy(mapValues(comments, filterNew), filterNew);
 }
 
