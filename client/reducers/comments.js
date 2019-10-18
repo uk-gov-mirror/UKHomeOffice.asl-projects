@@ -11,7 +11,8 @@ const comments = (state = {}, action) => {
             id: action.id,
             comment: action.comment,
             author: action.author,
-            isNew: true
+            isNew: true,
+            isMine: true
           }
         ]
       }
