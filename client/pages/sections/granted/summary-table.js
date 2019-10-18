@@ -1,7 +1,8 @@
 import React, { Fragment } from 'react';
 import { getLegacySpeciesLabel } from '../../../helpers';
+import { filterSpeciesByActive } from '../protocols/animals';
 
-const SummaryTable = ({ protocols, isLegacy }) => (
+const SummaryTable = ({ protocols, isLegacy, project }) => (
   <div className="summary-table">
     <h3>Summary table</h3>
     <table>
@@ -29,7 +30,7 @@ const SummaryTable = ({ protocols, isLegacy }) => (
         {
           (protocols || []).map((protocol, index) => {
             const species = !isLegacy
-              ? (protocol.speciesDetails || []).filter(s => s.name)
+              ? filterSpeciesByActive(protocol, project)
               : (protocol.species || []).map(s => {
                 const label = getLegacySpeciesLabel(s);
                 return {

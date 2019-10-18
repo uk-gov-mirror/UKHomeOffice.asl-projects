@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import omit from 'lodash/omit';
 import map from 'lodash/map';
 import intersection from 'lodash/intersection';
 import uniq from 'lodash/uniq';
@@ -45,17 +46,29 @@ class SpeciesSelector extends Component {
     this.props.onChange(value);
   }
 
+  onFieldChange = (...args) => {
+    this.props.onChange(this.props.value.filter(s => !SPECIES.deprecated.find(d => d.value === s)));
+    this.props.onFieldChange(...args);
+  }
+
   render() {
     const {
       species = SPECIES,
-      values,
+      values: vals,
       label,
       onFieldChange,
       name,
       hint
     } = this.props;
 
-    const otherValues = values[`${name}-other`] || []
+    const deprecated = (vals[name] || [])
+      .filter(val => species.deprecated.map(d => d.value).includes(val))
+      .map(val => (species.deprecated.find(d => d.value === val) || {}).label)
+
+    const otherValues = [
+      ...(vals[`${name}-other`] || []),
+      ...deprecated
+    ];
 
     return (
       <div className="species-selector">
@@ -64,26 +77,29 @@ class SpeciesSelector extends Component {
           hint && <span id={`${name}-hint`} className="govuk-hint">{this.props.hint}</span>
         }
         {
-          map(species, (options, code) => (
-            <details open={this.isOpen(options)} key={code}>
-              <summary>{SPECIES_CATEGORIES[code]}</summary>
-              <Field
-                {...getField(options, code, name)}
-                value={values[name]}
-                onChange={this.onGroupChange(code)}
-                onFieldChange={onFieldChange}
-                noComments={true}
-              />
-            </details>
-          ))
+          map(omit(species, 'deprecated'), (options, code) => {
+            const filtered = options.filter(o => !species.deprecated.includes(o.value));
+            return (
+              <details open={this.isOpen(filtered)} key={code}>
+                <summary>{SPECIES_CATEGORIES[code]}</summary>
+                <Field
+                  {...getField(filtered, code, name)}
+                  value={vals[name]}
+                  onChange={this.onGroupChange(code)}
+                  onFieldChange={onFieldChange}
+                  noComments={true}
+                />
+              </details>
+            )
+          })
         }
         <details open={otherValues.length}>
           <summary>Other</summary>
           <br />
           <OtherSpecies
             name={`${name}-other`}
-            values={otherValues}
-            onFieldChange={onFieldChange}
+            value={otherValues}
+            onFieldChange={this.onFieldChange}
           />
         </details>
       </div>

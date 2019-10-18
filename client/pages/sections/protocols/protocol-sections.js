@@ -12,6 +12,7 @@ import Sections from './sections';
 import ChangedBadge from '../../../components/changed-badge';
 import NewProtocolBadge from '../../../components/new-protocol-badge';
 import ReorderedBadge from '../../../components/reordered-badge';
+import { filterSpeciesByActive } from './animals';
 
 import { keepAlive } from '../../../actions/session';
 
@@ -68,7 +69,8 @@ class ProtocolSections extends PureComponent {
       editable,
       newComments,
       readonly,
-      schemaVersion
+      schemaVersion,
+      project
     } = this.props;
 
     const isLegacy = schemaVersion === 0;
@@ -79,7 +81,7 @@ class ProtocolSections extends PureComponent {
     const numberOfNewComments = Object.values(newComments)
       .reduce((total, comments) => total + (comments || []).length, 0);
 
-    const speciesDetails = values.speciesDetails && values.speciesDetails.filter(Boolean).filter(s => s.name);
+    const speciesDetails = filterSpeciesByActive(values, project);
 
     const noAnswer = <em>No answer provided</em>;
 
@@ -191,6 +193,6 @@ class ProtocolSections extends PureComponent {
   }
 }
 
-const mapStateToProps = ({ application: { schemaVersion }}) => ({ schemaVersion });
+const mapStateToProps = ({ application: { schemaVersion }, project }) => ({ schemaVersion, project });
 
 export default withRouter(connect(mapStateToProps, { keepAlive })(ProtocolSections));
