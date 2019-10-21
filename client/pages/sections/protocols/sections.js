@@ -127,7 +127,7 @@ const sortGranted = (sections, isGranted) => (a, b) => {
 
 const ProtocolSections = ({ sections, protocolState, editable, newComments, ...props }) =>  {
   return (
-  <Accordion open={getOpenSection(protocolState, editable, sections)} toggleAll={!props.pdf}>
+  <Accordion open={getOpenSection(protocolState, editable, sections)} toggleAll={!props.pdf} pdf={props.pdf}>
     {
       Object.keys(sections)
         .sort(sortGranted(sections, props.isGranted))
