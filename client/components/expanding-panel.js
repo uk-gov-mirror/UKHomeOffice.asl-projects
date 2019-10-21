@@ -32,17 +32,22 @@ export default function ExpandingPanel(props) {
     return open;
   }
 
+  function content() {
+    if (!isOpen()) {
+      return null;
+    }
+    return props.scrollToActive
+      ? React.Children.map(props.children, child => React.cloneElement(child, { ...props, scrollToTop }))
+      : props.children
+  }
+
   return (
     <section className={classnames('expanding-panel', { open: isOpen() }, props.className)}>
       <header onClick={() => toggle()}>
         <h3 ref={ref}>{ props.title }</h3>
       </header>
       <div className={classnames('content', { hidden: !isOpen() })}>
-        {
-          props.scrollToActive
-            ? React.Children.map(props.children, child => React.cloneElement(child, { ...props, scrollToTop }))
-            : props.children
-        }
+        { content() }
       </div>
     </section>
   )

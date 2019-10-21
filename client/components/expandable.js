@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import classnames from 'classnames';
 
 const hasTwoChildren = children => {
@@ -12,8 +12,23 @@ const Expandable = ({
   content,
   onHeaderClick,
   className
-}) => (
-  <div className={classnames('expandable', { expanded }, className)}>
+}) => {
+
+  function renderContent() {
+    if (!expanded) {
+      return null;
+    }
+    return <Fragment>
+      {
+        content && content
+      }
+      {
+        hasTwoChildren(children) ? children[1] : children
+      }
+    </Fragment>
+  }
+
+  return <div className={classnames('expandable', { expanded }, className)}>
     <div className="header" onClick={onHeaderClick}>
       {
         title && <h2>{title}</h2>
@@ -23,14 +38,9 @@ const Expandable = ({
       }
     </div>
     <div className={classnames('content', { hidden: !expanded })}>
-      {
-        content && content
-      }
-      {
-        hasTwoChildren(children) ? children[1] : children
-      }
+      { renderContent() }
     </div>
   </div>
-)
+};
 
 export default Expandable;
