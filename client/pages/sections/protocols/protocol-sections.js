@@ -13,6 +13,8 @@ import ChangedBadge from '../../../components/changed-badge';
 import NewProtocolBadge from '../../../components/new-protocol-badge';
 import ReorderedBadge from '../../../components/reordered-badge';
 
+import { keepAlive } from '../../../actions/session';
+
 class ProtocolSections extends PureComponent {
   state = {
     expanded: this.props.editable && !this.props.values.deleted && (this.props.protocolState || !this.props.values.complete)
@@ -32,6 +34,7 @@ class ProtocolSections extends PureComponent {
   }
 
   toggleExpanded = () => {
+    this.props.keepAlive();
     this.setState({
       expanded: !this.state.expanded
     })
@@ -190,4 +193,4 @@ class ProtocolSections extends PureComponent {
 
 const mapStateToProps = ({ application: { schemaVersion }}) => ({ schemaVersion });
 
-export default withRouter(connect(mapStateToProps)(ProtocolSections));
+export default withRouter(connect(mapStateToProps, { keepAlive })(ProtocolSections));

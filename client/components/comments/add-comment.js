@@ -13,6 +13,7 @@ class AddComment extends Component {
   };
 
   onChange = e => {
+    this.props.keepAlive();
     this.setState({
       comment: e.target.value
     })
