@@ -1,7 +1,7 @@
 import { Block } from 'slate';
 import Jimp from 'jimp';
 
-const MAX_IMAGE_SIZE = 1024 * 1024; // 1mb
+const MAX_IMAGE_SIZE = 5 * 1024 * 1024; // 1mb
 const MAX_IMAGE_WIDTH = 1200;
 const IMAGE_QUALITY = 50;
 
@@ -43,8 +43,8 @@ const onClickImage = (editor, event) => {
     }
 
     if (file.size > MAX_IMAGE_SIZE) {
-      const actual = Math.round(file.size / 1024);
-      throw new Error(`Image too large. Image files must be less than 1024kb. This image: ${actual}kb`);
+      const actual = Math.round(file.size / (1024 * 1024));
+      throw new Error(`Image too large. Image files must be less than 5mb. This image: ${actual}mb`);
     }
 
     const reader = new FileReader();
