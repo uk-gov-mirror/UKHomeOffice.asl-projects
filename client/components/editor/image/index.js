@@ -1,6 +1,9 @@
 import { Block } from 'slate';
+import Jimp from 'jimp';
 
 const MAX_IMAGE_SIZE = 1024 * 1024; // 1mb
+const MAX_IMAGE_WIDTH = 1200;
+const IMAGE_QUALITY = 50;
 
 const schema = {
   document: {
@@ -45,16 +48,29 @@ const onClickImage = (editor, event) => {
     }
 
     const reader = new FileReader();
+
     reader.addEventListener(
       'load',
       () => {
-        const src = reader.result;
-        if (!src) return;
-        editor.command(insertImage, src);
+        Jimp.read(reader.result)
+          .then(image => {
+            return image.bitmap.width > MAX_IMAGE_WIDTH
+              ? image.resize(MAX_IMAGE_WIDTH, Jimp.AUTO)
+              : image;
+          })
+          .then(image => image.quality(IMAGE_QUALITY))
+          .then(image => image.getBase64Async(Jimp.AUTO))
+          .then(base64Image => {
+            editor.command(insertImage, base64Image);
+          })
+          .catch(err => {
+            console.log(err);
+            throw new Error('There was an issue saving your image, please try again');
+          });
       },
       false
     );
-    reader.readAsDataURL(file);
+    reader.readAsArrayBuffer(file);
   }
   event.target.value = '';
 };
