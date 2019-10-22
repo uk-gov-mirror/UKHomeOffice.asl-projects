@@ -1,7 +1,7 @@
 import { Block } from 'slate';
 import Jimp from 'jimp';
 
-const MAX_IMAGE_SIZE = 5 * 1024 * 1024; // 1mb
+const MAX_IMAGE_SIZE = 5 * 1024 * 1024; // 5mb
 const MAX_IMAGE_WIDTH = 1200;
 const IMAGE_QUALITY = 50;
 
