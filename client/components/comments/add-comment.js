@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { addComment } from '../../actions/comments';
+import { keepAlive } from '../../actions/session';
 import { Button, TextArea } from '@ukhomeoffice/react-components'
 
 class AddComment extends Component {
@@ -38,6 +39,7 @@ class AddComment extends Component {
   }
 
   toggleAdding = () => {
+    this.props.keepAlive();
     this.setState({ adding: !this.state.adding });
   }
 
@@ -68,4 +70,4 @@ class AddComment extends Component {
   }
 }
 
-export default connect(null, { addComment })(AddComment);
+export default connect(null, { addComment, keepAlive })(AddComment);
