@@ -68,7 +68,7 @@ class Accordion extends React.Component {
             key: i,
             onToggle: () => this.toggle(i),
             advance: () => this.advance(i),
-            open: this.state.open[i],
+            open: this.props.pdf || this.state.open[i],
             scrollToActive: this.props.scrollToActive
           }))
         }
