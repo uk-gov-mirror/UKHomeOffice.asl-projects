@@ -1,6 +1,9 @@
 import { Block } from 'slate';
+import Jimp from 'jimp';
 
-const MAX_IMAGE_SIZE = 1024 * 1024; // 1mb
+const MAX_IMAGE_SIZE = 5 * 1024 * 1024; // 5mb
+const MAX_IMAGE_WIDTH = 1200;
+const IMAGE_QUALITY = 50;
 
 const schema = {
   document: {
@@ -40,21 +43,34 @@ const onClickImage = (editor, event) => {
     }
 
     if (file.size > MAX_IMAGE_SIZE) {
-      const actual = Math.round(file.size / 1024);
-      throw new Error(`Image too large. Image files must be less than 1024kb. This image: ${actual}kb`);
+      const actual = (file.size / (1024 * 1024)).toFixed(2);
+      throw new Error(`Image too large. Image files must be less than 5mb. This image: ${actual}mb`);
     }
 
     const reader = new FileReader();
+
     reader.addEventListener(
       'load',
       () => {
-        const src = reader.result;
-        if (!src) return;
-        editor.command(insertImage, src);
+        Jimp.read(reader.result)
+          .then(image => {
+            return image.bitmap.width > MAX_IMAGE_WIDTH
+              ? image.resize(MAX_IMAGE_WIDTH, Jimp.AUTO)
+              : image;
+          })
+          .then(image => image.quality(IMAGE_QUALITY))
+          .then(image => image.getBase64Async(Jimp.AUTO))
+          .then(base64Image => {
+            editor.command(insertImage, base64Image);
+          })
+          .catch(err => {
+            console.log(err);
+            throw new Error('There was an issue saving your image, please try again');
+          });
       },
       false
     );
-    reader.readAsDataURL(file);
+    reader.readAsArrayBuffer(file);
   }
   event.target.value = '';
 };
