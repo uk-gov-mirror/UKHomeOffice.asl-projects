@@ -43,7 +43,7 @@ const onClickImage = (editor, event) => {
     }
 
     if (file.size > MAX_IMAGE_SIZE) {
-      const actual = Math.round(file.size / (1024 * 1024));
+      const actual = (file.size / (1024 * 1024)).toFixed(2);
       throw new Error(`Image too large. Image files must be less than 5mb. This image: ${actual}mb`);
     }
 
