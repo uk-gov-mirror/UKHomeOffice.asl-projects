@@ -7,6 +7,7 @@ import { Button } from '@ukhomeoffice/react-components';
 import some from 'lodash/some';
 import flatten from 'lodash/flatten';
 import values from 'lodash/values';
+import pickBy from 'lodash/pickBy';
 
 import SPECIES from '../../../constants/species';
 
@@ -139,9 +140,23 @@ class Animals extends Component {
     const deprecated = SPECIES.deprecated.map(d => d.value);
     const projectSpecies = (this.props.project.species || []).filter(s => !deprecated.includes(s));
 
+    const deprecatedSpecies = (this.props.project.species || [])
+      .filter(s => deprecated.includes(s))
+      .filter(s => s.indexOf('other') === -1)
+      .map(s => (SPECIES.deprecated.find(d => d.value === s) || {}).label)
+
+    const deprecatedOthers = flatten(
+      values(
+        pickBy(this.props.project, (value, key) => {
+          return SPECIES.deprecated.find(d => `species-${d.value}` === key);
+        })
+      )
+    );
+
     const otherSpecies = [
       ...(this.props.project['species-other'] || []),
-      ...(this.props.project.species || []).filter(s => deprecated.includes(s)).map(s => (SPECIES.deprecated.find(d => d.value === s) || {}).label)
+      ...deprecatedSpecies,
+      ...deprecatedOthers
     ];
 
     const speciesField = fields.filter(f => f.section === 'intro').map(f => ({ ...f, options: flatten([

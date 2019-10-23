@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 
+import pickBy from 'lodash/pickBy';
+import values from 'lodash/values';
+import flatten from 'lodash/flatten';
 import omit from 'lodash/omit';
 import map from 'lodash/map';
 import intersection from 'lodash/intersection';
@@ -63,11 +66,21 @@ class SpeciesSelector extends Component {
 
     const deprecated = (vals[name] || [])
       .filter(val => species.deprecated.map(d => d.value).includes(val))
-      .map(val => (species.deprecated.find(d => d.value === val) || {}).label)
+      .filter(val => val.indexOf('other') === -1)
+      .map(val => (species.deprecated.find(d => d.value === val) || {}).label);
+
+    const deprecatedOthers = flatten(
+      values(
+        pickBy(vals, (value, key) => {
+          return species.deprecated.find(d => `${name}-${d.value}` === key);
+        })
+      )
+    );
 
     const otherValues = [
       ...(vals[`${name}-other`] || []),
-      ...deprecated
+      ...deprecated,
+      ...deprecatedOthers
     ];
 
     return (
