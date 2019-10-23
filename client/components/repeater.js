@@ -35,7 +35,7 @@ class Repeater extends Component {
   addItem() {
     return Promise.resolve()
       .then(this.props.onBeforeAdd)
-      .then(() => this.update([ ...this.state.items, { id: uuid() } ]))
+      .then(() => this.update([ ...this.state.items, { id: uuid(), ...this.props.itemProps } ]))
       .then(this.props.onAfterAdd);
   }
 
@@ -187,6 +187,7 @@ Repeater.defaultProps = {
   addOnInit: true,
   addAnother: true,
   softDelete: false,
+  itemProps: {},
   onBeforeAdd: () => Promise.resolve(),
   onAfterAdd: () => Promise.resolve(),
   onBeforeRemove: () => Promise.resolve(),

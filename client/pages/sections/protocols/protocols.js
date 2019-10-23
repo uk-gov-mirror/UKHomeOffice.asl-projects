@@ -143,6 +143,7 @@ class Protocols extends PureComponent {
         addButtonBefore={protocols && protocols.length > 0 && protocols[0].title}
         addButtonAfter={true}
         softDelete={true}
+        itemProps={{ speciesDetails: [], steps: [] }}
         onAfterAdd={() => {
           window.scrollTo({
             top: document.body.scrollHeight,
