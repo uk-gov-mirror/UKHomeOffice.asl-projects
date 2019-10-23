@@ -9,32 +9,34 @@ import LEGACY_SPECIES from '../constants/legacy-species';
 export const formatDate = (date, format) => (date ? dateFormatter(date, format) : '-');
 
 export const getConditions = (values, conditions, project) => {
-  const customConditions = (values.conditions || [])
-    .filter(condition => condition.autoAdded && condition.edited);
 
-  const newConditions = [];
+  // remove any old-style conditions from before the days of types
+  const previous = (values.conditions || []).filter(Boolean).filter(c => c.type);
+
+  const editedConditions = previous.filter(c => c.autoAdded && c.edited);
+
   conditions = map(conditions, (condition, key) => ({ ...condition, key }))
 
-  conditions.forEach(condition => {
-    const customCondition = customConditions.find(c => c.key === condition.key);
+  const newConditions = conditions.map(condition => {
+    const editedCondition = editedConditions.find(c => c.key === condition.key);
     const path = `${condition.key}.versions.${condition.versions.length - 1}`;
-    if (customCondition) {
-      newConditions.push({
-        ...customCondition,
-        path: condition.path
-      })
+
+    if (editedCondition) {
+      return { ...editedCondition };
     } else if (condition.include && condition.include(values, project)) {
-      newConditions.push({
+      return {
         path,
         key: condition.key,
         type: condition.type,
         autoAdded: true
-      });
+      };
     }
-  });
+  }).filter(Boolean);
 
   return [
-    ...(values.conditions || []).filter(condition => !condition.autoAdded),
+    // fully custom conditions
+    ...previous.filter(c => !c.autoAdded),
+    // edited conditions
     ...newConditions
   ];
 }
