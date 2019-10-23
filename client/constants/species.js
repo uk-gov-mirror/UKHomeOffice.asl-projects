@@ -13,15 +13,11 @@ export default {
       value: 'guinea-pigs'
     },
     {
-      label: 'Hamsters (Syrian)',
-      value: 'hamsters-syrian'
+      label: 'Hamsters',
+      value: 'hamsters'
     },
     {
-      label: 'Hamsters (Chinese)',
-      value: 'hamsters-chinese'
-    },
-    {
-      label: 'Mongolian gerbils',
+      label: 'Gerbils',
       value: 'gerbils'
     },
     {
@@ -39,37 +35,41 @@ export default {
   ],
   LA: [
     {
-      label: 'Pigs',
-      value: 'pigs'
-    },
-    {
-      label: 'Goats',
-      value: 'goats'
+      label: 'Cattle',
+      value: 'cattle'
     },
     {
       label: 'Sheep',
       value: 'sheep'
     },
     {
-      label: 'Cattle',
-      value: 'cattle'
+      label: 'Goats',
+      value: 'goats'
+    },
+    {
+      label: 'Pigs',
+      value: 'pigs'
+    },
+    {
+      label: 'Minipigs',
+      value: 'minipigs'
     },
     {
       label: 'Camelids',
-      value: 'camelids'
+      value: 'other-camelids'
     }
   ],
   AQ: [
     {
       label: 'Reptiles',
-      value: 'reptiles'
+      value: 'other-reptiles'
     },
     {
-      label: 'Common and Northern leopard frogs',
+      label: 'Xenopus laevis',
       value: 'common-frogs'
     },
     {
-      label: 'African and Western clawed frogs',
+      label: 'Xenopus tropicalis',
       value: 'african-frogs'
     },
     {
@@ -87,13 +87,87 @@ export default {
     {
       label: 'Cephalopods',
       value: 'cephalopods'
+    }
+  ],
+  AV: [
+    {
+      label: 'Domestic fowl',
+      value: 'other-fowl'
+    },
+    {
+      label: 'Other birds',
+      value: 'other-birds'
+    }
+  ],
+  DOM: [
+    {
+      label: 'Cats',
+      value: 'cats'
+    },
+    {
+      label: 'Beagles',
+      value: 'beagles'
+    },
+    {
+      label: 'Other dogs',
+      value: 'other-dogs'
+    },
+    {
+      label: 'Horses',
+      value: 'horses'
+    },
+    {
+      label: 'Ponies',
+      value: 'ponies'
+    },
+    {
+      label: 'Donkeys',
+      value: 'donkeys'
+    },
+    {
+      label: 'Other equidae',
+      value: 'other-equidae'
+    }
+  ],
+  NHP: [
+    {
+      label: 'Marmosets',
+      value: 'marmosets'
+    },
+    {
+      label: 'Rhesus macaques',
+      value: 'rhesus'
+    },
+    {
+      label: 'Cynomolgus macaques',
+      value: 'cynomolgus'
+    },
+    {
+      label: 'Other non human primates',
+      value: 'other-nhps'
+    }
+  ],
+  deprecated: [
+    {
+      label: 'Hamsters (Syrian)',
+      value: 'hamsters-syrian'
+    },
+    {
+      label: 'Hamsters (Chinese)',
+      value: 'hamsters-chinese'
+    },
+    {
+      label: 'Camelids',
+      value: 'camelids'
+    },
+    {
+      label: 'Reptiles',
+      value: 'reptiles'
     },
     {
       label: 'Xenopus',
       value: 'xenopus'
-    }
-  ],
-  AV: [
+    },
     {
       label: 'Domestic fowl',
       value: 'fowl'
@@ -103,48 +177,8 @@ export default {
       value: 'quails'
     },
     {
-      label: 'Other birds',
-      value: 'other-birds'
-    }
-  ],
-  DOG: [
-    {
-      label: 'Beagles',
-      value: 'beagles'
-    },
-    {
-      label: 'Other dogs',
-      value: 'other-dogs'
-    }
-  ],
-  CAT: [
-    {
-      label: 'Cats',
-      value: 'cats'
-    }
-  ],
-  EQU: [
-    {
-      label: 'Horses, donkeys, ponies, and cross-breeds',
-      value: 'horses'
-    }
-  ],
-  NHP: [
-    {
       label: 'Prosimians',
       value: 'prosimians'
-    },
-    {
-      label: 'Marmosets and tamarins',
-      value: 'marmosets'
-    },
-    {
-      label: 'Cynomolgus monkeys',
-      value: 'cynomolgus'
-    },
-    {
-      label: 'Rhesus monkeys',
-      value: 'rhesus'
     },
     {
       label: 'Vervets',
@@ -170,6 +204,5 @@ export default {
       label: 'Apes',
       value: 'apes'
     }
-  ],
-  deprecated: []
+  ]
 }

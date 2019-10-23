@@ -1,5 +1,10 @@
 import some from 'lodash/some';
 import intersection from 'lodash/intersection';
+import values from 'lodash/values';
+import flatten from 'lodash/flatten';
+import SPECIES from './species';
+
+const species = flatten(values(SPECIES));
 
 export default {
   protocol: {
@@ -146,17 +151,27 @@ Genetically altered animals may not be re-homed.`
       ]
     },
     transfer: {
-      include: project => intersection([
-        'mice',
-        'rats',
-        'guinea-pigs',
-        'hamsters-syrian',
-        'hamsters-chinese',
-        'gerbils',
-        'other-rodents',
-        'xenopus',
-        'zebra-fish'
-      ], project.species).length && some(project.protocols, protocol => protocol.gaas),
+      include: project => {
+        const nopes = [
+          'mice',
+          'rats',
+          'guinea-pigs',
+          'hamsters',
+          // legacy
+          'hamsters-syrian',
+          // legacy
+          'hamsters-chinese',
+          'gerbils',
+          'other-rodents',
+          // legacy
+          'xenopus',
+          'common-frogs',
+          'african-frogs',
+          'zebra-fish'
+        ];
+        return (!!intersection(nopes, project.species).length || !!intersection(nopes.map(n => (species.find(s => s.value === n) || {}).label), project['species-other']).length) &&
+          some(project.protocols, protocol => protocol.gaas);
+      },
       type: 'authorisation',
       versions: [
         {
