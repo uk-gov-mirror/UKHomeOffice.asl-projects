@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Value } from 'slate';
 import { diffWords } from 'diff';
 import last from 'lodash/last';
-
+import { Warning } from '@ukhomeoffice/react-components';
 import { fetchQuestionVersions } from '../actions/projects';
 import Modal from './modal';
 import ReviewField from './review-field'
@@ -163,7 +163,9 @@ class DiffWindow extends React.Component {
       {
         !hasContentChanges && <div className="govuk-grid-row">
           <div className="govuk-grid-column-full">
-            <p>This change consists only of formatting or styling changes. No difference will be shown below.</p>
+            <Warning>
+              <p>There are no changes to the text in this answer. The changes might include formatting or images.</p>
+            </Warning>
           </div>
         </div>
       }
