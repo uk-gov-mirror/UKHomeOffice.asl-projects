@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Value } from 'slate';
 import { diffWords } from 'diff';
 import last from 'lodash/last';
-
+import { Warning } from '@ukhomeoffice/react-components';
 import { fetchQuestionVersions } from '../actions/projects';
 import Modal from './modal';
 import ReviewField from './review-field'
@@ -26,6 +26,13 @@ class DiffWindow extends React.Component {
   selectTab = (e, active) => {
     e.preventDefault();
     this.setState({ active })
+  }
+
+  hasContentChanges(a, b) {
+    const before = Value.fromJSON(JSON.parse(a || '{}'));
+    const after = Value.fromJSON(JSON.parse(b || '{}'));
+
+    return before.document.text !== after.document.text;
   }
 
   diff(a, b) {
@@ -140,6 +147,7 @@ class DiffWindow extends React.Component {
     }
 
     const changes = this.diff(before, this.props.value);
+    const hasContentChanges = this.hasContentChanges(before, this.props.value);
 
     if (this.props.loading) {
       return <div className="govuk-grid-row">
@@ -152,6 +160,15 @@ class DiffWindow extends React.Component {
     }
 
     return <Fragment>
+      {
+        !hasContentChanges && <div className="govuk-grid-row">
+          <div className="govuk-grid-column-full">
+            <Warning>
+              <p>There are no changes to the text in this answer. The changes might include formatting or images.</p>
+            </Warning>
+          </div>
+        </div>
+      }
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-one-half">
           {
