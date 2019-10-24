@@ -134,18 +134,41 @@ export function indexedDBSync(data) {
   };
 }
 
-const shouldSyncConditions = state => {
+const conditionsToSync = (state) => {
   if (state.application.isSyncing) {
-    return false;
+    return null;
   }
-  const hasDiff = !isEqual(pick(state.savedProject, CONDITIONS_FIELDS), pick(state.project, CONDITIONS_FIELDS));
-  return hasDiff;
+  const projectConditions = getConditions(state.project);
+  if (!isEqual(getConditions(state.savedProject), projectConditions)) {
+    return projectConditions;
+  }
+  return state.project.protocols.reduce((data, protocol) => {
+    if (data) {
+      return data;
+    }
+    const protocolConditions = getConditions(state.project, protocol.id);
+    if (!isEqual(getConditions(state.savedProject, protocol.id), protocolConditions)) {
+      return protocolConditions;
+    }
+    return null;
+  }, null);
 };
 
-const syncConditions = (dispatch, getState, extra = {}) => {
-  const state = getState();
+const getConditions = (project, protocolId) => {
+  if (protocolId) {
+    const protocol = project.protocols.find(p => p.id === protocolId);
+    return {
+      ...pick(protocol, CONDITIONS_FIELDS),
+      protocolId
+    };
+  }
+  return pick(project, CONDITIONS_FIELDS);
+};
 
-  if (!shouldSyncConditions(state)) {
+const syncConditions = (dispatch, getState) => {
+  const state = getState();
+  const data = conditionsToSync(state);
+  if (!data) {
     return Promise.resolve();
   }
 
@@ -155,10 +178,7 @@ const syncConditions = (dispatch, getState, extra = {}) => {
     state,
     method: 'PUT',
     url: `${state.application.basename}/conditions`,
-    data: {
-      ...pick(state.project, CONDITIONS_FIELDS),
-      ...extra
-    }
+    data
   }
 
   return Promise.resolve()
@@ -170,11 +190,24 @@ const syncConditions = (dispatch, getState, extra = {}) => {
         dispatch(showMessage('Saved successfully'))
       }
     })
-    .then(() => dispatch(updateSavedProject(state.project)))
-    .then(() => syncConditions(dispatch, getState, extra))
+    .then(() => dispatch(updateSavedProject(applyConditions(state.savedProject, data))))
+    .then(() => syncConditions(dispatch, getState))
     .catch(err => {
-      return onSyncError(syncConditions, err, dispatch, getState, extra)
+      return onSyncError(syncConditions, err, dispatch, getState)
     });
+};
+
+const applyConditions = (state, conditions) => {
+  if (conditions.protocolId) {
+    const protocols = state.protocols.map(p => {
+      if (p.id === conditions.protocolId) {
+        return { ...p, ...pick(conditions, CONDITIONS_FIELDS) };
+      }
+      return p;
+    });
+    return { ...state, protocols };
+  }
+  return { ...state, ...pick(conditions, CONDITIONS_FIELDS) };
 };
 
 const shouldSyncProject = state => {
@@ -238,8 +271,8 @@ const syncProject = (dispatch, getState) => {
     });
 }
 
-const debouncedSyncConditions = debounce((dispatch, getState, extra) => {
-  return syncConditions(dispatch, getState, extra)
+const debouncedSyncConditions = debounce((dispatch, getState) => {
+  return syncConditions(dispatch, getState)
 }, 1000, { maxWait: 5000, leading: true });
 
 export function updateRetrospectiveAssessment(retrospectiveAssessment) {
@@ -280,7 +313,7 @@ export function updateConditions(type, conditions, protocolId) {
       newState.conditions = type === 'legacy' ? conditions : newConditions;
     }
     dispatch(updateProject(newState));
-    return debouncedSyncConditions(dispatch, getState, protocolId && { protocolId })
+    return debouncedSyncConditions(dispatch, getState)
   }
 }
 
