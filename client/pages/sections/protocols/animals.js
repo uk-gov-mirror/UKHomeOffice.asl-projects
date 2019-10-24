@@ -76,29 +76,9 @@ class Animals extends Component {
     this.setState({ adding: !this.state.adding });
   }
 
-  saveAnimalsAndAdvance = () => {
-    const species = this.props.values.species;
-    const speciesDetails = this.props.values.speciesDetails || [];
-    species.forEach(i => {
-      let item = flatten(values(SPECIES)).find(f => f.value === i);
-      if (item) {
-        item = item.label
-      }
-      else {
-        item = i;
-      }
-      if (some(speciesDetails, sd => sd.name === item)) {
-        return;
-      }
-      speciesDetails.push({ name: item, id: v4() })
-    });
-
-    this.props.onFieldChange('speciesDetails', speciesDetails);
-    this.props.advance();
-  }
-
   getItems = () => {
-    const { values: { speciesDetails = [] }, project } = this.props;
+    const { project } = this.props;
+    const speciesDetails = this.props.values.speciesDetails.filter(Boolean);
     let species = this.props.values.species || [];
 
     species = species.map(s => {

@@ -79,14 +79,14 @@ class ProtocolSections extends PureComponent {
     const numberOfNewComments = Object.values(newComments)
       .reduce((total, comments) => total + (comments || []).length, 0);
 
-    const speciesDetails = values.speciesDetails && values.speciesDetails.filter(s => s.name);
+    const speciesDetails = values.speciesDetails && values.speciesDetails.filter(Boolean).filter(s => s.name);
 
     const noAnswer = <em>No answer provided</em>;
 
     const fields = Object.values(sections)
       .reduce((list, section) => {
         if (section.repeats && values[section.repeats]) {
-          values[section.repeats].forEach(repeater => {
+          values[section.repeats].filter(Boolean).forEach(repeater => {
             list.push.apply(list, (section.fields || []).map(f => `${section.repeats}.${repeater.id}.${f.name}`));
           });
           return list;
