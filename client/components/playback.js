@@ -51,7 +51,7 @@ const mapStateToProps = ({ application: { schemaVersion }, project }, { playback
         }
       });
     }
-    field = subsection.fields.find(f => f.name === playback);
+    field = (subsection.fields || []).find(f => f.name === playback);
     return field;
   });
   return {
