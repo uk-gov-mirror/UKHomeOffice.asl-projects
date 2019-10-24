@@ -78,7 +78,7 @@ const getOpenSection = (protocolState, editable, sections) => {
 
 const getFieldKeys = (section, values) => {
   if (section.repeats) {
-    return (values[section.repeats] || []).reduce((list, repeater) => {
+    return (values[section.repeats] || []).filter(Boolean).reduce((list, repeater) => {
       return list.concat((section.fields || []).map(f => `protocols.${values.id}.${section.repeats}.${repeater.id}.${f.name}`));
     }, []);
   }
