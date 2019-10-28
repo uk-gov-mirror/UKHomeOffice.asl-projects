@@ -27,8 +27,8 @@ const plugins = [
   Blocks(),
   Marks(),
   Image(),
-  tablePlugin,
-  listPlugin
+  listPlugin,
+  tablePlugin
 ];
 
 const serialiseValue = value => {
