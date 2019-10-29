@@ -19,12 +19,12 @@ const Step = ({ id, index, fields, ...props }) => {
           props.adverse === true
             ? (
               <ReviewFields
-                fields={fields.filter(f => f.name === 'adverse')}
+                fields={fields.find(f => f.name === 'adverse').options.find(o => o.label === 'Yes').reveal}
                 values={props}
               />
             )
             : (
-              <h3>This step will have no adverse effects.</h3>
+              <h3>This step will have no adverse effects that are more than mild and transient.</h3>
             )
         }
       </div>
