@@ -1,12 +1,11 @@
 import React, { Component, Fragment, createRef } from 'react';
-import { withRouter } from 'react-router';
+import { useParams } from 'react-router';
 
 import classnames from 'classnames'
 import { Button } from '@ukhomeoffice/react-components';
 
 import every from 'lodash/every';
 import isUndefined from 'lodash/isUndefined';
-import TextEditor from '../../../components/editor';
 
 import ReviewFields from '../../../components/review-fields';
 import Repeater from '../../../components/repeater';
@@ -81,7 +80,7 @@ class Step extends Component {
   }
 
   render() {
-    const { prefix, index, fields, values, updateItem, length, editable, deleted } = this.props;
+    const { prefix, index, fields, values, updateItem, length, editable, deleted, isReviewStep } = this.props;
 
     const completed = !editable || values.completed;
     return (
@@ -112,7 +111,15 @@ class Step extends Component {
             }
           </h3>
           {
-            completed && values.title && <TextEditor value={values.title} readOnly={true} key={values.title} />
+            completed && values.title && (
+              <ReviewFields
+                fields={[ fields.find(f => f.name === 'title') ]}
+                values={{ title: values.title }}
+                prefix={this.props.prefix}
+                editLink={`0#${this.props.prefix}`}
+                readonly={!isReviewStep}
+              />
+            )
           }
         </Fragment>
         {
@@ -135,6 +142,7 @@ class Step extends Component {
               values={values}
               prefix={this.props.prefix}
               editLink={`0#${this.props.prefix}`}
+              readonly={!isReviewStep}
             />
             {
               editable && !deleted && <a href="#" onClick={this.editStep}>Edit step</a>
@@ -146,7 +154,8 @@ class Step extends Component {
   }
 }
 
-const Steps = ({ values, prefix, updateItem, editable, ...props }) => {
+export default function Steps({ values, prefix, updateItem, editable, ...props }) {
+  const isReviewStep = parseInt(useParams().step, 10) === 1;
   return (
     <div className="steps">
       <p className="grey">{props.hint}</p>
@@ -163,11 +172,10 @@ const Steps = ({ values, prefix, updateItem, editable, ...props }) => {
         <Step
           editable={editable}
           deleted={values.deleted}
+          isReviewStep={isReviewStep}
           { ...props }
         />
       </Repeater>
     </div>
   )
 }
-
-export default withRouter(Steps);
