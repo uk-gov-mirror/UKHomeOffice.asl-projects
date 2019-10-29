@@ -121,7 +121,7 @@ class Protocols extends PureComponent {
   }
 
   render() {
-    const { protocols, editable, previousProtocols } = this.props;
+    const { protocols, editable, previousProtocols, isLegacy } = this.props;
 
     const items = (protocols || []).filter(p => {
       if (p.deleted === true) {
@@ -133,6 +133,11 @@ class Protocols extends PureComponent {
       return true;
     });
 
+    const itemProps = {
+      speciesDetails: [],
+      steps: isLegacy ? undefined : []
+    };
+
     return (
       <Repeater
         type="protocols"
@@ -143,7 +148,7 @@ class Protocols extends PureComponent {
         addButtonBefore={protocols && protocols.length > 0 && protocols[0].title}
         addButtonAfter={true}
         softDelete={true}
-        itemProps={{ speciesDetails: [], steps: [] }}
+        itemProps={itemProps}
         onAfterAdd={() => {
           window.scrollTo({
             top: document.body.scrollHeight,
@@ -177,6 +182,23 @@ class Protocols extends PureComponent {
   }
 }
 
-const mapStateToProps = ({ comments, project: { protocols }, application: { user, readonly, previousProtocols } }) => ({ protocols, newComments: getNewComments(comments, user), readonly, previousProtocols });
+const mapStateToProps = ({
+  comments,
+  project: {
+    protocols
+  },
+  application: {
+    user,
+    readonly,
+    previousProtocols,
+    schemaVersion
+  }
+}) => ({
+  protocols,
+  newComments: getNewComments(comments, user),
+  readonly,
+  previousProtocols,
+  isLegacy: schemaVersion === 0
+});
 
 export default connect(mapStateToProps)(Protocols);
