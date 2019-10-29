@@ -28,7 +28,11 @@ class DiffWindow extends React.Component {
     this.setState({ active })
   }
 
-  hasContentChanges(a, b) {
+  hasContentChanges(a, b, type) {
+    if (type !== 'text-editor') {
+      return true;
+    }
+
     const before = Value.fromJSON(JSON.parse(a || '{}'));
     const after = Value.fromJSON(JSON.parse(b || '{}'));
 
@@ -147,7 +151,7 @@ class DiffWindow extends React.Component {
     }
 
     const changes = this.diff(before, this.props.value);
-    const hasContentChanges = this.hasContentChanges(before, this.props.value);
+    const hasContentChanges = this.hasContentChanges(before, this.props.value, this.props.type);
 
     if (this.props.loading) {
       return <div className="govuk-grid-row">
