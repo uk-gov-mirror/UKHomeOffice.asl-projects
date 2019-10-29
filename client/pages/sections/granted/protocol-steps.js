@@ -19,7 +19,7 @@ const Step = ({ id, index, fields, ...props }) => {
           props.adverse === true
             ? (
               <ReviewFields
-                fields={fields.find(f => f.name === 'adverse').options.find(o => o.label === 'Yes').reveal}
+                fields={fields.find(f => f.name === 'adverse').options.find(o => o.value === true).reveal}
                 values={props}
               />
             )
