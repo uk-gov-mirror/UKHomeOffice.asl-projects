@@ -70,12 +70,12 @@ class Section extends React.Component {
               if (typeof data === 'string') {
                 data = { [data]: value };
               }
-              const conditions = getConditions({ ...this.props.project, ...data }, CONDITIONS.project);
-
-              this.props.update(data);
 
               if (!this.props.isLegacy) {
-                this.props.update({ conditions })
+                const conditions = getConditions({ ...this.props.project, ...data }, CONDITIONS.project);
+                this.props.update({ ...data, conditions })
+              } else {
+                this.props.update(data);
               }
             }}
             exit={ () => this.props.history.push('/') }
