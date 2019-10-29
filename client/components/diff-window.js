@@ -29,7 +29,7 @@ class DiffWindow extends React.Component {
   }
 
   hasContentChanges(a, b, type) {
-    if (type !== 'text-editor') {
+    if (type !== 'texteditor') {
       return true;
     }
 
