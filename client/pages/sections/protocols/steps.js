@@ -80,7 +80,7 @@ class Step extends Component {
   }
 
   render() {
-    const { prefix, index, fields, values, updateItem, length, editable, deleted, step } = this.props;
+    const { prefix, index, fields, values, updateItem, length, editable, deleted, isReviewStep } = this.props;
 
     const completed = !editable || values.completed;
     return (
@@ -117,7 +117,7 @@ class Step extends Component {
                 values={{ title: values.title }}
                 prefix={this.props.prefix}
                 editLink={`0#${this.props.prefix}`}
-                readonly={step !== 1}
+                readonly={!isReviewStep}
               />
             )
           }
@@ -142,7 +142,7 @@ class Step extends Component {
               values={values}
               prefix={this.props.prefix}
               editLink={`0#${this.props.prefix}`}
-              readonly={step !== 1}
+              readonly={!isReviewStep}
             />
             {
               editable && !deleted && <a href="#" onClick={this.editStep}>Edit step</a>
@@ -155,7 +155,7 @@ class Step extends Component {
 }
 
 export default function Steps({ values, prefix, updateItem, editable, ...props }) {
-  const { step } = useParams();
+  const isReviewStep = parseInt(useParams().step, 10) === 1;
   return (
     <div className="steps">
       <p className="grey">{props.hint}</p>
@@ -172,7 +172,7 @@ export default function Steps({ values, prefix, updateItem, editable, ...props }
         <Step
           editable={editable}
           deleted={values.deleted}
-          step={step}
+          isReviewStep={isReviewStep}
           { ...props }
         />
       </Repeater>
