@@ -180,9 +180,9 @@ class FormatToolbar extends Component {
         {this.renderBlockButton('input-file', ic_image, 'Insert image')}
         {this.renderMarkButton('superscript', superscript, 'Superscript')}
         {this.renderMarkButton('subscript', subscript, 'Subscript')}
+        {this.renderListToolbar()}
         {this.renderClearFormattingButton()}
         {this.renderTableToolbar()}
-        {this.renderListToolbar()}
       </div>
     )
   }
