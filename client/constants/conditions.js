@@ -218,7 +218,7 @@ Genetically altered animals may not be re-homed.`
     },
     'code-of-practice': {
       include: project => !project['establishments-care-conditions'],
-      type: 'authorisation',
+      type: 'condition',
       versions: [
         {
           title: 'Establishment licences not meeting Code of Practice',
