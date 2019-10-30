@@ -25,7 +25,7 @@ class ProtocolsReview extends PureComponent {
         }
 
         <Fragment>
-          <ProtocolConditions />
+          { readonly && <ProtocolConditions /> }
           <Protocols {...props} editable={false} />
         </Fragment>
 
