@@ -10,7 +10,8 @@ import {
   ic_format_quote,
   ic_format_list_numbered,
   ic_format_list_bulleted,
-  ic_image
+  ic_image,
+  ic_format_clear
 } from 'react-icons-kit/md/';
 import {
   superscript,
@@ -148,6 +149,24 @@ class FormatToolbar extends Component {
     );
   }
 
+  clearFormatting = e => {
+    e.preventDefault();
+    if (window.confirm('Are you sure you want to clear formatting in selection?')) {
+      this.props.command('unwrapBlocks');
+      this.props.command('clearMarks');
+    }
+  }
+
+  renderClearFormattingButton() {
+    return <button
+      className="tooltip-icon-button"
+      onMouseDown={this.clearFormatting}
+      title="Clear formatting"
+      >
+      <Icon icon={ic_format_clear} />
+    </button>
+  }
+
   render () {
     return (
       <div className="format-toolbar">
@@ -161,8 +180,9 @@ class FormatToolbar extends Component {
         {this.renderBlockButton('input-file', ic_image, 'Insert image')}
         {this.renderMarkButton('superscript', superscript, 'Superscript')}
         {this.renderMarkButton('subscript', subscript, 'Subscript')}
-        {this.renderTableToolbar()}
         {this.renderListToolbar()}
+        {this.renderClearFormattingButton()}
+        {this.renderTableToolbar()}
       </div>
     )
   }
