@@ -76,7 +76,7 @@ export default {
       ]
     },
     marmosets: {
-      include: project => (project.species || []).includes('marmosets') && !project['marmoset-colony'],
+      include: project => (project.species || []).includes('marmosets') && project['marmoset-colony'] === false,
       type: 'condition',
       versions: [
         {
@@ -207,7 +207,7 @@ Genetically altered animals may not be re-homed.`
       ]
     },
     'non-purpose-bred-sched-2': {
-      include: project => !project['purpose-bred-animals'],
+      include: project => project['purpose-bred-animals'] === false,
       type: 'condition',
       versions: [
         {
@@ -217,7 +217,7 @@ Genetically altered animals may not be re-homed.`
       ]
     },
     'code-of-practice': {
-      include: project => !project['establishments-care-conditions'],
+      include: project => project['establishments-care-conditions'] === false,
       type: 'condition',
       versions: [
         {
