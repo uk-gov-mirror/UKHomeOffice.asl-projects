@@ -7,6 +7,7 @@ import pickBy from 'lodash/pickBy';
 import mapValues from 'lodash/mapValues';
 import SPECIES from '../../../constants/species';
 import { getLegacySpeciesLabel } from '../../../helpers';
+import { filterSpeciesByActive } from '../../../pages/sections/protocols/animals';
 
 export default (application, sections, values, updateImageDimensions) => {
   const numbering = new Numbering();
@@ -664,7 +665,7 @@ export default (application, sections, values, updateImageDimensions) => {
           renderFields(doc, section, stepValues);
         });
       case 'animals':
-        return (values.speciesDetails || []).forEach(speciesValues => {
+        return filterSpeciesByActive(values, project).forEach(speciesValues => {
           doc.createParagraph(speciesValues.name).heading2();
           renderFields(doc, section, speciesValues, section.fields.filter(f => f.name !== 'species'));
         });

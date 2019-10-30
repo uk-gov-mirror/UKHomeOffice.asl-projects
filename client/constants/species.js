@@ -170,5 +170,6 @@ export default {
       label: 'Apes',
       value: 'apes'
     }
-  ]
+  ],
+  deprecated: []
 }

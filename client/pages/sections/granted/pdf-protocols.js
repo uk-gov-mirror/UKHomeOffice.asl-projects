@@ -4,10 +4,11 @@ import SummaryTable from './summary-table';
 import ProtocolSections from '../protocols/sections';
 import ProtocolConditions from '../protocols/protocol-conditions';
 import { getLegacySpeciesLabel } from '../../../helpers';
+import { filterSpeciesByActive } from '../protocols/animals';
 
-const Protocol = ({ protocol, number, sections, isLegacy }) => {
+const Protocol = ({ protocol, number, sections, isLegacy, project }) => {
   const species = !isLegacy
-    ? (protocol.speciesDetails || []).filter(s => s.name)
+    ? filterSpeciesByActive(protocol, project)
     : (protocol.species || []).map(s => {
       const label = getLegacySpeciesLabel(s);
       return {
@@ -87,7 +88,7 @@ const PDF = ({ protocols = [], isLegacy, ...props }) => {
       {
         !isLegacy && <h2>{props.title}</h2>
       }
-      <SummaryTable protocols={protocols} isLegacy={isLegacy} />
+      <SummaryTable protocols={protocols} isLegacy={isLegacy} project={props.project} />
       <ProtocolConditions pdf={true} />
       {
         protocols.map((protocol, index) => (
@@ -96,6 +97,7 @@ const PDF = ({ protocols = [], isLegacy, ...props }) => {
             protocol={protocol}
             number={index + 1}
             sections={props.sections}
+            project={props.project}
             isLegacy={isLegacy}
           />
         ))
@@ -109,7 +111,8 @@ const mapStateToProps = ({
   application: { schemaVersion }
 }) => ({
   protocols: project.protocols,
-  isLegacy: schemaVersion === 0
+  isLegacy: schemaVersion === 0,
+  project
 });
 
 export default connect(mapStateToProps)(PDF);

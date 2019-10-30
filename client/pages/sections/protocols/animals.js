@@ -7,6 +7,7 @@ import { Button } from '@ukhomeoffice/react-components';
 import some from 'lodash/some';
 import flatten from 'lodash/flatten';
 import values from 'lodash/values';
+import pickBy from 'lodash/pickBy';
 
 import SPECIES from '../../../constants/species';
 
@@ -16,15 +17,46 @@ import Fieldset from '../../../components/fieldset';
 import Expandable from '../../../components/expandable';
 import Repeater from '../../../components/repeater';
 
-import SpeciesSelector from '../../../components/species-selector';
+function getProjectSpecies(project) {
+  return flatten([
+    ...(project.species || []).map(s => {
+      if (s.indexOf('other') > -1) {
+        return project[`species-${s}`];
+      }
+      return s;
+    }),
+    ...(project['species-other'] || [])
+  ]);
+}
 
-const AddSpecies = ({ onContinueClicked, onFieldChange, ...props }) => {
-  return (<div className="panel light-grey-bg">
-    <SpeciesSelector name='species' { ...props } onFieldChange={onFieldChange} />
-    <p className="control-panel">
-      <Button onClick={onContinueClicked}>Add species</Button>
-    </p>
-  </div>)}
+export function filterSpeciesByActive(protocol, project) {
+  const { species = [], speciesDetails = [] } = protocol;
+  const projectSpecies = getProjectSpecies(project);
+
+  return speciesDetails.filter(s => {
+    return (species.includes(s.value) || species.includes(s.name)) && (projectSpecies.includes(s.value) || projectSpecies.includes(s.name));
+  });
+}
+
+function AddSpecies({ onContinueClicked, onFieldChange, ...props }) {
+  return (
+    <div className="panel light-grey-bg">
+      <Fieldset
+        fields={[
+          {
+            name: 'species',
+            type: 'species-selector'
+          }
+        ]}
+        onFieldChange={onFieldChange}
+        {...props}
+      />
+      <p className="control-panel">
+        <Button onClick={onContinueClicked}>Add species</Button>
+      </p>
+    </div>
+  );
+}
 
 class Animal extends Component {
   state = {
@@ -81,43 +113,22 @@ class Animals extends Component {
     const speciesDetails = this.props.values.speciesDetails.filter(Boolean);
     let species = this.props.values.species || [];
 
-    species = species.map(s => {
-      const obj = flatten(values(SPECIES)).find(sp => sp.value === s);
-      if (obj) {
-        return obj.label;
-      }
-      return s;
-    });
+    species.forEach(item => {
+      const precodedSpecies = flatten(values(SPECIES)).find(f => f.value === item);
+      let value;
 
-    const proj = flatten([
-      ...(project.species || []).map(s => {
-        if (s.indexOf('other') > -1) {
-          return project[`species-${s}`];
-        }
-        const species = flatten(values(SPECIES)).find(sp => sp.value === s);
-        if (species) {
-          return species.label;
-        }
-      }),
-      ...([project['species-other']] || [])
-    ]);
-
-    species.forEach(i => {
-      let item = flatten(values(SPECIES)).find(f => f.value === i);
-      if (item) {
-        item = item.label
-      }
-      else {
-        item = i;
+      if (precodedSpecies) {
+        value = precodedSpecies.value;
+        item = precodedSpecies.label
       }
 
       if (some(speciesDetails, sd => sd.name === item)) {
         return;
       }
-      speciesDetails.push({ name: item, id: v4() })
+      speciesDetails.push({ name: item, id: v4(), value })
     });
 
-    return speciesDetails.filter(s => species.includes(s.name) && proj.includes(s.name))
+    return filterSpeciesByActive({ speciesDetails, species }, project);
   }
 
   render() {
@@ -126,14 +137,36 @@ class Animals extends Component {
 
     const { adding } = this.state;
 
+    const deprecated = SPECIES.deprecated.map(d => d.value);
+    const projectSpecies = (this.props.project.species || []).filter(s => !deprecated.includes(s));
+
+    const deprecatedSpecies = (this.props.project.species || [])
+      .filter(s => deprecated.includes(s))
+      .filter(s => s.indexOf('other') === -1)
+      .map(s => (SPECIES.deprecated.find(d => d.value === s) || {}).label)
+
+    const deprecatedOthers = flatten(
+      values(
+        pickBy(this.props.project, (value, key) => {
+          return SPECIES.deprecated.find(d => `species-${d.value}` === key);
+        })
+      )
+    );
+
+    const otherSpecies = [
+      ...(this.props.project['species-other'] || []),
+      ...deprecatedSpecies,
+      ...deprecatedOthers
+    ];
+
     const speciesField = fields.filter(f => f.section === 'intro').map(f => ({ ...f, options: flatten([
-      ...(this.props.project.species || []).map(s => {
+      ...projectSpecies.map(s => {
         if (s.indexOf('other') > -1) {
           return this.props.project[`species-${s}`]
         }
         return flatten(values(SPECIES)).find(species => species.value === s);
       }),
-      ...(this.props.project['species-other'] || [])
+      ...otherSpecies
     ]) }));
 
     const items = this.getItems();
@@ -145,13 +178,25 @@ class Animals extends Component {
       />
     }
 
+    const protocolSpecies = [
+      ...(this.props.values.species || []).map(s => {
+        if (deprecated.includes(s)) {
+          return (SPECIES.deprecated.find(d => d.value === s) || {}).label;
+        }
+        return s;
+      })
+    ];
+
     return (
       <Fragment>
         {
           editable && !deleted && (
             <Fieldset
               fields={speciesField}
-              values={this.props.values}
+              values={{
+                ...this.props.values,
+                species: protocolSpecies
+              }}
               onFieldChange={onFieldChange}
               prefix={prefix}
             />
