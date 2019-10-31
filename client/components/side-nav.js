@@ -45,7 +45,7 @@ const SideNav = ({ schemaVersion, project, isGranted, ...props }) => {
       {
         Object.keys(sections)
           .filter(key => !sections[key].show || sections[key].show(props))
-          .filter(key => !isGranted || !sections[key].granted.show || sections[key].granted.show(props))
+          .filter(key => !isGranted || !sections[key].granted.show || sections[key].granted.show(project))
           .sort((a, b) => !isGranted ? true : sections[a].granted.order - sections[b].granted.order)
           .map(key => {
             const section = sections[key];
