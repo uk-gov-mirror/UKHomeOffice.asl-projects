@@ -1,5 +1,5 @@
 module.exports = {
-  licenceHolder: `This **PROJECT LICENCE** allows the holder to carry out a programme of scientific procedures on living animals under the powers vested in him/her by the **ANIMALS (SCIENTIFIC PROCEDURES) ACT 1986.**
+  licenceHolder: `This **PROJECT LICENCE** allows the holder to carry out a programme of scientific procedures on living animals under the powers vested in the Secretary of State by the **ANIMALS (SCIENTIFIC PROCEDURES) ACT 1986.**
 
   The Secretary of State hereby licences the project licence holder to carry out the programme of work specified, subject to the restrictions and provisions contained in the Act and subject also to the limitations and conditions contained in this licence and to any other conditions that the Secretary of State may from time to time prescribe.
 
