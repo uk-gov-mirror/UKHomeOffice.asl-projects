@@ -12,7 +12,7 @@ class ProtocolsReview extends PureComponent {
   }
 
   render() {
-    const { complete, readonly, ...props } = this.props;
+    const { complete, readonly, isLegacy, ...props } = this.props;
     return (
       <Fragment>
         {
@@ -25,7 +25,7 @@ class ProtocolsReview extends PureComponent {
         }
 
         <Fragment>
-          { readonly && <ProtocolConditions /> }
+          { readonly && !isLegacy && <ProtocolConditions /> }
           <Protocols {...props} editable={false} />
         </Fragment>
 
