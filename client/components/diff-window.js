@@ -1,13 +1,16 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
+import classnames from 'classnames';
 import { Value } from 'slate';
-import { diffWords } from 'diff';
+import { diffWords, diffArrays } from 'diff';
 import last from 'lodash/last';
 import { Warning } from '@ukhomeoffice/react-components';
 import { fetchQuestionVersions } from '../actions/projects';
 import Modal from './modal';
 import ReviewField from './review-field'
 import Tabs from './tabs';
+
+const DEFAULT_LABEL = 'No answer provided';
 
 class DiffWindow extends React.Component {
   state = {
@@ -39,54 +42,70 @@ class DiffWindow extends React.Component {
     return before.document.text !== after.document.text;
   }
 
-  diff(a, b) {
-    let before;
-    let after;
+  diff(a, b, type) {
+    type = type || this.props.type;
+    let diff = [];
+    let added = [];
+    let removed = [];
+    switch (type) {
+      case 'text':
+        diff = diffWords(a || '', b || '');
+        break;
+      case 'checkbox':
+        diff = diffArrays((a || []).sort(), (b || []).sort());
+        break;
+      case 'texteditor':
+        let before;
+        let after;
 
-    try {
-      before = Value.fromJSON(JSON.parse(a || '{}'));
-      after = Value.fromJSON(JSON.parse(b || '{}'));
-    } catch (e) {
-      return { added: [], removed: [] };
+        try {
+          before = Value.fromJSON(JSON.parse(a || '{}'));
+          after = Value.fromJSON(JSON.parse(b || '{}'));
+        } catch (e) {
+          return { added: [], removed: [] };
+        }
+
+        const diffs = diffWords(before.document.text, after.document.text);
+
+        const removed = diffs.reduce((arr, d) => {
+          // ignore additions
+          if (!d.added) {
+            const prev = last(arr);
+            const start = prev ? prev.start + prev.count : 0;
+            return [...arr, { ...d, start, count: d.value.length }];
+          }
+          return arr;
+        }, []).filter(d => d.removed);
+
+        const added = diffs.reduce((arr, d) => {
+          // ignore removals
+          if (!d.removed) {
+            const prev = last(arr);
+            const start = prev ? prev.start + prev.count : 0;
+            return [...arr, { ...d, start, count: d.value.length }];
+          }
+          return arr;
+        }, []).filter(d => d.added);
+
+        return { added, removed };
     }
 
-    const diffs = diffWords(before.document.text, after.document.text);
-
-    const removed = diffs.reduce((arr, d) => {
-      // ignore additions
-      if (!d.added) {
-        const prev = last(arr);
-        const start = prev ? prev.start + prev.count : 0;
-        return [...arr, { ...d, start, count: d.value.length }];
-      }
-      return arr;
-    }, []).filter(d => d.removed);
-
-    const added = diffs.reduce((arr, d) => {
-      // ignore removals
-      if (!d.removed) {
-        const prev = last(arr);
-        const start = prev ? prev.start + prev.count : 0;
-        return [...arr, { ...d, start, count: d.value.length }];
-      }
-      return arr;
-    }, []).filter(d => d.added);
-
-    return { added, removed };
+    return {
+      added: diff.filter(item => !item.removed),
+      removed: diff.filter(item => !item.added)
+    };
   }
 
-  decorateNode(diff, state) {
+  decorateNode(parts) {
 
     return (node) => {
       const decorations = [];
       if (!node.type) {
-        const diffs = state === 'before' ? diff.removed : diff.added;
-
         let start = 0;
 
         const getDiffs = text => {
           const length = text.text.length;
-          return diffs.filter(d => {
+          return parts.filter(d => {
             const end = d.start + d.count;
             const startsInside = d.start >= start && d.start < start + length;
             const endsInside = end > start && end <= start + length;
@@ -94,7 +113,6 @@ class DiffWindow extends React.Component {
             return startsInside || endsInside || wrapsAround;
           });
         };
-
 
         for (const txt of node.texts()) {
           const [text, path] = txt;
@@ -141,6 +159,55 @@ class DiffWindow extends React.Component {
     return next();
   }
 
+  renderDiff(parts, value) {
+    switch (this.props.type) {
+      case 'text':
+        return (
+          <p>
+            {
+              parts.length
+                ? parts.map(({ value, added, removed }, i) => (
+                  <span key={i} className={classnames('diff', { added, removed })}>{ value }</span>
+                ))
+                : <em>{DEFAULT_LABEL}</em>
+            }
+          </p>
+        );
+
+      case 'checkbox':
+        return parts.length
+          ? (
+              <ul>
+                {
+                  parts.map(({ value, added, removed }, i) => (
+                    <li key={i} className={classnames('diff', { added, removed })}>{ value }</li>
+                  ))
+                }
+              </ul>
+            )
+          : (
+            <p>
+              <em>{ DEFAULT_LABEL }</em>
+            </p>
+          );
+
+      default:
+        return (
+          <ReviewField
+            key={value}
+            name={this.props.name}
+            decorateNode={this.decorateNode(parts)}
+            renderDecoration={this.renderDecoration}
+            options={this.props.options}
+            type={this.props.type}
+            value={value}
+            noComments
+          />
+        )
+
+    }
+  }
+
   compare() {
     const { previous, granted, changedFromLatest, changedFromGranted } = this.props;
 
@@ -184,15 +251,9 @@ class DiffWindow extends React.Component {
                     <a href="#" onClick={e => this.selectTab(e, 1)}>Previous version</a>
                   </Tabs>
                   <div className="panel light-grey">
-                    <ReviewField
-                      key={before}
-                      decorateNode={this.decorateNode(changes, 'before')}
-                      renderDecoration={this.renderDecoration}
-                      options={this.props.options}
-                      type={this.props.type}
-                      value={before}
-                      noComments
-                    />
+                    {
+                      this.renderDiff(changes.removed, before)
+                    }
                   </div>
                 </Fragment>
               )
@@ -200,14 +261,9 @@ class DiffWindow extends React.Component {
                 <Fragment>
                   <h3>{changedFromGranted ? 'Current licence' : 'Previous version'}</h3>
                   <div className="panel light-grey">
-                    <ReviewField
-                      decorateNode={this.decorateNode(changes, 'before')}
-                      renderDecoration={this.renderDecoration}
-                      options={this.props.options}
-                      type={this.props.type}
-                      value={before}
-                      noComments
-                    />
+                    {
+                      this.renderDiff(changes.removed, before)
+                    }
                   </div>
                 </Fragment>
               )
@@ -216,15 +272,9 @@ class DiffWindow extends React.Component {
         <div className="govuk-grid-column-one-half">
           <h3>Proposed</h3>
           <div className="panel light-grey">
-            <ReviewField
-              key={before}
-              decorateNode={this.decorateNode(changes, 'after')}
-              renderDecoration={this.renderDecoration}
-              options={this.props.options}
-              type={this.props.type}
-              value={this.props.value}
-              noComments
-            />
+            {
+              this.renderDiff(changes.added, this.props.value)
+            }
           </div>
         </div>
       </div>
