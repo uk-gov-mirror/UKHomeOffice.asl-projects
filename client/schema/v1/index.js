@@ -24,7 +24,6 @@ import SPECIES from '../../constants/species';
 
 import intersection from 'lodash/intersection';
 import some from 'lodash/some';
-import flatten from 'lodash/flatten';
 
 import experience from './experience';
 
@@ -1850,11 +1849,7 @@ each other.`,
         title: 'Cats, dogs, and equidae',
         intro: 'You are seeing this section because you added a type of cat, dog, or equid to your project. To change this, go to Introductory details.',
         show: values => intersection(
-          flatten([
-            SPECIES.CAT,
-            SPECIES.DOG,
-            SPECIES.EQU
-          ]).map(s => s.value),
+          SPECIES.DOM.map(s => s.value),
           values.species
         ).length,
         fields: [

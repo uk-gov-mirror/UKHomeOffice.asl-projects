@@ -1,10 +1,8 @@
 export default {
   SA: 'Small animals',
   LA: 'Large animals',
-  AQ: 'Aquatic species',
+  AQ: 'Fish, reptiles and aquatic species',
   AV: 'Birds',
-  DOG: 'Dogs',
-  CAT: 'Cats',
-  EQU: 'Equidae',
+  DOM: 'Cats, dogs and equidae',
   NHP: 'Non-human primates'
 };
