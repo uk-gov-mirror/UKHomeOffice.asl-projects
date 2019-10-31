@@ -27,7 +27,7 @@ class ProtocolConditions extends Component {
   render() {
     return (
       <div className="protocol-conditions">
-        <h2>Conditions related to all protocols</h2>
+        <h2>General constraints</h2>
 
         <p>
           Anaesthesia, surgery, substance administration and withdrawal of fluid conditions relate to each of these protocols.
@@ -37,7 +37,7 @@ class ProtocolConditions extends Component {
           this.props.pdf ? <Content />
           : (
             <details>
-              <summary>View conditions</summary>
+              <summary>View general constraints</summary>
               <br />
               <Content />
             </details>
