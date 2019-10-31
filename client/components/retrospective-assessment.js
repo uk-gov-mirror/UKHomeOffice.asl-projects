@@ -41,7 +41,7 @@ const nopes = [
 
 function raApplies(project) {
   return !!intersection(project.species, nopes).length ||
-    !!intersection(project['species-other'], nopes.map(n => (species.find(s => s.value === n) || {}).value)).length ||
+    !!intersection(project['species-other'], nopes.map(n => (species.find(s => s.value === n) || {}).label)).length ||
     project['endangered-animals'] ||
     some(project.protocols, p => (p.severity || '').match(/severe/ig));
 }
