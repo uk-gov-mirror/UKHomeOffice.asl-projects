@@ -222,7 +222,7 @@ Genetically altered animals may not be re-homed.`
       ]
     },
     'non-purpose-bred-sched-2': {
-      include: project => project['purpose-bred-animals'] === false,
+      include: project => project['purpose-bred'] === false,
       type: 'condition',
       versions: [
         {
