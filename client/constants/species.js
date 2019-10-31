@@ -92,7 +92,7 @@ export default {
   AV: [
     {
       label: 'Domestic fowl',
-      value: 'other-fowl'
+      value: 'other-domestic-fowl'
     },
     {
       label: 'Other birds',
