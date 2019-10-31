@@ -47,6 +47,10 @@ class DiffWindow extends React.Component {
     let diff = [];
     let added = [];
     let removed = [];
+    let before;
+    let after;
+    let diffs
+
     switch (type) {
       case 'text':
         diff = diffWords(a || '', b || '');
@@ -55,8 +59,6 @@ class DiffWindow extends React.Component {
         diff = diffArrays((a || []).sort(), (b || []).sort());
         break;
       case 'texteditor':
-        let before;
-        let after;
 
         try {
           before = Value.fromJSON(JSON.parse(a || '{}'));
@@ -65,9 +67,9 @@ class DiffWindow extends React.Component {
           return { added: [], removed: [] };
         }
 
-        const diffs = diffWords(before.document.text, after.document.text);
+        diffs = diffWords(before.document.text, after.document.text);
 
-        const removed = diffs.reduce((arr, d) => {
+        removed = diffs.reduce((arr, d) => {
           // ignore additions
           if (!d.added) {
             const prev = last(arr);
@@ -77,7 +79,7 @@ class DiffWindow extends React.Component {
           return arr;
         }, []).filter(d => d.removed);
 
-        const added = diffs.reduce((arr, d) => {
+        added = diffs.reduce((arr, d) => {
           // ignore removals
           if (!d.removed) {
             const prev = last(arr);
