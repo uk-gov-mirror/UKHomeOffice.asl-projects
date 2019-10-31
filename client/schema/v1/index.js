@@ -1685,6 +1685,7 @@ each other.`,
           },
           fate: {
             title: 'Fate of animals',
+            show: ({ isGranted }) => !isGranted,
             granted: {
               order: 10
             },
