@@ -1217,12 +1217,6 @@ each other.`,
                 label: 'Which of your objectives will this protocol address?',
                 hint: 'Select all that apply.',
                 type: 'objective-selector'
-              },
-              {
-                name: 'outputs',
-                label: 'What outputs are expected to arise from this protocol?',
-                hint: 'For example, test results, phenotypic information, or products.',
-                type: 'texteditor'
               }
             ]
           },
@@ -1528,6 +1522,12 @@ each other.`,
               order: 8
             },
             fields: [
+              {
+                name: 'outputs',
+                label: 'What outputs are expected to arise from this protocol?',
+                hint: 'For example, test results, phenotypic information, or products.',
+                type: 'texteditor'
+              },
               {
                 name: 'quantitative-data',
                 label: 'Will this protocol generate quantitative data?',
