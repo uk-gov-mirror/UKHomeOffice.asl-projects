@@ -822,6 +822,9 @@ each other.`,
                 type: 'radio',
                 inline: true,
                 className: 'smaller',
+                show: values => {
+                  return !values.isGranted || !!values['objectives-regulatory-authorities'];
+                },
                 options: [
                   {
                     label: 'Yes',
@@ -898,6 +901,9 @@ each other.`,
                 type: 'radio',
                 inline: true,
                 className: 'smaller',
+                show: values => {
+                  return !values.isGranted || !!values['objectives-non-regulatory'];
+                },
                 options: [
                   {
                     label: 'Yes',
@@ -933,6 +939,9 @@ each other.`,
                 type: 'radio',
                 inline: true,
                 className: 'smaller',
+                show: values => {
+                  return !values.isGranted || !!values['objectives-genetically-altered'];
+                },
                 options: [
                   {
                     label: 'Yes',
@@ -997,6 +1006,9 @@ each other.`,
                 type: 'radio',
                 inline: true,
                 className: 'smaller',
+                show: values => {
+                  return !values.isGranted || !!values['objectives-vaccines'];
+                },
                 options: [
                   {
                     label: 'Yes',
