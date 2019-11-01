@@ -100,7 +100,12 @@ class Protocol extends PureComponent {
 
 class Protocols extends PureComponent {
   save = protocols => {
-    if (!this.props.readonly) {
+    if (this.props.readonly) {
+      return;
+    }
+
+    // dont evaluate conditions for legacy
+    if (!this.props.isLegacy) {
       protocols = protocols.map(protocol => {
         const conds = getConditions(protocol, CONDITIONS.protocol, this.props.project);
         if (conds) {
@@ -111,8 +116,9 @@ class Protocols extends PureComponent {
         }
         return protocol;
       });
-      this.props.save({ protocols });
     }
+
+    this.props.save({ protocols });
   }
 
   edit = e => {
