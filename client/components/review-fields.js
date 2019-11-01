@@ -51,6 +51,6 @@ const ReviewFields = ({ fields, values = {}, onEdit, editLink, project, prefix =
   </Fragment>
 );
 
-const mapStateToProps = ({ project, application: { isGranted } }) => ({ project, isGranted })
+const mapStateToProps = ({ project, application: { isGranted } = {} }) => ({ project, isGranted })
 
 export default connect(mapStateToProps)(ReviewFields);
