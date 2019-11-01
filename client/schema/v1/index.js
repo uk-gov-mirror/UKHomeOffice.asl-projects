@@ -13,7 +13,6 @@ import ProjectSummary from '../../pages/sections/granted/project-summary';
 import GrantedConditions from '../../pages/sections/granted/conditions';
 import GrantedAuthorisations from '../../pages/sections/granted/authorisations';
 import ActionPlan from '../../pages/sections/granted/action-plan';
-import Continued from '../../pages/sections/granted/protocol-continued';
 import Purpose from '../../pages/sections/granted/protocol-purpose';
 import ProtocolEstablishments from '../../pages/sections/granted/protocol-establishments';
 import GrantedProtocols from '../../pages/sections/granted/protocols';
@@ -1412,14 +1411,7 @@ each other.`,
               }
             ]
           },
-          continued: {
-            show: props => props.isGranted,
-            title: 'Continued use and re-use',
-            granted: {
-              order: 5,
-              review: Continued
-            }
-          },
+
           steps: {
             title: 'Steps',
             hint: 'A step can be a single procedure or a combination of procedures to achieve an outcome. You will be able to reorder your steps at any time before you send your application to the Home Office, but they should be broadly chronological, with the final step being a method of killing or the last regulated procedure.',
