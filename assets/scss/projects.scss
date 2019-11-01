@@ -93,6 +93,20 @@ html.modal-open, html.modal-open body {
     }
   }
 
+  .diff {
+
+    &.added {
+      border-bottom: 3px solid #47ff47;
+      background-color: #d3ffd3;
+    }
+
+    &.removed {
+      text-decoration: line-through;
+      border-bottom: 3px solid #ff4747;
+      background-color: #ffd3d3;
+    }
+  }
+
   .govuk-tabs {
     ul {
       margin: 0 0 $govuk-gutter 0;
