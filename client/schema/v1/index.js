@@ -261,6 +261,7 @@ export default () => ({
           {
             name: 'transfer',
             label: 'Will any animals be moved between licensed establishments during this project?',
+            hint: 'This may include moving animals mid protocol during regulated procedures',
             type: 'radio',
             inline: true,
             className: 'smaller',
