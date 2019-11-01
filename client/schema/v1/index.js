@@ -1508,6 +1508,68 @@ each other.`,
               }
             ]
           },
+          fate: {
+            title: 'Fate of animals',
+            show: ({ isGranted }) => !isGranted,
+            granted: {
+              order: 10
+            },
+            fields: [
+              {
+                name: 'fate',
+                label: 'What will happen to animals at the end of this protocol?​',
+                hint: 'Select all that apply',
+                type: 'checkbox',
+                className: 'smaller',
+                options: [
+                  {
+                    label: 'Killed',
+                    value: 'killed',
+                    hint: 'Ensure that the methods of killing to be used are described in the final step of this protocol.',
+                    reveal: {
+                      label: '',
+                      review: 'Method of killing',
+                      name: 'killing-method',
+                      type: 'checkbox',
+                      className: 'smaller',
+                      options: [
+                        {
+                          label: 'Schedule 1 method​',
+                          value: 'schedule-1'
+                        },
+                        {
+                          label: 'Non-schedule 1 killing of a conscious animal',
+                          value: 'other',
+                          reveal: {
+                            name: 'method-and-justification',
+                            label: 'For each non-schedule 1 method, explain why this is necessary.',
+                            type: 'texteditor'
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    label: 'Kept alive',
+                    value: 'kept-alive'
+                  },
+                  {
+                    label: 'Continued use on another protocol in this project',
+                    value: 'continued-use',
+                    reveal: {
+                      name: 'continued-use-relevant-project',
+                      label: 'Please state the relevant protocol.',
+                      type: 'texteditor'
+                    }
+                  },
+                  {
+                    label: 'Continued use on other projects',
+                    value: 'continued-use-2'
+                  }
+                ]
+              }
+            ]
+          },
           experience: {
             title: 'Animal experience',
             granted: {
@@ -1682,51 +1744,6 @@ each other.`,
                   {
                     label: 'No',
                     value: false
-                  }
-                ]
-              }
-            ]
-          },
-          fate: {
-            title: 'Fate of animals',
-            show: ({ isGranted }) => !isGranted,
-            granted: {
-              order: 10
-            },
-            fields: [
-              {
-                name: 'fate',
-                label: 'What will happen to animals at the end of this protocol?​',
-                hint: 'Select all that apply',
-                type: 'checkbox',
-                className: 'smaller',
-                options: [
-                  {
-                    label: 'Killed',
-                    value: 'killed',
-                    hint: 'Ensure that the methods of killing to be used are described in the final step of this protocol.',
-                    reveal: {
-                      name: 'method-and-justification',
-                      label: 'For any non-schedule 1 method of killing a conscious animal, explain why this is necessary.',
-                      type: 'texteditor'
-                    }
-                  },
-                  {
-                    label: 'Kept alive',
-                    value: 'kept-alive'
-                  },
-                  {
-                    label: 'Continued use on another protocol in this project',
-                    value: 'continued-use',
-                    reveal: {
-                      name: 'continued-use-relevant-project',
-                      label: 'Please state the relevant protocol.',
-                      type: 'texteditor'
-                    }
-                  },
-                  {
-                    label: 'Continued use on other projects',
-                    value: 'continued-use-2'
                   }
                 ]
               }
