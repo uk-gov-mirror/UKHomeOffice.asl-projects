@@ -1702,26 +1702,9 @@ each other.`,
                     value: 'killed',
                     hint: 'Ensure that the methods of killing to be used are described in the final step of this protocol.',
                     reveal: {
-                      label: '',
-                      review: 'Method of killing',
-                      name: 'killing-method',
-                      type: 'checkbox',
-                      className: 'smaller',
-                      options: [
-                        {
-                          label: 'Schedule 1 method​',
-                          value: 'schedule-1'
-                        },
-                        {
-                          label: 'Non-schedule 1 killing of a conscious animal',
-                          value: 'other',
-                          reveal: {
-                            name: 'method-and-justification',
-                            label: 'For each non-schedule 1 method, explain why this is necessary.',
-                            type: 'texteditor'
-                          }
-                        }
-                      ]
+                      name: 'method-and-justification',
+                      label: 'For any non-schedule 1 method of killing a conscious animal, explain why this is necessary.',
+                      type: 'texteditor'
                     }
                   },
                   {
