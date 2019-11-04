@@ -2,6 +2,7 @@ import React, { Fragment, Component } from 'react';
 import { connect } from 'react-redux';
 
 import { addChange } from '../actions/projects';
+import { throwError } from '../actions/messages';
 import isUndefined from 'lodash/isUndefined';
 import castArray from 'lodash/castArray';
 import every from 'lodash/every';
@@ -50,6 +51,9 @@ class Field extends Component {
       })
       .then(() => {
         return this.props.onChange && this.props.onChange(value);
+      })
+      .catch(err => {
+        this.props.throwError(err.message || 'Something went wrong');
       });
   }
 
@@ -248,7 +252,7 @@ const mapStateToProps = ({ project, settings, application }, { name, conditional
   };
 }
 
-const ConnectedField = connect(mapStateToProps, { addChange })(Field);
+const ConnectedField = connect(mapStateToProps, { addChange, throwError })(Field);
 
 const FieldGroup = props => {
   return (
