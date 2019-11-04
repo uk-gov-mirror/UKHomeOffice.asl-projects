@@ -110,7 +110,7 @@ class Animals extends Component {
 
   getItems = () => {
     const { project } = this.props;
-    const speciesDetails = this.props.values.speciesDetails.filter(Boolean);
+    const speciesDetails = (this.props.values.speciesDetails || []).filter(Boolean);
     let species = this.props.values.species || [];
 
     species.forEach(item => {
