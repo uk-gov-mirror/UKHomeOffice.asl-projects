@@ -6,6 +6,7 @@ import { diffWords, diffArrays } from 'diff';
 import last from 'lodash/last';
 import { Warning } from '@ukhomeoffice/react-components';
 import { fetchQuestionVersions } from '../actions/projects';
+import { mapSpecies, mapPermissiblePurpose } from '../helpers';
 import Modal from './modal';
 import ReviewField from './review-field'
 import Tabs from './tabs';
@@ -51,12 +52,30 @@ class DiffWindow extends React.Component {
     let after;
     let diffs
 
+    const getLabel = item => {
+      const option = this.props.options.find(opt => opt.value === item);
+      if (option) {
+        return option.label;
+      } else {
+        const subopt = this.props.options.find(opt => opt.reveal).reveal.options.find(opt => opt.value === item);
+        return `(b) ${subopt.label}`;
+      }
+    }
+
     switch (type) {
       case 'text':
         diff = diffWords(a || '', b || '');
         break;
       case 'checkbox':
+      case 'location-selector':
+      case 'objective-selector':
         diff = diffArrays((a || []).sort(), (b || []).sort());
+        break;
+      case 'permissible-purpose':
+        diff = diffArrays((a || []).map(getLabel).sort(), mapPermissiblePurpose(this.props.project).map(getLabel).sort());
+        break;
+      case 'species-selector':
+        diff = diffArrays(a || [], mapSpecies(this.props.project));
         break;
       case 'texteditor':
 
@@ -177,13 +196,17 @@ class DiffWindow extends React.Component {
         );
 
       case 'checkbox':
+      case 'permissible-purpose':
+      case 'location-selector':
+      case 'objective-selector':
+      case 'species-selector':
         return parts.length
           ? (
               <ul>
                 {
-                  parts.map(({ value, added, removed }, i) => (
-                    <li key={i} className={classnames('diff', { added, removed })}>{ value }</li>
-                  ))
+                  parts.map(({ value, added, removed }, i) => {
+                    return value.map(v => <li key={i}><span className={classnames('diff', { added, removed })}>{ v }</span></li>)
+                  })
                 }
               </ul>
             )
@@ -308,9 +331,10 @@ class DiffWindow extends React.Component {
   }
 }
 
-const mapStateToProps = ({ questionVersions }, { name, value }) => {
+const mapStateToProps = ({ questionVersions, project }, { name, value }) => {
   if (!questionVersions[name]) {
     return {
+      project,
       loading: true,
       changedFromGranted: false,
       changedFromLatest: false
@@ -321,6 +345,7 @@ const mapStateToProps = ({ questionVersions }, { name, value }) => {
     loading: false,
     previous,
     granted,
+    project,
     changedFromGranted: grantedId && granted !== value,
     changedFromLatest: grantedId !== previousId && previous !== value
   };

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from '@asl/components';
 import TextEditor from './editor';
 import speciesOptions from '../constants/species';
-import { getLegacySpeciesLabel } from '../helpers';
+import { getLegacySpeciesLabel, mapSpecies } from '../helpers';
 
 import flatten from 'lodash/flatten';
 import values from 'lodash/values';
@@ -69,18 +69,7 @@ class ReviewField extends React.Component {
     }
 
     if (this.props.type === 'species-selector') {
-      const project = this.props.project;
-      const other = project[`${this.props.name}-other`] || [];
-      value = value || [];
-      value = flatten([
-        ...value.map(val => {
-          if (val.indexOf('other') > -1) {
-            return project[`${this.props.name}-${val}`];
-          }
-          return val;
-        }),
-        ...other
-      ]);
+      value = mapSpecies(this.props.project);
     }
     if (this.props.type === 'permissible-purpose') {
       const childrenName = options.find(o => o.reveal).reveal.name;
@@ -130,10 +119,6 @@ class ReviewField extends React.Component {
         );
       }
 
-      if (this.props.type === 'species-selector') {
-        options = flatten(values(speciesOptions))
-      }
-
       const getValue = value => {
         const v = (options || []).find(option => option.value === value)
         return v
@@ -144,7 +129,7 @@ class ReviewField extends React.Component {
       return (
         <ul>
           {
-            value.filter(v => options && this.props.type !== 'species-selector' ? options.find(o => o.value === v) : true).map(value => (
+            value.filter(v => options ? options.find(o => o.value === v) : true).map(value => (
               <li key={value}>{getValue(value)}</li>
             ))
           }

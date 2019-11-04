@@ -1,10 +1,12 @@
 import flatten from 'lodash/flatten';
+import values from 'lodash/values';
 import castArray from 'lodash/castArray';
 import pickBy from 'lodash/pickBy';
 import mapValues from 'lodash/mapValues';
 import map from 'lodash/map';
 import dateFormatter from 'date-fns/format';
 import LEGACY_SPECIES from '../constants/legacy-species';
+import SPECIES from '../constants/species';
 
 export const formatDate = (date, format) => (date ? dateFormatter(date, format) : '-');
 
@@ -39,6 +41,30 @@ export const getConditions = (values, conditions, project) => {
     // edited conditions
     ...newConditions
   ];
+}
+
+export function mapPermissiblePurpose(project) {
+  const values = project['permissible-purpose'] || [];
+  const others = project['translational-research'] || [];
+  return [
+    ...values,
+    ...others
+  ];
+}
+
+export function mapSpecies(project) {
+  const species = project.species || [];
+  const other = project['species-other'] || [];
+  return flatten([
+    ...species.map(val => {
+      if (val.indexOf('other') > -1) {
+        return project[`species-${val}`] || [];
+      }
+      const item = flatten(values(SPECIES)).find(s => s.value === val);
+      return item ? item.label : val;
+    }),
+    ...other
+  ]);
 }
 
 export const getScrollPos = (elem, offset = 0) => {
