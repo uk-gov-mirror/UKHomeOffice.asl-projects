@@ -2314,7 +2314,7 @@ each other.`,
       nmbas: {
         title: 'Neuromuscular blocking agents (NMBAs)',
         show: values => some(values.protocols, protocol => {
-          return protocol && some(protocol.steps, step => step.nmbas);
+          return some(protocol.steps, step => step.nmbas);
         }),
         linkTo: 'protocols',
         steps: [
@@ -2369,7 +2369,7 @@ each other.`,
       },
       'reusing-animals': {
         title: 'Re-using animals',
-        show: project => some(project.protocols, protocol => protocol && some(protocol.speciesDetails, species => (species || {}).reuse)),
+        show: project => some(project.protocols, protocol => some(protocol.speciesDetails, species => (species || {}).reuse)),
         intro: 'You are seeing this section because you will be re-using animals during your project. If this is not correct, you can change this in Protocols.',
         fields: [
           {
