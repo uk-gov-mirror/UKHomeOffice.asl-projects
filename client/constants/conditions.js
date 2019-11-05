@@ -29,7 +29,7 @@ export default {
       ]
     },
     reuse: {
-      include: protocol => some(protocol.speciesDetails.filter(Boolean), species => species.reuse),
+      include: protocol => some((protocol.speciesDetails || []).filter(Boolean), species => species.reuse),
       type: 'authorisation',
       versions: [
         {
@@ -39,7 +39,7 @@ export default {
       ]
     },
     'continued-use': {
-      include: protocol => some(protocol.speciesDetails.filter(Boolean), species => species['continued-use']),
+      include: protocol => some((protocol.speciesDetails || []).filter(Boolean), species => species['continued-use']),
       type: 'authorisation',
       versions: [
         {
