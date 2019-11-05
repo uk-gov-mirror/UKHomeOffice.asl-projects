@@ -1,7 +1,9 @@
 import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
 import { Button } from '@ukhomeoffice/react-components';
 import uuid from 'uuid/v4';
 import cloneDeep from 'lodash/cloneDeep';
+import { throwError } from '../actions/messages';
 
 class Repeater extends Component {
   constructor(props) {
@@ -36,7 +38,8 @@ class Repeater extends Component {
     return Promise.resolve()
       .then(this.props.onBeforeAdd)
       .then(() => this.update([ ...this.state.items, { id: uuid(), ...this.props.itemProps } ]))
-      .then(this.props.onAfterAdd);
+      .then(this.props.onAfterAdd)
+      .catch(err => this.props.throwError(err.message || 'Error adding item'));
   }
 
   updateItem(index, updated) {
@@ -70,7 +73,8 @@ class Repeater extends Component {
     return Promise.resolve()
       .then(() => this.props.onBeforeDuplicate(items, item.id))
       .then(items => this.update(items))
-      .then(() => this.props.onAfterDuplicate(item, item.id));
+      .then(() => this.props.onAfterDuplicate(item, item.id))
+      .catch(err => this.props.throwError(err.message || 'Error duplicating item'));
   }
 
   removeItem(index, event) {
@@ -90,7 +94,8 @@ class Repeater extends Component {
         }
         this.update(this.state.items.filter((item, i) => index !== i))
       })
-      .then(this.props.onAfterRemove);
+      .then(this.props.onAfterRemove)
+      .catch(err => this.props.throwError(err.message || 'Error removing item'));
   }
 
   restoreItem(index, event) {
@@ -108,12 +113,14 @@ class Repeater extends Component {
         }
         return item;
       })))
-      .then(this.props.onAfterRestore);
+      .then(this.props.onAfterRestore)
+      .catch(err => this.props.throwError(err.message || 'Error restoring item'));
   }
 
   update(items) {
     return new Promise(resolve => this.setState({ items }, resolve))
       .then(this.save)
+      .catch(err => this.props.throwError(err.message || 'Error updating item'))
   }
 
   save() {
@@ -196,4 +203,4 @@ Repeater.defaultProps = {
   onAfterDuplicate: item => Promise.resolve(item)
 };
 
-export default Repeater;
+export default connect(null, { throwError })(Repeater);
