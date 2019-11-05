@@ -181,6 +181,15 @@ class DiffWindow extends React.Component {
   }
 
   renderDiff(parts, value) {
+    const getLabel = item => {
+      if (!this.props.options || !Array.isArray(this.props.options)) {
+        return item;
+      }
+
+      const option = this.props.options.find(opt => opt.value === item);
+      return option ? option.label : item;
+    };
+
     switch (this.props.type) {
       case 'text':
         return (
@@ -205,7 +214,7 @@ class DiffWindow extends React.Component {
               <ul>
                 {
                   parts.map(({ value, added, removed }, i) => {
-                    return value.map(v => <li key={i}><span className={classnames('diff', { added, removed })}>{ v }</span></li>)
+                    return value.map(v => <li key={i}><span className={classnames('diff', { added, removed })}>{ getLabel(v) }</span></li>)
                   })
                 }
               </ul>
