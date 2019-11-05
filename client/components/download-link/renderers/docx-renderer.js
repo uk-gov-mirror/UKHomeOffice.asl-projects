@@ -6,7 +6,7 @@ import get from 'lodash/get';
 import pickBy from 'lodash/pickBy';
 import mapValues from 'lodash/mapValues';
 import SPECIES from '../../../constants/species';
-import { getLegacySpeciesLabel } from '../../../helpers';
+import { getLegacySpeciesLabel, mapSpecies } from '../../../helpers';
 import { filterSpeciesByActive } from '../../../pages/sections/protocols/animals';
 
 export default (application, sections, values, updateImageDimensions) => {
@@ -388,25 +388,14 @@ export default (application, sections, values, updateImageDimensions) => {
   }
 
   const renderSpeciesSelector = (doc, values, value, noSeparator) => {
-    const other = values['species-other'] || [];
-    value = value || [];
-    value = flatten([
-      ...value.map(val => {
-        if (val.indexOf('other') > -1) {
-          return values[`species-${val}`];
-        }
-        return val;
-      }),
-      ...other
-    ]);
+    const species = mapSpecies(values)
 
-    if (!value.length) {
+    if (!species.length) {
       return renderNull(doc);
     }
 
-    value.forEach(species => {
-      const item = flatten(Object.values(SPECIES)).find(s => s.value === species)
-      let text = new TextRun(item ? item.label : species).size(24);
+    species.forEach(value => {
+      let text = new TextRun(value).size(24);
 
       const paragraph = new Paragraph();
       paragraph.style('body').bullet();
