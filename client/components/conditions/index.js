@@ -46,7 +46,6 @@ function ConditionsPage({
         scope="project"
         type={type}
         conditions={conditions}
-        startIndex={0}
         {...props}
       />
       {
