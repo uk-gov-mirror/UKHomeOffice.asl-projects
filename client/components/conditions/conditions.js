@@ -144,7 +144,7 @@ class Conditions extends Component {
     if (!this.props.showConditions) {
       return null;
     }
-    const { conditions, editConditions, startIndex = 0 } = this.props;
+    const { conditions, editConditions } = this.props;
     const { updating } = this.state;
 
     return (
@@ -160,7 +160,7 @@ class Conditions extends Component {
               editConditions={editConditions}
               updating={updating}
               title={title}
-              number={index + 1 + startIndex}
+              number={index + 1}
               custom={condition.custom}
               content={content}
               {...condition}
