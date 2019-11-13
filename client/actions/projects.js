@@ -9,6 +9,7 @@ import * as types from './types';
 import database from '../database';
 import { showMessage, throwError } from './messages';
 import sendMessage from './messaging';
+import { getConditions } from '../helpers';
 
 const CONDITIONS_FIELDS = ['conditions', 'retrospectiveAssessment'];
 
@@ -138,23 +139,23 @@ const conditionsToSync = (state) => {
   if (state.application.isSyncing) {
     return null;
   }
-  const projectConditions = getConditions(state.project);
-  if (!isEqual(getConditions(state.savedProject), projectConditions)) {
+  const projectConditions = getConditionsToSync(state.project);
+  if (!isEqual(getConditionsToSync(state.savedProject), projectConditions)) {
     return projectConditions;
   }
   return state.project.protocols.reduce((data, protocol) => {
     if (data) {
       return data;
     }
-    const protocolConditions = getConditions(state.project, protocol.id);
-    if (!isEqual(getConditions(state.savedProject, protocol.id), protocolConditions)) {
+    const protocolConditions = getConditionsToSync(state.project, protocol.id);
+    if (!isEqual(getConditionsToSync(state.savedProject, protocol.id), protocolConditions)) {
       return protocolConditions;
     }
     return null;
   }, null);
 };
 
-const getConditions = (project, protocolId) => {
+const getConditionsToSync = (project, protocolId) => {
   if (protocolId) {
     const protocol = project.protocols.find(p => p.id === protocolId);
     return {
@@ -233,6 +234,19 @@ const onSyncError = (func, err, dispatch, getState, ...args) => {
   return setTimeout(() => func(dispatch, getState, ...args), 1000);
 };
 
+function getProjectWithConditions(project) {
+  return {
+    ...project,
+    conditions: getConditions(project),
+    protocols: (project.protocols || []).map(protocol => {
+      return {
+        ...protocol,
+        conditions: getConditions(protocol, project)
+      };
+    })
+  };
+}
+
 const syncProject = (dispatch, getState) => {
   const state = getState();
 
@@ -242,17 +256,26 @@ const syncProject = (dispatch, getState) => {
 
   dispatch(isSyncing());
 
-  const patch = diff(state.savedProject, state.project)
-    .map(d => d.kind === 'edit' ? omit(d, 'lhs') : d);
+  const project = state.application.schemaVersion === 1
+    ? getProjectWithConditions(state.project)
+    : state.project;
+
+  const patch = diff(state.savedProject, project);
+  if (!patch || !patch.length) {
+    return Promise.resolve();
+  }
+
+  const data = patch.map(d => d.kind === 'edit' ? omit(d, 'lhs') : d);
 
   const params = {
     state,
     method: 'PUT',
     url: state.application.basename,
-    data: patch
+    data
   };
 
   return Promise.resolve()
+    .then(() => dispatch(updateProject(project)))
     .then(() => sendMessage(params))
     .then(() => {
       dispatch(doneSyncing())

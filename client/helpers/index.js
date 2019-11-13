@@ -7,15 +7,21 @@ import map from 'lodash/map';
 import dateFormatter from 'date-fns/format';
 import LEGACY_SPECIES from '../constants/legacy-species';
 import SPECIES from '../constants/species';
+import CONDITIONS from '../constants/conditions';
 
 export const formatDate = (date, format) => (date ? dateFormatter(date, format) : '-');
 
-export const getConditions = (values, conditions, project) => {
+export const getConditions = (values, project) => {
+  const isProtocol = !!project;
 
   // remove any old-style conditions from before the days of types
   const previous = (values.conditions || []).filter(Boolean).filter(c => c.type);
 
   const editedConditions = previous.filter(c => c.autoAdded && c.edited);
+
+  let conditions = isProtocol
+    ? CONDITIONS.protocol
+    : CONDITIONS.project;
 
   conditions = map(conditions, (condition, key) => ({ ...condition, key }))
 
