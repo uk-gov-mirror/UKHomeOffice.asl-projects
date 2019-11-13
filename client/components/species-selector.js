@@ -50,7 +50,7 @@ class SpeciesSelector extends Component {
   }
 
   onFieldChange = (...args) => {
-    this.props.onChange(this.props.value.filter(s => !SPECIES.deprecated.find(d => d.value === s)));
+    this.props.onChange((this.props.value || []).filter(s => !SPECIES.deprecated.find(d => d.value === s)));
     this.props.onFieldChange(...args);
   }
 
