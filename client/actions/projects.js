@@ -256,7 +256,8 @@ const syncProject = (dispatch, getState) => {
 
   dispatch(isSyncing());
 
-  const project = state.application.schemaVersion === 1
+  // don't evaluate conditions on legacy projects
+  const project = state.application.schemaVersion > 0
     ? getProjectWithConditions(state.project)
     : state.project;
 
