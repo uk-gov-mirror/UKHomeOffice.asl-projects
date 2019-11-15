@@ -17,6 +17,8 @@ import Fieldset from '../../../components/fieldset';
 import Expandable from '../../../components/expandable';
 import Repeater from '../../../components/repeater';
 
+const allSpecies = flatten(Object.values(SPECIES));
+
 function getProjectSpecies(project) {
   return flatten([
     ...(project.species || []).map(s => {
@@ -29,11 +31,25 @@ function getProjectSpecies(project) {
   ]);
 }
 
+function normaliseValues(speciesDetails) {
+  return speciesDetails.map(details => {
+    if (details.value) {
+      return details;
+    }
+    // if there's a species with a label matching the name use that
+    const match = allSpecies.find(sp => sp.label === details.name);
+    if (match) {
+      return { ...details, value: match.value };
+    }
+    return details;
+  });
+}
+
 export function filterSpeciesByActive(protocol, project) {
   const { species = [], speciesDetails = [] } = protocol;
   const projectSpecies = getProjectSpecies(project);
 
-  return speciesDetails.filter(s => {
+  return normaliseValues(speciesDetails).filter(s => {
     return (species.includes(s.value) || species.includes(s.name)) && (projectSpecies.includes(s.value) || projectSpecies.includes(s.name));
   });
 }
@@ -206,7 +222,7 @@ class Animals extends Component {
           items={items}
           type="speciesDetails"
           prefix={prefix}
-          onSave={speciesDetails => updateItem({ speciesDetails })}
+          onSave={speciesDetails => updateItem({ speciesDetails: normaliseValues(speciesDetails) })}
           addAnother={false}
           addOnInit={false}
         >
