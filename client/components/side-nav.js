@@ -18,6 +18,9 @@ const SideNav = ({ schemaVersion, project, isGranted, ...props }) => {
     if (!isGranted) {
       return () => null;
     }
+
+    nav.current.style.position = 'relative';
+
     const pos = nav.current.offsetTop;
     const width = nav.current.offsetWidth;
     window.onscroll = () => {
