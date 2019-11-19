@@ -6,11 +6,8 @@ import get from 'lodash/get';
 import pickBy from 'lodash/pickBy';
 import mapValues from 'lodash/mapValues';
 import SPECIES from '../../../constants/species';
-import { getLegacySpeciesLabel, mapSpecies } from '../../../helpers';
+import { getLegacySpeciesLabel, mapSpecies, stripInvalidXmlChars } from '../../../helpers';
 import { filterSpeciesByActive } from '../../../pages/sections/protocols/animals';
-
-/* eslint-disable no-control-regex */
-const stripInvalidXmlChars = text => text.replace(/([^\x09\x0A\x0D\x20-\uD7FF\uE000-\uFFFC\u{10000}-\u{10FFFF}])/ug, '');
 
 export default (application, sections, values, updateImageDimensions) => {
   const numbering = new Numbering();

@@ -119,3 +119,11 @@ export const flattenReveals = (fields, values) => {
     ])
   }, []);
 };
+
+/* eslint-disable no-control-regex */
+export const stripInvalidXmlChars = text => {
+  if (typeof text !== 'string') {
+    return text;
+  }
+  return text.replace(/([^\x09\x0A\x0D\x20-\uD7FF\uE000-\uFFFC\u{10000}-\u{10FFFF}])/ug, '')
+};
