@@ -7,8 +7,6 @@ import SectionsLink from '../components/sections-link';
 import ErrorBoundary from '../components/error-boundary';
 import Readonly from './readonly';
 import { getSubsections } from '../schema';
-import { getConditions } from '../helpers';
-import CONDITIONS from '../constants/conditions';
 
 const mapStateToProps = ({ project, application: { schemaVersion, readonly, establishment, isGranted } }, { match: { params } }) => {
   const section = getSubsections(schemaVersion)[params.section];
@@ -70,13 +68,7 @@ class Section extends React.Component {
               if (typeof data === 'string') {
                 data = { [data]: value };
               }
-
-              if (!this.props.isLegacy) {
-                const conditions = getConditions({ ...this.props.project, ...data }, CONDITIONS.project);
-                this.props.update({ ...data, conditions })
-              } else {
-                this.props.update(data);
-              }
+              this.props.update(data);
             }}
             exit={ () => this.props.history.push('/') }
             fields={ fields }

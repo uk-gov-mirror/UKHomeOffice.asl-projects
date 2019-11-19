@@ -11,8 +11,7 @@ import Fieldset from '../../../components/fieldset';
 import Repeater from '../../../components/repeater';
 import Controls from '../../../components/controls';
 
-import { getNewComments, getConditions } from '../../../helpers';
-import CONDITIONS from '../../../constants/conditions';
+import { getNewComments } from '../../../helpers';
 
 const Form = ({
   number,
@@ -102,20 +101,6 @@ class Protocols extends PureComponent {
   save = protocols => {
     if (this.props.readonly) {
       return;
-    }
-
-    // dont evaluate conditions for legacy
-    if (!this.props.isLegacy) {
-      protocols = protocols.map(protocol => {
-        const conds = getConditions(protocol, CONDITIONS.protocol, this.props.project);
-        if (conds) {
-          return {
-            ...protocol,
-            conditions: conds
-          }
-        }
-        return protocol;
-      });
     }
 
     this.props.save({ protocols });
