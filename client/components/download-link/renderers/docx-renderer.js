@@ -744,7 +744,7 @@ export default (application, sections, values, updateImageDimensions) => {
   };
 
   const traverse = (obj, fn) => {
-    if (typeof obj !== 'object') {
+    if (!obj || typeof obj !== 'object') {
       return Promise.resolve(obj);
     }
 
