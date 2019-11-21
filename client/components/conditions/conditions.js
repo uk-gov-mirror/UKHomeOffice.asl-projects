@@ -18,6 +18,7 @@ function Condition({
   inspectorAdded,
   number,
   singular,
+  className,
   onSave,
   onRemove,
   editConditions
@@ -37,7 +38,7 @@ function Condition({
   const displayContent = edited || content;
 
   return (
-    <Fragment>
+    <div className={className}>
       <h2>{singular} {number}</h2>
       <div className={classnames('condition', { deleted })}>
         <h3>{title}</h3>
@@ -97,7 +98,7 @@ function Condition({
           </p>
         )
       }
-    </Fragment>
+    </div>
   );
 }
 
@@ -156,6 +157,7 @@ class Conditions extends Component {
             const { title, content } = template;
             return <Condition
               key={condition.key}
+              className={condition.key}
               singular={this.props.singular}
               editConditions={editConditions}
               updating={updating}
