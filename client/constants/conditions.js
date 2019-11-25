@@ -53,7 +53,7 @@ export default {
       type: 'authorisation',
       versions: [
         {
-          title: 'Continued use off a protocol on to another in this project',
+          title: 'Continued use off a protocol on to another protocol in this project',
           content: '<<<INSERT animal type(s) HERE>>> may continue to be used on <<<INSERT protocol number(s) HERE>>> of this project.'
         }
       ]
