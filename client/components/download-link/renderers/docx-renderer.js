@@ -670,7 +670,7 @@ export default (application, sections, values, updateImageDimensions) => {
 
   const renderProtocolsSection = (doc, subsection, values) => {
     const protocols = values['protocols'] || [];
-    protocols.forEach((protocolValues, index) => {
+    protocols.filter(protocol => !protocol.deleted).forEach((protocolValues, index) => {
       doc.createParagraph(`Protocol ${index + 1}`).style('ProtocolSectionTitle');
       renderField(doc, subsection.fields[0], protocolValues);
 
@@ -719,6 +719,7 @@ export default (application, sections, values, updateImageDimensions) => {
   }
 
   const renderDocument = (doc, sections, values) => {
+    values = values || {};
     const now = new Date();
 
     // inject the project licence holder into introductory details
