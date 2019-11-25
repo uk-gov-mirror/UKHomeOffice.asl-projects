@@ -433,7 +433,7 @@ export default () => ({
                     value: 'kept-alive'
                   },
                   {
-                    label: 'Set fee/re-homed',
+                    label: 'Set free/re-homed',
                     value: 'set-free'
                   }
                 ]
