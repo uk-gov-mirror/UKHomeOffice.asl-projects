@@ -35,7 +35,7 @@ const StaticSection = ({ section, project, fields = [], isGranted, subsection = 
 const mapStateToProps = ({ project, application: { isGranted, schemaVersion } }, { section }) => {
   const fields = flatten([
     ...(section.fields || []),
-    ...((section.steps || []).map(step => step.fields) || [])
+    ...((section.steps || []).filter(step => !step.show || step.show(project)).map(step => step.fields) || [])
   ]);
 
   return {
