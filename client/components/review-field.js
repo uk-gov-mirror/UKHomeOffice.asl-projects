@@ -5,6 +5,7 @@ import TextEditor from './editor';
 import speciesOptions from '../constants/species';
 import { getLegacySpeciesLabel, mapSpecies } from '../helpers';
 
+import castArray from 'lodash/castArray';
 import flatten from 'lodash/flatten';
 import values from 'lodash/values';
 import isUndefined from 'lodash/isUndefined';
@@ -14,6 +15,7 @@ import get from 'lodash/get';
 
 import { formatDate } from '../helpers';
 import { DATE_FORMAT } from '../constants';
+import ReviewFields from './review-fields';
 
 class ReviewField extends React.Component {
 
@@ -126,11 +128,34 @@ class ReviewField extends React.Component {
           : value
       }
 
+      const getChildren = value => {
+        const option = (options || []).find(option => option.value === value);
+        if (!option.reveal) {
+          return null;
+        }
+
+        return (
+          <div className="review-children">
+            <ReviewFields
+              fields={castArray(option.reveal).map(field => ({ ...field, preserveHeirarchy: true }))}
+              values={this.props.values}
+            />
+          </div>
+        )
+      }
+
       return (
         <ul>
           {
             value.filter(v => options ? options.find(o => o.value === v) : true).map(value => (
-              <li key={value}>{getValue(value)}</li>
+              <li key={value}>
+                {
+                  getValue(value)
+                }
+                {
+                  this.props.preserveHeirarchy && getChildren(value)
+                }
+              </li>
             ))
           }
         </ul>
@@ -194,7 +219,6 @@ class ReviewField extends React.Component {
   }
 
 }
-
 
 const mapStateToProps = ({ project, settings }) => {
   return {
