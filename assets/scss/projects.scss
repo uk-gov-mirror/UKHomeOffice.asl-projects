@@ -1343,6 +1343,22 @@ html.modal-open, html.modal-open body {
     }
   }
 
+  .review {
+    > ul {
+      padding-left: 1em;
+    }
+
+    .review-children {
+      @extend .govuk-inset-text;
+      border-width: 10px;
+      margin-top: 10px !important;
+
+      ul {
+        list-style-type: disc;
+      }
+    }
+  }
+
   // hack to always show sub-list for permissible purposes
   // and to remove the checkbox for the reveal option
   #permissible-purpose-translational-research {

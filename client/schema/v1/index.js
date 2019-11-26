@@ -1521,6 +1521,7 @@ each other.`,
                 label: 'What will happen to animals at the end of this protocol?​',
                 hint: 'Select all that apply',
                 type: 'checkbox',
+                preserveHeirarchy: true,
                 className: 'smaller',
                 options: [
                   {
