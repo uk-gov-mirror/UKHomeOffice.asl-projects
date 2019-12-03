@@ -7,6 +7,7 @@ export function postError({ error, info }) {
     json: {
       message: error.message,
       stack: error.stack,
+      url: document.URL,
       ...info
     }
   };
