@@ -11,7 +11,7 @@ export function postError({ error, info }) {
     }
   };
 
-  return fetch('/error', params).response;
+  return fetch('/error', params).response.catch(() => {});
 }
 
 export default function sendMessage({ method, data, url }) {
