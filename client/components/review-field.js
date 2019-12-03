@@ -58,7 +58,7 @@ class ReviewField extends React.Component {
 
     if (value && this.props.type === 'holder') {
       return (
-        <Link page="profile.view" profileId={value.licenceHolder.id} establishmentId={value.establishment.id} label={`${value.licenceHolder.firstName} ${value.licenceHolder.lastName}`} />
+        <Link page="profile.read" profileId={value.licenceHolder.id} establishmentId={value.establishment.id} label={`${value.licenceHolder.firstName} ${value.licenceHolder.lastName}`} />
       );
     }
 
