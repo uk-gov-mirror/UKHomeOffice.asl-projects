@@ -1,6 +1,20 @@
 import fetch from 'r2';
 
-export default ({ method, data, url }) => {
+export function postError({ error, info }) {
+  const params = {
+    method: 'POST',
+    credentials: 'include',
+    json: {
+      message: error.message,
+      stack: error.stack,
+      ...info
+    }
+  };
+
+  return fetch('/error', params).response;
+}
+
+export default function sendMessage({ method, data, url }) {
   const params = {
     method,
     credentials: 'include',
@@ -28,4 +42,4 @@ export default ({ method, data, url }) => {
           return json;
         });
     });
-};
+}
