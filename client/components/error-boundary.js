@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { postError } from '../actions/messaging';
 import Banner from './banner';
 
 export default class ErrorBoundary extends Component {
@@ -11,6 +12,7 @@ export default class ErrorBoundary extends Component {
   }
 
   componentDidCatch(error, info) {
+    postError({ error, info });
     this.setState({ error, info });
   }
 
