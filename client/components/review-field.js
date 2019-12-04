@@ -84,7 +84,7 @@ class ReviewField extends React.Component {
           <ul>
             {
               options
-                .filter(o => value.includes(o.value) || hasChildren(o))
+                .filter(o => (value || []).includes(o.value) || hasChildren(o))
                 .map((o, i) => (
                   <Fragment key={i}>
                     <li>{o.label}</li>
