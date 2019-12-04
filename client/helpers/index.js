@@ -120,6 +120,16 @@ export const flattenReveals = (fields, values) => {
   }, []);
 };
 
+export function getFields(section) {
+  if (!section.repeats && section.fields && section.fields.length) {
+    return section.fields;
+  }
+  else if (section.steps) {
+    return flatten(section.steps.filter(s => !s.repeats).map(step => step.fields));
+  }
+  else return [];
+}
+
 /* eslint-disable no-control-regex */
 export const stripInvalidXmlChars = text => {
   if (typeof text !== 'string') {

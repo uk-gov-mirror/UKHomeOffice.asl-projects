@@ -1,14 +1,29 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, Fragment } from 'react';
 import { NavLink } from 'react-router-dom';
+import ChangedBadge from './changed-badge';
 import map from 'lodash/map';
 import pickBy from 'lodash/pickBy';
+import reduce from 'lodash/reduce';
 import classnames from 'classnames';
 import SectionLink from './sections-link';
 import ExpandingPanel from './expanding-panel';
 import schemaMap, { getGrantedSubsections } from '../schema';
+import { flattenReveals, getFields } from '../helpers'
 
 const sectionVisible = (section, values) => {
   return !section.show || section.show(values);
+}
+
+function getFieldsForSection(section, project) {
+  if (section.subsections) {
+    return reduce(section.subsections, (arr, subsection) => {
+      return [
+        ...arr,
+        ...getFieldsForSection(subsection, project)
+      ];
+    }, []);
+  }
+  return flattenReveals(getFields(section), project).map(field => field.name);
 }
 
 const SideNav = ({ schemaVersion, project, isGranted, ...props }) => {
@@ -53,11 +68,18 @@ const SideNav = ({ schemaVersion, project, isGranted, ...props }) => {
           .map(key => {
             const section = sections[key];
             if (section.subsections) {
+              const title = <Fragment>
+                <ChangedBadge fields={getFieldsForSection(section, project)} noLabel />
+                <span className="indent">{section.title}</span>
+              </Fragment>
               return (
-                <ExpandingPanel key={key} title={section.title}>
+                <ExpandingPanel key={key} title={title}>
                   {
                     map(pickBy(section.subsections, s => sectionVisible(s, project)), (subsection, key) => {
-                      return <p key={key}><NavLink to={`/${key}`}>{subsection.title}</NavLink></p>
+                      return <p key={key}>
+                        <ChangedBadge fields={getFieldsForSection(subsection, project)} noLabel />
+                        <NavLink className="indent" to={`/${key}`}>{subsection.title}</NavLink>
+                      </p>
                     })
                   }
                 </ExpandingPanel>
@@ -65,6 +87,7 @@ const SideNav = ({ schemaVersion, project, isGranted, ...props }) => {
             }
             return (
               <NavLink key={key} to={`/${key}`}>
+                <ChangedBadge fields={getFieldsForSection(section, project)} notLabel />
                 <h3>
                   {
                     isGranted
