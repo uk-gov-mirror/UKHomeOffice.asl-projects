@@ -38,8 +38,8 @@ function insertImage(editor, src, target) {
 const onClickImage = (editor, event) => {
   const file = event.target.files[0];
   if (file) {
-    if (!file.type.match(/^image\/*/)) {
-      throw new Error('Only images can be added');
+    if (!file.type.match(/^image\/(jpeg|png)/)) {
+      throw new Error('Only JPG or PNG files can be added');
     }
 
     if (file.size > MAX_IMAGE_SIZE) {
