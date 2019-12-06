@@ -346,12 +346,25 @@ html.modal-open, html.modal-open body {
     padding: 10px 16px;
     font-weight: bold;
 
-    &:before {
-      content: '◀';
-      font-size: 0.6em;
-      vertical-align: middle;
-      margin-right: $govuk-gutter;
+    span {
+      margin-left: $govuk-gutter;
+      position: relative;
+
+      &:before {
+        content: '';
+        width: 0;
+        height: 0;
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        border-right: 7px solid $white;
+        position: absolute;
+        top: 50%;
+        left: -1.5em;
+        margin-top: -5px;
+      }
     }
+
+
   }
 
   dl {
@@ -925,6 +938,7 @@ html.modal-open, html.modal-open body {
       display: block;
       padding: $govuk-gutter-half;
       text-decoration: none;
+      position: relative;
 
       > h3 {
         margin-bottom: 0;
@@ -1070,6 +1084,26 @@ html.modal-open, html.modal-open body {
       margin-bottom: 0;
     }
 
+    .indent {
+      margin-left: $govuk-gutter;
+      display: block;
+    }
+
+    .content p {
+      position: relative;
+    }
+
+    .badge {
+      border-radius: 100%;
+      padding: 0;
+      width: 0.75em;
+      height: 0.75em;
+      display: inline-block;
+      position: absolute;
+      top: 50%;
+      margin-top: -0.375em;
+    }
+
     .expanding-panel {
       header {
         background: $white;
@@ -1094,6 +1128,10 @@ html.modal-open, html.modal-open body {
 
           h3 {
             color: $white;
+
+            > span.badge {
+              background-color: $white;
+            }
 
             &:hover {
               color: $light-grey;

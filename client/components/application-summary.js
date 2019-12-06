@@ -14,20 +14,10 @@ import { Button } from '@ukhomeoffice/react-components';
 
 import { INCOMPLETE, PARTIALLY_COMPLETE, COMPLETE } from '../constants/completeness';
 import schemaMap from '../schema'
-import { flattenReveals, getNewComments } from '../helpers';
+import { flattenReveals, getNewComments, getFields } from '../helpers';
 
 import NewComments from './new-comments';
 import ChangedBadge from './changed-badge';
-
-const getFields = subsection => {
-  if (!subsection.repeats && subsection.fields && subsection.fields.length) {
-    return subsection.fields
-  }
-  else if (subsection.steps) {
-    return flatten(subsection.steps.filter(s => !s.repeats).map(step => step.fields))
-  }
-  else return []
-}
 
 const mapStateToProps = ({
   project,
