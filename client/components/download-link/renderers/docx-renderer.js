@@ -635,7 +635,7 @@ export default (application, sections, values, updateImageDimensions) => {
           if (step.singular) {
             doc.createParagraph(`${step.singular} ${index + 1}`).heading2();
           }
-          (step.fields || []).forEach(field => renderField(doc, field, v, project));
+          (step.fields || []).filter(f => f.repeats).forEach(field => renderField(doc, field, v, project));
         });
         (step.fields || []).filter(f => !f.repeats).forEach(field => renderField(doc, field, values, project));
       } else {
