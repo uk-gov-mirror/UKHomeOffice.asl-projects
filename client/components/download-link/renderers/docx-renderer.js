@@ -721,6 +721,7 @@ export default (application, sections, values, updateImageDimensions) => {
   const renderDocument = (doc, sections, values) => {
     values = values || {};
     const now = new Date();
+    const primaryEstablishment = application.establishment.name;
 
     // inject the project licence holder into introductory details
     const field = {
@@ -732,7 +733,27 @@ export default (application, sections, values, updateImageDimensions) => {
     values['holder'] = application.licenceHolder;
 
     doc.createParagraph(values.title).style('SectionTitle');
-    doc.createParagraph(`Document exported on ${now}`).style('body').pageBreak();
+    doc.createParagraph(`Document exported on ${now}`).style('body');
+
+    doc.createParagraph('\n').style('body');
+    doc.createParagraph('\n').style('body');
+    doc.createParagraph('\n').style('body');
+    doc.createParagraph('\n').style('body');
+
+    doc.createParagraph('Applicant').style('Question');
+    doc.createParagraph(application.licenceHolder.name).style('body');
+
+    doc.createParagraph('Primary establishment').style('Question');
+    doc.createParagraph(primaryEstablishment).style('body');
+
+    doc.createParagraph('Additional establishments').style('Question');
+    const establishments = (values.establishments || [])
+      .map(e => e['establishment-name'])
+      .filter(e => e !== primaryEstablishment);
+    const text = establishments.length
+      ? establishments.join(', ')
+      : 'None';
+    doc.createParagraph(text).style('body').pageBreak();
 
     sections.filter(s => !s.show || s.show(values)).forEach(section => {
       if (section.name === 'nts') {
