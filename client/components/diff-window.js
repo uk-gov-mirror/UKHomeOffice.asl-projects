@@ -243,16 +243,6 @@ class DiffWindow extends React.Component {
   }
 
   compare() {
-    const { previous, granted, changedFromLatest, changedFromGranted } = this.props;
-
-    let before = changedFromGranted ? granted : previous;
-
-    if (changedFromLatest && changedFromGranted) {
-      before = this.state.active === 0 ? granted : previous;
-    }
-
-    const changes = this.diff(before, this.props.value);
-    const hasContentChanges = this.hasContentChanges(before, this.props.value, this.props.type);
 
     if (this.props.loading) {
       return <div className="govuk-grid-row">
@@ -263,6 +253,17 @@ class DiffWindow extends React.Component {
         </div>
       </div>
     }
+
+    const { previous, granted, changedFromLatest, changedFromGranted } = this.props;
+
+    let before = changedFromGranted ? granted : previous;
+
+    if (changedFromLatest && changedFromGranted) {
+      before = this.state.active === 0 ? granted : previous;
+    }
+
+    const changes = this.diff(before, this.props.value);
+    const hasContentChanges = this.hasContentChanges(before, this.props.value, this.props.type);
 
     return <Fragment>
       {
