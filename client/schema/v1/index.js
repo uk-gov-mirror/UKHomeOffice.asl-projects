@@ -2591,13 +2591,12 @@ each other.`,
           {
             name: 'reduction-estimation',
             label: 'How have you estimated the numbers of animals you will use?',
-            hint: 'For example, you may have made some power calculations or carried out some statistical modelling.',
             type: 'texteditor'
           },
           {
             name: 'reduction-steps',
             label: 'What steps did you take during the experimental design phase to reduce the number of animals being used in this project?',
-            hint: 'Include advice taken from local statisticians, online tools (such as the NC3Rs\' Experimental Design Assistant), or regulatory requirements.',
+            hint: 'You may want to reference online tools (such as the NC3R\'s Experiment Design Assistant) or any relevant regulatory requirements.',
             type: 'texteditor'
           },
           {
