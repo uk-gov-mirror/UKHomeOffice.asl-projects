@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import ReactMarkdown from 'react-markdown';
 import conditions from '../../../constants/protocol-conditions';
+import Details from '../../../components/details';
 
 class Content extends Component {
   render() {
@@ -36,11 +37,9 @@ class ProtocolConditions extends Component {
         {
           this.props.pdf ? <Content />
           : (
-            <details>
-              <summary>View general constraints</summary>
-              <br />
+            <Details summary="View general constraints">
               <Content />
-            </details>
+            </Details>
           )
         }
       </div>
