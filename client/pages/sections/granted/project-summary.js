@@ -8,10 +8,10 @@ import LEGAL from '../../../constants/legal';
 
 import { DATE_FORMAT } from '../../../constants';
 
-const GrantedAuthoritySection = ({ project }) => (
+const GrantedAuthoritySection = () => (
   <div className="granted-section">
     <h2>Granted authority</h2>
-    <ReactMarkdown className="legal">{LEGAL.grantedAuthority(project.licenceNumber)}</ReactMarkdown>
+    <ReactMarkdown className="legal">{LEGAL.grantedAuthority}</ReactMarkdown>
   </div>
 );
 
@@ -54,7 +54,7 @@ const ProjectSummary = ({
       {
         pdf && (
           <Fragment>
-            <GrantedAuthoritySection project={project} />
+            <GrantedAuthoritySection />
             <div className="granted-section">
               <RetrospectiveAssessment />
             </div>
@@ -131,7 +131,7 @@ const ProjectSummary = ({
         }
       </div>
       {
-        !pdf && <GrantedAuthoritySection project={project} />
+        !pdf && <GrantedAuthoritySection />
       }
     </Fragment>
   );

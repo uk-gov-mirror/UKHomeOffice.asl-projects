@@ -116,6 +116,7 @@ export default () => ({
           {
             name: 'duration',
             label: 'What will be the duration of this project?',
+            review: 'Project licence duration',
             type: 'duration'
           },
           {

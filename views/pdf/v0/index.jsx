@@ -24,7 +24,7 @@ const Legacy = ({ project, values }) => {
       </div>
       <div className="granted-section">
         <h2>Granted authority</h2>
-        <ReactMarkdown className="legal">{LEGAL.grantedAuthority(project.licenceNumber)}</ReactMarkdown>
+        <ReactMarkdown className="legal">{LEGAL.grantedAuthority}</ReactMarkdown>
       </div>
       <div className="granted-section">
         <h2>Retrospective assessment</h2>
