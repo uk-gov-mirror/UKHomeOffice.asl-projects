@@ -2596,7 +2596,7 @@ each other.`,
           {
             name: 'reduction-steps',
             label: 'What steps did you take during the experimental design phase to reduce the number of animals being used in this project?',
-            hint: 'You may want to reference online tools (such as the NC3R\'s Experiment Design Assistant) or any relevant regulatory requirements.',
+            hint: 'You may want to reference online tools (such as the NC3R\'s Experimental Design Assistant) or any relevant regulatory requirements.',
             type: 'texteditor'
           },
           {
