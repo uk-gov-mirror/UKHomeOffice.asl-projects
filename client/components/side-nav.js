@@ -23,7 +23,11 @@ function getFieldsForSection(section, project) {
       ];
     }, []);
   }
-  return flattenReveals(getFields(section), project).map(field => field.name);
+  const fields = flattenReveals(getFields(section), project).map(field => field.name);
+  if (section.repeats) {
+    fields.push(section.repeats);
+  }
+  return fields;
 }
 
 const SideNav = ({ schemaVersion, project, isGranted, ...props }) => {
