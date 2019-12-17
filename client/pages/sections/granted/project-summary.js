@@ -22,10 +22,7 @@ const ProjectSummary = ({
     name,
     licenceNumber,
     address,
-    licenceHolder: {
-      firstName,
-      lastName
-    }
+    licenceHolder
   },
   fields,
   pdf
@@ -92,7 +89,7 @@ const ProjectSummary = ({
             <dt>Establishment licence number: </dt>
             <dd>{ licenceNumber }</dd>
             <dt>Establishment licence holder: </dt>
-            <dd>{firstName} {lastName}</dd>
+            <dd>{ licenceHolder ? `${licenceHolder.firstName} ${licenceHolder.lastName}` : '-' }</dd>
             <dt>Address: </dt>
             <dd>{ address }</dd>
           </dl>
