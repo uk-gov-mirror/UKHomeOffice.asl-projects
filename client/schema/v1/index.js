@@ -15,6 +15,7 @@ import GrantedAuthorisations from '../../pages/sections/granted/authorisations';
 import ActionPlan from '../../pages/sections/granted/action-plan';
 import Purpose from '../../pages/sections/granted/protocol-purpose';
 import ProtocolEstablishments from '../../pages/sections/granted/protocol-establishments';
+import ProtocolObjectives from '../../pages/sections/granted/protocol-objectives';
 import GrantedProtocols from '../../pages/sections/granted/protocols';
 
 import GrantedSteps from '../../pages/sections/granted/protocol-steps';
@@ -1419,14 +1420,21 @@ each other.`,
               }
             ]
           },
-
+          objectives: {
+            title: 'Objectives',
+            show: props => props.isGranted,
+            granted: {
+              order: 6,
+              review: ProtocolObjectives
+            }
+          },
           steps: {
             title: 'Steps',
             hint: 'A step can be a single procedure or a combination of procedures to achieve an outcome. You will be able to reorder your steps at any time before you send your application to the Home Office, but they should be broadly chronological, with the final step being a method of killing or the last regulated procedure.',
             footer: 'Once you’ve created a list of steps, you need to add information about adverse effects, controls and limitations, and humane endpoints to each one.​',
             repeats: 'steps',
             granted: {
-              order: 6,
+              order: 7,
               review: GrantedSteps
             },
             fields: [
@@ -1514,7 +1522,7 @@ each other.`,
             title: 'Fate of animals',
             show: ({ isGranted }) => !isGranted,
             granted: {
-              order: 10
+              order: 11
             },
             fields: [
               {
@@ -1576,7 +1584,7 @@ each other.`,
           experience: {
             title: 'Animal experience',
             granted: {
-              order: 7
+              order: 8
             },
             fields: [
               {
@@ -1596,7 +1604,7 @@ each other.`,
           experimentalDesign: {
             title: 'Experimental design',
             granted: {
-              order: 8
+              order: 9
             },
             fields: [
               {
@@ -1691,7 +1699,7 @@ each other.`,
             title: 'Protocol justification',
             label: 'Why is each type of animal, experimental model, and/or method selected for this protocol:',
             granted: {
-              order: 9
+              order: 10
             },
             fields: [
               {
