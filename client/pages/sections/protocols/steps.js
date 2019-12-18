@@ -80,7 +80,7 @@ class Step extends Component {
   }
 
   render() {
-    const { prefix, index, fields, values, updateItem, length, editable, deleted, isReviewStep } = this.props;
+    const { prefix, index, fields, values, updateItem, length, editable, deleted, isReviewStep, protocol } = this.props;
 
     const completed = !editable || values.completed;
     return (
@@ -88,7 +88,7 @@ class Step extends Component {
         className={classnames('step', { completed, editable })}
         ref={this.step}
       >
-        <ChangedBadge fields={[ prefix.substr(0, prefix.length - 1) ]} />
+        <ChangedBadge fields={[ prefix.substr(0, prefix.length - 1) ]} protocolId={values.id} />
         <Fragment>
           {
             editable && completed && !deleted && (
@@ -117,6 +117,7 @@ class Step extends Component {
                 values={{ title: values.title }}
                 prefix={this.props.prefix}
                 editLink={`0#${this.props.prefix}`}
+                protocolId={protocol.id}
                 readonly={!isReviewStep}
               />
             )
@@ -143,6 +144,7 @@ class Step extends Component {
               prefix={this.props.prefix}
               editLink={`0#${this.props.prefix}`}
               readonly={!isReviewStep}
+              protocolId={protocol.id}
             />
             {
               editable && !deleted && <a href="#" onClick={this.editStep}>Edit step</a>
@@ -173,6 +175,7 @@ export default function Steps({ values, prefix, updateItem, editable, ...props }
           editable={editable}
           deleted={values.deleted}
           isReviewStep={isReviewStep}
+          protocol={values}
           { ...props }
         />
       </Repeater>
