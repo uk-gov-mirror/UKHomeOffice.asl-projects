@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import Comments from './comments';
 import DiffWindow from './diff-window';
 import ReviewField from './review-field';
+import ChangedBadge from './changed-badge';
 
 import ErrorBoundary from './error-boundary';
 
@@ -12,16 +13,6 @@ class Review extends React.Component {
 
   replay() {
     return <ReviewField {...this.props} />;
-  }
-
-  changedBadge = () => {
-    if (this.props.changedFromLatest) {
-      return <span className="badge changed">changed</span>;
-    }
-    if (this.props.changedFromGranted) {
-      return <span className="badge">amended</span>;
-    }
-    return null;
   }
 
   render() {
@@ -32,9 +23,11 @@ class Review extends React.Component {
         {
           (!isGranted || showGrantedLabel) && <h3>{review || label}</h3>
         }
-        {
-          this.changedBadge()
-        }
+        <ChangedBadge
+          changedFromLatest={this.props.changedFromLatest}
+          changedFromGranted={this.props.changedFromGranted}
+          protocolId={this.props.protocolId}
+        />
         {
           this.props.readonly && (this.props.changedFromLatest || this.props.changedFromGranted) && (
             <DiffWindow
@@ -74,7 +67,7 @@ class Review extends React.Component {
 }
 
 
-const mapStateToProps = ({ application: { readonly, isGranted } = {}, changes : { latest = [], granted = [] } = {} }, ownProps) => {
+const mapStateToProps = ({ application: { readonly, isGranted, previousProtocols } = {}, changes : { latest = [], granted = [] } = {} }, ownProps) => {
   const key = `${ownProps.prefix || ''}${ownProps.name}`;
   const changedFromGranted = granted.includes(key);
   const changedFromLatest = latest.includes(key);
@@ -82,7 +75,8 @@ const mapStateToProps = ({ application: { readonly, isGranted } = {}, changes : 
     readonly: ownProps.readonly || readonly,
     changedFromLatest,
     changedFromGranted,
-    isGranted
+    isGranted,
+    previousProtocols
   };
 }
 
