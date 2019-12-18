@@ -1,22 +1,18 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import get from 'lodash/get';
+import ReviewFields from '../../../components/review-fields';
 import { getSubsections } from '../../../schema';
 
 const Objectives = ({ values, schemaVersion }) => {
-  const field = get(getSubsections(schemaVersion), 'protocols.sections.details.fields').find(f => f.name === 'objectives');
+  const fields = get(getSubsections(schemaVersion), 'protocols.sections.details.fields');
   return (
     <div className="objectives">
       <h2>Objectives</h2>
-      <h3>{ field.label }</h3>
-      {
-        (values.objectives || []).map((objective, index) => (
-          <Fragment key={index}>
-            <h3>Objective {index + 1}</h3>
-            <p>{ objective }</p>
-          </Fragment>
-        ))
-      }
+      <ReviewFields
+        fields={fields.filter(f => f.name === 'objectives')}
+        values={values}
+      />
     </div>
   );
 };
