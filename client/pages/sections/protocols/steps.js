@@ -88,7 +88,7 @@ class Step extends Component {
         className={classnames('step', { completed, editable })}
         ref={this.step}
       >
-        <ChangedBadge fields={[ prefix.substr(0, prefix.length - 1) ]} protocolId={values.id} />
+        <ChangedBadge fields={[ prefix.substr(0, prefix.length - 1) ]} protocolId={protocol.id} />
         <Fragment>
           {
             editable && completed && !deleted && (
