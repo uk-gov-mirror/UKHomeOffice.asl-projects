@@ -3,12 +3,12 @@ import { useSelector, shallowEqual } from 'react-redux';
 
 const selector = ({
   changes: {
-    latest,
-    granted
-  },
+    latest = [],
+    granted = []
+  } = {},
   application: {
     previousProtocols
-  }
+  } = {}
 }) => ({
   latest,
   granted,
@@ -16,7 +16,10 @@ const selector = ({
 });
 
 export default function ChangedBadge({ fields = [], changedFromGranted, changedFromLatest, protocolId, noLabel }) {
-  const { latest = [], granted = [], previousProtocols } = useSelector(selector, shallowEqual);
+  const { latest, granted, previousProtocols } = useSelector(selector, shallowEqual);
+  if (!latest.length && !granted.length) {
+    return null;
+  }
   const changedFrom = source => source.length && fields.some(field => source.some(change => change === field));
 
   if ((changedFromLatest || changedFrom(latest)) && (!protocolId || previousProtocols.previous.includes(protocolId))) {
