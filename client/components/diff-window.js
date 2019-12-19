@@ -318,6 +318,10 @@ class DiffWindow extends React.Component {
 
   render() {
     const { modalOpen } = this.state;
+    const { changedFromLatest, changedFromGranted } = this.props;
+    if (!changedFromLatest && !changedFromGranted) {
+      return null;
+    }
 
     return modalOpen
       ? (

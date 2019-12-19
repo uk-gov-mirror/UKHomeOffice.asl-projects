@@ -17,23 +17,34 @@ class Review extends React.Component {
 
   render() {
     const { label } = this.props.altLabels ? this.props.alt : this.props;
-    const { hint, isGranted, showGrantedLabel = true, review } = this.props;
+    const {
+      hint,
+      isGranted,
+      showGrantedLabel = true,
+      review,
+      changedFromLatest,
+      changedFromGranted
+    } = this.props;
     return (
       <div className="review">
         {
           (!isGranted || showGrantedLabel) && <h3>{review || label}</h3>
         }
-        <ChangedBadge
-          changedFromLatest={this.props.changedFromLatest}
-          changedFromGranted={this.props.changedFromGranted}
-          protocolId={this.props.protocolId}
-        />
         {
-          this.props.readonly && (this.props.changedFromLatest || this.props.changedFromGranted) && (
+          (changedFromLatest || changedFromGranted) && (
+            <ChangedBadge
+              changedFromLatest={changedFromLatest}
+              changedFromGranted={changedFromGranted}
+              protocolId={this.props.protocolId}
+            />
+          )
+        }
+        {
+          this.props.readonly && (changedFromLatest || changedFromGranted) && (
             <DiffWindow
               {...this.props}
-              changedFromLatest={this.props.changedFromLatest}
-              changedFromGranted={this.props.changedFromGranted}
+              changedFromLatest={changedFromLatest}
+              changedFromGranted={changedFromGranted}
               name={`${this.props.prefix}${this.props.name}`}
             />
           )
