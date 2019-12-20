@@ -9,7 +9,9 @@ import StandardConditions from '../components/standard-conditions';
 
 export default function PDF() {
   const project = useSelector(state => state.project);
-  const sections = Object.values(getGrantedSubsections(1)).filter(s => !s.granted.show || s.granted.show(project)).sort((a, b) => a.granted.order - b.granted.order);
+  const sections = Object.values(getGrantedSubsections(1))
+    .filter(s => !s.granted.show || s.granted.show(project))
+    .sort((a, b) => a.granted.order - b.granted.order);
   return (
     <Fragment>
       <div className="logo"></div>
