@@ -205,7 +205,7 @@ export default () => ({
             label: 'Which purposes apply to your project?',
             type: 'permissible-purpose',
             className: 'smaller',
-            preserveHeirarchy: true,
+            preserveHierarchy: true,
             options: [
               {
                 label: '(a) Basic research',
