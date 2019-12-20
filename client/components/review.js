@@ -25,7 +25,6 @@ class Review extends React.Component {
       changedFromLatest,
       changedFromGranted
     } = this.props;
-    console.log(this.props.readonly && (changedFromLatest || changedFromGranted))
     return (
       <div className="review">
         {
