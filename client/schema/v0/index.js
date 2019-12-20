@@ -203,8 +203,9 @@ export default () => ({
           {
             name: 'purpose',
             label: 'Which purposes apply to your project?',
-            type: 'checkbox',
+            type: 'permissible-purpose',
             className: 'smaller',
+            preserveHierarchy: true,
             options: [
               {
                 label: '(a) Basic research',

@@ -137,7 +137,7 @@ class ReviewField extends React.Component {
         return (
           <div className="review-children">
             <ReviewFields
-              fields={castArray(option.reveal).map(field => ({ ...field, preserveHeirarchy: true }))}
+              fields={castArray(option.reveal).map(field => ({ ...field, preserveHierarchy: true }))}
               values={this.props.values}
             />
           </div>
@@ -153,7 +153,7 @@ class ReviewField extends React.Component {
                   getValue(value)
                 }
                 {
-                  this.props.preserveHeirarchy && getChildren(value)
+                  this.props.preserveHierarchy && getChildren(value)
                 }
               </li>
             ))

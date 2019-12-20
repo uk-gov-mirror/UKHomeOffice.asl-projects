@@ -100,7 +100,7 @@ export const getLegacySpeciesLabel = species => {
 export const flattenReveals = (fields, values) => {
   return fields.reduce((arr, item) => {
     const reveals = [];
-    if (item.options && !item.preserveHeirarchy) {
+    if (item.options && !item.preserveHierarchy) {
       item.options.forEach(option => {
         if (option.reveal) {
           if (Array.isArray(values[item.name]) && values[item.name].includes(option.value)) {
