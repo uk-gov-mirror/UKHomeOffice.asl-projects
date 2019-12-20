@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import ReactMarkdown from 'react-markdown';
 import Review from '../../../components/review';
+import ReviewFields from '../../../components/review-fields';
 import RetrospectiveAssessment from '../../../components/retrospective-assessment';
 import { formatDate } from '../../../helpers';
 import LEGAL from '../../../constants/legal';
@@ -55,12 +56,27 @@ const ProjectSummary = ({
             <div className="granted-section">
               <RetrospectiveAssessment />
             </div>
+            <div className="granted-section">
+              <h2>Permissible purposes</h2>
+              <ReviewFields
+                fields={fields.filter(f => f.name === 'permissible-purpose')}
+                values={values}
+                noComments
+              />
+            </div>
           </Fragment>
         )
       }
       {
         !pdf && (
           <Fragment>
+            <div className="granted-section">
+              <ReviewFields
+                fields={fields.filter(f => f.name === 'permissible-purpose')}
+                values={values}
+                noComments
+              />
+            </div>
             <div className="granted-section">
               <Review
                 {...fields.find(f => f.name === 'duration')}
