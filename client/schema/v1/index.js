@@ -1236,7 +1236,7 @@ each other.`,
             ]
           },
           purpose: {
-            title: 'Purpose and outputs',
+            title: 'Purpose, outputs and objectives',
             show: props => props.isGranted,
             granted: {
               order: 2,
