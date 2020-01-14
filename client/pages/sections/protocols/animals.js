@@ -136,6 +136,12 @@ class Animals extends Component {
       if (precodedSpecies) {
         value = precodedSpecies.value;
         item = precodedSpecies.label
+        const matchingValue = speciesDetails.find(sd => sd.value === value);
+        // item is already in list - make sure it has the right label
+        if (matchingValue) {
+          matchingValue.name = item;
+          return;
+        }
       }
 
       if (some(speciesDetails, sd => sd.name === item)) {
