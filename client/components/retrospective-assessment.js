@@ -1,50 +1,12 @@
 import React, { Fragment, useState } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { updateRetrospectiveAssessment } from '../actions/projects';
-import intersection from 'lodash/intersection';
-import some from 'lodash/some';
-import values from 'lodash/values';
-import flatten from 'lodash/flatten';
 import isUndefined from 'lodash/isUndefined';
 import isPlainObject from 'lodash/isPlainObject';
 import { Button } from '@ukhomeoffice/react-components';
 import Field from './field';
 import RAContent from '../constants/retrospective-assessment';
-import SPECIES from '../constants/species';
-
-const species = flatten(values(SPECIES));
-
-const nopes = [
-  // legacy
-  'prosimians',
-  'marmosets',
-  'cynomolgus',
-  'rhesus',
-  // legacy
-  'vervets',
-  // legacy
-  'baboons',
-  // legacy
-  'squirrel-monkeys',
-  // legacy
-  'other-old-world',
-  // legacy
-  'other-new-world',
-  'other-nhps',
-  // legacy
-  'apes',
-  'beagles',
-  'other-dogs',
-  'cats',
-  'horses'
-];
-
-function raApplies(project) {
-  return !!intersection(project.species, nopes).length ||
-    !!intersection(project['species-other'], nopes.map(n => (species.find(s => s.value === n) || {}).label)).length ||
-    project['endangered-animals'] ||
-    some(project.protocols, p => (p.severity || '').match(/severe/ig));
-}
+import raApplies from '../helpers/retrospective-assessment';
 
 function getInitialState(project) {
   if (!isUndefined(project.retrospectiveAssessment)) {

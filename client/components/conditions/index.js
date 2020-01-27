@@ -5,6 +5,7 @@ import { Button } from '@ukhomeoffice/react-components';
 import { updateConditions } from '../../actions/projects';
 import Conditions from './conditions';
 import AddConditions from './add-conditions';
+import RetrospectiveAssessment from '../retrospective-assessment'
 
 function ConditionsPage({
   values,
@@ -41,6 +42,9 @@ function ConditionsPage({
       }
       {
         !editConditions && !conditions.length && <ReactMarkdown className="grey">{emptyIntroReadOnly}</ReactMarkdown>
+      }
+      {
+        editConditions && <RetrospectiveAssessment />
       }
       <Conditions
         scope="project"
