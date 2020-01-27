@@ -1,8 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { updateRetrospectiveAssessment } from '../actions/projects';
-import values from 'lodash/values';
-import flatten from 'lodash/flatten';
 import isUndefined from 'lodash/isUndefined';
 import isPlainObject from 'lodash/isPlainObject';
 import { Button } from '@ukhomeoffice/react-components';

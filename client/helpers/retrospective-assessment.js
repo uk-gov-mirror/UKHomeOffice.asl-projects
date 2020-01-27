@@ -32,10 +32,12 @@ const nopes = [
 ];
 
 export default function raApplies(project) {
+  if (!project) {
+    return false;
+  }
   const hasRASpecies = !!intersection(project.species, nopes).length;
   const hasRASpeciesOther = !!intersection(project['species-other'], nopes.map(n => (species.find(s => s.value === n) || {}).label)).length;
   const hasEndangeredAnimals = project['endangered-animals'];
   const hasSevereProtocols = some(project.protocols, p => (p.severity || '').match(/severe/ig));
-  console.log({ hasRASpecies, hasRASpeciesOther, hasEndangeredAnimals, hasSevereProtocols });
   return hasRASpecies || hasRASpeciesOther || hasEndangeredAnimals || hasSevereProtocols;
 }
