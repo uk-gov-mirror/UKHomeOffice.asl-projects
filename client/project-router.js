@@ -8,19 +8,21 @@ import Section from './pages/section';
 import Project from './pages/project';
 
 const selector = ({
-  project,
+  project: version,
   application: {
+    project,
     isSyncing,
     basename,
     drafting,
     isGranted
   }
-}) => ({ project, isSyncing, basename, drafting, isGranted });
+}) => ({ project, version, isSyncing, basename, drafting, isGranted });
 
 const ProjectRouter = () => {
   const [statusShowing, setStatusShowing] = useState(true);
   const {
     project,
+    version,
     isSyncing,
     basename,
     drafting,
@@ -101,11 +103,33 @@ const ProjectRouter = () => {
   return (
     <BrowserRouter basename={basename}>
       <ScrollToTop>
-        <DownloadHeader model={project} licenceType="ppl" isGranted={isGranted} basename={downloadBasename} />
+
+        <DownloadHeader
+          title={version.title || 'Untitled project'}
+          subtitle="Project licence"
+          isGranted={isGranted}
+          basename={downloadBasename}
+        >
+          <dl>
+            <dt>Project title</dt>
+            <dd>{version.title}</dd>
+
+            <dt>Project licence holder</dt>
+            <dd>{`${project.licenceHolder.firstName} ${project.licenceHolder.lastName}`}</dd>
+
+            <dt>Primary establishment</dt>
+            <dd>{project.establishment.name}</dd>
+
+            <dt>Project licence number</dt>
+            <dd>{project.licenceNumber}</dd>
+          </dl>
+        </DownloadHeader>
+
         <Switch>
           <Route path="/:section/:step?" render={props => <Section { ...props } drafting={drafting} />} />
           <Route path="/" component={Project} />
         </Switch>
+
       </ScrollToTop>
     </BrowserRouter>
   )
