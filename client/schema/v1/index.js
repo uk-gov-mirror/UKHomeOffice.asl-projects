@@ -1674,6 +1674,7 @@ each other.`,
                               {
                                 name: 'control-groups-size',
                                 label: 'How will you determine group sizes?',
+                                hint: 'You should reference POWER calculations you have made, if relevant.',
                                 type: 'texteditor'
                               },
                               {
@@ -2599,6 +2600,7 @@ each other.`,
           {
             name: 'reduction-estimation',
             label: 'How have you estimated the numbers of animals you will use?',
+            hint: 'Do not mention POWER calculations here. If relevant, there will be an opportunity to provide these details elsewhere.',
             type: 'texteditor'
           },
           {
