@@ -108,6 +108,7 @@ const ProjectRouter = () => {
           title={version.title || 'Untitled project'}
           subtitle="Project licence"
           basename={downloadBasename}
+          isGranted={isGranted}
         >
           <dl>
             <dt>Project title</dt>
