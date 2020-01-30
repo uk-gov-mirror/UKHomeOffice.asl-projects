@@ -20,7 +20,14 @@ export default function ChangedBadge({ fields = [], changedFromGranted, changedF
   if (!latest.length && !granted.length) {
     return null;
   }
-  const changedFrom = source => source.length && fields.some(field => source.some(change => change === field));
+  const changedFrom = source => {
+    return source.length && fields.some(field => {
+      if (field.includes('*')) {
+        field = field.split('.*')[0];
+      }
+      return source.some(change => change === field)
+    });
+  }
 
   if ((changedFromLatest || changedFrom(latest)) && (!protocolId || previousProtocols.previous.includes(protocolId))) {
     return <span className="badge changed">{ noLabel ? '' : 'changed' }</span>;

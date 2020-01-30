@@ -105,19 +105,30 @@ class ApplicationSummary extends React.Component {
     return !section.show || section.show(this.props.values);
   }
 
-  getComments = (key, subsection) => {
-    let newComments = 0;
+  getCommentCount = (key, subsection) => {
 
     if (subsection.repeats) {
-      newComments += flatten(Object.keys(this.props.newComments)
+      return flatten(Object.keys(this.props.newComments)
         .filter(key => key.match(new RegExp(`^${subsection.repeats}\\.`)))
         .map(key => this.props.newComments[key])).length;
+    } else {
+      return (this.props.fieldsBySection[key] || []).reduce((total, field) => {
+        if (field.includes('.*')) {
+          const prefix = field.split('.*')[0];
+          return total + Object.keys(this.props.newComments).reduce((sum, q) => {
+            if (q.split('.')[0] === prefix) {
+              return sum + this.props.newComments[q].length;
+            }
+            return sum;
+          }, 0);
+        }
+        return total + (this.props.newComments[field] || []).length
+      }, 0);
     }
+  }
 
-    newComments += (this.props.fieldsBySection[key] || []).reduce((total, field) => {
-      return total + (this.props.newComments[field] || []).length
-    }, 0);
-
+  getComments = (key, subsection) => {
+    const newComments = this.getCommentCount(key, subsection);
     return <NewComments comments={newComments} />
   }
 

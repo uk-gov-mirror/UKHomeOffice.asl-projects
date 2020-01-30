@@ -121,11 +121,19 @@ export const flattenReveals = (fields, values) => {
 };
 
 export function getFields(section) {
-  if (!section.repeats && section.fields && section.fields.length) {
-    return section.fields;
+  if (section.fields && section.fields.length) {
+    return section.fields.map(field => {
+      if (field.repeats) {
+        return {
+          ...field,
+          name: `${section.repeats}.*.${field.name}`
+        };
+      }
+      return field;
+    });
   }
   else if (section.steps) {
-    return flatten(section.steps.filter(s => !s.repeats).map(step => step.fields));
+    return flatten(section.steps.map(getFields));
   }
   else return [];
 }
