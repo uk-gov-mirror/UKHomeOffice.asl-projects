@@ -10,6 +10,7 @@ import database from '../database';
 import { showMessage, throwError } from './messages';
 import sendMessage from './messaging';
 import { getConditions } from '../helpers';
+import cleanProtocols from '../helpers/clean-protocols';
 
 const CONDITIONS_FIELDS = ['conditions', 'retrospectiveAssessment'];
 
@@ -364,8 +365,8 @@ const debouncedSyncProject = debounce((...args) => {
 
 export const ajaxSync = props => {
   return (dispatch, getState) => {
-    const { project } = getState();
-    const newState = { ...project, ...props };
+    const { project, application: { establishment } } = getState();
+    const newState = cleanProtocols(project, props, establishment);
 
     dispatch(updateProject(newState));
     return debouncedSyncProject(dispatch, getState);
