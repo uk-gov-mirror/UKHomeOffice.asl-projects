@@ -152,7 +152,7 @@ class ApplicationSummary extends React.Component {
                   subsections.map(key => {
                     const subsection = section.subsections[key];
                     const fields = Object.values(this.props.fieldsBySection[key] || []);
-                    if(subsection.repeats) {
+                    if (subsection.repeats) {
                       fields.push(subsection.repeats);
                     }
                     return <tr key={key}>

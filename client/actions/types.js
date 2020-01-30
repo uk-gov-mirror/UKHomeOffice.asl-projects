@@ -23,6 +23,7 @@ export const COMMENT_DELETED = 'COMMENT_DELETED';
 export const REFRESH_COMMENTS = 'REFRESH_COMMENTS';
 
 export const ADD_CHANGE = 'ADD_CHANGE';
+export const ADD_CHANGES = 'ADD_CHANGES';
 export const LOAD_QUESTION_VERSIONS = 'LOAD_QUESTION_VERSIONS';
 export const ERROR = 'ERROR';
 

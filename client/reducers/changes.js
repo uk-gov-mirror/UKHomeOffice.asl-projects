@@ -6,7 +6,7 @@ const INITIAL_STATE = {
 };
 
 const changedItems = (state = [], action) => {
-  const paths = action.change.split('.').map((_, i, arr) => arr.slice(0, i + 1).join('.'));
+  const paths = action.split('.').map((_, i, arr) => arr.slice(0, i + 1).join('.'));
 
   return paths.reduce((arr, path) => {
     return arr.includes(path) ? arr : [ ...arr, path ];
@@ -18,7 +18,17 @@ const changes = (state = INITIAL_STATE, action) => {
     case types.ADD_CHANGE: {
       return {
         ...state,
-        latest: changedItems(state.latest, action)
+        latest: changedItems(state.latest, action.change)
+      };
+    }
+
+    case types.ADD_CHANGES: {
+      const granted = action.granted.reduce((arr, item) => changedItems(arr, item), state.granted);
+      const latest = action.latest.reduce((arr, item) => changedItems(arr, item), state.latest);
+      return {
+        ...state,
+        granted,
+        latest
       };
     }
   }
