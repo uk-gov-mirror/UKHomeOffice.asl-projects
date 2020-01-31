@@ -139,6 +139,7 @@ class ReviewField extends React.Component {
             <ReviewFields
               fields={castArray(option.reveal).map(field => ({ ...field, preserveHierarchy: true }))}
               values={this.props.values}
+              prefix={this.props.prefix}
             />
           </div>
         )
