@@ -3,11 +3,10 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import Field from './field';
+import getLocations from '../helpers/get-locations';
 
 const LocationSelector = ({
-  establishment,
-  establishments,
-  poles,
+  locations,
   ...props
 }) => (
   <div className="location-selector">
@@ -15,11 +14,7 @@ const LocationSelector = ({
       {...props}
       type="checkbox"
       className="smaller"
-      options={[
-        ...(establishment ? [establishment.name] : []),
-        ...establishments,
-        ...poles
-      ]}
+      options={locations}
       noComments={true}
     />
     <Link to="../establishments">Add new establishment</Link>
@@ -28,9 +23,7 @@ const LocationSelector = ({
 )
 
 const mapStateToProps = ({ project, application: { establishment } }) => ({
-  establishment,
-  establishments: (project.establishments || []).filter(e => e['establishment-name']).map(e => e['establishment-name']),
-  poles: (project.polesList || []).filter(p => p.title).map(p => p.title)
+  locations: getLocations(project, establishment)
 });
 
 export default connect(mapStateToProps)(LocationSelector);

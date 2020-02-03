@@ -10,6 +10,7 @@ import database from '../database';
 import { showMessage, throwError } from './messages';
 import sendMessage from './messaging';
 import { getConditions } from '../helpers';
+import cleanProtocols from '../helpers/clean-protocols';
 
 const CONDITIONS_FIELDS = ['conditions', 'retrospectiveAssessment'];
 
@@ -83,6 +84,14 @@ export function addChange(change) {
   return {
     type: types.ADD_CHANGE,
     change
+  }
+}
+
+export function addChanges(changes = {}) {
+  return {
+    type: types.ADD_CHANGES,
+    granted: changes.granted || [],
+    latest: changes.latest || []
   }
 }
 
@@ -278,7 +287,8 @@ const syncProject = (dispatch, getState) => {
   return Promise.resolve()
     .then(() => dispatch(updateProject(project)))
     .then(() => sendMessage(params))
-    .then(() => {
+    .then(json => {
+      dispatch(addChanges(json.changes))
       dispatch(doneSyncing())
       if (state.application.syncError) {
         dispatch(syncErrorResolved());
@@ -364,8 +374,8 @@ const debouncedSyncProject = debounce((...args) => {
 
 export const ajaxSync = props => {
   return (dispatch, getState) => {
-    const { project } = getState();
-    const newState = { ...project, ...props };
+    const { project, application: { establishment } } = getState();
+    const newState = cleanProtocols(project, props, establishment);
 
     dispatch(updateProject(newState));
     return debouncedSyncProject(dispatch, getState);
