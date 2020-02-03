@@ -922,9 +922,16 @@ html.modal-open, html.modal-open body {
     }
   }
 
-  .download-header .left h2 {
-    font-weight: normal;
-    margin-bottom: 0;
+  .download-header .page-title {
+    h1 {
+      font-weight: normal;
+      margin-bottom: 5px;
+    }
+
+    h2 {
+      font-weight: normal;
+      margin-bottom: 0;
+    }
   }
 
   .sidebar-nav {
