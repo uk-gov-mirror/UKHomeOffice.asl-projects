@@ -94,12 +94,21 @@ class Comments extends Component {
 const mapStateToProps = ({ comments, application: { commentable, showComments } }, { field }) => {
   const name = field.split('.').pop();
   let allComments = comments[field];
-  // backwards compatibility fix for some comments being saved without a prefix
+
+  // backwards compatibility fixes for some comments being saved without a prefix
   // merge comments saved with unprefixed name and full name
-  // whitelist the fields in legacy protocol animal questions as they are the only ones affected
-  if (name !== field && field.match(/^protocols\.[a-f0-9-]+\.item\./)) {
-    allComments = [].concat(comments[name]).concat(comments[field]).filter(Boolean);
+  if (name !== field) {
+    // whitelist the fields in legacy protocol animal questions
+    if (field.match(/^protocols\.[a-f0-9-]+\.item\./)) {
+      allComments = [].concat(comments[name]).concat(comments[field]).filter(Boolean);
+    }
+
+    // whitelist the fields nested under the fate section of protocols
+    if (field.match(/^protocols\.[a-f0-9-]+\.killed|killing-method|method-and-justification|continued-use-relevant-project/)) {
+      allComments = [].concat(comments[name]).concat(comments[field]).filter(Boolean);
+    }
   }
+
   return {
     comments: allComments,
     commentable,
