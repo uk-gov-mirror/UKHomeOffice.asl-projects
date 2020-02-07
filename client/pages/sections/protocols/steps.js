@@ -168,7 +168,7 @@ export default function Steps({ values, prefix, updateItem, editable, ...props }
         prefix={prefix}
         items={values.steps}
         onSave={steps => updateItem({ steps })}
-        addAnother={!values.deleted && every(values.steps, step => step.completed)}
+        addAnother={!values.deleted && every(values.steps, step => step.completed) && editable}
         { ...props }
       >
         <Step
