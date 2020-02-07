@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import ReactMarkdown from 'react-markdown';
 import conditions from '../../../constants/protocol-conditions';
-import Details from '../../../components/details';
+import { Details } from '@asl/components';
 
 class Content extends Component {
   render() {
