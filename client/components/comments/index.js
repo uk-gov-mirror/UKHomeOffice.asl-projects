@@ -104,7 +104,7 @@ const mapStateToProps = ({ comments, application: { commentable, showComments } 
     }
 
     // whitelist the fields nested under the fate section of protocols
-    if (field.match(/^protocols\.[a-f0-9-]+\.killed|killing-method|method-and-justification|continued-use-relevant-project/)) {
+    if (field.match(/^protocols\.[a-f0-9-]+\.(killed|killing-method|method-and-justification|continued-use-relevant-project)$/)) {
       allComments = [].concat(comments[name]).concat(comments[field]).filter(Boolean);
     }
   }
