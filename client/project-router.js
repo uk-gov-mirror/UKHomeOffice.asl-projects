@@ -107,6 +107,7 @@ const ProjectRouter = () => {
           subtitle="Project licence"
           basename={downloadBasename}
           licenceStatus={project.status}
+          showAllDownloads={true}
         >
           <dl>
             <dt>Project title</dt>
