@@ -1962,7 +1962,7 @@ each other.`,
 
 * ensures animals are accustomed to humans.
 * consists only of animals that have been bred in captivity.
-* is sustained only by animals bred within the same colony, or animals that are sourced from another self-sustanining colony.`,
+* is sustained only by animals bred within the same colony, or animals that are sourced from another self-sustaining colony.`,
 
             type: 'radio',
             inline: true,
