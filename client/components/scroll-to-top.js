@@ -7,7 +7,7 @@ const ScrollToTop = ({ children, location }) => {
     const header = document.querySelector('.download-header');
     const top = header ? header.offsetTop : 0;
     window.scrollTo(0, top);
-  }, [location]);
+  }, [location.pathname]);
 
   return children;
 }
