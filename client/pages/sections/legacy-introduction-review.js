@@ -3,6 +3,7 @@ import classnames from 'classnames';
 import { connect } from 'react-redux';
 import { formatDate } from '../../helpers';
 import ReviewFields from '../../components/review-fields';
+import Review from '../../components/review';
 import Banner from '../../components/banner';
 import { DATE_FORMAT } from '../../constants';
 
@@ -38,8 +39,17 @@ const LegacyIntroduction = ({ fields, project, values, pdf, readonly, title }) =
       )}
       <ReviewFields
         values={values}
-        fields={fields}
+        fields={fields.filter(f => f.name !== 'continuation')}
       />
+    {
+      values.continuation && (
+        <Review
+          {...fields.find(f => f.name === 'continuation')}
+          value={values.continuation}
+          values={values}
+        />
+      )
+    }
       {readonly && !pdf && (
         <Fragment>
           {project.issueDate && (

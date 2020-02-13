@@ -20,15 +20,22 @@ class Review extends React.Component {
     const {
       hint,
       isGranted,
+      legacyGranted,
+      grantedLabel,
       showGrantedLabel = true,
       review,
       changedFromLatest,
       changedFromGranted
     } = this.props;
+
+    const displayLabel = (legacyGranted || isGranted) && grantedLabel
+      ? grantedLabel
+      : review || label;
+
     return (
       <div className="review">
         {
-          (!isGranted || showGrantedLabel) && <h3>{review || label}</h3>
+          (!isGranted || showGrantedLabel) && <h3>{displayLabel}</h3>
         }
         {
           (changedFromLatest || changedFromGranted) && (
@@ -78,7 +85,7 @@ class Review extends React.Component {
 }
 
 
-const mapStateToProps = ({ application: { readonly, isGranted, previousProtocols } = {}, changes : { latest = [], granted = [] } = {} }, ownProps) => {
+const mapStateToProps = ({ application: { readonly, isGranted, previousProtocols, legacyGranted } = {}, changes : { latest = [], granted = [] } = {} }, ownProps) => {
   const key = `${ownProps.prefix || ''}${ownProps.name}`;
   const changedFromGranted = granted.includes(key);
   const changedFromLatest = latest.includes(key);
@@ -87,7 +94,8 @@ const mapStateToProps = ({ application: { readonly, isGranted, previousProtocols
     changedFromLatest,
     changedFromGranted,
     isGranted,
-    previousProtocols
+    previousProtocols,
+    legacyGranted
   };
 }
 
