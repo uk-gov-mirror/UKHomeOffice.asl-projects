@@ -26,6 +26,8 @@ const LegacyIntroduction = ({ fields, project, values, pdf, readonly, title }) =
     values.holder = value;
   }
 
+  const continuationField = fields.find(f => f.name === 'continuation');
+
   return (
     <div className={classnames('introduction-review', { readonly })}>
       {!readonly && (
@@ -44,7 +46,8 @@ const LegacyIntroduction = ({ fields, project, values, pdf, readonly, title }) =
     {
       values.continuation && (
         <Review
-          {...fields.find(f => f.name === 'continuation')}
+          {...continuationField}
+          label={continuationField.grantedLabel}
           value={values.continuation}
           values={values}
         />
