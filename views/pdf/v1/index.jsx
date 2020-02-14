@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import classnames from 'classnames';
-import ReactMarkdown from 'react-markdown';
 import { useSelector } from 'react-redux';
 import map from 'lodash/map';
 import { getGrantedSubsections } from '../../../client/schema';

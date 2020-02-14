@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactMarkdown from 'react-markdown';
+import { Markdown } from '@asl/components';
 import Review from '../authorisations';
 
 const Authorisarions = ({ granted, ...props }) => (
@@ -7,7 +7,7 @@ const Authorisarions = ({ granted, ...props }) => (
     {
       props.pdf && <h2>{props.title}</h2>
     }
-    <ReactMarkdown className="grey">{granted.intro}</ReactMarkdown>
+    <Markdown className="grey">{granted.intro}</Markdown>
     <Review {...props} />
   </div>
 );

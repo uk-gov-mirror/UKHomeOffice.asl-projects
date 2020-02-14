@@ -1,6 +1,6 @@
 import React, { useState, Fragment } from 'react';
 import { connect } from 'react-redux';
-import ReactMarkdown from 'react-markdown';
+import { Markdown } from '@asl/components';
 import { Button } from '@ukhomeoffice/react-components';
 import { updateConditions } from '../../actions/projects';
 import Conditions from './conditions';
@@ -38,10 +38,10 @@ function ConditionsPage({
   return (
     <Fragment>
       {
-        editConditions && <ReactMarkdown className="grey">{conditions.length ? intro : emptyIntro}</ReactMarkdown>
+        editConditions && <Markdown className="grey">{conditions.length ? intro : emptyIntro}</Markdown>
       }
       {
-        !editConditions && !conditions.length && <ReactMarkdown className="grey">{emptyIntroReadOnly}</ReactMarkdown>
+        !editConditions && !conditions.length && <Markdown className="grey">{emptyIntroReadOnly}</Markdown>
       }
       {
         editConditions && <RetrospectiveAssessment />

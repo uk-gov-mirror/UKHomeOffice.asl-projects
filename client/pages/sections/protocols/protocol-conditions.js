@@ -1,23 +1,22 @@
 import React, { Component, Fragment } from 'react';
-import ReactMarkdown from 'react-markdown';
 import conditions from '../../../constants/protocol-conditions';
-import { Details } from '@asl/components';
+import { Details, Markdown } from '@asl/components';
 
 class Content extends Component {
   render() {
     return (
       <Fragment>
         <div className="purple-inset">
-          <ReactMarkdown className="condition-text">{conditions.anaesthesia}</ReactMarkdown>
+          <Markdown className="condition-text">{conditions.anaesthesia}</Markdown>
         </div>
         <div className="purple-inset">
-          <ReactMarkdown className="condition-text">{conditions.generalAnaesthesia}</ReactMarkdown>
+          <Markdown className="condition-text">{conditions.generalAnaesthesia}</Markdown>
         </div>
         <div className="purple-inset">
-          <ReactMarkdown className="condition-text">{conditions.surgery}</ReactMarkdown>
+          <Markdown className="condition-text">{conditions.surgery}</Markdown>
         </div>
         <div className="purple-inset">
-          <ReactMarkdown className="condition-text">{conditions.administration}</ReactMarkdown>
+          <Markdown className="condition-text">{conditions.administration}</Markdown>
         </div>
       </Fragment>
     );

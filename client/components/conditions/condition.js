@@ -1,6 +1,6 @@
 import React, { useState, Fragment } from 'react';
 import classnames from 'classnames';
-import ReactMarkdown from 'react-markdown';
+import { Markdown } from '@asl/components';
 import Editable from '../editable';
 import Playback from '../playback';
 
@@ -71,7 +71,7 @@ const Condition = ({
             <Fragment>
               {
                 content && content !== ''
-                  ? <ReactMarkdown id={id} className={classnames('light', { clamp: expandable && !expanded })}>{content}</ReactMarkdown>
+                  ? <Markdown id={id} className={classnames('light', { clamp: expandable && !expanded })}>{content}</Markdown>
                   : <em>No answer provided</em>
               }
               {
