@@ -57,16 +57,14 @@ class ReviewField extends React.Component {
     }
 
     if ((this.props.legacyGranted || this.props.isGranted) && (this.props.name === 'continuation' && !isUndefined(value)))  {
-      return value
-        ? (
-          <dl className="inline">
-            <dt>From the licence</dt>
-            <dd>{this.props.project['continuation-licence-number']}</dd>
-            <dt>Expiring on</dt>
-            <dd>{this.props.project['continuation-expiry-date'] && formatDate(this.props.project['continuation-expiry-date'], DATE_FORMAT.long)}</dd>
-          </dl>
-        )
-        : <p>This is not a project continuation</p>
+      return (
+        <dl className="inline">
+          <dt>From the licence</dt>
+          <dd>{this.props.project['continuation-licence-number']}</dd>
+          <dt>Expiring on</dt>
+          <dd>{this.props.project['continuation-expiry-date'] && formatDate(this.props.project['continuation-expiry-date'], DATE_FORMAT.long)}</dd>
+        </dl>
+      );
     }
 
     if (value && this.props.type === 'holder') {
