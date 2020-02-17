@@ -13,9 +13,10 @@ const selector = ({
     project,
     isSyncing,
     basename,
-    drafting
+    drafting,
+    isGranted
   }
-}) => ({ project, version, isSyncing, basename, drafting });
+}) => ({ project, version, isSyncing, basename, drafting, isGranted });
 
 const ProjectRouter = () => {
   const [statusShowing, setStatusShowing] = useState(true);
@@ -24,7 +25,8 @@ const ProjectRouter = () => {
     version,
     isSyncing,
     basename,
-    drafting
+    drafting,
+    isGranted
   } = useSelector(selector, shallowEqual);
 
   function toggleStatusShowing() {
@@ -106,7 +108,7 @@ const ProjectRouter = () => {
           title={version.title || 'Untitled project'}
           subtitle="Project licence"
           basename={downloadBasename}
-          licenceStatus={project.status}
+          licenceStatus={isGranted ? project.status : 'inactive'}
           showAllDownloads={true}
         >
           <dl>
