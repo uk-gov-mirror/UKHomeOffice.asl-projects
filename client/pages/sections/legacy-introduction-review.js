@@ -50,7 +50,14 @@ const LegacyIntroduction = ({ fields, project, values, pdf, readonly, title }) =
           label={continuationField.grantedLabel}
           value={values.continuation}
           values={values}
-        />
+        >
+          <dl className="inline">
+            <dt>From the licence</dt>
+            <dd>{values['continuation-licence-number']}</dd>
+            <dt>Expiring on</dt>
+            <dd>{values['continuation-expiry-date'] && formatDate(values['continuation-expiry-date'], DATE_FORMAT.long)}</dd>
+          </dl>
+        </Review>
       )
     }
       {readonly && !pdf && (
