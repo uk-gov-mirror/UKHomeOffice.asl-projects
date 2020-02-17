@@ -56,6 +56,7 @@ class ReviewField extends React.Component {
       )
     }
 
+    // we only want to render this component if viewing a granted licence, if not then fallback to default radio behaviour
     if ((this.props.legacyGranted || this.props.isGranted) && (this.props.name === 'continuation' && !isUndefined(value)))  {
       return (
         <dl className="inline">
