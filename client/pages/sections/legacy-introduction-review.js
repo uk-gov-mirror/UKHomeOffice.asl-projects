@@ -3,6 +3,7 @@ import classnames from 'classnames';
 import { connect } from 'react-redux';
 import { formatDate } from '../../helpers';
 import ReviewFields from '../../components/review-fields';
+import Review from '../../components/review';
 import Banner from '../../components/banner';
 import { DATE_FORMAT } from '../../constants';
 
@@ -25,6 +26,8 @@ const LegacyIntroduction = ({ fields, project, values, pdf, readonly, title }) =
     values.holder = value;
   }
 
+  const continuationField = fields.find(f => f.name === 'continuation');
+
   return (
     <div className={classnames('introduction-review', { readonly })}>
       {!readonly && (
@@ -38,8 +41,25 @@ const LegacyIntroduction = ({ fields, project, values, pdf, readonly, title }) =
       )}
       <ReviewFields
         values={values}
-        fields={fields}
+        fields={fields.filter(f => f.name !== 'continuation')}
       />
+    {
+      values.continuation && (
+        <Review
+          {...continuationField}
+          label={continuationField.grantedLabel}
+          value={values.continuation}
+          values={values}
+        >
+          <dl className="inline">
+            <dt>From the licence</dt>
+            <dd>{values['continuation-licence-number']}</dd>
+            <dt>Expiring on</dt>
+            <dd>{values['continuation-expiry-date'] && formatDate(values['continuation-expiry-date'], DATE_FORMAT.long)}</dd>
+          </dl>
+        </Review>
+      )
+    }
       {readonly && !pdf && (
         <Fragment>
           {project.issueDate && (

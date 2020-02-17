@@ -28,6 +28,7 @@ export default () => ({
           {
             name: 'continuation',
             label: 'Is this a continuation of previous project licence?',
+            grantedLabel: 'This is a project continuation',
             type: 'radio',
             inline: true,
             className: 'smaller',
