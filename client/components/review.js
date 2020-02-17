@@ -12,7 +12,7 @@ import ErrorBoundary from './error-boundary';
 class Review extends React.Component {
 
   replay() {
-    return <ReviewField {...this.props} />;
+    return this.props.children || <ReviewField {...this.props} />;
   }
 
   render() {
