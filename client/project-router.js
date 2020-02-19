@@ -108,7 +108,7 @@ const ProjectRouter = () => {
           title={version.title || 'Untitled project'}
           subtitle="Project licence"
           basename={downloadBasename}
-          licenceStatus={isGranted ? project.status : 'inactive'}
+          licenceStatus={project.status === 'active' && !isGranted ? 'inactive' : project.status }
           showAllDownloads={true}
         >
           <dl>
