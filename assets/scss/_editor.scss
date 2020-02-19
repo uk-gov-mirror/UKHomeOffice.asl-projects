@@ -21,8 +21,13 @@
   }
 
   h1 {
-    margin: 20px 0 25px 0;
+    font-size: 26px;
   }
+
+  h2 {
+    font-size: 1em;
+  }
+
   blockquote {
     border-left: 2px solid #ddd;
     margin-left: 0;
@@ -78,9 +83,6 @@
   }
   p {
     margin-top: 0;
-  }
-  h1 {
-    font-size: 2em;
   }
   ol,
   ul {
