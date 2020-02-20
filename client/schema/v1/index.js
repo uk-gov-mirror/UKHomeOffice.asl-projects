@@ -8,6 +8,8 @@ import RepeaterReview from '../../pages/sections/repeater/review';
 import Conditions from '../../pages/sections/conditions';
 import Authorisations from '../../pages/sections/authorisations';
 
+import { transferOfAnimals } from '../shared';
+
 // granted components
 import ProjectSummary from '../../pages/sections/granted/project-summary';
 import GrantedConditions from '../../pages/sections/granted/conditions';
@@ -256,91 +258,7 @@ export default () => ({
           }
         ]
       },
-      'transfer-of-animals': {
-        title: 'Transfer and movement of animals',
-        show: values => values['other-establishments'] && values.establishments && values.establishments.length,
-        fields: [
-          {
-            name: 'transfer',
-            label: 'Will any animals be moved between licensed establishments during this project?',
-            hint: 'This may include moving animals mid protocol during regulated procedures',
-            type: 'radio',
-            inline: true,
-            className: 'smaller',
-            options: [
-              {
-                label: 'Yes',
-                value: true,
-                reveal: [
-                  {
-                    name: 'transfer-why',
-                    label: 'Why do you need to move animals between licensed establishments?',
-                    type: 'texteditor'
-                  },
-                  {
-                    name: 'transfer-how',
-                    label: 'How might the movement of animals between licensed establishments affect scientific delivery of the work?',
-                    type: 'texteditor'
-                  },
-                  {
-                    name: 'transfer-measures',
-                    label: 'What measures will you use to minimise any adverse effects for animals that may arise when moving them between licensed establishments?',
-                    type: 'texteditor'
-                  },
-                  {
-                    name: 'transfer-recovery',
-                    label: 'Will surgically prepared animals be given a minimum of 7 days to recover before being transferred?',
-                    type: 'radio',
-                    inline: true,
-                    className: 'smaller',
-                    options: [
-                      {
-                        label: 'Yes',
-                        value: true
-                      },
-                      {
-                        label: 'No',
-                        value: false,
-                        reveal: {
-                          name: 'transfer-no-recovery',
-                          label: 'Why won\'t animals be given 7 days to recover before being transferred?',
-                          type: 'texteditor'
-                        }
-                      }
-                    ]
-                  },
-                  {
-                    name: 'transfer-acclimatisation',
-                    label: 'Will animals be given a minimum of 7 days to acclimatise to their new surroundings prior to any regulated procedures being undertaken?',
-                    type: 'radio',
-                    inline: true,
-                    className: 'smaller',
-                    options: [
-                      {
-                        label: 'Yes',
-                        value: true
-                      },
-                      {
-                        label: 'No',
-                        value: false,
-                        reveal: {
-                          name: 'transfer-no-acclimatisation',
-                          label: 'Why won\'t  animals be given 7 days to acclimatise to their new surroundings? ',
-                          type: 'texteditor'
-                        }
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                label: 'No',
-                value: false
-              }
-            ]
-          }
-        ]
-      },
+      'transfer-of-animals': transferOfAnimals,
       poles: {
         title: 'Places other than a licensed establishment (POLEs)',
         review: RepeaterReview,
