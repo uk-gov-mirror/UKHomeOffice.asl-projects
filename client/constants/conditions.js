@@ -187,6 +187,22 @@ Genetically altered animals may not be re-homed.`
         }
       ]
     },
+    transferAndMovement: {
+      include: project => project.transfer,
+      type: 'authorisation',
+      versions: [
+        {
+          title: 'Transfer of animals',
+          content: `<<<TYPE OF ANIMAL(s)>>> may be moved from <<<NAME OF ESTABLISHMENT>>> TO <<<NAME OF ESTABLISHMENT>>> provided that:
+
+* <<<Measures to minimise adverse effects>>>
+* Animals are given a minimum of <<<7>>> days to acclimatise to their new surroundings before any further regulated procedures are undertaken
+* Animals are transported in accordance with the relevant legislation
+* Animals are inspected by a competent person after transfer
+* Any transport related problems with the welfare of the animals are notified to the Home Office promptly`
+        }
+      ]
+    },
     slaughter: {
       include: project => project['commercial-slaughter'],
       type: 'authorisation',
