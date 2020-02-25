@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
-import ReactMarkdown from 'react-markdown';
 import uuid from 'uuid/v4';
+import { Markdown } from '@asl/components';
 
 import Repeater from '../../../components/repeater';
 import Fieldset from '../../../components/fieldset';
@@ -43,7 +43,7 @@ const Items = ({ title, save, subtitle, intro, advance, repeats, exit, ...props 
         subtitle && <h2>{subtitle}</h2>
       }
       {
-        intro && <ReactMarkdown className="grey">{intro}</ReactMarkdown>
+        intro && <Markdown className="grey" links={true}>{intro}</Markdown>
       }
       <Repeater
         items={getItems(props.values, repeats)}
