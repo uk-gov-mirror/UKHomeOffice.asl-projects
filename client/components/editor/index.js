@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import classnames from 'classnames';
 import { Editor } from 'slate-react';
 import { Value } from 'slate';
-import ReactMarkdown from 'react-markdown';
+import { Markdown } from '@asl/components';
 
 import get from 'lodash/get';
 import defer from 'lodash/defer';
@@ -135,7 +135,7 @@ class TextEditor extends Component {
               {
                 this.props.hint && (
                   <span id={`${this.props.name}-hint`} className='govuk-hint'>
-                    <ReactMarkdown source={this.props.hint} />
+                    <Markdown source={this.props.hint} links={true} />
                   </span>
                 )
               }
