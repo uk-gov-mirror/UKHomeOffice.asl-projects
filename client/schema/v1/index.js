@@ -2611,7 +2611,7 @@ each other.`,
           },
           {
             name: 'reduction-review',
-            label: 'What measures, apart from good experimental design, will you use to optimise the number of animals you plan to use in your project.',
+            label: 'What measures, apart from good experimental design, will you use to optimise the number of animals you plan to use in your project?',
             hint: 'This may include efficient breeding, pilot studies, computer modelling, or sharing of tissue.',
             type: 'texteditor'
           }
