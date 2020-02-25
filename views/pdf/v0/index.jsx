@@ -1,7 +1,7 @@
 import React from 'react';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
-import ReactMarkdown from 'react-markdown';
+import { Markdown } from '@asl/components';
 import { getSubsections } from '../../../client/schema';
 import StaticSection from '../../../client/components/static-section';
 import RA from '../../../client/components/retrospective-assessment';
@@ -20,11 +20,11 @@ const Legacy = ({ project, values }) => {
       <div className="granted-section">
         <h2>Project licence holder</h2>
         <p className="licence-holder">{`${project.licenceHolder.firstName} ${project.licenceHolder.lastName}`}</p>
-        <ReactMarkdown className="legal">{LEGAL.licenceHolder}</ReactMarkdown>
+        <Markdown className="legal">{LEGAL.licenceHolder}</Markdown>
       </div>
       <div className="granted-section">
         <h2>Granted authority</h2>
-        <ReactMarkdown className="legal">{LEGAL.grantedAuthority}</ReactMarkdown>
+        <Markdown className="legal">{LEGAL.grantedAuthority}</Markdown>
       </div>
       <div className="granted-section">
         <h2>Retrospective assessment</h2>

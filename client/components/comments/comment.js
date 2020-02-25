@@ -2,8 +2,8 @@ import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
 import format from 'date-fns/format';
-import ReactMarkdown from 'react-markdown';
 import { Button } from '@ukhomeoffice/react-components';
+import { Markdown } from '@asl/components';
 import { deleteComment } from '../../actions/comments';
 
 import { DATE_FORMAT } from '../../constants';
@@ -32,7 +32,7 @@ const Comment = ({
       {
         deleted
           ? <em>This comment has been deleted</em>
-          : <ReactMarkdown>{comment}</ReactMarkdown>
+          : <Markdown>{comment}</Markdown>
       }
 
       {

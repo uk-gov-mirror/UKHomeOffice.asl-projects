@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
-import ReactMarkdown from 'react-markdown';
+import { Markdown } from '@asl/components';
 import Review from '../../../components/review';
 import ReviewFields from '../../../components/review-fields';
 import RetrospectiveAssessment from '../../../components/retrospective-assessment';
@@ -12,7 +12,7 @@ import { DATE_FORMAT } from '../../../constants';
 const GrantedAuthoritySection = () => (
   <div className="granted-section">
     <h2>Granted authority</h2>
-    <ReactMarkdown className="legal">{LEGAL.grantedAuthority}</ReactMarkdown>
+    <Markdown className="legal">{LEGAL.grantedAuthority}</Markdown>
   </div>
 );
 
@@ -47,7 +47,7 @@ const ProjectSummary = ({
       <div className="granted-section">
         <h2>Project licence holder</h2>
         <p className="licence-holder">{`${project.licenceHolder.firstName} ${project.licenceHolder.lastName}`}</p>
-        <ReactMarkdown className="legal">{LEGAL.licenceHolder}</ReactMarkdown>
+        <Markdown className="legal">{LEGAL.licenceHolder}</Markdown>
       </div>
       {
         pdf && (

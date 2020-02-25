@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactMarkdown from 'react-markdown';
+import { Markdown } from '@asl/components';
 import Review from '../conditions';
 
 const Conditions = ({ granted, ...props }) => (
@@ -13,7 +13,7 @@ const Conditions = ({ granted, ...props }) => (
       )
     }
     <h2>{granted.subtitle}</h2>
-    <ReactMarkdown className="grey">{granted.intro}</ReactMarkdown>
+    <Markdown className="grey">{granted.intro}</Markdown>
     <Review {...props} />
   </div>
 );

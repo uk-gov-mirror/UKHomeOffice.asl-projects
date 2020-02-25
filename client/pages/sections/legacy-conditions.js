@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
-import ReactMarkdown from 'react-markdown';
+import { Markdown } from '@asl/components';
 import { updateConditions } from '../../actions/projects';
 import AddConditions from '../../components/conditions/add-conditions';
 import Condition from '../../components/conditions/condition';
@@ -93,7 +93,7 @@ function LegacyConditions({
               />
               <h2>Export of animals (transfer)</h2>
               <div className="purple-inset">
-                <ReactMarkdown>{standardConditions}</ReactMarkdown>
+                <Markdown>{standardConditions}</Markdown>
               </div>
             </Fragment>
           )

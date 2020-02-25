@@ -1,8 +1,8 @@
 import React, { Component, useState, Fragment } from 'react';
 import classnames from 'classnames';
-import ReactMarkdown from 'react-markdown';
 import { connect } from 'react-redux';
 import get from 'lodash/get';
+import { Markdown } from '@asl/components';
 import { Button } from '@ukhomeoffice/react-components';
 import CONDITIONS from '../../constants/conditions';
 
@@ -71,7 +71,7 @@ function Condition({
                       onRevert={handleRevert}
                       showRevert={!custom}
                     />
-                  : <ReactMarkdown className="condition-text">{displayContent}</ReactMarkdown>
+                  : <Markdown className="condition-text">{displayContent}</Markdown>
                 }
               </Fragment>
             )
