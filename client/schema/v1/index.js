@@ -184,6 +184,10 @@ export default () => ({
           {
             fields: [
               {
+                name: 'transferToEstablishment',
+                type: 'establishment-selector'
+              },
+              {
                 name: 'other-establishments',
                 label: 'Will your project use any additional establishments?',
                 type: 'radio',
