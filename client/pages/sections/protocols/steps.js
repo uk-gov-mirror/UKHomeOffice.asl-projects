@@ -4,7 +4,6 @@ import { useParams } from 'react-router';
 import classnames from 'classnames'
 import { Button } from '@ukhomeoffice/react-components';
 
-import every from 'lodash/every';
 import isUndefined from 'lodash/isUndefined';
 
 import ReviewFields from '../../../components/review-fields';
@@ -168,7 +167,7 @@ export default function Steps({ values, prefix, updateItem, editable, ...props }
         prefix={prefix}
         items={values.steps}
         onSave={steps => updateItem({ steps })}
-        addAnother={!values.deleted && every(values.steps, step => step.completed) && editable}
+        addAnother={!values.deleted && editable}
         { ...props }
       >
         <Step
