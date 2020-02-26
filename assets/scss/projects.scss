@@ -770,7 +770,9 @@ html.modal-open, html.modal-open body {
           }
         }
       }
-
+      &.editable .control-panel {
+        margin-top: 0;
+      }
       &.editable > .review .review a.edit-link {
         display: none;
       }

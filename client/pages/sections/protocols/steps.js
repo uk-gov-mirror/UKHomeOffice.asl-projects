@@ -4,7 +4,6 @@ import { useParams } from 'react-router';
 import classnames from 'classnames'
 import { Button } from '@ukhomeoffice/react-components';
 
-import every from 'lodash/every';
 import isUndefined from 'lodash/isUndefined';
 
 import ReviewFields from '../../../components/review-fields';
@@ -132,10 +131,12 @@ class Step extends Component {
                 onFieldChange={(key, value) => updateItem({ [key]: value })}
                 values={values}
               />
-              <Button onClick={this.saveStep}>Save step</Button>
-              {
-                length > 1 && <Button className="link" onClick={this.removeItem}>Remove step</Button>
-              }
+              <p className="control-panel">
+                <Button onClick={this.saveStep}>Save step</Button>
+                {
+                  length > 1 && <Button className="link" onClick={this.removeItem}>Remove step</Button>
+                }
+              </p>
             </Fragment>
           : <div className="review">
             <ReviewFields
@@ -168,7 +169,7 @@ export default function Steps({ values, prefix, updateItem, editable, ...props }
         prefix={prefix}
         items={values.steps}
         onSave={steps => updateItem({ steps })}
-        addAnother={!values.deleted && every(values.steps, step => step.completed) && editable}
+        addAnother={!values.deleted && editable}
         { ...props }
       >
         <Step
