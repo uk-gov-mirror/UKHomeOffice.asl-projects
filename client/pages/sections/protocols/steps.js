@@ -131,10 +131,12 @@ class Step extends Component {
                 onFieldChange={(key, value) => updateItem({ [key]: value })}
                 values={values}
               />
-              <Button onClick={this.saveStep}>Save step</Button>
-              {
-                length > 1 && <Button className="link" onClick={this.removeItem}>Remove step</Button>
-              }
+              <p className="control-panel">
+                <Button onClick={this.saveStep}>Save step</Button>
+                {
+                  length > 1 && <Button className="link" onClick={this.removeItem}>Remove step</Button>
+                }
+              </p>
             </Fragment>
           : <div className="review">
             <ReviewFields
