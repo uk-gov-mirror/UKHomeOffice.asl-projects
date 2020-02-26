@@ -1,5 +1,7 @@
+import merge from 'lodash/merge';
 import Repeater from '../../pages/sections/repeater';
 import LegacyEstablishments from '../../pages/sections/legacy-establishments';
+import { transferOfAnimals } from '../shared';
 
 import Protocols from '../../pages/sections/protocols';
 import ProtocolsReview from '../../pages/sections/protocols/review';
@@ -157,7 +159,8 @@ export default () => ({
             type: 'texteditor'
           }
         ]
-      }
+      },
+      'transfer-of-animals': merge({}, transferOfAnimals, { show: () => true })
     }
   },
   scientificBackground: {
