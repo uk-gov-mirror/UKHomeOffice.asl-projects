@@ -512,6 +512,10 @@ html.modal-open, html.modal-open body {
     padding: 2em 0 1px;
     margin-bottom: 2em;
 
+    h1, h2 {
+      color: $white;
+    }
+
     &.error {
       background-color: $white;
       color: $govuk-text-colour;
