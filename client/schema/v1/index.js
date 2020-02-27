@@ -2243,7 +2243,7 @@ each other.`,
       nmbas: {
         title: 'Neuromuscular blocking agents (NMBAs)',
         show: values => some(values.protocols, protocol => {
-          return protocol && some(protocol.steps, step => step.nmbas);
+          return protocol && some(protocol.steps, step => step && step.nmbas);
         }),
         linkTo: 'protocols',
         steps: [
