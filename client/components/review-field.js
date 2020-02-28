@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Link } from '@asl/components';
 import TextEditor from './editor';
-import speciesOptions from '../constants/species';
+import { projectSpecies as speciesOptions } from '@asl/constants';
 import { getLegacySpeciesLabel, mapSpecies } from '../helpers';
 
 import castArray from 'lodash/castArray';
