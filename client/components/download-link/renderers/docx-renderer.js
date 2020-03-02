@@ -5,7 +5,7 @@ import isNull from 'lodash/isNull';
 import get from 'lodash/get';
 import pickBy from 'lodash/pickBy';
 import mapValues from 'lodash/mapValues';
-import SPECIES from '../../../constants/species';
+import { projectSpecies as SPECIES } from '@asl/constants';
 import { getLegacySpeciesLabel, mapSpecies, stripInvalidXmlChars } from '../../../helpers';
 import { filterSpeciesByActive } from '../../../pages/sections/protocols/animals';
 

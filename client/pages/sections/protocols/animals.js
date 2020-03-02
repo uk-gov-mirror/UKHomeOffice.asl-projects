@@ -9,7 +9,7 @@ import flatten from 'lodash/flatten';
 import values from 'lodash/values';
 import pickBy from 'lodash/pickBy';
 
-import SPECIES from '../../../constants/species';
+import { projectSpecies as SPECIES } from '@asl/constants';
 
 import Review from '../../../components/review';
 import ReviewFields from '../../../components/review-fields';

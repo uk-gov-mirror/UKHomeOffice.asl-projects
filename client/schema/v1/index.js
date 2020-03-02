@@ -22,7 +22,7 @@ import GrantedProtocols from '../../pages/sections/granted/protocols';
 
 import GrantedSteps from '../../pages/sections/granted/protocol-steps';
 
-import SPECIES from '../../constants/species';
+import { projectSpecies as SPECIES } from '@asl/constants';
 
 import intersection from 'lodash/intersection';
 import some from 'lodash/some';
