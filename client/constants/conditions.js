@@ -2,7 +2,7 @@ import some from 'lodash/some';
 import intersection from 'lodash/intersection';
 import values from 'lodash/values';
 import flatten from 'lodash/flatten';
-import SPECIES from './species';
+import { projectSpecies as SPECIES } from '@asl/constants';
 
 const species = flatten(values(SPECIES));
 
