@@ -29,7 +29,8 @@ const mapStateToProps = ({
     user,
     showConditions,
     basename,
-    drafting
+    drafting,
+    project: actualProject
   }
 }) => {
   const schema = schemaMap[schemaVersion];
@@ -49,7 +50,8 @@ const mapStateToProps = ({
     values: project,
     sections: schema(),
     basename,
-    drafting
+    drafting,
+    project: actualProject
   };
 }
 
@@ -136,6 +138,12 @@ class ApplicationSummary extends React.Component {
     if (this.props.drafting) {
       return window.alert('Submitting to ASRU through this tool is not currently supported.')
     }
+
+    if (this.props.project.isLegacyStub) {
+      window.location.href = this.props.basename.replace(/\/edit\/?$/, '/convert');
+      return;
+    }
+
     window.location.href = `${this.props.basename}/submit`;
   }
 
