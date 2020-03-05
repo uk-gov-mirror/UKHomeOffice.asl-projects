@@ -115,6 +115,9 @@ class Protocols extends PureComponent {
     const { protocols, editable, previousProtocols, isLegacy } = this.props;
 
     const items = (protocols || []).filter(p => {
+      if (editable) {
+        return true;
+      }
       if (p.deleted === true) {
         if (previousProtocols.showDeleted.includes(p.id)) {
           return true;
