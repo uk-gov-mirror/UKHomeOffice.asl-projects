@@ -97,6 +97,8 @@ class ProtocolSections extends PureComponent {
       }, [])
       .map(f => `protocols.${values.id}.${f}`);
 
+    values.title = values.title || 'Untitled protocol';
+
     return (
       <section className={classnames('protocol', { complete: values.complete || readonly, readonly, deleted: values.deleted })}>
         {
