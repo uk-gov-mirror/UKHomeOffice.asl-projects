@@ -46,6 +46,7 @@ export default () => ({
           {
             name: 'title',
             label: 'What\'s the title of this project?',
+            hint: 'Focus on your broad aims and use simple language. For example \'Genes and lifestyle influences on brain ageing\'.',
             type: 'text'
           },
           {
