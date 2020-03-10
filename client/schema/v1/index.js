@@ -185,6 +185,7 @@ export default () => ({
             fields: [
               {
                 name: 'transferToEstablishment',
+                label: 'What is the primary establishment for this licence?',
                 type: 'establishment-selector'
               },
               {

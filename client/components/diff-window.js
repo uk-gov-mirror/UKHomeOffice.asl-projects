@@ -235,6 +235,7 @@ class DiffWindow extends React.Component {
             options={this.props.options}
             type={this.props.type}
             value={value}
+            diff={true}
             noComments
           />
         )
