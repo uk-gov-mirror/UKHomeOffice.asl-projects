@@ -239,29 +239,28 @@ export default (application, sections, values, updateImageDimensions) => {
     doc.addTable(table);
   };
 
-  const renderNode = (doc, node, depth = 0, paragraph) => {
+  const renderNode = (doc, node, depth = 0, paragraph, numbers) => {
     let text;
+    let p;
+    let addToDoc;
 
     const getContent = input => {
       return get(input, 'nodes[0].leaves[0].text', get(input, 'nodes[0].text')).trim();
     }
 
-    const renderListItem = (doc, item, numbering) => {
-      if (item.type !== 'list-item') {
-        return renderNode(doc, item);
-      }
-
-      paragraph = paragraph = new Paragraph();
-      paragraph.style('body');
-
-      numbering
-        ? paragraph.setNumbering(numbering, depth)
-        : paragraph.bullet();
-
-      item.nodes.forEach(n => renderNode(doc, n, depth + 1, paragraph));
-    }
-
     switch (node.type) {
+      case 'list-item':
+        p = new Paragraph();
+        p.style('body');
+
+        numbers
+          ? p.setNumbering(numbers, depth)
+          : p.bullet(depth);
+
+        node.nodes.forEach(n => renderNode(doc, n, depth + 1, p));
+        doc.addParagraph(p);
+        break
+
       case 'heading-one':
         doc.createParagraph(getContent(node)).heading1();
         break;
@@ -285,16 +284,17 @@ export default (application, sections, values, updateImageDimensions) => {
       case 'numbered-list': {
         abstract.createLevel(depth, 'decimal', '%2.', 'start').addParagraphProperty(new Indent(720 * (depth + 1), 0));
         const concrete = numbering.createConcreteNumbering(abstract);
-        node.nodes.forEach(item => renderListItem(doc, item, concrete));
+        node.nodes.forEach(item => renderNode(doc, item, depth, paragraph, concrete));
         break;
       }
 
       case 'bulleted-list':
-        node.nodes.forEach(item => renderListItem(doc, item));
+        node.nodes.forEach(item => renderNode(doc, item, depth, paragraph));
         break;
 
       case 'paragraph':
       case 'block':
+        addToDoc = !paragraph;
         paragraph = paragraph || new Paragraph();
         node.nodes.forEach(childNode => {
           const leaves = childNode.leaves || [childNode];
@@ -329,7 +329,9 @@ export default (application, sections, values, updateImageDimensions) => {
             }
           });
         });
-        doc.addParagraph(paragraph);
+        if (addToDoc) {
+          doc.addParagraph(paragraph);
+        }
         break;
 
       case 'image':
