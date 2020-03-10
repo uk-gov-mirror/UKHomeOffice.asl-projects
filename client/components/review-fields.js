@@ -7,12 +7,12 @@ import every from 'lodash/every';
 import { flattenReveals } from '../helpers';
 import Review from './review';
 
-const fieldIncluded = (field, values, isGranted) => {
+const fieldIncluded = (field, values, application) => {
   if (!field.conditional && !field.show) {
     return true;
   }
   if (field.show && typeof field.show === 'function') {
-    return field.show({ ...values, isGranted });
+    return field.show({ ...values, ...application });
   }
   return every(Object.keys(field.conditional), key => field.conditional[key] === values[key])
 }
@@ -28,8 +28,8 @@ const ReviewFields = ({
   altLabels,
   readonly,
   step,
-  isGranted,
-  protocolId
+  protocolId,
+  application
 }) => (
   <Fragment>
     {
@@ -39,7 +39,7 @@ const ReviewFields = ({
             item.name && <h2 className="group">{item.name}</h2>
           }
           {
-            flattenReveals(fields.filter(field => fieldIncluded(field, project, isGranted)), item).map(field => {
+            flattenReveals(fields.filter(field => fieldIncluded(field, project, application)), item).map(field => {
               return <Review
                 { ...field }
                 prefix={ prefix }
@@ -65,6 +65,6 @@ const ReviewFields = ({
   </Fragment>
 );
 
-const mapStateToProps = ({ project, application: { isGranted } = {} }) => ({ project, isGranted })
+const mapStateToProps = ({ project, application }) => ({ project, application });
 
 export default connect(mapStateToProps)(ReviewFields);

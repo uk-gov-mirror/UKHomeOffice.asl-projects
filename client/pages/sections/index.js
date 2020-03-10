@@ -47,7 +47,7 @@ class Questions extends PureComponent {
     const fields = this.props.fields;
     return fields.filter(field => {
       if (field.show && typeof field.show === 'function') {
-        return field.show(this.props.project)
+        return field.show({ ...this.props.project, ...this.props.application })
       }
       return true;
     });
@@ -169,6 +169,6 @@ class Section extends PureComponent {
   }
 }
 
-const mapStateToProps = ({ project }) => ({ project });
+const mapStateToProps = ({ project, application }) => ({ project, application });
 
 export default connect(mapStateToProps)(Section);
