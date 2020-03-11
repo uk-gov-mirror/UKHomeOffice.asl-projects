@@ -239,7 +239,7 @@ export default (application, sections, values, updateImageDimensions) => {
     doc.addTable(table);
   };
 
-  const renderNode = (doc, node, depth = 0, paragraph, numbers) => {
+  const renderNode = (doc, node, depth = 0, paragraph, numbers, index) => {
     let text;
     let p;
     let addToDoc;
@@ -257,8 +257,8 @@ export default (application, sections, values, updateImageDimensions) => {
           ? p.setNumbering(numbers, depth)
           : p.bullet(depth);
 
-        node.nodes.forEach(n => renderNode(doc, n, depth + 1, p));
         doc.addParagraph(p);
+        node.nodes.forEach((n, index) => renderNode(doc, n, depth + 1, p, null, index));
         break
 
       case 'heading-one':
@@ -296,7 +296,7 @@ export default (application, sections, values, updateImageDimensions) => {
       case 'block':
         addToDoc = !paragraph;
         paragraph = paragraph || new Paragraph();
-        node.nodes.forEach(childNode => {
+        node.nodes.forEach((childNode, childNodeIndex) => {
           const leaves = childNode.leaves || [childNode];
           leaves.forEach(leaf => {
             text = new TextRun(stripInvalidXmlChars(leaf.text));
@@ -324,6 +324,9 @@ export default (application, sections, values, updateImageDimensions) => {
                     break;
                 }
               });
+              if (!addToDoc && (index > 0) && childNodeIndex === 0) {
+                text.break().break();
+              }
               paragraph.style('body');
               paragraph.addRun(text);
             }
