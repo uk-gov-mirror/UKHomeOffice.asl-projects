@@ -7,8 +7,8 @@ const Conditions = ({ granted, ...props }) => (
     {
       !props.pdf && (
         <p>
-          All <a href="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/193124/Project_Licence_-_Standard_Conditions.pdf" target="_blank" rel="noopener noreferrer">standard conditions of project licences</a> apply.<br />
-          <span className="grey">Opens PDF in a new window.</span>
+          All <a href="https://www.gov.uk/government/publications/project-establishment-licence/project-establishment-licence" target="_blank" rel="noopener noreferrer">standard conditions of project licences</a> apply.<br />
+          <span className="grey">Opens in a new window.</span>
         </p>
       )
     }
