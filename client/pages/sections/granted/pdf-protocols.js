@@ -112,7 +112,7 @@ const mapStateToProps = ({
   project,
   application: { schemaVersion }
 }) => ({
-  protocols: project.protocols,
+  protocols: (project.protocols || []).filter(protocol => !protocol.deleted),
   isLegacy: schemaVersion === 0,
   project
 });
