@@ -22,6 +22,7 @@ import LegacySpeciesSelector from './legacy-species-selector';
 import AnimalQuantities from './animal-quantities';
 import LocationSelector from './location-selector';
 import ObjectiveSelector from './objective-selector';
+import EstablishmentSelector from './establishment-selector';
 import Duration from './duration';
 import TextEditor from './editor';
 
@@ -103,6 +104,9 @@ class Field extends Component {
         hint={hint}
         onChange={ this.onFieldChange }
       />;
+    }
+    if (this.props.type === 'establishment-selector') {
+      return <EstablishmentSelector {...this.props} value={value} label={label} hint={hint} />;
     }
     if (this.props.type === 'legacy-species-selector') {
       return <LegacySpeciesSelector {...this.props} value={value} label={label} hint={hint} />;

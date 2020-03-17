@@ -103,6 +103,14 @@ export default () => ({
           {
             fields: [
               {
+                name: 'transferToEstablishment',
+                label: 'What is the primary establishment for this licence?',
+                type: 'establishment-selector',
+                show: application => !application.isGranted &&
+                  application.project &&
+                  application.project.status !== 'inactive'
+              },
+              {
                 name: 'other-establishments',
                 label: 'Will your project use any additional establishments?',
                 type: 'radio',

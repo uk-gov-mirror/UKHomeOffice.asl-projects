@@ -13,6 +13,8 @@ import isNull from 'lodash/isNull';
 import isInteger from 'lodash/isInteger';
 import get from 'lodash/get';
 
+import EstablishmentSelector from './establishment-selector';
+
 import { formatDate } from '../helpers';
 import { DATE_FORMAT } from '../constants';
 import ReviewFields from './review-fields';
@@ -60,6 +62,10 @@ class ReviewField extends React.Component {
       return (
         <Link page="profile.read" profileId={value.licenceHolder.id} establishmentId={value.establishment.id} label={`${value.licenceHolder.firstName} ${value.licenceHolder.lastName}`} />
       );
+    }
+
+    if (this.props.type === 'establishment-selector') {
+      return <EstablishmentSelector {...this.props} review={true} />
     }
 
     if (value && this.props.type === 'date') {
