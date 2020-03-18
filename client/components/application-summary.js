@@ -30,7 +30,8 @@ const mapStateToProps = ({
     showConditions,
     basename,
     drafting,
-    project: actualProject
+    project: actualProject,
+    projectUrl
   }
 }) => {
   const schema = schemaMap[schemaVersion];
@@ -51,7 +52,8 @@ const mapStateToProps = ({
     sections: schema(),
     basename,
     drafting,
-    project: actualProject
+    project: actualProject,
+    projectUrl
   };
 }
 
@@ -202,10 +204,13 @@ class ApplicationSummary extends React.Component {
               <Button
                 disabled={!this.isCompleted()}
                 onClick={this.onComplete}
-              >Continue</Button>
+              >{this.props.project.isLegacyStub ? 'Continue to final confirmation' : 'Continue'}</Button>
             </Fragment>
           )
         }
+        <p className="back-to-project">
+          <a href={this.props.projectUrl}>Back to project overview</a>
+        </p>
       </Fragment>
     )
   }
