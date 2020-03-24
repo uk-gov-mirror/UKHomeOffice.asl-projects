@@ -6,6 +6,7 @@ import AddConditions from '../../components/conditions/add-conditions';
 import Condition from '../../components/conditions/condition';
 import RetrospectiveAssessment from '../../components/retrospective-assessment';
 import LEGACY_CONDITIONS from '../../constants/legacy-conditions';
+import { Link } from 'react-router-dom';
 
 function LegacyConditions({
   values,
@@ -66,6 +67,10 @@ function LegacyConditions({
                   allowEmpty
                 />
               </div>
+              {
+                values.isLegacyStub &&
+                  <Link to="/"><span>List of sections</span></Link>
+              }
           </Fragment>
           )
           : (

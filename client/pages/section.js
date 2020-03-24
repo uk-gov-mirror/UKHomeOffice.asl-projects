@@ -5,10 +5,27 @@ import { indexedDBSync, ajaxSync } from '../actions/projects';
 import DefaultSection from './sections';
 import SectionsLink from '../components/sections-link';
 import ErrorBoundary from '../components/error-boundary';
+import StaticSection from '../components/static-section';
 import Readonly from './readonly';
 import { getSubsections } from '../schema';
 
-const mapStateToProps = ({ project, application: { schemaVersion, readonly, establishment, isGranted } }, { match: { params } }) => {
+const mapStateToProps = (
+  {
+    project,
+    application: {
+      schemaVersion,
+      readonly,
+      establishment,
+      isGranted,
+      project: actualProject
+    }
+  },
+  {
+    match: {
+      params
+    }
+  }
+) => {
   const section = getSubsections(schemaVersion)[params.section];
 
   section.fields = section.fields || [];
@@ -22,7 +39,8 @@ const mapStateToProps = ({ project, application: { schemaVersion, readonly, esta
     section: params.section,
     ...section,
     options: section,
-    isGranted
+    isGranted,
+    actualProject
   };
 };
 
@@ -47,6 +65,10 @@ class Section extends React.Component {
         project={this.props.project}
         options={this.props.options}
       />
+    }
+
+    if (this.props.actualProject.isLegacyStub && this.props.section === 'additional-conditions') {
+      return <StaticSection section={this.props.options} { ...rest } />
     }
 
     const Component = this.props.component || DefaultSection;
