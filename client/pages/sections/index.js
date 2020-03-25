@@ -56,6 +56,7 @@ class Questions extends PureComponent {
   render = () => {
     const { title, values, save, advance, exit, nts, subtitle, intro, linkTo, playback } = this.props;
     const { ntsAccepted } = this.state;
+
     return (
       <Fragment>
         <h1>{ title }</h1>
