@@ -9,9 +9,9 @@ const revealContent = `To change the primary establishment you must:
 * take the application through the AWERB review process at the new establishment (and any additional establishments)
 * review any related sections of the application that appear as ‘incomplete'`
 
-export default function EstablishmentSelector({ value, onChange, onFieldChange, review, diff, ...props }) {
+export default function EstablishmentSelector({ value, onFieldChange, review, diff, ...props }) {
   const { establishments, canTransfer, establishment, transferInProgress, readonly, project } = useSelector(state => state.application, shallowEqual);
-  const [localValue, setLocalValue] = useState(value || establishment.id);
+  const [localValue, setLocalValue] = useState(value);
 
   const canUpdateEstablishment = canTransfer && establishments.length > 1 && !transferInProgress;
   const draft = project.status === 'inactive';
@@ -30,13 +30,13 @@ export default function EstablishmentSelector({ value, onChange, onFieldChange, 
   }));
 
   useEffect(() => {
-    if (onChange && localValue !== value) {
+    if (onFieldChange && localValue !== value) {
       onFieldChange({
         'transfer-of-animals-complete': false,
         'protocols-complete': false,
-        'experience-complete': false
+        'experience-complete': false,
+        transferToEstablishment: localValue
       });
-      onChange(localValue);
     }
   }, [localValue]);
 
@@ -49,7 +49,7 @@ export default function EstablishmentSelector({ value, onChange, onFieldChange, 
               {...props}
               type="radio"
               options={options}
-              value={localValue}
+              value={localValue || establishment.id}
               onChange={e => setLocalValue(parseInt(e.target.value, 10))}
             />
           )
