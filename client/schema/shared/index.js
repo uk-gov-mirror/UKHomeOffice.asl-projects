@@ -1,6 +1,10 @@
 export const transferOfAnimals = {
   title: 'Transfer and movement of animals',
-  show: values => values['other-establishments'] && values.establishments && values.establishments.length,
+  show: values => {
+    const hasAdditionalEstablishments = values['other-establishments'] && values.establishments && values.establishments.length;
+    const isTransfer = !!values['transferToEstablishment'];
+    return hasAdditionalEstablishments || isTransfer;
+  },
   fields: [
     {
       name: 'transfer',
