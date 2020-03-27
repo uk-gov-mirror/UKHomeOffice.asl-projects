@@ -213,24 +213,24 @@ export default () => ({
             component: Repeater,
             show: values => values['other-establishments'],
             repeats: 'establishments',
-            singular: 'Establishment',
+            singular: 'Additional establishment',
             fields: [
               {
                 name: 'establishment-name',
-                label: 'Establishment name',
+                label: 'Additional establishment name',
                 type: 'text',
                 repeats: true
               },
               {
                 name: 'establishment-about',
-                label: 'Why do you need to carry out work at this establishment?',
+                label: 'Why do you need to carry out work at this additional establishment?',
                 hint: 'For example, there may be important specialised equipment at this location that is not available at your primary establishment.',
                 type: 'texteditor',
                 repeats: true
               },
               {
                 name: 'establishment-supervisor',
-                label: 'Who will be responsible for supervising your work at this establishment?',
+                label: 'Who will be responsible for supervising your work at this additional establishment?',
                 type: 'texteditor',
                 repeats: true
               }
