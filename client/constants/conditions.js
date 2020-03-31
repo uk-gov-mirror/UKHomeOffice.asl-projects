@@ -86,7 +86,7 @@ export default {
       versions: [
         {
           title: 'Marmosets',
-          content: 'Standard condition 13(c) of this licence shall not apply in cases when marmosets bred for use in procedures are not suitable for the purpose of the programme of work specified in the licence as justified in the project licence application.'
+          content: 'Standard condition 13(c) of this licence shall not apply in cases when marmosets sourced from a self-sustaining colony are not suitable for the purpose of the programme of work specified in the licence as justified in the project licence application.'
         }
       ]
     },
