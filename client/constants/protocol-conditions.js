@@ -3,6 +3,7 @@ module.exports = {
 
 Induction and maintenance of general or local anaesthesia, sedation or analgesia to mitigate the pain, suffering or distress associated with the performance of other regulated procedures is indicated using the following codes in protocols:**
 * AA no anaesthesia
+* ABL local anaesthesia
 * AB general anaesthesia with recovery
 * AC non-recovery general anaesthesia
 * AD under neuromuscular blockade`,
