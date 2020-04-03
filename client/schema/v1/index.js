@@ -1370,23 +1370,6 @@ each other.`,
                 hint: 'Explain where one or more steps are repeated in one experiment, list any alternative techniques within a step (e.g. dosing routes), and include all procedures performed under terminal anaesthesia.\n\nWhen describing the technical aspects of a step, be broad enough to be flexible when the variation does not impact on animal welfare (e.g. use "antibiotic" instead of "penicillin"). Finally, avoid specifying volumes and frequencies when they do not impact on animal welfare.'
               },
               {
-                name: 'nmbas',
-                label: 'Will this step involve the use of neuromuscular blocking agents (NMBAs)?',
-                type: 'radio',
-                className: 'smaller',
-                inline: true,
-                options: [
-                  {
-                    label: 'Yes',
-                    value: true
-                  },
-                  {
-                    label: 'No',
-                    value: false
-                  }
-                ]
-              },
-              {
                 name: 'optional',
                 label: 'Is this step optional?',
                 type: 'radio',
@@ -2249,14 +2232,32 @@ each other.`,
     subsections: {
       nmbas: {
         title: 'Neuromuscular blocking agents (NMBAs)',
-        show: values => some(values.protocols, protocol => {
-          return protocol && some(protocol.steps, step => step && step.nmbas);
-        }),
-        linkTo: 'protocols',
         steps: [
           {
+            title: 'Neuromuscular blocking agents (NMBAs)',
+            fields: [
+              {
+                name: 'nmbas-used',
+                label: 'Will this project involve the use of neuromuscular blacking agents (NMBAs)?',
+                type: 'radio',
+                className: 'smaller',
+                inline: true,
+                options: [
+                  {
+                    label: 'Yes',
+                    value: true
+                  },
+                  {
+                    label: 'No',
+                    value: false
+                  }
+                ]
+              }
+            ]
+          },
+          {
             title: 'Neuromuscular blocking agents (NMBAs) - 1 of 2',
-            intro: 'You are seeing this section because you will be using an NMBA during your project. To change this, go to Protocols.',
+            show: values => values['nmbas-used'],
             fields: [
               {
                 name: 'nmbas-why',
@@ -2282,7 +2283,7 @@ each other.`,
           },
           {
             title: 'Neuromuscular blocking agents (NMBAs) - 2 of 2',
-            intro: 'You are seeing this section because you will be using an NMBA during your project. To change this, go to Protocols.',
+            show: values => values['nmbas-used'],
             fields: [
               {
                 name: 'nmbas-depth',
