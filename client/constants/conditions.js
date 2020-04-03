@@ -9,7 +9,7 @@ const species = flatten(values(SPECIES));
 export default {
   protocol: {
     nmbas: {
-      include: protocol => some(protocol.steps, step => step.nmbas),
+      include: false,
       type: 'condition',
       versions: [
         {
@@ -71,7 +71,7 @@ export default {
   },
   project: {
     nmbas: {
-      include: project => some(project.protocols, protocol => some(protocol.steps, step => (step.code || []).includes('ad'))),
+      include: project => project['nmbas-used'],
       type: 'condition',
       versions: [
         {
