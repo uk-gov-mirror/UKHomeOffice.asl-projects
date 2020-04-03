@@ -1739,44 +1739,30 @@ each other.`,
         nts: true,
         fields: [
           {
-            name: 'fate-of-animals-nts',
-            label: 'Will any animals not be killed at the end of this project?',
-            hint: 'Ensure that any methods of killing to be used are described in the final step of each protocol.',
-            type: 'radio',
+            name: 'fate-of-animals',
+            label: 'What will happen to animals at the end of this project?',
+            type: 'checkbox',
             className: 'smaller',
-            inline: true,
             options: [
               {
-                label: 'Yes',
-                value: true,
-                reveal: {
-                  name: 'fate-of-animals',
-                  label: 'What will happen to animals at the end of their use in this project?',
-                  type: 'checkbox',
-                  className: 'smaller',
-                  options: [
-                    {
-                      label: 'Kept alive',
-                      value: 'kept-alive'
-                    },
-                    {
-                      label: 'Set free',
-                      value: 'set-free'
-                    },
-                    {
-                      label: 'Rehomed',
-                      value: 'rehomed'
-                    },
-                    {
-                      label: 'Used in other projects',
-                      value: 'used-in-other-projects'
-                    }
-                  ]
-                }
+                label: 'Killed',
+                value: 'killed'
               },
               {
-                label: 'No',
-                value: false
+                label: 'Kept alive',
+                value: 'kept-alive'
+              },
+              {
+                label: 'Set free',
+                value: 'set-free'
+              },
+              {
+                label: 'Rehomed',
+                value: 'rehomed'
+              },
+              {
+                label: 'Used in other projects',
+                value: 'used-in-other-projects'
               }
             ]
           }
