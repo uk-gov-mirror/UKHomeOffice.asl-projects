@@ -10,7 +10,21 @@ const revealContent = `To change the primary establishment you must:
 * review any related sections of the application that appear as ‘incomplete'`
 
 export default function EstablishmentSelector({ value, onFieldChange, review, diff, ...props }) {
-  const { establishments, canTransfer, establishment, transferInProgress, readonly, project } = useSelector(state => state.application, shallowEqual);
+  const {
+    establishments,
+    canTransfer,
+    establishment,
+    transferInProgress,
+    readonly,
+    project,
+    isGranted,
+    legacyGranted
+  } = useSelector(state => state.application, shallowEqual);
+
+  if (isGranted || legacyGranted) {
+    return <p>{establishment.name}</p>
+  }
+
   const [localValue, setLocalValue] = useState(value);
 
   const canUpdateEstablishment = canTransfer && establishments.length > 1 && !transferInProgress;
