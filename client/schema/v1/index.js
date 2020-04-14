@@ -2224,7 +2224,7 @@ each other.`,
             fields: [
               {
                 name: 'nmbas-used',
-                label: 'Will this project involve the use of neuromuscular blacking agents (NMBAs)?',
+                label: 'Will this project involve the use of neuromuscular blocking agents (NMBAs)?',
                 type: 'radio',
                 className: 'smaller',
                 inline: true,
