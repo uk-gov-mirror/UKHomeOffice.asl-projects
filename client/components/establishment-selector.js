@@ -54,6 +54,9 @@ export default function EstablishmentSelector({ value, onFieldChange, review, di
     }
   }, [localValue]);
 
+  const currentEstId = localValue || establishment.id;
+  const establishmentName = (establishments.find(e => e.id === currentEstId) || {}).name || 'Another establishment';
+
   return (
     <div className="establishment-selector">
       {
@@ -72,7 +75,7 @@ export default function EstablishmentSelector({ value, onFieldChange, review, di
               {
                 !review && <h3>{ props.label }</h3>
               }
-              <p>{(establishments.find(e => e.id === localValue) || {}).name || 'Another establishment'}</p>
+              <p>{establishmentName}</p>
 
               {
                 readonly
