@@ -54,8 +54,11 @@ export default function EstablishmentSelector({ value, onFieldChange, review, di
     }
   }, [localValue]);
 
-  const currentEstId = localValue || establishment.id;
-  const establishmentName = (establishments.find(e => e.id === currentEstId) || {}).name || 'Another establishment';
+  const displayEstablishment = localValue
+    ? establishments.find(e => e.id === localValue) || {}
+    : establishment;
+
+  const establishmentName = displayEstablishment.name || 'Another establishment';
 
   return (
     <div className="establishment-selector">
