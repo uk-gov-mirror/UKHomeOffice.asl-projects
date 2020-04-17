@@ -28,6 +28,16 @@ html.modal-open, html.modal-open body {
     }
   }
 
+  .application-summary {
+    h2.section-heading {
+      margin-bottom: 10px;
+    }
+
+    table tr td {
+      border-top: 1px solid $govuk-border-colour;
+    }
+  }
+
   .introduction-review {
     .duration {
       margin-bottom: 1em;

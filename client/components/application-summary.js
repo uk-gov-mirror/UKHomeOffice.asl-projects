@@ -154,7 +154,7 @@ class ApplicationSummary extends React.Component {
       return null;
     }
     return (
-      <Fragment>
+      <div className="application-summary">
         {
           Object.keys(this.props.sections).filter(section => !this.props.sections[section].show || this.props.sections[section].show(this.props)).map(key => {
             const section = this.props.sections[key];
@@ -166,7 +166,7 @@ class ApplicationSummary extends React.Component {
             }
 
             return <Fragment key={key}>
-              <h2>{ section.title }</h2>
+              <h2 className="section-heading">{ section.title }</h2>
               <table className="govuk-table">
                 <tbody>
                 {
@@ -211,7 +211,7 @@ class ApplicationSummary extends React.Component {
         <p className="back-to-project">
           <a href={this.props.projectUrl}>Back to project overview</a>
         </p>
-      </Fragment>
+      </div>
     )
   }
 
