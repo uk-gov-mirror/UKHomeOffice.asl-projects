@@ -4,21 +4,7 @@ import Repeater from '../../../components/repeater';
 import Fieldset from '../../../components/fieldset';
 import Controls from '../../../components/controls';
 import Playback from '../../../components/playback';
-
-const Objective = ({ index, fields, length, values, removeItem, updateItem, prefix }) => (
-  <div className="objective">
-    {
-      length > 1 && <a href="#" className="float-right" onClick={removeItem}>Remove</a>
-    }
-    <h2>Objective {index + 1}</h2>
-    <Fieldset
-      fields={fields.filter(f => f.objective)}
-      values={values}
-      prefix={prefix}
-      onFieldChange={(key, value) => updateItem({ [key]: value })}
-    />
-  </div>
-)
+import { Item } from '../repeater/index';
 
 class Objectives extends Component {
   render() {
@@ -38,7 +24,7 @@ class Objectives extends Component {
         singular="objective"
         onSave={objectives => this.props.save({ objectives })}
       >
-        <Objective {...this.props}/>
+        <Item {...this.props} fields={this.props.fields.filter(f => f.name === 'title')} />
       </Repeater>
       <Fieldset
         fields={this.props.fields.filter(f => !f.objective)}

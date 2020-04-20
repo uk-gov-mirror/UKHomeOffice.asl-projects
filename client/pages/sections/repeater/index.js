@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { useSelector } from 'react-redux';
 import uuid from 'uuid/v4';
 import { Markdown } from '@asl/components';
 
@@ -6,22 +7,31 @@ import Repeater from '../../../components/repeater';
 import Fieldset from '../../../components/fieldset';
 import Controls from '../../../components/controls';
 
-const Item = ({ index, fields, values, updateItem, removeItem, length, prefix, singular }) => (
-  <Fragment>
-    <div className="panel gutter">
-      {
-        length > 1 && <a href="#" className="float-right" onClick={removeItem}>Remove</a>
-      }
-      <h2>{singular} {index + 1}</h2>
-      <Fieldset
-        fields={fields}
-        values={values}
-        prefix={prefix}
-        onFieldChange={(key, value) => updateItem({ [key]: value })}
-      />
-    </div>
-  </Fragment>
-)
+export function Item({ index, fields, values, updateItem, removeItem, length, prefix, singular, confirmRemove }) {
+  const project = useSelector(state => state.project);
+  function confirmRemoveItem(e) {
+    e.preventDefault();
+    if (confirmRemove(project, values)) {
+      removeItem(e);
+    }
+  }
+  return (
+    <Fragment>
+      <div className="panel gutter">
+        {
+          length > 1 && <a href="#" className="float-right" onClick={confirmRemoveItem}>Remove</a>
+        }
+        <h2>{singular} {index + 1}</h2>
+        <Fieldset
+          fields={fields}
+          values={values}
+          prefix={prefix}
+          onFieldChange={(key, value) => updateItem({ [key]: value })}
+        />
+      </div>
+    </Fragment>
+  );
+}
 
 const getItems = (values, repeats) => {
   const items = values[repeats];
