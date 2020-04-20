@@ -158,11 +158,11 @@ function getProtocolPart(p, i, protocols) {
   return str;
 }
 
-export const confirmRemove = (protocolRef, key, singularName) => (project, item) => {
+export const confirmRemove = (protocolRef, singularName, key) => (project, item) => {
   const protocols = (project.protocols || [])
     .map((protocol, index) => ({ ...protocol, index }))
     .filter(protocol => {
-      return (protocol[protocolRef] || []).includes(item[key]);
+      return (protocol[protocolRef] || []).includes(key ? item[key] : item);
     });
 
   // item doesn't appear in any protocols
