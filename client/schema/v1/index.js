@@ -17,6 +17,7 @@ import GrantedAuthorisations from '../../pages/sections/granted/authorisations';
 import ActionPlan from '../../pages/sections/granted/action-plan';
 import Purpose from '../../pages/sections/granted/protocol-purpose';
 import ProtocolEstablishments from '../../pages/sections/granted/protocol-establishments';
+import Establishments from '../../pages/sections/establishments';
 import ProtocolObjectives from '../../pages/sections/granted/protocol-objectives';
 import GrantedProtocols from '../../pages/sections/granted/protocols';
 
@@ -177,7 +178,7 @@ export default () => ({
     subsections: {
       establishments: {
         title: 'Establishments',
-        review: RepeaterReview,
+        review: Establishments,
         repeats: 'establishments',
         singular: 'Additional establishment',
         enable: 'other-establishments',
