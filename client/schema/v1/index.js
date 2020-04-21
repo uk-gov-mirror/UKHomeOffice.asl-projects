@@ -29,7 +29,7 @@ import some from 'lodash/some';
 
 import experience from './experience';
 
-import { confirmRemove } from '../../helpers'
+import confirmRemove from '../../helpers/confirm-remove';
 
 export default () => ({
   introduction: {
@@ -217,7 +217,7 @@ export default () => ({
             show: values => values['other-establishments'],
             repeats: 'establishments',
             singular: 'Additional establishment',
-            confirmRemove: confirmRemove('locations', 'establishment', 'name'),
+            confirmRemove: confirmRemove('locations', 'establishment', 'establishment-name'),
             fields: [
               {
                 name: 'establishment-name',

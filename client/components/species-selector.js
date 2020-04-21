@@ -8,7 +8,7 @@ import map from 'lodash/map';
 import intersection from 'lodash/intersection';
 import uniq from 'lodash/uniq';
 
-import { confirmRemove } from '../helpers';
+import confirmRemove from '../helpers/confirm-remove';
 import { projectSpecies as SPECIES } from '@asl/constants';
 import SPECIES_CATEGORIES from '../constants/species-categories';
 

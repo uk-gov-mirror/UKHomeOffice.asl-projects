@@ -3,18 +3,36 @@ import { useSelector } from 'react-redux';
 import uuid from 'uuid/v4';
 import { Markdown } from '@asl/components';
 
+import isFunction from 'lodash/isFunction';
+
 import Repeater from '../../../components/repeater';
 import Fieldset from '../../../components/fieldset';
 import Controls from '../../../components/controls';
 
-export function Item({ index, fields, values, updateItem, removeItem, length, prefix, singular, confirmRemove }) {
+export function Item({
+  index,
+  fields,
+  values,
+  updateItem,
+  removeItem,
+  length,
+  prefix,
+  singular,
+  confirmRemove
+}) {
   const project = useSelector(state => state.project);
+
   function confirmRemoveItem(e) {
     e.preventDefault();
-    if (confirmRemove(project, values)) {
-      removeItem(e);
+    if (isFunction(confirmRemove)) {
+      if (confirmRemove(project, values)) {
+        return removeItem(e);
+      }
+      return;
     }
+    return removeItem(e);
   }
+
   return (
     <Fragment>
       <div className="panel gutter">
@@ -45,7 +63,16 @@ const getItems = (values, repeats) => {
   }
 }
 
-const Items = ({ title, save, subtitle, intro, advance, repeats, exit, ...props }) => {
+const Items = ({
+  title,
+  save,
+  subtitle,
+  intro,
+  advance,
+  repeats,
+  exit,
+  ...props
+}) => {
   return (
     <Fragment>
       <h1>{ title }</h1>
