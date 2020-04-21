@@ -146,16 +146,19 @@ export const stripInvalidXmlChars = text => {
   return text.replace(/([^\x09\x0A\x0D\x20-\uD7FF\uE000-\uFFFC\u{10000}-\u{10FFFF}])/ug, '')
 };
 
+// protocol 1 and protocol 2
 // protocol 1, protocol 2 and protocol 3
-function getProtocolPart(p, i, protocols) {
-  const str = `${p.index + 1}`;
-  if (i === protocols.length - 1) {
-    return ` and ${str}`
-  }
-  if (i > 0) {
-    return `, ${str}`;
-  }
-  return str;
+function getProtocolParts(protocols) {
+  return protocols.map((p, i) => {
+    const str = `${p.index + 1}`;
+    if (i === protocols.length - 1) {
+      return ` and ${str}`
+    }
+    if (i > 0) {
+      return `, ${str}`;
+    }
+    return str;
+  }).join('');
 }
 
 export const confirmRemove = (protocolRef, singularName, key) => (project, item) => {
@@ -181,6 +184,6 @@ export const confirmRemove = (protocolRef, singularName, key) => (project, item)
     // item appears in a single protocol
     ? `protocol ${protocols[0].index + 1}`
     // item appears in many protocols, list them
-    : `protocols ${protocols.map(getProtocolPart).join('')}`
+    : `protocols ${getProtocolParts(protocols)}`;
   return window.confirm(`${message} ${protocolText}.`);
 };
