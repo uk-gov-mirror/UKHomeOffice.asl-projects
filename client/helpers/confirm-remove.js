@@ -1,6 +1,6 @@
-// prints list of protocols in the following formats:
-// protocol 1 and protocol 2
-// protocol 1, protocol 2 and protocol 3
+// prints numbers of protocols in the following formats:
+// 1 and 2
+// 1, 2 and 3
 function getProtocolParts(protocols) {
   return protocols.map((p, i) => {
     const str = `${p.index + 1}`;
