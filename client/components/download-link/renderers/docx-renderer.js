@@ -652,6 +652,10 @@ export default (application, sections, values, updateImageDimensions) => {
   const renderProtocol = (doc, name, section, values, project) => {
     doc.createParagraph(section.title).style('ProtocolSectionTitle');
 
+    if (section.label) {
+      doc.createParagraph(section.label).style('Question');
+    }
+
     switch (name) {
       case 'steps':
         return (values.steps || []).forEach((stepValues, index) => {
