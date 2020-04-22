@@ -29,6 +29,8 @@ import some from 'lodash/some';
 
 import experience from './experience';
 
+import confirmRemove from '../../helpers/confirm-remove';
+
 export default () => ({
   introduction: {
     title: 'Project introduction',
@@ -127,6 +129,7 @@ export default () => ({
             name: 'species',
             label: 'Which types of animals will be used in this project?',
             type: 'species-selector',
+            confirmRemove: true,
             summary: true
           }
         ]
@@ -214,6 +217,7 @@ export default () => ({
             show: values => values['other-establishments'],
             repeats: 'establishments',
             singular: 'Additional establishment',
+            confirmRemove: confirmRemove('locations', 'establishment', 'establishment-name'),
             fields: [
               {
                 name: 'establishment-name',
@@ -301,6 +305,7 @@ export default () => ({
             repeats: 'polesList',
             singular: 'POLE',
             show: values => values.poles === true,
+            confirmRemove: confirmRemove('locations', 'POLE', 'title'),
             subtitle: 'Specify the details of each POLE that you will be using.',
             intro: `If you can’t specify a grid reference for a POLE, include details that allows it to be easily identified for inspection. This could be an address of a site or a postcode of a farm.
 
@@ -714,6 +719,7 @@ If you can only add generic information at this stage, provide a general descrip
             singular: 'Objective',
             component: Objectives,
             repeats: 'objectives',
+            confirmRemove: confirmRemove('objectives', 'objective', 'title'),
             fields: [
               {
                 name: 'title',

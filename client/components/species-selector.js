@@ -8,6 +8,7 @@ import map from 'lodash/map';
 import intersection from 'lodash/intersection';
 import uniq from 'lodash/uniq';
 
+import confirmRemove from '../helpers/confirm-remove';
 import { projectSpecies as SPECIES } from '@asl/constants';
 import SPECIES_CATEGORIES from '../constants/species-categories';
 
@@ -100,6 +101,7 @@ class SpeciesSelector extends Component {
                   value={vals[name]}
                   onChange={this.onGroupChange(code)}
                   onFieldChange={onFieldChange}
+                  confirmRemove={this.props.confirmRemove && confirmRemove('species', 'animal type')}
                   noComments={true}
                 />
               </details>

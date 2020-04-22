@@ -189,10 +189,22 @@ class Field extends Component {
         inline={ this.props.inline }
         onChange={ e => {
           const values = [ ...(value || []) ];
-          if (values.includes(e.target.value)) {
-            return this.onFieldChange(values.filter(v => v !== e.target.value));
+          const itemRemoved = values.includes(e.target.value);
+
+          const newValue = itemRemoved
+            ? values.filter(v => v !== e.target.value)
+            : [ ...values, e.target.value ];
+
+          if (this.props.confirmRemove && itemRemoved) {
+            if (this.props.confirmRemove(this.props.project, e.target.value)) {
+              this.onFieldChange(newValue);
+            } else {
+              e.preventDefault();
+              return false;
+            }
           }
-          this.onFieldChange([ ...values, e.target.value ]);
+
+          this.onFieldChange(newValue);
         }}
       />;
     }
@@ -250,6 +262,7 @@ const mapStateToProps = ({ project, settings, application }, { name, conditional
   options = optionsFromSettings ? settings[optionsFromSettings] : options;
   return {
     options,
+    project,
     showChanges: !!onFieldChange && application && !application.newApplication,
     value: !isUndefined(value) ? value : project && project[name],
     show: !conditional || every(Object.keys(conditional), key => conditional[key] === project[key])
