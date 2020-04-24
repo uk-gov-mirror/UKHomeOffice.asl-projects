@@ -595,6 +595,17 @@ export default (application, sections, values, updateImageDimensions) => {
         const licenceNumber = application.licenceNumber ? application.licenceNumber : '';
         return renderText(doc, `${licenceNumber} `, noSeparator);
       }
+      case 'establishment-selector': {
+        if (value) {
+          const receivingEstablishment = application.establishments.find(e => e.id === value);
+
+          return receivingEstablishment
+            ? renderText(doc, receivingEstablishment.name, noSeparator)
+            : renderNull(doc, noSeparator);
+        } else {
+          return renderText(doc, application.establishment.name, noSeparator);
+        }
+      }
     }
 
     if (isUndefined(value) || isNull(value)) {
