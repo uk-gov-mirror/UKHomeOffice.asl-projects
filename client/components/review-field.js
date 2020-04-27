@@ -19,6 +19,23 @@ import { formatDate } from '../helpers';
 import { DATE_FORMAT } from '../constants';
 import ReviewFields from './review-fields';
 
+function RevealChildren({ value, options, values, prefix }) {
+  const option = (options || []).find(option => option.value === value);
+  if (!option.reveal) {
+    return null;
+  }
+
+  return (
+    <div className="review-children">
+      <ReviewFields
+        fields={castArray(option.reveal).map(field => ({ ...field, preserveHierarchy: true }))}
+        values={values}
+        prefix={prefix}
+      />
+    </div>
+  )
+}
+
 class ReviewField extends React.Component {
 
   render() {
@@ -79,6 +96,17 @@ class ReviewField extends React.Component {
     if (this.props.type === 'species-selector') {
       value = mapSpecies(this.props.project);
     }
+
+    if (this.props.type === 'repeater') {
+      return (
+        <ReviewFields
+          fields={this.props.fields}
+          values={this.props.values[this.props.name]}
+          prefix={this.props.prefix}
+        />
+      )
+    }
+
     if (this.props.type === 'permissible-purpose') {
       const childrenName = options.find(o => o.reveal).reveal.name;
       const hasChildren = o => o.reveal && this.props.project[o.reveal.name] && this.props.project[o.reveal.name].length;
@@ -134,23 +162,6 @@ class ReviewField extends React.Component {
           : value
       }
 
-      const getChildren = value => {
-        const option = (options || []).find(option => option.value === value);
-        if (!option.reveal) {
-          return null;
-        }
-
-        return (
-          <div className="review-children">
-            <ReviewFields
-              fields={castArray(option.reveal).map(field => ({ ...field, preserveHierarchy: true }))}
-              values={this.props.values}
-              prefix={this.props.prefix}
-            />
-          </div>
-        )
-      }
-
       return (
         <ul>
           {
@@ -160,7 +171,7 @@ class ReviewField extends React.Component {
                   getValue(value)
                 }
                 {
-                  this.props.preserveHierarchy && getChildren(value)
+                  this.props.preserveHierarchy && <RevealChildren value={value} options={options} {...this.props} />
                 }
               </li>
             ))
@@ -216,7 +227,14 @@ class ReviewField extends React.Component {
       return <TextEditor {...this.props} readOnly={true} />;
     }
     if (!isUndefined(value) && !isNull(value) && value !== '') {
-      return <p>{value.review || value.label || value}</p>;
+      return (
+        <Fragment>
+          <p>{value.review || value.label || value}</p>
+          {
+            this.props.preserveHierarchy && <RevealChildren value={value} options={options} {...this.props} />
+          }
+        </Fragment>
+      );
     }
     return (
       <p>

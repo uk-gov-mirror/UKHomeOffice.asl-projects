@@ -41,6 +41,7 @@ const Items = ({
         type={repeats}
         singular={props.singular}
         onSave={items => save({ [repeats]: items })}
+        {...props}
       />
       <Controls onContinue={advance} onExit={exit} />
     </Fragment>

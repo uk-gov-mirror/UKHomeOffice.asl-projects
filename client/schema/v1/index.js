@@ -684,6 +684,7 @@ If you can only add generic information at this stage, provide a general descrip
             type: 'radio',
             inline: true,
             className: 'smaller',
+            preserveHierarchy: true,
             options: [
               {
                 label: 'Yes',

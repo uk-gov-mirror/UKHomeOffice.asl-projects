@@ -59,7 +59,8 @@ class Review extends React.Component {
           !this.props.noComments && <Comments field={`${this.props.prefix || ''}${this.props.name}`} collapsed={!this.props.readonly} />
         }
         {
-          !this.props.readonly && (
+          // repeaters have edit links on the individual fields
+          !this.props.readonly && this.props.type !== 'repeater' && (
             <Fragment>
               <p>
                 <Link
