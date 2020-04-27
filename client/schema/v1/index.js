@@ -680,7 +680,7 @@ If you can only add generic information at this stage, provide a general descrip
           },
           {
             name: 'transfer-expiring',
-            label: 'Do you need to transfer animals from an expiring licence as continued use?',
+            label: 'Do you need to transfer animals from a project that’s due to expire?',
             type: 'radio',
             inline: true,
             className: 'smaller',
@@ -690,9 +690,24 @@ If you can only add generic information at this stage, provide a general descrip
                 value: true,
                 reveal: [
                   {
-                    name: 'expiring-yes',
-                    label: 'Please state the licence number and expiry date of all these licences.',
-                    type: 'texteditor'
+                    name: 'project-continuation',
+                    type: 'repeater',
+                    singular: 'Expiring project',
+                    addAnotherLabel: 'Transfer animals from another project',
+                    addAnotherClassName: 'link',
+                    fields: [
+                      {
+                        name: 'licence-number',
+                        type: 'text',
+                        label: 'Project licence number'
+                      },
+                      {
+                        name: 'expiry-date',
+                        type: 'date',
+                        label: 'Expiry date',
+                        hint: 'For example, 13 06 2019'
+                      }
+                    ]
                   }
                 ]
               },

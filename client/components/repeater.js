@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import classnames from 'classnames';
 import { connect } from 'react-redux';
 import { Button } from '@ukhomeoffice/react-components';
 import uuid from 'uuid/v4';
@@ -150,7 +151,7 @@ class Repeater extends Component {
   }
 
   render() {
-    const addButton = <Button className="block add-another button-secondary" onClick={this.addItem}>{`Add another ${this.props.singular}`}</Button>
+    const addButton = <Button className={classnames('block', 'add-another', this.props.addAnotherClassName || 'button-secondary')} onClick={this.addItem}>{this.props.addAnotherLabel || `Add another ${this.props.singular}`}</Button>
     return (
       <Fragment>
         {

@@ -4,7 +4,7 @@ import Repeater from '../../../components/repeater';
 import Fieldset from '../../../components/fieldset';
 import Controls from '../../../components/controls';
 import Playback from '../../../components/playback';
-import { Item } from '../repeater/index';
+import { Item } from '../../../components/repeater-field';
 
 class Objectives extends Component {
   render() {

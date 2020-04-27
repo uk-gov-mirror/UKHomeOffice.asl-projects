@@ -25,6 +25,7 @@ import ObjectiveSelector from './objective-selector';
 import EstablishmentSelector from './establishment-selector';
 import Duration from './duration';
 import TextEditor from './editor';
+import Repeater from './repeater-field';
 
 import Fieldset from './fieldset';
 import Comments from './comments';
@@ -119,6 +120,9 @@ class Field extends Component {
     }
     if (this.props.type === 'other-species-selector') {
       return <OtherSpecies {...this.props} value={value} label={label} hint={hint} />;
+    }
+    if (this.props.type === 'repeater') {
+      return <Repeater {...this.props} items={value} label={label} hint={hint} onSave={val => this.onFieldChange(val)}/>;
     }
     if (this.props.type === 'duration') {
       return <Duration
