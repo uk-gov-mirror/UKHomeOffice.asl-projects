@@ -32,6 +32,8 @@ import experience from './experience';
 
 import confirmRemove from '../../helpers/confirm-remove';
 
+import { isTrainingLicence } from '../../helpers';
+
 export default () => ({
   introduction: {
     title: 'Project introduction',
@@ -56,7 +58,7 @@ export default () => ({
             name: 'project-aim',
             label: 'What\'s the aim of this project?',
             hint: 'Keep this to a short one or two sentence summary.',
-            playback: 'Aim of this project',
+            playbackLabel: 'Aim of this project',
             type: 'texteditor'
           },
           {
@@ -65,58 +67,83 @@ export default () => ({
             type: 'texteditor'
           },
           {
-            name: 'permissible-purpose',
-            label: 'Which permissible purposes apply to this project?',
-            type: 'permissible-purpose',
+            name: 'training-licence',
+            label: 'Is training and education the primary purpose of this project?',
+            type: 'radio',
+            inline: true,
             className: 'smaller',
             options: [
               {
-                label: '(a) Basic research',
-                value: 'basic-research'
+                label: 'Yes',
+                value: true,
+                reveal: [
+                  {
+                    name: 'training-why-needed',
+                    label: 'Why is this teaching licence needed?',
+                    type: 'texteditor'
+                  },
+                  {
+                    name: 'training-related-discipline',
+                    label: 'What course or scientific or medical discipline does this application relate to?',
+                    type: 'texteditor'
+                  }
+                ]
               },
               {
-                label: '(b) Translational or applied research with one of the following aims:',
-                value: 'translational-research',
+                label: 'No',
+                value: false,
                 reveal: {
-                  name: 'translational-research',
-                  label: '',
-                  type: 'checkbox',
+                  name: 'permissible-purpose',
+                  label: 'Which permissible purposes apply to this project?',
+                  type: 'permissible-purpose',
                   className: 'smaller',
                   options: [
                     {
-                      label: '(i) Avoidance, prevention, diagnosis or treatment of disease, ill-health  or abnormality, or their effects, in man, animals or plants',
-                      value: 'translational-research-1',
+                      label: '(a) Basic research',
+                      value: 'basic-research'
                     },
                     {
-                      label: '(ii) Assessment, detection, regulation or modification of physiological conditions in man, animals or plants',
-                      value: 'translational-research-2'
+                      label: '(b) Translational or applied research with one of the following aims:',
+                      value: 'translational-research',
+                      reveal: {
+                        name: 'translational-research',
+                        label: '',
+                        type: 'checkbox',
+                        className: 'smaller',
+                        options: [
+                          {
+                            label: '(i) Avoidance, prevention, diagnosis or treatment of disease, ill-health  or abnormality, or their effects, in man, animals or plants',
+                            value: 'translational-research-1',
+                          },
+                          {
+                            label: '(ii) Assessment, detection, regulation or modification of physiological conditions in man, animals or plants',
+                            value: 'translational-research-2'
+                          },
+                          {
+                            label: '(iii) Improvement of the welfare of animals or of the production conditions for animals reared for agricultural purposes',
+                            value: 'translational-research-3'
+                          }
+                        ]
+                      }
                     },
                     {
-                      label: '(iii) Improvement of the welfare of animals or of the production conditions for animals reared for agricultural purposes',
-                      value: 'translational-research-3'
+                      label: '(c) Development, manufacture or testing of the quality, effectiveness and safety of drugs, foodstuffs and feedstuffs or any other substances or products, with one of the following aims mentioned in paragraph (b)',
+                      value: 'safety-of-drugs'
+                    },
+                    {
+                      label: '(d) Protection of the natural environment in the interests of the health or welfare of man or animals',
+                      value: 'protection-of-environment'
+                    },
+                    {
+                      label: '(e) Research aimed at preserving the species of animal subjected to regulated procedures as part of the programme of work',
+                      value: 'preservation-of-species'
+                    },
+                    {
+                      label: '(g) Forensic enquiries',
+                      value: 'forensic-enquiries'
                     }
                   ]
                 }
-              },
-              {
-                label: '(c) Development, manufacture or testing of the quality, effectiveness and safety of drugs, foodstuffs and feedstuffs or any other substances or products, with one of the following aims mentioned in paragraph (b)',
-                value: 'safety-of-drugs'
-              },
-              {
-                label: '(d) Protection of the natural environment in the interests of the health or welfare of man or animals',
-                value: 'protection-of-environment'
-              },
-              {
-                label: '(e) Research aimed at preserving the species of animal subjected to regulated procedures as part of the programme of work',
-                value: 'preservation-of-species'
-              },
-              {
-                label: '(f) Higher education or training for the acquisition, maintenance or improvement of vocational skills',
-                value: 'higher-education'
-              },
-              {
-                label: '(g) Forensic enquiries',
-                value: 'forensic-enquiries'
               }
             ]
           },
@@ -143,6 +170,7 @@ export default () => ({
       experience,
       funding: {
         title: 'Funding',
+        show: values => !isTrainingLicence(values),
         fields: [
           {
             name: 'funding-how',
@@ -407,6 +435,7 @@ If you can only add generic information at this stage, provide a general descrip
     subsections: {
       'scientific-background': {
         title: 'Scientific background',
+        show: values => !isTrainingLicence(values),
         fields: [
           {
             name: 'scientific-background-basic-translational',
@@ -720,13 +749,91 @@ If you can only add generic information at this stage, provide a general descrip
           }
         ]
       },
+      'training-background': {
+        title: 'Scientific background',
+        show: values => isTrainingLicence(values),
+        fields: [
+          {
+            name: 'training-background-predicted-needs',
+            label: 'What are the predicted needs for teaching over the lifetime of the project?',
+            type: 'texteditor'
+          },
+          {
+            name: 'training-background-specialist-bodies',
+            label: 'What support do you have for the course from specialist bodies or societies?',
+            type: 'texteditor'
+          },
+          {
+            name: 'training-background-qualification',
+            label: 'Do students have to undertake this course to gain their professional qualification?',
+            type: 'radio',
+            inline: true,
+            className: 'smaller',
+            options: [
+              {
+                label: 'Yes',
+                value: true,
+                reveal: {
+                  name: 'training-background-qualification-who-mandates',
+                  label: 'What is the requirement and who mandates it?',
+                  type: 'texteditor'
+                }
+              },
+              {
+                label: 'No',
+                value: false
+              }
+            ]
+          },
+          {
+            name: 'training-background-measure-success',
+            label: 'How will you measure the success of this training or education?',
+            type: 'texteditor'
+          },
+          {
+            name: 'training-background-learning-outcomes',
+            label: 'How are learning outcomes evaluated to identify the added value of using protected animals?',
+            hint: 'For example, feedback from participants or potential employers.',
+            type: 'texteditor'
+          },
+          {
+            name: 'training-background-annual-review',
+            label: 'What arrangements have you made for an annual review of the course by your Animal Welfare and Ethics Review Board (AWERB)?',
+            type: 'texteditor'
+          },
+          {
+            name: 'transfer-expiring',
+            label: 'Do you need to transfer animals from an expiring licence as continued use?',
+            type: 'radio',
+            inline: true,
+            className: 'smaller',
+            options: [
+              {
+                label: 'Yes',
+                value: true,
+                reveal: [
+                  {
+                    name: 'expiring-yes',
+                    label: 'Please state the licence number and expiry date of all these licences.',
+                    type: 'texteditor'
+                  }
+                ]
+              },
+              {
+                label: 'No',
+                value: false
+              }
+            ]
+          }
+        ]
+      },
       'action-plan': {
         title: 'Action plan',
         granted: {
           order: 3,
           review: ActionPlan
         },
-        playback: 'project-aim',
+        playback: values => isTrainingLicence(values) ? undefined : 'project-aim',
         review: ObjectivesReview,
         steps: [
           {
@@ -748,6 +855,7 @@ If you can only add generic information at this stage, provide a general descrip
               },
               {
                 name: 'objective-relation',
+                show: values => !isTrainingLicence(values),
                 label: 'How do each of these objectives relate to each other and help you to achieve your aim?',
                 hint: `Outline any interdependencies, stop:go points, and milestones. Include any key in vitro, ex vivo or in silico work, clinical findings, or results from epidemiological studies carried out under other projects that will enable you to achieve your objectives.
 
@@ -763,6 +871,7 @@ each other.`,
             fields: [
               {
                 name: 'objectives-alternatives',
+                show: values => !isTrainingLicence(values),
                 label: 'Where relevant, how will you seek to use or develop non-animal alternatives for all or part of your work?',
                 type: 'texteditor'
               },
@@ -773,7 +882,7 @@ each other.`,
                 inline: true,
                 className: 'smaller',
                 show: values => {
-                  return !values.isGranted || !!values['objectives-regulatory-authorities'];
+                  return !isTrainingLicence(values) && (!values.isGranted || !!values['objectives-regulatory-authorities']);
                 },
                 options: [
                   {
@@ -852,7 +961,7 @@ each other.`,
                 inline: true,
                 className: 'smaller',
                 show: values => {
-                  return !values.isGranted || !!values['objectives-non-regulatory'];
+                  return !isTrainingLicence(values) && (!values.isGranted || !!values['objectives-non-regulatory']);
                 },
                 options: [
                   {
@@ -890,7 +999,7 @@ each other.`,
                 inline: true,
                 className: 'smaller',
                 show: values => {
-                  return !values.isGranted || !!values['objectives-genetically-altered'];
+                  return !isTrainingLicence(values) && (!values.isGranted || !!values['objectives-genetically-altered']);
                 },
                 options: [
                   {
@@ -957,7 +1066,7 @@ each other.`,
                 inline: true,
                 className: 'smaller',
                 show: values => {
-                  return !values.isGranted || !!values['objectives-vaccines'];
+                  return !isTrainingLicence(values) && (!values.isGranted || !!values['objectives-vaccines']);
                 },
                 options: [
                   {
@@ -1019,6 +1128,130 @@ each other.`,
                     value: false
                   }
                 ]
+              },
+              {
+                name: 'training-objectives-use-of-animals',
+                show: values => isTrainingLicence(values),
+                label: 'How does the use of live animals fit with the learning outcomes of the training course?',
+                type: 'texteditor'
+              },
+              {
+                name: 'training-objectives-attendees-selected',
+                show: values => isTrainingLicence(values),
+                label: 'How are attendees selected?',
+                type: 'texteditor'
+              },
+              {
+                name: 'training-objectives-demonstration',
+                show: values => isTrainingLicence(values),
+                label: 'Is each protocol used for demonstration purposes, or for tissue provision?',
+                type: 'radio',
+                inline: true,
+                className: 'smaller',
+                options: [
+                  {
+                    label: 'Yes',
+                    value: true,
+                    reveal: {
+                      name: 'training-objectives-demonstration-responsible',
+                      label: 'Who will be responsible for the animals being used?',
+                      type: 'texteditor'
+                    }
+                  },
+                  {
+                    label: 'No',
+                    value: false
+                  }
+                ]
+              },
+              {
+                name: 'training-objectives-long-term-teaching-aid',
+                show: values => isTrainingLicence(values),
+                label: 'Will animals be used to produce a longer-term teaching aid such as a video?',
+                type: 'radio',
+                inline: true,
+                className: 'smaller',
+                options: [
+                  {
+                    label: 'Yes',
+                    value: true,
+                    reveal: {
+                      name: 'training-objectives-long-term-teaching-aid-description',
+                      label: 'Describe the nature of the material you plan to produce.',
+                      type: 'texteditor'
+                    }
+                  },
+                  {
+                    label: 'No',
+                    value: false
+                  }
+                ]
+              },
+              {
+                name: 'training-objectives-regulated-procedures',
+                show: values => isTrainingLicence(values),
+                label: 'Will the students undertake regulated procedures?',
+                type: 'radio',
+                inline: true,
+                className: 'smaller',
+                options: [
+                  {
+                    label: 'Yes',
+                    value: true,
+                    reveal: {
+                      name: 'training-objectives-regulated-procedures-pil',
+                      label: 'Will participants need a personal licence?',
+                      type: 'radio',
+                      inline: true,
+                      className: 'smaller',
+                      options: [
+                        {
+                          label: 'Yes',
+                          value: true,
+                          reveal: [
+                            {
+                              name: 'training-objectives-regulated-procedures-pil-type',
+                              label: 'What type of personal licence will they need?',
+                              type: 'texteditor'
+                            },
+                            {
+                              name: 'training-objectives-regulated-procedures-pil-precursor-training',
+                              label: 'What training will participants receive during the course before they can use protected animals?',
+                              type: 'texteditor'
+                            }
+                          ]
+                        },
+                        {
+                          label: 'No',
+                          value: false
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    label: 'No',
+                    value: false
+                  }
+                ]
+              },
+              {
+                name: 'training-objectives-non-animal-alternatives',
+                show: values => isTrainingLicence(values),
+                label: 'Are you using or developing non-animal alternatives such as video material, in silico, or ex vivo material for this work?',
+                type: 'texteditor'
+              },
+              {
+                name: 'training-objectives-other-resources',
+                show: values => isTrainingLicence(values),
+                label: 'Have you checked the Norecopa website and other resources to ensure that there are no suitable non-animal alternatives?',
+                hint: 'The Norecopa website can be found at https://norecopa.no/.',
+                type: 'texteditor'
+              },
+              {
+                name: 'training-objectives-keep-up-to-date',
+                show: values => isTrainingLicence(values),
+                label: 'How will you keep up to date with any non-animal alternatives developed during the course of this project?',
+                type: 'texteditor'
               }
             ]
           }
@@ -1028,9 +1261,33 @@ each other.`,
         title: 'General principles',
         fields: [
           {
-            label: 'Unnecessary duplication of work must be avoided. Under what circumstances would you knowingly duplicate work?',
             name: 'general-principles-duplicate',
+            show: values => !isTrainingLicence(values),
+            label: 'Unnecessary duplication of work must be avoided. Under what circumstances would you knowingly duplicate work?',
             type: 'texteditor'
+          },
+          {
+            name: 'training-general-principles-existing-material',
+            show: values => isTrainingLicence(values),
+            label: 'Does data or learning material exist from previous work?',
+            type: 'radio',
+            inline: true,
+            className: 'smaller',
+            options: [
+              {
+                label: 'Yes',
+                value: true,
+                reveal: {
+                  name: 'training-general-principles-existing-material-how-use',
+                  label: 'How will you use this data or material?',
+                  type: 'texteditor'
+                }
+              },
+              {
+                label: 'No',
+                value: false
+              }
+            ]
           },
           {
             name: 'experimental-design-sexes',
@@ -1062,18 +1319,21 @@ each other.`,
         fields: [
           {
             name: 'benefit-outputs',
+            show: values => !isTrainingLicence(values),
             label: 'What outputs do you think you will see at the end of this project?',
             hint: 'Outputs can include new information, publications, or products.',
             type: 'texteditor'
           },
           {
             name: 'benefit-who',
+            show: values => !isTrainingLicence(values),
             label: 'Who or what will benefit from these outputs, and how?',
             hint: 'The impact of these outputs may be seen in the short-term, or they may not be fully realised until you\'ve completed the project. Consider all timescales in your answer.',
             type: 'texteditor'
           },
           {
             name: 'benefit-service',
+            show: values => !isTrainingLicence(values),
             label: 'Will this work be offered as a service to others?',
             type: 'radio',
             inline: true,
@@ -1093,6 +1353,30 @@ each other.`,
                 value: false
               }
             ]
+          },
+          {
+            name: 'training-benefit-future-careers',
+            show: values => isTrainingLicence(values),
+            label: 'How will course attendees use their knowledge or skills in their future careers?',
+            type: 'texteditor'
+          },
+          {
+            name: 'training-benefit-principle-learning-outcomes',
+            show: values => isTrainingLicence(values),
+            label: 'What are the principal learning outcomes from the course?',
+            type: 'texteditor'
+          },
+          {
+            name: 'training-benefit-learning-outcomes-important',
+            show: values => isTrainingLicence(values),
+            label: 'How are these learning outcomes important to the people on the course?',
+            type: 'texteditor'
+          },
+          {
+            name: 'training-benefit-transfer-of-knowledge',
+            show: values => isTrainingLicence(values),
+            label: 'Who or what will benefit from the transfer of knowledge, or acquisition of skills that this course will deliver?',
+            type: 'texteditor'
           },
           {
             name: 'benefit-maximise-outputs',
@@ -1540,8 +1824,15 @@ each other.`,
             fields: [
               {
                 name: 'outputs',
+                show: values => !isTrainingLicence(values),
                 label: 'What outputs are expected to arise from this protocol?',
                 hint: 'For example, test results, phenotypic information, or products.',
+                type: 'texteditor'
+              },
+              {
+                name: 'training-outputs',
+                show: values => isTrainingLicence(values),
+                label: 'What learning outcomes are expected to arise from this protocol?',
                 type: 'texteditor'
               },
               {
@@ -2512,12 +2803,20 @@ each other.`,
           },
           {
             name: 'replacement-alternatives',
+            show: values => !isTrainingLicence(values),
             label: 'Which non-animal alternatives did you consider for use in this project?',
             type: 'texteditor'
           },
           {
             name: 'replacement-justification',
+            show: values => !isTrainingLicence(values),
             label: 'Why were they not suitable?',
+            type: 'texteditor'
+          },
+          {
+            name: 'training-replacement-observation',
+            show: values => isTrainingLicence(values),
+            label: 'Why can\'t your aim be met by observing or by participating in ongoing research or clinical procedures?',
             type: 'texteditor'
           }
         ]
@@ -2540,14 +2839,34 @@ each other.`,
           },
           {
             name: 'reduction-steps',
+            show: values => !isTrainingLicence(values),
             label: 'What steps did you take during the experimental design phase to reduce the number of animals being used in this project?',
             hint: 'You may want to reference online tools (such as the NC3R\'s Experimental Design Assistant) or any relevant regulatory requirements.',
             type: 'texteditor'
           },
           {
             name: 'reduction-review',
+            show: values => !isTrainingLicence(values),
             label: 'What measures, apart from good experimental design, will you use to optimise the number of animals you plan to use in your project?',
             hint: 'This may include efficient breeding, pilot studies, computer modelling, or sharing of tissue.',
+            type: 'texteditor'
+          },
+          {
+            name: 'training-reduction-techniques',
+            show: values => isTrainingLicence(values),
+            label: 'What in silico or ex vivo techniques will you use during training?',
+            type: 'texteditor'
+          },
+          {
+            name: 'training-reduction-animal-numbers',
+            show: values => isTrainingLicence(values),
+            label: 'Will these techniques reduce animal numbers? If so, how?',
+            type: 'texteditor'
+          },
+          {
+            name: 'training-reduction-other-measures',
+            show: values => isTrainingLicence(values),
+            label: 'What other measures will you use to minimise the number of animals you plan to use in your project?',
             type: 'texteditor'
           }
         ]
