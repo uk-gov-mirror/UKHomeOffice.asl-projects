@@ -5,6 +5,7 @@ import isNull from 'lodash/isNull';
 import get from 'lodash/get';
 import pickBy from 'lodash/pickBy';
 import mapValues from 'lodash/mapValues';
+import format from 'date-fns/format';
 import { projectSpecies as SPECIES } from '@asl/constants';
 import { getLegacySpeciesLabel, mapSpecies, stripInvalidXmlChars } from '../../../helpers';
 import { filterSpeciesByActive } from '../../../pages/sections/protocols/animals';
@@ -615,6 +616,12 @@ export default (application, sections, values, updateImageDimensions) => {
     switch (field.type) {
       case 'radio':
         return renderRadio(doc, field, values, value, noSeparator);
+
+      case 'repeater':
+        return (value || []).map(item => renderFields(doc, field, item, field.fields, project))
+
+      case 'date':
+        return renderText(doc, format(value, 'DD/MM/YYYY'));
 
       case 'location-selector':
       case 'objective-selector':
