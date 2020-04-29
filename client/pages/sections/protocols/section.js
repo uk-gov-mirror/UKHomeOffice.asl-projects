@@ -14,7 +14,8 @@ class Section extends PureComponent {
       prefix,
       editable,
       pdf,
-      title
+      title,
+      project
     } = this.props;
 
     return (
@@ -27,7 +28,7 @@ class Section extends PureComponent {
           editable && !values.deleted
             ? (
               <Fieldset
-                fields={fields}
+                fields={fields.filter(f => f.show === undefined || f.show(project))}
                 values={values}
                 prefix={prefix}
                 onFieldChange={onFieldChange}
@@ -35,7 +36,7 @@ class Section extends PureComponent {
             )
             : (
               <ReviewFields
-                fields={fields}
+                fields={fields.filter(f => f.show === undefined || f.show(project))}
                 values={values}
                 prefix={prefix}
                 editLink={`0#${prefix}`}

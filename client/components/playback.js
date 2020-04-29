@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 
 import map from 'lodash/map'
 import findKey from 'lodash/findKey';
+import isFunction from 'lodash/isFunction';
+import isEmpty from 'lodash/isEmpty';
 
 import Review from './review';
 import schemaMap from '../schema';
@@ -21,14 +23,14 @@ const getUrl = (id, section, step) => {
 }
 
 const Playback = ({ project, step, history, field, section }) => {
-  if (!project || !field) {
+  if (!project || !field || isEmpty(field)) {
     return null;
   }
   return (
     <div className="playback">
       <Review
         { ...field }
-        label={field.playback || field.label}
+        label={field.playbackLabel || field.label}
         value={project[field.name]}
         onEdit={() => history.push(getUrl(project.id, section, step))}
       />
@@ -37,6 +39,7 @@ const Playback = ({ project, step, history, field, section }) => {
 }
 
 const mapStateToProps = ({ application: { schemaVersion }, project }, { playback }) => {
+  playback = isFunction(playback) ? playback(project) : playback;
   let step;
   let field;
   const schema = schemaMap[schemaVersion];
