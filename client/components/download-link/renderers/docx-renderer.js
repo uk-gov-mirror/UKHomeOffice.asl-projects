@@ -1,4 +1,4 @@
-import { Document, Paragraph, TextRun, Numbering, Indent, Table } from 'docx';
+import { Document, Paragraph, TextRun, Numbering, Indent, Table, Media } from 'docx';
 import flatten from 'lodash/flatten';
 import isUndefined from 'lodash/isUndefined';
 import isNull from 'lodash/isNull';
@@ -11,12 +11,13 @@ import { getLegacySpeciesLabel, mapSpecies, stripInvalidXmlChars } from '../../.
 import { filterSpeciesByActive } from '../../../pages/sections/protocols/animals';
 
 export default (application, sections, values, updateImageDimensions) => {
+  const document = new Document();
   const numbering = new Numbering();
   const abstract = numbering.createAbstractNumbering();
 
-  const addStyles = doc => {
+  const addStyles = () => {
 
-    doc.Styles.createParagraphStyle('Question', 'Question')
+    document.Styles.createParagraphStyle('Question', 'Question')
       .basedOn('Normal')
       .next('Normal')
       .quickFormat()
@@ -27,7 +28,7 @@ export default (application, sections, values, updateImageDimensions) => {
       .font('Helvetica')
       .spacing({ before: 200, after: 50 });
 
-    doc.Styles.createParagraphStyle('SectionTitle', 'Section Title')
+    document.Styles.createParagraphStyle('SectionTitle', 'Section Title')
       .basedOn('Normal')
       .next('Normal')
       .quickFormat()
@@ -37,7 +38,7 @@ export default (application, sections, values, updateImageDimensions) => {
       .font('Helvetica')
       .spacing({ before: 500, after: 300 });
 
-    doc.Styles.createParagraphStyle('ProtocolSectionTitle', 'Protocol Section Title')
+    document.Styles.createParagraphStyle('ProtocolSectionTitle', 'Protocol Section Title')
       .basedOn('Normal')
       .next('Normal')
       .quickFormat()
@@ -47,7 +48,7 @@ export default (application, sections, values, updateImageDimensions) => {
       .font('Helvetica')
       .spacing({ before: 500, after: 300 });
 
-    doc.Styles.createParagraphStyle('Heading1', 'Heading 1')
+    document.Styles.createParagraphStyle('Heading1', 'Heading 1')
       .basedOn('Normal')
       .next('Normal')
       .quickFormat()
@@ -56,7 +57,7 @@ export default (application, sections, values, updateImageDimensions) => {
       .font('Helvetica')
       .spacing({ before: 360, after: 400 });
 
-    doc.Styles.createParagraphStyle('Heading2', 'Heading 2')
+    document.Styles.createParagraphStyle('Heading2', 'Heading 2')
       .basedOn('Normal')
       .next('Normal')
       .quickFormat()
@@ -65,7 +66,7 @@ export default (application, sections, values, updateImageDimensions) => {
       .font('Helvetica')
       .spacing({ before: 400, after: 300 });
 
-    doc.Styles.createParagraphStyle('Heading3', 'Heading 3')
+    document.Styles.createParagraphStyle('Heading3', 'Heading 3')
       .basedOn('Normal')
       .next('Normal')
       .quickFormat()
@@ -74,7 +75,7 @@ export default (application, sections, values, updateImageDimensions) => {
       .font('Helvetica')
       .spacing({ before: 400, after: 200 });
 
-    doc.Styles.createParagraphStyle('body', 'Body')
+    document.Styles.createParagraphStyle('body', 'Body')
       .basedOn('Normal')
       .next('Normal')
       .quickFormat()
@@ -82,7 +83,7 @@ export default (application, sections, values, updateImageDimensions) => {
       .font('Helvetica')
       .spacing({ before: 200, after: 200 });
 
-    doc.Styles.createParagraphStyle('ListParagraph', 'List Paragraph')
+    document.Styles.createParagraphStyle('ListParagraph', 'List Paragraph')
       .basedOn('Normal')
       .next('Normal')
       .quickFormat()
@@ -91,7 +92,7 @@ export default (application, sections, values, updateImageDimensions) => {
       .spacing({ before: 100, after: 100 });
 
 
-    doc.Styles.createParagraphStyle('aside', 'Aside')
+    document.Styles.createParagraphStyle('aside', 'Aside')
       .basedOn('Body')
       .next('Body')
       .quickFormat()
@@ -99,24 +100,20 @@ export default (application, sections, values, updateImageDimensions) => {
       .color('999999')
       .italics();
 
-    doc.Styles.createParagraphStyle('footerText', 'Footer Text')
+    document.Styles.createParagraphStyle('footerText', 'Footer Text')
       .basedOn('Normal')
       .next('Normal')
       .quickFormat()
       .font('Helvetica')
       .size(20);
-
-    return doc;
   };
 
-  const addPageNumbers = (doc) => {
-    doc.Footer.createParagraph()
+  const addPageNumbers = () => {
+    document.Footer.createParagraph()
       .addRun(new TextRun('Page ').pageNumber())
       .addRun(new TextRun(' of ').numberOfTotalPages())
       .style('footerText')
       .right();
-
-    return doc;
   };
 
   const tableToMatrix = table => {
@@ -240,7 +237,7 @@ export default (application, sections, values, updateImageDimensions) => {
     doc.addTable(table);
   };
 
-  const renderNode = (doc, node, depth = 0, paragraph, numbers, index) => {
+  const renderNode = (parent, node, depth = 0, paragraph, numbers, index) => {
     let text;
     let p;
     let addToDoc;
@@ -258,39 +255,39 @@ export default (application, sections, values, updateImageDimensions) => {
           ? p.setNumbering(numbers, depth)
           : p.bullet(depth);
 
-        doc.addParagraph(p);
-        node.nodes.forEach((n, index) => renderNode(doc, n, depth + 1, p, null, index));
+        parent.addParagraph(p);
+        node.nodes.forEach((n, index) => renderNode(parent, n, depth + 1, p, null, index));
         break
 
       case 'heading-one':
-        doc.createParagraph(getContent(node)).heading1();
+        parent.createParagraph(getContent(node)).heading1();
         break;
 
       case 'heading-two':
-        doc.createParagraph(getContent(node)).heading2();
+        parent.createParagraph(getContent(node)).heading2();
         break;
 
       case 'block-quote':
-        doc.createParagraph(getContent(node)).style('aside');
+        parent.createParagraph(getContent(node)).style('aside');
         break;
 
       case 'table-cell':
-        node.nodes.forEach(part => renderNode(doc, part))
+        node.nodes.forEach(part => renderNode(parent, part))
         break;
 
       case 'table':
-        renderTable(doc, node);
+        renderTable(parent, node);
         break;
 
       case 'numbered-list': {
         abstract.createLevel(depth, 'decimal', '%2.', 'start').addParagraphProperty(new Indent(720 * (depth + 1), 0));
         const concrete = numbering.createConcreteNumbering(abstract);
-        node.nodes.forEach(item => renderNode(doc, item, depth, paragraph, concrete));
+        node.nodes.forEach(item => renderNode(parent, item, depth, paragraph, concrete));
         break;
       }
 
       case 'bulleted-list':
-        node.nodes.forEach(item => renderNode(doc, item, depth, paragraph));
+        node.nodes.forEach(item => renderNode(parent, item, depth, paragraph));
         break;
 
       case 'paragraph':
@@ -334,19 +331,21 @@ export default (application, sections, values, updateImageDimensions) => {
           });
         });
         if (addToDoc) {
-          doc.addParagraph(paragraph);
+          parent.addParagraph(paragraph);
         }
         break;
 
       case 'image':
-        doc.createImage(node.data.src, node.data.width, node.data.height);
+        paragraph = paragraph || new Paragraph();
+        paragraph.addImage(Media.addImage(document, node.data.src));
+        parent.addParagraph(paragraph);
         break;
 
       default:
         // if there is no matching type then it's probably a denormalised text node with no wrapping paragraph
         // attempt to render with the node wrapped in a paragraph
         if (node.text) {
-          renderNode(doc, { object: 'block', type: 'paragraph', nodes: [ node ] }, depth, paragraph)
+          renderNode(parent, { object: 'block', type: 'paragraph', nodes: [ node ] }, depth, paragraph)
         }
 
     }
@@ -745,7 +744,7 @@ export default (application, sections, values, updateImageDimensions) => {
     });
   }
 
-  const renderDocument = (doc, sections, values) => {
+  const renderDocument = (sections, values) => {
     values = values || {};
     const now = new Date();
     const primaryEstablishment = application.establishment.name;
@@ -759,37 +758,35 @@ export default (application, sections, values, updateImageDimensions) => {
     sections[0].subsections['introduction'].fields.splice(1, 0, field);
     values['holder'] = application.licenceHolder;
 
-    doc.createParagraph(values.title).style('SectionTitle');
-    doc.createParagraph(`Document exported on ${now}`).style('body');
+    document.createParagraph(values.title).style('SectionTitle');
+    document.createParagraph(`Document exported on ${now}`).style('body');
 
-    doc.createParagraph('\n').style('body');
-    doc.createParagraph('\n').style('body');
-    doc.createParagraph('\n').style('body');
-    doc.createParagraph('\n').style('body');
+    document.createParagraph('\n').style('body');
+    document.createParagraph('\n').style('body');
+    document.createParagraph('\n').style('body');
+    document.createParagraph('\n').style('body');
 
-    doc.createParagraph('Applicant').style('Question');
-    doc.createParagraph(application.licenceHolder.name).style('body');
+    document.createParagraph('Applicant').style('Question');
+    document.createParagraph(application.licenceHolder.name).style('body');
 
-    doc.createParagraph('Primary establishment').style('Question');
-    doc.createParagraph(primaryEstablishment).style('body');
+    document.createParagraph('Primary establishment').style('Question');
+    document.createParagraph(primaryEstablishment).style('body');
 
-    doc.createParagraph('Additional establishments').style('Question');
+    document.createParagraph('Additional establishments').style('Question');
     const establishments = (values.establishments || [])
       .map(e => e['establishment-name'])
       .filter(e => e !== primaryEstablishment);
     const text = establishments.length
       ? establishments.join(', ')
       : 'None';
-    doc.createParagraph(text).style('body').pageBreak();
+    document.createParagraph(text).style('body').pageBreak();
 
     sections.filter(s => !s.show || s.show(values)).forEach(section => {
       if (section.name === 'nts') {
-        return renderNtsSection(doc, section, values, sections);
+        return renderNtsSection(document, section, values, sections);
       }
-      renderSection(doc, section, values);
+      renderSection(document, section, values);
     });
-
-    return doc;
   };
 
   const traverse = (obj, fn) => {
@@ -848,8 +845,8 @@ export default (application, sections, values, updateImageDimensions) => {
 
   return Promise.resolve()
     .then(() => addImageDimensions(values))
-    .then(() => new Document())
-    .then(doc => addStyles(doc))
-    .then(doc => renderDocument(doc, sections, values))
-    .then(doc => addPageNumbers(doc))
+    .then(() => addStyles())
+    .then(() => renderDocument(sections, values))
+    .then(() => addPageNumbers())
+    .then(() => document);
 }
