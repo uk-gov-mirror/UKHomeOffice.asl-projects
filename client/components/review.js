@@ -25,6 +25,8 @@ class Review extends React.Component {
       changedFromLatest,
       changedFromGranted
     } = this.props;
+    const showComments = !this.props.noComments && this.props.type !== 'repeater';
+
     return (
       <div className="review">
         {
@@ -56,7 +58,7 @@ class Review extends React.Component {
           this.replay()
         }
         {
-          !this.props.noComments && <Comments field={`${this.props.prefix || ''}${this.props.name}`} collapsed={!this.props.readonly} />
+          showComments && <Comments field={`${this.props.prefix || ''}${this.props.name}`} collapsed={!this.props.readonly} />
         }
         {
           // repeaters have edit links on the individual fields

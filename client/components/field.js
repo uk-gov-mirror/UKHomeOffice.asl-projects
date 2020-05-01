@@ -276,11 +276,12 @@ const mapStateToProps = ({ project, settings, application }, { name, conditional
 const ConnectedField = connect(mapStateToProps, { addChange, throwError })(Field);
 
 const FieldGroup = props => {
+  const showComments = !props.noComments && props.type !== 'repeater';
   return (
     <Fragment>
       <ConnectedField {...props} />
       {
-        !props.noComments && <Comments field={props.name} />
+        showComments && <Comments field={props.name} />
       }
     </Fragment>
   )
