@@ -1182,6 +1182,7 @@ html.modal-open, html.modal-open body {
   }
 
   .comments.expanding-panel {
+    margin-top: $govuk-gutter;
     margin-bottom: $govuk-gutter;
     border-top: 3px solid $govuk-border-colour;
     border-bottom: 3px solid $govuk-border-colour;
