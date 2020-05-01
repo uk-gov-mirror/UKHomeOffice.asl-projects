@@ -171,7 +171,7 @@ class ReviewField extends React.Component {
                   getValue(value)
                 }
                 {
-                  this.props.preserveHierarchy && <RevealChildren value={value} options={options} {...this.props} />
+                  this.props.preserveHierarchy && <RevealChildren {...this.props} value={value} options={options} />
                 }
               </li>
             ))
