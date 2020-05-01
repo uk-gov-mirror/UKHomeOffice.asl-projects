@@ -122,7 +122,14 @@ class Field extends Component {
       return <OtherSpecies {...this.props} value={value} label={label} hint={hint} />;
     }
     if (this.props.type === 'repeater') {
-      return <Repeater {...this.props} items={value} label={label} hint={hint} onSave={val => this.onFieldChange(val)}/>;
+      return <Repeater
+        {...this.props}
+        type={this.props.name}
+        items={value}
+        label={label}
+        hint={hint}
+        onSave={val => this.onFieldChange(val)}
+      />;
     }
     if (this.props.type === 'duration') {
       return <Duration

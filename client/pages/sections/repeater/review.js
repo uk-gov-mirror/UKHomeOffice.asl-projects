@@ -5,7 +5,7 @@ import Banner from '../../../components/banner';
 import ReviewFields from '../../../components/review-fields';
 import Review from '../../../components/review';
 
-const ReviewRepeater = ({ items = [], singular, fields, name, step }) => (
+export const ReviewRepeater = ({ items = [], singular, fields, name, step }) => (
   <Fragment>
     {
       items.map((item, index) => (
@@ -19,7 +19,7 @@ const ReviewRepeater = ({ items = [], singular, fields, name, step }) => (
                   {...field}
                   value={item[field.name]}
                   prefix={`${name}.${item.id}.`}
-                  editLink={`./${step}#${field.name}`}
+                  editLink={step && `./${step}#${field.name}`}
                 />
               ))
             }
