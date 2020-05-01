@@ -18,6 +18,7 @@ import EstablishmentSelector from './establishment-selector';
 import { formatDate } from '../helpers';
 import { DATE_FORMAT } from '../constants';
 import ReviewFields from './review-fields';
+import { ReviewRepeater } from '../pages/sections/repeater/review';
 
 function RevealChildren({ value, options, values, prefix }) {
   const option = (options || []).find(option => option.value === value);
@@ -99,10 +100,11 @@ class ReviewField extends React.Component {
 
     if (this.props.type === 'repeater') {
       return (
-        <ReviewFields
+        <ReviewRepeater
+          singular={this.props.singular}
           fields={this.props.fields}
-          values={this.props.values[this.props.name]}
-          prefix={this.props.prefix}
+          name={this.props.name}
+          items={this.props.values[this.props.name]}
         />
       )
     }
