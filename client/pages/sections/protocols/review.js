@@ -1,5 +1,6 @@
 import React, { Fragment, PureComponent } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import Banner from '../../../components/banner';
 import Complete from '../../../components/complete';
 import Protocols from './protocols';
@@ -25,7 +26,14 @@ class ProtocolsReview extends PureComponent {
         }
 
         <Fragment>
-          { readonly && !isLegacy && <ProtocolConditions /> }
+          {
+            readonly && !isLegacy && (
+              <Fragment>
+                <p><Link to="/protocol-summary" target="_blank">View summary table</Link></p>
+                <ProtocolConditions />
+              </Fragment>
+            )
+          }
           <Protocols {...props} editable={false} />
         </Fragment>
 

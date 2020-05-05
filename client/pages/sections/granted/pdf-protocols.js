@@ -88,7 +88,10 @@ const PDF = ({ protocols = [], isLegacy, ...props }) => {
       {
         !isLegacy && <h2>{props.title}</h2>
       }
-      <SummaryTable protocols={protocols} isLegacy={isLegacy} project={props.project} />
+      <div className="summary-table">
+        <h3>Summary table</h3>
+        <SummaryTable protocols={protocols} isLegacy={isLegacy} project={props.project} />
+      </div>
       {
         !isLegacy && <ProtocolConditions pdf={true} />
       }
