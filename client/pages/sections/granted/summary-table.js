@@ -21,50 +21,59 @@ function TableRow({ species, protocol, index, isLegacy, ExpandingRow, expanded, 
   const showExpandingRow = ExpandingRow && !isLegacy;
 
   return species.map((s, speciesIndex) => {
-    const isLastRow = speciesIndex === species.length - 1;
+    const isLastRowClassName = classnames({ 'is-last-row': speciesIndex === species.length - 1 });
     return (
       <Fragment key={index + speciesIndex}>
         <tr onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} onClick={onClick} className={classnames({ expandable: ExpandingRow, hover, expanded })}>
           {
-            (speciesIndex === 0) && (
-              <Fragment>
-                <td rowSpan={species.length || 1} className="is-last-row">
-                  <span className={classnames({ expanding: ExpandingRow, expanded })}>{ index + 1 }</span>
-                </td>
-                <td rowSpan={species.length || 1} className="is-last-row">{ protocol.title }</td>
-              </Fragment>
-            )
-          }
-          <td className={classnames({ 'is-last-row': isLastRow })}>{ s.name }</td>
-          {
             isLegacy
-              ? <td>{s.quantity}</td>
-              : (
+              ? (
                 <Fragment>
-                  <td className={classnames({ 'is-last-row': isLastRow })}>{ s['maximum-animals'] }</td>
-                  <td className={classnames({ 'is-last-row': isLastRow })}>{ s['maximum-times-used'] }</td>
+                  {
+                    speciesIndex === 0 && (
+                      <Fragment>
+                        <td rowSpan={species.length || 1}>{ index + 1 }</td>
+                        <td rowSpan={species.length || 1}>{ protocol.title }</td>
+                      </Fragment>
+                    )
+                  }
+                  <td>{ s.name }</td>
+                  <td>{s.quantity}</td>
+                  <td>{s['life-stages']}</td>
+                  <td>{s['genetically-altered'] === true ? 'Yes' : 'No'}</td>
+                  {
+                    speciesIndex === 0 && (
+                      <td rowSpan={species.length || 1}>{ protocol.severity }</td>
+                    )
+                  }
                 </Fragment>
               )
-          }
-          <td className={classnames({ 'is-last-row': isLastRow })}>
-            {
-              isLegacy
-                ? s['life-stages']
-                : (s['life-stages'] || []).map(titleCase).join(', ')
-              }
-          </td>
-          {
-            isLegacy && <td>{s['genetically-altered'] === true ? 'Yes' : 'No'}</td>
-          }
-          {
-            speciesIndex === 0 && (
-              <Fragment>
-                {
-                  !isLegacy && <td rowSpan={species.length || 1} className="is-last-row">{ protocol.gaas === true ? 'Yes' : 'No' }</td>
-                }
-                <td rowSpan={species.length || 1} className="is-last-row">{ protocol.severity && titleCase(protocol.severity) }</td>
-              </Fragment>
-            )
+              : (
+                <Fragment>
+                  {
+                    (speciesIndex === 0) && (
+                      <Fragment>
+                        <td rowSpan={species.length || 1} className="is-last-row">
+                          <span className={classnames({ expanding: ExpandingRow, expanded })}>{ index + 1 }</span>
+                        </td>
+                        <td rowSpan={species.length || 1} className="is-last-row">{ protocol.title }</td>
+                      </Fragment>
+                    )
+                  }
+                  <td className={isLastRowClassName}>{ s.name }</td>
+                  <td className={isLastRowClassName}>{ s['maximum-animals'] }</td>
+                  <td className={isLastRowClassName}>{ s['maximum-times-used'] }</td>
+                  <td className={isLastRowClassName}>{(s['life-stages'] || []).map(titleCase).join(', ')}</td>
+                  {
+                    speciesIndex === 0 && (
+                      <Fragment>
+                        <td rowSpan={species.length || 1} className="is-last-row">{ protocol.gaas === true ? 'Yes' : 'No' }</td>
+                        <td rowSpan={species.length || 1} className="is-last-row">{ protocol.severity && titleCase(protocol.severity) }</td>
+                      </Fragment>
+                    )
+                  }
+                </Fragment>
+              )
           }
         </tr>
         {
