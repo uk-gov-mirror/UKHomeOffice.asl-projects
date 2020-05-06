@@ -6,6 +6,7 @@ import { DownloadHeader } from '@asl/components';
 import ScrollToTop from './components/scroll-to-top';
 import Section from './pages/section';
 import Project from './pages/project';
+import ProtocolSummary from './pages/sections/protocols/summary-table';
 
 const selector = ({
   project: version,
@@ -129,6 +130,7 @@ const ProjectRouter = () => {
         </DownloadHeader>
 
         <Switch>
+          <Route path="/protocol-summary" component={ProtocolSummary} />
           <Route path="/:section/:step?" render={props => <Section { ...props } drafting={drafting} />} />
           <Route path="/" component={Project} />
         </Switch>
