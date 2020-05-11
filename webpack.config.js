@@ -4,20 +4,21 @@ const mode = process.env.NODE_ENV === 'production' ? 'production' : 'development
 
 module.exports = {
   mode,
-  devtool: 'none',
   entry: {
-    index: './client/index',
-    external: './client/external'
+    index: './lib/client'
   },
   target: 'web',
   output: {
     path: path.resolve(__dirname, './public/js')
   },
+  resolve: {
+    extensions: ['.js', '.jsx']
+  },
   module: {
     rules: [
       {
         test: /\.jsx?$/,
-        exclude: p => p.match(/node_modules/) && !p.match(/@joefitter\/docx/),
+        exclude: path => path.match(/node_modules/) && !path.match(/node_modules\/@asl/),
         use: {
           loader: 'babel-loader',
           options: {

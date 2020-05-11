@@ -2,7 +2,7 @@
   "name": "@asl/projects",
   "version": "6.8.1",
   "description": "ASL PPL prototype",
-  "main": "client/external.js",
+  "main": "client/index.js",
   "styles": "assets/scss/projects.scss",
   "scripts": {
     "start": "node index.js",
@@ -32,7 +32,7 @@
     "registry": "https://artifactory.digital.homeoffice.gov.uk/artifactory/api/npm/npm-virtual/"
   },
   "dependencies": {
-    "@asl/components": "^7.0.4",
+    "@asl/components": "^7.2.4",
     "@asl/constants": "^0.6.1",
     "@babel/core": "^7.2.2",
     "@babel/plugin-proposal-object-rest-spread": "^7.3.2",
@@ -41,7 +41,7 @@
     "@babel/preset-react": "^7.0.0",
     "@joefitter/slate-edit-list": "0.0.3",
     "@joefitter/slate-edit-table": "0.0.3",
-    "@ukhomeoffice/frontend-toolkit": "^2.8.1",
+    "@ukhomeoffice/frontend-toolkit": "^2.12.0",
     "@ukhomeoffice/react-components": "^0.8.1",
     "babel-loader": "^8.0.5",
     "babel-plugin-transform-class-properties": "^6.24.1",
