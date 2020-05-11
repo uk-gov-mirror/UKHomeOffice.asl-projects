@@ -68,7 +68,7 @@ export default () => ({
           },
           {
             name: 'training-licence',
-            label: 'Is training and education the primary purpose of this project?',
+            label: 'Is this project for higher education and training purposes?',
             type: 'radio',
             inline: true,
             className: 'smaller',
@@ -79,7 +79,7 @@ export default () => ({
                 reveal: [
                   {
                     name: 'training-why-needed',
-                    label: 'Why is this teaching licence needed?',
+                    label: 'Why is this higher education and training licence needed?',
                     type: 'texteditor'
                   },
                   {
@@ -754,18 +754,18 @@ If you can only add generic information at this stage, provide a general descrip
         show: values => isTrainingLicence(values),
         fields: [
           {
-            name: 'training-background-predicted-needs',
-            label: 'What are the predicted needs for teaching over the lifetime of the project?',
+            name: 'training-background-anticipated-demand',
+            label: 'What do you anticipate demand for this training to be over the lifetime of the project?',
             type: 'texteditor'
           },
           {
             name: 'training-background-specialist-bodies',
-            label: 'What support do you have for the course from specialist bodies or societies?',
+            label: 'Describe if the training is endorsed or otherwise supported by any specialist bodies or societies.',
             type: 'texteditor'
           },
           {
             name: 'training-background-qualification',
-            label: 'Do students have to undertake this course to gain their professional qualification?',
+            label: 'Is this training a mandatory requirement for a professional qualification?',
             type: 'radio',
             inline: true,
             className: 'smaller',
@@ -775,7 +775,7 @@ If you can only add generic information at this stage, provide a general descrip
                 value: true,
                 reveal: {
                   name: 'training-background-qualification-who-mandates',
-                  label: 'What is the requirement and who mandates it?',
+                  label: 'Explain who mandates the training and what the requirement is.',
                   type: 'texteditor'
                 }
               },
@@ -787,13 +787,13 @@ If you can only add generic information at this stage, provide a general descrip
           },
           {
             name: 'training-background-measure-success',
-            label: 'How will you measure the success of this training or education?',
+            label: 'How will you measure the success of the training?',
             type: 'texteditor'
           },
           {
             name: 'training-background-learning-outcomes',
-            label: 'How are learning outcomes evaluated to identify the added value of using protected animals?',
-            hint: 'For example, feedback from participants or potential employers.',
+            label: 'How will you evaluate if the participants\' learning has been enhanced by the use of protected animals?',
+            hint: 'For example, by reviewing feedback from participants or potential employers.',
             type: 'texteditor'
           },
           {
@@ -1132,7 +1132,7 @@ each other.`,
               {
                 name: 'training-objectives-use-of-animals',
                 show: values => isTrainingLicence(values),
-                label: 'How does the use of live animals fit with the learning outcomes of the training course?',
+                label: 'Why can\'t learning outcomes be achieved without the use of live animals?',
                 type: 'texteditor'
               },
               {
@@ -1140,29 +1140,6 @@ each other.`,
                 show: values => isTrainingLicence(values),
                 label: 'How are attendees selected?',
                 type: 'texteditor'
-              },
-              {
-                name: 'training-objectives-demonstration',
-                show: values => isTrainingLicence(values),
-                label: 'Is each protocol used for demonstration purposes, or for tissue provision?',
-                type: 'radio',
-                inline: true,
-                className: 'smaller',
-                options: [
-                  {
-                    label: 'Yes',
-                    value: true,
-                    reveal: {
-                      name: 'training-objectives-demonstration-responsible',
-                      label: 'Who will be responsible for the animals being used?',
-                      type: 'texteditor'
-                    }
-                  },
-                  {
-                    label: 'No',
-                    value: false
-                  }
-                ]
               },
               {
                 name: 'training-objectives-long-term-teaching-aid',
@@ -1177,55 +1154,8 @@ each other.`,
                     value: true,
                     reveal: {
                       name: 'training-objectives-long-term-teaching-aid-description',
-                      label: 'Describe the nature of the material you plan to produce.',
+                      label: 'Describe the material you plan to produce.',
                       type: 'texteditor'
-                    }
-                  },
-                  {
-                    label: 'No',
-                    value: false
-                  }
-                ]
-              },
-              {
-                name: 'training-objectives-regulated-procedures',
-                show: values => isTrainingLicence(values),
-                label: 'Will the students undertake regulated procedures?',
-                type: 'radio',
-                inline: true,
-                className: 'smaller',
-                options: [
-                  {
-                    label: 'Yes',
-                    value: true,
-                    reveal: {
-                      name: 'training-objectives-regulated-procedures-pil',
-                      label: 'Will participants need a personal licence?',
-                      type: 'radio',
-                      inline: true,
-                      className: 'smaller',
-                      options: [
-                        {
-                          label: 'Yes',
-                          value: true,
-                          reveal: [
-                            {
-                              name: 'training-objectives-regulated-procedures-pil-type',
-                              label: 'What type of personal licence will they need?',
-                              type: 'texteditor'
-                            },
-                            {
-                              name: 'training-objectives-regulated-procedures-pil-precursor-training',
-                              label: 'What training will participants receive during the course before they can use protected animals?',
-                              type: 'texteditor'
-                            }
-                          ]
-                        },
-                        {
-                          label: 'No',
-                          value: false
-                        }
-                      ]
                     }
                   },
                   {
@@ -1237,14 +1167,15 @@ each other.`,
               {
                 name: 'training-objectives-non-animal-alternatives',
                 show: values => isTrainingLicence(values),
-                label: 'Are you using or developing non-animal alternatives such as video material, in silico, or ex vivo material for this work?',
+                label: 'Describe any resources you use, or are currently developing, to supplement or replace the use of animals.',
+                hint: 'This could include videos, in silico or ex vivio material.',
                 type: 'texteditor'
               },
               {
                 name: 'training-objectives-other-resources',
                 show: values => isTrainingLicence(values),
-                label: 'Have you checked the Norecopa website and other resources to ensure that there are no suitable non-animal alternatives?',
-                hint: 'The Norecopa website can be found at https://norecopa.no/.',
+                label: 'Specify any resources you’ve explored to ensure there are no suitable non-animal alternatives.',
+                hint: 'For example, Norecopa.',
                 type: 'texteditor'
               },
               {
@@ -1464,6 +1395,73 @@ each other.`,
                 label: 'Which of your objectives will this protocol address?',
                 hint: 'Select all that apply.',
                 type: 'objective-selector'
+              },
+              {
+                name: 'training-used-for',
+                show: values => isTrainingLicence(values),
+                label: 'What will this protocol be used for?',
+                hint: 'If your purpose isn’t listed you can leave this blank.',
+                type: 'checkbox',
+                className: 'smaller',
+                options: [
+                  {
+                    label: 'Demonstration purposes',
+                    value: 'demonstration'
+                  },
+                  {
+                    label: 'Tissue provision',
+                    value: 'tissue-provision'
+                  }
+                ]
+              },
+              {
+                name: 'training-responsible-for-animals',
+                show: values => isTrainingLicence(values),
+                label: 'Who will be responsible for the animals used in this protocol?',
+                type: 'texteditor'
+              },
+              {
+                name: 'training-regulated-procedures',
+                show: values => isTrainingLicence(values),
+                label: 'Will students carry out regulated procedures under this protocol?',
+                type: 'radio',
+                className: 'smaller',
+                options: [
+                  {
+                    label: 'Yes',
+                    value: true,
+                    reveal: {
+                      name: 'training-regulated-procedures-type-of-pil',
+                      label: 'What type of personal licence will they need?',
+                      type: 'radio',
+                      options: [
+                        {
+                          label: 'A and B',
+                          value: 'A, B'
+                        },
+                        {
+                          label: 'A, B and C',
+                          value: 'A, B, C'
+                        },
+                        {
+                          label: 'E',
+                          value: 'E'
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    label: 'No',
+                    value: false
+                  }
+                ],
+                inline: true
+              },
+              {
+                name: 'training-participant-pre-course-training',
+                show: values => isTrainingLicence(values),
+                label: 'What training will participants receive before they can use protected animals?',
+                type: 'texteditor'
               }
             ]
           },

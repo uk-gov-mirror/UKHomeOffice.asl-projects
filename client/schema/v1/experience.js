@@ -35,9 +35,9 @@ export default {
     {
       name: 'training-has-delivered',
       show: values => isTrainingLicence(values),
-      label: 'Have you delivered higher education or training courses before?',
+      label: 'Have you previously delivered courses that required a higher education and training licence?',
       alt: {
-        label: 'Has this person delivered higher education or training courses before?'
+        label: 'Has this person previously delivered courses that required a higher education and training licence?'
       },
       type: 'radio',
       inline: true,
@@ -48,9 +48,9 @@ export default {
           value: true,
           reveal: {
             name: 'training-delivery-experience',
-            label: 'What experience do you have of delivering these types of courses?',
+            label: 'Describe your experience of delivering these types of courses.',
             alt: {
-              label: 'What experience does this person have of delivering these types of courses?'
+              label: 'Describe this person\'s experience of delivering these types of courses.'
             },
             type: 'texteditor'
           }
@@ -121,18 +121,10 @@ export default {
     {
       name: 'funding-previous',
       label: 'What relevant expertise and staffing will be available to support you?',
-      hint: 'Include examples of practical, technical, and specialist support you’ll be able to draw on.',
+      hint: 'Include examples of practical or specialist support you\'ll be able to draw on. If anyone is going to help manage the project, explain how.',
       alt: {
         label: 'What relevant expertise and staffing will be available to support this person?',
-        hint: 'Include examples of practical, technical, and specialist support they\'ll be able to draw on.',
-      },
-      type: 'texteditor'
-    },
-    {
-      name: 'other-people',
-      label: 'Will other people help you manage the project? If so, how?',
-      alt: {
-        label: 'Will other people help this person manage the project? If so, how?'
+        hint: 'Include examples of practical or specialist support they\'ll be able to draw on. If anyone is going to help manage the project, explain how.',
       },
       type: 'texteditor'
     }
