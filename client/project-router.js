@@ -14,11 +14,10 @@ const selector = ({
     project,
     isSyncing,
     basename,
-    drafting,
     isGranted,
     legacyGranted
   }
-}) => ({ project, version, isSyncing, basename, drafting, isGranted, legacyGranted });
+}) => ({ project, version, isSyncing, basename, isGranted, legacyGranted });
 
 const ProjectRouter = () => {
   const [statusShowing, setStatusShowing] = useState(true);
@@ -27,7 +26,6 @@ const ProjectRouter = () => {
     version,
     isSyncing,
     basename,
-    drafting,
     isGranted,
     legacyGranted
   } = useSelector(selector, shallowEqual);
@@ -71,10 +69,6 @@ const ProjectRouter = () => {
   })
 
   useEffect(() => {
-    if (drafting) {
-      return;
-    }
-
     const licenceStatusBanner = document.querySelector('.licence-status-banner');
 
     if (!licenceStatusBanner) {
@@ -131,7 +125,7 @@ const ProjectRouter = () => {
 
         <Switch>
           <Route path="/protocol-summary" component={ProtocolSummary} />
-          <Route path="/:section/:step?" render={props => <Section { ...props } drafting={drafting} />} />
+          <Route path="/:section/:step?" render={props => <Section { ...props } />} />
           <Route path="/" component={Project} />
         </Switch>
 

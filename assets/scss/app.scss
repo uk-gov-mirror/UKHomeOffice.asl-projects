@@ -1,5 +1,5 @@
 $assetPath: '/public';
-
+$red: #d4351c;
 @import "@ukhomeoffice/frontend-toolkit";
 @import "@ukhomeoffice/frontend-toolkit/assets/styles/forms";
 @import "@ukhomeoffice/frontend-toolkit/assets/styles/typography";
@@ -8,3 +8,7 @@ $assetPath: '/public';
 @import "@ukhomeoffice/frontend-toolkit/assets/styles/components/table";
 
 @import "projects";
+
+.download-header {
+  display: none;
+}

@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import isEmpty from 'lodash/isEmpty';
-import { indexedDBSync, ajaxSync } from '../actions/projects';
+import { sync } from '../actions/projects';
 import DefaultSection from './sections';
 import SectionsLink from '../components/sections-link';
 import ErrorBoundary from '../components/error-boundary';
@@ -44,10 +44,9 @@ const mapStateToProps = (
   };
 };
 
-const mapDispatchToProps = (dispatch, { drafting }) => {
-  const update = drafting ? indexedDBSync : ajaxSync;
+const mapDispatchToProps = (dispatch) => {
   return {
-    update: data => dispatch(update(data))
+    update: data => dispatch(sync(data))
   };
 };
 
