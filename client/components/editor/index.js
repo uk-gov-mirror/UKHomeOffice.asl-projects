@@ -7,7 +7,6 @@ import { Markdown } from '@asl/components';
 
 import get from 'lodash/get';
 import defer from 'lodash/defer';
-import debounce from 'lodash/debounce';
 import isEqual from 'lodash/isEqual';
 
 import { throwError } from '../../actions/messages';
@@ -73,10 +72,10 @@ class TextEditor extends Component {
     this.editor = editor;
   };
 
-  save = debounce(() => {
+  save = () => {
     const { value } = this.state;
     this.props.onChange && this.props.onChange(serialiseValue(value));
-  }, 500, { maxWait: 5000, leading: true })
+  };
 
   onChange = ({ value }) => {
     const old = this.state.value;
