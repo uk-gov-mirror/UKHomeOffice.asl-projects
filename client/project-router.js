@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { useSelector, shallowEqual } from 'react-redux'
 import { DownloadHeader } from '@asl/components';
+import isEqual from 'lodash/isEqual';
 
 import ScrollToTop from './components/scroll-to-top';
 import Section from './pages/section';
@@ -10,15 +11,27 @@ import ProtocolSummary from './pages/sections/protocols/summary-table';
 
 const selector = ({
   project: version,
+  savedProject,
   application: {
+    readonly,
     project,
-    isSyncing,
     basename,
     drafting,
     isGranted,
     legacyGranted
   }
-}) => ({ project, version, isSyncing, basename, drafting, isGranted, legacyGranted });
+}) => {
+  const isSyncing = !readonly && !isEqual(version, savedProject);
+  return {
+    project,
+    version,
+    isSyncing,
+    basename,
+    drafting,
+    isGranted,
+    legacyGranted
+  };
+};
 
 const ProjectRouter = () => {
   const [statusShowing, setStatusShowing] = useState(true);

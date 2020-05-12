@@ -256,6 +256,8 @@ function getProjectWithConditions(project) {
   };
 }
 
+const wait = t => new Promise(resolve => setTimeout(resolve, t));
+
 const syncProject = (dispatch, getState) => {
   const state = getState();
 
@@ -299,6 +301,7 @@ const syncProject = (dispatch, getState) => {
       const patched = applyPatches(state.savedProject, patch);
       dispatch(updateSavedProject(patched));
     })
+    .then(() => wait(2000))
     .then(() => syncProject(dispatch, getState))
     .catch(err => {
       onSyncError(syncProject, err, dispatch, getState)
@@ -370,7 +373,7 @@ export function fetchQuestionVersions(key) {
 
 const debouncedSyncProject = debounce((...args) => {
   return syncProject(...args);
-}, 1000, { maxWait: 5000, leading: true });
+}, 2000, { maxWait: 20000, leading: false });
 
 export const ajaxSync = props => {
   return (dispatch, getState) => {
