@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import classnames from 'classnames';
 import { connect } from 'react-redux';
 import SummaryTable from './summary-table';
 import ProtocolSections from '../protocols/sections';
@@ -6,7 +7,7 @@ import ProtocolConditions from '../protocols/protocol-conditions';
 import { getLegacySpeciesLabel } from '../../../helpers';
 import { filterSpeciesByActive } from '../protocols/animals';
 
-const Protocol = ({ protocol, number, sections, isLegacy, project }) => {
+export function Protocol({ protocol, number, sections, isLegacy, project, children, className }) {
   const species = !isLegacy
     ? filterSpeciesByActive(protocol, project)
     : (protocol.species || []).map(s => {
@@ -17,7 +18,7 @@ const Protocol = ({ protocol, number, sections, isLegacy, project }) => {
       }
     });
   return (
-    <div className="protocol">
+    <div className={classnames('protocol', className)}>
       <h3 className="protocol-number">Protocol {number}</h3>
       <div className="protocol-panel">
         <h2>{ protocol.title || 'Untitled protocol' }</h2>
@@ -36,8 +37,8 @@ const Protocol = ({ protocol, number, sections, isLegacy, project }) => {
                       ? <th>Est. numbers</th>
                       : (
                         <Fragment>
-                          <th>Max. no. of animals</th>
-                          <th>Max. no. of uses per animal</th>
+                          <th>Max number of animals</th>
+                          <th>Max uses per animal</th>
                         </Fragment>
                       )
                   }
@@ -73,13 +74,20 @@ const Protocol = ({ protocol, number, sections, isLegacy, project }) => {
             </table>
           )
         }
+        {
+          children
+        }
       </div>
-      <div className="protocol-content">
-        <ProtocolSections values={protocol} sections={sections} pdf={true} number={number} />
-        <p className="end">{`( End of protocol ${number} )`}</p>
-      </div>
+      {
+        sections && (
+          <div className="protocol-content">
+            <ProtocolSections values={protocol} sections={sections} pdf={true} number={number} />
+            <p className="end">{`( End of protocol ${number} )`}</p>
+          </div>
+        )
+      }
     </div>
-  )
+  );
 }
 
 const PDF = ({ protocols = [], isLegacy, ...props }) => {
