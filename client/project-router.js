@@ -14,6 +14,7 @@ const selector = ({
   savedProject,
   application: {
     readonly,
+    editConditions,
     project,
     basename,
     drafting,
@@ -21,7 +22,9 @@ const selector = ({
     legacyGranted
   }
 }) => {
-  const isSyncing = !readonly && !isEqual(version, savedProject);
+  // only compare version data if version is in an editable state
+  const editable = !readonly || editConditions;
+  const isSyncing = editable && !isEqual(version, savedProject);
   return {
     project,
     version,
