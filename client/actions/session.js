@@ -1,7 +1,7 @@
-import debounce from 'lodash/debounce';
+import throttle from 'lodash/throttle';
 import sendMessage from './messaging';
 
-const debouncedSendMessage = debounce(sendMessage, 30000);
+const debouncedSendMessage = throttle(sendMessage, 30000);
 
 export const keepAlive = () => {
   return () => {
