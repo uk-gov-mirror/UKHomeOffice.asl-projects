@@ -30,9 +30,11 @@ const plugins = [
   tablePlugin
 ];
 
+const nullValue = JSON.stringify(Value.fromJSON(initialValue('')));
+
 const serialiseValue = value => {
   const jsonVal = JSON.stringify(value.toJSON());
-  if (jsonVal === JSON.stringify(Value.fromJSON(initialValue('')))) {
+  if (jsonVal === nullValue) {
     return null;
   }
   return jsonVal;
@@ -79,9 +81,9 @@ class TextEditor extends Component {
 
   onChange = ({ value }) => {
     const old = this.state.value;
-    const hasChanged = !isEqual(old.toJSON(), value.toJSON());
+    const hasChanged = () => !isEqual(old.toJSON(), value.toJSON());
 
-    this.setState({ value }, () => hasChanged && this.save());
+    this.setState({ value }, () => hasChanged() && this.save());
   };
 
   onFocus = (self, editor, next) => {
