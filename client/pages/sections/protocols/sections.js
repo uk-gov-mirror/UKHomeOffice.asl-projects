@@ -5,7 +5,6 @@ import pick from 'lodash/pick';
 import pickBy from 'lodash/pickBy';
 import size from 'lodash/size';
 import flatten from 'lodash/flatten';
-import isUndefined from 'lodash/isUndefined';
 
 import Accordion from '../../../components/accordion';
 import ExpandingPanel from '../../../components/expanding-panel';
@@ -118,27 +117,27 @@ const getTitle = (section, newComments, values) => (
   </Fragment>
 )
 
-const sortGranted = (sections, isGranted) => (a, b) => {
-  if (!isGranted || isUndefined(sections[a].granted)) {
-    return false;
-  }
+const sortGranted = sections => (a, b) => {
   return sections[a].granted.order - sections[b].granted.order;
 }
 
 const ProtocolSections = ({ sections, protocolState, editable, newComments, ...props }) =>  {
+  let sectionNames = Object.keys(sections)
+    .filter(section => !sections[section].show || sections[section].show(props));
+
+  if (props.isGranted && !props.isFullApplication) {
+    sectionNames = sectionNames.sort(sortGranted(sections));
+  }
   return (
   <Accordion open={getOpenSection(protocolState, editable, sections)} toggleAll={!props.pdf} pdf={props.pdf}>
     {
-      Object.keys(sections)
-        .sort(sortGranted(sections, props.isGranted))
-        .filter(section => !sections[section].show || sections[section].show(props))
-        .map((section, sectionIndex) => (
-          <ExpandingPanel key={section} title={getTitle(sections[section], newComments, props.values)} className={section.toLowerCase()}>
-            {
-              getSection(section, { ...props, protocolState, editable, ...sections[section], sectionsLength: size(sections), sectionIndex })
-            }
-          </ExpandingPanel>
-        ))
+      sectionNames.map((section, sectionIndex) => (
+        <ExpandingPanel key={section} title={getTitle(sections[section], newComments, props.values)} className={section.toLowerCase()}>
+          {
+            getSection(section, { ...props, protocolState, editable, ...sections[section], sectionsLength: size(sections), sectionIndex })
+          }
+        </ExpandingPanel>
+      ))
     }
   </Accordion>
 )}
@@ -147,14 +146,16 @@ const mapStateToProps = ({
   application: {
     schemaVersion,
     showConditions,
-    isGranted
+    isGranted,
+    isFullApplication
   }
 }, { sections }) => ({
   schemaVersion,
   showConditions,
   isGranted,
+  isFullApplication,
   // show all sections for legacy
-  sections: isGranted && schemaVersion !== 0
+  sections: isGranted && !isFullApplication && schemaVersion !== 0
     ? pickBy(sections, section => section.granted)
     : sections
 });

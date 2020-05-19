@@ -8,7 +8,6 @@ const Objectives = ({ values, schemaVersion }) => {
   const fields = get(getSubsections(schemaVersion), 'protocols.sections.details.fields');
   return (
     <div className="objectives">
-      <h2>Objectives</h2>
       <ReviewFields
         fields={fields.filter(f => f.name === 'objectives')}
         values={values}

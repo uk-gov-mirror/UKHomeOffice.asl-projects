@@ -6,7 +6,7 @@ import ReviewFields from '../../../components/review-fields';
 import Banner from '../../../components/banner';
 import Playback from '../../../components/playback';
 
-const ObjectivesReview = ({ playback, values, steps, goto, readonly }) => (
+const ObjectivesReview = ({ playback, values, steps, goto, readonly, isFullApplication }) => (
   <Fragment>
     {
       !readonly && (
@@ -19,6 +19,9 @@ const ObjectivesReview = ({ playback, values, steps, goto, readonly }) => (
           <Playback playback={playback} />
         </Fragment>
       )
+    }
+    {
+      isFullApplication && <h2>Action plan</h2>
     }
     <h3>What are your scientific objectives or research questions?</h3>
     <p className="grey hint">Each objective should be as SMART (specific, measurable, achievable, realistic, time-related) as possible.</p>
@@ -53,6 +56,6 @@ const ObjectivesReview = ({ playback, values, steps, goto, readonly }) => (
   </Fragment>
 );
 
-const mapStateToProps = ({ application: { readonly } }) => ({ readonly })
+const mapStateToProps = ({ application: { readonly, isFullApplication } }) => ({ readonly, isFullApplication })
 
 export default connect(mapStateToProps)(ObjectivesReview);

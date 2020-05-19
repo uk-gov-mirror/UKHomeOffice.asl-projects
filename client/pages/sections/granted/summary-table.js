@@ -136,8 +136,8 @@ export default function SummaryTable({ protocols, isLegacy, project, className, 
                 ? <th>Est. numbers</th>
                 : (
                   <Fragment>
-                    <th>Max. no. of animals</th>
-                    <th>Max. no. of uses per animal</th>
+                    <th>Max number of animals</th>
+                    <th>Max uses per animal</th>
                   </Fragment>
                 )
             }

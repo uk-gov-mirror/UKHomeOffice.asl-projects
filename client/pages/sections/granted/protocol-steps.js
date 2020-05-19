@@ -3,7 +3,7 @@ import { Value } from 'slate';
 import Review from '../../../components/review';
 import ReviewFields from '../../../components/review-fields';
 
-const Step = ({ id, index, fields, ...props }) => {
+const Step = ({ id, index, fields, prefix, ...props }) => {
   return (
     <div className="granted-step" id={id}>
       <div className="header">
@@ -11,6 +11,7 @@ const Step = ({ id, index, fields, ...props }) => {
         <Review
           {...fields.find(f => f.name === 'title')}
           label=""
+          prefix={prefix}
           value={props.title}
         />
       </div>
@@ -20,6 +21,7 @@ const Step = ({ id, index, fields, ...props }) => {
             ? (
               <ReviewFields
                 fields={fields.find(f => f.name === 'adverse').options.find(o => o.value === true).reveal}
+                prefix={prefix}
                 values={props}
               />
             )
@@ -39,7 +41,7 @@ const Step = ({ id, index, fields, ...props }) => {
   )
 }
 
-const Steps = ({ values, fields, pdf, number }) => {
+const Steps = ({ values, fields, pdf, prefix }) => {
   const getStepTitle = title => {
     const untitled = <em>Untitled step</em>;
     if (!title) {
@@ -54,7 +56,7 @@ const Steps = ({ values, fields, pdf, number }) => {
   return (
     <div className="granted-steps">
       {
-        pdf && <h2>{`Protocol ${number} steps`}</h2>
+        pdf && <h2>Steps</h2>
       }
       {
         !pdf && (
@@ -76,7 +78,7 @@ const Steps = ({ values, fields, pdf, number }) => {
         )
       }
       {
-        values.steps.map((step, index) => <Step key={step.id} {...step} index={index} fields={fields} pdf={pdf} />)
+        values.steps.map((step, index) => <Step key={step.id} {...step} index={index} fields={fields} pdf={pdf} prefix={`${prefix}steps.${step.id}.`} />)
       }
     </div>
   )

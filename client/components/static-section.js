@@ -2,11 +2,16 @@ import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import flatten from 'lodash/flatten';
 import ReviewFields from './review-fields';
+import PDFProtocols from '../pages/sections/granted/pdf-protocols';
 
 const StaticSection = ({ section, project, fields = [], isGranted, subsection = false, ...props }) => {
-  const Component = isGranted
+  let Component = isGranted && !props.isFullApplication
     ? (section.granted && section.granted.review) || section.review || ReviewFields
     : section.review || ReviewFields;
+
+  if (props.pdf && section.name === 'protocols') {
+    Component = PDFProtocols
+  }
 
   return (
     <Fragment>
@@ -32,7 +37,7 @@ const StaticSection = ({ section, project, fields = [], isGranted, subsection = 
   )
 }
 
-const mapStateToProps = ({ project, application: { isGranted, schemaVersion } }, { section }) => {
+const mapStateToProps = ({ project, application: { isGranted, schemaVersion, isFullApplication } }, { section }) => {
   const fields = flatten([
     ...(section.fields || []),
     ...(section.steps || []).filter(step => !step.show || step.show(project)).map(step => step.fields)
@@ -42,7 +47,8 @@ const mapStateToProps = ({ project, application: { isGranted, schemaVersion } },
     project,
     fields,
     isGranted,
-    isLegacy: schemaVersion === 0
+    isLegacy: schemaVersion === 0,
+    isFullApplication
   }
 }
 
