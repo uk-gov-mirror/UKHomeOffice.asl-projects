@@ -2,19 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { useSelector, shallowEqual } from 'react-redux'
 import { DownloadHeader } from '@asl/components';
-import isEqual from 'lodash/isEqual';
 
 import ScrollToTop from './components/scroll-to-top';
+import SyncHandler from './components/sync-handler';
 import Section from './pages/section';
 import Project from './pages/project';
 import ProtocolSummary from './pages/sections/protocols/summary-table';
 
 const selector = ({
   project: version,
-  savedProject,
   application: {
-    readonly,
-    editConditions,
     project,
     basename,
     drafting,
@@ -22,13 +19,9 @@ const selector = ({
     legacyGranted
   }
 }) => {
-  // only compare version data if version is in an editable state
-  const editable = !readonly || editConditions;
-  const isSyncing = editable && !isEqual(version, savedProject);
   return {
     project,
     version,
-    isSyncing,
     basename,
     drafting,
     isGranted,
@@ -41,7 +34,6 @@ const ProjectRouter = () => {
   const {
     project,
     version,
-    isSyncing,
     basename,
     drafting,
     isGranted,
@@ -53,44 +45,6 @@ const ProjectRouter = () => {
   }
 
   useEffect(() => {
-    window.onbeforeunload = () => {
-      if (isSyncing) {
-        return true;
-      }
-    }
-
-    const nextSteps = document.querySelector('#page-component > p.next-steps > a');
-    const statusMessage = document.querySelector('#page-component > p.next-steps > span.status-message');
-
-    if (isSyncing) {
-      if (nextSteps) {
-        nextSteps.setAttribute('disabled', true);
-        nextSteps.onclick = () => false;
-      }
-      statusMessage && (statusMessage.innerText = 'Saving...');
-    } else {
-      if (nextSteps) {
-        nextSteps.removeAttribute('disabled');
-        nextSteps.onclick = null;
-      }
-      statusMessage && (statusMessage.innerText = '');
-    }
-
-    return () => {
-      window.onbeforeunload = null;
-      if (nextSteps) {
-        nextSteps.removeAttribute('disabled');
-        nextSteps.onclick = null;
-      }
-      statusMessage && (statusMessage.innerText = '');
-    }
-  })
-
-  useEffect(() => {
-    if (drafting) {
-      return;
-    }
-
     const licenceStatusBanner = document.querySelector('.licence-status-banner');
 
     if (!licenceStatusBanner) {
@@ -122,7 +76,7 @@ const ProjectRouter = () => {
   return (
     <BrowserRouter basename={basename}>
       <ScrollToTop>
-
+        <SyncHandler />
         <DownloadHeader
           title={version.title || 'Untitled project'}
           subtitle="Project licence"
