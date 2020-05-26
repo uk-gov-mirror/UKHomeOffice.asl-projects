@@ -2675,7 +2675,7 @@ Please review all sections of this application before making a recommendation.`,
         granted: {
           order: 2,
           show: project => {
-            return !(project.conditions || []).find(c => c.type === 'authorisation');
+            return (project.conditions || []).find(c => c.type === 'authorisation');
           },
           review: GrantedAuthorisations,
           intro: `These authorisations apply to the project as a whole.
