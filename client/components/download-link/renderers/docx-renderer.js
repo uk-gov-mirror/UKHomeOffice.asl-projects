@@ -337,7 +337,7 @@ export default (application, sections, values, updateImageDimensions) => {
 
       case 'image':
         paragraph = paragraph || new Paragraph();
-        paragraph.addImage(Media.addImage(document, node.data.src));
+        paragraph.addImage(Media.addImage(document, node.data.src, node.data.width, node.data.height));
         parent.addParagraph(paragraph);
         break;
 
