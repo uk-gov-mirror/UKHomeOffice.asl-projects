@@ -7,18 +7,20 @@ const selector = ({
   },
   application: {
     isGranted,
-    previousProtocols: {
-      previous
-    }
+    previousProtocols
   }
 }) => ({
   protocols,
-  previous,
+  previousProtocols,
   isGranted
 })
 
 export default function ReorderedBadge({ id }) {
-  const { protocols, previous, isGranted } = useSelector(selector, shallowEqual);
+  const { protocols, previousProtocols, isGranted } = useSelector(selector, shallowEqual);
+  if (!previousProtocols) {
+    return null;
+  }
+  const { previous } = previousProtocols;
   const previousIds = previous.filter(p => !(protocols.find(protocol => protocol.id === p) || {}).deleted);
   const ids = (protocols || []).filter(p => !p.deleted).filter(p => previous.includes(p.id)).map(p => p.id);
 

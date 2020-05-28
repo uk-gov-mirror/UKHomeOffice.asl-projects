@@ -3,7 +3,11 @@ import { useSelector } from 'react-redux';
 import classnames from 'classnames';
 
 export default function NewProtocolBadge({ id }) {
-  const { granted, previous } = useSelector(state => state.application.previousProtocols);
+  const previousProtocols = useSelector(state => state.application.previousProtocols);
+  if (!previousProtocols) {
+    return null;
+  }
+  const { granted, previous } = previousProtocols;
 
   const notNew = !granted.length && (!previous.length || previous.includes(id));
 
