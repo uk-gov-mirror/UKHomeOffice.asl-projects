@@ -1,34 +1,43 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
+import isUndefined from 'lodash/isUndefined';
 
 import Banner from '../../../components/banner';
 import ReviewFields from '../../../components/review-fields';
 import Review from '../../../components/review';
 
-export const ReviewRepeater = ({ items = [], singular, fields, name, step }) => (
-  <Fragment>
-    {
-      items.map((item, index) => (
-        <Fragment key={index}>
-          <div key={index} className="panel">
-            <h2>{singular} {index + 1}</h2>
-            {
-              fields.map(field => (
-                <Review
-                  key={field.name}
-                  {...field}
-                  value={item[field.name]}
-                  prefix={`${name}.${item.id}.`}
-                  editLink={step && `./${step}#${field.name}`}
-                />
-              ))
-            }
-          </div>
-        </Fragment>
-      ))
-    }
-  </Fragment>
-);
+export function ReviewRepeater({ items = [], singular, fields, name, step, hideChanges, noComments }) {
+  return (
+    <Fragment>
+      {
+        items.map((item, index) => (
+          <Fragment key={index}>
+            <div key={index} className="panel">
+              <h2>{singular} {index + 1}</h2>
+              {
+                fields.map(field => {
+                  const prefix = `${name}.${item.id}.`;
+                  const editLink = !isUndefined(step) && `./${step}#${prefix}${field.name}`;
+                  return (
+                    <Review
+                      key={field.name}
+                      {...field}
+                      value={item[field.name]}
+                      prefix={prefix}
+                      editLink={editLink}
+                      hideChanges={hideChanges}
+                      noComments={noComments}
+                    />
+                  )
+                })
+              }
+            </div>
+          </Fragment>
+        ))
+      }
+    </Fragment>
+  )
+}
 
 const ReviewSection = ({ title, steps, values, readonly, singular, enable }) => (
   <Fragment>

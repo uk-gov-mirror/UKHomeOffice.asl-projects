@@ -229,12 +229,14 @@ class DiffWindow extends React.Component {
         return (
           <ReviewField
             key={value}
+            {...this.props}
             name={this.props.name}
             decorateNode={this.decorateNode(parts)}
             renderDecoration={this.renderDecoration}
             options={this.props.options}
             type={this.props.type}
             value={value}
+            values={{[this.props.name]: value}}
             diff={true}
             noComments
           />
