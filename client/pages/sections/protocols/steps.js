@@ -167,7 +167,7 @@ export default function Steps({ values, prefix, updateItem, editable, ...props }
         type="steps"
         singular="step"
         prefix={prefix}
-        items={values.steps.filter(Boolean)}
+        items={(values.steps || []).filter(Boolean)}
         onSave={steps => updateItem({ steps })}
         addAnother={!values.deleted && editable}
         { ...props }
