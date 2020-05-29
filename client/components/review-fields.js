@@ -29,7 +29,8 @@ const ReviewFields = ({
   readonly,
   step,
   protocolId,
-  application
+  application,
+  hideChanges
 }) => (
   <Fragment>
     {
@@ -56,6 +57,7 @@ const ReviewFields = ({
                 noComments={ noComments }
                 altLabels={altLabels}
                 readonly={readonly}
+                hideChanges={hideChanges}
               />
             })
           }

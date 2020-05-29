@@ -20,9 +20,9 @@ import { DATE_FORMAT } from '../constants';
 import ReviewFields from './review-fields';
 import { ReviewRepeater } from '../pages/sections/repeater/review';
 
-function RevealChildren({ value, options, values, prefix }) {
+function RevealChildren({ value, options, values, prefix, diff }) {
   const option = (options || []).find(option => option.value === value);
-  if (!option.reveal) {
+  if (!option.reveal || diff) {
     return null;
   }
 
@@ -99,12 +99,19 @@ class ReviewField extends React.Component {
     }
 
     if (this.props.type === 'repeater') {
+      const items = this.props.values[this.props.name];
+      if (!items || !items.length) {
+        return <em>No answer provided</em>
+      }
       return (
         <ReviewRepeater
           singular={this.props.singular}
           fields={this.props.fields}
           name={this.props.name}
-          items={this.props.values[this.props.name]}
+          items={items}
+          step={this.props.step || 0}
+          noComments={true}
+          hideChanges={true}
         />
       )
     }

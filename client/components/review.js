@@ -23,9 +23,13 @@ class Review extends React.Component {
       showGrantedLabel = true,
       review,
       changedFromLatest,
-      changedFromGranted
+      changedFromGranted,
+      hideChanges
     } = this.props;
     const showComments = !this.props.noComments && this.props.type !== 'repeater';
+    const changed = changedFromLatest || changedFromGranted;
+    const showDiffWindow = this.props.readonly && !hideChanges && changed
+    const showChanges = !hideChanges && changed;
 
     return (
       <div className="review">
@@ -33,7 +37,7 @@ class Review extends React.Component {
           (!isGranted || showGrantedLabel) && <h3>{review || label}</h3>
         }
         {
-          (changedFromLatest || changedFromGranted) && (
+          showChanges && (
             <ChangedBadge
               changedFromLatest={changedFromLatest}
               changedFromGranted={changedFromGranted}
@@ -42,7 +46,7 @@ class Review extends React.Component {
           )
         }
         {
-          this.props.readonly && (changedFromLatest || changedFromGranted) && (
+          showDiffWindow && (
             <DiffWindow
               {...this.props}
               changedFromLatest={changedFromLatest}
