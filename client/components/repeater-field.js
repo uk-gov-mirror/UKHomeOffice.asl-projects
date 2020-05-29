@@ -13,7 +13,8 @@ export function Item({
   length,
   prefix,
   singular,
-  confirmRemove
+  confirmRemove,
+  noComments
 }) {
   const project = useSelector(state => state.project);
 
@@ -39,6 +40,7 @@ export function Item({
           fields={fields}
           values={values}
           prefix={prefix}
+          noComments={noComments}
           onFieldChange={(key, value) => updateItem({ [key]: value })}
         />
       </div>
