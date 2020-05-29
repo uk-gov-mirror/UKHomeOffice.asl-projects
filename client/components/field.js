@@ -128,6 +128,7 @@ class Field extends Component {
         items={value}
         label={label}
         hint={hint}
+        noComments={true}
         onSave={val => this.onFieldChange(val)}
       />;
     }
