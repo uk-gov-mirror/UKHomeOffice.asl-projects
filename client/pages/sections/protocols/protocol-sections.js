@@ -97,7 +97,7 @@ class ProtocolSections extends PureComponent {
       }, [])
       .map(f => `protocols.${values.id}.${f}`);
 
-    values.title = values.title || 'Untitled protocol';
+    const title = values.title || 'Untitled protocol';
 
     return (
       <section className={classnames('protocol', { complete: values.complete || readonly, readonly, deleted: values.deleted })}>
@@ -116,7 +116,7 @@ class ProtocolSections extends PureComponent {
         }
         <Expandable expanded={this.state.expanded} onHeaderClick={this.toggleExpanded}>
           <Completable status={values.deleted ? 'deleted' : values.complete ? 'complete' : 'incomplete'}>
-            <h2 className="title inline-block">{values.deleted ? values.title : `${number + 1}: ${values.title}`}</h2>
+            <h2 className="title inline-block">{values.deleted ? title : `${number + 1}: ${title}`}</h2>
             {
               editable && <a href="#" className={classnames('inline-block', { restore: values.deleted })} onClick={values.deleted ? this.props.restoreItem : this.toggleActive}>{values.deleted ? 'Restore' : 'Edit title'}</a>
             }
