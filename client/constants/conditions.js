@@ -34,6 +34,7 @@ export default {
       versions: [
         {
           title: 'Re-use',
+          requiresEditing: true,
           content: '<<<INSERT animal type(s) HERE>>> that have been kept alive and maintained under the supervision of the NVS at <<<INSERT place HERE>>> may be re-used in this protocol, provided that all criteria in section 14 of the Animals (Scientific Procedures) Act and in this project licence are fulfilled.'
         }
       ]
@@ -44,6 +45,7 @@ export default {
       versions: [
         {
           title: 'Continued use on to a protocol',
+          requiresEditing: true,
           content: '<<<INSERT animal type(s) HERE>>> used on this protocol may be obtained from protocol <<<INSERT number(s) HERE>>> of this project, or from other projects with authority to supply animals of a type authorised in this project.'
         }
       ]
@@ -54,6 +56,7 @@ export default {
       versions: [
         {
           title: 'Continued use off a protocol on to another protocol in this project',
+          requiresEditing: true,
           content: '<<<INSERT animal type(s) HERE>>> may continue to be used on <<<INSERT protocol number(s) HERE>>> of this project.'
         }
       ]
@@ -64,6 +67,7 @@ export default {
       versions: [
         {
           title: 'Continued use off protocol on to another project',
+          requiresEditing: true,
           content: '<<<INSERT animal type(s) HERE>>> may continue to be used on other projects authorised to use animals of this type.'
         }
       ]
@@ -96,6 +100,7 @@ export default {
       versions: [
         {
           title: 'Animals taken from the wild',
+          requiresEditing: true,
           content: 'Standard condition 13(b) of this licence shall not apply in cases when <<<INSERT animal type(s) HERE>>> bred for use in procedures are not suitable for the purpose of the programme of work specified in the licence as justified in the project licence application.'
         }
       ]
@@ -106,6 +111,7 @@ export default {
       versions: [
         {
           title: 'Feral animals',
+          requiresEditing: true,
           content: 'Standard condition 13(a) of this licence shall not apply in cases when <<<INSERT animal type(s) HERE>>> bred for use in procedures are not suitable for the purpose of the programme of work specified in the licence as justified in the project licence application.'
         }
       ]
@@ -126,6 +132,7 @@ export default {
       versions: [
         {
           title: 'Rehoming',
+          requiresEditing: true,
           content: `<<<INSERT animal type(s) HERE>>> may be rehomed at the end of a series of regulated procedures provided that the following actions have been taken:
 * <<<INSERT actions to ensure the state of health allows the animal to be re-homed HERE>>>;
 * <<<INSERT actions to ensure that the rehoming of the animal poses no danger to public health, animal health, or the environment HERE>>>;
@@ -142,6 +149,7 @@ Genetically altered animals may not be re-homed.`
       versions: [
         {
           title: 'Setting free',
+          requiresEditing: true,
           content: `<<<INSERT animal type(s) HERE>>> may be set free at the end of the series of regulated procedures conducted under the authority of protocol <<<INSERT protocol number(s) HERE>>> provided that the following actions have been taken:
 * <<<INSERT actions to ensure the state of health allows the animal to be set free HERE>>>;
 * <<<INSERT actions to ensure that the setting free of the animal poses no danger to public health, animal health or the environment HERE>>>;
@@ -193,6 +201,7 @@ Genetically altered animals may not be re-homed.`
       versions: [
         {
           title: 'Transfer of animals',
+          requiresEditing: true,
           content: `<<<TYPE OF ANIMAL(s)>>> may be moved from <<<NAME OF ESTABLISHMENT>>> TO <<<NAME OF ESTABLISHMENT>>> provided that:
 
 * <<<Measures to minimise adverse effects>>>
@@ -209,6 +218,7 @@ Genetically altered animals may not be re-homed.`
       versions: [
         {
           title: 'Commercial slaughter',
+          requiresEditing: true,
           content: `<<<INSERT animal type(s) HERE>>> may be sent directly to slaughter at a registered slaughterhouse at the end of their use provided that:
 * The animal is healthy and meets the commercial requirements for meat hygiene to enable them to enter the food chain. They must not be infected with any notifiable disease and comply with the relevant substance withdrawal times;
 * While kept alive at pending transport to the slaughterhouse, the animal is kept in an appropriate social group under the supervision of the NVS;
@@ -223,6 +233,7 @@ Genetically altered animals may not be re-homed.`
       versions: [
         {
           title: 'Continuation of work',
+          requiresEditing: true,
           content: 'Authority is hereby given to transfer, to this project, animals undergoing regulated procedures under the licence(s) <<<ADD LICENCE NUMBER(S) >>> (expires: <<<ADD EXPIRY DATE(S)>>>)'
         }
       ]
@@ -234,6 +245,7 @@ Genetically altered animals may not be re-homed.`
       versions: [
         {
           title: 'Training requirement',
+          requiresEditing: true,
           content: 'This licence authority will expire <<<INSERT number HERE>>> months after the initial grant date unless evidence that <<INSERT name HERE>>> has successfully completed accredited training module(s) <<<INSERT module codes HERE>>> is provided to aspa.london@homeoffice.gov.uk.'
         }
       ]
@@ -254,6 +266,7 @@ Genetically altered animals may not be re-homed.`
       versions: [
         {
           title: 'Establishment licences not meeting Code of Practice',
+          requiresEditing: true,
           content: `If an establishment does not meet the requirements laid out in the Code of Practice for the housing and care of animals bred, supplied, or used for scentific purposes, the following conditions apply:
 * <<<INSERT conditions HERE>>>`
         }
@@ -286,6 +299,7 @@ For studies requested for other worldwide authorities, for example the US Food a
       versions: [
         {
           title: 'Reporting requirement',
+          requiresEditing: true,
           content: 'A report in writing to [aspa.london@homeoffice.gov.uk](aspa.london@homeoffice.gov.uk) or orally to <<<INSERT name of assigned inspector HERE>>>  on the project shall be made by <<<INSERT date HERE>>>  or after <<<INSERT number HERE>>> animals have been used, whichever is the sooner. The report shall contain <<<INSERT required content of report HERE>>>.'
         }
       ]
@@ -326,6 +340,7 @@ For studies requested for other worldwide authorities, for example the US Food a
       versions: [
         {
           title: 'Minimising suffering for wild or feral animals',
+          requiresEditing: true,
           content: 'In accordance with paragraph 25(5) of Schedule 2C to the Act, the words “...and, unless the Secretary of State has agreed otherwise, action has been taken to minimise the suffering of the animal” in part (b) of Standard Condition 14 (b) of this licence shall not apply to wild <<<INSERT animal type(s) HERE>>> or feral <<<INSERT animal type(s) HERE>>> undergoing procedures under protocol <<<INSERT protocol number(s) HERE>>> of the licence for the purpose of the programme of work specified and justified in the licence.'
         }
       ]
