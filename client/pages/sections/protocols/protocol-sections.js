@@ -143,7 +143,7 @@ class ProtocolSections extends PureComponent {
                   <thead>
                     <tr>
                       <th>Animal types</th>
-                      <th>Est. max. no. of animals</th>
+                      <th>Max. no. of animals</th>
                       <th>Max. no. of uses per animal</th>
                       <th>Life stages</th>
                     </tr>
