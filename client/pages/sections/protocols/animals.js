@@ -1,8 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import v4 from 'uuid/v4';
-
-import { Button } from '@ukhomeoffice/react-components';
 
 import some from 'lodash/some';
 import flatten from 'lodash/flatten';
@@ -54,26 +53,6 @@ export function filterSpeciesByActive(protocol, project) {
   });
 }
 
-function AddSpecies({ onContinueClicked, onFieldChange, ...props }) {
-  return (
-    <div className="panel light-grey-bg">
-      <Fieldset
-        fields={[
-          {
-            name: 'species',
-            type: 'species-selector'
-          }
-        ]}
-        onFieldChange={onFieldChange}
-        {...props}
-      />
-      <p className="control-panel">
-        <Button onClick={onContinueClicked}>Add species</Button>
-      </p>
-    </div>
-  );
-}
-
 class Animal extends Component {
   state = {
     expanded: true
@@ -119,11 +98,6 @@ class Animals extends Component {
     adding: false
   }
 
-  toggleAdding = e => {
-    e.preventDefault();
-    this.setState({ adding: !this.state.adding });
-  }
-
   getItems = () => {
     const { project } = this.props;
     const speciesDetails = (this.props.values.speciesDetails || []).filter(Boolean);
@@ -156,8 +130,6 @@ class Animals extends Component {
   render() {
 
     const { prefix, editable, fields, onFieldChange, updateItem, values: { deleted } } = this.props;
-
-    const { adding } = this.state;
 
     const deprecated = SPECIES.deprecated.map(d => d.value);
     const projectSpecies = (this.props.project.species || []).filter(s => !deprecated.includes(s));
@@ -239,14 +211,7 @@ class Animals extends Component {
           />
         </Repeater>
         {
-          editable && !adding && !deleted && <div className="add-more-animals"><a href="#" onClick={this.toggleAdding}>Add more animal types</a></div>
-        }
-        {
-          editable && adding && !deleted && <AddSpecies
-            onContinueClicked={this.toggleAdding}
-            values={this.props.project}
-            onFieldChange={this.props.save}
-          />
+          editable && !deleted && <Link to="../introduction">Manage animal types</Link>
         }
       </Fragment>
     )
