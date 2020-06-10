@@ -1206,6 +1206,7 @@ each other.`,
               {
                 name: 'species',
                 label: 'Which types of animals would you like to add to this protocol?',
+                hint: 'Select all that apply.',
                 type: 'checkbox',
                 className: 'smaller',
                 inline: true,

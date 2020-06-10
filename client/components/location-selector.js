@@ -17,8 +17,8 @@ const LocationSelector = ({
       options={locations}
       noComments={true}
     />
-    <Link to="../establishments">Add new establishment</Link>
-    <Link to="../poles">Add new POLE</Link>
+    <Link to="../establishments">Manage establishments</Link>
+    <Link to="../poles">Manage POLEs</Link>
   </div>
 )
 
