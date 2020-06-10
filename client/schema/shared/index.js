@@ -9,7 +9,7 @@ export const transferOfAnimals = {
     {
       name: 'transfer',
       label: 'Will any animals undergoing regulated procedures be moved between licensed establishments?',
-      hint: 'This includes genetically altered animals being bred or maintained under the authority of you project licence.',
+      hint: 'This includes genetically altered animals being bred or maintained under the authority of your project licence.',
       type: 'radio',
       inline: true,
       className: 'smaller',
