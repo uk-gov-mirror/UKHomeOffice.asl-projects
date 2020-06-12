@@ -67,7 +67,15 @@ class Comments extends Component {
       >
         <Fragment>
           {
-            (showPrevious || !active.length) && previous.map((comment, index) => <Comment index={index} key={index} field={field} { ...comment } />)
+            commentable && !editing &&
+              <AddComment field={field} />
+          }
+          {
+            commentToEdit &&
+              <EditComment field={field} id={commentToEdit.id} key={commentToEdit.id} value={commentToEdit.comment} cancel={this.cancelEdit} />
+          }
+          {
+            active.map((comment, index) => <Comment index={(comments.length || 0) - index - 1} key={(comments.length || 0) - index - 1} field={field} editComment={this.editComment} { ...comment } />)
           }
           {
             !!active.length && !!previous.length && (
@@ -75,15 +83,7 @@ class Comments extends Component {
             )
           }
           {
-            active.map((comment, index) => <Comment index={index + (previous.length || 0)} key={index} field={field} editComment={this.editComment} { ...comment } />)
-          }
-          {
-            commentToEdit &&
-              <EditComment field={field} id={commentToEdit.id} key={commentToEdit.id} value={commentToEdit.comment} cancel={this.cancelEdit} />
-          }
-          {
-            commentable && !editing &&
-              <AddComment field={field} />
+            (showPrevious || !active.length) && previous.map((comment, index) => <Comment index={previous.length - index - 1} key={previous.length - index - 1} field={field} { ...comment } />)
           }
         </Fragment>
       </ExpandingPanel>

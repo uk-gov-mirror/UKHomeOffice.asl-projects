@@ -6,14 +6,14 @@ const comments = (state = {}, action) => {
       return {
         ...state,
         [action.field]: [
-          ...(state[action.field] || []),
           {
             id: action.id,
             comment: action.comment,
             author: action.author,
             isNew: true,
             isMine: true
-          }
+          },
+          ...(state[action.field] || [])
         ]
       }
 
