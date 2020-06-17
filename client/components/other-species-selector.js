@@ -43,12 +43,12 @@ class OtherSpecies extends Component {
 
     return (
       <Fragment key={items.length}>
+        <h3>{ label }</h3>
         {
           items.map((item, index) => (
             <div key={index} className="flex species-selector-other">
               <div className="grow">
                 <Field
-                  label={index === 0 && label}
                   className="grow"
                   name={`${name}-${index}`}
                   type="text"
@@ -57,10 +57,14 @@ class OtherSpecies extends Component {
                   noComments={true}
                 />
               </div>
-              <Button
-                className="shrink"
-                onClick={() => this.removeItem(index)}
-              >Remove</Button>
+              {
+                items.length > 1 && (
+                  <Button
+                    className="link"
+                    onClick={() => this.removeItem(index)}
+                  >Remove</Button>
+                )
+              }
             </div>
           ))
         }
