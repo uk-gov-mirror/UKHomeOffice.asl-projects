@@ -1135,7 +1135,8 @@ html.modal-open, html.modal-open body {
     }
 
     .species-selector-other .govuk-button {
-      margin-bottom: 32px;
+      margin-bottom: $govuk-gutter;
+      margin-left: $govuk-gutter;
     }
   }
 
