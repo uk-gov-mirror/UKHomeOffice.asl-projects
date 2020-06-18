@@ -76,6 +76,18 @@ class ReviewField extends React.Component {
       )
     }
 
+    if (this.props.type === 'keywords') {
+      return (
+        <ul>
+          {
+            value.map((keyword, i) => (
+              <li key={i}>{keyword}</li>
+            ))
+          }
+        </ul>
+      );
+    }
+
     if (value && this.props.type === 'holder') {
       return (
         <Link page="profile.read" profileId={value.licenceHolder.id} establishmentId={value.establishment.id} label={`${value.licenceHolder.firstName} ${value.licenceHolder.lastName}`} />
