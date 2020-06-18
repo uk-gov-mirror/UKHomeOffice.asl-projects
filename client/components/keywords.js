@@ -52,6 +52,7 @@ export default function Keywords(props) {
             fields={getFields()}
             onFieldChange={onKeywordChange}
             values={keywords}
+            noComments={true}
           />
         </div>
       </div>
