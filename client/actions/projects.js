@@ -3,7 +3,6 @@ import debounce from 'lodash/debounce';
 import cloneDeep from 'lodash/cloneDeep';
 import isEqual from 'lodash/isEqual';
 import pick from 'lodash/pick'
-import { diff, applyChange } from 'deep-diff';
 
 import * as types from './types';
 import database from '../database';
@@ -13,6 +12,8 @@ import { getConditions } from '../helpers';
 import cleanProtocols from '../helpers/clean-protocols';
 
 const CONDITIONS_FIELDS = ['conditions', 'retrospectiveAssessment'];
+
+const jsondiff = require('jsondiffpatch').create({ objectHash: obj => obj.id });
 
 export function loadProjects() {
   return dispatch => {
@@ -227,14 +228,6 @@ const shouldSyncProject = state => {
   return !isEqual(state.savedProject, state.project);
 };
 
-const applyPatches = (source, patches = []) => {
-  const patched = cloneDeep(source);
-  patches.forEach(p => {
-    applyChange(patched, p);
-  });
-  return patched;
-};
-
 const onSyncError = (func, err, dispatch, getState, ...args) => {
   console.error(err);
   dispatch(doneSyncing());
@@ -272,18 +265,16 @@ const syncProject = (dispatch, getState) => {
     ? getProjectWithConditions(state.project)
     : state.project;
 
-  const patch = diff(state.savedProject, project);
-  if (!patch || !patch.length) {
+  const patch = jsondiff.diff(state.savedProject, project);
+  if (!patch) {
     return Promise.resolve();
   }
-
-  const data = patch.map(d => d.kind === 'edit' ? omit(d, 'lhs') : d);
 
   const params = {
     state,
     method: 'PUT',
     url: state.application.basename,
-    data
+    data: patch
   };
 
   return Promise.resolve()
@@ -298,7 +289,7 @@ const syncProject = (dispatch, getState) => {
       }
     })
     .then(() => {
-      const patched = applyPatches(state.savedProject, patch);
+      const patched = jsondiff.patch(state.savedProject, patch);
       dispatch(updateSavedProject(patched));
     })
     .then(() => wait(2000))
