@@ -16,7 +16,7 @@ import Fieldset from './fieldset';
 export default function Keywords(props) {
   const numKeywords = 5;
 
-  function mapKeywords(keywords) {
+  function mapKeywords(keywords = []) {
     return range(0, numKeywords).reduce((obj, i) => {
       obj[`keyword-${i}`] = keywords[i];
       return obj;
