@@ -28,7 +28,9 @@ const Duration = ({ name, error, label, hint, value = {}, onChange }) => {
   const [months, setMonths] = useState(value.months);
 
   useEffect(() => {
-    onChange({ months, years });
+    if (months !== undefined && years !== undefined) {
+      onChange({ months, years });
+    }
   }, [years, months]);
 
   useEffect(() => {

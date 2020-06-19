@@ -18,6 +18,12 @@ export function showMessage(message) {
   };
 }
 
+export function showWarning(message) {
+  return (dispatch) => {
+    return dispatch({ type: types.SHOW_WARNING, message });
+  };
+}
+
 export function throwError(message) {
   return (dispatch) => {
     clearTimeout(hideTimeout);

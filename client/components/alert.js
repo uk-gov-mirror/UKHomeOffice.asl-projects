@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import { hideMessage } from '../actions/messages';
+import { Markdown } from '@asl/components';
 
 const mapStateToProps = state => {
   return { ...state.message };
@@ -19,7 +20,7 @@ class Create extends React.Component {
     }
     return <div className={`alert alert-${this.props.type}`} key="alert" onClick={this.onClick}>
       <div className="govuk-width-container">
-        <p>{ this.props.message }</p>
+        <Markdown>{ this.props.message }</Markdown>
       </div>
     </div>;
   }
