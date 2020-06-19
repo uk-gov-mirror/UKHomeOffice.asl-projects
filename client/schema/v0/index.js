@@ -551,6 +551,7 @@ export default () => ({
         playback: [
           'title',
           'purpose',
+          'keywords',
           'duration'
         ],
         fields: [
