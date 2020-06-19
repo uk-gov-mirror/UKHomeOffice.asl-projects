@@ -3,6 +3,7 @@ import debounce from 'lodash/debounce';
 import cloneDeep from 'lodash/cloneDeep';
 import isEqual from 'lodash/isEqual';
 import pick from 'lodash/pick'
+import shasum from 'shasum';
 
 import * as types from './types';
 import database from '../database';
@@ -287,9 +288,12 @@ const syncProject = (dispatch, getState) => {
         dispatch(syncErrorResolved());
         dispatch(showMessage('Saved successfully'))
       }
+      return json;
     })
-    .then(() => {
+    .then(response => {
       const patched = jsondiff.patch(state.savedProject, patch);
+      console.log(response.checksum);
+      console.log(shasum(omit(patched, 'id')));
       dispatch(updateSavedProject(patched));
     })
     .then(() => wait(2000))

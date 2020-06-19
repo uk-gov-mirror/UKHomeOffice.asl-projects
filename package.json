@@ -76,6 +76,7 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "regenerator-runtime": "^0.13.2",
+    "shasum": "^1.0.2",
     "slate": "^0.47.8",
     "slate-hyperscript": "^0.13.4",
     "slate-react": "^0.22.4",
