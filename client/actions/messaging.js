@@ -1,4 +1,5 @@
 import fetch from 'r2';
+import { version } from '../../package.json';
 
 export function postError({ error, info }) {
   const params = {
@@ -23,6 +24,10 @@ export default function sendMessage({ method, data, url }) {
     // to keycloak if users session expires
     redirect: 'manual',
     json: data,
+    headers: {
+      // send version header for compatability validation on server
+      'x-projects-version': version
+    }
   };
   return Promise.resolve()
     .then(() => fetch(url, params).response)

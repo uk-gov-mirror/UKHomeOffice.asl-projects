@@ -232,7 +232,10 @@ const onSyncError = (func, err, dispatch, getState, ...args) => {
   console.error(err);
   dispatch(doneSyncing());
   dispatch(syncError());
-  dispatch(throwError('Failed to save, trying again'));
+  dispatch(throwError(err.code === 'UPDATE_REQUIRED'
+    ? 'This software has been updated. You must refresh your browser to avoid losing work.'
+    : 'Failed to save, trying again'
+  ));
   return setTimeout(() => func(dispatch, getState, ...args), 1000);
 };
 
