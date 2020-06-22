@@ -64,6 +64,13 @@ const ProjectSummary = ({
                 noComments
               />
             </div>
+            <div className="granted-section">
+              <Review
+                {...fields.find(f => f.name === 'keywords')}
+                value={values.keywords}
+                noComments
+              />
+            </div>
           </Fragment>
         )
       }
@@ -74,6 +81,13 @@ const ProjectSummary = ({
               <ReviewFields
                 fields={fields.filter(f => f.name === 'permissible-purpose')}
                 values={values}
+                noComments
+              />
+            </div>
+            <div className="granted-section">
+              <Review
+                {...fields.find(f => f.name === 'keywords')}
+                value={values.keywords}
                 noComments
               />
             </div>

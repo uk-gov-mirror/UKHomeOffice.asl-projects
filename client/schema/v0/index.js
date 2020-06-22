@@ -23,6 +23,12 @@ export default () => ({
             type: 'text'
           },
           {
+            name: 'keywords',
+            label: 'Key words that describe this project',
+            hint: 'Choose up to 5. For example: cancer, stem cells, therapy.',
+            type: 'keywords'
+          },
+          {
             name: 'duration',
             label: 'Licence duration',
             type: 'duration'
@@ -545,6 +551,7 @@ export default () => ({
         playback: [
           'title',
           'purpose',
+          'keywords',
           'duration'
         ],
         fields: [

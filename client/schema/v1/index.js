@@ -121,6 +121,12 @@ export default () => ({
             ]
           },
           {
+            name: 'keywords',
+            label: 'Key words that describe this project',
+            hint: 'Choose up to 5. For example: cancer, stem cells, therapy.',
+            type: 'keywords'
+          },
+          {
             name: 'duration',
             label: 'What will be the duration of this project?',
             review: 'Project licence duration',

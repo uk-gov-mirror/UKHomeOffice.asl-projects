@@ -408,6 +408,25 @@ export default (application, sections, values, updateImageDimensions) => {
       doc.addParagraph(paragraph);
     });
 
+    if (!noSeparator) {
+      renderHorizontalRule(doc);
+    }
+  };
+
+  const renderKeywords = (doc, values, value, noSeparator) => {
+    const keywords = value || [];
+
+    if (!keywords.length) {
+      return renderNull(doc);
+    }
+
+    keywords.forEach(value => {
+      const text = new TextRun(value).size(24);
+      const paragraph = new Paragraph();
+      paragraph.style('body').bullet();
+      paragraph.addRun(text);
+      doc.addParagraph(paragraph);
+    });
 
     if (!noSeparator) {
       renderHorizontalRule(doc);
@@ -589,6 +608,8 @@ export default (application, sections, values, updateImageDimensions) => {
         return renderLegacySpecies(doc, values, value, noSeparator);
       case 'animal-quantities':
         return renderAnimalQuantities(doc, values, noSeparator);
+      case 'keywords':
+        return renderKeywords(doc, values, value, noSeparator);
       case 'duration':
         return renderDuration(doc, value, noSeparator);
       case 'licenceNumber': {

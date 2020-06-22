@@ -24,6 +24,7 @@ import LocationSelector from './location-selector';
 import ObjectiveSelector from './objective-selector';
 import EstablishmentSelector from './establishment-selector';
 import Duration from './duration';
+import Keywords from './keywords';
 import TextEditor from './editor';
 import Repeater from './repeater-field';
 
@@ -140,6 +141,16 @@ class Field extends Component {
         error={ this.props.error }
         min={ this.props.min }
         max={ this.props.max }
+        value={ value }
+        onChange={ val => this.onFieldChange(val) }
+      />;
+    }
+    if (this.props.type === 'keywords') {
+      return <Keywords
+        name={ this.props.name }
+        label={ label }
+        hint={ hint }
+        error={ this.props.error }
         value={ value }
         onChange={ val => this.onFieldChange(val) }
       />;
