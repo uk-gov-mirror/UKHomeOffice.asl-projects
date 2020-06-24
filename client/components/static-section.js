@@ -1,17 +1,26 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import flatten from 'lodash/flatten';
+import get from 'lodash/get';
 import ReviewFields from './review-fields';
 import PDFProtocols from '../pages/sections/granted/pdf-protocols';
 
-const StaticSection = ({ section, project, fields = [], isGranted, subsection = false, ...props }) => {
-  let Component = isGranted && !props.isFullApplication
-    ? (section.granted && section.granted.review) || section.review || ReviewFields
-    : section.review || ReviewFields;
-
-  if (props.pdf && section.name === 'protocols') {
-    Component = PDFProtocols
+function getComponent(section, isGranted, isFullApplication, pdf) {
+  if (pdf && section.name === 'protocols') {
+    return PDFProtocols;
   }
+
+  const GrantedReview = get(section, 'granted.review');
+
+  if (isGranted && !isFullApplication && GrantedReview) {
+    return GrantedReview;
+  }
+
+  return section.review || ReviewFields;
+}
+
+const StaticSection = ({ section, project, fields = [], isGranted, subsection = false, ...props }) => {
+  const Component = getComponent(section, isGranted, props.isFullApplication, props.pdf);
 
   return (
     <Fragment>
