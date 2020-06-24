@@ -1,12 +1,26 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import flatten from 'lodash/flatten';
+import get from 'lodash/get';
 import ReviewFields from './review-fields';
+import PDFProtocols from '../pages/sections/granted/pdf-protocols';
+
+function getComponent(section, isGranted, isFullApplication, pdf) {
+  if (pdf && section.name === 'protocols') {
+    return PDFProtocols;
+  }
+
+  const GrantedReview = get(section, 'granted.review');
+
+  if (isGranted && !isFullApplication && GrantedReview) {
+    return GrantedReview;
+  }
+
+  return section.review || ReviewFields;
+}
 
 const StaticSection = ({ section, project, fields = [], isGranted, subsection = false, ...props }) => {
-  const Component = isGranted
-    ? (section.granted && section.granted.review) || section.review || ReviewFields
-    : section.review || ReviewFields;
+  const Component = getComponent(section, isGranted, props.isFullApplication, props.pdf);
 
   return (
     <Fragment>
@@ -32,7 +46,7 @@ const StaticSection = ({ section, project, fields = [], isGranted, subsection = 
   )
 }
 
-const mapStateToProps = ({ project, application: { isGranted, schemaVersion } }, { section }) => {
+const mapStateToProps = ({ project, application: { isGranted, schemaVersion, isFullApplication } }, { section }) => {
   const fields = flatten([
     ...(section.fields || []),
     ...(section.steps || []).filter(step => !step.show || step.show(project)).map(step => step.fields)
@@ -42,7 +56,8 @@ const mapStateToProps = ({ project, application: { isGranted, schemaVersion } },
     project,
     fields,
     isGranted,
-    isLegacy: schemaVersion === 0
+    isLegacy: schemaVersion === 0,
+    isFullApplication
   }
 }
 

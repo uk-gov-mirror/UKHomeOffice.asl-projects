@@ -30,9 +30,14 @@ const ReviewFields = ({
   step,
   protocolId,
   application,
-  hideChanges
+  hideChanges,
+  isFullApplication,
+  title
 }) => (
   <Fragment>
+    {
+      isFullApplication && <h2>{ title }</h2>
+    }
     {
       castArray(values).map((item, i) => (
         <Fragment key={i}>

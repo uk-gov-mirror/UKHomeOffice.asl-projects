@@ -5,7 +5,8 @@ const INITIAL_STATE = {
   readonly: false,
   establishment: null,
   isSyncing: false,
-  syncError: false
+  syncError: false,
+  previousProtocols: {}
 };
 
 export default function applicationReducer(state = INITIAL_STATE, action) {

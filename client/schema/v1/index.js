@@ -198,7 +198,7 @@ export default () => ({
                 name: 'transferToEstablishment',
                 label: 'What is the primary establishment for this licence?',
                 type: 'establishment-selector',
-                show: application => application.project && application.project.status !== 'inactive'
+                show: application => application.project && application.project.status !== 'inactive' && !application.isFullApplication
               },
               {
                 name: 'other-establishments',
@@ -1191,7 +1191,7 @@ each other.`,
           },
           purpose: {
             title: 'Purpose and outputs',
-            show: props => props.isGranted,
+            show: props => props.isGranted && !props.isFullApplication,
             granted: {
               order: 2,
               review: Purpose
@@ -1199,7 +1199,7 @@ each other.`,
           },
           establishments: {
             title: 'Establishments and POLEs',
-            show: props => props.isGranted,
+            show: props => props.isGranted && !props.isFullApplication,
             granted: {
               order: 3,
               review: ProtocolEstablishments
@@ -1377,7 +1377,7 @@ each other.`,
           },
           objectives: {
             title: 'Objectives',
-            show: props => props.isGranted,
+            show: props => props.isGranted && !props.isFullApplication,
             granted: {
               order: 6,
               review: ProtocolObjectives
@@ -1458,7 +1458,7 @@ each other.`,
           },
           fate: {
             title: 'Fate of animals',
-            show: ({ isGranted }) => !isGranted,
+            show: ({ isGranted, isFullApplication }) => !isGranted || isFullApplication,
             granted: {
               order: 11
             },
