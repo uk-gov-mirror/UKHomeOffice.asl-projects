@@ -125,7 +125,7 @@ const ProtocolSections = ({ sections, protocolState, editable, newComments, ...p
   let sectionNames = Object.keys(sections)
     .filter(section => !sections[section].show || sections[section].show(props));
 
-  if (props.isGranted && !props.isFullApplication) {
+  if (props.isGranted && !props.isFullApplication && props.schemaVersion > 0) {
     sectionNames = sectionNames.sort(sortGranted(sections));
   }
   return (
