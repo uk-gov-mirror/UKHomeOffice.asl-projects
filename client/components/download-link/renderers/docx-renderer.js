@@ -106,6 +106,13 @@ export default (application, sections, values, updateImageDimensions) => {
       .quickFormat()
       .font('Helvetica')
       .size(20);
+
+    document.Styles.createParagraphStyle('error', 'Error')
+      .basedOn('Body')
+      .next('Body')
+      .quickFormat()
+      .color('FF0000')
+      .bold();
   };
 
   const addPageNumbers = () => {
@@ -361,7 +368,14 @@ export default (application, sections, values, updateImageDimensions) => {
     }
     const nodes = content.document.nodes;
 
-    nodes.forEach(node => renderNode(doc, node));
+    nodes.forEach(node => {
+      try {
+        renderNode(doc, node);
+      } catch (e) {
+        doc.createParagraph(`There was a problem rendering this content (${node.type})`).style('error');
+        doc.createParagraph(e.stack).style('error');
+      }
+    });
 
     if (!noSeparator) {
       renderHorizontalRule(doc);
