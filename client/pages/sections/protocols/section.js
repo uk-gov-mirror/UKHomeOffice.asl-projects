@@ -1,4 +1,5 @@
 import React, { PureComponent, Fragment } from 'react';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
 import Fieldset from '../../../components/fieldset'
@@ -49,4 +50,4 @@ class Section extends PureComponent {
   }
 }
 
-export default withRouter(Section);
+export default withRouter(connect(({ project }) => ({ project }))(Section));
