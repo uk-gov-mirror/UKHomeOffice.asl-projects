@@ -2,7 +2,6 @@ import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Markdown } from '@asl/components';
 import Review from '../../../components/review';
-import ReviewFields from '../../../components/review-fields';
 import RetrospectiveAssessment from '../../../components/retrospective-assessment';
 import { formatDate, isTrainingLicence } from '../../../helpers';
 import LEGAL from '../../../constants/legal';
