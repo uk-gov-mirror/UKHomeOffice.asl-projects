@@ -4,9 +4,8 @@ import { updateRetrospectiveAssessment } from '../actions/projects';
 import { Button } from '@ukhomeoffice/react-components';
 import Field from './field';
 import RAContent from '../constants/retrospective-assessment';
-import raApplies from '../helpers/retrospective-assessment';
 
-const selector = ({ project, application: { editConditions } }) => ({ project, editConditions });
+const selector = ({ project, application: { editConditions, raCompulsory } }) => ({ project, editConditions, raCompulsory });
 
 const RetrospectiveAssessmentRequired = ({ showTitle = true }) => {
   return <div className="conditions retrospective-assessment">
@@ -20,10 +19,9 @@ const RetrospectiveAssessmentRequired = ({ showTitle = true }) => {
 };
 
 export default function RetrospectiveAssessment({ showTitle = true }) {
-  const { project, editConditions } = useSelector(selector, shallowEqual);
-  const required = raApplies(project);
+  const { project, editConditions, raCompulsory } = useSelector(selector, shallowEqual);
 
-  if (required) {
+  if (raCompulsory) {
     return <RetrospectiveAssessmentRequired showTitle={ showTitle } />;
   }
 
