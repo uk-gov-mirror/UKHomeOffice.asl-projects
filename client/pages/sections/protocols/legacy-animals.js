@@ -25,12 +25,13 @@ const LegacyAnimal = ({ updateItem, values, readonly, prefix, fields, index, edi
     }
     <hr />
   </Fragment>
-)
+);
 
 const LegacyAnimals = ({ updateItem, title, values, fields, prefix, readonly, index, editable }) => (
   <Fragment>
     <h2>{title}</h2>
     <Repeater
+      type="species"
       items={values.species}
       addAnother={!!editable}
       onSave={species => updateItem({ species })}
