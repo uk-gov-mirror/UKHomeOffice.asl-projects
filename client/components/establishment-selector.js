@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { RadioGroup, Warning } from '@ukhomeoffice/react-components';
-import { Details, Inset, Markdown } from '@asl/components';
+import { Details, Inset, Markdown, Link } from '@asl/components';
 import { useSelector, shallowEqual } from 'react-redux';
 
 const revealContent = `To change the primary establishment you must:
@@ -13,6 +13,7 @@ export default function EstablishmentSelector({ value, onFieldChange, review, di
   const {
     establishments,
     canTransfer,
+    canTransferDraft,
     establishment,
     transferInProgress,
     readonly,
@@ -59,6 +60,20 @@ export default function EstablishmentSelector({ value, onFieldChange, review, di
     : establishment;
 
   const establishmentName = displayEstablishment.name || 'Another establishment';
+
+  if (draft && canTransferDraft) {
+    return (
+      <div className="govuk-form-group">
+        <fieldset className="govuk-fieldset inline smaller">
+          <legend className="govuk-fieldset__legend">
+            <h2 className="govuk-fieldset__heading govuk-heading-l">Primary establishment</h2>
+          </legend>
+          <p>{establishmentName}</p>
+          <p><Link page="project.transferDraft" label="Change" establishmentId={establishment.id} projectId={project.id} /></p>
+        </fieldset>
+      </div>
+    );
+  }
 
   return (
     <div className="establishment-selector">
