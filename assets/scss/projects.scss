@@ -444,7 +444,7 @@ html.modal-open, html.modal-open body {
   }
 
   p.control-panel {
-    margin-top: 2*$govuk-gutter;
+    margin-top: $govuk-gutter;
     display: flex;
     justify-content: flex-start;
     align-items: center;
