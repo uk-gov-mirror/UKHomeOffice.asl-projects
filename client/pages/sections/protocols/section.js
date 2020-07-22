@@ -50,4 +50,8 @@ class Section extends PureComponent {
   }
 }
 
-export default withRouter(connect(({ project }) => ({ project }))(Section));
+const mapStateToProps = ({ project }) => {
+  return { project };
+};
+
+export default withRouter(connect(mapStateToProps)(Section));
