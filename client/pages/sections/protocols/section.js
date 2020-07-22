@@ -1,4 +1,5 @@
 import React, { PureComponent, Fragment } from 'react';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
 import Fieldset from '../../../components/fieldset'
@@ -14,7 +15,8 @@ class Section extends PureComponent {
       prefix,
       editable,
       pdf,
-      title
+      title,
+      project
     } = this.props;
 
     return (
@@ -27,7 +29,7 @@ class Section extends PureComponent {
           editable && !values.deleted
             ? (
               <Fieldset
-                fields={fields}
+                fields={fields.filter(f => f.show === undefined || f.show(project))}
                 values={values}
                 prefix={prefix}
                 onFieldChange={onFieldChange}
@@ -35,7 +37,7 @@ class Section extends PureComponent {
             )
             : (
               <ReviewFields
-                fields={fields}
+                fields={fields.filter(f => f.show === undefined || f.show(project))}
                 values={values}
                 prefix={prefix}
                 editLink={`0#${prefix}`}
@@ -48,4 +50,8 @@ class Section extends PureComponent {
   }
 }
 
-export default withRouter(Section);
+const mapStateToProps = ({ project }) => {
+  return { project };
+};
+
+export default withRouter(connect(mapStateToProps)(Section));

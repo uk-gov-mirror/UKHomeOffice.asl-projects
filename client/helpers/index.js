@@ -145,3 +145,7 @@ export const stripInvalidXmlChars = text => {
   }
   return text.replace(/([^\x09\x0A\x0D\x20-\uD7FF\uE000-\uFFFC\u{10000}-\u{10FFFF}])/ug, '')
 };
+
+export const isTrainingLicence = values => {
+  return values['training-licence'] || (values['permissible-purpose'] || []).includes('higher-education');
+};

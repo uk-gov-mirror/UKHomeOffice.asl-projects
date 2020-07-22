@@ -2,10 +2,11 @@ import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Markdown } from '@asl/components';
 import Review from '../../../components/review';
-import ReviewFields from '../../../components/review-fields';
 import RetrospectiveAssessment from '../../../components/retrospective-assessment';
-import { formatDate } from '../../../helpers';
+import { formatDate, isTrainingLicence } from '../../../helpers';
 import LEGAL from '../../../constants/legal';
+
+import permissiblePurpose from '../../../schema/v1/permissible-purpose';
 
 import { DATE_FORMAT } from '../../../constants';
 
@@ -15,6 +16,21 @@ const GrantedAuthoritySection = () => (
     <Markdown className="legal">{LEGAL.grantedAuthority}</Markdown>
   </div>
 );
+
+const PermissiblePurpose = ({ values }) => {
+  return isTrainingLicence(values) ?
+    <Review
+      {...permissiblePurpose}
+      type="text"
+      value="(f) Higher education and training"
+      noComments
+    /> :
+    <Review
+      {...permissiblePurpose}
+      value={values['permissible-purpose']}
+      noComments
+    />
+};
 
 const ProjectSummary = ({
   project,
@@ -58,11 +74,7 @@ const ProjectSummary = ({
             </div>
             <div className="granted-section">
               <h2>Permissible purposes</h2>
-              <ReviewFields
-                fields={fields.filter(f => f.name === 'permissible-purpose')}
-                values={values}
-                noComments
-              />
+              <PermissiblePurpose values={values} />
             </div>
             <div className="granted-section">
               <Review
@@ -78,11 +90,7 @@ const ProjectSummary = ({
         !pdf && (
           <Fragment>
             <div className="granted-section">
-              <ReviewFields
-                fields={fields.filter(f => f.name === 'permissible-purpose')}
-                values={values}
-                noComments
-              />
+              <PermissiblePurpose values={values} />
             </div>
             <div className="granted-section">
               <Review
