@@ -87,7 +87,9 @@ class NTSSummary extends Component {
     if (section.steps){
       fields = flatten(section.steps.map((step, index) => step.fields.map(field => ({ ...field, step: index }))));
     }
-    return fields.filter(field => !whitelist || whitelist.includes(field.name));
+    return fields
+      .filter(field => !whitelist || whitelist.includes(field.name))
+      .filter(field => !field.show || field.show(this.props.project));
   }
 
   onCompleteChange = complete => {
