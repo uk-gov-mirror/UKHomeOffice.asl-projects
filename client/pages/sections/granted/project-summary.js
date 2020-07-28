@@ -19,9 +19,12 @@ const GrantedAuthoritySection = () => (
 
 const PermissiblePurpose = ({ values }) => {
   return isTrainingLicence(values) ?
-    <ul>
-      <li>(f) Higher education and training</li>
-    </ul> :
+    <div className="review">
+      <h3>Which permissible purposes apply to this project?</h3>
+      <ul>
+        <li>(f) Higher education and training</li>
+      </ul>
+    </div>:
     <Review
       {...permissiblePurpose}
       value={values['permissible-purpose']}
