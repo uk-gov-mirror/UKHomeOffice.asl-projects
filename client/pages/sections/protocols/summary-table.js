@@ -30,7 +30,7 @@ function ExpandingRow({ protocol }) {
 export default function SummaryTable() {
   const project = useSelector(state => state.project);
   const isLegacy = useSelector(state => state.application.project.schemaVersion) === 0;
-  const protocols = project.protocols || [];
+  const protocols = (project.protocols || []).filter(p => !p.deleted);
   return (
     <Fragment>
       <h1>Protocol summary table</h1>
