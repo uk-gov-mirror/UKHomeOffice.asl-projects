@@ -540,7 +540,11 @@ export default (application, sections, values, updateImageDimensions) => {
     let years = 5;
     if (value) {
       months = value.months || months;
-      years = value.years || years;
+      if (value.years === 0) {
+        years = 0;
+      } else {
+        years = value.years || years;
+      }
     }
     const yearsLabel = years === 1 ? 'Year' : 'Years';
     const monthsLabel = months === 1 ? 'Month' : 'Months';
