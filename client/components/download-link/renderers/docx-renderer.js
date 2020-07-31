@@ -299,6 +299,9 @@ export default (application, sections, values, updateImageDimensions) => {
 
       case 'paragraph':
       case 'block':
+        if (node.nodes.length === 1 && !getContent(node)) {
+          return;
+        }
         addToDoc = !paragraph;
         paragraph = paragraph || new Paragraph();
         node.nodes.forEach((childNode, childNodeIndex) => {
