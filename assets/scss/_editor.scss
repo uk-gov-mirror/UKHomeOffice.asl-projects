@@ -61,6 +61,15 @@
     cursor: pointer;
     border: 0;
     color: $dark-grey;
+    margin-right: 0.5em;
+    height: 40px;
+    width: 40px;
+    border: 1px solid $govuk-border-colour;
+    background-color: $light-grey;
+    box-shadow: 0 2px 0 #929191;
+    &:hover {
+      background-color: $mid-grey;
+    }
     &.active {
       color: $blue;
     }

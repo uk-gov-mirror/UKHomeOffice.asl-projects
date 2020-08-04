@@ -41,7 +41,7 @@ class FormatToolbar extends Component {
           title={tooltip}
         >
           <input type='file' onChange={this.onClickImage} />
-          <Icon icon={icon} />
+          <Icon icon={icon} size={'24'} />
         </label>
       );
     }
