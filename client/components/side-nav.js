@@ -1,10 +1,9 @@
-import React, { useEffect, useRef, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import { NavLink } from 'react-router-dom';
 import ChangedBadge from './changed-badge';
 import map from 'lodash/map';
 import pickBy from 'lodash/pickBy';
 import reduce from 'lodash/reduce';
-import classnames from 'classnames';
 import SectionLink from './sections-link';
 import ExpandingPanel from './expanding-panel';
 import schemaMap, { getGrantedSubsections } from '../schema';
@@ -31,36 +30,12 @@ function getFieldsForSection(section, project) {
 }
 
 const SideNav = ({ schemaVersion, project, isGranted, ...props }) => {
-  const nav = useRef(null);
-
-  useEffect(() => {
-    if (!isGranted) {
-      return () => null;
-    }
-
-    nav.current.style.position = 'relative';
-
-    const pos = nav.current.offsetTop;
-    const width = nav.current.offsetWidth;
-    window.onscroll = () => {
-      if (document.documentElement.scrollTop >= pos) {
-        nav.current.style.position = 'fixed';
-        nav.current.style.width = width + 'px';
-      } else {
-        nav.current.style.position = 'relative';
-      }
-    }
-    return () => {
-      window.onscroll = null;
-    }
-  });
-
   const schema = schemaMap[schemaVersion];
   const sections = isGranted
     ? getGrantedSubsections(schemaVersion)
     : schema();
   return (
-    <nav ref={nav} className={classnames('sidebar-nav', 'section-nav', { sticky: isGranted })}>
+    <nav className="sidebar-nav section-nav sticky">
       {
         !isGranted && <SectionLink />
       }
