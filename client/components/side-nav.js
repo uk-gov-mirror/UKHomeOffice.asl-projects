@@ -29,7 +29,7 @@ function getFieldsForSection(section, project) {
   return fields;
 }
 
-const SideNav = ({ schemaVersion, project, isGranted, ...props }) => {
+const SideNav = ({ schemaVersion, project, isGranted, activeSection, ...props }) => {
   const schema = schemaMap[schemaVersion];
   const sections = isGranted
     ? getGrantedSubsections(schemaVersion)
@@ -47,12 +47,13 @@ const SideNav = ({ schemaVersion, project, isGranted, ...props }) => {
           .map(key => {
             const section = sections[key];
             if (section.subsections) {
+              const open = activeSection && section.subsections[activeSection];
               const title = <Fragment>
                 <ChangedBadge fields={getFieldsForSection(section, project)} noLabel />
                 <span className="indent">{section.title}</span>
               </Fragment>
               return (
-                <ExpandingPanel key={key} title={title}>
+                <ExpandingPanel key={key} title={title} open={open}>
                   {
                     map(pickBy(section.subsections, s => sectionVisible(s, project)), (subsection, key) => {
                       return <p key={key}>

@@ -7,7 +7,7 @@ import ErrorBoundary from '../components/error-boundary';
 
 import { keepAlive } from '../actions/session';
 
-function Readonly({ isGranted, project, options, schemaVersion, showConditions, keepAlive, location }) {
+function Readonly({ isGranted, project, options, schemaVersion, showConditions, keepAlive, location, match }) {
 
   useEffect(() => {
     keepAlive()
@@ -22,6 +22,7 @@ function Readonly({ isGranted, project, options, schemaVersion, showConditions, 
             isGranted={isGranted}
             schemaVersion={schemaVersion}
             showConditions={showConditions}
+            activeSection={match.params.section}
           />
           <span>&nbsp;</span>
         </div>
