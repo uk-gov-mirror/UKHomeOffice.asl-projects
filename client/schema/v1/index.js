@@ -7,6 +7,7 @@ import Repeater from '../../pages/sections/repeater';
 import RepeaterReview from '../../pages/sections/repeater/review';
 import Conditions from '../../pages/sections/conditions';
 import Authorisations from '../../pages/sections/authorisations';
+import Training from '../../pages/sections/training';
 
 import { transferOfAnimals } from '../shared';
 
@@ -152,6 +153,30 @@ export default () => ({
               },
               {
                 label: 'No',
+                value: false
+              }
+            ]
+          }
+        ]
+      },
+      training: {
+        title: 'Training',
+        intro: 'Applicants must confirm training requirements have been met. This could be through completed training modules or professional experience that makes training unnecessary.',
+        component: Training,
+        review: Training,
+        fields: [
+          {
+            name: 'update-training',
+            label: 'Do you need to update this training record?',
+            type: 'radio',
+            className: 'smaller',
+            options: [
+              {
+                label: 'Yes, I need to update it',
+                value: true
+              },
+              {
+                label: 'No, that looks fine',
                 value: false
               }
             ]
