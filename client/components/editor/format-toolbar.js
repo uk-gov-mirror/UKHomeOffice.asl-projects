@@ -22,6 +22,8 @@ import {
 import { table2 } from 'react-icons-kit/icomoon';
 import Icon from 'react-icons-kit';
 
+const SizedIcon = props => <Icon size="24" {...props} />;
+
 class FormatToolbar extends Component {
 
   hasMark = type => {
@@ -34,15 +36,13 @@ class FormatToolbar extends Component {
 
     if (type === 'input-file') {
       return (
-        <label
-          className={classnames('fileContainer tooltip-icon-button', {
-            active: isActive
-          })}
+        <button
+          className={classnames('tooltip-icon-button', { active: isActive })}
           title={tooltip}
         >
           <input type='file' onChange={this.onClickImage} />
-          <Icon icon={icon} size={'24'} />
-        </label>
+          <SizedIcon icon={icon} />
+        </button>
       );
     }
 
@@ -52,7 +52,7 @@ class FormatToolbar extends Component {
         className={classnames('tooltip-icon-button', { active: isActive })}
         title={tooltip}
       >
-        <Icon icon={icon} />
+        <SizedIcon icon={icon} />
       </button>
     );
   }
@@ -65,7 +65,7 @@ class FormatToolbar extends Component {
         className={classnames('tooltip-icon-button', { active: isActive })}
         title={tooltip}
       >
-        <Icon icon={icon} />
+        <SizedIcon icon={icon} />
       </button>
     );
   }
@@ -103,7 +103,7 @@ class FormatToolbar extends Component {
       )
       : (
         <button className="tooltip-icon-button" onClick={this.command('insertTable')} title="Insert table">
-          <Icon icon={table2} />
+          <SizedIcon icon={table2} />
         </button>
       )
   }
@@ -120,14 +120,14 @@ class FormatToolbar extends Component {
           onMouseDown={this.command(inBulleted ? 'unwrapList' : 'wrapInList', 'bulleted-list')}
           title={inBulleted ? 'Remove bulleted list' : 'Bulleted list'}
         >
-          <Icon icon={ic_format_list_bulleted} />
+          <SizedIcon icon={ic_format_list_bulleted} />
         </button>
         <button
           className={classnames('tooltip-icon-button', { active: inNumbered })}
           onMouseDown={this.command(inNumbered ? 'unwrapList' : 'wrapInList', 'numbered-list')}
           title={inNumbered ? 'Remove numbered list' : 'Numbered list'}
         >
-          <Icon icon={ic_format_list_numbered} />
+          <SizedIcon icon={ic_format_list_numbered} />
         </button>
         <button
           className="tooltip-icon-button"
@@ -135,7 +135,7 @@ class FormatToolbar extends Component {
           onMouseDown={this.command('decreaseItemDepth')}
           title="Decrease list indent"
         >
-          <Icon icon={outdent} />
+          <SizedIcon icon={outdent} />
         </button>
         <button
           className="tooltip-icon-button"
@@ -143,7 +143,7 @@ class FormatToolbar extends Component {
           onMouseDown={this.command('increaseItemDepth')}
           title="Increase list indent"
         >
-          <Icon icon={indent} />
+          <SizedIcon icon={indent} />
         </button>
       </Fragment>
     );
@@ -163,7 +163,7 @@ class FormatToolbar extends Component {
       onMouseDown={this.clearFormatting}
       title="Clear formatting"
       >
-      <Icon icon={ic_format_clear} />
+      <SizedIcon icon={ic_format_clear} />
     </button>
   }
 

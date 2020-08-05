@@ -67,6 +67,8 @@
     border: 1px solid $govuk-border-colour;
     background-color: $light-grey;
     box-shadow: 0 2px 0 #929191;
+    overflow: hidden;
+    position: relative;
     &:hover {
       background-color: $mid-grey;
     }
@@ -76,7 +78,16 @@
     &[disabled] {
       color: $mid-grey;
     }
+    [type='file'] {
+      opacity: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+      height: 100%;
+      cursor: pointer;
+    }
   }
+
   img {
     display: block;
     max-width: 100%;
@@ -105,23 +116,6 @@
   }
   ul {
     list-style-type: disc;
-  }
-  .fileContainer {
-    overflow: hidden;
-    position: relative;
-    [type='file'] {
-      // cursor: inherit;
-      // display: block;
-      // font-size: 999px;
-      // filter: alpha(opacity = 0);
-      // min-height: 100%;
-      // min-width: 100%;
-      opacity: 0;
-      position: absolute;
-      right: 0;
-      // text-align: right;
-      // top: 0;
-    }
   }
 
   table {
