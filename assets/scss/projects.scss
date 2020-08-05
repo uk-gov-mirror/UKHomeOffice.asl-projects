@@ -1480,4 +1480,9 @@ html.modal-open, html.modal-open body {
       }
     }
   }
+
+  .govuk-grid-row {
+    display: flex;
+    align-items: stretch;
+  }
 }
