@@ -22,7 +22,7 @@ export default function EstablishmentSelector({ value, onFieldChange, review, di
     legacyGranted
   } = useSelector(state => state.application, shallowEqual);
 
-  if (isGranted || legacyGranted) {
+  if (isGranted || legacyGranted || review) {
     return <p>{establishment.name}</p>
   }
 
@@ -78,7 +78,7 @@ export default function EstablishmentSelector({ value, onFieldChange, review, di
   return (
     <div className="establishment-selector">
       {
-        canUpdateEstablishment && !review
+        canUpdateEstablishment
           ? (
             <RadioGroup
               {...props}
@@ -119,7 +119,7 @@ export default function EstablishmentSelector({ value, onFieldChange, review, di
           )
       }
       {
-        canTransfer && !review && (
+        canTransfer && (
           <Details summary="Why is the establishment I'm looking for not listed?">
             <Inset>
               <p>If the establishment is not listed, ask the Home Office Liaison Contact (HOLC) of that establishment to send you an invitation. Once you accept the invitation, you can request your licence to be transferred.</p>
