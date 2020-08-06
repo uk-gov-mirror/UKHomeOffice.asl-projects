@@ -166,18 +166,18 @@ export default () => ({
         review: Training,
         fields: [
           {
-            name: 'update-training',
+            name: 'training-complete',
             label: 'Do you need to update this training record?',
             type: 'radio',
             className: 'smaller',
             options: [
               {
                 label: 'Yes, I need to update it',
-                value: true
+                value: false
               },
               {
                 label: 'No, that looks fine',
-                value: false
+                value: true
               }
             ]
           }

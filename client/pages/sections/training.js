@@ -11,18 +11,13 @@ export default function Training(props) {
   const project = useSelector(state => state.project);
   const form = useRef(null);
   const history = useHistory();
-  const needsUpdate = project['update-training'];
+  const trainingComplete = project['training-complete'];
 
   function onSubmit(e) {
     e.preventDefault();
-    if (!needsUpdate) {
-      props.save({
-        training,
-        'training-complete': true
-      });
+    if (trainingComplete) {
       return history.push('/');
     }
-    props.save('training-complete', false);
     form.current.submit();
   }
 
