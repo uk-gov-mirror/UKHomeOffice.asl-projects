@@ -609,10 +609,10 @@ export default (application, sections, values, updateImageDimensions) => {
   };
 
   const renderField = (doc, field, values, project, noSeparator) => {
-    if (field.show && !field.show(values)) {
+    project = project || values;
+    if (field.show && !field.show(project)) {
       return false;
     }
-    project = project || values;
     const value = values[field.name];
 
     if (!field.label && field.type === 'checkbox' && field.name.includes('declaration')) {
