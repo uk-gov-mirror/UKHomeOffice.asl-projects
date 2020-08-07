@@ -40,7 +40,6 @@ export default function Training(props) {
 
               <Fieldset
                 {...props}
-                values={{ 'training-update': needsUpdate }}
                 onFieldChange={props.save}
               />
               <Button>Continue</Button>
