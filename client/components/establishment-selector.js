@@ -22,7 +22,7 @@ export default function EstablishmentSelector({ value, onFieldChange, review, di
     legacyGranted
   } = useSelector(state => state.application, shallowEqual);
 
-  if (isGranted || legacyGranted || review) {
+  if (isGranted || legacyGranted) {
     return <p>{establishment.name}</p>
   }
 
@@ -61,6 +61,10 @@ export default function EstablishmentSelector({ value, onFieldChange, review, di
 
   const establishmentName = displayEstablishment.name || 'Another establishment';
 
+  if (review) {
+    return <p>{establishmentName}</p>
+  }
+
   if (draft && canTransferDraft) {
     return (
       <div className="govuk-form-group">
@@ -90,9 +94,7 @@ export default function EstablishmentSelector({ value, onFieldChange, review, di
           )
           : (
             <Fragment>
-              {
-                !review && <h3>{ props.label }</h3>
-              }
+              <h3>{ props.label }</h3>
               <p>{establishmentName}</p>
 
               {
