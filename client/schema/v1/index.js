@@ -176,7 +176,7 @@ export default () => ({
                 value: false
               },
               {
-                label: 'No, that looks fine',
+                label: 'No, this training record is up to date',
                 value: true
               }
             ]
