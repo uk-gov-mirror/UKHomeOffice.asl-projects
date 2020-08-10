@@ -228,7 +228,7 @@ class DiffWindow extends React.Component {
       default:
         return (
           <ReviewField
-            key={value}
+            key={value + this.state.active}
             {...this.props}
             name={this.props.name}
             decorateNode={this.decorateNode(parts)}
