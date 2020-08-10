@@ -1260,21 +1260,6 @@ html.modal-open, html.modal-open body {
       border-top: 0;
     }
 
-    h3 {
-      margin-left: 0.5em;
-
-      &:before {
-        content: '';
-        margin-right: 0.5em;
-        background: $comments;
-        background-size: 100%;
-        vertical-align: middle;
-        display: inline-block;
-        width: 1.5em;
-        height: 1.5em;
-      }
-    }
-
     .comment {
       border: 3px solid $govuk-border-colour;
       border-radius: $govuk-gutter-half;
@@ -1285,8 +1270,11 @@ html.modal-open, html.modal-open body {
       margin-right: $govuk-gutter;
 
       .header {
-        border-bottom: 3px solid $govuk-border-colour;
         padding: $govuk-gutter-half / 2 $govuk-gutter-half;
+
+        .date {
+          padding-left: 1em;
+        }
       }
 
       .content {

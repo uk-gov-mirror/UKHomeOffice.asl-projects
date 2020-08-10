@@ -25,7 +25,7 @@ const Comment = ({
     <div className="header">
       <strong>{`${index + 1}. ${author}`}</strong>
       {
-        !deleted && <span className="float-right">{ createdAt ? format(createdAt, DATE_FORMAT.short) : 'New' }</span>
+        !deleted && <span className="date">{ createdAt ? format(createdAt, DATE_FORMAT.short) : 'New' }</span>
       }
     </div>
     <div className="content">

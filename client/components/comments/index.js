@@ -62,7 +62,7 @@ class Comments extends Component {
         alwaysUpdate={true}
         className={classnames('comments', { 'has-new': some(comments, comment => comment.isNew) })}
         open={expanded}
-        title={expanded ? 'Hide comments' : 'Show comments'}
+        title={`${expanded ? 'Hide comments' : 'Show comments'} (${comments.length})`}
         onToggle={this.toggleExpanded}
       >
         <Fragment>
