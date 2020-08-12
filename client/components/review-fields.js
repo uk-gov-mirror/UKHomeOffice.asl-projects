@@ -74,4 +74,5 @@ const ReviewFields = ({
 
 const mapStateToProps = ({ project, application }) => ({ project, application });
 
+export { ReviewFields };
 export default connect(mapStateToProps)(ReviewFields);
