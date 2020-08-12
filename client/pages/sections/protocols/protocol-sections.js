@@ -13,6 +13,7 @@ import ChangedBadge from '../../../components/changed-badge';
 import NewProtocolBadge from '../../../components/new-protocol-badge';
 import ReorderedBadge from '../../../components/reordered-badge';
 import { filterSpeciesByActive } from './animals';
+import { flattenReveals } from '../../../helpers';
 
 import { keepAlive } from '../../../actions/session';
 
@@ -87,13 +88,15 @@ class ProtocolSections extends PureComponent {
 
     const fields = Object.values(sections)
       .reduce((list, section) => {
+        const flattenedFields = flattenReveals(section.fields || [], values);
+
         if (section.repeats && values[section.repeats]) {
           values[section.repeats].filter(Boolean).forEach(repeater => {
-            list.push.apply(list, (section.fields || []).map(f => `${section.repeats}.${repeater.id}.${f.name}`));
+            list.push.apply(list, flattenedFields.map(f => `${section.repeats}.${repeater.id}.${f.name}`));
           });
           return list;
         }
-        return list.concat((section.fields || []).map(field => field.name));
+        return list.concat(flattenedFields.map(field => field.name));
       }, [])
       .map(f => `protocols.${values.id}.${f}`);
 
