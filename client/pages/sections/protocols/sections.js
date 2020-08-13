@@ -76,12 +76,13 @@ const getOpenSection = (protocolState, editable, sections) => {
 }
 
 const getFieldKeys = (section, values) => {
+  const flattenedFields = flattenReveals(section.fields || [], values);
   if (section.repeats) {
     return (values[section.repeats] || []).filter(Boolean).reduce((list, repeater) => {
-      return list.concat((section.fields || []).map(f => `protocols.${values.id}.${section.repeats}.${repeater.id}.${f.name}`));
+      return list.concat(flattenedFields.map(f => `protocols.${values.id}.${section.repeats}.${repeater.id}.${f.name}`));
     }, []);
   }
-  return section.fields.map(f => `protocols.${values.id}.${f.name}`);
+  return flattenedFields.map(f => `protocols.${values.id}.${f.name}`);
 };
 
 const getBadges = (section, newComments, values) => {
