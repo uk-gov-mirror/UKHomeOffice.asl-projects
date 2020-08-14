@@ -23,7 +23,9 @@ export default function Training(props) {
 
   return (
     <Fragment>
-      <h1>Training</h1>
+      {
+        !readonly && <h1>Training</h1>
+      }
       <p>{props.intro}</p>
       <h2>Training record</h2>
       <TrainingSummary certificates={readonly ? project.training : training} />
