@@ -1,7 +1,7 @@
 module.exports = {
   anaesthesia: `### Anaesthesia
 
-Induction and maintenance of general or local anaesthesia, sedation or analgesia to mitigate the pain, suffering or distress associated with the performance of other regulated procedures is indicated using the following codes in protocols:**
+Induction and maintenance of general or local anaesthesia, sedation or analgesia to mitigate the pain, suffering or distress associated with the performance of other regulated procedures is indicated using the following codes in protocols:
 * AA no anaesthesia
 * ABL local anaesthesia
 * AB general anaesthesia with recovery
@@ -14,7 +14,7 @@ If authorised in this licence and unless otherwise specified, all animals are ex
 
   surgery: `### Surgery
 
-If authorised in this licence and unless otherwise specified:**
+If authorised in this licence and unless otherwise specified:
 * Surgical procedures should be carried out aseptically, to at least the published Home Office minimum;
 * In the uncommon event of post-operative complications, animals will be humanely killed unless, in the opinion of a veterinary surgeon, such complications can be remedied promptly and successfully using no more than minor interventions. Minimally inflamed wounds without obvious infection may be re-closed on one occasion within 48 hours of the initial surgery. In the event of recurrence, NVS advice will be followed;
 * Peri and post-operative analgesia will be provided; agents will be administered as agreed in advance with the NVS;

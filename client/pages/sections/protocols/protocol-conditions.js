@@ -30,13 +30,14 @@ class ProtocolConditions extends Component {
         <h2>General constraints</h2>
 
         <p>
-          Anaesthesia, surgery, substance administration and withdrawal of fluid constraints relate to each of these protocols.
+          Please note, constraints on procedures involving anaesthesia, surgery, substance administration and withdrawal
+          of fluids apply to all protocols.
         </p>
 
         {
           this.props.pdf ? <Content />
           : (
-            <Details summary="View general constraints">
+            <Details summary="Show general constraints">
               <Content />
             </Details>
           )
