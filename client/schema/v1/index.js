@@ -32,7 +32,7 @@ import some from 'lodash/some';
 import experience from './experience';
 import permissiblePurpose from './permissible-purpose';
 
-import confirmRemove from '../../helpers/confirm-remove';
+import confirmProtocolsAffected from '../../helpers/confirm-protocols-affected';
 
 import { isTrainingLicence } from '../../helpers';
 
@@ -114,7 +114,7 @@ export default () => ({
             name: 'species',
             label: 'Which types of animals will be used in this project?',
             type: 'species-selector',
-            confirmRemove: true,
+            confirmRemove: confirmProtocolsAffected('remove', 'species', 'animal type'),
             summary: true
           }
         ]
@@ -227,7 +227,7 @@ export default () => ({
             show: values => values['other-establishments'],
             repeats: 'establishments',
             singular: 'Additional establishment',
-            confirmRemove: confirmRemove('locations', 'establishment', 'establishment-name'),
+            confirmRemove: confirmProtocolsAffected('remove', 'locations', 'establishment', 'establishment-name'),
             fields: [
               {
                 name: 'establishment-name',
@@ -315,7 +315,7 @@ export default () => ({
             repeats: 'polesList',
             singular: 'POLE',
             show: values => values.poles === true,
-            confirmRemove: confirmRemove('locations', 'POLE', 'title'),
+            confirmRemove: confirmProtocolsAffected('remove', 'locations', 'POLE', 'title'),
             subtitle: 'Specify the details of each POLE that you will be using.',
             intro: `If you can’t specify a grid reference for a POLE, include details that allows it to be easily identified for inspection. This could be an address of a site or a postcode of a farm.
 
@@ -325,7 +325,9 @@ If you can only add generic information at this stage, provide a general descrip
                 name: 'title',
                 label: 'Name',
                 type: 'text',
-                repeats: true
+                repeats: true,
+                toggleEdit: true,
+                confirmEdit: confirmProtocolsAffected('edit', 'locations', 'POLE', 'title', 'name'),
               },
               {
                 name: 'pole-info',
@@ -840,7 +842,7 @@ If you can only add generic information at this stage, provide a general descrip
             singular: 'Objective',
             component: Objectives,
             repeats: 'objectives',
-            confirmRemove: confirmRemove('objectives', 'objective', 'title'),
+            confirmRemove: confirmProtocolsAffected('remove', 'objectives', 'objective', 'title'),
             fields: [
               {
                 name: 'title',
@@ -848,7 +850,9 @@ If you can only add generic information at this stage, provide a general descrip
                 review: 'Objective title',
                 type: 'text',
                 objective: true,
-                repeats: true
+                repeats: true,
+                toggleEdit: true,
+                confirmEdit: confirmProtocolsAffected('edit', 'objectives', 'objective', 'title'),
               },
               {
                 name: 'objective-relation',

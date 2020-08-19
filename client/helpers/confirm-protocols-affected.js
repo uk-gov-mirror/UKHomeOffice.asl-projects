@@ -14,10 +14,11 @@ function getProtocolParts(protocols) {
   }).join('');
 }
 
-const confirmRemove = (protocolRef, singularName, key) => (project, item) => {
+const confirmProtocolsAffected = (changeType, protocolRef, singularName, key, label) => (project, item) => {
   const protocols = (project.protocols || [])
     .filter(p => !p.deleted)
     .map((protocol, index) => ({ ...protocol, index }));
+
   const affectedProtocols = protocols.filter(protocol => (protocol[protocolRef] || []).includes(key ? item[key] : item));
 
   // item doesn't appear in any protocols
@@ -25,7 +26,13 @@ const confirmRemove = (protocolRef, singularName, key) => (project, item) => {
     return true;
   }
 
-  let message = `Protocols will be affected\n\nRemoving this ${singularName} will also remove it from`;
+  let message = `Protocols will be affected\n\n`;
+
+  if (changeType === 'remove') {
+    message = `${message}Removing this ${singularName} will also remove it from`;
+  } else {
+    message = `${message}Changing the ${label || key} of this ${singularName} will remove it from`;
+  }
 
   // item appears in all protocols
   if (affectedProtocols.length === protocols.length) {
@@ -37,7 +44,8 @@ const confirmRemove = (protocolRef, singularName, key) => (project, item) => {
     ? `protocol ${affectedProtocols[0].index + 1}`
     // item appears in many protocols, list them
     : `protocols ${getProtocolParts(affectedProtocols)}`;
+
   return window.confirm(`${message} ${protocolText}.`);
 };
 
-export default confirmRemove;
+export default confirmProtocolsAffected;
