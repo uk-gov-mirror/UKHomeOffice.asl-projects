@@ -2909,7 +2909,7 @@ each other.`,
     name: 'nts',
     subsections: {
       'nts-review': {
-        title: 'Review',
+        title: 'Non-technical summary',
         component: NTSSummary,
         review: NTSSummary,
         sections: [
