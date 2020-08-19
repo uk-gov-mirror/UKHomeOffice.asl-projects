@@ -19,8 +19,8 @@ export default function NTS({ accepted, onAccept, review, hideTitle }) {
         <p>As an NTS is a public document, do not include any information that could identify any people, locations, or intellectual property related to your project. You will be able to review and edit your NTS as a whole before you send your licence application to the Home Office.</p>
       </Fragment>
       {
-        !review && (
-          <Button disabled={accepted} onClick={onAccept}>Continue</Button>
+        !review && !accepted && (
+          <Button onClick={onAccept}>Continue</Button>
         )
       }
     </div>
