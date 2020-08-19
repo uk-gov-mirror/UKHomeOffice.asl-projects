@@ -8,7 +8,6 @@ import flatten from 'lodash/flatten';
 
 import Complete from '../../components/complete';
 import Review from '../../components/review';
-import NTS from '../../components/nts';
 import schemaMap from '../../schema';
 
 const OFFSET = 100;
@@ -100,7 +99,13 @@ class NTSSummary extends Component {
   render() {
     return (
       <Fragment>
-        <NTS review={true} hideTitle={true} />
+        <h1>Non-technical summary</h1>
+        <div className="nts">
+          <p>
+            Check your non-technical summary uses everyday language and doesn’t include information that could identify
+            people, locations or intellectual property related to your project.
+          </p>
+        </div>
         <div className="nts-review">
           {
             !this.props.readonly && (
