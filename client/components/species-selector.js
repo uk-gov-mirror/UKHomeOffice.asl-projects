@@ -8,7 +8,6 @@ import map from 'lodash/map';
 import intersection from 'lodash/intersection';
 import uniq from 'lodash/uniq';
 
-import confirmRemove from '../helpers/confirm-remove';
 import { projectSpecies as SPECIES } from '@asl/constants';
 import SPECIES_CATEGORIES from '../constants/species-categories';
 
@@ -62,7 +61,8 @@ class SpeciesSelector extends Component {
       label,
       onFieldChange,
       name,
-      hint
+      hint,
+      confirmRemove
     } = this.props;
 
     const deprecated = (vals[name] || [])
@@ -101,7 +101,7 @@ class SpeciesSelector extends Component {
                   value={vals[name]}
                   onChange={this.onGroupChange(code)}
                   onFieldChange={onFieldChange}
-                  confirmRemove={this.props.confirmRemove && confirmRemove('species', 'animal type')}
+                  confirmRemove={confirmRemove}
                   noComments={true}
                 />
               </details>
