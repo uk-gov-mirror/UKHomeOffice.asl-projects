@@ -69,6 +69,11 @@
     box-shadow: 0 2px 0 #929191;
     overflow: hidden;
     position: relative;
+
+    &:focus-within {
+      @extend :focus;
+    }
+
     &:hover {
       background-color: $mid-grey;
     }

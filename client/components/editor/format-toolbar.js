@@ -40,6 +40,7 @@ class FormatToolbar extends Component {
           className={classnames('tooltip-icon-button', { active: isActive })}
           title={tooltip}
           aria-label={tooltip}
+          tabIndex={-1}
         >
           <input
             type='file'
