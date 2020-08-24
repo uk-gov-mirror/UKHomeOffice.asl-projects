@@ -42,7 +42,7 @@
     "@joefitter/slate-edit-list": "0.0.3",
     "@joefitter/slate-edit-table": "0.0.3",
     "@ukhomeoffice/frontend-toolkit": "^2.8.1",
-    "@ukhomeoffice/react-components": "^0.8.1",
+    "@ukhomeoffice/react-components": "^0.8.8",
     "babel-loader": "^8.0.5",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-es2015": "^6.24.1",
