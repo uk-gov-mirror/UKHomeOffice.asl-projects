@@ -40,6 +40,7 @@ class FormatToolbar extends Component {
           className={classnames('tooltip-icon-button', { active: isActive })}
           title={tooltip}
         >
+          <span className="button-text">{ tooltip }</span>
           <input type='file' onChange={this.onClickImage} />
           <SizedIcon icon={icon} />
         </button>
@@ -52,6 +53,7 @@ class FormatToolbar extends Component {
         className={classnames('tooltip-icon-button', { active: isActive })}
         title={tooltip}
       >
+        <span className="button-text">{ tooltip }</span>
         <SizedIcon icon={icon} />
       </button>
     );
@@ -65,6 +67,7 @@ class FormatToolbar extends Component {
         className={classnames('tooltip-icon-button', { active: isActive })}
         title={tooltip}
       >
+        <span className="button-text">{ tooltip }</span>
         <SizedIcon icon={icon} />
       </button>
     );
@@ -103,6 +106,7 @@ class FormatToolbar extends Component {
       )
       : (
         <button className="tooltip-icon-button" onClick={this.command('insertTable')} title="Insert table">
+          <span className="button-text">Insert table</span>
           <SizedIcon icon={table2} />
         </button>
       )
@@ -113,20 +117,25 @@ class FormatToolbar extends Component {
     const inNumbered = this.props.query('isSelectionInList', 'numbered-list');
     const inBulleted = this.props.query('isSelectionInList', 'bulleted-list');
 
+    const toggleBulletedLabel = inBulleted ? 'Remove bulleted list' : 'Bulleted list';
+    const toggleNumberedLabel = inNumbered ? 'Remove numbered list' : 'Numbered list';
+
     return (
       <Fragment>
         <button
           className={classnames('tooltip-icon-button', { active: inBulleted })}
           onMouseDown={this.command(inBulleted ? 'unwrapList' : 'wrapInList', 'bulleted-list')}
-          title={inBulleted ? 'Remove bulleted list' : 'Bulleted list'}
+          title={toggleBulletedLabel}
         >
+          <span className="button-text">{toggleBulletedLabel}</span>
           <SizedIcon icon={ic_format_list_bulleted} />
         </button>
         <button
           className={classnames('tooltip-icon-button', { active: inNumbered })}
           onMouseDown={this.command(inNumbered ? 'unwrapList' : 'wrapInList', 'numbered-list')}
-          title={inNumbered ? 'Remove numbered list' : 'Numbered list'}
+          title={toggleNumberedLabel}
         >
+          <span className="button-text">{toggleNumberedLabel}</span>
           <SizedIcon icon={ic_format_list_numbered} />
         </button>
         <button
@@ -135,6 +144,7 @@ class FormatToolbar extends Component {
           onMouseDown={this.command('decreaseItemDepth')}
           title="Decrease list indent"
         >
+          <span className="button-text">Decrease list indent</span>
           <SizedIcon icon={outdent} />
         </button>
         <button
@@ -143,6 +153,7 @@ class FormatToolbar extends Component {
           onMouseDown={this.command('increaseItemDepth')}
           title="Increase list indent"
         >
+          <span className="button-text">Increase list indent</span>
           <SizedIcon icon={indent} />
         </button>
       </Fragment>
@@ -163,6 +174,7 @@ class FormatToolbar extends Component {
       onMouseDown={this.clearFormatting}
       title="Clear formatting"
       >
+      <span className="button-text">Clear formatting</span>
       <SizedIcon icon={ic_format_clear} />
     </button>
   }
