@@ -133,7 +133,7 @@ const ProjectSummary = ({
           </dl>
         </div>
         {
-          values.establishments && !!values.establishments.length && (
+          values['other-establishments'] && values.establishments && !!values.establishments.length && (
             <div className="granted-section">
               <h3>Additional establishments</h3>
               <ul>

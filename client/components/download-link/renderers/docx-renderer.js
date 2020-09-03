@@ -821,7 +821,7 @@ export default (application, sections, values, updateImageDimensions) => {
     const establishments = (values.establishments || [])
       .map(e => e['establishment-name'])
       .filter(e => e !== primaryEstablishment);
-    const text = establishments.length
+    const text = (values['other-establishments'] && establishments.length)
       ? establishments.join(', ')
       : 'None';
     document.createParagraph(text).style('body').pageBreak();
