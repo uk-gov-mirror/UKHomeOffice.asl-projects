@@ -145,7 +145,7 @@ const ProjectSummary = ({
           )
         }
         {
-          values.polesList && !!values.polesList.length && (
+          values.poles && values.polesList && !!values.polesList.length && (
             <div className="granted-section">
               <h3>Places other than a licensed establishment (POLEs):</h3>
               <ul>
