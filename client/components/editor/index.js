@@ -30,14 +30,11 @@ const plugins = [
   tablePlugin
 ];
 
-const nullValue = JSON.stringify(Value.fromJSON(initialValue('')));
-
 const serialiseValue = value => {
-  const jsonVal = JSON.stringify(value.toJSON());
-  if (jsonVal === nullValue) {
+  if (!value.document.text) {
     return null;
   }
-  return jsonVal;
+  return value.toJSON();
 };
 
 const normaliseValue = value => {
@@ -45,12 +42,14 @@ const normaliseValue = value => {
   if (!value) {
     return initialValue('');
   }
-  try {
-    // try and parse value
-    value = JSON.parse(value)
-  } catch(e) {
-    // if value is unable to be JSON parsed, set it as a single text node
-    value = initialValue(value);
+  if (typeof value === 'string') {
+    try {
+      // try and parse value
+      value = JSON.parse(value)
+    } catch(e) {
+      // if value is unable to be JSON parsed, set it as a single text node
+      value = initialValue(value);
+    }
   }
   // if structure is empty and incomplete, init with empty value
   if (get(value, 'document.nodes.length') === 0) {
