@@ -32,13 +32,20 @@ class DiffWindow extends React.Component {
     this.setState({ active })
   }
 
+  parseValue(val) {
+    if (typeof val === 'string') {
+      val = JSON.parse(val || '{}');
+    }
+    return Value.fromJSON(val || {});
+  }
+
   hasContentChanges(a, b, type) {
     if (type !== 'texteditor') {
       return true;
     }
 
-    const before = Value.fromJSON(JSON.parse(a || '{}'));
-    const after = Value.fromJSON(JSON.parse(b || '{}'));
+    const before = this.parseValue(a);
+    const after = this.parseValue(b);
 
     return before.document.text !== after.document.text;
   }
@@ -80,8 +87,8 @@ class DiffWindow extends React.Component {
       case 'texteditor':
 
         try {
-          before = Value.fromJSON(JSON.parse(a || '{}'));
-          after = Value.fromJSON(JSON.parse(b || '{}'));
+          before = this.parseValue(a);
+          after = this.parseValue(b);
         } catch (e) {
           return { added: [], removed: [] };
         }

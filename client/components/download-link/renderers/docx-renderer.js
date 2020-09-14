@@ -362,12 +362,13 @@ export default (application, sections, values, updateImageDimensions) => {
   }
 
   const renderTextEditor = (doc, value, noSeparator) => {
-    let content;
-
-    try {
-      content = JSON.parse(value);
-    } catch(e) {
-      return renderText(doc, value, noSeparator);
+    let content = value;
+    if (typeof value === 'string') {
+      try {
+        content = JSON.parse(value);
+      } catch(e) {
+        return renderText(doc, value, noSeparator);
+      }
     }
     const nodes = content.document.nodes;
 
