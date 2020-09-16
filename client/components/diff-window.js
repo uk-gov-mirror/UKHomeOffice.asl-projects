@@ -6,7 +6,7 @@ import { diffWords, diffArrays } from 'diff';
 import last from 'lodash/last';
 import { Warning } from '@ukhomeoffice/react-components';
 import { fetchQuestionVersions } from '../actions/projects';
-import { mapSpecies, mapPermissiblePurpose } from '../helpers';
+import { mapSpecies, mapPermissiblePurpose, mapAnimalQuantities } from '../helpers';
 import Modal from './modal';
 import ReviewField from './review-field'
 import Tabs from './tabs';
@@ -231,7 +231,24 @@ class DiffWindow extends React.Component {
               <em>{ DEFAULT_LABEL }</em>
             </p>
           );
-
+      case 'animal-quantities':
+        if (value === undefined) {
+          value = mapAnimalQuantities(this.props.project, this.props.name);
+        }
+        return (
+          <ReviewField
+            key={value + this.state.active}
+            {...this.props}
+            name={this.props.name}
+            decorateNode={this.decorateNode(parts)}
+            renderDecoration={this.renderDecoration}
+            type={this.props.type}
+            value={value}
+            project={value}
+            diff={true}
+            noComments
+          />
+        )
       default:
         return (
           <ReviewField

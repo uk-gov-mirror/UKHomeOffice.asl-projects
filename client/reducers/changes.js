@@ -9,6 +9,9 @@ const changedItems = (state = [], action) => {
   const paths = action.split('.').map((_, i, arr) => arr.slice(0, i + 1).join('.'));
 
   return paths.reduce((arr, path) => {
+    if (path.match(/^reduction-quantities-/)) {
+      path = 'reduction-quantities';
+    }
     return arr.includes(path) ? arr : [ ...arr, path ];
   }, state);
 };
