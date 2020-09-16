@@ -58,6 +58,17 @@ export function mapPermissiblePurpose(project) {
   ];
 }
 
+export function mapAnimalQuantities(project, name) {
+  const species = [].concat(project.species).concat(project['species-other']).filter(Boolean);
+  return species
+    .reduce((obj, key) => {
+      return {
+        ...obj,
+        [`${name}-${key}`]: project[`${name}-${key}`]
+      };
+    }, { species });
+}
+
 export function mapSpecies(project) {
   const species = project.species || [];
   const other = project['species-other'] || [];

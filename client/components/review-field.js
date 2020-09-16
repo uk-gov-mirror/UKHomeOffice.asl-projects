@@ -268,9 +268,9 @@ class ReviewField extends React.Component {
 
 }
 
-const mapStateToProps = ({ project, settings }) => {
+const mapStateToProps = ({ project, settings }, props) => {
   return {
-    project,
+    project: props.project || project,
     settings
   };
 }
