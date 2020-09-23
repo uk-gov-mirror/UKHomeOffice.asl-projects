@@ -10,10 +10,15 @@ import { showMessage, throwError } from './messages';
 import sendMessage from './messaging';
 import { getConditions } from '../helpers';
 import cleanProtocols from '../helpers/clean-protocols';
+import sha from 'sha.js';
 
 const CONDITIONS_FIELDS = ['conditions', 'retrospectiveAssessment'];
 
-const jsondiff = require('jsondiffpatch').create({ objectHash: obj => obj.id });
+const jsondiff = require('jsondiffpatch').create({
+  objectHash: obj => {
+    return obj.id || sha('sha256').update(obj).digest('hex');
+  }
+});
 
 export function loadProjects() {
   return dispatch => {
