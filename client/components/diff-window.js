@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
 import { Value } from 'slate';
-import { diffWords, diffArrays } from 'diff';
+import { diffWords, diffSentences, diffArrays } from 'diff';
 import last from 'lodash/last';
 import { Warning } from '@ukhomeoffice/react-components';
 import { fetchQuestionVersions } from '../actions/projects';
@@ -92,8 +92,11 @@ class DiffWindow extends React.Component {
         } catch (e) {
           return { added: [], removed: [] };
         }
-
-        diffs = diffWords(before.document.text, after.document.text);
+        if (before.document.text.length < 5000 && after.document.text.length < 5000) {
+          diffs = diffWords(before.document.text, after.document.text);
+        } else {
+          diffs = diffSentences(before.document.text, after.document.text);
+        }
 
         removed = diffs.reduce((arr, d) => {
           // ignore additions
