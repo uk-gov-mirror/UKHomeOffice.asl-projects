@@ -7,6 +7,32 @@
   border-radius: 0px;
   margin-bottom: $govuk-gutter;
 
+  .image-wrapper {
+    position: relative;
+
+    .image-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(255, 255, 255, 0.4);
+      display: none;
+
+      button {
+        position: absolute;
+        top: $govuk-gutter;
+        right: $govuk-gutter;
+      }
+    }
+  }
+
+  &:not(.readonly) {
+    .image-wrapper:hover .image-overlay {
+      display: block;
+    }
+  }
+
   &.focus {
     outline: 3px solid $ho-focus;
     outline-offset: 0;
