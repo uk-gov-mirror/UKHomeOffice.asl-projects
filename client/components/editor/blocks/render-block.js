@@ -1,7 +1,24 @@
 import React from 'react';
+import { Button } from '@ukhomeoffice/react-components';
+
+function Image(props) {
+  return (
+    <div className="image-wrapper">
+      <div className="image-overlay">
+        <Button onClick={props.remove} className="button-warning">Remove image</Button>
+      </div>
+      <img {...props} />
+    </div>
+  )
+}
 
 const renderBlock = (props, editor, next) => {
   const { attributes, children, node, isFocused } = props;
+
+  function remove() {
+    editor.removeNodeByKey(node.key);
+  }
+
   switch (node.type) {
     case 'paragraph':
       return <p {...attributes}>{children}</p>;
@@ -13,7 +30,7 @@ const renderBlock = (props, editor, next) => {
       return <h2 {...attributes}>{children}</h2>;
     case 'image': {
       const src = node.data.get('src');
-      return <img src={src} {...attributes} selected={isFocused} />;
+      return <Image src={src} {...attributes} selected={isFocused} remove={remove} />
     }
     case 'block': {
       return <span {...attributes}>{children}</span>
