@@ -5,10 +5,12 @@ import classnames from 'classnames'
 import { Button } from '@ukhomeoffice/react-components';
 
 import isUndefined from 'lodash/isUndefined';
+import pickBy from 'lodash/pickBy';
 
 import ReviewFields from '../../../components/review-fields';
 import Repeater from '../../../components/repeater';
 import Fieldset from '../../../components/fieldset';
+import NewComments from '../../../components/new-comments';
 import ChangedBadge from '../../../components/changed-badge';
 
 class Step extends Component {
@@ -79,7 +81,12 @@ class Step extends Component {
   }
 
   render() {
-    const { prefix, index, fields, values, updateItem, length, editable, deleted, isReviewStep, protocol } = this.props;
+    const { prefix, index, fields, values, updateItem, length, editable, deleted, isReviewStep, protocol, newComments } = this.props;
+
+    const re = new RegExp(`^steps.${values.id}\\.`);
+    const relevantComments = Object.values(
+      pickBy(newComments, (value, key) => key.match(re))
+    ).reduce((total, comments) => total + (comments || []).length, 0);
 
     const completed = !editable || values.completed;
     return (
@@ -87,6 +94,7 @@ class Step extends Component {
         className={classnames('step', { completed, editable })}
         ref={this.step}
       >
+        <NewComments comments={relevantComments} />
         <ChangedBadge fields={[ prefix.substr(0, prefix.length - 1) ]} protocolId={protocol.id} />
         <Fragment>
           {
