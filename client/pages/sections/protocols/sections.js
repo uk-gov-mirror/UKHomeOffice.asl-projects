@@ -135,7 +135,7 @@ const ProtocolSections = ({ sections, protocolState, editable, newComments, ...p
       sectionNames.map((section, sectionIndex) => (
         <ExpandingPanel key={section} title={getTitle(sections[section], newComments, props.values)} className={section.toLowerCase()}>
           {
-            getSection(section, { ...props, protocolState, editable, ...sections[section], sectionsLength: size(sections), sectionIndex })
+            getSection(section, { ...props, protocolState, editable, ...sections[section], sectionsLength: size(sections), sectionIndex, newComments })
           }
         </ExpandingPanel>
       ))
