@@ -12,6 +12,7 @@ export default function Training(props) {
   const form = useRef(null);
   const history = useHistory();
   const trainingComplete = project['training-complete'];
+  const fields = readonly ? props.fields.filter(f => f.name !== 'training-complete') : props.fields;
 
   function onSubmit(e) {
     e.preventDefault();
@@ -31,7 +32,7 @@ export default function Training(props) {
       <TrainingSummary certificates={readonly ? project.training : training} />
       {
         readonly
-          ? <ReviewFields {...props} />
+          ? <ReviewFields {...props} fields={fields} />
           : (
             <form
               ref={form}
