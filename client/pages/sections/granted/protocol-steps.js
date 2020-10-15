@@ -47,7 +47,16 @@ const Steps = ({ values, fields, pdf, prefix }) => {
     if (!title) {
       return untitled;
     }
-    const value = Value.fromJSON(JSON.parse(title));
+
+    if (typeof title === 'string') {
+      try {
+        title = JSON.parse(title);
+      } catch (e) {
+        return untitled;
+      }
+    }
+
+    const value = Value.fromJSON(title);
     return value.document.text && value.document.text !== ''
       ? value.document.text
       : untitled;
