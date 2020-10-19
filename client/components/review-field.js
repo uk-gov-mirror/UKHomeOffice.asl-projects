@@ -212,6 +212,13 @@ class ReviewField extends React.Component {
       </p>
     }
 
+    if (this.props.type === 'additional-availability') {
+      const item = (this.props.project.establishments || []).find(e => e['establishment-id'] === this.props.value);
+      if (item) {
+        return <p>{item.name || item['establishment-name']}</p> // establishment-name is legacy
+      }
+    }
+
     if (this.props.type === 'animal-quantities') {
       const species = [
         ...flatten((this.props.project.species || []).map(s => {
@@ -261,7 +268,7 @@ class ReviewField extends React.Component {
     }
     return (
       <p>
-        <em>No answer provided.</em>
+        <em>{this.props.nullValue || 'No answer provided.'}</em>
       </p>
     );
   }

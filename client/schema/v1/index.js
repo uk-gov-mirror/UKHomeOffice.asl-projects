@@ -230,9 +230,11 @@ export default () => ({
             confirmRemove: confirmProtocolsAffected('remove', 'locations', 'establishment', 'establishment-name'),
             fields: [
               {
-                name: 'establishment-name',
-                label: 'Additional establishment name',
-                type: 'text',
+                name: 'establishment-id',
+                label: 'Select another establishment where work will be carried out',
+                hint: 'Note, establishment administrators will be able to see this application.',
+                readOnlyWarning: 'Only the licence holder can agree to disclose their licence to another establishment.',
+                type: 'additional-availability',
                 repeats: true
               },
               {

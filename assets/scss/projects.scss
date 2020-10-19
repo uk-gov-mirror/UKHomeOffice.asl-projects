@@ -71,6 +71,10 @@ html.modal-open, html.modal-open body {
     }
   }
 
+  .panel .govuk-inset-text {
+    border-color: $govuk-border-colour;
+  }
+
   .application-summary {
     h2.section-heading {
       margin-bottom: 10px;

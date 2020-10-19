@@ -16,6 +16,7 @@ import {
   DateInput
 } from '@ukhomeoffice/react-components';
 
+import AdditionalAvailability from './additional-availability';
 import OtherSpecies from './other-species-selector';
 import SpeciesSelector from './species-selector';
 import LegacySpeciesSelector from './legacy-species-selector';
@@ -109,6 +110,9 @@ class Field extends Component {
     }
     if (this.props.type === 'establishment-selector') {
       return <EstablishmentSelector {...this.props} value={value} label={label} hint={hint} />;
+    }
+    if (this.props.type === 'additional-availability') {
+      return <AdditionalAvailability {...this.props} value={value} label={label} hint={hint} />;
     }
     if (this.props.type === 'legacy-species-selector') {
       return <LegacySpeciesSelector {...this.props} value={value} label={label} hint={hint} />;
