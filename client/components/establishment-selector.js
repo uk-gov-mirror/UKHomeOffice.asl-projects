@@ -17,13 +17,16 @@ export default function EstablishmentSelector({ value, onFieldChange, review, di
     establishment,
     transferInProgress,
     readonly,
-    project,
+    project: {
+      establishment: projectEstablishment,
+      ...project
+    },
     isGranted,
     legacyGranted
   } = useSelector(state => state.application, shallowEqual);
 
   if (isGranted || legacyGranted) {
-    return <p>{establishment.name}</p>
+    return <p>{projectEstablishment.name}</p>
   }
 
   const [localValue, setLocalValue] = useState(value);
@@ -57,7 +60,7 @@ export default function EstablishmentSelector({ value, onFieldChange, review, di
 
   const displayEstablishment = localValue
     ? establishments.find(e => e.id === localValue) || {}
-    : establishment;
+    : projectEstablishment;
 
   const establishmentName = displayEstablishment.name || 'Another establishment';
 

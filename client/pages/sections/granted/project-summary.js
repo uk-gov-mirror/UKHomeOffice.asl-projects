@@ -138,7 +138,7 @@ const ProjectSummary = ({
               <h3>Additional establishments</h3>
               <ul>
                 {
-                  values.establishments.map((e, i) => <li key={i}><strong>{e['establishment-name']}</strong></li>)
+                  values.establishments.map((e, i) => <li key={i}><strong>{e.name || e['establishment-name']}</strong></li>)
                 }
               </ul>
             </div>
