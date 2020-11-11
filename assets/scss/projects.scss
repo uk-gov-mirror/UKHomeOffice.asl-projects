@@ -97,6 +97,17 @@ html.modal-open, html.modal-open body {
     }
   }
 
+  .additional-establishments-radios {
+    > .govuk-form-group {
+      margin-bottom: 0;
+    }
+
+    > a {
+      display: block;
+      margin-bottom: $govuk-gutter;
+    }
+  }
+
   .modal {
     z-index: 100;
     position: fixed;

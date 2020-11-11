@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { useSelector } from 'react-redux';
-import { RadioGroup, Warning } from '@ukhomeoffice/react-components';
+import { RadioGroup, CheckboxGroup, Warning } from '@ukhomeoffice/react-components';
 import { Details, Inset } from '@asl/components';
 import Review from './review';
 
@@ -36,9 +36,24 @@ export default function AdditionalAvailability(props) {
 
   const freeTextSet = !!estName && !value;
 
+  function deselect(e) {
+    e.preventDefault()
+    props.onChange(null);
+  }
+
   const label = freeTextSet
     ? 'Confirm this establishment by selecting it from the list'
     : props.label
+
+  const reveal = (
+    <p>
+      <Details summary="Why is the establishment I need not listed?">
+        <Inset>
+          <p>You need to be invited to join an establishment before you can request to do work there. Contact your chosen establishment for an invite.</p>
+        </Inset>
+      </Details>
+    </p>
+  );
 
   return (
     <Fragment>
@@ -66,35 +81,48 @@ export default function AdditionalAvailability(props) {
         newApplication && <Warning><p>This draft will become instantly visible to staff with oversight of projects at this establishment. Be careful of sharing sensitive information.</p></Warning>
       }
       {
-        availableEstablishments.length > 0 && (
-          <RadioGroup
+        availableEstablishments.length === 1 && (
+          <CheckboxGroup
             {...props}
             label={label}
             value={value}
+            hint={reveal}
             options={[
               {
-                label: 'Undecided',
-                value: false
-              },
-              ...availableEstablishments.map(est => {
-                return {
-                  label: est.name,
-                  value: est.id
-                };
-              })
+                label: availableEstablishments[0].name,
+                value: availableEstablishments[0].id
+              }
             ]}
             onChange={e => {
-              const val = e.target.value === 'false' ? false : parseInt(e.target.value, 10);
+              const val = e.target.checked ? parseInt(e.target.value, 10) : null
               props.onChange(val);
             }}
           />
         )
       }
-      <Details summary="Why is the establishment I need not listed?">
-        <Inset>
-          <p>You need to be invited to join an establishment before you can request to do work there. Contact your chosen establishment for an invite.</p>
-        </Inset>
-      </Details>
+      {
+        availableEstablishments.length > 1 && (
+          <div className="additional-establishments-radios">
+            <RadioGroup
+              {...props}
+              label={label}
+              value={value}
+              hint={reveal}
+              options={availableEstablishments.map(est => {
+                return {
+                  label: est.name,
+                  value: est.id
+                };
+              })}
+              onChange={e => {
+                const val = parseInt(e.target.value, 10);
+                props.onChange(val);
+              }}
+            />
+            <a href="#" onClick={deselect}>Clear selection</a>
+          </div>
+        )
+      }
     </Fragment>
   )
 }
