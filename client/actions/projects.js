@@ -376,8 +376,8 @@ const debouncedSyncProject = debounce((...args) => {
 
 export const ajaxSync = props => {
   return (dispatch, getState) => {
-    const { project, application: { establishment } } = getState();
-    const newState = cleanProtocols(project, props, establishment);
+    const { project, application: { establishment, establishments } } = getState();
+    const newState = cleanProtocols(project, props, establishment, establishments);
 
     dispatch(updateProject(newState));
     return debouncedSyncProject(dispatch, getState);

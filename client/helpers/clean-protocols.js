@@ -1,7 +1,7 @@
 import intersection from 'lodash/intersection';
 import getLocations from './get-locations';
 
-export default function cleanProtocols (state, props = {}, establishment) {
+export default function cleanProtocols (state, props = {}, establishment, establishments) {
   const project = { ...state, ...props };
 
   if (!props.objectives && !props.establishments && !props.polesList) {
@@ -10,7 +10,7 @@ export default function cleanProtocols (state, props = {}, establishment) {
 
   project.protocols = project.protocols || [];
 
-  const locations = getLocations(project, establishment);
+  const locations = getLocations(project, establishment, establishments);
   const objectives = (project.objectives || []).map(o => o.title);
 
   project.protocols.forEach(protocol => {
