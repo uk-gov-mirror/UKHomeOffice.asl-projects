@@ -38,7 +38,7 @@ export default function AdditionalAvailability(props) {
 
   function deselect(e) {
     e.preventDefault()
-    props.onChange(null);
+    props.updateItem({ [name]: null, 'name': null });
   }
 
   const label = freeTextSet
@@ -94,8 +94,14 @@ export default function AdditionalAvailability(props) {
               }
             ]}
             onChange={e => {
-              const val = e.target.checked ? parseInt(e.target.value, 10) : null
-              props.onChange(val);
+              const val = e.target.checked ? parseInt(e.target.value, 10) : null;
+              const updates = {
+                [name]: val,
+                name: val
+                  ? (availableEstablishments.find(e => e.id === val) || {}).name
+                  : null
+              };
+              props.updateItem(updates);
             }}
           />
         )
@@ -116,7 +122,8 @@ export default function AdditionalAvailability(props) {
               })}
               onChange={e => {
                 const val = parseInt(e.target.value, 10);
-                props.onChange(val);
+                const item = availableEstablishments.find(e => e.id === val);
+                props.updateItem({ [name]: val, 'name': item.name });
               }}
             />
             <a href="#" onClick={deselect}>Clear selection</a>

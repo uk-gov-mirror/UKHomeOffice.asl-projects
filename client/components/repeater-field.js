@@ -42,6 +42,7 @@ export function Item({
           prefix={prefix}
           noComments={noComments}
           onFieldChange={(key, value) => updateItem({ [key]: value })}
+          updateItem={updateItem}
         />
       </div>
     </Fragment>

@@ -22,8 +22,8 @@ const LocationSelector = ({
   </div>
 )
 
-const mapStateToProps = ({ project, application: { establishment, establishments } }) => ({
-  locations: getLocations(project, establishment, establishments)
+const mapStateToProps = ({ project, application: { establishment } }) => ({
+  locations: getLocations(project, establishment)
 });
 
 export default connect(mapStateToProps)(LocationSelector);
