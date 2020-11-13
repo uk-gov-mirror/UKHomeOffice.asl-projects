@@ -3,7 +3,7 @@ import React from 'react';
 import ToggleEdit from './toggle-edit';
 import Field from './field';
 
-const Fieldset = ({ fields, onFieldChange, values, noComments, altLabels, prefix = '' }) => (
+const Fieldset = ({ fields, onFieldChange, values, noComments, altLabels, prefix = '', updateItem }) => (
   <fieldset>
     {
       fields.map(f => {
@@ -15,6 +15,7 @@ const Fieldset = ({ fields, onFieldChange, values, noComments, altLabels, prefix
           values={ values }
           prefix={ prefix }
           onChange={ value => onFieldChange(f.name, value) }
+          updateItem={updateItem}
           onFieldChange={onFieldChange}
           noComments={noComments}
           altLabels={altLabels}
