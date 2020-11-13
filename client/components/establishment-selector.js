@@ -53,7 +53,8 @@ export default function EstablishmentSelector({ value, onFieldChange, review, di
         'transfer-of-animals-complete': false,
         'protocols-complete': false,
         'experience-complete': false,
-        transferToEstablishment: localValue
+        transferToEstablishment: localValue,
+        transferToEstablishmentName: (establishments.find(e => e.id === localValue) || {}).name
       });
     }
   }, [localValue]);
