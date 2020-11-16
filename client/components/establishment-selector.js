@@ -66,7 +66,7 @@ export default function EstablishmentSelector({ value, onFieldChange, review, di
   const establishmentName = displayEstablishment.name || 'Another establishment';
 
   if (review) {
-    return <p>{establishmentName}</p>
+    return <p>{project.transferToEstablishmentName || establishmentName}</p>
   }
 
   if (draft && canTransferDraft) {
