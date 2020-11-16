@@ -431,6 +431,10 @@ export default (application, sections, values, updateImageDimensions) => {
     }
   };
 
+  const renderAdditionalEstablishment = (doc, field, values, value, noSeparator) => {
+    return renderText(doc, values.name || values['establishment-name'], noSeparator);
+  }
+
   const renderKeywords = (doc, values, value, noSeparator) => {
     const keywords = value || [];
 
@@ -483,9 +487,10 @@ export default (application, sections, values, updateImageDimensions) => {
     }
 
     if (field.type === 'location-selector') {
+      const est = project.transferToEstablishmentName || application.establishment.name;
       const options = [
-        ...(application.establishment ? [application.establishment.name] : []),
-        ...(project.establishments || []).map(e => e['establishment-name']),
+        ...(est || []),
+        ...(project.establishments || []).map(e => e.name || e['establishment-name']),
         ...(project.polesList || []).map(p => p.title)
       ];
       value = value.filter(v => options.includes(v));
@@ -662,6 +667,9 @@ export default (application, sections, values, updateImageDimensions) => {
       case 'radio':
         return renderRadio(doc, field, values, value, noSeparator);
 
+      case 'additional-availability':
+        return renderAdditionalEstablishment(doc, field, values, value, noSeparator);
+
       case 'repeater':
         return (value || []).map(item => renderFields(doc, field, item, field.fields, project))
 
@@ -820,7 +828,7 @@ export default (application, sections, values, updateImageDimensions) => {
 
     document.createParagraph('Additional establishments').style('Question');
     const establishments = (values.establishments || [])
-      .map(e => e['establishment-name'])
+      .map(e => e.name || e['establishment-name'])
       .filter(e => e !== primaryEstablishment);
     const text = (values['other-establishments'] && establishments.length)
       ? establishments.join(', ')
