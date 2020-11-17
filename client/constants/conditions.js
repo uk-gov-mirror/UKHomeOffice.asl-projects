@@ -36,6 +36,11 @@ export default {
           title: 'Re-use',
           requiresEditing: true,
           content: '<<<INSERT animal type(s) HERE>>> that have been kept alive and maintained under the supervision of the NVS at <<<INSERT place HERE>>> may be re-used in this protocol, provided that all criteria in section 14 of the Animals (Scientific Procedures) Act and in this project licence are fulfilled.'
+        },
+        {
+          title: 'Re-use',
+          requiresEditing: true,
+          content: '<<<INSERT animal type(s) HERE>>> that have been kept alive and maintained under the supervision of a veterinary surgeon or other suitably qualified person at <<<INSERT place HERE>>> may be re-used in this protocol, provided that all criteria in section 14 of the Animals (Scientific Procedures) Act and in this project licence are fulfilled.'
         }
       ]
     },
@@ -58,6 +63,11 @@ export default {
           title: 'Continued use off a protocol on to another protocol in this project',
           requiresEditing: true,
           content: '<<<INSERT animal type(s) HERE>>> may continue to be used on <<<INSERT protocol number(s) HERE>>> of this project.'
+        },
+        {
+          title: 'Continued use off a protocol on to another protocol in this project',
+          requiresEditing: true,
+          content: '<<<INSERT animal type(s) HERE>>> may continue to be used on protocol <<<INSERT protocol number(s) HERE>>> of this project.'
         }
       ]
     },
@@ -91,6 +101,10 @@ export default {
         {
           title: 'Marmosets',
           content: 'Standard condition 13(c) of this licence shall not apply in cases when marmosets sourced from a self-sustaining colony are not suitable for the purpose of the programme of work specified in the licence as justified in the project licence application.'
+        },
+        {
+          title: 'Marmosets',
+          content: 'Standard condition 13(c) of this licence shall not apply in cases when marmosets that are offspring of marmosets bred in captivity or sourced from a self-sustaining colony are not suitable for the purpose of the programme of work specified in the licence, as justified in the licence.'
         }
       ]
     },
@@ -222,6 +236,14 @@ Genetically altered animals may not be re-homed.`
           content: `<<<INSERT animal type(s) HERE>>> may be sent directly to slaughter at a registered slaughterhouse at the end of their use provided that:
 * The animal is healthy and meets the commercial requirements for meat hygiene to enable them to enter the food chain. They must not be infected with any notifiable disease and comply with the relevant substance withdrawal times;
 * While kept alive at pending transport to the slaughterhouse, the animal is kept in an appropriate social group under the supervision of the NVS;
+* The animal is appropriately identified and is transported in accordance with the relevant legalisation.`
+        },
+        {
+          title: 'Commercial slaughter',
+          requiresEditing: true,
+          content: `<<<INSERT animal type(s) HERE>>> may be sent directly to slaughter at a registered slaughterhouse at the end of their use provided that:
+* The animal is healthy and meets the commercial requirements for meat hygiene to enable them to enter the food chain. They must not be infected with any notifiable disease and comply with the relevant substance withdrawal times;
+* While kept alive at <<<INSERT place HERE>>> pending transport to the slaughterhouse, the animal is kept in an appropriate social group under the supervision of a veterinary surgeon;
 * The animal is appropriately identified and is transported in accordance with the relevant legalisation.`
         }
       ]
