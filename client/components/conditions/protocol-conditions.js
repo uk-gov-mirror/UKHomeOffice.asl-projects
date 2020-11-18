@@ -10,7 +10,9 @@ function ProtocolConditions(props) {
   const [adding, setAdding] = useState(false);
   const [updating, setUpdating] = useState(false);
 
-  const conditions = (props.conditions || []).filter(c => c.type === props.type).filter(c => !props.isGranted || !c.deleted);
+  const conditions = (props.conditions || [])
+    .filter(c => c.type === props.type)
+    .filter(c => props.editConditions || !c.deleted);
 
   function handleSave(val) {
     setAdding(false);
@@ -74,6 +76,6 @@ function ProtocolConditions(props) {
   )
 }
 
-export default connect(({ application: { editConditions, isGranted } }) => ({ editConditions, isGranted }), (dispatch, { type, values: { id } }) => ({
+export default connect(({ application: { editConditions } }) => ({ editConditions }), (dispatch, { type, values: { id } }) => ({
   saveConditions: conditions => dispatch(updateConditions(type, conditions, id))
 }))(ProtocolConditions);
