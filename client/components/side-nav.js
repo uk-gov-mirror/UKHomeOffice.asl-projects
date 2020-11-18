@@ -50,7 +50,7 @@ const SideNav = ({ schemaVersion, project, isGranted, activeSection, ...props })
               const open = activeSection && section.subsections[activeSection];
               const title = <Fragment>
                 <ChangedBadge fields={getFieldsForSection(section, project)} noLabel />
-                <span className="indent">{section.title}</span>
+                <span className="indent">{section.subtitle || section.title}</span>
               </Fragment>
               return (
                 <ExpandingPanel key={key} title={title} open={open}>
