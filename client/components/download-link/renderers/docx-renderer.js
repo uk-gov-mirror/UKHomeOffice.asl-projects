@@ -761,9 +761,7 @@ export default (application, sections, values, updateImageDimensions) => {
   };
 
   const renderSubsection = (doc, subsection, values) => {
-    const sectionTitle = new Paragraph(subsection.title).style('SectionTitle');
-
-    doc.addParagraph(sectionTitle);
+    doc.createParagraph(subsection.title).heading2();
 
     if(subsection.name === 'protocol' || subsection.name === 'protocols') {
       renderProtocolsSection(doc, subsection, values);
@@ -773,6 +771,13 @@ export default (application, sections, values, updateImageDimensions) => {
   };
 
   const renderSection = (doc, section, values) => {
+    if (section.title) {
+      const sectionTitle = new Paragraph(section.title).style('SectionTitle');
+      doc.addParagraph(sectionTitle);
+    }
+    if (section.subtitle) {
+      doc.createParagraph(section.subtitle).heading1();
+    }
     Object.values(section.subsections).filter(s => !s.show || s.show(values)).forEach(
       subsection => renderSubsection(doc, subsection, values)
     );
