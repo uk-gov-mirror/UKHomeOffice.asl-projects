@@ -19,15 +19,6 @@ html.modal-open, html.modal-open body {
 }
 
 #ppl-drafting-tool {
-  .page-header {
-    background-color: $background;
-
-    h2, h3 {
-      margin-bottom: $govuk-gutter/4;
-      font-weight: normal;
-    }
-  }
-
   .protocols-summary {
     // 7th child is the rowspan column appearing right after a non rowspan col
     th:nth-child(7),
@@ -992,18 +983,6 @@ html.modal-open, html.modal-open body {
     margin-bottom: $govuk-gutter;
 
     > .govuk-button {
-      margin-bottom: 0;
-    }
-  }
-
-  .download-header .page-title {
-    h1 {
-      font-weight: normal;
-      margin-bottom: 5px;
-    }
-
-    h2 {
-      font-weight: normal;
       margin-bottom: 0;
     }
   }

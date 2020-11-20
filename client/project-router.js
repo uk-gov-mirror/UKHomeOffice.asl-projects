@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { useSelector, shallowEqual } from 'react-redux'
-import { DownloadHeader } from '@asl/components';
+import { DocumentHeader, Link } from '@asl/components';
 
 import ScrollToTop from './components/scroll-to-top';
 import SyncHandler from './components/sync-handler';
 import Section from './pages/section';
 import Project from './pages/project';
 import ProtocolSummary from './pages/sections/protocols/summary-table';
+
+import { formatDate } from './helpers';
+import { DATE_FORMAT } from './constants';
 
 const selector = ({
   project: version,
@@ -16,7 +19,8 @@ const selector = ({
     basename,
     drafting,
     isGranted,
-    legacyGranted
+    legacyGranted,
+    establishment
   }
 }) => {
   return {
@@ -25,7 +29,8 @@ const selector = ({
     basename,
     drafting,
     isGranted,
-    legacyGranted
+    legacyGranted,
+    establishment
   };
 };
 
@@ -36,8 +41,7 @@ const ProjectRouter = () => {
     version,
     basename,
     drafting,
-    isGranted,
-    legacyGranted
+    establishment
   } = useSelector(selector, shallowEqual);
 
   function toggleStatusShowing() {
@@ -71,33 +75,77 @@ const ProjectRouter = () => {
     };
   });
 
-  const downloadBasename = basename.replace(/\/edit$/, '');
+  const versionModel = project.versions.find(v => v.id === version.id);
+
+  const isApplication = project.status === 'inactive';
+  const isAmendment = project.status === 'active' && versionModel.status !== 'granted';
+
+  const title = isApplication
+    ? 'Project licence application'
+    : (isAmendment ? 'Project licence amendment' : 'Project licence');
+
+  const docxType = isApplication
+    ? 'application'
+    : (isAmendment ? 'amendment' : 'application');
 
   return (
     <BrowserRouter basename={basename}>
       <ScrollToTop>
         <SyncHandler />
-        <DownloadHeader
-          title={version.title || 'Untitled project'}
-          subtitle="Project licence"
-          basename={downloadBasename}
-          licenceStatus={ (project.status === 'active' && !(isGranted || legacyGranted)) ? 'inactive' : project.status }
-          showAllDownloads={true}
+        <DocumentHeader
+          title={title}
+          subtitle={version.title || 'Untitled project'}
+          detailsLabel="details and downloads"
+          backLink={<Link page="project.read" label="Go to project overview" establishmentId={establishment.id} projectId={project.id} />}
         >
           <dl>
             <dt>Project title</dt>
             <dd>{version.title}</dd>
 
-            <dt>Project licence holder</dt>
+            <dt>Licence holder</dt>
             <dd>{`${project.licenceHolder.firstName} ${project.licenceHolder.lastName}`}</dd>
+
+            <dt>Licence number</dt>
+            <dd>{project.licenceNumber || '-'}</dd>
 
             <dt>Primary establishment</dt>
             <dd>{project.establishment.name}</dd>
 
-            <dt>Project licence number</dt>
-            <dd>{project.licenceNumber}</dd>
+            { project.expiryDate &&
+              <Fragment>
+                <dt>Expiry date</dt>
+                <dd>{formatDate(project.expiryDate, DATE_FORMAT.long)}</dd>
+              </Fragment>
+            }
+
+            { project.raDate &&
+              <Fragment>
+                <dt>Retrospective assessment due</dt>
+                <dd>{formatDate(project.raDate, DATE_FORMAT.long)}</dd>
+              </Fragment>
+            }
+
+            { project.amendedDate &&
+              <Fragment>
+                <dt>Last amended</dt>
+                <dd>{formatDate(project.amendedDate, DATE_FORMAT.long)}</dd>
+              </Fragment>
+            }
+
+            <dt>Downloads</dt>
+            <dd>
+              <ul>
+                <li><Link page="projectVersion.pdf" label="Download licence as a PDF" establishmentId={establishment.id} projectId={project.id} versionId={version.id} /></li>
+                {
+                  (isApplication || isAmendment) &&
+                  <li>
+                    <Link page="projectVersion.docx" label={`Download ${docxType} as a DOCX`} establishmentId={establishment.id} projectId={project.id} versionId={version.id} />
+                  </li>
+                }
+              </ul>
+            </dd>
           </dl>
-        </DownloadHeader>
+        </DocumentHeader>
 
         <Switch>
           <Route path="/protocol-summary" component={ProtocolSummary} />
