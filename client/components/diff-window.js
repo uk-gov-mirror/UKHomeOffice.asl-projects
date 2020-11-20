@@ -4,6 +4,7 @@ import classnames from 'classnames';
 import { Value } from 'slate';
 import { diffWords, diffSentences, diffArrays } from 'diff';
 import last from 'lodash/last';
+import isEqual from 'lodash/isEqual';
 import { Warning } from '@ukhomeoffice/react-components';
 import { fetchQuestionVersions } from '../actions/projects';
 import { mapSpecies, mapPermissiblePurpose, mapAnimalQuantities } from '../helpers';
@@ -283,13 +284,15 @@ class DiffWindow extends React.Component {
         </div>
       </div>
     }
+    const { first, previous, granted, changedFromFirst, changedFromLatest, changedFromGranted } = this.props;
 
-    const { previous, granted, changedFromLatest, changedFromGranted } = this.props;
+    const baseline = granted || first;
+    const changedFromBaseline = changedFromGranted || changedFromFirst;
+    const baselineLabel = changedFromGranted ? 'Current licence' : 'Initial submission';
+    let before = changedFromBaseline ? baseline : previous;
 
-    let before = changedFromGranted ? granted : previous;
-
-    if (changedFromLatest && changedFromGranted) {
-      before = this.state.active === 0 ? granted : previous;
+    if (changedFromLatest && changedFromBaseline) {
+      before = this.state.active === 0 ? baseline : previous;
     }
 
     const changes = this.diff(before, this.props.value);
@@ -308,11 +311,11 @@ class DiffWindow extends React.Component {
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-one-half">
           {
-            changedFromLatest && changedFromGranted
+            changedFromLatest && changedFromBaseline
               ? (
                 <Fragment>
                   <Tabs active={this.state.active}>
-                    <a href="#" onClick={e => this.selectTab(e, 0)}>Current licence</a>
+                    <a href="#" onClick={e => this.selectTab(e, 0)}>{ baselineLabel }</a>
                     <a href="#" onClick={e => this.selectTab(e, 1)}>Previous version</a>
                   </Tabs>
                   <div className="panel light-grey">
@@ -324,7 +327,7 @@ class DiffWindow extends React.Component {
               )
               : (
                 <Fragment>
-                  <h3>{changedFromGranted ? 'Current licence' : 'Previous version'}</h3>
+                  <h3>{changedFromBaseline ? baselineLabel : 'Previous version'}</h3>
                   <div className="panel light-grey">
                     {
                       this.renderDiff(changes.removed, before)
@@ -377,17 +380,20 @@ const mapStateToProps = ({ questionVersions, project }, { name, value }) => {
       project,
       loading: true,
       changedFromGranted: false,
-      changedFromLatest: false
+      changedFromLatest: false,
+      changedFromFirst: false
     };
   }
-  const { previous, granted, grantedId, previousId } = questionVersions[name];
+  const { first, previous, granted, grantedId, previousId, firstId } = questionVersions[name];
   return {
     loading: false,
+    first,
     previous,
     granted,
     project,
-    changedFromGranted: grantedId && granted !== value,
-    changedFromLatest: grantedId !== previousId && previous !== value
+    changedFromGranted: grantedId && !isEqual(granted, value),
+    changedFromFirst: firstId && !isEqual(first, value),
+    changedFromLatest: grantedId !== previousId && !isEqual(previous, value)
   };
 }
 

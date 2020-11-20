@@ -22,12 +22,13 @@ class Review extends React.Component {
       isGranted,
       showGrantedLabel = true,
       review,
+      changedFromFirst,
       changedFromLatest,
       changedFromGranted,
       hideChanges
     } = this.props;
     const showComments = !this.props.noComments && this.props.type !== 'repeater';
-    const changed = changedFromLatest || changedFromGranted;
+    const changed = changedFromFirst || changedFromLatest || changedFromGranted;
     const showDiffWindow = this.props.readonly && !hideChanges && changed
     const showChanges = !hideChanges && changed;
 
@@ -39,6 +40,7 @@ class Review extends React.Component {
         {
           showChanges && (
             <ChangedBadge
+              changedFromFirst={changedFromFirst}
               changedFromLatest={changedFromLatest}
               changedFromGranted={changedFromGranted}
               protocolId={this.props.protocolId}
@@ -49,8 +51,6 @@ class Review extends React.Component {
           showDiffWindow && (
             <DiffWindow
               {...this.props}
-              changedFromLatest={changedFromLatest}
-              changedFromGranted={changedFromGranted}
               name={`${this.props.prefix}${this.props.name}`}
             />
           )
@@ -85,12 +85,14 @@ class Review extends React.Component {
 }
 
 
-const mapStateToProps = ({ application: { readonly, isGranted, previousProtocols } = {}, changes : { latest = [], granted = [] } = {} }, ownProps) => {
+const mapStateToProps = ({ application: { readonly, isGranted, previousProtocols } = {}, changes : { first = [], latest = [], granted = [] } = {} }, ownProps) => {
   const key = `${ownProps.prefix || ''}${ownProps.name}`;
   const changedFromGranted = granted.includes(key);
   const changedFromLatest = latest.includes(key);
+  const changedFromFirst = first.includes(key);
   return {
     readonly: ownProps.readonly || readonly,
+    changedFromFirst,
     changedFromLatest,
     changedFromGranted,
     isGranted,
