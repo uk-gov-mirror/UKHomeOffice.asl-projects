@@ -166,7 +166,12 @@ class ApplicationSummary extends React.Component {
             }
 
             return <Fragment key={key}>
-              <h2 className="section-heading">{ section.title }</h2>
+              {
+                section.title && <h2 className="section-heading">{ section.title }</h2>
+              }
+              {
+                section.subtitle && <h3 className="section-heading">{ section.subtitle }</h3>
+              }
               <table className="govuk-table">
                 <tbody>
                 {

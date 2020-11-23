@@ -1,4 +1,3 @@
-import NTSSummary from '../../pages/sections/nts';
 import Protocols from '../../pages/sections/protocols';
 import ProtocolsReview from '../../pages/sections/protocols/review';
 import Objectives from '../../pages/sections/objectives';
@@ -38,12 +37,11 @@ import { isTrainingLicence } from '../../helpers';
 
 export default () => ({
   introduction: {
-    title: 'Project introduction',
+    title: 'Introductory details',
     subsections: {
       introduction: {
         title: 'Introductory details',
         grantedTitle: 'Project summary',
-        nts: true,
         granted: {
           order: 0,
           title: 'Project summary',
@@ -55,18 +53,6 @@ export default () => ({
             label: 'What\'s the title of this project?',
             hint: 'Focus on your broad aims and use simple language. For example \'Genes and lifestyle influences on brain ageing\'.',
             type: 'text'
-          },
-          {
-            name: 'project-aim',
-            label: 'What\'s the aim of this project?',
-            hint: 'Keep this to a short one or two sentence summary.',
-            playbackLabel: 'Aim of this project',
-            type: 'texteditor'
-          },
-          {
-            name: 'project-importance',
-            label: 'Why is it important to undertake this work?',
-            type: 'texteditor'
           },
           {
             name: 'training-licence',
@@ -99,12 +85,6 @@ export default () => ({
             ]
           },
           {
-            name: 'keywords',
-            label: 'Key words that describe this project',
-            hint: 'Choose up to 5. For example: cancer, stem cells, therapy.',
-            type: 'keywords'
-          },
-          {
             name: 'duration',
             label: 'What will be the duration of this project?',
             review: 'Project licence duration',
@@ -121,8 +101,289 @@ export default () => ({
       }
     }
   },
+  nts: {
+    title: 'Non technical summary',
+    subsections: {
+      aims: {
+        title: 'Aims',
+        nts: true,
+        fields: [
+          {
+            name: 'project-aim',
+            label: 'What\'s the aim of this project?',
+            hint: 'Keep this to a short one or two sentence summary.',
+            playbackLabel: 'Aim of this project',
+            type: 'texteditor'
+          },
+          {
+            name: 'project-importance',
+            label: 'Why is it important to undertake this work?',
+            type: 'texteditor'
+          },
+          {
+            name: 'keywords',
+            label: 'Key words that describe this project',
+            hint: 'Choose up to 5. For example: cancer, stem cells, therapy.',
+            type: 'keywords'
+          }
+        ]
+      },
+      benefits: {
+        title: 'Benefits',
+        nts: true,
+        fields: [
+          {
+            name: 'benefit-outputs',
+            show: values => !isTrainingLicence(values),
+            label: 'What outputs do you think you will see at the end of this project?',
+            hint: 'Outputs can include new information, publications, or products.',
+            type: 'texteditor'
+          },
+          {
+            name: 'benefit-who',
+            show: values => !isTrainingLicence(values),
+            label: 'Who or what will benefit from these outputs, and how?',
+            hint: 'The impact of these outputs may be seen in the short-term, or they may not be fully realised until you\'ve completed the project. Consider all timescales in your answer.',
+            type: 'texteditor'
+          },
+          {
+            name: 'benefit-service',
+            show: values => !isTrainingLicence(values),
+            label: 'Will this work be offered as a service to others?',
+            type: 'radio',
+            inline: true,
+            className: 'smaller',
+            options: [
+              {
+                label: 'Yes',
+                value: true,
+                reveal: {
+                  name: 'benefit-service-benefits',
+                  label: 'What are the benefits of offering this work as a service?',
+                  type: 'texteditor'
+                }
+              },
+              {
+                label: 'No',
+                value: false
+              }
+            ]
+          },
+          {
+            name: 'training-benefit-future-careers',
+            show: values => isTrainingLicence(values),
+            label: 'How will course attendees use their knowledge or skills in their future careers?',
+            type: 'texteditor'
+          },
+          {
+            name: 'training-benefit-principle-learning-outcomes',
+            show: values => isTrainingLicence(values),
+            label: 'What are the principal learning outcomes from the course?',
+            type: 'texteditor'
+          },
+          {
+            name: 'training-benefit-learning-outcomes-important',
+            show: values => isTrainingLicence(values),
+            label: 'How are these learning outcomes important to the people on the course?',
+            type: 'texteditor'
+          },
+          {
+            name: 'training-benefit-transfer-of-knowledge',
+            show: values => isTrainingLicence(values),
+            label: 'Who or what will benefit from the transfer of knowledge, or acquisition of skills that this course will deliver?',
+            type: 'texteditor'
+          },
+          {
+            name: 'benefit-maximise-outputs',
+            label: 'How will you look to maximise the outputs of this work?',
+            hint: 'For example, collaboration, dissemination of new knowledge, or publication of unsuccessful approaches.',
+            type: 'texteditor'
+          }
+        ]
+      },
+      'project-harms': {
+        title: 'Project harms',
+        nts: true,
+        fields: [
+          {
+            name: 'project-harms-animals',
+            label: 'Explain why you are using these types of animals and your choice of life stages.',
+            type: 'texteditor'
+          },
+          {
+            name: 'project-harms-summary',
+            label: 'Typically, what will be done to an animal used in your project?',
+            hint: 'For example, injections and surgical procedures. Include any relevant information about the duration of experiments and the number of procedures.',
+            type: 'texteditor'
+          },
+          {
+            name: 'project-harms-effects',
+            label: 'What are the expected impacts and/or adverse effects for the animals during your project?',
+            hint: 'Examples can include pain, weight loss, tumours, or abnormal behaviour. State the estimated duration of these effects on an animal.',
+            type: 'texteditor'
+          },
+          {
+            name: 'project-harms-severity',
+            label: 'What are the expected severities and the proportion of animals in each category (per animal type)?',
+            type: 'texteditor'
+          }
+        ]
+      },
+      'fate-of-animals': {
+        title: 'Fate of animals',
+        nts: true,
+        fields: [
+          {
+            name: 'fate-of-animals',
+            label: 'What will happen to animals at the end of this project?',
+            type: 'checkbox',
+            className: 'smaller',
+            options: [
+              {
+                label: 'Killed',
+                value: 'killed'
+              },
+              {
+                label: 'Kept alive',
+                value: 'kept-alive'
+              },
+              {
+                label: 'Set free',
+                value: 'set-free'
+              },
+              {
+                label: 'Rehomed',
+                value: 'rehomed'
+              },
+              {
+                label: 'Used in other projects',
+                value: 'used-in-other-projects'
+              }
+            ]
+          }
+        ]
+      },
+      replacement: {
+        title: 'Replacement',
+        playback: 'project-aim',
+        reviewTitle: '3Rs: Replacement',
+        nts: true,
+        fields: [
+          {
+            name: 'replacement-why',
+            label: 'Why do you need to use animals to achieve the aim of your project?',
+            type: 'texteditor'
+          },
+          {
+            name: 'replacement-alternatives',
+            show: values => !isTrainingLicence(values),
+            label: 'Which non-animal alternatives did you consider for use in this project?',
+            type: 'texteditor'
+          },
+          {
+            name: 'replacement-justification',
+            show: values => !isTrainingLicence(values),
+            label: 'Why were they not suitable?',
+            type: 'texteditor'
+          },
+          {
+            name: 'training-replacement-observation',
+            show: values => isTrainingLicence(values),
+            label: 'Why can\'t your aim be met by observing or by participating in ongoing research or clinical procedures?',
+            type: 'texteditor'
+          }
+        ]
+      },
+      reduction: {
+        title: 'Reduction',
+        reviewTitle: '3Rs: Reduction',
+        nts: true,
+        fields: [
+          {
+            name: 'reduction-quantities',
+            label: 'Enter the estimated number of animals of each type used in this project.',
+            type: 'animal-quantities'
+          },
+          {
+            name: 'reduction-estimation',
+            label: 'How have you estimated the numbers of animals you will use?',
+            hint: 'Do not mention POWER calculations here. If relevant, there will be an opportunity to provide these details elsewhere.',
+            type: 'texteditor'
+          },
+          {
+            name: 'reduction-steps',
+            show: values => !isTrainingLicence(values),
+            label: 'What steps did you take during the experimental design phase to reduce the number of animals being used in this project?',
+            hint: 'You may want to reference online tools (such as the NC3R\'s Experimental Design Assistant) or any relevant regulatory requirements.',
+            type: 'texteditor'
+          },
+          {
+            name: 'reduction-review',
+            show: values => !isTrainingLicence(values),
+            label: 'What measures, apart from good experimental design, will you use to optimise the number of animals you plan to use in your project?',
+            hint: 'This may include efficient breeding, pilot studies, computer modelling, or sharing of tissue.',
+            type: 'texteditor'
+          },
+          {
+            name: 'training-reduction-techniques',
+            show: values => isTrainingLicence(values),
+            label: 'What in silico or ex vivo techniques will you use during training?',
+            type: 'texteditor'
+          },
+          {
+            name: 'training-reduction-animal-numbers',
+            show: values => isTrainingLicence(values),
+            label: 'Will these techniques reduce animal numbers? If so, how?',
+            type: 'texteditor'
+          },
+          {
+            name: 'training-reduction-other-measures',
+            show: values => isTrainingLicence(values),
+            label: 'What other measures will you use to minimise the number of animals you plan to use in your project?',
+            type: 'texteditor'
+          }
+        ]
+      },
+      refinement: {
+        title: 'Refinement',
+        reviewTitle: '3Rs: Refinement',
+        nts: true,
+        fields: [
+          {
+            name: 'refinement-models',
+            label: 'Which animal models and methods will you use during this project?',
+            hint: 'Explain why these models and methods cause the least pain, suffering, distress, or lasting harm to the animals.',
+            type: 'texteditor'
+          },
+          {
+            name: 'refinement-less-sentient',
+            label: 'Why can’t you use animals that are less sentient?',
+            hint: 'For example, animals at a more immature life stage, species that are less sentient, or animals that have been terminally anaesthetised?',
+            type: 'texteditor'
+          },
+          {
+            name: 'refinement-3rs-advances',
+            label: 'How will you stay informed about advances in the 3Rs, and implement these advances effectively, during the project?',
+            type: 'texteditor'
+          },
+          {
+            name: 'refinement-explaination',
+            label: 'How will you refine the procedures you\'re using to minimise the welfare costs (harms) for the animals?',
+            hint: 'Potential refinements include increased monitoring, post-operative care, pain management, and training of animals.',
+            type: 'texteditor'
+          },
+          {
+            name: 'refinement-published-guidance',
+            label: 'What published best practice guidance will you follow to ensure experiments are conducted in the most refined way?',
+            type: 'texteditor'
+          }
+        ]
+      }
+    }
+  },
   applicantInformation: {
-    title: 'Applicant information',
+    title: 'Technical details',
+    subtitle: 'Applicant information',
     subsections: {
       experience,
       funding: {
@@ -186,7 +447,7 @@ export default () => ({
     }
   },
   projectLocation: {
-    title: 'Project location',
+    subtitle: 'Project location',
     subsections: {
       establishments: {
         title: 'Establishments',
@@ -415,7 +676,7 @@ If you can only add generic information at this stage, provide a general descrip
     }
   },
   projectPlan: {
-    title: 'Project plan',
+    subtitle: 'Project plan',
     subsections: {
       'scientific-background': {
         title: 'Scientific background',
@@ -1245,84 +1506,11 @@ each other.`,
             ]
           },
         ]
-      },
-      benefits: {
-        title: 'Benefits',
-        nts: true,
-        fields: [
-          {
-            name: 'benefit-outputs',
-            show: values => !isTrainingLicence(values),
-            label: 'What outputs do you think you will see at the end of this project?',
-            hint: 'Outputs can include new information, publications, or products.',
-            type: 'texteditor'
-          },
-          {
-            name: 'benefit-who',
-            show: values => !isTrainingLicence(values),
-            label: 'Who or what will benefit from these outputs, and how?',
-            hint: 'The impact of these outputs may be seen in the short-term, or they may not be fully realised until you\'ve completed the project. Consider all timescales in your answer.',
-            type: 'texteditor'
-          },
-          {
-            name: 'benefit-service',
-            show: values => !isTrainingLicence(values),
-            label: 'Will this work be offered as a service to others?',
-            type: 'radio',
-            inline: true,
-            className: 'smaller',
-            options: [
-              {
-                label: 'Yes',
-                value: true,
-                reveal: {
-                  name: 'benefit-service-benefits',
-                  label: 'What are the benefits of offering this work as a service?',
-                  type: 'texteditor'
-                }
-              },
-              {
-                label: 'No',
-                value: false
-              }
-            ]
-          },
-          {
-            name: 'training-benefit-future-careers',
-            show: values => isTrainingLicence(values),
-            label: 'How will course attendees use their knowledge or skills in their future careers?',
-            type: 'texteditor'
-          },
-          {
-            name: 'training-benefit-principle-learning-outcomes',
-            show: values => isTrainingLicence(values),
-            label: 'What are the principal learning outcomes from the course?',
-            type: 'texteditor'
-          },
-          {
-            name: 'training-benefit-learning-outcomes-important',
-            show: values => isTrainingLicence(values),
-            label: 'How are these learning outcomes important to the people on the course?',
-            type: 'texteditor'
-          },
-          {
-            name: 'training-benefit-transfer-of-knowledge',
-            show: values => isTrainingLicence(values),
-            label: 'Who or what will benefit from the transfer of knowledge, or acquisition of skills that this course will deliver?',
-            type: 'texteditor'
-          },
-          {
-            name: 'benefit-maximise-outputs',
-            label: 'How will you look to maximise the outputs of this work?',
-            hint: 'For example, collaboration, dissemination of new knowledge, or publication of unsuccessful approaches.',
-            type: 'texteditor'
-          }
-        ]
       }
     }
   },
   protocols: {
-    title: 'Protocols',
+    subtitle: 'Protocols',
     subsections: {
       protocols: {
         title: 'Protocols',
@@ -2003,73 +2191,11 @@ each other.`,
             }
           }
         }
-      },
-      'project-harms': {
-        title: 'Project harms',
-        nts: true,
-        fields: [
-          {
-            name: 'project-harms-animals',
-            label: 'Explain why you are using these types of animals and your choice of life stages.',
-            type: 'texteditor'
-          },
-          {
-            name: 'project-harms-summary',
-            label: 'Typically, what will be done to an animal used in your project?',
-            hint: 'For example, injections and surgical procedures. Include any relevant information about the duration of experiments and the number of procedures.',
-            type: 'texteditor'
-          },
-          {
-            name: 'project-harms-effects',
-            label: 'What are the expected impacts and/or adverse effects for the animals during your project?',
-            hint: 'Examples can include pain, weight loss, tumours, or abnormal behaviour. State the estimated duration of these effects on an animal.',
-            type: 'texteditor'
-          },
-          {
-            name: 'project-harms-severity',
-            label: 'What are the expected severities and the proportion of animals in each category (per animal type)?',
-            type: 'texteditor'
-          }
-        ]
-      },
-      'fate-of-animals': {
-        title: 'Fate of animals',
-        nts: true,
-        fields: [
-          {
-            name: 'fate-of-animals',
-            label: 'What will happen to animals at the end of this project?',
-            type: 'checkbox',
-            className: 'smaller',
-            options: [
-              {
-                label: 'Killed',
-                value: 'killed'
-              },
-              {
-                label: 'Kept alive',
-                value: 'kept-alive'
-              },
-              {
-                label: 'Set free',
-                value: 'set-free'
-              },
-              {
-                label: 'Rehomed',
-                value: 'rehomed'
-              },
-              {
-                label: 'Used in other projects',
-                value: 'used-in-other-projects'
-              }
-            ]
-          }
-        ]
       }
     }
   },
   useOfAnimals: {
-    title: 'Use of animals',
+    subtitle: 'Use of animals',
     subsections: {
       domestic: {
         title: 'Cats, dogs, and equidae',
@@ -2529,7 +2655,7 @@ each other.`,
     }
   },
   otherConsiderations: {
-    title: 'Other considerations',
+    subtitle: 'Other considerations',
     subsections: {
       nmbas: {
         title: 'Neuromuscular blocking agents (NMBAs)',
@@ -2788,175 +2914,9 @@ each other.`,
       }
     }
   },
-  threeRs: {
-    title: 'The 3Rs',
-    subsections: {
-      replacement: {
-        title: 'Replacement',
-        playback: 'project-aim',
-        reviewTitle: '3Rs: Replacement',
-        nts: true,
-        fields: [
-          {
-            name: 'replacement-why',
-            label: 'Why do you need to use animals to achieve the aim of your project?',
-            type: 'texteditor'
-          },
-          {
-            name: 'replacement-alternatives',
-            show: values => !isTrainingLicence(values),
-            label: 'Which non-animal alternatives did you consider for use in this project?',
-            type: 'texteditor'
-          },
-          {
-            name: 'replacement-justification',
-            show: values => !isTrainingLicence(values),
-            label: 'Why were they not suitable?',
-            type: 'texteditor'
-          },
-          {
-            name: 'training-replacement-observation',
-            show: values => isTrainingLicence(values),
-            label: 'Why can\'t your aim be met by observing or by participating in ongoing research or clinical procedures?',
-            type: 'texteditor'
-          }
-        ]
-      },
-      reduction: {
-        title: 'Reduction',
-        reviewTitle: '3Rs: Reduction',
-        nts: true,
-        fields: [
-          {
-            name: 'reduction-quantities',
-            label: 'Enter the estimated number of animals of each type used in this project.',
-            type: 'animal-quantities'
-          },
-          {
-            name: 'reduction-estimation',
-            label: 'How have you estimated the numbers of animals you will use?',
-            hint: 'Do not mention POWER calculations here. If relevant, there will be an opportunity to provide these details elsewhere.',
-            type: 'texteditor'
-          },
-          {
-            name: 'reduction-steps',
-            show: values => !isTrainingLicence(values),
-            label: 'What steps did you take during the experimental design phase to reduce the number of animals being used in this project?',
-            hint: 'You may want to reference online tools (such as the NC3R\'s Experimental Design Assistant) or any relevant regulatory requirements.',
-            type: 'texteditor'
-          },
-          {
-            name: 'reduction-review',
-            show: values => !isTrainingLicence(values),
-            label: 'What measures, apart from good experimental design, will you use to optimise the number of animals you plan to use in your project?',
-            hint: 'This may include efficient breeding, pilot studies, computer modelling, or sharing of tissue.',
-            type: 'texteditor'
-          },
-          {
-            name: 'training-reduction-techniques',
-            show: values => isTrainingLicence(values),
-            label: 'What in silico or ex vivo techniques will you use during training?',
-            type: 'texteditor'
-          },
-          {
-            name: 'training-reduction-animal-numbers',
-            show: values => isTrainingLicence(values),
-            label: 'Will these techniques reduce animal numbers? If so, how?',
-            type: 'texteditor'
-          },
-          {
-            name: 'training-reduction-other-measures',
-            show: values => isTrainingLicence(values),
-            label: 'What other measures will you use to minimise the number of animals you plan to use in your project?',
-            type: 'texteditor'
-          }
-        ]
-      },
-      refinement: {
-        title: 'Refinement',
-        reviewTitle: '3Rs: Refinement',
-        nts: true,
-        fields: [
-          {
-            name: 'refinement-models',
-            label: 'Which animal models and methods will you use during this project?',
-            hint: 'Explain why these models and methods cause the least pain, suffering, distress, or lasting harm to the animals.',
-            type: 'texteditor'
-          },
-          {
-            name: 'refinement-less-sentient',
-            label: 'Why can’t you use animals that are less sentient?',
-            hint: 'For example, animals at a more immature life stage, species that are less sentient, or animals that have been terminally anaesthetised?',
-            type: 'texteditor'
-          },
-          {
-            name: 'refinement-3rs-advances',
-            label: 'How will you stay informed about advances in the 3Rs, and implement these advances effectively, during the project?',
-            type: 'texteditor'
-          },
-          {
-            name: 'refinement-explaination',
-            label: 'How will you refine the procedures you\'re using to minimise the welfare costs (harms) for the animals?',
-            hint: 'Potential refinements include increased monitoring, post-operative care, pain management, and training of animals.',
-            type: 'texteditor'
-          },
-          {
-            name: 'refinement-published-guidance',
-            label: 'What published best practice guidance will you follow to ensure experiments are conducted in the most refined way?',
-            type: 'texteditor'
-          }
-        ]
-      }
-    }
-  },
-  nts: {
-    title: 'Non-technical summary',
-    name: 'nts',
-    subsections: {
-      'nts-review': {
-        title: 'Non-technical summary',
-        component: NTSSummary,
-        review: NTSSummary,
-        sections: [
-          {
-            section: 'introduction',
-            title: 'Aim and duration',
-            fields: [
-              'project-aim',
-              'project-importance',
-              'duration'
-            ]
-          },
-          {
-            section: 'benefits',
-            title: 'Benefits'
-          },
-          {
-            section: 'project-harms',
-            title: 'Anticipated harms'
-          },
-          {
-            section: 'fate-of-animals',
-            title: 'Fate of animals'
-          },
-          {
-            section: 'replacement',
-            title: 'Replacement'
-          },
-          {
-            section: 'reduction',
-            title: 'Reduction'
-          },
-          {
-            section: 'refinement',
-            title: 'Refinement'
-          }
-        ]
-      }
-    }
-  },
   conditions: {
-    title: 'Additional conditions',
+    title: 'Additional conditions and authorisations',
+    subtitle: 'Additional conditions',
     show: props => props.showConditions,
     subsections: {
       conditions: {
@@ -2986,7 +2946,7 @@ Please review all sections of this application before making a recommendation.`,
     }
   },
   authorisations: {
-    title: 'Authorisations',
+    subtitle: 'Authorisations',
     show: props => props.showConditions,
     subsections: {
       authorisations: {
