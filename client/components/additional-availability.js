@@ -78,7 +78,9 @@ export default function AdditionalAvailability(props) {
         )
       }
       {
-        newApplication && <Warning><p>This draft will become instantly visible to staff with oversight of projects at this establishment. Be careful of sharing sensitive information.</p></Warning>
+        newApplication
+          ? <Warning><p>This draft will become instantly visible to staff with oversight of projects at this establishment. Be careful of sharing sensitive information.</p></Warning>
+          : <Warning><p>Staff with oversight of projects at this establishment will be able to see the amended project licence once it’s been approved.</p></Warning>
       }
       {
         availableEstablishments.length === 1 && (
