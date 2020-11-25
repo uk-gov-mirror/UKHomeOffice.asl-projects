@@ -6,7 +6,7 @@ $pink: #ff1493;
 @mixin sticky {
   position: -webkit-sticky;
   position: sticky;
-  top: 0;
+  top: 2 * $govuk-gutter;
 }
 
 @mixin purple-inset {
@@ -973,6 +973,12 @@ html.modal-open, html.modal-open body {
       h2:first-child {
         margin-top:0;
       }
+    }
+  }
+
+  .document-header .page-title {
+    h1 {
+      margin-bottom: 5px;
     }
   }
 
