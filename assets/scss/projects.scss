@@ -976,6 +976,12 @@ html.modal-open, html.modal-open body {
     }
   }
 
+  .document-header .page-title {
+    h1 {
+      margin-bottom: 5px;
+    }
+  }
+
   .nts {
     @extend .panel;
     @extend .yellow-bg;
