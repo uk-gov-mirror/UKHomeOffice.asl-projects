@@ -16,9 +16,11 @@ const ObjectivesReview = ({ playback, values, steps, goto, readonly, isFullAppli
             <h1>Action plan</h1>
           </Banner>
           <h1>Action plan</h1>
-          <Playback playback={playback} />
         </Fragment>
       )
+    }
+    {
+      <Playback playback={playback} />
     }
     {
       isFullApplication && <h2>Action plan</h2>

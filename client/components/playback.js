@@ -11,7 +11,7 @@ import isEmpty from 'lodash/isEmpty';
 import Review from './review';
 import schemaMap from '../schema';
 
-const getUrl = (id, section, step) => {
+const getUrl = (section, step) => {
   let url = '';
   if (section) {
     url = `${url}/${section}`;
@@ -22,23 +22,26 @@ const getUrl = (id, section, step) => {
   return url;
 }
 
-const Playback = ({ project, step, history, field, section }) => {
+const Playback = ({ project, step, history, field, section, readonly, basename, title }) => {
   if (!project || !field || isEmpty(field)) {
     return null;
   }
+  const page = getUrl(section, step);
+  const hint = readonly ? <span>From <a href={`${basename}${page}`}>{title}</a></span> : null;
   return (
     <div className="playback">
       <Review
         { ...field }
         label={field.playbackLabel || field.label}
+        hint={hint}
         value={project[field.name]}
-        onEdit={() => history.push(getUrl(project.id, section, step))}
+        onEdit={() => history.push(page)}
       />
     </div>
   )
 }
 
-const mapStateToProps = ({ application: { schemaVersion }, project }, { playback }) => {
+const mapStateToProps = ({ application: { schemaVersion, readonly, basename }, project }, { playback }) => {
   playback = isFunction(playback) ? playback(project) : playback;
   let step;
   let field;
@@ -61,7 +64,10 @@ const mapStateToProps = ({ application: { schemaVersion }, project }, { playback
     field,
     step,
     section,
-    project
+    project,
+    readonly,
+    basename,
+    title: subsections[section].title
   };
 }
 
