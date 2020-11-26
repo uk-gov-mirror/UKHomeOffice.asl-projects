@@ -80,6 +80,7 @@ const ProjectSummary = ({
               <Review
                 name="keywords"
                 label="Key words that describe this project"
+                type="keywords"
                 value={values.keywords}
                 noComments
               />
@@ -95,7 +96,9 @@ const ProjectSummary = ({
             </div>
             <div className="granted-section">
               <Review
-                {...fields.find(f => f.name === 'keywords')}
+                name="keywords"
+                label="Key words that describe this project"
+                type="keywords"
                 value={values.keywords}
                 noComments
               />
