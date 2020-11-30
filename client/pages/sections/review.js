@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import castArray from 'lodash/castArray';
 
 import ReviewFields from '../../components/review-fields';
 import Banner from '../../components/banner';
@@ -27,7 +28,7 @@ const ReviewSection = ({
         nts && <NTS review={true} />
       }
       {
-        playback && <Playback playback={playback} />
+        playback && castArray(playback).map(p => <Playback key={p} playback={p} />)
       }
       <ReviewFields fields={fields} values={values} onEdit={onEdit} />
     </Fragment>
