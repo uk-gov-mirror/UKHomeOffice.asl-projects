@@ -43,6 +43,9 @@ const Playback = ({ project, step, history, field, section, readonly, basename, 
 
 const mapStateToProps = ({ application: { schemaVersion, readonly, basename }, project }, { playback }) => {
   playback = isFunction(playback) ? playback(project) : playback;
+  if (!playback) {
+    return null;
+  }
   let step;
   let field;
   const schema = schemaMap[schemaVersion];
