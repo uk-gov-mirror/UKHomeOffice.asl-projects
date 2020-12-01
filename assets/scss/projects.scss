@@ -496,7 +496,7 @@ html.modal-open, html.modal-open body {
     background: $green;
     color: white;
     font-weight: bold;
-    z-index: 100;
+    z-index: 10000;
 
     &.alert-error {
       background: $govuk-error-colour;
