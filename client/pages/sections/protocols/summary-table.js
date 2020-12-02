@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { Button } from '@ukhomeoffice/react-components';
 import Table from '../granted/summary-table';
 import ReviewField from '../../../components/review-field';
+import ProtocolConditions from './protocol-conditions';
 
 function ExpandingRow({ protocol }) {
   return (
@@ -35,6 +36,7 @@ export default function SummaryTable() {
     <Fragment>
       <h1>Protocol summary table</h1>
       <Button onClick={() => window.close()}>Close summary table</Button>
+      <ProtocolConditions />
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-two-thirds">
           <p>A step can be a single procedure or a combination of procedures to achieve an outcome. They should be broadly chronological, with the final step being a method of killing or the last regulated procedure.</p>
