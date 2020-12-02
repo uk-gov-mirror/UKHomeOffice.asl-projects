@@ -871,34 +871,27 @@ export default (application, sections, values, updateImageDimensions) => {
 
   const addImageDimensions = values => {
     return traverse(values, (value) => {
-      if (typeof value !== 'string') {
+      if (typeof value !== 'object' || value === null) {
         return Promise.resolve(value);
       }
 
-      try {
-        const content = JSON.parse(value);
+      if (!value.document || !value.document.nodes) {
+        return Promise.resolve(value);
+      }
 
-        if (!content.document || !content.document.nodes) {
-          return Promise.resolve(value);
+      const nodePromises = value.document.nodes.map(node => {
+        if (node.type !== 'image') {
+          return Promise.resolve(node);
         }
 
-        const nodePromises = content.document.nodes.map(node => {
-          if (node.type !== 'image') {
-            return Promise.resolve(node);
-          }
+        return updateImageDimensions(node);
+      });
 
-          return updateImageDimensions(node);
+      return Promise.all(nodePromises)
+        .then(nodes => {
+          value.document.nodes = nodes;
+          return JSON.stringify(value);
         });
-
-        return Promise.all(nodePromises)
-          .then(nodes => {
-            content.document.nodes = nodes;
-            return JSON.stringify(content);
-          });
-      } catch (e) {
-        // not json, do nothing
-        return Promise.resolve(value);
-      }
     });
   };
 
