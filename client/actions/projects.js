@@ -193,7 +193,7 @@ const syncConditions = (dispatch, getState) => {
   const params = {
     state,
     method: 'PUT',
-    url: `${state.application.basename}/conditions`,
+    url: `${state.application.basename.replace(/\/full-application/, '')}/conditions`,
     data
   }
 

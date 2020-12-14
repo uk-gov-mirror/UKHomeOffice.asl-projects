@@ -35,10 +35,15 @@ const refreshComments = comments => {
   };
 };
 
+const getUrl = (state, suffix) => {
+  const url = state.application.basename.replace(/\/edit?/, '').replace(/\/full-application?/, '');
+  return `${url}${suffix}`;
+}
+
 export const addComment = comment => (dispatch, getState) => {
   const state = getState();
   const params = {
-    url: `${state.application.basename.replace(/\/edit?/, '')}/comment`,
+    url: getUrl(state, `/comment`),
     method: 'POST',
     data: comment
   }
@@ -56,7 +61,7 @@ export const addComment = comment => (dispatch, getState) => {
 export const editComment = ({ id, field, comment }) => (dispatch, getState) => {
   const state = getState();
   const params = {
-    url: `${state.application.basename.replace(/\/edit?/, '')}/comment/${id}`,
+    url: getUrl(state, `/comment/${id}`),
     method: 'PUT',
     data: {
       id,
@@ -78,7 +83,7 @@ export const editComment = ({ id, field, comment }) => (dispatch, getState) => {
 export const deleteComment = ({ id, field }) => (dispatch, getState) => {
   const state = getState();
   const params = {
-    url: `${state.application.basename.replace(/\/edit?/, '')}/comment/${id}`,
+    url: getUrl(state, `/comment/${id}`),
     method: 'DELETE'
   };
   return Promise.resolve()
