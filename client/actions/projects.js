@@ -20,6 +20,11 @@ const jsondiff = require('jsondiffpatch').create({
   }
 });
 
+const getUrl = (state, suffix) => {
+  const url = state.application.basename.replace(/\/edit?/, '').replace(/\/full-application?/, '');
+  return `${url}${suffix}`;
+};
+
 export function loadProjects() {
   return dispatch => {
     return database()
@@ -193,7 +198,7 @@ const syncConditions = (dispatch, getState) => {
   const params = {
     state,
     method: 'PUT',
-    url: `${state.application.basename.replace(/\/full-application/, '')}/conditions`,
+    url: getUrl(state, '/conditions'),
     data
   }
 
@@ -360,7 +365,7 @@ export function fetchQuestionVersions(key) {
 
     const params = {
       state,
-      url: `question/${key}`
+      url: getUrl(state, `/question/${key}`)
     }
 
     return Promise.resolve()
