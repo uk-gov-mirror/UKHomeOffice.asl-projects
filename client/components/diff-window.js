@@ -208,7 +208,7 @@ class DiffWindow extends React.Component {
             {
               parts.length
                 ? parts.map(({ value, added, removed }, i) => (
-                  <span key={i} className={classnames('diff', { added, removed })}>{ value }</span>
+                  <span key={i} className={classnames({ added, removed, diff: (added || removed) })}>{ value }</span>
                 ))
                 : <em>{DEFAULT_LABEL}</em>
             }
@@ -225,7 +225,7 @@ class DiffWindow extends React.Component {
               <ul>
                 {
                   parts.map(({ value, added, removed }, i) => {
-                    return value.map(v => <li key={i}><span className={classnames('diff', { added, removed })}>{ getLabel(v) }</span></li>)
+                    return value.map(v => <li key={i}><span className={classnames({ added, removed, diff: (added || removed) })}>{ getLabel(v) }</span></li>)
                   })
                 }
               </ul>
