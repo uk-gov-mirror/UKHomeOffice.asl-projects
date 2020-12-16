@@ -1,8 +1,9 @@
-import React, { Fragment } from 'react';
-import { connect } from 'react-redux';
+import React, { Fragment, useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import classnames from 'classnames';
 import { Value } from 'slate';
 import { diffWords, diffSentences, diffArrays } from 'diff';
+import pick from 'lodash/pick';
 import last from 'lodash/last';
 import isEqual from 'lodash/isEqual';
 import { Warning } from '@ukhomeoffice/react-components';
@@ -14,121 +15,9 @@ import Tabs from './tabs';
 
 const DEFAULT_LABEL = 'No answer provided';
 
-class DiffWindow extends React.Component {
-  state = {
-    active: 0,
-    modalOpen: false
-  }
-
-  toggleModal = e => {
-    e.preventDefault();
-    if (this.props.loading) {
-      this.props.getPreviousVersions()
-    }
-    this.setState({ modalOpen: !this.state.modalOpen });
-  }
-
-  selectTab = (e, active) => {
-    e.preventDefault();
-    this.setState({ active })
-  }
-
-  parseValue(val) {
-    if (typeof val === 'string') {
-      val = JSON.parse(val || '{}');
-    }
-    return Value.fromJSON(val || {});
-  }
-
-  hasContentChanges(a, b, type) {
-    if (type !== 'texteditor') {
-      return true;
-    }
-
-    const before = this.parseValue(a);
-    const after = this.parseValue(b);
-
-    return before.document.text !== after.document.text;
-  }
-
-  diff(a, b, type) {
-    type = type || this.props.type;
-    let diff = [];
-    let added = [];
-    let removed = [];
-    let before;
-    let after;
-    let diffs
-
-    const getLabel = item => {
-      const option = this.props.options.find(opt => opt.value === item);
-      if (option) {
-        return option.label;
-      } else {
-        const subopt = this.props.options.find(opt => opt.reveal).reveal.options.find(opt => opt.value === item);
-        return `(b) ${subopt.label}`;
-      }
-    }
-
-    switch (type) {
-      case 'text':
-        diff = diffWords(a || '', b || '');
-        break;
-      case 'checkbox':
-      case 'location-selector':
-      case 'objective-selector':
-        diff = diffArrays((a || []).sort(), (b || []).sort());
-        break;
-      case 'permissible-purpose':
-        diff = diffArrays((a || []).map(getLabel).sort(), mapPermissiblePurpose(this.props.project).map(getLabel).sort());
-        break;
-      case 'species-selector':
-        diff = diffArrays(a || [], mapSpecies(this.props.project));
-        break;
-      case 'texteditor':
-
-        try {
-          before = this.parseValue(a);
-          after = this.parseValue(b);
-        } catch (e) {
-          return { added: [], removed: [] };
-        }
-        if (before.document.text.length < 5000 && after.document.text.length < 5000) {
-          diffs = diffWords(before.document.text, after.document.text);
-        } else {
-          diffs = diffSentences(before.document.text, after.document.text);
-        }
-
-        removed = diffs.reduce((arr, d) => {
-          // ignore additions
-          if (!d.added) {
-            const prev = last(arr);
-            const start = prev ? prev.start + prev.count : 0;
-            return [...arr, { ...d, start, count: d.value.length }];
-          }
-          return arr;
-        }, []).filter(d => d.removed);
-
-        added = diffs.reduce((arr, d) => {
-          // ignore removals
-          if (!d.removed) {
-            const prev = last(arr);
-            const start = prev ? prev.start + prev.count : 0;
-            return [...arr, { ...d, start, count: d.value.length }];
-          }
-          return arr;
-        }, []).filter(d => d.added);
-
-        return { added, removed };
-    }
-
-    return {
-      added: diff.filter(item => !item.removed),
-      removed: diff.filter(item => !item.added)
-    };
-  }
-
-  decorateNode(parts) {
+const Diff = (props) => {
+  const { changes, value } = props;
+  const decorateNode = (parts) => {
 
     return (node) => {
       const decorations = [];
@@ -180,7 +69,7 @@ class DiffWindow extends React.Component {
 
   }
 
-  renderDecoration(props, editor, next) {
+  const renderDecoration = (props, editor, next) => {
     const { children, decoration, attributes } = props;
     if (decoration.type === 'diff') {
       return <span className="diff" {...attributes}>{ children }</span>;
@@ -191,216 +80,274 @@ class DiffWindow extends React.Component {
     return next();
   }
 
-  renderDiff(parts, value) {
-    const getLabel = item => {
-      if (!this.props.options || !Array.isArray(this.props.options)) {
-        return item;
-      }
 
-      const option = this.props.options.find(opt => opt.value === item);
-      return option ? option.label : item;
-    };
+  const getLabel = item => {
+    if (!props.options || !Array.isArray(props.options)) {
+      return item;
+    }
 
-    switch (this.props.type) {
-      case 'text':
-        return (
+    const option = props.options.find(opt => opt.value === item);
+    return option ? option.label : item;
+  };
+
+  switch (props.type) {
+    case 'text':
+      return (
+        <p>
+          {
+            changes.length
+              ? changes.map(({ value, added, removed }, i) => (
+                <span key={i} className={classnames({ added, removed, diff: (added || removed) })}>{ value }</span>
+              ))
+              : <em>{DEFAULT_LABEL}</em>
+          }
+        </p>
+      );
+
+    case 'checkbox':
+    case 'permissible-purpose':
+    case 'location-selector':
+    case 'objective-selector':
+    case 'species-selector':
+      return changes.length
+        ? (
+            <ul>
+              {
+                changes.map(({ value, added, removed }, i) => {
+                  return value.map(v => <li key={i}><span className={classnames({ added, removed, diff: (added || removed) })}>{ getLabel(v) }</span></li>)
+                })
+              }
+            </ul>
+          )
+        : (
           <p>
-            {
-              parts.length
-                ? parts.map(({ value, added, removed }, i) => (
-                  <span key={i} className={classnames({ added, removed, diff: (added || removed) })}>{ value }</span>
-                ))
-                : <em>{DEFAULT_LABEL}</em>
-            }
+            <em>{ DEFAULT_LABEL }</em>
           </p>
         );
-
-      case 'checkbox':
-      case 'permissible-purpose':
-      case 'location-selector':
-      case 'objective-selector':
-      case 'species-selector':
-        return parts.length
-          ? (
-              <ul>
-                {
-                  parts.map(({ value, added, removed }, i) => {
-                    return value.map(v => <li key={i}><span className={classnames({ added, removed, diff: (added || removed) })}>{ getLabel(v) }</span></li>)
-                  })
-                }
-              </ul>
-            )
-          : (
-            <p>
-              <em>{ DEFAULT_LABEL }</em>
-            </p>
-          );
-      case 'animal-quantities':
-        if (value === undefined) {
-          value = mapAnimalQuantities(this.props.project, this.props.name);
-        }
-        return (
-          <ReviewField
-            key={value + this.state.active}
-            {...this.props}
-            name={this.props.name}
-            decorateNode={this.decorateNode(parts)}
-            renderDecoration={this.renderDecoration}
-            type={this.props.type}
-            value={value}
-            project={value}
-            diff={true}
-            noComments
-          />
-        )
-      default:
-        return (
-          <ReviewField
-            key={value + this.state.active}
-            {...this.props}
-            name={this.props.name}
-            decorateNode={this.decorateNode(parts)}
-            renderDecoration={this.renderDecoration}
-            options={this.props.options}
-            type={this.props.type}
-            value={value}
-            values={{[this.props.name]: value}}
-            diff={true}
-            noComments
-          />
-        )
-
-    }
+    case 'animal-quantities':
+      if (value === undefined) {
+        value = mapAnimalQuantities(project, props.name);
+      }
+      return (
+        <ReviewField
+          {...props}
+          key={JSON.stringify(changes)}
+          name={props.name}
+          decorateNode={decorateNode(changes)}
+          renderDecoration={renderDecoration}
+          type={props.type}
+          value={value}
+          project={value}
+          diff={true}
+          noComments
+        />
+      )
+    default:
+      return (
+        <ReviewField
+          {...props}
+          key={JSON.stringify(changes)}
+          name={props.name}
+          decorateNode={decorateNode(changes)}
+          renderDecoration={renderDecoration}
+          options={props.options}
+          type={props.type}
+          value={value}
+          values={{[props.name]: value}}
+          diff={true}
+          noComments
+        />
+      )
   }
+}
 
-  compare() {
+const Comparison = (props) => {
 
-    if (this.props.loading) {
-      return <div className="govuk-grid-row">
-        <div className="govuk-grid-column-full">
-          <div className="panel light-grey">
-            <p className="loading">Loading comparison</p>
-          </div>
-        </div>
-      </div>
+  const [active, setActive] = useState(0);
+  const [changes, setChanges] = useState({ added: [], removed: [] });
+
+  const project = useSelector(state => state.project);
+  const loading = useSelector(state => !state.questionVersions[props.name]);
+  const { before, previous, changedFromBaseline, changedFromLatest, changedFromGranted } = useSelector(state => {
+    if (!state.questionVersions[props.name]) {
+      return {
+        changedFromLatest: false,
+        changedFromBaseline: false
+      };
     }
-    const { first, previous, granted, changedFromFirst, changedFromLatest, changedFromGranted } = this.props;
+    const { first, previous, granted, grantedId, previousId, firstId } = state.questionVersions[props.name];
 
-    const baseline = granted || first;
+
+    const changedFromGranted = grantedId && !isEqual(granted, props.value);
+    const changedFromFirst = firstId && !isEqual(first, props.value);
+    const changedFromLatest = grantedId !== previousId && !isEqual(previous, props.value);
+
     const changedFromBaseline = changedFromGranted || changedFromFirst;
-    const baselineLabel = changedFromGranted ? 'Current licence' : 'Initial submission';
+    const baseline = granted || first;
     let before = changedFromBaseline ? baseline : previous;
 
     if (changedFromLatest && changedFromBaseline) {
-      before = this.state.active === 0 ? baseline : previous;
+      before = active === 0 ? baseline : previous;
     }
 
-    const changes = this.diff(before, this.props.value);
-    const hasContentChanges = this.hasContentChanges(before, this.props.value, this.props.type);
+    return {
+      before,
+      previous,
+      changedFromLatest,
+      changedFromBaseline,
+      changedFromGranted
+    };
+  });
 
-    return <Fragment>
-      {
-        !hasContentChanges && <div className="govuk-grid-row">
-          <div className="govuk-grid-column-full">
-            <Warning>
-              <p>There are no changes to the text in this answer. The changes might include formatting or images.</p>
-            </Warning>
-          </div>
-        </div>
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchQuestionVersions(props.name));
+  }, [ props.name ]);
+
+  useEffect(() => {
+    if (!loading) {
+      const worker = new Worker('/public/js/pages/project-version/read/worker/bundle.js');
+
+      worker.onmessage = msg => {
+        console.log(msg.data);
+        setChanges(msg.data);
+      };
+
+      worker.postMessage({
+        before,
+        after: props.value,
+        props: {
+          type: props.type,
+          options: props.options,
+          project
+        }
+      });
+
+      setTimeout(() => {
+        worker.terminate();
+      }, 20000);
+
+      return () => {
+        worker.terminate();
       }
-      <div className="govuk-grid-row">
-        <div className="govuk-grid-column-one-half">
-          {
-            changedFromLatest && changedFromBaseline
-              ? (
-                <Fragment>
-                  <Tabs active={this.state.active}>
-                    <a href="#" onClick={e => this.selectTab(e, 0)}>{ baselineLabel }</a>
-                    <a href="#" onClick={e => this.selectTab(e, 1)}>Previous version</a>
-                  </Tabs>
-                  <div className="panel light-grey">
-                    {
-                      this.renderDiff(changes.removed, before)
-                    }
-                  </div>
-                </Fragment>
-              )
-              : (
-                <Fragment>
-                  <h3>{changedFromBaseline ? baselineLabel : 'Previous version'}</h3>
-                  <div className="panel light-grey">
-                    {
-                      this.renderDiff(changes.removed, before)
-                    }
-                  </div>
-                </Fragment>
-              )
-          }
-        </div>
-        <div className="govuk-grid-column-one-half">
-          <h3>Proposed</h3>
-          <div className="panel light-grey">
-            {
-              this.renderDiff(changes.added, this.props.value)
-            }
-          </div>
+    }
+    return () => {};
+  }, [before,active]);
+
+  const selectTab = (e, active) => {
+    e.preventDefault();
+    setChanges({ added: [], removed: [] });
+    setActive(active);
+  }
+
+  const parseValue = (val) => {
+    if (typeof val === 'string') {
+      val = JSON.parse(val || '{}');
+    }
+    return Value.fromJSON(val || {});
+  }
+
+  const hasContentChanges = (a, b, type) => {
+    if (type !== 'texteditor') {
+      return true;
+    }
+
+    const before = parseValue(a);
+    const after = parseValue(b);
+
+    return before.document.text !== after.document.text;
+  }
+
+  if (loading) {
+    return <div className="govuk-grid-row">
+      <div className="govuk-grid-column-full">
+        <div className="panel light-grey">
+          <p className="loading">Loading comparison</p>
         </div>
       </div>
-    </Fragment>
+    </div>
   }
 
-  render() {
-    const { modalOpen } = this.state;
+  const baselineLabel = changedFromGranted ? 'Current licence' : 'Initial submission';
 
-    return modalOpen
-      ? (
-        <Modal onClose={this.toggleModal}>
-          <div className="diff-window">
-            <div className="diff-window-header">
-              <h1>See what&apos;s changed</h1>
-              <a href="#" className="float-right close" onClick={this.toggleModal}>Close</a>
-            </div>
-            <div className="diff-window-body">
-              <h2>{this.props.label}</h2>
-              { this.compare() }
-            </div>
-            <div className="diff-window-footer">
-              <h3><a href="#" className="float-right close" onClick={this.toggleModal}>Close</a></h3>
-            </div>
+  const hasVisibleDiff = hasContentChanges(before, props.value, props.type);
+
+  return <Fragment>
+    {
+      !hasVisibleDiff && <div className="govuk-grid-row">
+        <div className="govuk-grid-column-full">
+          <Warning>
+            <p>There are no changes to the text in this answer. The changes might include formatting or images.</p>
+          </Warning>
+        </div>
+      </div>
+    }
+    <div className="govuk-grid-row">
+      <div className="govuk-grid-column-one-half">
+        {
+          changedFromLatest && changedFromBaseline
+            ? (
+              <Fragment>
+                <Tabs active={active}>
+                  <a href="#" onClick={e => selectTab(e, 0)}>{ baselineLabel }</a>
+                  <a href="#" onClick={e => selectTab(e, 1)}>Previous version</a>
+                </Tabs>
+                <div className="panel light-grey">
+                  <Diff {...props} changes={changes.removed} value={before} key={before + active} />
+                </div>
+              </Fragment>
+            )
+            : (
+              <Fragment>
+                <h3>{changedFromBaseline ? baselineLabel : 'Previous version'}</h3>
+                <div className="panel light-grey">
+                  <Diff {...props} changes={changes.removed} value={before} key={before + active} />
+                </div>
+              </Fragment>
+            )
+        }
+      </div>
+      <div className="govuk-grid-column-one-half">
+        <h3>Proposed</h3>
+        <div className="panel light-grey">
+          <Diff {...props} changes={changes.added} value={props.value} key={props.value + active} />
+        </div>
+      </div>
+    </div>
+  </Fragment>
+
+}
+
+const DiffWindow  = (props) => {
+
+  const { label } = props;
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const toggleModal = e => {
+    e.preventDefault();
+    setModalOpen(!modalOpen);
+  }
+
+  return modalOpen
+    ? (
+      <Modal onClose={ toggleModal }>
+        <div className="diff-window">
+          <div className="diff-window-header">
+            <h1>See what&apos;s changed</h1>
+            <a href="#" className="float-right close" onClick={ toggleModal }>Close</a>
           </div>
-        </Modal>
-      )
-      : <a href="#" className="modal-trigger" onClick={this.toggleModal}>See what&apos;s changed</a>
-  }
+          <div className="diff-window-body">
+            <h2>{ label }</h2>
+            <Comparison {...props} />
+          </div>
+          <div className="diff-window-footer">
+            <h3><a href="#" className="float-right close" onClick={ toggleModal }>Close</a></h3>
+          </div>
+        </div>
+      </Modal>
+    )
+    : <a href="#" className="modal-trigger" onClick={ toggleModal }>See what&apos;s changed</a>
 }
 
-const mapStateToProps = ({ questionVersions, project }, { name, value }) => {
-  if (!questionVersions[name]) {
-    return {
-      project,
-      loading: true,
-      changedFromGranted: false,
-      changedFromLatest: false,
-      changedFromFirst: false
-    };
-  }
-  const { first, previous, granted, grantedId, previousId, firstId } = questionVersions[name];
-  return {
-    loading: false,
-    first,
-    previous,
-    granted,
-    project,
-    changedFromGranted: grantedId && !isEqual(granted, value),
-    changedFromFirst: firstId && !isEqual(first, value),
-    changedFromLatest: grantedId !== previousId && !isEqual(previous, value)
-  };
-}
-
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    getPreviousVersions: () => dispatch(fetchQuestionVersions(ownProps.name))
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(DiffWindow);
+export default DiffWindow;
