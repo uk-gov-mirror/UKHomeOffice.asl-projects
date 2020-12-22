@@ -33,7 +33,6 @@ const DiffWindow  = (props) => {
     return arr;
   });
 
-
   const dispatch = useDispatch();
 
   const changes = useSelector(state => get(state.questionVersions, `${props.name}.${versions[active]}.diff`, { added: [], removed: [] }));
@@ -140,16 +139,6 @@ const DiffWindow  = (props) => {
 
   const renderDiff = (parts, value) => {
 
-    const getPermissiblePurposeLabel = item => {
-      const option = props.options.find(opt => opt.value === item);
-      if (option) {
-        return option.label;
-      } else {
-        const subopt = props.options.find(opt => opt.reveal).reveal.options.find(opt => opt.value === item);
-        return `(b) ${subopt.label}`;
-      }
-    }
-
     const getLabel = item => {
       if (!props.options || !Array.isArray(props.options)) {
         return item;
@@ -159,14 +148,57 @@ const DiffWindow  = (props) => {
       return option ? option.label : item;
     };
 
+    const arrayDiff = () => {
+      return parts
+        .reduce((arr, { value, added, removed }) => {
+          return [ ...arr, ...value.map(v => ({ value: v, added, removed})) ];
+        }, [])
+        .map(item => ({ ...item, label: getLabel(item.value) }))
+        .map(({ value, added, removed, label }) => {
+          return <li key={value}><span className={classnames({ added, removed, diff: (added || removed) })}>{ label }</span></li>
+        });
+    };
+
+
+    const permissiblePurposeDiff = () => {
+      const diffs = parts
+        .reduce((arr, { value, added, removed }) => {
+          return [ ...arr, ...value.map(v => ({ value: v, added, removed})) ];
+        }, []);
+
+      const Option = ({ option }) => {
+        const diff = diffs.find(d => d.value === option.value);
+        if (diff) {
+          const { added, removed, value } = diff;
+          const { label } = option;
+          return <li key={value}><span className={classnames({ added, removed, diff: (added || removed) })}>{ label }</span></li>;
+        }
+        return null;
+      };
+
+      return props.options
+        .map(option => {
+          if (option.value === 'translational-research') {
+            return <li>
+              <ul>
+                {
+                  option.reveal.options.map(o => <Option option={o} key={o.value} />)
+                }
+              </ul>
+            </li>;
+          }
+          return <Option option={option} key={option.value} />
+        });
+    };
+
     switch (props.type) {
       case 'text':
         return (
           <p>
             {
               parts.length
-                ? parts.map(({ value, added, removed }, i) => (
-                  <span key={i} className={classnames({ added, removed, diff: (added || removed) })}>{ value }</span>
+                ? parts.map(({ value, added, removed }) => (
+                  <span key={value} className={classnames({ added, removed, diff: (added || removed) })}>{ value }</span>
                 ))
                 : <em>{DEFAULT_LABEL}</em>
             }
@@ -180,11 +212,7 @@ const DiffWindow  = (props) => {
         return parts.length
           ? (
               <ul>
-                {
-                  parts.map(({ value, added, removed }, i) => {
-                    return value.map(v => <li key={i}><span className={classnames({ added, removed, diff: (added || removed) })}>{ getLabel(v) }</span></li>)
-                  })
-                }
+                { arrayDiff() }
               </ul>
             )
           : (
@@ -196,11 +224,7 @@ const DiffWindow  = (props) => {
         return parts.length
           ? (
               <ul>
-                {
-                  parts.map(({ value, added, removed }, i) => {
-                    return value.map(v => <li key={i}><span className={classnames({ added, removed, diff: (added || removed) })}>{ getPermissiblePurposeLabel(v) }</span></li>)
-                  })
-                }
+                { permissiblePurposeDiff() }
               </ul>
             )
           : (
