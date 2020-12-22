@@ -358,19 +358,19 @@ export function updateConditions(type, conditions, protocolId) {
   }
 }
 
-export function fetchQuestionVersions(key) {
+export function fetchQuestionVersions(key, { version, type }) {
 
   return (dispatch, getState) => {
     const state = getState();
 
     const params = {
       state,
-      url: getUrl(state, `/question/${key}`)
+      url: getUrl(state, `/question/${key}?version=${version}&type=${type}`)
     }
 
     return Promise.resolve()
       .then(() => sendMessage(params))
-      .then(versions => dispatch({ type: types.LOAD_QUESTION_VERSIONS, versions, key }))
+      .then(value => dispatch({ type: types.LOAD_QUESTION_VERSIONS, value, key, version }))
       .catch(error => dispatch({ type: types.ERROR, error }));
   }
 }

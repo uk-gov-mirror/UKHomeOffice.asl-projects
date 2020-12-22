@@ -6,7 +6,10 @@ const questionVersions = (state = {}, action) => {
     case types.LOAD_QUESTION_VERSIONS:
       return {
         ...state,
-        [action.key]: action.versions
+        [action.key]: {
+          ...(state[action.key] || {}),
+          [action.version]: action.value
+        }
       };
   }
   return state;
