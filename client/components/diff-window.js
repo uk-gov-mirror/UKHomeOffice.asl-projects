@@ -39,12 +39,12 @@ const DiffWindow  = (props) => {
   const before = useSelector(state => get(state.questionVersions, `${props.name}.${versions[active]}.value`));
 
   useEffect(() => {
-    if (!before) {
+    if (!before && modalOpen) {
       setLoading(true);
       dispatch(fetchQuestionVersions(props.name, { version: versions[active], type: props.type }))
         .then(() => setLoading(false));
     }
-  }, [props.name, versions[active]]);
+  }, [props.name, versions[active], modalOpen]);
 
   const toggleModal = e => {
     e.preventDefault();
