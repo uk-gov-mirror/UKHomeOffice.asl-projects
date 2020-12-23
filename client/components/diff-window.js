@@ -18,6 +18,8 @@ const DiffWindow  = (props) => {
   const [active, setActive] = useState(0);
   const [loading, setLoading] = useState(false);
 
+  const project = useSelector(state => state.project);
+
   const versions = useSelector(state => {
     const iterations = get(state, 'application.project.versions');
     const isFirstIteration = iterations.length <= 2 || iterations[1].status === 'granted';
@@ -232,7 +234,7 @@ const DiffWindow  = (props) => {
           );
       case 'animal-quantities':
         if (value === undefined) {
-          value = mapAnimalQuantities(props.project, props.name);
+          value = mapAnimalQuantities(project, props.name);
         }
         return (
           <ReviewField
