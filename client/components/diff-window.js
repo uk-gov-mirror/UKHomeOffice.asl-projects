@@ -37,8 +37,8 @@ const DiffWindow  = (props) => {
 
   const dispatch = useDispatch();
 
-  const changes = useSelector(state => get(state.questionVersions, `${props.name}.${versions[active]}.diff`, { added: [], removed: [] }));
-  const before = useSelector(state => get(state.questionVersions, `${props.name}.${versions[active]}.value`));
+  const changes = useSelector(state => get(state.questionVersions, `['${props.name}'].${versions[active]}.diff`, { added: [], removed: [] }));
+  const before = useSelector(state => get(state.questionVersions, `['${props.name}'].${versions[active]}.value`));
 
   useEffect(() => {
     if (!before && modalOpen) {
