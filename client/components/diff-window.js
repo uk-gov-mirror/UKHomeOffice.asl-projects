@@ -179,13 +179,11 @@ const DiffWindow  = (props) => {
       return props.options
         .map(option => {
           if (option.value === 'translational-research') {
-            return <li>
-              <ul>
-                {
-                  option.reveal.options.map(o => <Option option={o} key={o.value} />)
-                }
-              </ul>
-            </li>;
+            return <ul>
+              {
+                option.reveal.options.map(o => <Option option={o} key={o.value} />)
+              }
+            </ul>;
           }
           return <Option option={option} key={option.value} />
         });
