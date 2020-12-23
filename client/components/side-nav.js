@@ -26,6 +26,9 @@ function getFieldsForSection(section, project) {
   if (section.repeats) {
     fields.push(section.repeats);
   }
+  if (section.name === 'protocols') {
+    return fields.filter(f => f !== 'title');
+  }
   return fields;
 }
 
