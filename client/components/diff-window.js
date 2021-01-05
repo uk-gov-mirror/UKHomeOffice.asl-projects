@@ -100,7 +100,7 @@ const DiffWindow  = (props) => {
 
           localDiffs.forEach(d => {
             decorations.push({
-              type: d.removed ? 'diff-removed' : 'diff',
+              type: d.removed ? 'removed' : 'added',
               data: {
                 value: d.value
               },
@@ -128,15 +128,9 @@ const DiffWindow  = (props) => {
 
   }
 
-  const renderDecoration = (props, editor, next) => {
+  const renderDecoration = (props) => {
     const { children, decoration, attributes } = props;
-    if (decoration.type === 'diff') {
-      return <span className="diff" {...attributes}>{ children }</span>;
-    }
-    if (decoration.type === 'diff-removed') {
-      return <span className="diff removed" {...attributes}>{ children }</span>;
-    }
-    return next();
+    return <span className={classnames('diff', decoration.type)} {...attributes}>{ children }</span>;
   }
 
   const renderDiff = (parts, value) => {
