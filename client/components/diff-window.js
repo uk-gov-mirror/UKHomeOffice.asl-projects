@@ -26,10 +26,10 @@ const DiffWindow  = (props) => {
     const arr = [];
     if (props.changedFromGranted) {
       arr.push('granted');
-    } else if (props.changedFromFirst) {
+    } else if (props.changedFromFirst && !isFirstIteration) {
       arr.push('first');
     }
-    if (props.changedFromLatest && !isFirstIteration) {
+    if (props.changedFromLatest) {
       arr.push('latest');
     }
     return arr;
