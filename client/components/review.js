@@ -6,6 +6,7 @@ import Comments from './comments';
 import DiffWindow from './diff-window';
 import ReviewField from './review-field';
 import ChangedBadge from './changed-badge';
+import RAPlaybackHint from './ra-playback-hint';
 
 import ErrorBoundary from './error-boundary';
 
@@ -18,7 +19,6 @@ class Review extends React.Component {
   render() {
     const { label } = this.props.altLabels ? this.props.alt : this.props;
     const {
-      hint,
       isGranted,
       showGrantedLabel = true,
       review,
@@ -27,6 +27,13 @@ class Review extends React.Component {
       changedFromGranted,
       hideChanges
     } = this.props;
+
+    let { hint } = this.props;
+
+    if (this.props.raPlayback) {
+      hint = <RAPlaybackHint {...this.props.raPlayback} hint={hint} />
+    }
+
     const showComments = !this.props.noComments && this.props.type !== 'repeater';
     const changed = changedFromFirst || changedFromLatest || changedFromGranted;
     const showDiffWindow = this.props.readonly && !hideChanges && changed

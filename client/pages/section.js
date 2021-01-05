@@ -6,6 +6,8 @@ import DefaultSection from './sections';
 import SectionsLink from '../components/sections-link';
 import ErrorBoundary from '../components/error-boundary';
 import StaticSection from '../components/static-section';
+import RaSidePanel from '../components/ra-side-panel';
+import RAHint from '../components/ra-hint';
 import Readonly from './readonly';
 import { getSubsections } from '../schema';
 
@@ -32,6 +34,7 @@ const mapStateToProps = (
 
   return {
     isLegacy: schemaVersion === 0,
+    isRa: schemaVersion === 'RA',
     project,
     establishment,
     readonly,
@@ -77,28 +80,42 @@ class Section extends React.Component {
     return (
       <Fragment>
         <SectionsLink />
-        <ErrorBoundary
-          section={true}
-          message="Sorry, there is a problem with this section"
-          details={`Section: ${this.props.title}`}
-        >
-          <Component
-            { ...this.props }
-            title={ title }
-            section={ section }
-            save={(data, value) => {
-              if (typeof data === 'string') {
-                data = { [data]: value };
-              }
-              this.props.update(data);
-            }}
-            exit={ () => this.props.history.push('/') }
-            fields={ fields }
-            step={ step }
-            { ...rest }
-            onProgress={ step => this.props.history.push(`/${this.props.section}/${step}`) }
-          />
-        </ErrorBoundary>
+        {
+          this.props.isRa && <RAHint />
+        }
+        <div className="govuk-grid-row">
+          <div className={`govuk-grid-column-${this.props.isRa ? 'two-thirds' : 'full'}`}>
+            <ErrorBoundary
+              section={true}
+              message="Sorry, there is a problem with this section"
+              details={`Section: ${this.props.title}`}
+            >
+              <Component
+                { ...this.props }
+                title={ title }
+                section={ section }
+                save={(data, value) => {
+                  if (typeof data === 'string') {
+                    data = { [data]: value };
+                  }
+                  this.props.update(data);
+                }}
+                exit={ () => this.props.history.push('/') }
+                fields={ fields }
+                step={ step }
+                { ...rest }
+                onProgress={ step => this.props.history.push(`/${this.props.section}/${step}`) }
+              />
+            </ErrorBoundary>
+          </div>
+          {
+            this.props.isRa && (
+              <div className="govuk-grid-column-one-third">
+                <RaSidePanel />
+              </div>
+            )
+          }
+        </div>
       </Fragment>
     )
   }

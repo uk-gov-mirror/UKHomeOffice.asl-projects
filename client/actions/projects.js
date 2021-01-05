@@ -358,14 +358,14 @@ export function updateConditions(type, conditions, protocolId) {
   }
 }
 
-export function fetchQuestionVersions(key, { version, type }) {
+export function fetchQuestionVersions(key, { version, type, isRa }) {
 
   return (dispatch, getState) => {
     const state = getState();
 
     const params = {
       state,
-      url: getUrl(state, `/question/${key}?version=${version}&type=${type}`)
+      url: getUrl(state, `/question/${key}?version=${version}&type=${type}&isRa=${isRa}`)
     }
 
     return Promise.resolve()
