@@ -472,6 +472,13 @@ export default () => ({
               {
                 name: 'adverse-effects',
                 label: 'Describe the likely adverse effects and the expected incidence in the different animals used.',
+                hint: `For the series of regulated procedures described above, both as a whole and as component steps:
+
+Describe the likely adverse effect(s) and the expected incidence in the different animals used
+
+  * Explain how animals will be monitored for the onset or development of adverse effects
+  * Set out the refinement measures and other controls you will adopt to prevent adverse effects from occurring or to minimise their severity
+  * In all cases specify practicable and realistic humane end-points`,
                 type: 'texteditor'
               }
             ]
