@@ -61,42 +61,25 @@ export const transferOfAnimals = {
               ]
             },
             {
-              name: 'transfer-surgically-prepared',
-              label: 'Will you be transferring surgically prepared animals?',
+              name: 'transfer-acclimatisation',
+              label: 'Will animals be given a minimum of 7 days to acclimatise to their new surroundings prior to any regulated procedures being undertaken?',
               type: 'radio',
               inline: true,
               className: 'smaller',
               options: [
                 {
                   label: 'Yes',
-                  value: true,
-                  reveal: {
-                    name: 'transfer-acclimatisation',
-                    label: 'Will animals be given a minimum of 7 days to acclimatise to their new surroundings prior to any regulated procedures being undertaken?',
-                    type: 'radio',
-                    inline: true,
-                    className: 'smaller',
-                    options: [
-                      {
-                        label: 'Yes',
-                        value: true
-                      },
-                      {
-                        label: 'No',
-                        value: false,
-                        reveal: {
-                          name: 'transfer-no-acclimatisation',
-                          label: 'Why won\'t  animals be given 7 days to acclimatise to their new surroundings? ',
-                          type: 'texteditor'
-                        }
-                      }
-                    ]
-                  }
+                  value: true
                 },
                 {
                   label: 'No',
-                  value: false
-                },
+                  value: false,
+                  reveal: {
+                    name: 'transfer-no-acclimatisation',
+                    label: 'Why won\'t  animals be given 7 days to acclimatise to their new surroundings? ',
+                    type: 'texteditor'
+                  }
+                }
               ]
             }
           ]
