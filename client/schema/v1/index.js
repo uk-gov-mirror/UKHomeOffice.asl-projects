@@ -358,7 +358,7 @@ export default () => ({
           {
             name: 'refinement-less-sentient',
             label: 'Why can’t you use animals that are less sentient?',
-            hint: 'For example, animals at a more immature life stage, species that are less sentient, or animals that have been terminally anaesthetised?',
+            hint: 'For example, animals at a more immature life stage, species that are less sentient, or animals that have been terminally anaesthetised.',
             type: 'texteditor'
           },
           {
