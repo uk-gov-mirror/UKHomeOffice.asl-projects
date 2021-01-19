@@ -20,7 +20,8 @@ const selector = ({
     drafting,
     isGranted,
     legacyGranted,
-    establishment
+    establishment,
+    schemaVersion
   }
 }) => {
   return {
@@ -30,7 +31,8 @@ const selector = ({
     drafting,
     isGranted,
     legacyGranted,
-    establishment
+    establishment,
+    schemaVersion
   };
 };
 
@@ -41,7 +43,8 @@ const ProjectRouter = () => {
     version,
     basename,
     drafting,
-    establishment
+    establishment,
+    schemaVersion
   } = useSelector(selector, shallowEqual);
 
   function toggleStatusShowing() {
@@ -75,18 +78,24 @@ const ProjectRouter = () => {
     };
   });
 
-  const versionModel = project.versions.find(v => v.id === version.id);
+  const versionModel = (project.versions || []).find(v => v.id === version.id) || {};
 
   const isApplication = project.status === 'inactive';
   const isAmendment = project.status === 'active' && versionModel.status !== 'granted';
 
-  const title = isApplication
+  let title = isApplication
     ? 'Project licence application'
     : (isAmendment ? 'Project licence amendment' : 'Project licence');
+
+  if (schemaVersion === 'RA') {
+    title = 'Retrospective assessment';
+  }
 
   const docxType = isApplication
     ? 'application'
     : (isAmendment ? 'amendment' : 'application');
+
+  const projectTitle = project.title || version.title || 'Untitled project'
 
   return (
     <BrowserRouter basename={basename}>
@@ -94,7 +103,7 @@ const ProjectRouter = () => {
         <SyncHandler />
         <DocumentHeader
           title={title}
-          subtitle={version.title || 'Untitled project'}
+          subtitle={projectTitle}
           detailsLabel="details and downloads"
           backLink={<Link page="project.read" label="Go to project overview" establishmentId={establishment.id} projectId={project.id} />}
         >

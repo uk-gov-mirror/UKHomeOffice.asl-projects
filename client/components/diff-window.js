@@ -19,9 +19,14 @@ const DiffWindow  = (props) => {
   const [loading, setLoading] = useState(false);
 
   const project = useSelector(state => state.project);
+  const isRa = useSelector(state => state.application.schemaVersion) === 'RA';
 
   const versions = useSelector(state => {
-    const iterations = get(state, 'application.project.versions');
+
+    const iterations = isRa
+      ? get(state, 'application.project.retrospectiveAssessments')
+      : get(state, 'application.project.versions');
+
     const isFirstIteration = iterations.length <= 2 || iterations[1].status === 'granted';
     const arr = [];
     if (props.changedFromGranted) {
@@ -43,7 +48,7 @@ const DiffWindow  = (props) => {
   useEffect(() => {
     if (!before && modalOpen) {
       setLoading(true);
-      dispatch(fetchQuestionVersions(props.name, { version: versions[active], type: props.type }))
+      dispatch(fetchQuestionVersions(props.name, { version: versions[active], type: props.type, isRa }))
         .then(() => setLoading(false));
     }
   }, [props.name, versions[active], modalOpen]);

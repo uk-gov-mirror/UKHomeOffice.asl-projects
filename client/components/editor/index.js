@@ -135,7 +135,11 @@ class TextEditor extends Component {
               {
                 this.props.hint && (
                   <span id={`${this.props.name}-hint`} className='govuk-hint'>
-                    <Markdown source={this.props.hint} links={true} />
+                    {
+                      typeof this.props.hint === 'string'
+                        ? <Markdown source={this.props.hint} links={true} />
+                        : this.props.hint
+                    }
                   </span>
                 )
               }

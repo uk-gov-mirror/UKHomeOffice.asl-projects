@@ -929,6 +929,26 @@ html.modal-open, html.modal-open body {
     }
   }
 
+  .ra-nav {
+    border-top: 2px solid #ccc;
+    padding-top: $govuk-gutter-half;
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+  }
+
+  dl.ra-summary {
+    margin-bottom: $govuk-gutter;
+  }
+
+  .ra-playback {
+    .review:not(:last-child) {
+      margin-bottom: $govuk-gutter;
+    }
+  }
+
   .expanding-panel {
     border-top: 1px solid $govuk-border-colour;
     &:last-child {

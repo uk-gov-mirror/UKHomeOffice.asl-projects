@@ -13,7 +13,7 @@ import flatten from 'lodash/flatten';
 import { Button } from '@ukhomeoffice/react-components';
 
 import { INCOMPLETE, PARTIALLY_COMPLETE, COMPLETE } from '../constants/completeness';
-import schemaMap from '../schema'
+import schemaMap from '../schema';
 import { flattenReveals, getNewComments, getFields } from '../helpers';
 
 import NewComments from './new-comments';

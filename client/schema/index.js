@@ -3,10 +3,12 @@ import isUndefined from 'lodash/isUndefined';
 
 import v0 from './v0';
 import v1 from './v1';
+import ra from './ra';
 
 const versions = {
   0: v0,
-  1: v1
+  1: v1,
+  'RA': ra
 };
 
 export function getGrantedSubsections(schemaVersion) {

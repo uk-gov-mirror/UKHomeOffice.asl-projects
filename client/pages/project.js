@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
@@ -19,7 +19,11 @@ const Index = ({
     return <Redirect to={`/${Object.keys(subsections)[0]}`} />;
   }
 
-  return <ApplicationSummary />
+  return (
+    <Fragment>
+      <ApplicationSummary />
+    </Fragment>
+  )
 };
 
 const mapStateToProps = ({ project, application: { isGranted, schemaVersion } }) => ({ project, isGranted, schemaVersion });

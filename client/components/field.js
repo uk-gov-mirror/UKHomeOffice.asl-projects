@@ -16,6 +16,7 @@ import {
   DateInput
 } from '@ukhomeoffice/react-components';
 
+import RAPlaybackHint from './ra-playback-hint';
 import AdditionalAvailability from './additional-availability';
 import OtherSpecies from './other-species-selector';
 import SpeciesSelector from './species-selector';
@@ -92,7 +93,12 @@ class Field extends Component {
     }
     const { value } = this.state;
 
-    const { label, hint } = this.props.altLabels ? this.props.alt : this.props;
+    let { label, hint } = this.props.altLabels ? this.props.alt : this.props;
+
+    if (this.props.raPlayback) {
+      hint = <RAPlaybackHint {...this.props.raPlayback} hint={hint} />
+    }
+
     if (this.props.fallbackLink && this.props.options && !this.props.options.length) {
       return <a href={this.props.fallbackLink.url}>{this.props.fallbackLink.label}</a>
     }
@@ -292,7 +298,8 @@ const mapStateToProps = ({ project, settings, application }, { name, conditional
     project,
     showChanges: !!onFieldChange && application && !application.newApplication,
     value: !isUndefined(value) ? value : project && project[name],
-    show: !conditional || every(Object.keys(conditional), key => conditional[key] === project[key])
+    show: !conditional || every(Object.keys(conditional), key => conditional[key] === project[key]),
+    grantedVersion: application.grantedVersion
   };
 }
 
