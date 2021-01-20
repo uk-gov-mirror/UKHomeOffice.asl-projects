@@ -95,7 +95,7 @@ const ProjectRouter = () => {
     ? 'application'
     : (isAmendment ? 'amendment' : 'application');
 
-  const projectTitle = project.title || version.title || 'Untitled project'
+  const projectTitle = version.title || project.title || 'Untitled project';
 
   return (
     <BrowserRouter basename={basename}>
