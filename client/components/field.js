@@ -299,7 +299,7 @@ const mapStateToProps = ({ project, settings, application }, { name, conditional
     showChanges: !!onFieldChange && application && !application.newApplication,
     value: !isUndefined(value) ? value : project && project[name],
     show: !conditional || every(Object.keys(conditional), key => conditional[key] === project[key]),
-    grantedVersion: application.grantedVersion
+    grantedVersion: application && application.grantedVersion
   };
 }
 
