@@ -23,7 +23,7 @@ export default () => ({
           {
             name: 'aims-achieved',
             label: 'Did the project achieve its aims and if not, why not?',
-            hint: 'If some objectives were only partially achieved, explain why',
+            hint: 'If aims were only partially achieved, explain why',
             raPlayback: {
               name: {
                 default: 'project-aim',
@@ -89,7 +89,7 @@ If animals went through procedures more than once, make sure this is reflected i
         fields: [
           {
             name: 'refinement',
-            label: 'With the knowledge you now have, could the choice of animals of models used have been improved at all? During the project, how did you minimise harm to animals?',
+            label: 'With the knowledge you have now, could the choice of animals or models used have been improved at all? How did you minimise harm to animals during the project?',
             hint: 'High quality facilities and good processes for managing the animals\' care and wellbeing can reduce harms, for example.',
             raPlayback: {
               name: {
