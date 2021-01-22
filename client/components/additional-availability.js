@@ -47,7 +47,7 @@ export default function AdditionalAvailability(props) {
 
   const reveal = (
     <p>
-      <Details summary="Why is the establishment I need not listed?">
+      <Details summary="Help if your establishment’s not listed">
         <Inset>
           <p>You need to be invited to join an establishment before you can request to do work there. Contact your chosen establishment for an invite.</p>
         </Inset>
