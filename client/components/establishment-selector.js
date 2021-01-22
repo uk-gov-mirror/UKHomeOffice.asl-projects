@@ -83,6 +83,12 @@ export default function EstablishmentSelector({ value, onFieldChange, review, di
     );
   }
 
+  const hint = <Details summary="Help if your establishment's not listed" className="margin-top">
+    <Inset>
+      <p>You need to be invited to an establishment before you can make them your primary establishment. Ask the Home Office Liaison Contact (HOLC) at your chosen establishment to send you an invitation.</p>
+    </Inset>
+  </Details>;
+
   return (
     <div className="establishment-selector">
       {
@@ -94,6 +100,7 @@ export default function EstablishmentSelector({ value, onFieldChange, review, di
               options={options}
               value={localValue || establishment.id}
               onChange={e => setLocalValue(parseInt(e.target.value, 10))}
+              hint={hint}
             />
           )
           : (
@@ -123,15 +130,6 @@ export default function EstablishmentSelector({ value, onFieldChange, review, di
               }
             </Fragment>
           )
-      }
-      {
-        canTransfer && (
-          <Details summary="Why is the establishment I'm looking for not listed?">
-            <Inset>
-              <p>If the establishment is not listed, ask the Home Office Liaison Contact (HOLC) of that establishment to send you an invitation. Once you accept the invitation, you can request your licence to be transferred.</p>
-            </Inset>
-          </Details>
-        )
       }
     </div>
   );
