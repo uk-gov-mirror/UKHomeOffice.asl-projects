@@ -492,7 +492,7 @@ export default () => ({
             fields: [
               {
                 name: 'establishment-id',
-                label: 'Select another establishment where work will be carried out',
+                label: 'Select an establishment where work will be carried out',
                 readOnlyWarning: 'Only the licence holder can agree to disclose their licence to another establishment.',
                 type: 'additional-availability',
                 repeats: true
