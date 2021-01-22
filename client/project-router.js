@@ -83,11 +83,13 @@ const ProjectRouter = () => {
   const isApplication = project.status === 'inactive';
   const isAmendment = project.status === 'active' && versionModel.status !== 'granted';
 
+  const isRa = schemaVersion === 'RA';
+
   let title = isApplication
     ? 'Project licence application'
     : (isAmendment ? 'Project licence amendment' : 'Project licence');
 
-  if (schemaVersion === 'RA') {
+  if (isRa) {
     title = 'Retrospective assessment';
   }
 
@@ -97,6 +99,11 @@ const ProjectRouter = () => {
 
   const projectTitle = version.title || project.title || 'Untitled project';
 
+
+  const detailsLabel = isRa
+    ? 'details'
+    : 'details and downloads';
+
   return (
     <BrowserRouter basename={basename}>
       <ScrollToTop>
@@ -104,7 +111,7 @@ const ProjectRouter = () => {
         <DocumentHeader
           title={title}
           subtitle={projectTitle}
-          detailsLabel="details and downloads"
+          detailsLabel={detailsLabel}
           backLink={<Link page="project.read" label="Go to project overview" establishmentId={establishment.id} projectId={project.id} />}
         >
           <dl>
@@ -141,18 +148,24 @@ const ProjectRouter = () => {
               </Fragment>
             }
 
-            <dt>Downloads</dt>
-            <dd>
-              <ul>
-                <li><Link page="projectVersion.pdf" label="Download licence as a PDF" establishmentId={establishment.id} projectId={project.id} versionId={version.id} /></li>
-                {
-                  (isApplication || isAmendment) &&
-                  <li>
-                    <Link page="projectVersion.docx" label={`Download ${docxType} as a DOCX`} establishmentId={establishment.id} projectId={project.id} versionId={version.id} />
-                  </li>
-                }
-              </ul>
-            </dd>
+            {
+              !isRa && (
+                <Fragment>
+                  <dt>Downloads</dt>
+                  <dd>
+                    <ul>
+                      <li><Link page="projectVersion.pdf" label="Download licence as a PDF" establishmentId={establishment.id} projectId={project.id} versionId={version.id} /></li>
+                      {
+                        (isApplication || isAmendment) &&
+                        <li>
+                          <Link page="projectVersion.docx" label={`Download ${docxType} as a DOCX`} establishmentId={establishment.id} projectId={project.id} versionId={version.id} />
+                        </li>
+                      }
+                    </ul>
+                  </dd>
+                </Fragment>
+              )
+            }
           </dl>
         </DocumentHeader>
 
