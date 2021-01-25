@@ -968,7 +968,7 @@ If you can only add generic information at this stage, provide a general descrip
                     name: 'project-continuation',
                     type: 'repeater',
                     singular: 'Expiring project',
-                    addAnotherLabel: 'Transfer animals from another project',
+                    addAnotherLabel: 'Add another project to transfer animals from',
                     addAnotherClassName: 'link',
                     fields: [
                       {
@@ -1062,7 +1062,7 @@ If you can only add generic information at this stage, provide a general descrip
                     name: 'project-continuation',
                     type: 'repeater',
                     singular: 'Expiring project',
-                    addAnotherLabel: 'Transfer animals from another project',
+                    addAnotherLabel: 'Add another project to transfer animals from',
                     addAnotherClassName: 'link',
                     fields: [
                       {
