@@ -9,7 +9,7 @@ export default function NTSWritingTips() {
         <li>use bullet points to break up long paragraphs of text</li>
         <li>if you have several points, separate them with headings</li>
         <li>leave out extensive detail or background information - give the information required and no more</li>
-        <li>use simple words instead of long words. For example, instead of saying ‘The findings are indicative of…’ say, ‘The findings suggest’ or ‘The finding show’</li>
+        <li>use simple words instead of long words. For example, instead of saying ‘The findings are indicative of…’ say, ‘The findings suggest’ or ‘The findings show’</li>
         <li>avoid technical terms - if that’s not possible, provide an explanation in brackets</li>
       </ul>
     </Details>
