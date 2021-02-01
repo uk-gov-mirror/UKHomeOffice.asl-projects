@@ -1,7 +1,6 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import classnames from 'classnames';
 import { useSelector } from 'react-redux';
-import map from 'lodash/map';
 import { getGrantedSubsections, getSubsections } from '../../../client/schema';
 import StaticSection from '../../../client/components/static-section';
 import StandardConditions from '../components/standard-conditions';
@@ -24,7 +23,7 @@ export default function PDF() {
       {
         sections.map((section, index) => (
           <section className={classnames('section', section.name)} key={index}>
-            <StaticSection section={section} pdf />
+            <StaticSection section={section} pdf isFullApplication />
           </section>
         ))
       }
