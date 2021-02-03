@@ -22,12 +22,12 @@ const getUrl = (section, step) => {
   return url;
 }
 
-const Playback = ({ project, step, history, field, section, readonly, basename, title }) => {
+const Playback = ({ project, step, history, field, section, readonly, basename, title, isFullApplicationPdf }) => {
   if (!project || !field || isEmpty(field)) {
     return null;
   }
   const page = getUrl(section, step);
-  const hint = readonly ? <span>From <a href={`${basename}${page}`}>{title}</a></span> : null;
+  const hint = readonly && !isFullApplicationPdf ? <span>From <a href={`${basename}${page}`}>{title}</a></span> : null;
   return (
     <div className="playback">
       <Review
