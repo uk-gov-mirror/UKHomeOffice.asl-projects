@@ -177,7 +177,7 @@ export default function Steps({ values, prefix, updateItem, editable, ...props }
         prefix={prefix}
         items={(values.steps || []).filter(Boolean)}
         onSave={steps => updateItem({ steps })}
-        addAnother={!values.deleted && editable}
+        addAnother={!props.pdf && !values.deleted && editable}
         { ...props }
       >
         <Step

@@ -21,9 +21,10 @@ function getComponent(section, isGranted, isFullApplication, pdf) {
 
 const StaticSection = ({ section, project, fields = [], isGranted, subsection = false, ...props }) => {
   const Component = getComponent(section, isGranted, props.isFullApplication, props.pdf);
+  const fullApplicationPdf = props.pdf && props.isFullApplication;
 
   return (
-    <Fragment>
+    <div className={fullApplicationPdf ? 'full-application' : ''}>
       {
         (!props.pdf || props.isLegacy) && (
           <Fragment>
@@ -42,7 +43,7 @@ const StaticSection = ({ section, project, fields = [], isGranted, subsection = 
         )
       }
       <Component {...section} fields={fields} values={project} {...props} />
-    </Fragment>
+    </div>
   )
 }
 
