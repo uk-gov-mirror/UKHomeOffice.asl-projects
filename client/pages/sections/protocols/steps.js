@@ -167,8 +167,6 @@ class Step extends Component {
 
 export default function Steps({ values, prefix, updateItem, editable, ...props }) {
   const isReviewStep = parseInt(useParams().step, 10) === 1;
-  const isFullApplicationPdf = props.isFullApplication && props.pdf;
-  const addAnother = !values.deleted && !!editable && !isFullApplicationPdf;
   return (
     <div className="steps">
       <p className="grey">{props.hint}</p>
@@ -179,7 +177,7 @@ export default function Steps({ values, prefix, updateItem, editable, ...props }
         prefix={prefix}
         items={(values.steps || []).filter(Boolean)}
         onSave={steps => updateItem({ steps })}
-        addAnother={addAnother}
+        addAnother={!props.pdf && !values.deleted && editable}
         { ...props }
       >
         <Step
