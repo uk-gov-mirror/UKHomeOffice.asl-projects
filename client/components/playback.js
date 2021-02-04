@@ -22,12 +22,12 @@ const getUrl = (section, step) => {
   return url;
 }
 
-const Playback = ({ project, step, history, field, section, readonly, basename, title }) => {
+const Playback = ({ project, step, history, field, section, readonly, basename, title, isPdf }) => {
   if (!project || !field || isEmpty(field)) {
     return null;
   }
   const page = getUrl(section, step);
-  const hint = readonly ? <span>From <a href={`${basename}${page}`}>{title}</a></span> : null;
+  const hint = readonly && !isPdf ? <span>From <a href={`${basename}${page}`}>{title}</a></span> : null;
   return (
     <div className="playback">
       <Review
@@ -41,7 +41,18 @@ const Playback = ({ project, step, history, field, section, readonly, basename, 
   )
 }
 
-const mapStateToProps = ({ application: { schemaVersion, readonly, basename }, project }, { playback }) => {
+const mapStateToProps = ({
+  application: {
+    schemaVersion,
+    readonly,
+    basename
+  },
+  project,
+  static: {
+    isPdf
+  }
+},
+{ playback }) => {
   playback = isFunction(playback) ? playback(project) : playback;
   if (!playback) {
     return null;
@@ -70,7 +81,8 @@ const mapStateToProps = ({ application: { schemaVersion, readonly, basename }, p
     project,
     readonly,
     basename,
-    title: subsections[section].title
+    title: subsections[section].title,
+    isPdf
   };
 }
 

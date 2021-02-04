@@ -244,8 +244,8 @@ class ReviewField extends React.Component {
       }
       return <dl className="inline">
         {
-          species.map(s => (
-            <Fragment key={s.key}>
+          species.map((s, i) => (
+            <Fragment key={i}>
               <dt>{s.title}:</dt>
               <dd>{s.value ? s.value : <em>No answer provided.</em>}</dd>
             </Fragment>
