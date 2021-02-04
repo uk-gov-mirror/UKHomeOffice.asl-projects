@@ -1043,7 +1043,7 @@ If you can only add generic information at this stage, provide a general descrip
           },
           {
             name: 'training-background-annual-review',
-            label: 'What arrangements have you made for an annual review of the course by your Animal Welfare and Ethics Review Board (AWERB)?',
+            label: 'What arrangements have you made for an annual review of the course by your Animal Welfare and Ethical Review Body (AWERB)?',
             type: 'texteditor'
           },
           {
