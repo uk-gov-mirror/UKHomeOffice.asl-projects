@@ -489,7 +489,7 @@ export default (application, sections, values, updateImageDimensions) => {
     if (field.type === 'location-selector') {
       const est = project.transferToEstablishmentName || application.establishment.name;
       const options = [
-        ...(est || []),
+        ...(est ? [est] : []),
         ...(project.establishments || []).map(e => e.name || e['establishment-name']),
         ...(project.polesList || []).map(p => p.title)
       ];
