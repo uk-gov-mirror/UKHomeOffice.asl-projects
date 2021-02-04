@@ -6,7 +6,7 @@ import ReviewFields from '../../../components/review-fields';
 import Banner from '../../../components/banner';
 import Playback from '../../../components/playback';
 
-const ObjectivesReview = ({ playback, values, steps, goto, readonly, isFullApplication, pdf }) => (
+const ObjectivesReview = ({ playback, values, steps, goto, readonly, isFullApplication }) => (
   <Fragment>
     {
       !readonly && (
@@ -19,7 +19,7 @@ const ObjectivesReview = ({ playback, values, steps, goto, readonly, isFullAppli
         </Fragment>
       )
     }
-    <Playback playback={playback} isFullApplicationPdf={isFullApplication && pdf} />
+    <Playback playback={playback} />
     {
       isFullApplication && <h2>Action plan</h2>
     }
