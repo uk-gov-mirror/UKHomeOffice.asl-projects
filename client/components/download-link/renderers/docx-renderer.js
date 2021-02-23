@@ -871,7 +871,7 @@ export default (application, sections, values, updateImageDimensions) => {
 
   const addImageDimensions = values => {
     return traverse(values, (value) => {
-      if (typeof value !== 'object' || typeof value !== 'string' || value === null) {
+      if ((typeof value !== 'object' && typeof value !== 'string') || value === null) {
         return Promise.resolve(value);
       }
 
