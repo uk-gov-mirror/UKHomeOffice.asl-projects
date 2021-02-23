@@ -875,16 +875,19 @@ export default (application, sections, values, updateImageDimensions) => {
         return Promise.resolve(value);
       }
 
+      let valueWasJson = false;
+
       if (typeof value === 'string') {
         try {
           value = JSON.parse(value);
+          valueWasJson = true;
         } catch (e) {
           return Promise.resolve(value);
         }
       }
 
       if (!value.document || !value.document.nodes) {
-        return Promise.resolve(value);
+        return Promise.resolve(valueWasJson ? JSON.stringify(value) : value);
       }
 
       const nodePromises = value.document.nodes.map(node => {
@@ -898,7 +901,7 @@ export default (application, sections, values, updateImageDimensions) => {
       return Promise.all(nodePromises)
         .then(nodes => {
           value.document.nodes = nodes;
-          return JSON.stringify(value);
+          return Promise.resolve(valueWasJson ? JSON.stringify(value) : value);
         });
     });
   };
