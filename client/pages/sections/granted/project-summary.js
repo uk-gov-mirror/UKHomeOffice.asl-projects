@@ -38,7 +38,7 @@ const ProjectSummary = ({
   establishment,
   fields,
   pdf,
-  versionHolder
+  licenceHolder
 }) => {
 
   return (
@@ -58,7 +58,7 @@ const ProjectSummary = ({
       }
       <div className="granted-section">
         <h2>Project licence holder</h2>
-        <p className="licence-holder">{`${versionHolder.firstName} ${versionHolder.lastName}`}</p>
+        <p className="licence-holder">{`${licenceHolder.firstName} ${licenceHolder.lastName}`}</p>
         <Markdown className="legal">{LEGAL.licenceHolder}</Markdown>
       </div>
       {
@@ -174,10 +174,10 @@ const ProjectSummary = ({
 
 export default connect(({
   project: values,
-  application: { project, establishment, versionHolder }
+  application: { project, establishment, licenceHolder }
 }) => ({
   values,
   project,
   establishment,
-  versionHolder
+  licenceHolder
 }))(ProjectSummary);
