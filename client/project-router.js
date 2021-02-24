@@ -119,7 +119,7 @@ const ProjectRouter = () => {
         >
           <dl>
             <dt>Project title</dt>
-            <dd>{version.title}</dd>
+            <dd>{version.title || project.title}</dd>
 
             <dt>Licence holder</dt>
             <dd>{`${licenceHolder.firstName} ${licenceHolder.lastName}`}</dd>
