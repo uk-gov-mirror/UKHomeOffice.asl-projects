@@ -10,7 +10,7 @@ import Modal from './modal';
 import ReviewField from './review-field'
 import Tabs from './tabs';
 
-import normaliseWhitespace from '../../helpers/normalise-whitespace';
+import normaliseWhitespace from '../helpers/normalise-whitespace';
 
 const DEFAULT_LABEL = 'No answer provided';
 
