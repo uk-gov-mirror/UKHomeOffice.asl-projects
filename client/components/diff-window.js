@@ -10,6 +10,8 @@ import Modal from './modal';
 import ReviewField from './review-field'
 import Tabs from './tabs';
 
+import normaliseWhitespace from '../../helpers/normalise-whitespace';
+
 const DEFAULT_LABEL = 'No answer provided';
 
 const DiffWindow  = (props) => {
@@ -78,7 +80,7 @@ const DiffWindow  = (props) => {
     const before = parseValue(a);
     const after = parseValue(b);
 
-    return before.document.text !== after.document.text;
+    return normaliseWhitespace(before.document.text) !== normaliseWhitespace(after.document.text);
   }
 
   const decorateNode = (parts) => {

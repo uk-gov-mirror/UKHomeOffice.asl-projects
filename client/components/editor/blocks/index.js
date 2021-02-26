@@ -1,4 +1,6 @@
+import normaliseWhitespace from '../../helpers/normalise-whitespace';
 import renderBlock from './render-block';
+import { Text } from 'slate';
 
 const DEFAULT_BLOCK = 'paragraph';
 
@@ -55,6 +57,16 @@ const toggleBlock = (editor, type) => {
 
 export default function Blocks() {
   return {
+    // this needs to be american spelling and I don't like it either
+    normalizeNode: (node, editor, next) => {
+      if (node.object === 'text') {
+        const text = normaliseWhitespace(node.text);
+        if (node.text !== text) {
+          return () => editor.replaceNodeByKey(node.key, Text.create({ text }));
+        }
+      }
+      next();
+    },
     renderBlock,
     commands: {
       toggleBlock,
