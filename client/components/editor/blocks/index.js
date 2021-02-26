@@ -1,4 +1,4 @@
-import normaliseWhitespace from '../../helpers/normalise-whitespace';
+import normaliseWhitespace from '../../../helpers/normalise-whitespace';
 import renderBlock from './render-block';
 import { Text } from 'slate';
 
