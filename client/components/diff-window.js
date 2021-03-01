@@ -314,7 +314,7 @@ const DiffWindow  = (props) => {
           {
             controls()
           }
-          <div className="panel light-grey">
+          <div className="panel light-grey before">
             {
               loading ? <p>Loading...</p> : renderDiff(changes.removed, before)
             }
@@ -322,7 +322,7 @@ const DiffWindow  = (props) => {
         </div>
         <div className="govuk-grid-column-one-half">
           <h3>Proposed</h3>
-          <div className="panel light-grey">
+          <div className="panel light-grey after">
             {
               renderDiff(changes.added, props.value)
             }
