@@ -21,7 +21,8 @@ const selector = ({
     isGranted,
     legacyGranted,
     establishment,
-    schemaVersion
+    schemaVersion,
+    licenceHolder
   }
 }) => {
   return {
@@ -32,7 +33,8 @@ const selector = ({
     isGranted,
     legacyGranted,
     establishment,
-    schemaVersion
+    schemaVersion,
+    licenceHolder
   };
 };
 
@@ -44,7 +46,8 @@ const ProjectRouter = () => {
     basename,
     drafting,
     establishment,
-    schemaVersion
+    schemaVersion,
+    licenceHolder
   } = useSelector(selector, shallowEqual);
 
   function toggleStatusShowing() {
@@ -116,10 +119,10 @@ const ProjectRouter = () => {
         >
           <dl>
             <dt>Project title</dt>
-            <dd>{version.title}</dd>
+            <dd>{version.title || project.title}</dd>
 
             <dt>Licence holder</dt>
-            <dd>{`${project.licenceHolder.firstName} ${project.licenceHolder.lastName}`}</dd>
+            <dd>{`${licenceHolder.firstName} ${licenceHolder.lastName}`}</dd>
 
             <dt>Licence number</dt>
             <dd>{project.licenceNumber || '-'}</dd>

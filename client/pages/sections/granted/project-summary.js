@@ -35,14 +35,10 @@ const PermissiblePurpose = ({ values }) => {
 const ProjectSummary = ({
   project,
   values,
-  establishment: {
-    name,
-    licenceNumber,
-    address,
-    licenceHolder
-  },
+  establishment,
   fields,
-  pdf
+  pdf,
+  licenceHolder
 }) => {
 
   return (
@@ -62,7 +58,7 @@ const ProjectSummary = ({
       }
       <div className="granted-section">
         <h2>Project licence holder</h2>
-        <p className="licence-holder">{`${project.licenceHolder.firstName} ${project.licenceHolder.lastName}`}</p>
+        <p className="licence-holder">{`${licenceHolder.firstName} ${licenceHolder.lastName}`}</p>
         <Markdown className="legal">{LEGAL.licenceHolder}</Markdown>
       </div>
       {
@@ -126,14 +122,14 @@ const ProjectSummary = ({
         <p className="legal">You are authorised to undertake this programme of scientific procedures at the following places:</p>
         <div className="granted-section">
           <h3>Primary establishment</h3>
-          <p>{ name }</p>
+          <p>{ establishment.name }</p>
           <dl className="inline">
             <dt>Establishment licence number: </dt>
-            <dd>{ licenceNumber }</dd>
+            <dd>{ establishment.licenceNumber }</dd>
             <dt>Establishment licence holder: </dt>
-            <dd>{ licenceHolder ? `${licenceHolder.firstName} ${licenceHolder.lastName}` : '-' }</dd>
+            <dd>{ establishment.licenceHolder ? `${establishment.licenceHolder.firstName} ${establishment.licenceHolder.lastName}` : '-' }</dd>
             <dt>Address: </dt>
-            <dd>{ address }</dd>
+            <dd>{ establishment.address }</dd>
           </dl>
         </div>
         {
@@ -178,9 +174,10 @@ const ProjectSummary = ({
 
 export default connect(({
   project: values,
-  application: { project, establishment }
+  application: { project, establishment, licenceHolder }
 }) => ({
   values,
   project,
-  establishment
+  establishment,
+  licenceHolder
 }))(ProjectSummary);

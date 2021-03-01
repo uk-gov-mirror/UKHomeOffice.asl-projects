@@ -8,9 +8,8 @@ import RA from '../../../client/components/retrospective-assessment';
 import StandardConditions from '../components/standard-conditions';
 import LEGAL from '../../../client/constants/legal';
 
-const Legacy = ({ project, values }) => {
+const Legacy = ({ project, licenceHolder }) => {
   const sections = getSubsections(0);
-  const raFields = sections['additional-conditions'].fields;
 
   return (
     <div className="legacy-pdf">
@@ -19,7 +18,7 @@ const Legacy = ({ project, values }) => {
       <h1 className="project-title">{project.title}</h1>
       <div className="granted-section">
         <h2>Project licence holder</h2>
-        <p className="licence-holder">{`${project.licenceHolder.firstName} ${project.licenceHolder.lastName}`}</p>
+        <p className="licence-holder">{`${licenceHolder.firstName} ${licenceHolder.lastName}`}</p>
         <Markdown className="legal">{LEGAL.licenceHolder}</Markdown>
       </div>
       <div className="granted-section">
@@ -47,9 +46,10 @@ const Legacy = ({ project, values }) => {
 
 export default connect(({
   project: values,
-  application: { project, establishment }
+  application: { project, establishment, licenceHolder }
 }) => ({
   project,
   values,
-  establishment
+  establishment,
+  licenceHolder
 }))(Legacy);
