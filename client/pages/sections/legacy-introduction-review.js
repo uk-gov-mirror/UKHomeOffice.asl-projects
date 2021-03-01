@@ -7,10 +7,9 @@ import Review from '../../components/review';
 import Banner from '../../components/banner';
 import { DATE_FORMAT } from '../../constants';
 
-const LegacyIntroduction = ({ fields, project, values, pdf, readonly, title }) => {
+const LegacyIntroduction = ({ fields, project, values, pdf, readonly, title, licenceHolder }) => {
 
   if (readonly && !pdf) {
-    const licenceHolder = project ? project.licenceHolder : null;
     const establishment = project ? project.establishment : null;
     const field = {
       label: 'Licence holder',
@@ -82,9 +81,10 @@ const LegacyIntroduction = ({ fields, project, values, pdf, readonly, title }) =
 
 export default connect(({
   project: values,
-  application: { project, readonly }
+  application: { project, readonly, licenceHolder }
 }) => ({
   values,
   project,
-  readonly
+  readonly,
+  licenceHolder
 }))(LegacyIntroduction);
