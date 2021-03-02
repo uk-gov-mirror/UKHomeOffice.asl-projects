@@ -12,7 +12,7 @@ export function ReviewRepeater({ items = [], singular, fields, name, step, hideC
       {
         items.map((item, index) => (
           <Fragment key={index}>
-            <div key={index} className="panel">
+            <div key={index} className="panel gutter">
               <h2>{singular} {index + 1}</h2>
               {
                 fields.map(field => {
