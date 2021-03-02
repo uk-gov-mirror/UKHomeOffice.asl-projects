@@ -545,6 +545,8 @@ export default () => ({
       poles: {
         title: 'Places other than a licensed establishment (POLEs)',
         review: RepeaterReview,
+        enable: 'polesList',
+        singular: 'POLE',
         steps: [
           {
             fields: [
