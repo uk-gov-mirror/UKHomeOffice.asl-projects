@@ -12,7 +12,7 @@ export function ReviewRepeater({ items = [], singular, fields, name, step, hideC
       {
         items.map((item, index) => (
           <Fragment key={index}>
-            <div key={index} className="panel">
+            <div key={index} className="panel gutter">
               <h2>{singular} {index + 1}</h2>
               {
                 fields.map(field => {
@@ -39,7 +39,7 @@ export function ReviewRepeater({ items = [], singular, fields, name, step, hideC
   )
 }
 
-const ReviewSection = ({ title, steps, values, readonly, singular, enable }) => (
+const ReviewSection = ({ title, steps, values, readonly, singular, repeaterFor }) => (
   <Fragment>
     {
       !readonly && (
@@ -51,7 +51,7 @@ const ReviewSection = ({ title, steps, values, readonly, singular, enable }) => 
     }
     {
       steps.filter(s => !s.show || s.show(values)).map((step, index) => step.repeats
-        ? values[enable] && <ReviewRepeater key={index} items={values[step.repeats]} fields={step.fields} step={index} name={step.repeats} singular={singular} />
+        ? values[repeaterFor] && <ReviewRepeater key={index} items={values[step.repeats]} fields={step.fields} step={index} name={step.repeats} singular={singular} />
         : <ReviewFields fields={step.fields} key={index} values={values} step={index} />
       )
     }

@@ -104,7 +104,7 @@ export default () => ({
         repeats: 'establishments',
         singular: 'Additional establishment',
         review: LegacyEstablishments,
-        enable: 'other-establishments',
+        repeaterFor: 'other-establishments',
         steps: [
           {
             fields: [

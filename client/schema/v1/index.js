@@ -454,7 +454,7 @@ export default () => ({
         review: Establishments,
         repeats: 'establishments',
         singular: 'Additional establishment',
-        enable: 'other-establishments',
+        repeaterFor: 'other-establishments',
         steps: [
           {
             fields: [
@@ -545,6 +545,8 @@ export default () => ({
       poles: {
         title: 'Places other than a licensed establishment (POLEs)',
         review: RepeaterReview,
+        repeaterFor: 'polesList',
+        singular: 'POLE',
         steps: [
           {
             fields: [
