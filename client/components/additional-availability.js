@@ -7,12 +7,12 @@ import Review from './review';
 function ReadOnly(props) {
   return (
     <Fragment>
-      <p>{props.readOnlyWarning}</p>
       <Review
         {...props}
         value={props.values.name || props.values['establishment-name']}
         readonly={true}
       />
+      <p><em>{props.readOnlyWarning}</em></p>
     </Fragment>
   );
 }
