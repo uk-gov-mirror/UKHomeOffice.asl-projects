@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { useSelector } from 'react-redux';
-import { RadioGroup, CheckboxGroup, Warning } from '@ukhomeoffice/react-components';
+import { RadioGroup, CheckboxGroup } from '@ukhomeoffice/react-components';
 import { Details, Inset } from '@asl/components';
 import Review from './review';
 
@@ -42,17 +42,24 @@ export default function AdditionalAvailability(props) {
   }
 
   const label = freeTextSet
-    ? 'Confirm this establishment by selecting it from the list'
-    : props.label
+    ? 'Confirm this establishment by selecting it from the list below'
+    : props.label;
 
-  const reveal = (
-    <p>
-      <Details summary="Help if your establishment’s not listed">
-        <Inset>
-          <p>You need to be invited to join an establishment before you can request to do work there. Contact your chosen establishment for an invite.</p>
-        </Inset>
-      </Details>
-    </p>
+  const oversightWarning = newApplication
+    ? 'This draft will become instantly visible to staff with oversight of projects at this establishment. Be careful of sharing sensitive information.'
+    : 'Staff with oversight of projects at this establishment will be able to see the amended project licence once it’s been approved.';
+
+  const hint = (
+    <Fragment>
+      <p>{oversightWarning}</p>
+      <p>
+        <Details summary="Help if your establishment’s not listed">
+          <Inset>
+            <p>You need to be invited to join an establishment before you can request to do work there. Contact your chosen establishment for an invite.</p>
+          </Inset>
+        </Details>
+      </p>
+    </Fragment>
   );
 
   return (
@@ -78,17 +85,12 @@ export default function AdditionalAvailability(props) {
         )
       }
       {
-        newApplication
-          ? <Warning><p>This draft will become instantly visible to staff with oversight of projects at this establishment. Be careful of sharing sensitive information.</p></Warning>
-          : <Warning><p>Staff with oversight of projects at this establishment will be able to see the amended project licence once it’s been approved.</p></Warning>
-      }
-      {
         availableEstablishments.length === 1 && (
           <CheckboxGroup
             {...props}
             label={label}
             value={value}
-            hint={reveal}
+            hint={hint}
             options={[
               {
                 label: availableEstablishments[0].name,
@@ -115,7 +117,7 @@ export default function AdditionalAvailability(props) {
               {...props}
               label={label}
               value={value}
-              hint={reveal}
+              hint={hint}
               options={availableEstablishments.map(est => {
                 return {
                   label: est.name,
