@@ -64,6 +64,7 @@ export default () => ({
               {
                 label: 'Yes',
                 value: true,
+                additionalInfo: `Permissible purpose: (f) Higher education or training for the acquisition, maintenance or improvement of vocational skills`,
                 reveal: [
                   {
                     name: 'training-why-needed',

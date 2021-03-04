@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
+import ReactMarkdown from 'react-markdown';
 import { Link } from '@asl/components';
 import TextEditor from './editor';
 import { projectSpecies as speciesOptions } from '@asl/constants';
@@ -42,6 +43,8 @@ class ReviewField extends React.Component {
   render() {
     let value = this.props.value;
     let options;
+    let additionalInfo;
+
     if (['checkbox', 'radio', 'select', 'permissible-purpose'].includes(this.props.type)) {
       options = this.props.optionsFromSettings
         ? this.props.settings[this.props.optionsFromSettings]
@@ -49,7 +52,8 @@ class ReviewField extends React.Component {
     }
 
     if ((this.props.type === 'radio' || this.props.type === 'select') && !isUndefined(value)) {
-      value = options.find(option => !isUndefined(option.value) ? option.value === value : option === value)
+      value = options.find(option => !isUndefined(option.value) ? option.value === value : option === value);
+      additionalInfo = value.additionalInfo;
     }
 
     if (this.props.type === 'duration') {
@@ -202,6 +206,7 @@ class ReviewField extends React.Component {
         </ul>
       );
     }
+
     if (this.props.type === 'declaration') {
       return <p>
         {
@@ -253,19 +258,23 @@ class ReviewField extends React.Component {
         }
       </dl>
     }
+
     if (this.props.type === 'texteditor') {
       return <TextEditor {...this.props} readOnly={true} />;
     }
+
     if (!isUndefined(value) && !isNull(value) && value !== '') {
       return (
         <Fragment>
           <p>{value.review || value.label || value}</p>
+          { additionalInfo && <ReactMarkdown source={additionalInfo} /> }
           {
             this.props.preserveHierarchy && <RevealChildren value={value} options={options} {...this.props} />
           }
         </Fragment>
       );
     }
+
     return (
       <p>
         <em>{this.props.nullValue || 'No answer provided.'}</em>

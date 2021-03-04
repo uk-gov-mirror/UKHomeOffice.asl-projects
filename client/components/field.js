@@ -7,6 +7,8 @@ import isUndefined from 'lodash/isUndefined';
 import castArray from 'lodash/castArray';
 import every from 'lodash/every';
 
+import ReactMarkdown from 'react-markdown';
+
 import {
   Input,
   Select,
@@ -71,6 +73,7 @@ class Field extends Component {
         ...option,
         reveal: (
           <div className="govuk-inset-text">
+            { option.additionalInfo && <ReactMarkdown source={option.additionalInfo} /> }
             {
               option.reveal.component
                 ? option.reveal.component
