@@ -1,8 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import map from 'lodash/map';
-import isEmpty from 'lodash/isEmpty';
-import { getReasons } from '../helpers/retrospective-assessment';
 import { formatDate } from '../helpers';
 import { DATE_FORMAT } from '../constants';
 
@@ -16,27 +14,7 @@ const descriptions = {
 };
 
 export default function RaDetails() {
-  const { project, grantedVersion } = useSelector(state => state.application);
-  let reasons = getReasons(grantedVersion.data);
-
-  console.log(project.versions);
-
-  // if (isEmpty(reasons)) {
-  //   const oldReasons = project.versions
-  //     .slice(1)
-  //     .filter(oldVersion => oldVersion.status === 'granted')
-  //     .reduce((result, oldVersion) => {
-  //       const r = getReasons(oldVersion.data);
-  //       if (!isEmpty(r)) {
-  //         result = Object.assign({}, result, r); // merge the results
-  //       }
-  //       return result;
-  //     }, {});
-
-  //   console.log({oldReasons});
-
-  //   reasons = oldReasons;
-  // }
+  const { reasons, project } = useSelector(state => state.application);
 
   return (
     <div className="ra-details gutter">
