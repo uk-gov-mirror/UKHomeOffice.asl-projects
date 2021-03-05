@@ -20,8 +20,8 @@ class Objectives extends Component {
           ? <h3>What are your teaching objectives?</h3>
           : <h3>What are your scientific objectives or research questions?</h3>
       }
-      <p className="grey">Each objective should be as SMART (specific, measurable, achievable, realistic, time-related) as possible.</p>
-      <p className="grey">It should be possible to determine, in five years’ time, whether or not your objectives were met, assuming all lines of enquiry are pursued.</p>
+      <p className="grey">Each objective should be as SMART (specific, measurable, achievable, realistic, time-related) as possible.</p>
+      <p className="grey">It should be possible to determine, in five years’ time, whether or not your objectives were met, assuming all lines of enquiry are pursued.</p>
       <Repeater
         items={this.props.values.objectives || []}
         type="objectives"

@@ -24,8 +24,8 @@ const ObjectivesReview = ({ playback, values, steps, goto, readonly, isFullAppli
       isFullApplication && <h2>Action plan</h2>
     }
     <h3>What are your scientific objectives or research questions?</h3>
-    <p className="grey hint">Each objective should be as SMART (specific, measurable, achievable, realistic, time-related) as possible.</p>
-    <p className="grey hint">It should be possible to determine, in five years’ time, whether or not your objectives were met, assuming all lines of enquiry are pursued.</p>
+    <p className="grey hint">Each objective should be as SMART (specific, measurable, achievable, realistic, time-related) as possible.</p>
+    <p className="grey hint">It should be possible to determine, in five years’ time, whether or not your objectives were met, assuming all lines of enquiry are pursued.</p>
     <hr />
     {
       (values.objectives || []).map((objective, index) => (

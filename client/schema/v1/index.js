@@ -1855,7 +1855,7 @@ each other.`,
           steps: {
             title: 'Steps',
             hint: 'A step can be a single procedure or a combination of procedures to achieve an outcome. You will be able to reorder your steps at any time before you send your application to the Home Office, but they should be broadly chronological, with the final step being a method of killing or the last regulated procedure.',
-            footer: 'Once you’ve created a list of steps, you need to add information about adverse effects, controls and limitations, and humane endpoints to each one.​',
+            footer: 'Once you’ve created a list of steps, you need to add information about adverse effects, controls and limitations, and humane endpoints to each one.',
             repeats: 'steps',
             granted: {
               order: 7,
@@ -1899,13 +1899,13 @@ each other.`,
                     reveal: [
                       {
                         name: 'adverse-effects',
-                        label: 'What are the likely adverse effects of this step?​',
+                        label: 'What are the likely adverse effects of this step?',
                         hint: 'State the expected adverse effect, including the likely incidence, and the anticipated degree and duration of suffering.',
                         type: 'texteditor'
                       },
                       {
                         name: 'prevent-adverse-effects',
-                        label: 'How will you monitor for, control, and limit any of these adverse effects?​',
+                        label: 'How will you monitor for, control, and limit any of these adverse effects?',
                         hint: 'If adverse effects can\'t be prevented, how will you attempt to ameliorate their initial signs?',
                         type: 'texteditor'
                       },
@@ -1934,7 +1934,7 @@ each other.`,
             fields: [
               {
                 name: 'fate',
-                label: 'What will happen to animals at the end of this protocol?​',
+                label: 'What will happen to animals at the end of this protocol?',
                 hint: 'Select all that apply',
                 type: 'checkbox',
                 preserveHierarchy: true,
@@ -2119,7 +2119,7 @@ each other.`,
             fields: [
               {
                 name: 'most-appropriate',
-                label: 'a) the most appropriate scientific approach?​',
+                label: 'a) the most appropriate scientific approach?',
                 type: 'texteditor'
               },
               {
@@ -2161,7 +2161,7 @@ each other.`,
                       },
                       {
                         name: 'dosing-regimen',
-                        label: 'How will you determine an appropriate dosing regimen?​',
+                        label: 'How will you determine an appropriate dosing regimen?',
                         hint: 'Include routes, dosage volumes, frequencies, and durations.',
                         type: 'texteditor'
                       }

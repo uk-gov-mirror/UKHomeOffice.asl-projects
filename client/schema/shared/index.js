@@ -40,7 +40,7 @@ export const transferOfAnimals = {
             },
             {
               name: 'transfer-recovery',
-              label: 'Will surgically prepared animals be given a minimum of 7 days to recover before being transferred?',
+              label: 'Will surgically prepared animals be given a minimum of 7 days to recover before being transferred?',
               type: 'radio',
               inline: true,
               className: 'smaller',
@@ -76,7 +76,7 @@ export const transferOfAnimals = {
                   value: false,
                   reveal: {
                     name: 'transfer-no-acclimatisation',
-                    label: 'Why won\'t  animals be given 7 days to acclimatise to their new surroundings? ',
+                    label: 'Why won\'t animals be given 7 days to acclimatise to their new surroundings?',
                     type: 'texteditor'
                   }
                 }
