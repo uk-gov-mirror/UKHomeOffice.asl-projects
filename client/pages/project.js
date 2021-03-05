@@ -7,6 +7,7 @@ import omit from 'lodash/omit';
 import { getGrantedSubsections } from '../schema'
 import ApplicationSummary from '../components/application-summary';
 import RaDeclaration from '../components/ra-declaration';
+import RaDetails from '../components/ra-details';
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -33,6 +34,7 @@ const Index = ({
 
   return (
     <Fragment>
+      { schemaVersion === 'RA' && <RaDetails /> }
       <ApplicationSummary />
     </Fragment>
   )

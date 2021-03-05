@@ -947,6 +947,15 @@ html.modal-open, html.modal-open body {
     }
   }
 
+  .ra-details {
+    dl.inline {
+      dd {
+        margin-left: 35%;
+        margin-bottom: $govuk-gutter-half;
+      }
+    }
+  }
+
   .expanding-panel {
     border-top: 1px solid $govuk-border-colour;
     &:last-child {
