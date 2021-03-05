@@ -137,7 +137,7 @@ const ProjectRouter = () => {
               </Fragment>
             }
 
-            { project.raDate &&
+            { project.raDate && !isRa &&
               <Fragment>
                 <dt>Retrospective assessment due</dt>
                 <dd>{formatDate(project.raDate, DATE_FORMAT.long)}</dd>
