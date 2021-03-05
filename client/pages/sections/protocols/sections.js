@@ -77,6 +77,9 @@ const getOpenSection = (protocolState, editable, sections) => {
 }
 
 const getFieldKeys = (section, values) => {
+  if (section.repeats) {
+    return [`protocols.${values.id}.${section.repeats}`];
+  }
   const flattenedFields = flattenReveals(section.fields || [], values);
   if (section.repeats) {
     return (values[section.repeats] || []).filter(Boolean).reduce((list, repeater) => {
