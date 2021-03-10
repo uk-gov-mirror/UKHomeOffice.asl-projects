@@ -423,7 +423,7 @@ export default () => ({
       },
       training: {
         title: 'Training',
-        intro: 'Applicants must confirm training requirements have been met. This could be through completed training modules or professional experience that makes training unnecessary.',
+        intro: 'Add details of relevant training completed. All project licence holders must have completed the PPL and E2 training modules, unless they have grounds for an exemption.',
         component: Training,
         review: Training,
         fields: [
