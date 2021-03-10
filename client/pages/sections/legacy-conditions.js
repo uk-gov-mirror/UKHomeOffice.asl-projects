@@ -28,15 +28,25 @@ function LegacyConditions({
   const custom = (values.conditions || []).find(value => value.key === 'custom');
 
   function handleConditionsChange(vals) {
+    const activeConditions = conditions.reduce((result, condition) => {
+      if (vals.includes(condition.key)) {
+        result.push({
+          ...condition,
+          checked: true
+        });
+      }
+      return result;
+    }, []);
+
     props.saveConditions([
       ...(custom ? [custom] : []),
-      ...conditions.filter(c => vals.includes(c.key))
+      ...activeConditions
     ])
   }
 
   function updateCustom(content) {
     props.saveConditions([
-      ...conditions,
+      ...(values.conditions || []).filter(c => c.key !== 'custom'),
       { key: 'custom', content }
     ]);
   }
