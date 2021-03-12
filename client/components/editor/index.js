@@ -8,6 +8,7 @@ import { Markdown } from '@asl/components';
 import get from 'lodash/get';
 import defer from 'lodash/defer';
 import isEqual from 'lodash/isEqual';
+import merge from 'lodash/merge';
 
 import { throwError } from '../../actions/messages';
 
@@ -29,6 +30,9 @@ const plugins = [
   listPlugin,
   tablePlugin
 ];
+
+// bugfix - this used to work as part of plugins, but alas no more.
+const schema = merge({}, listPlugin.schema, tablePlugin.schema);
 
 const serialiseValue = value => {
   if (!value.document.text) {
@@ -178,6 +182,7 @@ class TextEditor extends Component {
             renderDecoration={this.props.renderDecoration}
             onFocus={this.onFocus}
             onBlur={this.onBlur}
+            schema={schema}
           />
         </div>
       </div>
