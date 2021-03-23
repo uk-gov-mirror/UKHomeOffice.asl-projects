@@ -37,7 +37,7 @@ const DiffWindow  = (props) => {
       arr.push('first');
     }
     // if the latest version and the granted version are the same then don't add separate tabs
-    if (props.changedFromLatest && iterations[1].status !== 'granted') {
+    if (props.changedFromLatest && iterations[1] && iterations[1].status !== 'granted') {
       arr.push('latest');
     }
     return arr;
