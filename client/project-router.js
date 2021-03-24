@@ -85,6 +85,7 @@ const ProjectRouter = () => {
 
   const isApplication = project.status === 'inactive';
   const isAmendment = project.status === 'active' && versionModel.status !== 'granted';
+  const isSuperseded = versionModel.status === 'granted' && project.granted.createdAt > versionModel.createdAt;
 
   const isRa = schemaVersion === 'RA';
 
@@ -159,7 +160,7 @@ const ProjectRouter = () => {
                     <ul>
                       <li><Link page="projectVersion.pdf" label="Download licence as a PDF" establishmentId={establishment.id} projectId={project.id} versionId={version.id} /></li>
                       {
-                        (isApplication || isAmendment) &&
+                        (isApplication || isAmendment || isSuperseded) &&
                         <li>
                           <Link page="projectVersion.docx" label={`Download ${docxType} as a DOCX`} establishmentId={establishment.id} projectId={project.id} versionId={version.id} />
                         </li>
