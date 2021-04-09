@@ -1,8 +1,12 @@
 import intersection from 'lodash/intersection';
 import getLocations from './get-locations';
 
-export default function cleanProtocols (state, props = {}, establishment) {
+export default function cleanProtocols (state, props = {}, establishment, schemaVersion) {
   const project = { ...state, ...props };
+
+  if (schemaVersion === 0) {
+    return project;
+  }
 
   if (!props.objectives && !props.establishments && !props.polesList) {
     return project;
