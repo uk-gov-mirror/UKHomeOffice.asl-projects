@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Redirect, useLocation } from 'react-router-dom';
 import isEmpty from 'lodash/isEmpty';
 import omit from 'lodash/omit';
@@ -13,11 +13,9 @@ function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
-const Index = ({
-  project,
-  isGranted,
-  schemaVersion
-}) => {
+export default function Index() {
+  const { project, application: { isGranted, schemaVersion } } = useSelector(state => state);
+
   const query = useQuery();
   if (!project) {
     return null
@@ -38,8 +36,4 @@ const Index = ({
       <ApplicationSummary />
     </Fragment>
   )
-};
-
-const mapStateToProps = ({ project, application: { isGranted, schemaVersion } }) => ({ project, isGranted, schemaVersion });
-
-export default connect(mapStateToProps)(Index);
+}
