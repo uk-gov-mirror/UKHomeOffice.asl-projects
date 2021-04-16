@@ -137,7 +137,13 @@ const ProtocolSections = ({ sections, protocolState, editable, newComments, ...p
   <Accordion open={getOpenSection(protocolState, editable, sections)} toggleAll={!props.pdf} pdf={props.pdf}>
     {
       sectionNames.map((section, sectionIndex) => (
-        <ExpandingPanel key={section} title={getTitle(sections[section], newComments, props.values)} closeLabel={`Close ${sections[section].title.toLowerCase()}`} className={section.toLowerCase()}>
+        <ExpandingPanel
+          key={section}
+          title={getTitle(sections[section], newComments, props.values)}
+          className={section.toLowerCase()}
+          closeSectionLabel={`Close ${sections[section].title.toLowerCase()}`}
+          pdf={props.pdf}
+        >
           {
             getSection(section, { ...props, protocolState, editable, ...sections[section], sectionsLength: size(sections), sectionIndex, newComments })
           }
