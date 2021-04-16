@@ -50,7 +50,7 @@ export default function ExpandingPanel(props) {
     }
     return (
       <p className="toggles">
-        <a href="#" onClick={e => toggle(e)}>{props.closeLabel || 'Close section'}</a>
+        <a href="#" onClick={toggle}>{props.closeLabel || 'Close section'}</a>
       </p>
     );
   }
