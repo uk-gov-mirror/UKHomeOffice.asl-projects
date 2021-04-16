@@ -45,12 +45,12 @@ export default function ExpandingPanel(props) {
   }
 
   function closeSectionLink() {
-    if (!isOpen() || !props.closeSectionLabel || props.pdf) {
+    if (!isOpen() || !props.closeLabel || props.pdf) {
       return null;
     }
     return (
       <p className="toggles">
-        <a href="#" onClick={toggle}>{props.closeSectionLabel}</a>
+        <a href="#" onClick={toggle}>{props.closeLabel}</a>
       </p>
     );
   }

@@ -141,7 +141,7 @@ const ProtocolSections = ({ sections, protocolState, editable, newComments, ...p
           key={section}
           title={getTitle(sections[section], newComments, props.values)}
           className={section.toLowerCase()}
-          closeSectionLabel={`Close ${sections[section].title.toLowerCase()}`}
+          closeLabel={`Close ${sections[section].title.toLowerCase()}`}
           pdf={props.pdf}
         >
           {
