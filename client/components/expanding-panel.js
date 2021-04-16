@@ -18,7 +18,10 @@ export default function ExpandingPanel(props) {
     })
   }
 
-  function toggle() {
+  function toggle(event) {
+    if (event && typeof event.preventDefault === 'function') {
+      event.preventDefault();
+    }
     if (controlled) {
       return props.onToggle();
     }
@@ -41,6 +44,17 @@ export default function ExpandingPanel(props) {
       : props.children
   }
 
+  function closeSectionLink() {
+    if (!isOpen()) {
+      return null;
+    }
+    return (
+      <p className="toggles">
+        <a href="#" onClick={toggle}>{props.closeLabel || 'Close section'}</a>
+      </p>
+    );
+  }
+
   return (
     <section className={classnames('expanding-panel', { open: isOpen() }, props.className)}>
       <header onClick={() => toggle()}>
@@ -49,6 +63,7 @@ export default function ExpandingPanel(props) {
       <div className={classnames('content', { hidden: !isOpen() })}>
         { content() }
       </div>
+      { closeSectionLink() }
     </section>
   )
 }
