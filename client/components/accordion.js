@@ -54,8 +54,8 @@ class Accordion extends React.Component {
 
   render() {
     let { closeAll, openAll, openOne, toggleAll = true } = this.props;
-    closeAll = closeAll || 'Close all';
-    openAll = openAll || 'Open all';
+    closeAll = closeAll || 'Close all sections';
+    openAll = openAll || 'Open all sections';
     return (
       <div className="accordion">
         {
@@ -71,6 +71,11 @@ class Accordion extends React.Component {
             open: this.props.pdf || this.state.open[i],
             scrollToActive: this.props.scrollToActive
           }))
+        }
+        {
+          !openOne && toggleAll && <p className="toggles">
+            <a href="#" onClick={this.toggleAll}>{ this.allOpen() ? closeAll : openAll }</a>
+          </p>
         }
       </div>
     );
