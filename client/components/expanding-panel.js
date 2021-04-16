@@ -18,7 +18,10 @@ export default function ExpandingPanel(props) {
     })
   }
 
-  function toggle() {
+  function toggle(event) {
+    if (event && typeof event.preventDefault === 'function') {
+      event.preventDefault();
+    }
     if (controlled) {
       return props.onToggle();
     }
@@ -47,7 +50,7 @@ export default function ExpandingPanel(props) {
     }
     return (
       <p className="toggles">
-        <a href="#" onClick={() => toggle()}>{props.closeLabel || 'Close section'}</a>
+        <a href="#" onClick={e => toggle(e)}>{props.closeLabel || 'Close section'}</a>
       </p>
     );
   }
