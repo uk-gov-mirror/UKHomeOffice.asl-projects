@@ -5,6 +5,7 @@ import pick from 'lodash/pick';
 import pickBy from 'lodash/pickBy';
 import size from 'lodash/size';
 import flatten from 'lodash/flatten';
+import lowerFirst from 'lodash/lowerFirst';
 
 import Accordion from '../../../components/accordion';
 import ExpandingPanel from '../../../components/expanding-panel';
@@ -141,7 +142,7 @@ const ProtocolSections = ({ sections, protocolState, editable, newComments, ...p
           key={section}
           title={getTitle(sections[section], newComments, props.values)}
           className={section.toLowerCase()}
-          closeLabel={`Close ${sections[section].title.toLowerCase()}`}
+          closeLabel={`Close ${lowerFirst(sections[section].title)}`}
           pdf={props.pdf}
         >
           {
