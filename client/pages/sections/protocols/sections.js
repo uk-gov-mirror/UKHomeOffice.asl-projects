@@ -5,6 +5,7 @@ import pick from 'lodash/pick';
 import pickBy from 'lodash/pickBy';
 import size from 'lodash/size';
 import flatten from 'lodash/flatten';
+import lowerFirst from 'lodash/lowerFirst';
 
 import Accordion from '../../../components/accordion';
 import ExpandingPanel from '../../../components/expanding-panel';
@@ -137,7 +138,13 @@ const ProtocolSections = ({ sections, protocolState, editable, newComments, ...p
   <Accordion open={getOpenSection(protocolState, editable, sections)} toggleAll={!props.pdf} pdf={props.pdf}>
     {
       sectionNames.map((section, sectionIndex) => (
-        <ExpandingPanel key={section} title={getTitle(sections[section], newComments, props.values)} closeLabel={`Close ${sections[section].title.toLowerCase()}`} className={section.toLowerCase()}>
+        <ExpandingPanel
+          key={section}
+          title={getTitle(sections[section], newComments, props.values)}
+          className={section.toLowerCase()}
+          closeLabel={`Close ${lowerFirst(sections[section].title)}`}
+          pdf={props.pdf}
+        >
           {
             getSection(section, { ...props, protocolState, editable, ...sections[section], sectionsLength: size(sections), sectionIndex, newComments })
           }

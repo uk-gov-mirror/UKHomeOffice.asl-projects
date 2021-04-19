@@ -44,13 +44,13 @@ export default function ExpandingPanel(props) {
       : props.children
   }
 
-  function closeSectionLink() {
-    if (!isOpen()) {
+  function closeLink() {
+    if (!isOpen() || !props.closeLabel || props.pdf) {
       return null;
     }
     return (
       <p className="toggles">
-        <a href="#" onClick={toggle}>{props.closeLabel || 'Close section'}</a>
+        <a href="#" onClick={toggle}>{props.closeLabel}</a>
       </p>
     );
   }
@@ -63,7 +63,7 @@ export default function ExpandingPanel(props) {
       <div className={classnames('content', { hidden: !isOpen() })}>
         { content() }
       </div>
-      { closeSectionLink() }
+      { closeLink() }
     </section>
   )
 }
