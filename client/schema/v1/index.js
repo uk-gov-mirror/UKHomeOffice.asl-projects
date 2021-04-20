@@ -1434,7 +1434,7 @@ each other.`,
                 name: 'training-objectives-non-animal-alternatives',
                 show: values => isTrainingLicence(values),
                 label: 'Describe any resources you use, or are currently developing, to supplement or replace the use of animals.',
-                hint: 'This could include videos, in silico or ex vivio material.',
+                hint: 'This could include videos, in silico or ex vivo material.',
                 type: 'texteditor'
               },
               {
