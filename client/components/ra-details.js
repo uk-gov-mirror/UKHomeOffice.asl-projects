@@ -5,7 +5,7 @@ import { DATE_FORMAT } from '../constants';
 import RaReasons from './ra-reasons';
 
 export default function RaDetails() {
-  const { reasons, project } = useSelector(state => state.application);
+  const { project } = useSelector(state => state.application);
 
   return (
     <div className="ra-details gutter">
@@ -14,9 +14,7 @@ export default function RaDetails() {
         <dd>{formatDate(project.raDate, DATE_FORMAT.long)}</dd>
 
         <dt>Reason for retrospective assessment</dt>
-        <dd>
-          <RaReasons reasons={reasons} />
-        </dd>
+        <dd><RaReasons reasons={project.raReasons} /></dd>
       </dl>
     </div>
   )
