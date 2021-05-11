@@ -18,6 +18,7 @@ import { flattenReveals, getNewComments, getFields } from '../helpers';
 
 import NewComments from './new-comments';
 import ChangedBadge from './changed-badge';
+import NextSteps from './next-steps';
 
 const mapStateToProps = ({
   project,
@@ -216,6 +217,7 @@ class ApplicationSummary extends React.Component {
         <p className="back-to-project">
           <a href={this.props.projectUrl}>Back to project overview</a>
         </p>
+        <NextSteps />
       </div>
     )
   }

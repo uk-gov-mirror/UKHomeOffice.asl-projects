@@ -4,6 +4,7 @@ import flatten from 'lodash/flatten';
 import get from 'lodash/get';
 import ReviewFields from './review-fields';
 import PDFProtocols from '../pages/sections/granted/pdf-protocols';
+import SectionNav from './section-nav';
 
 function getComponent(section, isGranted, isFullApplication, pdf) {
   if (pdf && section.name === 'protocols') {
@@ -43,6 +44,7 @@ const StaticSection = ({ section, project, fields = [], isGranted, subsection = 
         )
       }
       <Component {...section} fields={fields} values={project} {...props} />
+      <SectionNav section={section} />
     </div>
   )
 }

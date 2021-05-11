@@ -226,6 +226,58 @@ html.modal-open, html.modal-open body {
     }
   }
 
+  .section-nav {
+    hr {
+      margin-top: 0;
+    }
+
+    .step-link {
+      padding: $govuk-gutter-half $govuk-gutter;
+      position: relative;
+      display: block;
+      text-decoration: none;
+      border-top: 1px solid $govuk-border-colour;
+      border-collapse: collapse;
+
+      &:hover {
+        background-color: darken($background, 5);
+      }
+
+      h3 {
+        margin: 0;
+        color: inherit;
+      }
+
+      h3:visited {
+        @extend a:visited;
+      }
+
+      span {
+        text-decoration: underline;
+      }
+
+      &.previous, &.next {
+        h3:before {
+          position: absolute;
+          left: 0;
+          color: #aaa;
+        }
+      }
+
+      &.previous {
+        h3:before {
+          content: "\2190";
+        }
+      }
+
+      &.next {
+        h3:before {
+          content: "\2192";
+        }
+      }
+    }
+  }
+
   .gutter {
     margin-bottom: $govuk-gutter;
   }
