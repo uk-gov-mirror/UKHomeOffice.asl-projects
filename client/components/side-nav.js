@@ -50,7 +50,7 @@ const SideNav = ({ schemaVersion, project, isGranted, activeSection, ...props })
           .map(key => {
             const section = sections[key];
             if (section.subsections) {
-              const open = activeSection && section.subsections[activeSection];
+              const open = !!(activeSection && section.subsections[activeSection]);
               const title = <Fragment>
                 <ChangedBadge fields={getFieldsForSection(section, project)} noLabel />
                 <span className="indent">{section.subtitle || section.title}</span>
