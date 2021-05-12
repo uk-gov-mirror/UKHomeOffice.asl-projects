@@ -39,6 +39,10 @@ class Review extends React.Component {
     const showDiffWindow = this.props.readonly && !hideChanges && changed
     const showChanges = !hideChanges && changed;
 
+    if (this.props.type === 'comments-only' && showComments) {
+      return <Comments field={`${this.props.prefix || ''}${this.props.name}`} collapsed={!this.props.readonly} />;
+    }
+
     return (
       <div className="review">
         {
