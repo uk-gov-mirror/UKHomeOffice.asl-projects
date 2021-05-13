@@ -44,7 +44,9 @@ const StaticSection = ({ section, project, fields = [], isGranted, subsection = 
         )
       }
       <Component {...section} fields={fields} values={project} {...props} />
-      <SectionNav section={section} />
+      {
+        !props.pdf && <SectionNav section={section} />
+      }
     </div>
   )
 }

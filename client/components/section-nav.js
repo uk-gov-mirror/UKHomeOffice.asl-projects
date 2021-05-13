@@ -12,12 +12,12 @@ function StepLink({ to, title, next, previous }) {
       <h3>{ next ? 'Next' : 'Previous' }</h3>
       <span>{title}</span>
     </Link>
-  )
+  );
 }
 
 export default function SectionNav() {
-  const { schemaVersion, isGranted } = useSelector(state => state.application)
-  const project = useSelector(state => state.project)
+  const { schemaVersion, isGranted } = useSelector(state => state.application);
+  const project = useSelector(state => state.project);
   const location = useLocation();
   const sectionName = location.pathname.replace('/', '');
   let subsections = isGranted ? getGrantedSubsections(schemaVersion) : getSubsections(schemaVersion);
@@ -26,13 +26,13 @@ export default function SectionNav() {
     if (isGranted) {
       return !s.granted.show || s.granted.show(project);
     }
-    return !s.show || s.show(project)
+    return !s.show || s.show(project);
   })
 
-  let subsectionKeys = Object.keys(subsections)
+  let subsectionKeys = Object.keys(subsections);
 
   if (isGranted) {
-    subsectionKeys = sortBy(subsectionKeys, key => subsections[key].granted.order)
+    subsectionKeys = sortBy(subsectionKeys, key => subsections[key].granted.order);
   }
 
   const stepIndex = subsectionKeys.indexOf(sectionName);
