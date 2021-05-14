@@ -12,7 +12,9 @@ export default function Training(props) {
   const form = useRef(null);
   const history = useHistory();
   const trainingComplete = project['training-complete'];
-  const fields = readonly ? props.fields.filter(f => f.name !== 'training-complete') : props.fields;
+  const fields = props.fields.map(f => {
+    return f.name === 'training-complete' ? { ...f, type: 'comments-only' } : f;
+  });
 
   function onSubmit(e) {
     e.preventDefault();
