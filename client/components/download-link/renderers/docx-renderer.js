@@ -721,7 +721,7 @@ export default (application, sections, values, updateImageDimensions) => {
   }
 
   const renderProtocol = (doc, name, section, values, project) => {
-    doc.createParagraph(section.title).style('ProtocolSectionTitle');
+    doc.createParagraph(section.title).heading2();
 
     if (section.label) {
       doc.createParagraph(section.label).style('Question');
@@ -730,17 +730,17 @@ export default (application, sections, values, updateImageDimensions) => {
     switch (name) {
       case 'steps':
         return (values.steps || []).forEach((stepValues, index) => {
-          doc.createParagraph(`Step ${index + 1} (${stepValues.optional ? 'optional' : 'mandatory'})`).heading2();
+          doc.createParagraph(`Step ${index + 1} (${stepValues.optional ? 'optional' : 'mandatory'})`).heading3();
           renderFields(doc, section, stepValues);
         });
       case 'animals':
         return filterSpeciesByActive(values, project).forEach(speciesValues => {
-          doc.createParagraph(speciesValues.name).heading2();
+          doc.createParagraph(speciesValues.name).heading3();
           renderFields(doc, section, speciesValues, section.fields.filter(f => f.name !== 'species'));
         });
       case 'legacy-animals':
         return (values.species || []).forEach((speciesValues, index) => {
-          doc.createParagraph(`Animal type ${index + 1}`).heading2();
+          doc.createParagraph(`Animal type ${index + 1}`).heading3();
           renderFields(doc, section, speciesValues, section.fields);
         });
       default:
@@ -751,7 +751,7 @@ export default (application, sections, values, updateImageDimensions) => {
   const renderProtocolsSection = (doc, subsection, values) => {
     const protocols = values['protocols'] || [];
     protocols.filter(protocol => !protocol.deleted).forEach((protocolValues, index) => {
-      doc.createParagraph(`Protocol ${index + 1}`).style('ProtocolSectionTitle');
+      doc.createParagraph(`Protocol ${index + 1}`).heading1();
       renderField(doc, subsection.fields[0], protocolValues);
 
       Object.keys(subsection.sections)
@@ -761,7 +761,7 @@ export default (application, sections, values, updateImageDimensions) => {
   };
 
   const renderSubsection = (doc, subsection, values) => {
-    doc.createParagraph(subsection.title).heading2();
+    subsection.name !== 'protocols' && doc.createParagraph(subsection.title).heading2();
 
     if(subsection.name === 'protocol' || subsection.name === 'protocols') {
       renderProtocolsSection(doc, subsection, values);
@@ -772,7 +772,7 @@ export default (application, sections, values, updateImageDimensions) => {
 
   const renderSection = (doc, section, values) => {
     if (section.title) {
-      const sectionTitle = new Paragraph(section.title).style('SectionTitle');
+      const sectionTitle = new Paragraph(section.title).heading1();
       doc.addParagraph(sectionTitle);
     }
     if (section.subtitle) {
@@ -817,7 +817,7 @@ export default (application, sections, values, updateImageDimensions) => {
     sections[0].subsections['introduction'].fields.splice(1, 0, field);
     values['holder'] = application.licenceHolder;
 
-    document.createParagraph(values.title).style('SectionTitle');
+    document.createParagraph(values.title).heading1();
     document.createParagraph(`Document exported on ${now}`).style('body');
 
     document.createParagraph('\n').style('body');
