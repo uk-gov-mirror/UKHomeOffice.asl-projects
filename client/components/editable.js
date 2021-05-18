@@ -51,6 +51,7 @@ class Editable extends Component {
         <TextArea
           value={content}
           onChange={this.onChange}
+          autoExpand={true}
         />
         <p className="control-panel">
           <Button disabled={updating} onClick={this.save} className="button-secondary">Save</Button>
