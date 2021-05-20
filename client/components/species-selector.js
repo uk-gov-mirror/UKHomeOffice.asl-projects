@@ -24,7 +24,7 @@ const getField = (options, name, fieldName) => ({
       return {
         ...option,
         reveal: {
-          label: `Which ${option.label.charAt(0).toLowerCase()}${option.label.substring(1)} will you be using?`,
+          label: `Specify other type of ${option.label.charAt(0).toLowerCase()}${option.label.substring(1)}`,
           name: `${fieldName}-${option.value}`,
           type: 'other-species-selector'
         }
