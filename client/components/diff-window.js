@@ -202,7 +202,7 @@ const DiffWindow = (props) => {
                 ? parts.map(({ value, added, removed }) => (
                   <span key={value} className={classnames({ added, removed, diff: (added || removed) })}>{ value }</span>
                 ))
-                : <em>{value || DEFAULT_LABEL}</em>
+                : value || <em>{ DEFAULT_LABEL }</em>
             }
           </p>
         );
