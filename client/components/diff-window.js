@@ -14,7 +14,7 @@ import normaliseWhitespace from '../helpers/normalise-whitespace';
 
 const DEFAULT_LABEL = 'No answer provided';
 
-const DiffWindow  = (props) => {
+const DiffWindow = (props) => {
 
   const [modalOpen, setModelOpen] = useState(false);
   const [active, setActive] = useState(0);
@@ -202,7 +202,7 @@ const DiffWindow  = (props) => {
                 ? parts.map(({ value, added, removed }) => (
                   <span key={value} className={classnames({ added, removed, diff: (added || removed) })}>{ value }</span>
                 ))
-                : <em>{DEFAULT_LABEL}</em>
+                : <em>{value || DEFAULT_LABEL}</em>
             }
           </p>
         );
@@ -298,7 +298,6 @@ const DiffWindow  = (props) => {
   const compare = () => {
 
     const hasVisibleChanges = hasContentChanges(before, props.value, props.type);
-
 
     return <Fragment>
       {
