@@ -21,9 +21,6 @@ export function showMessage(message) {
 export function throwError(message) {
   return (dispatch) => {
     clearTimeout(hideTimeout);
-    hideTimeout = setTimeout(() => {
-      dispatch(hideMessage());
-    }, 5000);
     return dispatch({ type: types.ERROR, error: { message } });
   };
 }
