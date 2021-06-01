@@ -10,8 +10,6 @@ import omit from 'lodash/omit';
 import mapValues from 'lodash/mapValues';
 import flatten from 'lodash/flatten';
 
-import { Button } from '@ukhomeoffice/react-components';
-
 import { INCOMPLETE, PARTIALLY_COMPLETE, COMPLETE } from '../constants/completeness';
 import schemaMap from '../schema';
 import { flattenReveals, getNewComments, getFields } from '../helpers';
@@ -19,6 +17,7 @@ import { flattenReveals, getNewComments, getFields } from '../helpers';
 import NewComments from './new-comments';
 import ChangedBadge from './changed-badge';
 import NextSteps from './next-steps';
+import Submit from './submit';
 
 const mapStateToProps = ({
   project,
@@ -31,8 +30,7 @@ const mapStateToProps = ({
     showConditions,
     basename,
     drafting,
-    project: actualProject,
-    projectUrl
+    project: actualProject
   }
 }) => {
   const schema = schemaMap[schemaVersion];
@@ -53,8 +51,7 @@ const mapStateToProps = ({
     sections: schema(),
     basename,
     drafting,
-    project: actualProject,
-    projectUrl
+    project: actualProject
   };
 }
 
@@ -202,21 +199,8 @@ class ApplicationSummary extends React.Component {
           })
         }
         {
-          !this.props.readonly && (
-            <Fragment>
-              {
-                !this.props.legacy && <p>All sections must be marked as complete before you can continue and send your application to the Home Office.</p>
-              }
-              <Button
-                disabled={!this.isCompleted()}
-                onClick={this.onComplete}
-              >{this.props.project.isLegacyStub ? 'Continue to final confirmation' : 'Continue'}</Button>
-            </Fragment>
-          )
+          !this.props.readonly && <Submit onComplete={this.onComplete} isCompleted={this.isCompleted()} />
         }
-        <p className="back-to-project">
-          <a href={this.props.projectUrl}>Back to project overview</a>
-        </p>
         <NextSteps />
       </div>
     )

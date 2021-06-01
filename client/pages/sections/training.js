@@ -7,7 +7,7 @@ import Fieldset from '../../components/fieldset';
 import ReviewFields from '../../components/review-fields';
 
 export default function Training(props) {
-  const { training, basename, readonly } = useSelector(state => state.application, shallowEqual);
+  const { training, basename, readonly, canUpdateTraining } = useSelector(state => state.application, shallowEqual);
   const project = useSelector(state => state.project);
   const form = useRef(null);
   const history = useHistory();
@@ -33,7 +33,7 @@ export default function Training(props) {
       <h2>Training record</h2>
       <TrainingSummary certificates={readonly ? project.training : training} />
       {
-        readonly
+        (readonly || !canUpdateTraining)
           ? <ReviewFields {...props} fields={fields} />
           : (
             <form
