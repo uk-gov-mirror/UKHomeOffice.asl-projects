@@ -5,7 +5,10 @@ import { Button } from '@ukhomeoffice/react-components';
 export default function Submit({ isCompleted, onComplete }) {
   const { readonly, schemaVersion, project, projectUrl, canSubmit } = useSelector(state => state.application, shallowEqual);
   const isLegacy = schemaVersion === 0;
-  const type = project.status === 'inactive' ? 'application' : 'amendment';
+  const isRa = schemaVersion === 'RA';
+  const type = isRa
+    ? 'retrospective assessment'
+    : (project.status === 'inactive' ? 'application' : 'amendment');
 
   return (
     <Fragment>
