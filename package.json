@@ -61,7 +61,6 @@
     "mdn-polyfills": "^5.15.0",
     "moment": "^2.22.2",
     "morgan": "^1.9.1",
-    "npm-sass": "^2.3.0",
     "r2": "^2.0.1",
     "react": "^16.9.0",
     "react-addons-css-transition-group": "^15.6.2",
@@ -79,9 +78,7 @@
     "sha.js": "^2.4.11",
     "slate": "^0.47.8",
     "slate-hyperscript": "^0.13.4",
-    "slate-react": "^0.22.10",
-    "webpack": "^4.23.1",
-    "webpack-cli": "^3.3.12"
+    "slate-react": "^0.22.10"
   },
   "devDependencies": {
     "@babel/register": "^7.8.3",
@@ -90,7 +87,10 @@
     "eslint": "^5.12.0",
     "eslint-plugin-react": "^7.12.4",
     "mocha": "^7.0.1",
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "npm-sass": "^2.3.0",
+    "webpack": "^4.46.0",
+    "webpack-cli": "^3.3.12"
   },
   "files": [
     "client/*",
