@@ -383,7 +383,6 @@ export default () => ({
     }
   },
   applicantInformation: {
-    title: 'Technical details',
     subtitle: 'Applicant information',
     subsections: {
       experience,
