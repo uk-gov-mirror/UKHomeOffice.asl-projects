@@ -383,8 +383,7 @@ export default () => ({
     }
   },
   applicantInformation: {
-    title: 'Technical details',
-    subtitle: 'Applicant information',
+    title: 'Applicant information',
     subsections: {
       experience,
       funding: {
@@ -448,7 +447,7 @@ export default () => ({
     }
   },
   projectLocation: {
-    subtitle: 'Project location',
+    title: 'Project location',
     subsections: {
       establishments: {
         title: 'Establishments',
@@ -679,7 +678,7 @@ If you can only add generic information at this stage, provide a general descrip
     }
   },
   projectPlan: {
-    subtitle: 'Project plan',
+    title: 'Project plan',
     subsections: {
       'scientific-background': {
         title: 'Scientific background',
@@ -1513,7 +1512,7 @@ each other.`,
     }
   },
   protocols: {
-    subtitle: 'Protocols',
+    title: 'Protocols',
     subsections: {
       protocols: {
         title: 'Protocols',
@@ -2198,7 +2197,7 @@ each other.`,
     }
   },
   useOfAnimals: {
-    subtitle: 'Use of animals',
+    title: 'Use of animals',
     subsections: {
       domestic: {
         title: 'Cats, dogs, and equidae',
@@ -2658,7 +2657,7 @@ each other.`,
     }
   },
   otherConsiderations: {
-    subtitle: 'Other considerations',
+    title: 'Other considerations',
     subsections: {
       nmbas: {
         title: 'Neuromuscular blocking agents (NMBAs)',
