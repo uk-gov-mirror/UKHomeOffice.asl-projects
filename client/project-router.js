@@ -103,11 +103,6 @@ const ProjectRouter = () => {
 
   const projectTitle = version.title || project.title || 'Untitled project';
 
-
-  const detailsLabel = isRa
-    ? 'details'
-    : 'details and downloads';
-
   return (
     <BrowserRouter basename={basename}>
       <ScrollToTop>
@@ -115,7 +110,7 @@ const ProjectRouter = () => {
         <DocumentHeader
           title={title}
           subtitle={projectTitle}
-          detailsLabel={detailsLabel}
+          detailsLabel="details and downloads"
           backLink={<Link page="project.read" label="Go to project overview" establishmentId={establishment.id} projectId={project.id} />}
         >
           <dl>
@@ -153,22 +148,36 @@ const ProjectRouter = () => {
             }
 
             {
-              !isRa && (
-                <Fragment>
+              <Fragment>
                   <dt>Downloads</dt>
                   <dd>
                     <ul>
-                      <li><Link page="projectVersion.pdf" label="Download licence as a PDF" establishmentId={establishment.id} projectId={project.id} versionId={version.id} /></li>
                       {
-                        (isApplication || isAmendment || isSuperseded) &&
-                        <li>
-                          <Link page="projectVersion.docx" label={`Download ${docxType} as a DOCX`} establishmentId={establishment.id} projectId={project.id} versionId={version.id} />
-                        </li>
+                        isRa ?
+                          <li>
+                            <Link
+                              page="projectVersion.ntsPdf"
+                              label="Download non-technical summary and retrospective assessment as a PDF"
+                              establishmentId={establishment.id}
+                              projectId={project.id}
+                              versionId={project.granted.id}
+                              query={{ draftRa: !!project.draftRa }}
+                            />
+                          </li>
+                        :
+                          <Fragment>
+                            <li><Link page="projectVersion.pdf" label="Download licence as a PDF" establishmentId={establishment.id} projectId={project.id} versionId={version.id} /></li>
+                            {
+                              (isApplication || isAmendment || isSuperseded) &&
+                              <li>
+                                <Link page="projectVersion.docx" label={`Download ${docxType} as a DOCX`} establishmentId={establishment.id} projectId={project.id} versionId={version.id} />
+                              </li>
+                            }
+                          </Fragment>
                       }
                     </ul>
                   </dd>
                 </Fragment>
-              )
             }
           </dl>
         </DocumentHeader>
