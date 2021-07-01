@@ -2,7 +2,7 @@ import React, { useState, useReducer, Fragment } from 'react';
 import { Button } from '@ukhomeoffice/react-components';
 import Condition from './condition';
 import Field from '../field';
-import uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 import CONDITIONS from '../../constants/conditions';
 
 function CustomConditions({ conditions, onUpdate, onAdd, onRemove }) {

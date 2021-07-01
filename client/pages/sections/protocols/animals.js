@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import v4 from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 
 import some from 'lodash/some';
 import flatten from 'lodash/flatten';
@@ -121,7 +121,7 @@ class Animals extends Component {
       if (some(speciesDetails, sd => sd.name === item)) {
         return;
       }
-      speciesDetails.push({ name: item, id: v4(), value })
+      speciesDetails.push({ name: item, id: uuid(), value })
     });
 
     return filterSpeciesByActive({ speciesDetails, species }, project);
