@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
 import { Button } from '@ukhomeoffice/react-components';
-import uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 import cloneDeep from 'lodash/cloneDeep';
 import { throwError } from '../actions/messages';
 
