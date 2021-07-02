@@ -36,6 +36,7 @@
     "date-fns": "^1.30.1",
     "details-element-polyfill": "^2.3.0",
     "docx": "5.0.0-rc4",
+    "eslint-config-lennym": "^2.2.1",
     "file-saver": "^2.0.0",
     "immutable": "^3.8.2",
     "is-hotkey": "^0.2.0",
