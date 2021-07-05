@@ -44,7 +44,7 @@ export default function RAPlaybackHint({ hint, summary, name }) {
 
   return (
     <Fragment>
-      <p><Markdown source={hint} links={true} /></p>
+      <p><Markdown links={true}>{ hint }</Markdown></p>
       <Details summary={summary} className="ra-playback">
         <Inset>
           <label className="govuk-hint">Extract from non-technical summary</label>

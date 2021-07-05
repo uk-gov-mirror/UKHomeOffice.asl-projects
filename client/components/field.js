@@ -73,7 +73,7 @@ class Field extends Component {
         ...option,
         reveal: (
           <div className="govuk-inset-text">
-            { option.additionalInfo && <ReactMarkdown source={option.additionalInfo} /> }
+            { option.additionalInfo && <ReactMarkdown>{option.additionalInfo}</ReactMarkdown> }
             {
               option.reveal.component
                 ? option.reveal.component

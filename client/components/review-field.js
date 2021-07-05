@@ -267,7 +267,7 @@ class ReviewField extends React.Component {
       return (
         <Fragment>
           <p>{value.review || value.label || value}</p>
-          { additionalInfo && <ReactMarkdown source={additionalInfo} /> }
+          { additionalInfo && <ReactMarkdown>{ additionalInfo }</ReactMarkdown> }
           {
             this.props.preserveHierarchy && <RevealChildren value={value} options={options} {...this.props} />
           }
