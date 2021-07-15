@@ -15,7 +15,7 @@ function Image(props) {
 const renderBlock = (props, editor, next) => {
   const { attributes, children, node, isFocused } = props;
 
-  if (props.readOnly && !node.text.trim().length) {
+  if (node.type !== 'image' && props.readOnly && !node.text.trim().length) {
     return null;
   }
 
