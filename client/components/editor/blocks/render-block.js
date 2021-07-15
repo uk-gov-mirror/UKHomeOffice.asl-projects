@@ -2,7 +2,6 @@ import React from 'react';
 import { Button } from '@ukhomeoffice/react-components';
 
 function Image(props) {
-  console.log('RENDERING IMAGE')
   return (
     <div className="image-wrapper">
       <div className="image-overlay">
