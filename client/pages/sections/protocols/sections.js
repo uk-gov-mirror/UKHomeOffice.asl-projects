@@ -114,14 +114,19 @@ const getBadges = (section, newComments, values) => {
   )
 }
 
-const getTitle = (section, newComments, values) => (
-  <Fragment>
-    {
-      section.fields && getBadges(section, newComments, values)
-    }
-    <div>{ section.title }</div>
-  </Fragment>
-)
+function Title({ section, newComments, values, number, pdf }) {
+  const title = pdf
+    ? section.title
+    : `${number + 1}: ${section.title}`
+  return (
+    <Fragment>
+      {
+        section.fields && getBadges(section, newComments, values)
+      }
+      <div>{ title }</div>
+    </Fragment>
+  )
+}
 
 const sortGranted = sections => (a, b) => {
   return sections[a].granted.order - sections[b].granted.order;
@@ -140,7 +145,7 @@ const ProtocolSections = ({ sections, protocolState, editable, newComments, ...p
       sectionNames.map((section, sectionIndex) => (
         <ExpandingPanel
           key={section}
-          title={getTitle(sections[section], newComments, props.values)}
+          title={<Title {...props} section={sections[section]} newComments={newComments} />}
           className={section.toLowerCase()}
           closeLabel={`Close ${lowerFirst(sections[section].title)}`}
           pdf={props.pdf}
