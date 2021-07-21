@@ -32,7 +32,7 @@ export default (application, sections, values, updateImageDimensions) => {
       .basedOn('Normal')
       .next('Normal')
       .quickFormat()
-      .size(40)
+      .size(44)
       .bold()
       .color('#8F23B3')
       .font('Helvetica')
@@ -52,7 +52,7 @@ export default (application, sections, values, updateImageDimensions) => {
       .basedOn('Normal')
       .next('Normal')
       .quickFormat()
-      .size(36)
+      .size(52)
       .bold()
       .font('Helvetica')
       .spacing({ before: 360, after: 400 });
@@ -61,7 +61,7 @@ export default (application, sections, values, updateImageDimensions) => {
       .basedOn('Normal')
       .next('Normal')
       .quickFormat()
-      .size(32)
+      .size(44)
       .bold()
       .font('Helvetica')
       .spacing({ before: 400, after: 300 });
@@ -70,7 +70,16 @@ export default (application, sections, values, updateImageDimensions) => {
       .basedOn('Normal')
       .next('Normal')
       .quickFormat()
-      .size(28)
+      .size(36)
+      .bold()
+      .font('Helvetica')
+      .spacing({ before: 400, after: 200 });
+
+    document.Styles.createParagraphStyle('Heading4', 'Heading 4')
+      .basedOn('Normal')
+      .next('Normal')
+      .quickFormat()
+      .size(32)
       .bold()
       .font('Helvetica')
       .spacing({ before: 400, after: 200 });
@@ -709,7 +718,7 @@ export default (application, sections, values, updateImageDimensions) => {
       if (step.repeats) {
         (values[step.repeats] || []).forEach((v, index) => {
           if (step.singular) {
-            doc.createParagraph(`${step.singular} ${index + 1}`).heading2();
+            doc.createParagraph(`${step.singular} ${index + 1}`).heading4();
           }
           (step.fields || []).filter(f => f.repeats).forEach(field => renderField(doc, field, v, project));
         });
@@ -720,8 +729,8 @@ export default (application, sections, values, updateImageDimensions) => {
     });
   }
 
-  const renderProtocol = (doc, name, section, values, project) => {
-    doc.createParagraph(section.title).heading2();
+  const renderProtocol = (doc, name, section, values, project, title) => {
+    doc.createParagraph(`${title}: ${section.title}`).heading4();
 
     if (section.label) {
       doc.createParagraph(section.label).style('Question');
@@ -730,17 +739,17 @@ export default (application, sections, values, updateImageDimensions) => {
     switch (name) {
       case 'steps':
         return (values.steps || []).forEach((stepValues, index) => {
-          doc.createParagraph(`Step ${index + 1} (${stepValues.optional ? 'optional' : 'mandatory'})`).heading3();
+          doc.createParagraph(`Step ${index + 1} (${stepValues.optional ? 'optional' : 'mandatory'})`).heading4();
           renderFields(doc, section, stepValues);
         });
       case 'animals':
         return filterSpeciesByActive(values, project).forEach(speciesValues => {
-          doc.createParagraph(speciesValues.name).heading3();
+          doc.createParagraph(speciesValues.name).heading4();
           renderFields(doc, section, speciesValues, section.fields.filter(f => f.name !== 'species'));
         });
       case 'legacy-animals':
         return (values.species || []).forEach((speciesValues, index) => {
-          doc.createParagraph(`Animal type ${index + 1}`).heading3();
+          doc.createParagraph(`Animal type ${index + 1}`).heading4();
           renderFields(doc, section, speciesValues, section.fields);
         });
       default:
@@ -751,17 +760,18 @@ export default (application, sections, values, updateImageDimensions) => {
   const renderProtocolsSection = (doc, subsection, values) => {
     const protocols = values['protocols'] || [];
     protocols.filter(protocol => !protocol.deleted).forEach((protocolValues, index) => {
-      doc.createParagraph(`Protocol ${index + 1}`).heading1();
+      const title = `Protocol ${index + 1}`;
+      doc.createParagraph(title).heading3();
       renderField(doc, subsection.fields[0], protocolValues);
 
       Object.keys(subsection.sections)
         .filter(k => !subsection.sections[k].show || subsection.sections[k].show(values))
-        .map(k => renderProtocol(doc, k, subsection.sections[k], protocolValues, values))
+        .map(k => renderProtocol(doc, k, subsection.sections[k], protocolValues, values, title))
     });
   };
 
   const renderSubsection = (doc, subsection, values) => {
-    subsection.name !== 'protocols' && doc.createParagraph(subsection.title).heading2();
+    subsection.name !== 'protocols' && doc.createParagraph(subsection.title).heading3();
 
     if(subsection.name === 'protocol' || subsection.name === 'protocols') {
       renderProtocolsSection(doc, subsection, values);
@@ -772,11 +782,11 @@ export default (application, sections, values, updateImageDimensions) => {
 
   const renderSection = (doc, section, values) => {
     if (section.title) {
-      const sectionTitle = new Paragraph(section.title).heading1();
+      const sectionTitle = new Paragraph(section.title).heading2();
       doc.addParagraph(sectionTitle);
     }
     if (section.subtitle) {
-      doc.createParagraph(section.subtitle).heading1();
+      doc.createParagraph(section.subtitle).heading2();
     }
     Object.values(section.subsections).filter(s => !s.show || s.show(values)).forEach(
       subsection => renderSubsection(doc, subsection, values)
