@@ -395,7 +395,7 @@ html.modal-open, html.modal-open body {
   }
 
   dl.inline {
-    margin: 0;
+    margin: 0 0 $govuk-gutter;
     > * {
       margin: 0;
       padding: 0;
@@ -991,10 +991,6 @@ html.modal-open, html.modal-open body {
       list-style-type: none;
       padding: 0;
     }
-  }
-
-  dl.ra-summary {
-    margin-bottom: $govuk-gutter;
   }
 
   .ra-playback {

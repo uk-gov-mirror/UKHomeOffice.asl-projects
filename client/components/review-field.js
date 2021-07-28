@@ -72,9 +72,9 @@ class ReviewField extends React.Component {
       }
       return (
         <dl className="inline">
-          <dt>Years</dt>
+          <dt>Years:</dt>
           <dd>{years}</dd>
-          <dt>Months</dt>
+          <dt>Months:</dt>
           <dd>{months}</dd>
         </dl>
       )
