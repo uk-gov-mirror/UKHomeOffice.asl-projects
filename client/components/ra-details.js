@@ -8,7 +8,7 @@ export default function RaDetails() {
   const { project } = useSelector(state => state.application);
 
   return (
-    <div className="ra-details gutter">
+    <div className="ra-details">
       <dl className="inline">
         <dt>Retrospective assessment due</dt>
         <dd>{formatDate(project.raDate, DATE_FORMAT.long)}</dd>
