@@ -227,7 +227,9 @@ html.modal-open, html.modal-open body {
   }
 
   .species-selector-other {
-    max-width: 200px;
+    .grow {
+      max-width: 200px;
+    }
   }
 
   .section-nav {
