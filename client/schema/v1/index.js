@@ -408,7 +408,7 @@ export default () => ({
                 value: true,
                 reveal: {
                   name: 'funding-reviewed',
-                  label: 'Were any grant applications for this work peer reviewed? If so, by whom?',
+                  label: 'Were any grant applications for this work peer reviewed? If so, by whom and what was the outcome?',
                   type: 'texteditor'
                 }
               },
