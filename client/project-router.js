@@ -47,7 +47,9 @@ const ProjectRouter = () => {
     drafting,
     establishment,
     schemaVersion,
-    licenceHolder
+    licenceHolder,
+    isGranted,
+    legacyGranted
   } = useSelector(selector, shallowEqual);
 
   function toggleStatusShowing() {
@@ -97,7 +99,7 @@ const ProjectRouter = () => {
     title = 'Retrospective assessment';
   }
 
-  const docxType = isApplication
+  const downloadType = isApplication
     ? 'application'
     : (isAmendment ? 'amendment' : 'application');
 
@@ -166,12 +168,16 @@ const ProjectRouter = () => {
                           </li>
                         :
                           <Fragment>
-                            <li><Link page="projectVersion.pdf" label="Download licence as a PDF" establishmentId={establishment.id} projectId={project.id} versionId={version.id} /></li>
+                            {
+                              (isGranted || legacyGranted) &&
+                              <li><Link page="projectVersion.pdf" label="Download licence (PDF)" establishmentId={establishment.id} projectId={project.id} versionId={version.id} /></li>
+                            }
                             {
                               (isApplication || isAmendment || isSuperseded) &&
-                              <li>
-                                <Link page="projectVersion.docx" label={`Download ${docxType} as a DOCX`} establishmentId={establishment.id} projectId={project.id} versionId={version.id} />
-                              </li>
+                                <Fragment>
+                                  <li><Link page="projectVersion.docx" label={`Download ${downloadType} (DOCX)`} establishmentId={establishment.id} projectId={project.id} versionId={version.id} /></li>
+                                  <li><Link page="projectVersion.pdf" query={{ application: true }} label={`Download ${downloadType} (PDF)`} establishmentId={establishment.id} projectId={project.id} versionId={version.id} /></li>
+                                </Fragment>
                             }
                           </Fragment>
                       }
