@@ -53,7 +53,7 @@ class ReviewField extends React.Component {
 
     if ((this.props.type === 'radio' || this.props.type === 'select') && !isUndefined(value)) {
       value = options.find(option => !isUndefined(option.value) ? option.value === value : option === value);
-      additionalInfo = value.additionalInfo;
+      additionalInfo = value && value.additionalInfo;
     }
 
     if (this.props.type === 'duration') {
