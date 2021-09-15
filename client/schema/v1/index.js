@@ -488,6 +488,7 @@ export default () => ({
             show: values => values['other-establishments'],
             repeats: 'establishments',
             singular: 'Additional establishment',
+            addAnotherLabel: 'Add another additional establishment',
             confirmRemove: confirmProtocolsAffected('remove', 'locations', 'establishment', 'establishment-name'),
             fields: [
               {
