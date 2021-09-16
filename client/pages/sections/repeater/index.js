@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { v4 as uuid } from 'uuid';
 import { Markdown } from '@asl/components';
 
@@ -28,7 +28,7 @@ const Items = ({
   ...props
 }) => {
   return (
-    <Fragment>
+    <div className={`repeats-${repeats}`}>
       <h1>{ title }</h1>
       {
         subtitle && <h2>{subtitle}</h2>
@@ -44,7 +44,7 @@ const Items = ({
         {...props}
       />
       <Controls onContinue={advance} onExit={exit} />
-    </Fragment>
+    </div>
   )
 }
 

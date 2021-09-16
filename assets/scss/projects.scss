@@ -1535,6 +1535,14 @@ html.modal-open, html.modal-open body {
     }
   }
 
+  .repeats-establishments {
+    fieldset, .panel .review {
+      background-color: white;
+      margin: 0 (-$govuk-gutter-half);
+      padding: $govuk-gutter-half;
+    }
+  }
+
   // hack to always show sub-list for permissible purposes
   // and to remove the checkbox for the reveal option
   #permissible-purpose-translational-research {
