@@ -1,16 +1,16 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import RepeaterReview from './repeater/review';
 
 const Establishments = ({ isFullApplication, ...props }) => {
   return (
-    <Fragment>
+    <div className="repeats-establishments">
       {
         isFullApplication && <h2>Establishments</h2>
       }
 
       <RepeaterReview {...props} />
-    </Fragment>
+    </div>
   )
 }
 
