@@ -1538,6 +1538,18 @@ html.modal-open, html.modal-open body {
       margin: 0 (-$govuk-gutter-half);
       padding: $govuk-gutter-half;
     }
+
+    .aa-establishment.deleted {
+      background-color: $mid-grey;
+
+      *:not(.restore) {
+        color: lighten($dark-grey, 20%);
+      }
+
+      fieldset, .panel .review {
+        background-color: #f3f3f3;
+      }
+    }
   }
 
   // hack to always show sub-list for permissible purposes
