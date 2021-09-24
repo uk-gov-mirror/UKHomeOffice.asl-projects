@@ -29,7 +29,9 @@ const getItems = (values, editable, previousAA) => {
   });
 }
 
-function Establishment({ number, editable, fields, values, updateItem, removeItem, restoreItem, prefix = '', ...props }) {
+function Establishment(props) {
+  const { number, editable, values, updateItem, removeItem, restoreItem } = props;
+
   return (
     <section>
       {
@@ -44,17 +46,11 @@ function Establishment({ number, editable, fields, values, updateItem, removeIte
           (values.deleted || !editable)
             ? <ReviewFields
             { ...props }
-            values={values}
-            fields={fields}
-            prefix={prefix}
             readonly={true}
             showItemHeading={false}
           />
             : <Fieldset
             { ...props }
-            values={values}
-            fields={fields}
-            prefix={prefix}
             onFieldChange={(key, value) => updateItem({ [key]: value })}
           />
         }
@@ -84,6 +80,7 @@ export default function Establishments({ values, editable, ...props }) {
         items={items}
         onSave={save}
         addAnother={editable}
+        addAnotherLabel="Add another additional establishment"
         addButtonBefore={false}
         addButtonAfter={true}
         softDelete={true}
