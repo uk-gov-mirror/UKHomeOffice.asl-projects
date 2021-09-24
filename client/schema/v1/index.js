@@ -455,7 +455,6 @@ export default () => ({
         review: EstablishmentsReview,
         repeats: 'establishments',
         singular: 'Additional establishment',
-        repeaterFor: 'other-establishments',
         steps: [
           {
             fields: [
