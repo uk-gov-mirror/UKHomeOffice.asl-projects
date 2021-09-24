@@ -48,7 +48,7 @@ function Establishment({ number, editable, fields, values, updateItem, removeIte
             fields={fields}
             prefix={prefix}
             readonly={true}
-            hideChanges={true}
+            showItemHeading={false}
           />
             : <Fieldset
             { ...props }
@@ -64,8 +64,7 @@ function Establishment({ number, editable, fields, values, updateItem, removeIte
 }
 
 export default function Establishments({ values, editable, ...props }) {
-  const { application } = useSelector(state => state);
-  const { readonly, previousAA } = application;
+  const { readonly, previousAA } = useSelector(state => state.application);
 
   const items = getItems(values, editable, previousAA);
   const itemProps = {};
