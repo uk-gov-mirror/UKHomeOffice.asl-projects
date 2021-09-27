@@ -19,9 +19,7 @@ export default function EstablishmentsReview({ steps, ...props }) {
 
       <ReviewFields {...props} fields={steps[0].fields} />
 
-      <div className="repeats-establishments">
-        <Establishments {...props} fields={steps[1].fields} editable={false} />
-      </div>
+      <Establishments {...props} fields={steps[1].fields} editable={false} />
 
       <ReviewFields {...props} fields={steps[2].fields} />
     </div>
