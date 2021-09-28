@@ -31,13 +31,14 @@ const ReviewFields = ({
   protocolId,
   application,
   hideChanges,
+  showTitle = true,
   showItemHeading = true,
   isFullApplication,
   title
 }) => (
   <Fragment>
     {
-      isFullApplication && <h2>{ title }</h2>
+      isFullApplication && showTitle && <h2>{ title }</h2>
     }
     {
       castArray(values).map((item, i) => (
