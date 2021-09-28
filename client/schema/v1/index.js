@@ -4,6 +4,8 @@ import Objectives from '../../pages/sections/objectives';
 import ObjectivesReview from '../../pages/sections/objectives/review';
 import Repeater from '../../pages/sections/repeater';
 import RepeaterReview from '../../pages/sections/repeater/review';
+import Establishments from '../../pages/sections/establishments';
+import EstablishmentsReview from '../../pages/sections/establishments/review';
 import Conditions from '../../pages/sections/conditions';
 import Authorisations from '../../pages/sections/authorisations';
 import Training from '../../pages/sections/training';
@@ -17,7 +19,6 @@ import GrantedAuthorisations from '../../pages/sections/granted/authorisations';
 import ActionPlan from '../../pages/sections/granted/action-plan';
 import Purpose from '../../pages/sections/granted/protocol-purpose';
 import ProtocolEstablishments from '../../pages/sections/granted/protocol-establishments';
-import Establishments from '../../pages/sections/establishments';
 import ProtocolObjectives from '../../pages/sections/granted/protocol-objectives';
 import GrantedProtocols from '../../pages/sections/granted/protocols';
 
@@ -451,10 +452,9 @@ export default () => ({
     subsections: {
       establishments: {
         title: 'Establishments',
-        review: Establishments,
+        review: EstablishmentsReview,
         repeats: 'establishments',
         singular: 'Additional establishment',
-        repeaterFor: 'other-establishments',
         steps: [
           {
             fields: [
@@ -484,7 +484,7 @@ export default () => ({
             ]
           },
           {
-            component: Repeater,
+            component: Establishments,
             show: values => values['other-establishments'],
             repeats: 'establishments',
             singular: 'Additional establishment',

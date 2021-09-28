@@ -31,6 +31,7 @@ const ReviewFields = ({
   protocolId,
   application,
   hideChanges,
+  showItemHeading = true,
   isFullApplication,
   title
 }) => (
@@ -42,7 +43,7 @@ const ReviewFields = ({
       castArray(values).map((item, i) => (
         <Fragment key={i}>
           {
-            item.name && <h2 className="group">{item.name}</h2>
+            item.name && showItemHeading && <h2 className="group">{item.name}</h2>
           }
           {
             flattenReveals(fields.filter(field => fieldIncluded(field, project, application)), item).map(field => {

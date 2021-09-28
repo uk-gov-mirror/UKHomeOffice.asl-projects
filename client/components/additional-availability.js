@@ -52,13 +52,11 @@ export default function AdditionalAvailability(props) {
   const hint = (
     <Fragment>
       <p>{oversightWarning}</p>
-      <p>
-        <Details summary="Help if your establishment’s not listed">
-          <Inset>
-            <p>You need to be invited to join an establishment before you can request to do work there. Contact your chosen establishment for an invite.</p>
-          </Inset>
-        </Details>
-      </p>
+      <Details summary="Help if your establishment’s not listed">
+        <Inset>
+          <p>You need to be invited to join an establishment before you can request to do work there. Contact your chosen establishment for an invite.</p>
+        </Inset>
+      </Details>
     </Fragment>
   );
 

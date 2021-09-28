@@ -1,5 +1,4 @@
 import React from 'react';
-import { v4 as uuid } from 'uuid';
 import { Markdown } from '@asl/components';
 
 import Repeater from '../../../components/repeater-field';
@@ -9,11 +8,6 @@ const getItems = (values, repeats) => {
   const items = values[repeats];
   if (items && items.length) {
     return items;
-  }
-  // b/c - map previously selected additional establishments.
-  if (repeats === 'establishments') {
-    const otherEstablishments = values['other-establishments-list'];
-    return (otherEstablishments || []).map(est => ({ 'establishment-name': est, id: uuid() }))
   }
 }
 
