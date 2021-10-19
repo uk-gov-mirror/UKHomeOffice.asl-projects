@@ -117,7 +117,7 @@ const getBadges = (section, newComments, values) => {
 function Title({ section, newComments, values, number, pdf }) {
   const title = pdf
     ? section.title
-    : `${number + 1}: ${section.title}`
+    : `Protocol ${number + 1}: ${section.title}`
   return (
     <Fragment>
       {
