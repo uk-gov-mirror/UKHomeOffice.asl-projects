@@ -22,7 +22,8 @@ const selector = ({
     legacyGranted,
     establishment,
     schemaVersion,
-    licenceHolder
+    licenceHolder,
+    isPreview
   }
 }) => {
   return {
@@ -34,7 +35,8 @@ const selector = ({
     legacyGranted,
     establishment,
     schemaVersion,
-    licenceHolder
+    licenceHolder,
+    isPreview
   };
 };
 
@@ -49,7 +51,8 @@ const ProjectRouter = () => {
     schemaVersion,
     licenceHolder,
     isGranted,
-    legacyGranted
+    legacyGranted,
+    isPreview
   } = useSelector(selector, shallowEqual);
 
   function toggleStatusShowing() {
@@ -97,6 +100,10 @@ const ProjectRouter = () => {
 
   if (isRa) {
     title = 'Retrospective assessment';
+  }
+
+  if (isPreview) {
+    title = 'Project licence preview'
   }
 
   const downloadType = isApplication

@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Markdown } from '@asl/components';
 import Review from '../../../components/review';
 import RetrospectiveAssessment from '../../../components/retrospective-assessment';
@@ -32,14 +32,13 @@ const PermissiblePurpose = ({ values }) => {
     />
 };
 
-const ProjectSummary = ({
-  project,
-  values,
-  establishment,
-  fields,
-  pdf,
-  licenceHolder
-}) => {
+export default function ProjectSummary({ fields = [], pdf }) {
+  const { project, establishment, licenceHolder, isPreview } = useSelector(state => state.application);
+  const values = useSelector(state => state.project);
+
+  function grantedField(val) {
+    return isPreview ? <em>Licence not yet granted</em> : val
+  }
 
   return (
     <Fragment>
@@ -51,7 +50,7 @@ const ProjectSummary = ({
             </div>
             <div className="granted-section">
               <h2>Project licence number</h2>
-              <p>{project.licenceNumber}</p>
+              <p>{grantedField(project.licenceNumber)}</p>
             </div>
           </Fragment>
         )
@@ -108,11 +107,11 @@ const ProjectSummary = ({
             </div>
             <div className="granted-section">
               <h3>Date granted</h3>
-              <p>{formatDate(project.issueDate, DATE_FORMAT.long)}</p>
+              <p>{grantedField(formatDate(project.issueDate, DATE_FORMAT.long))}</p>
             </div>
             <div className="granted-section">
               <h3>Expiry date</h3>
-              <p>{formatDate(project.expiryDate, DATE_FORMAT.long)}</p>
+              <p>{grantedField(formatDate(project.expiryDate, DATE_FORMAT.long))}</p>
             </div>
           </Fragment>
         )
@@ -171,13 +170,3 @@ const ProjectSummary = ({
     </Fragment>
   );
 }
-
-export default connect(({
-  project: values,
-  application: { project, establishment, licenceHolder }
-}) => ({
-  values,
-  project,
-  establishment,
-  licenceHolder
-}))(ProjectSummary);

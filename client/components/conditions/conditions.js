@@ -151,25 +151,27 @@ class Conditions extends Component {
     return (
       <div className="conditions">
         {
-          // ra conditions used to be added to the conditions array, we dont want to show them here.
-          conditions.filter(c => !c.key.match(/^retrospective-assessment/)).map((condition, index) => {
-            const template = get(CONDITIONS[this.props.scope], condition.path, {});
-            const { title, content } = template;
-            return <Condition
-              key={condition.key}
-              className={condition.key}
-              singular={this.props.singular}
-              editConditions={editConditions}
-              updating={updating}
-              title={title}
-              number={index + 1}
-              custom={condition.custom}
-              content={content}
-              {...condition}
-              onSave={this.handleSave(condition.key)}
-              onRemove={this.handleRemove(condition.key)}
-            />
-          })
+          conditions.length === 0
+            ? <p><em>No {this.props.authorisations ? 'authorisations' : 'conditions'} added</em></p>
+            // ra conditions used to be added to the conditions array, we dont want to show them here.
+            : conditions.filter(c => !c.key.match(/^retrospective-assessment/)).map((condition, index) => {
+              const template = get(CONDITIONS[this.props.scope], condition.path, {});
+              const { title, content } = template;
+              return <Condition
+                key={condition.key}
+                className={condition.key}
+                singular={this.props.singular}
+                editConditions={editConditions}
+                updating={updating}
+                title={title}
+                number={index + 1}
+                custom={condition.custom}
+                content={content}
+                {...condition}
+                onSave={this.handleSave(condition.key)}
+                onRemove={this.handleRemove(condition.key)}
+              />
+            })
         }
       </div>
     );

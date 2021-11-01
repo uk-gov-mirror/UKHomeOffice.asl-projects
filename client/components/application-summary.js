@@ -17,6 +17,7 @@ import { flattenReveals, getNewComments, getFields } from '../helpers';
 import NewComments from './new-comments';
 import ChangedBadge from './changed-badge';
 import NextSteps from './next-steps';
+import PreviewLicence from './preview-licence';
 import Submit from './submit';
 
 const mapStateToProps = ({
@@ -201,6 +202,7 @@ class ApplicationSummary extends React.Component {
         {
           !this.props.readonly && <Submit onComplete={this.onComplete} isCompleted={this.isCompleted()} />
         }
+        <PreviewLicence />
         <NextSteps />
       </div>
     )

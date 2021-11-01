@@ -8,7 +8,7 @@ const Authorisarions = ({ granted, ...props }) => (
       props.pdf && <h2>{props.title}</h2>
     }
     <Markdown className="grey">{granted.intro}</Markdown>
-    <Review {...props} />
+    <Review {...props} authorisations={true} />
   </div>
 );
 

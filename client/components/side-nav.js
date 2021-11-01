@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import ChangedBadge from './changed-badge';
 import map from 'lodash/map';
@@ -32,7 +33,10 @@ function getFieldsForSection(section, project) {
   return fields;
 }
 
-const SideNav = ({ schemaVersion, project, isGranted, activeSection, ...props }) => {
+export default function SideNav(props) {
+  const { schemaVersion, project, isGranted, activeSection } = props;
+  const application = useSelector(state => state.application);
+
   const schema = schemaMap[schemaVersion];
   const sections = isGranted
     ? getGrantedSubsections(schemaVersion)
@@ -45,7 +49,7 @@ const SideNav = ({ schemaVersion, project, isGranted, activeSection, ...props })
       {
         Object.keys(sections)
           .filter(key => !sections[key].show || sections[key].show(props))
-          .filter(key => !isGranted || !sections[key].granted.show || sections[key].granted.show(project))
+          .filter(key => !isGranted || !sections[key].granted.show || sections[key].granted.show({ ...project, ...application }))
           .sort((a, b) => !isGranted ? true : sections[a].granted.order - sections[b].granted.order)
           .map(key => {
             const section = sections[key];
@@ -85,5 +89,3 @@ const SideNav = ({ schemaVersion, project, isGranted, activeSection, ...props })
     </nav>
   );
 }
-
-export default SideNav;
