@@ -2,8 +2,8 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 export default function NextSteps() {
-  const { isActionable, previewLink } = useSelector(state => state.application);
-  if (!isActionable) {
+  const { isActionable, previewLink, asruUser } = useSelector(state => state.application);
+  if (!isActionable || !asruUser) {
     return null;
   }
 
