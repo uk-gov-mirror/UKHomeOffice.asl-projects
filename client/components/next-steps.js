@@ -7,9 +7,10 @@ export default function NextSteps() {
     return null;
   }
   return (
-    <p className="next-steps">
+    <div className="next-steps">
+      <h3>Next steps</h3>
       <a className="govuk-button" href={taskLink}>Next steps</a>
       <span className="status-message"></span>
-    </p>
+    </div>
   );
 }

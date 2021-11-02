@@ -16,7 +16,8 @@ function StepLink({ to, title, next, previous }) {
 }
 
 export default function SectionNav() {
-  const { schemaVersion, isGranted } = useSelector(state => state.application);
+  const application = useSelector(state => state.application);
+  const { schemaVersion, isGranted } = application;
   const project = useSelector(state => state.project);
   const location = useLocation();
   const sectionName = location.pathname.replace('/', '');
@@ -24,9 +25,9 @@ export default function SectionNav() {
 
   subsections = pickBy(subsections, s => {
     if (isGranted) {
-      return !s.granted.show || s.granted.show(project);
+      return !s.granted.show || s.granted.show({ ...project, ...application });
     }
-    return !s.show || s.show(project);
+    return !s.show || s.show({ ...project, ...application });
   })
 
   let subsectionKeys = Object.keys(subsections);

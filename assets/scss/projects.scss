@@ -660,6 +660,14 @@ html.modal-open, html.modal-open body {
     float: right;
   }
 
+  .preview-licence {
+    border-bottom: 1px solid $govuk-border-colour;
+  }
+
+  .next-steps {
+    margin-top: $govuk-gutter;
+  }
+
   .float-left {
     float: left;
   }

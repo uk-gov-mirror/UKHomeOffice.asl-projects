@@ -15,8 +15,13 @@ function ConditionsPage({
   emptyIntroReadOnly,
   showConditions,
   editConditions,
+  isPreview,
   ...props
 }) {
+  if (isPreview) {
+    editConditions = false;
+  }
+  
   if (!showConditions) {
     return null;
   }
@@ -73,6 +78,6 @@ function ConditionsPage({
   );
 }
 
-export default connect(({ application: { showConditions, editConditions } }) => ({ showConditions, editConditions }), (dispatch, { type }) => ({
+export default connect(({ application: { showConditions, editConditions, isPreview } }) => ({ showConditions, editConditions, isPreview }), (dispatch, { type }) => ({
   saveConditions: conditions => dispatch(updateConditions(type, conditions))
 }))(ConditionsPage);
