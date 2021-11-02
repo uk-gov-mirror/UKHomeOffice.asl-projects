@@ -147,14 +147,16 @@ class Conditions extends Component {
     }
     const { conditions, editConditions } = this.props;
     const { updating } = this.state;
+    
+    // ra conditions used to be added to the conditions array, we dont want to show them here.
+    const notRa = conditions.filter(c => !c.key.match(/^retrospective-assessment/));
 
     return (
       <div className="conditions">
         {
-          conditions.length === 0
+          notRa.length === 0
             ? <p><em>No {this.props.authorisations ? 'authorisations' : 'conditions'} added</em></p>
-            // ra conditions used to be added to the conditions array, we dont want to show them here.
-            : conditions.filter(c => !c.key.match(/^retrospective-assessment/)).map((condition, index) => {
+            : notRa.map((condition, index) => {
               const template = get(CONDITIONS[this.props.scope], condition.path, {});
               const { title, content } = template;
               return <Condition
