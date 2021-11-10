@@ -109,25 +109,27 @@ class ApplicationSummary extends React.Component {
   }
 
   getCommentCount = (key, subsection) => {
+    let repeaterComments = 0;
 
     if (subsection.repeats) {
-      return flatten(Object.keys(this.props.newComments)
+      repeaterComments = flatten(Object.keys(this.props.newComments)
         .filter(key => key.match(new RegExp(`^${subsection.repeats}\\.`)))
         .map(key => this.props.newComments[key])).length;
-    } else {
-      return (this.props.fieldsBySection[key] || []).reduce((total, field) => {
-        if (field.includes('.*')) {
-          const prefix = field.split('.*')[0];
-          return total + Object.keys(this.props.newComments).reduce((sum, q) => {
-            if (q.split('.')[0] === prefix) {
-              return sum + this.props.newComments[q].length;
-            }
-            return sum;
-          }, 0);
-        }
-        return total + (this.props.newComments[field] || []).length
-      }, 0);
     }
+
+    return (this.props.fieldsBySection[key] || []).reduce((total, field) => {
+      if (field.includes('.*')) {
+        const prefix = field.split('.*')[0];
+        return total + Object.keys(this.props.newComments).reduce((sum, q) => {
+          if (q.split('.')[0] === prefix) {
+            return sum + this.props.newComments[q].length;
+          }
+          return sum;
+        }, 0);
+      }
+      return total + (this.props.newComments[field] || []).length
+    }, repeaterComments);
+
   }
 
   getComments = (key, subsection) => {
