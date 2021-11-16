@@ -142,6 +142,12 @@ export const flattenReveals = (fields, values) => {
 };
 
 export function getFields(section) {
+  if (section.name === 'protocols') {
+    return flatten(Object.values(section.sections).concat(section.fields).map(getFields))
+      .map(field => {
+        return { ...field, name: `protocols.*.${field.name}` };
+      });
+  }
   if (section.fields && section.fields.length) {
     return section.fields.map(field => {
       if (field.repeats) {

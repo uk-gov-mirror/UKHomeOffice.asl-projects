@@ -6,9 +6,8 @@ import map from 'lodash/map';
 import pickBy from 'lodash/pickBy';
 import every from 'lodash/every';
 import some from 'lodash/some';
-import omit from 'lodash/omit';
 import mapValues from 'lodash/mapValues';
-import flatten from 'lodash/flatten';
+import minimatch from 'minimatch';
 
 import { INCOMPLETE, PARTIALLY_COMPLETE, COMPLETE } from '../constants/completeness';
 import schemaMap from '../schema';
@@ -46,7 +45,7 @@ const mapStateToProps = ({
     showComments,
     showConditions,
     newComments: getNewComments(comments, user),
-    fieldsBySection: omit(fieldsBySection, 'protocols'),
+    fieldsBySection,
     legacy: schemaVersion === 0,
     values: project,
     sections: schema(),
@@ -108,32 +107,19 @@ class ApplicationSummary extends React.Component {
     return !section.show || section.show(this.props.values);
   }
 
-  getCommentCount = (key, subsection) => {
-    let repeaterComments = 0;
-
-    if (subsection.repeats) {
-      repeaterComments = flatten(Object.keys(this.props.newComments)
-        .filter(key => key.match(new RegExp(`^${subsection.repeats}\\.`)))
-        .map(key => this.props.newComments[key])).length;
+  getCommentCount = (key) => {
+    const fields = this.props.fieldsBySection[key] || [];
+    const getCommentsForKey = key => {
+      const match = minimatch.filter(key);
+      return Object.keys(this.props.newComments)
+        .filter(match)
+        .reduce((sum, q) => sum + this.props.newComments[q].length, 0);
     }
-
-    return (this.props.fieldsBySection[key] || []).reduce((total, field) => {
-      if (field.includes('.*')) {
-        const prefix = field.split('.*')[0];
-        return total + Object.keys(this.props.newComments).reduce((sum, q) => {
-          if (q.split('.')[0] === prefix) {
-            return sum + this.props.newComments[q].length;
-          }
-          return sum;
-        }, 0);
-      }
-      return total + (this.props.newComments[field] || []).length
-    }, repeaterComments);
-
+    return fields.reduce((total, field) => total + getCommentsForKey(field), 0);
   }
 
-  getComments = (key, subsection) => {
-    const newComments = this.getCommentCount(key, subsection);
+  getComments = (key) => {
+    const newComments = this.getCommentCount(key);
     return <NewComments comments={newComments} />
   }
 
