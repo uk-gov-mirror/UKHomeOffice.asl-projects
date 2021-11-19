@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
+import minimatch from 'minimatch';
 
 const selector = ({
   changes: {
@@ -24,10 +25,9 @@ export default function ChangedBadge({ fields = [], changedFromGranted, changedF
   }
   const changedFrom = source => {
     return source.length && fields.some(field => {
-      if (field.includes('*')) {
-        field = field.split('.*')[0];
-      }
-      return source.some(change => change === field)
+      return source.some(change => {
+        return minimatch(change, field);
+      })
     });
   }
 
