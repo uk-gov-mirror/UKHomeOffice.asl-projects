@@ -346,7 +346,7 @@ export default () => ({
     subsections: {
       protocols: {
         title: 'Protocols',
-        name: 'protocol',
+        name: 'protocols',
         component: Protocols,
         review: ProtocolsReview,
         granted: {
