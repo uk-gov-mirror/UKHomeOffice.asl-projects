@@ -273,7 +273,28 @@ Genetically altered animals may not be re-homed.`
       ]
     },
     'non-purpose-bred-sched-2': {
-      include: project => project['purpose-bred'] === false,
+      include: project => {
+        const nopes = [
+          'mice',
+          'rats',
+          'guinea-pigs',
+          'hamsters',
+          'gerbils',
+          'rabbits',
+          'cats',
+          'dogs',
+          'ferrets',
+          'other-domestic-fowl',
+          'other-birds',
+          'common-frogs',
+          'african-frogs',
+          'other-amphibians',
+          'zebra-fish',
+          'pigs',
+          'sheep'
+        ];
+        return nopes.some(species => project.species.includes(species)) && project['purpose-bred'] === false
+      },
       type: 'condition',
       versions: [
         {
