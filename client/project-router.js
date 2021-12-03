@@ -127,13 +127,13 @@ const ProjectRouter = () => {
             <dd>{version.title || project.title}</dd>
 
             <dt>Licence holder</dt>
-            <dd>{`${licenceHolder.firstName} ${licenceHolder.lastName}`}</dd>
+            <dd><Link page="profile.read" establishmentId={project.establishment.id} profileId={licenceHolder.id} label={`${licenceHolder.firstName} ${licenceHolder.lastName}`} /></dd>
 
             <dt>Licence number</dt>
             <dd>{project.licenceNumber || '-'}</dd>
 
             <dt>Primary establishment</dt>
-            <dd>{project.establishment.name}</dd>
+            <dd><Link page="establishment.dashboard" establishmentId={project.establishment.id} label={project.establishment.name} /></dd>
 
             { project.expiryDate &&
               <Fragment>
