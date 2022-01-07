@@ -210,7 +210,7 @@ Genetically altered animals may not be re-homed.`
       ]
     },
     transferAndMovement: {
-      include: project => project.transfer && project['other-establishments'],
+      include: project => project.transfer && (project['other-establishments'] || project['transferToEstablishment']),
       type: 'authorisation',
       versions: [
         {
