@@ -1,9 +1,21 @@
 import React from 'react';
+import { OverflowWrapper } from '@asl/components';
 
 const renderBlock = (props, editor, next) => {
-  const { attributes, children, node } = props;
+  const { attributes, children, node, readOnly } = props;
   switch (node.type) {
     case 'table':
+      if (readOnly) {
+        return (
+          <div className="force-show-scrollbars">
+            <OverflowWrapper>
+              <table {...attributes}>
+                <tbody>{children}</tbody>
+              </table>
+            </OverflowWrapper>
+          </div>
+        );
+      }
       return (
         <table {...attributes}>
           <tbody>{children}</tbody>
