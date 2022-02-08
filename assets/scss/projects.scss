@@ -1151,6 +1151,10 @@ html.modal-open, html.modal-open body {
       color: white;
       padding: $govuk-gutter-half;
 
+      table {
+        color: $govuk-text-colour;
+      }
+
       .grey {
         display: none;
       }
