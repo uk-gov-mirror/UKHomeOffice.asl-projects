@@ -1,4 +1,6 @@
 import { Document, Paragraph, TextRun, Numbering, Indent, Table, Media } from 'docx';
+import unified from 'unified';
+import remarkParse from 'remark-parse';
 import flatten from 'lodash/flatten';
 import isUndefined from 'lodash/isUndefined';
 import isNull from 'lodash/isNull';
@@ -9,6 +11,7 @@ import format from 'date-fns/format';
 import { projectSpecies as SPECIES } from '@asl/constants';
 import { getLegacySpeciesLabel, mapSpecies, stripInvalidXmlChars } from '../../../helpers';
 import { filterSpeciesByActive } from '../../../pages/sections/protocols/animals';
+import protocolConditions from '../../../constants/protocol-conditions';
 
 export default (application, sections, values, updateImageDimensions) => {
   const document = new Document();
@@ -83,6 +86,15 @@ export default (application, sections, values, updateImageDimensions) => {
       .bold()
       .font('Helvetica')
       .spacing({ before: 400, after: 200 });
+
+    document.Styles.createParagraphStyle('Heading5', 'Heading 5')
+      .basedOn('Normal')
+      .next('Normal')
+      .quickFormat()
+      .size(24)
+      .bold()
+      .font('Helvetica')
+      .spacing({ before: 200, after: 50 });
 
     document.Styles.createParagraphStyle('body', 'Body')
       .basedOn('Normal')
@@ -729,6 +741,53 @@ export default (application, sections, values, updateImageDimensions) => {
     });
   }
 
+  const renderMarkdown = (doc, markdown) => {
+    // if we ever use slate >= 0.5 this function can be replaced with
+    // return renderTextEditor(doc, unified().use(remarkParse).use(remarkSlate).parse(markdown))
+
+    const tree = unified().use(remarkParse).parse(markdown);
+    let p;
+
+    (tree.children || []).forEach(node => {
+      switch (node.type) {
+        case 'heading':
+          doc.createParagraph(
+            stripInvalidXmlChars(node.children.find(c => c.type === 'text').value)
+          ).style(`Heading${node.depth}`);
+          break;
+
+        case 'paragraph':
+          doc.createParagraph(
+            stripInvalidXmlChars(node.children.find(c => c.type === 'text').value)
+          ).style('body');
+          break;
+
+        case 'list':
+          // only single-level bulleted lists presently
+          node.children.forEach(listItem => {
+            const text = stripInvalidXmlChars(get(listItem, 'children[0].children[0].value').trim());
+            p = new Paragraph(text);
+            p.style('body');
+            p.bullet(0)
+            doc.addParagraph(p);
+          });
+          break;
+      }
+    });
+  };
+
+  const renderProtocolConditions = doc => {
+    const markdown = `#### ${protocolConditions.title} \n` +
+      `${protocolConditions.summary} \n` +
+      // bump sub-headings from h3 -> h5, otherwise they look out of place
+      `##${protocolConditions.anaesthesia} \n` +
+      `##${protocolConditions.generalAnaesthesia} \n` +
+      `##${protocolConditions.surgery} \n` +
+      `##${protocolConditions.administration}`;
+
+    return renderMarkdown(doc, markdown);
+  };
+
   const renderProtocol = (doc, name, section, values, project, title) => {
     doc.createParagraph(`${title}: ${section.title}`).heading4();
 
@@ -774,6 +833,9 @@ export default (application, sections, values, updateImageDimensions) => {
     subsection.name !== 'protocols' && doc.createParagraph(subsection.title).heading3();
 
     if(subsection.name === 'protocol' || subsection.name === 'protocols') {
+      if (application.schemaVersion > 0) {
+        renderProtocolConditions(doc);
+      }
       renderProtocolsSection(doc, subsection, values);
     } else {
       renderFields(doc, subsection, values);

@@ -112,8 +112,8 @@ export function Protocol({ protocol, number, sections, isLegacy, project, childr
   );
 }
 
-const PDF = ({ protocols = [], isLegacy, isFullApplication, ...props }) => {
-  const showConditions = !isLegacy && !isFullApplication;
+const PDF = ({ protocols = [], isLegacy, ...props }) => {
+  const showConditions = !isLegacy;
   return (
     <Fragment>
       {

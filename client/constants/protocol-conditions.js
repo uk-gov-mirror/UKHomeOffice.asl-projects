@@ -1,4 +1,8 @@
 module.exports = {
+  title: 'General constraints',
+
+  summary: `Please note, constraints on procedures involving anaesthesia, surgery, substance administration and withdrawal of fluids apply to all protocols.`,
+
   anaesthesia: `### Anaesthesia
 
 Induction and maintenance of general or local anaesthesia, sedation or analgesia to mitigate the pain, suffering or distress associated with the performance of other regulated procedures is indicated using the following codes in protocols:
