@@ -15,7 +15,7 @@ function Image(props) {
 const renderBlock = (props, editor, next) => {
   const { attributes, children, node, isFocused } = props;
 
-  if (node.type !== 'image' && props.readOnly && !node.text.trim().length) {
+  if (!['image', 'table-cell'].includes(node.type) && props.readOnly && !node.text.trim().length) {
     return null;
   }
 
