@@ -1103,7 +1103,7 @@ If you can only add generic information at this stage, provide a general descrip
           {
             name: 'objectives',
             title: 'Action plan - 1 of 2',
-            intro: 'There are several useful resources to help you plan your experiments. It is recommended that you read the ARRIVE or PREPARE guidelines, or use the NC3Rs\' Experimental Design Assistant before answering the questions in this section.',
+            intro: 'There are several useful resources to help you plan your experiments. It is recommended that you read the ARRIVE, PREPARE guidelines, the NC3Rs\' Experimental Design Assistant and any other relevant guidelines before answering the questions in this section.',
             singular: 'Objective',
             component: Objectives,
             repeats: 'objectives',
