@@ -20,7 +20,7 @@ const getItems = (values, editable, previousAA) => {
       return true;
     }
     if (e.deleted === true) {
-      if (previousAA.showDeleted.includes(e.id)) {
+      if (previousAA && previousAA.showDeleted.includes(e.id)) {
         return true;
       }
       return false;
