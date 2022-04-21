@@ -255,7 +255,7 @@ html.modal-open, html.modal-open body {
       }
 
       h3:visited {
-        @extend a:visited;
+        @extend a, :visited;
       }
 
       span {
