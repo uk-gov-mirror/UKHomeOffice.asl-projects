@@ -268,7 +268,7 @@ Genetically altered animals may not be re-homed.`
         {
           title: 'Training requirement',
           requiresEditing: true,
-          content: 'This licence authority will expire <<<INSERT number HERE>>> months after the initial grant date unless evidence that <<INSERT name HERE>>> has successfully completed accredited training module(s) <<<INSERT module codes HERE>>> is provided to aspa.london@homeoffice.gov.uk.'
+          content: 'This licence authority will expire <<<INSERT number HERE>>> months after the initial grant date unless evidence that <<INSERT name HERE>>> has successfully completed accredited training module(s) <<<INSERT module codes HERE>>> is provided to ASRUComplianceAssurance@homeoffice.gov.uk.'
         }
       ]
     },
@@ -343,7 +343,7 @@ For studies requested for other worldwide authorities, for example the US Food a
         {
           title: 'Reporting requirement',
           requiresEditing: true,
-          content: 'A report in writing to [aspa.london@homeoffice.gov.uk](aspa.london@homeoffice.gov.uk) or orally to <<<INSERT name of assigned inspector HERE>>>  on the project shall be made by <<<INSERT date HERE>>>  or after <<<INSERT number HERE>>> animals have been used, whichever is the sooner. The report shall contain <<<INSERT required content of report HERE>>>.'
+          content: 'A report in writing to [ASRUComplianceAssurance@homeoffice.gov.uk](ASRUComplianceAssurance@homeoffice.gov.uk) or orally to <<<INSERT name of assigned inspector HERE>>>  on the project shall be made by <<<INSERT date HERE>>>  or after <<<INSERT number HERE>>> animals have been used, whichever is the sooner. The report shall contain <<<INSERT required content of report HERE>>>.'
         }
       ]
     },
