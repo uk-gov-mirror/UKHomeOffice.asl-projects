@@ -1579,7 +1579,7 @@ html.modal-open, html.modal-open body {
 
   // hack to always show sub-list for permissible purposes
   // and to remove the checkbox for the reveal option
-  #permissible-purpose-translational-research {
+  input[name="permissible-purpose"][value="translational-research"] {
     & + label {
       &:before,
       &:after {
