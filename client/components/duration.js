@@ -11,7 +11,7 @@ class Duration extends Component {
     months: null
   }
 
-  componentWillReceiveProps({ value }) {
+  UNSAFE_componentWillReceiveProps({ value }) {
     if (value) {
       this.setState(value);
     }
@@ -51,7 +51,7 @@ class Duration extends Component {
   }
 
   render() {
-    const { label, error } = this.props;
+    const { error } = this.props;
     return (
       <div className={classnames('govuk-form-group', 'duration', { 'govuk-form-group--error': error })}>
         <label className="govuk-label" htmlFor={this.props.name}>{this.props.label}</label>

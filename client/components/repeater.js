@@ -23,7 +23,7 @@ class Repeater extends Component {
     }
   }
 
-  componentWillReceiveProps({ items }) {
+  UNSAFE_componentWillReceiveProps({ items }) {
     if (items) {
       this.setState({ items })
     }
