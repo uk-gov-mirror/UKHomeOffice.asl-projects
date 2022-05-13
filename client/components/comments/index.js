@@ -16,7 +16,7 @@ class Comments extends Component {
     editing: false
   }
 
-  componentWillReceiveProps(newProps) {
+  UNSAFE_componentWillReceiveProps(newProps) {
     if (some(newProps.comments, comment => comment.isNew)) {
       this.setState({ expanded: true })
     }
