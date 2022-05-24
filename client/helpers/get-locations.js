@@ -1,3 +1,5 @@
+const uniq = require('lodash/uniq');
+
 export default function getLocations (project, establishment) {
   const establishments = (project.establishments || [])
     .filter(e => e.name || e['establishment-name'])
@@ -6,9 +8,9 @@ export default function getLocations (project, establishment) {
 
   const poles = (project.polesList || []).filter(p => p.title).map(p => p.title);
 
-  return [
+  return uniq([
     project.transferToEstablishmentName || establishment.name,
     ...establishments,
     ...poles
-  ];
+  ]);
 }
