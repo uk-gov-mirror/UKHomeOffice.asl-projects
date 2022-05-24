@@ -152,8 +152,6 @@ class Field extends Component {
         label={ label }
         hint={ hint }
         error={ this.props.error }
-        min={ this.props.min }
-        max={ this.props.max }
         value={ value }
         onChange={ val => this.onFieldChange(val) }
       />;
