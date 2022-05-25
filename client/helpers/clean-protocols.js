@@ -8,7 +8,7 @@ export default function cleanProtocols (state, props = {}, establishment, schema
     return project;
   }
 
-  if (!props.objectives && !props.establishments && !props.polesList) {
+  if (!props.objectives && !props.establishments && !props.polesList && !props.transferToEstablishmentName) {
     return project;
   }
 
