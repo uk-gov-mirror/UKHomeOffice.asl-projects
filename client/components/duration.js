@@ -22,7 +22,7 @@ const getFields = (years) => {
   ]
 };
 
-const Duration = ({ name, error, label, hint, value, onChange }) => {
+const Duration = ({ name, error, label, hint, value = {}, onChange }) => {
 
   const [years, setYears] = useState(value.years);
   const [months, setMonths] = useState(value.months);
