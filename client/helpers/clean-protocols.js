@@ -18,8 +18,12 @@ export default function cleanProtocols (state, props = {}, establishment, schema
   const objectives = (project.objectives || []).map(o => o.title);
 
   project.protocols.forEach(protocol => {
-    protocol.objectives = intersection(protocol.objectives, objectives);
-    protocol.locations = intersection(protocol.locations, locations);
+    if (props.objectives) {
+      protocol.objectives = intersection(protocol.objectives, objectives);
+    }
+    if (props.establishments || props.polesList || props.transferToEstablishmentName) {
+      protocol.locations = intersection(protocol.locations, locations);
+    }
   });
   return project;
 }
