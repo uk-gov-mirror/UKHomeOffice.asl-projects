@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
 import { Button } from '@ukhomeoffice/react-components';
 
-export default function Submit({ isCompleted, onComplete }) {
+export default function Submit({ onComplete }) {
   const { readonly, schemaVersion, project, projectUrl, canSubmit } = useSelector(state => state.application, shallowEqual);
   const isLegacy = schemaVersion === 0;
   const isRa = schemaVersion === 'RA';
@@ -23,7 +23,7 @@ export default function Submit({ isCompleted, onComplete }) {
                     {
                       !isLegacy && <p>All sections must be marked as complete before you can continue and send your application to the Home Office.</p>
                     }
-                    <Button disabled={!isCompleted} onClick={onComplete}>
+                    <Button onClick={onComplete}>
                       {
                         project.isLegacyStub ? 'Continue to final confirmation' : 'Continue'
                       }
