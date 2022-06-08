@@ -21,7 +21,7 @@ export default function Submit({ onComplete }) {
                 ? (
                   <Fragment>
                     {
-                      !isLegacy && <p>All sections must be marked as complete before you can continue and send your application to the Home Office.</p>
+                      !isLegacy && <p>All sections must be marked as complete before you can continue.</p>
                     }
                     <Button onClick={onComplete}>
                       {
@@ -38,7 +38,7 @@ export default function Submit({ onComplete }) {
         )
       }
       <p className="back-to-project">
-        <a href={projectUrl}>Back to project overview</a>
+        <a href={projectUrl}>Go to project overview</a>
       </p>
     </Fragment>
   )
