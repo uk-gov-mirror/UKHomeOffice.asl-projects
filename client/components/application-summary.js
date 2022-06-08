@@ -25,6 +25,7 @@ const mapStateToProps = ({
     schemaVersion,
     readonly,
     showComments,
+    showConditions,
     user,
     basename,
     project: actualProject
@@ -40,6 +41,7 @@ const mapStateToProps = ({
   return {
     readonly,
     showComments,
+    showConditions,
     newComments: getNewComments(comments, user),
     fieldsBySection,
     legacy: schemaVersion === 0,
@@ -62,7 +64,7 @@ const ApplicationSummary = () => {
     if (legacy) {
       return true;
     }
-    const subsections = map(pickBy(sections, section => !section.show || section.show(props)), section => pickBy(section.subsections, sectionVisible))
+    const subsections = map(pickBy(sections, section => !section.show || section.show(props)), section => pickBy(section.subsections, subsectionVisible))
       .reduce((obj, values) => ({ ...obj, ...values }), {});
 
     return Object.keys(subsections)
@@ -142,8 +144,8 @@ const ApplicationSummary = () => {
     )
   }
 
-  const sectionVisible = section => {
-    return !section.show || section.show(values);
+  const subsectionVisible = subsection => {
+    return !subsection.show || subsection.show(values);
   }
 
   const getCommentCount = (key) => {
@@ -191,7 +193,7 @@ const ApplicationSummary = () => {
         Object.keys(sections).filter(section => !sections[section].show || sections[section].show(props)).map(key => {
           const section = sections[key];
           const subsections = Object.keys(section.subsections)
-            .filter(subsection => sectionVisible(section.subsections[subsection]));
+            .filter(subsection => subsectionVisible(section.subsections[subsection]));
 
           if (!subsections.length) {
             return null;
