@@ -104,7 +104,7 @@ export default () => ({
     }
   },
   nts: {
-    title: 'Non technical summary',
+    title: 'Non-technical summary',
     subsections: {
       aims: {
         title: 'Aims',

@@ -129,7 +129,7 @@ const ApplicationSummary = () => {
           There is a problem
         </h2>
         <div className="govuk-error-summary__body">
-          <p>You must complete the following sections before you can submit your application to the Home Office:</p>
+          <p>You must complete the following sections before you can continue:</p>
           <ul className="govuk-list govuk-error-summary__list">
             {
               incomplete.map(({ key, title }) =>
