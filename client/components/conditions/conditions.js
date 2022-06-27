@@ -2,13 +2,44 @@ import React, { Component, useState, Fragment } from 'react';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
 import get from 'lodash/get';
-import { Markdown } from '@asl/components';
+import { Markdown, Inset } from '@asl/components';
 import { Button } from '@ukhomeoffice/react-components';
 import CONDITIONS from '../../constants/conditions';
-
 import Editable from '../editable';
+import { formatDate } from '../../helpers';
+import { DATE_FORMAT } from '../../constants';
+
+function Reminders({ reminders, conditionKey }) {
+  if (!(reminders.active || []).includes(conditionKey)) {
+    return null;
+  }
+
+  return (
+    <div className="reminders">
+      <p><em>Automated reminders have been set for this condition</em></p>
+      <details>
+        <summary>Show when reminders have been scheduled</summary>
+        <Inset>
+          <p>This condition needs to be met by:</p>
+          <ul>
+            {
+              reminders[conditionKey].map(reminder =>(
+                <li key={reminder.id}>{formatDate(reminder.deadline, DATE_FORMAT.long)}</li>
+              ))
+            }
+          </ul>
+          <p>
+            Licence holders will receive reminders a month before, a week before and on the day the condition
+            is due to be met. ASRU will receive a reminder when the deadline has passed.
+          </p>
+        </Inset>
+      </details>
+    </div>
+  );
+}
 
 function Condition({
+  conditionKey,
   title,
   deleted,
   updating,
@@ -21,12 +52,13 @@ function Condition({
   className,
   onSave,
   onRemove,
-  editConditions
+  editConditions,
+  reminders = {}
 }) {
   const [editing, setEditing] = useState(false);
 
-  function handleSave(edited) {
-    onSave({ edited })
+  function handleSave({ content, reminders }) {
+    onSave({ edited: content, reminders })
       .then(() => setEditing(false));
   }
 
@@ -63,6 +95,7 @@ function Condition({
                 {
                   editing && editConditions
                     ? <Editable
+                      conditionKey={conditionKey}
                       content={displayContent}
                       edited={!!edited}
                       updating={updating}
@@ -70,6 +103,7 @@ function Condition({
                       onCancel={setEditing.bind(null, false)}
                       onRevert={handleRevert}
                       showRevert={!custom}
+                      reminders={reminders}
                     />
                   : <Markdown className="condition-text">{displayContent}</Markdown>
                 }
@@ -77,6 +111,9 @@ function Condition({
             )
         }
       </div>
+      {
+        !editing && <Reminders reminders={reminders} conditionKey={conditionKey} />
+      }
       {
         editConditions && !editing && (
           <p>
@@ -147,7 +184,7 @@ class Conditions extends Component {
     }
     const { conditions, editConditions } = this.props;
     const { updating } = this.state;
-    
+
     // ra conditions used to be added to the conditions array, we dont want to show them here.
     const notRa = conditions.filter(c => !c.key.match(/^retrospective-assessment/));
 
@@ -161,6 +198,7 @@ class Conditions extends Component {
               const { title, content } = template;
               return <Condition
                 key={condition.key}
+                conditionKey={condition.key}
                 className={condition.key}
                 singular={this.props.singular}
                 editConditions={editConditions}

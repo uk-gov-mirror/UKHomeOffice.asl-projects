@@ -1,9 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import { TextArea, Button } from '@ukhomeoffice/react-components';
+import Reminders from './reminders';
 
 class Editable extends Component {
   state = {
-    content: this.props.content
+    content: this.props.content,
+    reminders: []
   }
 
   static defaultProps = {
@@ -12,13 +14,17 @@ class Editable extends Component {
 
   onChange = e => {
     const content = e.target.value;
-    this.setState({ content }, () => this.props.onChange(content));
+    this.setState({ ...this.state, content }, () => this.props.onChange(this.state));
+  }
+
+  onRemindersChange = reminders => {
+    this.setState({ ...this.state, reminders }, () => this.props.onChange(this.state));
   }
 
   save = e => {
     e.preventDefault();
     if ((!!this.state.content && this.state.content !== '' ) || this.props.allowEmpty) {
-      this.props.onSave(this.state.content)
+      this.props.onSave(this.state)
     } else {
       window.alert('Condition/authorisation cannot be empty');
     }
@@ -53,6 +59,9 @@ class Editable extends Component {
           onChange={this.onChange}
           autoExpand={true}
         />
+
+        <Reminders values={this.props.reminders} conditionKey={this.props.conditionKey} onChange={this.onRemindersChange} />
+
         <p className="control-panel">
           <Button disabled={updating} onClick={this.save} className="button-secondary">Save</Button>
           <Button disabled={updating} onClick={this.cancel} className="link">Cancel</Button>

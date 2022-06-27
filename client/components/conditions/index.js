@@ -21,7 +21,7 @@ function ConditionsPage({
   if (isPreview) {
     editConditions = false;
   }
-  
+
   if (!showConditions) {
     return null;
   }
