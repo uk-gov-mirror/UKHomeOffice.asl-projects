@@ -2,41 +2,10 @@ import React, { Component, useState, Fragment } from 'react';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
 import get from 'lodash/get';
-import { Markdown, Inset } from '@asl/components';
+import { Markdown, ConditionReminders } from '@asl/components';
 import { Button } from '@ukhomeoffice/react-components';
 import CONDITIONS from '../../constants/conditions';
 import Editable from '../editable';
-import { formatDate } from '../../helpers';
-import { DATE_FORMAT } from '../../constants';
-
-function Reminders({ reminders, conditionKey }) {
-  if (!(reminders.active || []).includes(conditionKey)) {
-    return null;
-  }
-
-  return (
-    <div className="reminders">
-      <p><em>Automated reminders have been set for this condition</em></p>
-      <details>
-        <summary>Show when reminders have been scheduled</summary>
-        <Inset>
-          <p>This condition needs to be met by:</p>
-          <ul>
-            {
-              reminders[conditionKey].map(reminder =>(
-                <li key={reminder.id}>{formatDate(reminder.deadline, DATE_FORMAT.long)}</li>
-              ))
-            }
-          </ul>
-          <p>
-            Licence holders will receive reminders a month before, a week before and on the day the condition
-            is due to be met. ASRU will receive a reminder when the deadline has passed.
-          </p>
-        </Inset>
-      </details>
-    </div>
-  );
-}
 
 function Condition({
   conditionKey,
@@ -112,7 +81,7 @@ function Condition({
         }
       </div>
       {
-        !editing && <Reminders reminders={reminders} conditionKey={conditionKey} />
+        !editing && (reminders.active || []).includes(conditionKey) && <ConditionReminders reminders={reminders[conditionKey]} />
       }
       {
         editConditions && !editing && (
