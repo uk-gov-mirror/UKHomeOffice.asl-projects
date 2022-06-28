@@ -81,7 +81,8 @@ function Condition({
         }
       </div>
       {
-        !editing && (reminders.active || []).includes(conditionKey) && <ConditionReminders reminders={reminders[conditionKey]} />
+        !editing && conditionKey && (reminders.active || []).includes(conditionKey) &&
+          <ConditionReminders reminders={reminders[conditionKey]} />
       }
       {
         editConditions && !editing && (

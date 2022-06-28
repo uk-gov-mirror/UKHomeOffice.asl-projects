@@ -51,16 +51,23 @@ class Editable extends Component {
   render () {
     const { edited, updating, showRevert } = this.props;
     const { content } = this.state;
+    const conditionKey = this.props.conditionKey;
+    const reminders = this.props.reminders || {};
 
     return (
       <Fragment>
         <TextArea
+          name="content"
+          label=""
           value={content}
           onChange={this.onChange}
           autoExpand={true}
         />
 
-        <Reminders values={this.props.reminders} conditionKey={this.props.conditionKey} onChange={this.onRemindersChange} />
+        {
+          conditionKey &&
+            <Reminders values={reminders} conditionKey={conditionKey} onChange={this.onRemindersChange} />
+        }
 
         <p className="control-panel">
           <Button disabled={updating} onClick={this.save} className="button-secondary">Save</Button>

@@ -39,6 +39,7 @@ const getFields = conditionKey => {
 
 function Reminders({ conditionKey, onChange, values = {} }) {
   const [reminders, setReminders] = useState(values);
+  const fields = getFields(conditionKey);
 
   const onFieldChange = (key, value) => {
     const updated = { ...reminders, [key]: value };
@@ -50,7 +51,7 @@ function Reminders({ conditionKey, onChange, values = {} }) {
   return (
     <div className="reminders">
       <Fieldset
-        fields={getFields(conditionKey)}
+        fields={fields}
         values={reminders}
         onFieldChange={onFieldChange}
         noComments={true}
