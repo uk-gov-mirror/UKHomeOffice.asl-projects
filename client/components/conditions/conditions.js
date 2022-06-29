@@ -22,7 +22,7 @@ function Condition({
   onSave,
   onRemove,
   editConditions,
-  reminders = {}
+  reminders
 }) {
   const [editing, setEditing] = useState(false);
 
@@ -37,6 +37,7 @@ function Condition({
   }
 
   const displayContent = edited || content;
+  const displayReminders = !editing && conditionKey && reminders && (reminders.active || []).includes(conditionKey);
 
   return (
     <div className={className}>
@@ -81,8 +82,7 @@ function Condition({
         }
       </div>
       {
-        !editing && conditionKey && (reminders.active || []).includes(conditionKey) &&
-          <ConditionReminders reminders={reminders[conditionKey]} />
+        displayReminders && <ConditionReminders reminders={reminders[conditionKey]} />
       }
       {
         editConditions && !editing && (

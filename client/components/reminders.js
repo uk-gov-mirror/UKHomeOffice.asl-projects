@@ -37,13 +37,15 @@ const getFields = conditionKey => {
   ];
 };
 
-function Reminders({ conditionKey, onChange, values = {} }) {
-  const [reminders, setReminders] = useState(values);
+function Reminders({ conditionKey, onChange, values }) {
+  // a defined value for reminders[conditionKey] needs to be set, otherwise the
+  // field component will try and pull the value from version.data[conditionKey]
+  const [reminders, setReminders] = useState(values || { active: [], [conditionKey]: null });
+
   const fields = getFields(conditionKey);
 
   const onFieldChange = (key, value) => {
     const updated = { ...reminders, [key]: value };
-
     setReminders(updated);
     onChange(updated);
   };

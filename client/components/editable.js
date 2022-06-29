@@ -52,7 +52,7 @@ class Editable extends Component {
     const { edited, updating, showRevert } = this.props;
     const { content } = this.state;
     const conditionKey = this.props.conditionKey;
-    const reminders = this.props.reminders || {};
+    const reminders = this.props.reminders;
 
     return (
       <Fragment>
