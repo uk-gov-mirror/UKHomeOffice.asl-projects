@@ -1,9 +1,5 @@
 import { Block } from 'slate';
-import Jimp from 'jimp';
-
 const MAX_IMAGE_SIZE = 5 * 1024 * 1024; // 5mb
-const MAX_IMAGE_WIDTH = 1200;
-const IMAGE_QUALITY = 50;
 
 const schema = {
   document: {
@@ -24,17 +20,6 @@ const schema = {
   }
 };
 
-function insertImage(editor, src, target) {
-  if (target) {
-    editor.select(target);
-  }
-
-  editor.insertBlock({
-    type: 'image',
-    data: { src }
-  });
-}
-
 const onClickImage = (editor, event) => {
   const file = event.target.files[0];
   if (file) {
@@ -47,32 +32,50 @@ const onClickImage = (editor, event) => {
       throw new Error(`Image too large. Image files must be less than 5mb. This image: ${actual}mb`);
     }
 
-    const reader = new FileReader();
+    const body = new FormData();
+    body.append('file', file);
 
-    reader.addEventListener(
-      'load',
-      () => {
-        Jimp.read(reader.result)
-          .then(image => {
-            return image.bitmap.width > MAX_IMAGE_WIDTH
-              ? image.resize(MAX_IMAGE_WIDTH, Jimp.AUTO)
-              : image;
-          })
-          .then(image => image.quality(IMAGE_QUALITY))
-          .then(image => image.getBase64Async(Jimp.AUTO))
-          .then(base64Image => {
-            editor.command(insertImage, base64Image);
-          })
-          .catch(err => {
-            console.log(err);
-            throw new Error('There was an issue saving your image, please try again');
-          });
-      },
-      false
-    );
-    reader.readAsArrayBuffer(file);
+    const image = Block.create({
+      type: 'image',
+      data: { loading: true }
+    });
+    const block = editor.value.blocks.get(0);
+
+    // if in an empty paragrpah then replace the paragraph with the iamge
+    if (block.text === '') {
+      editor.replaceNodeByKey(block.key, image);
+    } else {
+      editor.insertBlock(image);
+    }
+
+    // if adding an image at the end of the document insert a new paragraph after
+    const next = editor.value.document.getNextBlock(block.key);
+    if (!next) {
+      editor.moveToEndOfDocument();
+      editor.insertBlock({ type: 'paragraph' });
+    }
+
+    const key = image.get('key');
+    fetch('/attachment', { method: 'POST', body })
+      .then(result => {
+        if (result.status !== 200) {
+          throw new Error('Failed to save image');
+        }
+        return result.json()
+      })
+      .then(({ token }) => {
+        if (!token) {
+          throw new Error('Failed to save image');
+        }
+        editor.setNodeByKey(key, { data: { loading: false, src: `/attachment/${token}` } });
+      })
+      .catch(e => {
+        editor.removeNodeByKey(key);
+        throw e;
+      });
+
+    event.target.value = '';
   }
-  event.target.value = '';
 };
 
 function Image() {

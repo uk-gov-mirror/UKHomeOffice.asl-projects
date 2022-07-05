@@ -1,4 +1,3 @@
-import fetch from 'r2';
 import { version } from '../../package.json';
 
 export function postError({ error, info }) {
@@ -23,14 +22,15 @@ export default function sendMessage({ method, data, url }) {
     // prevent auto-redirecting request
     // to keycloak if users session expires
     redirect: 'manual',
-    json: data,
+    body: JSON.stringify(data),
     headers: {
+      'content-type': 'application/json',
       // send version header for compatability validation on server
       'x-projects-version': version
     }
   };
   return Promise.resolve()
-    .then(() => fetch(url, params).response)
+    .then(() => fetch(url, params))
     .then(response => {
       // detect if redirect was attempted
       if (response.type === 'opaqueredirect') {
