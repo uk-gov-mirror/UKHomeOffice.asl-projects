@@ -7,7 +7,7 @@ function Image(props) {
       <div className="image-overlay">
         <Button onClick={props.remove} className="button-warning">Remove image</Button>
       </div>
-      <img {...props} />
+      <p>{ props.loading ? 'Saving image...' : <img {...props} /> }</p>
     </div>
   )
 }
@@ -34,7 +34,8 @@ const renderBlock = (props, editor, next) => {
       return <h2 {...attributes}>{children}</h2>;
     case 'image': {
       const src = node.data.get('src');
-      return <Image src={src} {...attributes} selected={isFocused} remove={remove} />
+      const loading = node.data.get('loading');
+      return <Image src={src} loading={loading} {...attributes} selected={isFocused} remove={remove} />
     }
     case 'block': {
       return <span {...attributes}>{children}</span>
