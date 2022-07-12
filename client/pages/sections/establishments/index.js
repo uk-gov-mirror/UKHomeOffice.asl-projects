@@ -25,13 +25,14 @@ export default function Index({ advance, exit, ...props }) {
           <legend className="govuk-fieldset__legend">
             <h2 className="govuk-fieldset__heading govuk-heading-l larger">Primary establishment</h2>
           </legend>
-          {
-            transferToEstablishmentName ? <p className="larger">{transferToEstablishmentName}</p> : <p className="larger">{establishment.name}</p>
-          }
-          {
-            isActive ? <p className="larger"><Link to="/" label="Change"/></p>
-              : <p className="larger"><Link page="project.transferDraft" label="Change" establishmentId={establishment.id} projectId={project.id} /></p>
-          }
+          <p className="larger">{transferToEstablishmentName || establishment.name}</p>
+          <p className="larger">
+            {
+              isActive
+                ? <Link to="/" label="Change"/>
+                : <Link page="project.transferDraft" label="Change" establishmentId={establishment.id} projectId={project.id} />
+            }
+          </p>
         </fieldset>
       </div>
       <Establishments {...props} editable={true} />
