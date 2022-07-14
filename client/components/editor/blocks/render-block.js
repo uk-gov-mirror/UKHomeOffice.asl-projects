@@ -1,13 +1,18 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Button } from '@ukhomeoffice/react-components';
 
-function Image(props) {
+function Image({ src, token, remove, loading }) {
+  const imageRoot = useSelector(state => state.static.imageRoot || '/attachment', []);
+  if (!src && token) {
+    src = `${imageRoot}/${token}`;
+  }
   return (
     <div className="image-wrapper">
       <div className="image-overlay">
-        <Button onClick={props.remove} className="button-warning">Remove image</Button>
+        <Button onClick={remove} className="button-warning">Remove image</Button>
       </div>
-      <p>{ props.loading ? 'Saving image...' : <img {...props} /> }</p>
+      <p>{ loading ? 'Saving image...' : <img src={src} /> }</p>
     </div>
   )
 }
@@ -35,7 +40,8 @@ const renderBlock = (props, editor, next) => {
     case 'image': {
       const src = node.data.get('src');
       const loading = node.data.get('loading');
-      return <Image src={src} loading={loading} {...attributes} selected={isFocused} remove={remove} />
+      const token = node.data.get('token');
+      return <Image src={src} token={token} loading={loading} {...attributes} selected={isFocused} remove={remove} />
     }
     case 'block': {
       return <span {...attributes}>{children}</span>
