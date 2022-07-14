@@ -67,7 +67,7 @@ const onClickImage = (editor, event) => {
         if (!token) {
           throw new Error('Failed to save image');
         }
-        editor.setNodeByKey(key, { data: { loading: false, src: `/attachment/${token}` } });
+        editor.setNodeByKey(key, { data: { loading: false, token } });
       })
       .catch(e => {
         editor.removeNodeByKey(key);
