@@ -2,13 +2,13 @@ import React, { Component, useState, Fragment } from 'react';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
 import get from 'lodash/get';
-import { Markdown } from '@asl/components';
+import { Markdown, ConditionReminders } from '@asl/components';
 import { Button } from '@ukhomeoffice/react-components';
 import CONDITIONS from '../../constants/conditions';
-
 import Editable from '../editable';
 
 function Condition({
+  conditionKey,
   title,
   deleted,
   updating,
@@ -21,12 +21,13 @@ function Condition({
   className,
   onSave,
   onRemove,
-  editConditions
+  editConditions,
+  reminders
 }) {
   const [editing, setEditing] = useState(false);
 
-  function handleSave(edited) {
-    onSave({ edited })
+  function handleSave({ content, reminders }) {
+    onSave({ edited: content, reminders })
       .then(() => setEditing(false));
   }
 
@@ -36,6 +37,7 @@ function Condition({
   }
 
   const displayContent = edited || content;
+  const displayReminders = !editing && conditionKey && reminders && (reminders.active || []).includes(conditionKey);
 
   return (
     <div className={className}>
@@ -63,6 +65,7 @@ function Condition({
                 {
                   editing && editConditions
                     ? <Editable
+                      conditionKey={conditionKey}
                       content={displayContent}
                       edited={!!edited}
                       updating={updating}
@@ -70,6 +73,7 @@ function Condition({
                       onCancel={setEditing.bind(null, false)}
                       onRevert={handleRevert}
                       showRevert={!custom}
+                      reminders={reminders}
                     />
                   : <Markdown className="condition-text">{displayContent}</Markdown>
                 }
@@ -77,6 +81,9 @@ function Condition({
             )
         }
       </div>
+      {
+        displayReminders && <ConditionReminders reminders={reminders[conditionKey]} />
+      }
       {
         editConditions && !editing && (
           <p>
@@ -147,7 +154,7 @@ class Conditions extends Component {
     }
     const { conditions, editConditions } = this.props;
     const { updating } = this.state;
-    
+
     // ra conditions used to be added to the conditions array, we dont want to show them here.
     const notRa = conditions.filter(c => !c.key.match(/^retrospective-assessment/));
 
@@ -161,6 +168,7 @@ class Conditions extends Component {
               const { title, content } = template;
               return <Condition
                 key={condition.key}
+                conditionKey={condition.key}
                 className={condition.key}
                 singular={this.props.singular}
                 editConditions={editConditions}

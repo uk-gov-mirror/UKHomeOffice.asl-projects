@@ -21,7 +21,7 @@ function ConditionsPage({
   if (isPreview) {
     editConditions = false;
   }
-  
+
   if (!showConditions) {
     return null;
   }
@@ -69,7 +69,7 @@ function ConditionsPage({
                   omit={conditions.map(c => c.key)}
                   {...props}
                 />
-                : <Button className="button-secondary" onClick={() => setAdding(!adding)}>Add more {props.title.toLowerCase()}</Button>
+                : <Button className="button-secondary" onClick={() => setAdding(!adding)}>{`Add more ${props.title.toLowerCase()}`}</Button>
             }
           </Fragment>
         )
