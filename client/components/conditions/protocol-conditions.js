@@ -20,7 +20,7 @@ function ProtocolConditions(props) {
     props.saveConditions([
       ...conditions,
       {
-        content: val,
+        content: val.content,
         custom: true,
         type: props.type,
         key: uuid()
