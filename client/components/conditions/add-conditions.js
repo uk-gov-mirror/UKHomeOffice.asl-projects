@@ -82,6 +82,7 @@ function AddConditions({
   const [customConditions, dispatch] = useReducer(customConditionReducer, initialState);
 
   const setEdited = key => edited => {
+    edited = (typeof edited === 'object' && edited.content) ? edited.content : edited;
     setConditions(conditions.map(c => c.key === key ? ({ ...c, edited }) : c));
   }
 
