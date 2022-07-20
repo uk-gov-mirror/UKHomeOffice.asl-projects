@@ -2,14 +2,15 @@ import React from 'react';
 import Establishments from './establishments';
 import Controls from '../../../components/controls';
 import {shallowEqual, useSelector} from "react-redux";
-import {Link} from "@asl/components";
+import {Inset, Link} from "@asl/components";
 
 export default function Index({ advance, exit, ...props }) {
   const {
     establishment,
     project: {
       ...project
-    }
+    },
+    canTransfer
   } = useSelector(state => state.application, shallowEqual);
 
   const transferToEstablishmentName = useSelector(state => state.project.transferToEstablishmentName, shallowEqual);
@@ -28,9 +29,14 @@ export default function Index({ advance, exit, ...props }) {
           <p className="larger">{transferToEstablishmentName || establishment.name}</p>
           <p className="larger">
             {
-              isActive
-                ? <Link to="/" label="Change"/>
-                : <Link page="project.transferDraft" label="Change" establishmentId={establishment.id} projectId={project.id} />
+              canTransfer
+              ? isActive
+                  ? <Link to="/" label="Change"/>
+                  : <Link page="project.transferDraft" label="Change" establishmentId={establishment.id} projectId={project.id} />
+              : null
+            }
+            {
+              !canTransfer && <Inset><p>Only the project’s licence holder can change the primary establishment.</p></Inset>
             }
           </p>
         </fieldset>
