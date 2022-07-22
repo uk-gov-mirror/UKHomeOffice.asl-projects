@@ -6,7 +6,7 @@ import { v4 as uuid } from 'uuid';
 import CONDITIONS from '../../constants/conditions';
 
 function CustomConditions({ conditions, onUpdate, onAdd, onRemove }) {
-  const handleOnUpdate = index => val => onUpdate(index, val);
+  const handleOnUpdate = index => val => onUpdate(index, val.content);
 
   return (
     <Fragment>
