@@ -34,8 +34,21 @@ const plugins = [
 // bugfix - this used to work as part of plugins, but alas no more.
 const schema = merge({}, listPlugin.schema, tablePlugin.schema);
 
+const hasNonParagraphNode = (nodes) => {
+  return nodes.some(node => {
+    if (node.type !== 'paragraph') {
+      return true;
+    } else if (node.nodes.size > 0) {
+      hasNonParagraphNode(node.nodes);
+    } else {
+      return false;
+    }
+  })
+};
+
+
 const serialiseValue = value => {
-  if (!value.document.text) {
+  if (!value.document.text && !hasNonParagraphNode(value.document.nodes)) {
     return null;
   }
   return value.toJSON();
