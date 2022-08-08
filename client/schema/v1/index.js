@@ -889,6 +889,7 @@ If you can only add generic information at this stage, provide a general descrip
           {
             name: 'scientific-background-genetically-altered',
             label: 'Will you be producing genetically altered or surgically prepared animals/animal products using standardised protocol frameworks as a service to others?',
+            hint: 'This includes projects to create, breed, maintain and supply genetically altered animals to researchers within the establishment, projects taking blood and other tissues for researchers and other clients within and/or external to the establishment.',
             type: 'radio',
             inline: true,
             className: 'smaller',
@@ -1261,6 +1262,7 @@ each other.`,
               {
                 name: 'objectives-genetically-altered',
                 label: 'Will you be producing genetically altered or surgically prepared animals/animal products using standardised protocol frameworks?',
+                hint: 'This includes projects to create, breed, maintain and supply genetically altered animals to researchers within the establishment, projects taking blood and other tissues for researchers and other clients within and/or external to the establishment.',
                 type: 'radio',
                 inline: true,
                 className: 'smaller',
