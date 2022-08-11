@@ -47,7 +47,7 @@ function LegacyConditions({
   function updateCustom(content) {
     props.saveConditions([
       ...(values.conditions || []).filter(c => c.key !== 'custom'),
-      { key: 'custom', content }
+      { key: 'custom', content: content.content }
     ]);
   }
 

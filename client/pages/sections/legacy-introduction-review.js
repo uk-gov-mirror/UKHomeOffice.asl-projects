@@ -16,13 +16,13 @@ const LegacyIntroduction = ({ fields, project, values, pdf, readonly, title, lic
       name: 'holder',
       type: 'holder'
     };
-    const value = {
+    const holder = {
       licenceHolder,
       establishment
     };
 
     fields.splice(1, 0, field);
-    values.holder = value;
+    values = { ...values, holder };
   }
 
   const continuationField = fields.find(f => f.name === 'continuation');
