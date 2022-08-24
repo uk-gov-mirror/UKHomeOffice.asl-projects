@@ -1,84 +1,85 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { TextArea, Button } from '@ukhomeoffice/react-components';
 import Reminders from './reminders';
 
-class Editable extends Component {
-  state = {
-    content: this.props.content,
-    reminders: []
-  }
+function Editable({ edited,
+  updating,
+  showRevert,
+  conditionKey,
+  reminders = [],
+  content,
+  onChange = () => {},
+  allowEmpty,
+  onSave = () => {},
+  onCancel = () => {},
+  onRevert = () => {} }) {
 
-  static defaultProps = {
-    onChange: () => {}
-  }
+  const [ state, setState ] = useState({content, reminders});
 
-  onChange = e => {
+  useEffect(() => {
+    onChange(state);
+  }, [state]);
+
+  const onContentChange = e => {
     const content = e.target.value;
-    this.setState({ ...this.state, content }, () => this.props.onChange(this.state));
-  }
+    setState({ ...state, content });
+  };
 
-  onRemindersChange = reminders => {
-    this.setState({ ...this.state, reminders }, () => this.props.onChange(this.state));
-  }
+  const onRemindersChange = reminders => {
+    setState({ ...state, reminders });
+  };
 
-  save = e => {
+  const save = e => {
     e.preventDefault();
-    if ((!!this.state.content && this.state.content !== '' ) || this.props.allowEmpty) {
-      this.props.onSave(this.state)
+    if ((!!state.content && state.content !== '') || allowEmpty) {
+      onSave(state);
     } else {
       window.alert('Condition/authorisation cannot be empty');
     }
-  }
+  };
 
-  cancel = e => {
+  const cancel = e => {
     e.preventDefault();
-    if (this.state.content !== this.props.content) {
+    if (state.content !== content) {
       if (window.confirm('Are you sure')) {
-        this.props.onCancel();
+        onCancel();
       }
     } else {
-      this.props.onCancel();
+      onCancel();
     }
-  }
+  };
 
-  revert = e => {
+  const revert = e => {
     e.preventDefault();
     if (window.confirm('Are you sure?')) {
-      this.props.onRevert();
+      onRevert();
     }
-  }
+  };
 
-  render () {
-    const { edited, updating, showRevert } = this.props;
-    const { content } = this.state;
-    const conditionKey = this.props.conditionKey;
-    const reminders = this.props.reminders;
+  return (
+    <Fragment>
+      <TextArea
+        name="content"
+        label=""
+        value={content}
+        onChange={onContentChange}
+        autoExpand={true}
+      />
 
-    return (
-      <Fragment>
-        <TextArea
-          name="content"
-          label=""
-          value={content}
-          onChange={this.onChange}
-          autoExpand={true}
-        />
+      {
+        conditionKey &&
+        <Reminders values={reminders} conditionKey={conditionKey} onChange={onRemindersChange} />
+      }
 
+      <p className="control-panel">
+        <Button disabled={updating} onClick={save} className="button-secondary">Save</Button>
+        <Button disabled={updating} onClick={cancel} className="link">Cancel</Button>
         {
-          conditionKey &&
-            <Reminders values={reminders} conditionKey={conditionKey} onChange={this.onRemindersChange} />
+          edited && showRevert && <Button disabled={updating} onClick={revert} className="link">Revert to default</Button>
         }
-
-        <p className="control-panel">
-          <Button disabled={updating} onClick={this.save} className="button-secondary">Save</Button>
-          <Button disabled={updating} onClick={this.cancel} className="link">Cancel</Button>
-          {
-            edited && showRevert && <Button disabled={updating} onClick={this.revert} className="link">Revert to default</Button>
-          }
-        </p>
-      </Fragment>
-    )
-  }
+      </p>
+    </Fragment>
+  );
 }
 
-export default Editable
+export default Editable;
