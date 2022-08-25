@@ -15,6 +15,7 @@ function Editable({ edited,
   onRevert = () => {} }) {
 
   const [ state, setState ] = useState({content, reminders});
+  content = state.content;
 
   useEffect(() => {
     onChange(state);
