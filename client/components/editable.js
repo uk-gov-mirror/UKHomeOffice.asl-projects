@@ -15,13 +15,14 @@ function Editable({ edited,
   onRevert = () => {} }) {
 
   const [ state, setState ] = useState({content, reminders});
-  content = state.content;
+  const [ changed, setChanged ] = useState(false);
 
   useEffect(() => {
     onChange(state);
   }, [state]);
 
   const onContentChange = e => {
+    setChanged(true);
     const content = e.target.value;
     setState({ ...state, content });
   };
@@ -33,7 +34,7 @@ function Editable({ edited,
   const save = e => {
     e.preventDefault();
     if ((!!state.content && state.content !== '') || allowEmpty) {
-      onSave(state);
+      onSave(state).then(setChanged(false));
     } else {
       window.alert('Condition/authorisation cannot be empty');
     }
@@ -41,7 +42,7 @@ function Editable({ edited,
 
   const cancel = e => {
     e.preventDefault();
-    if (state.content !== content) {
+    if (changed) {
       if (window.confirm('Are you sure')) {
         onCancel();
       }
@@ -62,7 +63,7 @@ function Editable({ edited,
       <TextArea
         name="content"
         label=""
-        value={content}
+        value={state.content}
         onChange={onContentChange}
         autoExpand={true}
       />
