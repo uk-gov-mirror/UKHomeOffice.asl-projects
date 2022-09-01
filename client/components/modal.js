@@ -1,30 +1,32 @@
-import React, { Component } from 'react';
+import React, {useEffect} from 'react';
 
-class Modal extends Component {
-  componentDidMount() {
+export default function Modal({ onClose, children }) {
+  useEffect(() => {
+    const keydownHandler = e => {
+      if (e.key === 'Escape') {
+        onClose(e);
+      }
+    }
     document.getElementsByTagName('html')[0].classList.add('modal-open');
-  }
+    document.addEventListener("keydown", keydownHandler);
 
-  componentWillUnmount() {
-    document.getElementsByTagName('html')[0].classList.remove('modal-open');
-  }
+    return () => {
+      document.getElementsByTagName('html')[0].classList.remove('modal-open');
+      document.removeEventListener("keydown", keydownHandler);
+    }
+  })
 
-  close = e => {
+  const close = e => {
     if (e.target.className === 'modal') {
-      this.props.onClose(e)
+      onClose(e)
     }
   }
 
-  render () {
-    const { children } = this.props;
-    return (
-      <div className="modal" onClick={this.close}>
-        <div className="modal-content">
-          { children }
-        </div>
+  return (
+    <div className="modal" onClick={close}>
+      <div className="modal-content">
+        {children}
       </div>
-    )
-  }
+    </div>
+  )
 }
-
-export default Modal;
