@@ -1,11 +1,10 @@
-import React, {useEffect} from 'react';
+import React, {createRef, useEffect} from 'react';
 
 export default function Modal({ onClose, children }) {
   useEffect(() => {
     const keydownHandler = e => {
-      if (e.key === 'Escape') {
-        onClose(e);
-      }
+      const listener = keyListeners.get(e.key);
+      return listener && listener(e);
     }
     document.getElementsByTagName('html')[0].classList.add('modal-open');
     document.addEventListener("keydown", keydownHandler);
@@ -16,6 +15,30 @@ export default function Modal({ onClose, children }) {
     }
   })
 
+  const modalRef = createRef();
+  const handleTabKey = e => {
+    const focusableElements = modalRef.current.querySelectorAll(
+      'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"]):not([disabled]), details:not([disabled]), summary:not(:disabled)'
+    );
+    const firstElement = focusableElements[0];
+    const lastElement = focusableElements[focusableElements.length - 1];
+
+    if (!e.shiftKey && document.activeElement === lastElement) {
+      firstElement.focus();
+      return e.preventDefault();
+    }
+
+    if (e.shiftKey && document.activeElement === firstElement) {
+      lastElement.focus();
+      return e.preventDefault();
+    }
+  }
+
+  const keyListeners = new Map([
+    ['Escape', onClose],
+    ['Tab', handleTabKey]
+  ])
+
   const close = e => {
     if (e.target.className === 'modal') {
       onClose(e)
@@ -24,7 +47,7 @@ export default function Modal({ onClose, children }) {
 
   return (
     <div className="modal" onClick={close}>
-      <div className="modal-content">
+      <div className="modal-content" ref={modalRef}>
         {children}
       </div>
     </div>
