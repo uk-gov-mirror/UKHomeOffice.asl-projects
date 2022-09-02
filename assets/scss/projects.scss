@@ -1597,3 +1597,26 @@ html.modal-open, html.modal-open body {
     align-items: stretch;
   }
 }
+
+.holding-page {
+  text-align: center;
+  margin-bottom: 2em;
+}
+.spinner {
+  border: 12px solid #DEE0E2;
+  border-radius: 50%;
+  border-top-color: #808080;
+  width: 40px;
+  height: 40px;
+  -webkit-animation: spin 1.5s linear infinite;
+  animation: spin 1.5s linear infinite;
+  margin: 0 auto;
+}
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

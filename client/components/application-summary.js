@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useRef } from 'react';
+import React, { Fragment, useState, useRef, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -17,6 +17,8 @@ import ChangedBadge from './changed-badge';
 import NextSteps from './next-steps';
 import PreviewLicence from './preview-licence';
 import Submit from './submit';
+import { selector } from './sync-handler';
+import HoldingPage from './holding-page';
 
 const mapStateToProps = ({
   project,
@@ -55,10 +57,16 @@ const mapStateToProps = ({
 const ApplicationSummary = () => {
 
   const props = useSelector(mapStateToProps);
+  const { isSyncing } = useSelector(selector);
+  const [submitted, setSubmitted] = useState(false);
   const { legacy, values, readonly, sections, basename, fieldsBySection, newComments, project, showComments } = props;
 
   const [errors, setErrors] = useState(false);
   const ref = useRef(null);
+
+  useEffect(() => {
+    if (submitted && !isSyncing) { submit(); }
+  }, [isSyncing, submitted]);
 
   const getIncompleteSubsections = () => {
     if (legacy) {
@@ -175,17 +183,29 @@ const ApplicationSummary = () => {
       window.scrollTo({ top, behavior: 'smooth' });
       return;
     }
+    submit();
+  }
+
+  const submit = () => {
+    if (isSyncing) {
+      setSubmitted(true);
+      return;
+    }
     if (project.isLegacyStub) {
       window.location.href = basename.replace(/\/edit\/?$/, '/convert');
       return;
     }
     window.location.href = `${basename}/submit`;
-  }
-
+  };
 
   if (!values) {
     return null;
   }
+
+  if (submitted) {
+    return <HoldingPage />;
+  }
+
   return (
     <div className="application-summary" ref={ref}>
       <ErrorSummary />

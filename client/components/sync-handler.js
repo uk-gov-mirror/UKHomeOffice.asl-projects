@@ -3,7 +3,7 @@ import { useSelector, shallowEqual } from 'react-redux'
 import isEqual from 'lodash/isEqual';
 import classnames from 'classnames';
 
-const selector = ({
+export const selector = ({
   project: version,
   savedProject,
   application: {
@@ -53,7 +53,7 @@ const SyncHandler = () => {
       }
       statusMessage && (statusMessage.innerText = '');
     }
-  })
+  }, [isSyncing]);
 
   return <div className={classnames('sync-indicator', { syncing: isSyncing })}></div>;
 };
