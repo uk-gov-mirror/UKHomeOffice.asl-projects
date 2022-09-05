@@ -24,7 +24,7 @@
     "registry": "https://artifactory.digital.homeoffice.gov.uk/artifactory/api/npm/npm-virtual/"
   },
   "dependencies": {
-    "@asl/components": "^10.15.0",
+    "@asl/components": "^10.15.2",
     "@asl/constants": "^1.2.1",
     "@asl/service": "^9.1.1",
     "@babel/core": "^7.2.2",
