@@ -14,12 +14,16 @@ export const selector = ({
   // only compare version data if version is in an editable state
   const editable = !readonly || editConditions;
   const isSyncing = editable && !isEqual(version, savedProject);
-  return { isSyncing };
+  return { isSyncing, editable };
 };
 
 const SyncHandler = () => {
 
-  const { isSyncing } = useSelector(selector, shallowEqual);
+  const { isSyncing, editable } = useSelector(selector, shallowEqual);
+
+  if (!editable) {
+    return null;
+  }
 
   useEffect(() => {
     window.onbeforeunload = () => {
