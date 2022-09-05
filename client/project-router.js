@@ -61,30 +61,40 @@ const ProjectRouter = () => {
 
   useEffect(() => {
     const licenceStatusBanner = document.querySelector('.licence-status-banner');
-
     if (!licenceStatusBanner) {
       return;
     }
-
     const showHide = licenceStatusBanner.querySelector('.toggle-switch a');
     const statusDetails = licenceStatusBanner.querySelector('.status-details');
+    if (!statusShowing) {
+      statusDetails.classList.add('hidden');
+      licenceStatusBanner.classList.remove('open');
+      showHide.innerText = 'Show more'
+    } else {
+      statusDetails.classList.remove('hidden');
+      licenceStatusBanner.classList.add('open');
+      showHide.innerText = 'Show less'
+    }
+  }, [statusShowing]);
 
-    showHide.onclick = () => {
-      if (statusShowing) {
-        statusDetails.classList.add('hidden');
-        licenceStatusBanner.classList.remove('open');
-        showHide.innerText = 'Show more'
-      } else {
-        statusDetails.classList.remove('hidden');
-        licenceStatusBanner.classList.add('open');
-        showHide.innerText = 'Show less'
-      }
+  useEffect(() => {
+    const licenceStatusBanner = document.querySelector('.licence-status-banner');
+    if (!licenceStatusBanner) {
+      return;
+    }
+    const showHide = licenceStatusBanner.querySelector('header');
+    showHide.onclick = (e) => {
+      e.preventDefault();
       toggleStatusShowing();
     }
     return () => {
       showHide.onclick = null;
     };
   });
+
+  useEffect(() => {
+    setStatusShowing(false);
+  }, []);
 
   const versionModel = (project.versions || []).find(v => v.id === version.id) || {};
 
