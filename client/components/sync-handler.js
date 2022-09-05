@@ -55,7 +55,9 @@ const SyncHandler = () => {
     }
   }, [isSyncing]);
 
-  return <div className={classnames('sync-indicator', { syncing: isSyncing })}></div>;
+  return <div className={classnames('sync-indicator', { syncing: isSyncing })}>
+    { isSyncing ? 'Saving...' : 'Saved' }
+  </div>;
 };
 
 export default SyncHandler;

@@ -1620,3 +1620,9 @@ html.modal-open, html.modal-open body {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+.sync-indicator {
+  display: inline-block;
+  font-size: 14px;
+  padding: 0 0.5em;
+  color: $hint-colour;
+}

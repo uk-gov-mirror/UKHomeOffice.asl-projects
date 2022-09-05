@@ -115,11 +115,11 @@ const ProjectRouter = () => {
   return (
     <BrowserRouter basename={basename}>
       <ScrollToTop>
-        <SyncHandler />
         <DocumentHeader
           title={title}
           subtitle={projectTitle}
           detailsLabel="details and downloads"
+          status={<SyncHandler />}
           backLink={<Link page="project.read" label="Go to project overview" establishmentId={establishment.id} projectId={project.id} />}
         >
           <dl>
