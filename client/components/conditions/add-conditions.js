@@ -121,6 +121,7 @@ function AddConditions({
           onAdd={handleOnAdd}
           onUpdate={handleOnUpdate}
           onRemove={handleOnRemove}
+          // The conditionKey below is used as a temporary placeholder until a real UUID is generated when the condition is saved
           conditionKey={'uuid'}
         />
       }
