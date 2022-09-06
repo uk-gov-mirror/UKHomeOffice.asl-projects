@@ -17,7 +17,8 @@ const Condition = ({
   edited,
   editable = true,
   expandable = true,
-  className
+  className,
+  conditionKey
 }) => {
   const [editing, setEditing] = useState(isEditing);
   const [expanded, setExpanded] = useState(expandable === false);
@@ -33,7 +34,7 @@ const Condition = ({
 
   function handleRevert() {
     setEditing(false);
-    revert()
+    revert();
   }
 
   function handleUpdate(val) {
@@ -65,6 +66,7 @@ const Condition = ({
               onRevert={handleRevert}
               onChange={handleChange}
               showRevert={true}
+              conditionKey={conditionKey}
             />
           )
           : (
@@ -96,7 +98,7 @@ const Condition = ({
           )
       }
     </div>
-  )
-}
+  );
+};
 
-export default Condition
+export default Condition;

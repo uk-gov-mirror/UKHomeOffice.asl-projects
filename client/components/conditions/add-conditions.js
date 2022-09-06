@@ -5,8 +5,8 @@ import Field from '../field';
 import { v4 as uuid } from 'uuid';
 import CONDITIONS from '../../constants/conditions';
 
-function CustomConditions({ conditions, onUpdate, onAdd, onRemove }) {
-  const handleOnUpdate = index => val => onUpdate(index, val.content);
+function CustomConditions({ conditions, onUpdate, onAdd, onRemove, conditionKey }) {
+  const handleOnUpdate = index => val => onUpdate(index, val.content, val.reminders);
 
   return (
     <Fragment>
@@ -24,9 +24,10 @@ function CustomConditions({ conditions, onUpdate, onAdd, onRemove }) {
               editing={true}
               onUpdate={handleOnUpdate(index)}
               onChange={handleOnUpdate(index)}
-              content={condition}
+              content={condition.content}
+              conditionKey={conditionKey}
             />
-        </Fragment>
+          </Fragment>
         ))
       }
       <p>
@@ -47,16 +48,16 @@ const getConditions = (type, omit = []) => {
       inspectorAdded: true,
       ...CONDITIONS.inspector[key].versions[CONDITIONS.inspector[key].versions.length - 1]
     }));
-}
+};
 
-const initialState = [''];
+const initialState = [{ content: '', reminders: [] }];
 
 function customConditionReducer(state, action) {
   switch (action.type) {
     case 'add':
-      return [ ...state, '' ];
+      return [ ...state, { content: '', reminders: [] } ];
     case 'update':
-      return state.map((item, index) => index === action.index ? action.val : item);
+      return state.map((item, index) => index === action.index ? { content: action.val, reminders: action.reminders } : item);
     case 'remove':
       return state.filter((item, index) => index !== action.index);
     default:
@@ -82,9 +83,10 @@ function AddConditions({
   const [customConditions, dispatch] = useReducer(customConditionReducer, initialState);
 
   const setEdited = key => edited => {
+    const reminders = edited.reminders;
     edited = (typeof edited === 'object' && edited.content) ? edited.content : edited;
-    setConditions(conditions.map(c => c.key === key ? ({ ...c, edited }) : c));
-  }
+    setConditions(conditions.map(c => c.key === key ? ({ ...c, edited, reminders }) : c));
+  };
 
   const revert = key => () => setEdited(key)(null);
 
@@ -100,12 +102,13 @@ function AddConditions({
         id={condition.key}
         expandable={!isLegacy}
         editable={!isLegacy}
+        conditionKey={condition.key}
       />
-    }
+    };
   });
 
   const handleOnAdd = () => dispatch({ type: 'add' });
-  const handleOnUpdate = (index, val) => dispatch({ type: 'update', index, val });
+  const handleOnUpdate = (index, val, reminders) => dispatch({ type: 'update', index, val, reminders });
   const handleOnRemove = index => dispatch({ type: 'remove', index });
 
   if (!isLegacy) {
@@ -118,9 +121,11 @@ function AddConditions({
           onAdd={handleOnAdd}
           onUpdate={handleOnUpdate}
           onRemove={handleOnRemove}
+          // The conditionKey below is used as a temporary placeholder until a real UUID is generated when the condition is saved
+          conditionKey={'uuid'}
         />
       }
-    })
+    });
   }
 
   function onChange(vals) {
@@ -134,12 +139,19 @@ function AddConditions({
   function save() {
     onSave([
       ...conditions.filter(c => c.checked),
-      ...customConditions.filter(c => !!c && c !== '').map(condition => ({
-        type,
-        key: uuid(),
-        custom: true,
-        content: condition
-      }))
+      ...customConditions.filter(c => !!c.content && c.content !== '').map(condition => {
+        const uid = uuid();
+        return ({
+          type,
+          key: uid,
+          custom: true,
+          content: condition.content,
+          reminders: {
+            active: [uid],
+            [uid]: condition.reminders.uuid
+          }
+        });
+      })
     ]);
   }
 

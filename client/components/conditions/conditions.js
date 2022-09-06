@@ -1,4 +1,4 @@
-import React, { Component, useState, Fragment } from 'react';
+import React, { useState, Fragment } from 'react';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
 import get from 'lodash/get';
@@ -75,7 +75,7 @@ function Condition({
                       showRevert={!custom}
                       reminders={reminders}
                     />
-                  : <Markdown className="condition-text">{displayContent}</Markdown>
+                    : <Markdown className="condition-text">{displayContent}</Markdown>
                 }
               </Fragment>
             )
@@ -109,83 +109,77 @@ function Condition({
   );
 }
 
-class Conditions extends Component {
+function Conditions({ updating, editConditions, conditions, saveConditions, showConditions, singular, authorisations, scope }) {
 
-  state = {
-    updating: this.props.updating || false
-  }
+  const [ state, setState ] = useState({updating: updating || false});
+  updating = state.updating;
 
-  handleSave = key => data => {
-    if (!this.props.editConditions) {
+  const handleSave = key => data => {
+    if (!editConditions) {
       return;
     }
-    this.setState({ updating: true });
-    const conditions = this.props.conditions.map(condition => {
+    setState({ updating: true });
+    const conditionsToSave = conditions.map(condition => {
       if (condition.key === key) {
         return {
           ...condition,
           ...data
-        }
+        };
       }
       return condition;
     });
-    return this.props.saveConditions(conditions)
-      .then(() => this.setState({ updating: false }))
-  }
+    return saveConditions(conditionsToSave)
+      .then(() => setState({ updating: false }));
+  };
 
-  handleRemove = key => custom => {
-    if (!this.props.editConditions) {
+  const handleRemove = key => custom => {
+    if (!editConditions) {
       return;
     }
     if (custom) {
       if (window.confirm('Are you sure?')) {
-        this.setState({ updating: true })
-        return this.props.saveConditions(this.props.conditions.filter(condition => condition.key !== key))
-          .then(() => this.setState({ updating: false }))
+        setState({ updating: true });
+        return saveConditions(conditions.filter(condition => condition.key !== key))
+          .then(() => setState({ updating: false }));
       }
     } else {
-      this.handleSave(key)({ deleted: true });
+      handleSave(key)({ deleted: true });
     }
-  }
+  };
 
-  render () {
-    if (!this.props.showConditions) {
-      return null;
-    }
-    const { conditions, editConditions } = this.props;
-    const { updating } = this.state;
+  // ra conditions used to be added to the conditions array, we dont want to show them here.
+  const notRa = conditions.filter(c => !c.key.match(/^retrospective-assessment/));
+  const isNotRa = notRa.length === 0;
 
-    // ra conditions used to be added to the conditions array, we dont want to show them here.
-    const notRa = conditions.filter(c => !c.key.match(/^retrospective-assessment/));
+  return (
+    <div className="conditions">
+      { showConditions
+        ? isNotRa
+          ? <p><em>No {authorisations ? 'authorisations' : 'conditions'} added</em></p>
+          : notRa.map((condition, index) => {
+            const template = get(CONDITIONS[scope], condition.path, {});
+            const { title, content } = template;
+            return <Condition
+              key={condition.key}
+              conditionKey={condition.key}
+              className={condition.key}
+              singular={singular}
+              editConditions={editConditions}
+              updating={updating}
+              title={title}
+              number={index + 1}
+              custom={condition.custom}
+              content={content}
+              {...condition}
+              onSave={handleSave(condition.key)}
+              onRemove={handleRemove(condition.key)}
+            />;
+          })
+        : null
+      }
+    </div>
+  );
 
-    return (
-      <div className="conditions">
-        {
-          notRa.length === 0
-            ? <p><em>No {this.props.authorisations ? 'authorisations' : 'conditions'} added</em></p>
-            : notRa.map((condition, index) => {
-              const template = get(CONDITIONS[this.props.scope], condition.path, {});
-              const { title, content } = template;
-              return <Condition
-                key={condition.key}
-                conditionKey={condition.key}
-                className={condition.key}
-                singular={this.props.singular}
-                editConditions={editConditions}
-                updating={updating}
-                title={title}
-                number={index + 1}
-                custom={condition.custom}
-                content={content}
-                {...condition}
-                onSave={this.handleSave(condition.key)}
-                onRemove={this.handleRemove(condition.key)}
-              />
-            })
-        }
-      </div>
-    );
-  }
 }
 
 const mapStateToProps = ({
