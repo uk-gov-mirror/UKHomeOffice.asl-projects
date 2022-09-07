@@ -4,15 +4,18 @@ export function postError({ error, info }) {
   const params = {
     method: 'POST',
     credentials: 'include',
-    json: {
+    body: JSON.stringify({
       message: error.message,
       stack: error.stack,
       url: document.URL,
       ...info
+    }),
+    headers: {
+      'content-type': 'application/json'
     }
   };
 
-  return fetch('/error', params).response.catch(() => {});
+  return fetch('/error', params).catch(() => {});
 }
 
 export default function sendMessage({ method, data, url }) {
