@@ -52,8 +52,7 @@ export const addComment = comment => (dispatch, getState) => {
     .then(({ id }) => {
       dispatch(commentAdded({ ...comment, id, author: state.application.user }));
     })
-    .catch(err => {
-      console.error(err);
+    .catch(() => {
       dispatch(throwError('Error posting comment'));
     });
 };
@@ -74,8 +73,7 @@ export const editComment = ({ id, field, comment }) => (dispatch, getState) => {
     .then(() => dispatch(commentEdited({ field, comment, id })))
     .then(() => sendMessage(params))
     .then(comments => dispatch(refreshComments(comments)))
-    .catch(err => {
-      console.error(err);
+    .catch(() => {
       dispatch(throwError('Error updating comment'));
     });
 };
@@ -89,8 +87,7 @@ export const deleteComment = ({ id, field }) => (dispatch, getState) => {
   return Promise.resolve()
     .then(() => sendMessage(params))
     .then(() => dispatch(commentDeleted({ id, field })))
-    .catch(err => {
-      console.error(err);
+    .catch(() => {
       dispatch(throwError('Error deleting comment'));
     });
 };
