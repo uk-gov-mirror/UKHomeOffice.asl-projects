@@ -155,7 +155,7 @@ const DiffWindow = (props) => {
     const arrayDiff = () => {
       return parts
         .reduce((arr, { value, added, removed }) => {
-          return [ ...arr, ...value.map(v => ({ value: v, added, removed})) ];
+          return [ ...arr, ...value.map(v => ({ value: v, added, removed })) ];
         }, [])
         .map(item => ({ ...item, label: getLabel(item.value) }))
         .map(({ value, added, removed, label }) => {
@@ -166,7 +166,7 @@ const DiffWindow = (props) => {
     const permissiblePurposeDiff = () => {
       const diffs = parts
         .reduce((arr, { value, added, removed }) => {
-          return [ ...arr, ...value.map(v => ({ value: v, added, removed})) ];
+          return [ ...arr, ...value.map(v => ({ value: v, added, removed })) ];
         }, []);
 
       const Option = ({ option }) => {

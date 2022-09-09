@@ -256,7 +256,6 @@ export default (application, sections, values, updateImageDimensions) => {
     try {
       mergeCells(matrix, table);
     } catch (err) {
-      console.log('Failed to merge cells', err);
       table = initTable(matrix);
       populateTable(matrix, table);
     }
@@ -934,7 +933,7 @@ export default (application, sections, values, updateImageDimensions) => {
 
       return Promise.resolve()
         .then(() => fn(val))
-        .then(transformed => obj[key] = transformed);
+        .then(transformed => { obj[key] = transformed; });
     });
 
     return Promise.all(promises).then(() => obj);

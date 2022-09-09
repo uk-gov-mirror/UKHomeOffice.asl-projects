@@ -1,3 +1,4 @@
+/* eslint camelcase: ["error", {allow: ["^ic_"]}] */
 import React, { Component, Fragment } from 'react';
 import classnames from 'classnames';
 import {
@@ -28,7 +29,7 @@ class FormatToolbar extends Component {
 
   hasMark = type => {
     const { value } = this.props;
-    return value.activeMarks.some(mark => mark.type == type);
+    return value.activeMarks.some(mark => mark.type === type);
   }
 
   renderBlockButton = (type, icon, tooltip) => {

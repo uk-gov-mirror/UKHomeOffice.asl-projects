@@ -64,10 +64,9 @@ export function createProject(project) {
 }
 
 export function importProject(project) {
-  project = omit(project, 'id');
   return dispatch => {
     return database()
-      .then(db => db.create(project))
+      .then(db => db.create(omit(project, 'id')))
       .then(project => dispatch({ type: types.CREATE_PROJECT, project }))
       .then(() => dispatch(showMessage('Project imported!')))
       .catch(error => dispatch({ type: types.ERROR, error }));
@@ -239,7 +238,6 @@ const shouldSyncProject = state => {
 };
 
 const onSyncError = (func, err, dispatch, getState, ...args) => {
-  console.error(err);
   dispatch(doneSyncing());
   dispatch(syncError());
   const errorCount = getState().application.errorCount;

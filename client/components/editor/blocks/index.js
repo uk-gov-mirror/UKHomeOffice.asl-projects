@@ -6,7 +6,7 @@ const DEFAULT_BLOCK = 'paragraph';
 
 const hasBlock = (editor, event, type) => {
   const { value } = editor;
-  return value.blocks.some(node => node.type == type);
+  return value.blocks.some(node => node.type === type);
 };
 
 const findRootElem = (document, block) => {
