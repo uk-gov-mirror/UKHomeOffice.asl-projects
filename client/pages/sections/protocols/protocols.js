@@ -55,7 +55,7 @@ class Protocol extends PureComponent {
       fieldName: parts[parts.length - 1]
     };
     if (parts.length === 5) {
-      protocolState.section = parts[2],
+      protocolState.section = parts[2];
       protocolState.sectionItem = parts[3];
     }
 

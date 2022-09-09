@@ -70,12 +70,12 @@ class Section extends React.Component {
       />;
     }
 
+    const Component = this.props.component || DefaultSection;
+    const { fields, title, step, section, ...rest } = this.props;
+
     if (this.props.actualProject.isLegacyStub && this.props.section === 'additional-conditions') {
       return <StaticSection section={this.props.options} { ...rest } />;
     }
-
-    const Component = this.props.component || DefaultSection;
-    const { fields, title, step, section, ...rest } = this.props;
 
     return (
       <Fragment>
