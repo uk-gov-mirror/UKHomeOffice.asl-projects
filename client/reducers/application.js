@@ -20,29 +20,29 @@ export default function applicationReducer(state = INITIAL_STATE, action) {
       return {
         ...state,
         isSyncing: true
-      }
+      };
     case types.DONE_SYNCING:
       return {
         ...state,
         isSyncing: false
-      }
+      };
     case types.SET_BASENAME:
       return {
         ...state,
         basename: action.basename
-      }
+      };
     case types.SYNC_ERROR:
       return {
         ...state,
         syncError: true,
         errorCount: state.errorCount + 1
-      }
+      };
     case types.SYNC_ERROR_RESOLVED:
       return {
         ...state,
         syncError: false,
         errorCount: 0
-      }
+      };
     default:
       return state;
   }

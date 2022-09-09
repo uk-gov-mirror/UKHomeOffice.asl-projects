@@ -124,7 +124,7 @@ export default {
       hint: 'Include examples of practical or specialist support you\'ll be able to draw on. If anyone is going to help manage the project, explain how.',
       alt: {
         label: 'What relevant expertise and staffing will be available to support this person?',
-        hint: 'Include examples of practical or specialist support they\'ll be able to draw on. If anyone is going to help manage the project, explain how.',
+        hint: 'Include examples of practical or specialist support they\'ll be able to draw on. If anyone is going to help manage the project, explain how.'
       },
       type: 'texteditor'
     }

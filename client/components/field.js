@@ -44,7 +44,7 @@ class Field extends Component {
   }
 
   onFieldChange = value => {
-    this.setState({ value }, this.save)
+    this.setState({ value }, this.save);
   }
 
   save = () => {
@@ -86,8 +86,8 @@ class Field extends Component {
             }
           </div>
         )
-      }
-    })
+      };
+    });
   }
 
   render() {
@@ -99,11 +99,11 @@ class Field extends Component {
     let { label, hint } = this.props.altLabels ? this.props.alt : this.props;
 
     if (this.props.raPlayback) {
-      hint = <RAPlaybackHint {...this.props.raPlayback} hint={hint} />
+      hint = <RAPlaybackHint {...this.props.raPlayback} hint={hint} />;
     }
 
     if (this.props.fallbackLink && this.props.options && !this.props.options.length) {
-      return <a href={this.props.fallbackLink.url}>{this.props.fallbackLink.label}</a>
+      return <a href={this.props.fallbackLink.url}>{this.props.fallbackLink.label}</a>;
     }
     if (this.props.type === 'animal-quantities') {
       return <AnimalQuantities {...this.props} value={value} label={label} hint={hint} />;
@@ -187,7 +187,7 @@ class Field extends Component {
         value={ value || '' }
         error={ this.props.error }
         onChange={value => this.onFieldChange(value) }
-      />
+      />;
     }
     if (this.props.type === 'radio') {
       return <RadioGroup
@@ -207,7 +207,7 @@ class Field extends Component {
           if (val === 'false') {
             val = false;
           }
-          this.onFieldChange(val)
+          this.onFieldChange(val);
         }}
       />;
     }
@@ -277,7 +277,7 @@ class Field extends Component {
         value={value}
         error={this.props.error}
         onChange={ e => this.onFieldChange(e.target.checked) }
-      />
+      />;
     }
     return <Input
       className={ this.props.className }
@@ -302,7 +302,7 @@ const mapStateToProps = ({ project, settings, application }, { name, conditional
     show: !conditional || every(Object.keys(conditional), key => conditional[key] === project[key]),
     grantedVersion: application && application.grantedVersion
   };
-}
+};
 
 const ConnectedField = connect(mapStateToProps, { addChange, throwError })(Field);
 
@@ -315,8 +315,8 @@ const FieldGroup = props => {
         showComments && <Comments field={props.name} />
       }
     </Fragment>
-  )
-}
+  );
+};
 
 const SafeField = props => (
   <ErrorBoundary

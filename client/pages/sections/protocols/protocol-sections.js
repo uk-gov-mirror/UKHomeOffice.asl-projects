@@ -31,14 +31,14 @@ class ProtocolSections extends PureComponent {
 
   setCompleted = value => {
     this.props.updateItem({ complete: value });
-    this.setState({ expanded: !value })
+    this.setState({ expanded: !value });
   }
 
   toggleExpanded = () => {
     this.props.keepAlive();
     this.setState({
       expanded: !this.state.expanded
-    })
+    });
   }
 
   toggleActive = e => {
@@ -179,7 +179,7 @@ class ProtocolSections extends PureComponent {
           </div>
         </Expandable>
       </section>
-    )
+    );
   }
 }
 

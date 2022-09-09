@@ -12,8 +12,8 @@ const getItems = (values, editable, previousAA) => {
 
   if (!items || items.length < 1) {
     // b/c - map previously selected additional establishments.
-  const otherEstablishments = values['other-establishments-list'];
-  items = (otherEstablishments || []).map(est => ({ 'establishment-name': est, id: uuid() }))
+    const otherEstablishments = values['other-establishments-list'];
+    items = (otherEstablishments || []).map(est => ({ 'establishment-name': est, id: uuid() }));
   }
 
   return items.filter(e => {
@@ -28,7 +28,7 @@ const getItems = (values, editable, previousAA) => {
     }
     return true;
   });
-}
+};
 
 function Establishment(props) {
   const { number, editable, values, updateItem, removeItem, restoreItem } = props;
@@ -47,14 +47,14 @@ function Establishment(props) {
         {
           (values.deleted || !editable)
             ? <ReviewFields
-            { ...props }
-            readonly={true}
-            showItemHeading={false}
-          />
+              { ...props }
+              readonly={true}
+              showItemHeading={false}
+            />
             : <Fieldset
-            { ...props }
-            onFieldChange={(key, value) => updateItem({ [key]: value })}
-          />
+              { ...props }
+              onFieldChange={(key, value) => updateItem({ [key]: value })}
+            />
         }
       </div>
     </section>
@@ -72,7 +72,7 @@ export default function Establishments({ values, editable, ...props }) {
       return;
     }
     props.save({ establishments });
-  }
+  };
 
   return (
     <div className="repeats-establishments">
@@ -91,5 +91,5 @@ export default function Establishments({ values, editable, ...props }) {
         <Establishment {...props} editable={editable} />
       </Repeater>
     </div>
-  )
+  );
 }

@@ -8,11 +8,11 @@ import reduce from 'lodash/reduce';
 import SectionLink from './sections-link';
 import ExpandingPanel from './expanding-panel';
 import schemaMap, { getGrantedSubsections } from '../schema';
-import { flattenReveals, getFields } from '../helpers'
+import { flattenReveals, getFields } from '../helpers';
 
 const sectionVisible = (section, values) => {
   return !section.show || section.show(values);
-}
+};
 
 function getFieldsForSection(section, project) {
   if (section.subsections) {
@@ -58,7 +58,7 @@ export default function SideNav(props) {
               const title = <Fragment>
                 <ChangedBadge fields={getFieldsForSection(section, project)} noLabel />
                 <span className="indent">{section.subtitle || section.title}</span>
-              </Fragment>
+              </Fragment>;
               return (
                 <ExpandingPanel key={key} title={title} open={open}>
                   {
@@ -66,11 +66,11 @@ export default function SideNav(props) {
                       return <p key={key}>
                         <ChangedBadge fields={getFieldsForSection(subsection, project)} noLabel />
                         <NavLink className="indent" to={`/${key}`}>{subsection.title}</NavLink>
-                      </p>
+                      </p>;
                     })
                   }
                 </ExpandingPanel>
-              )
+              );
             }
             return (
               <NavLink key={key} to={`/${key}`}>
@@ -83,7 +83,7 @@ export default function SideNav(props) {
                   }
                 </h3>
               </NavLink>
-            )
+            );
           })
       }
     </nav>

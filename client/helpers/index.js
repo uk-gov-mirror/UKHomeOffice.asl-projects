@@ -23,7 +23,7 @@ export const getConditions = (values, project) => {
     ? CONDITIONS.protocol
     : CONDITIONS.project;
 
-  conditions = map(conditions, (condition, key) => ({ ...condition, key }))
+  conditions = map(conditions, (condition, key) => ({ ...condition, key }));
 
   const newConditions = conditions.map(condition => {
     const editedCondition = editedConditions.find(c => c.key === condition.key);
@@ -47,7 +47,7 @@ export const getConditions = (values, project) => {
     // edited conditions
     ...newConditions
   ];
-}
+};
 
 export function mapPermissiblePurpose(project) {
   const values = project['permissible-purpose'] || [];
@@ -107,7 +107,7 @@ export const getScrollPos = (elem, offset = 0) => {
 export const getNewComments = (comments, user) => {
   const filterNew = field => field.filter(comment => comment.isNew && comment.author !== user && !comment.deleted);
   return pickBy(mapValues(comments, filterNew), filterNew);
-}
+};
 
 export const getLegacySpeciesLabel = species => {
   const matched = LEGACY_SPECIES.find(s => s.value === species.speciesId);
@@ -125,19 +125,18 @@ export const flattenReveals = (fields, values) => {
       item.options.forEach(option => {
         if (option.reveal) {
           if (Array.isArray(values[item.name]) && values[item.name].includes(option.value)) {
-            reveals.push(flattenReveals(castArray(option.reveal), values))
-          }
-          else if (option.value === values[item.name]) {
-            reveals.push(flattenReveals(castArray(option.reveal), values))
+            reveals.push(flattenReveals(castArray(option.reveal), values));
+          } else if (option.value === values[item.name]) {
+            reveals.push(flattenReveals(castArray(option.reveal), values));
           }
         }
-      })
+      });
     }
     return flatten([
       ...arr,
       item,
       flatten(reveals)
-    ])
+    ]);
   }, []);
 };
 
@@ -158,11 +157,9 @@ export function getFields(section) {
       }
       return field;
     });
-  }
-  else if (section.steps) {
+  } else if (section.steps) {
     return flatten(section.steps.map(getFields));
-  }
-  else return [];
+  } else return [];
 }
 
 /* eslint-disable no-control-regex */
@@ -170,7 +167,7 @@ export const stripInvalidXmlChars = text => {
   if (typeof text !== 'string') {
     return text;
   }
-  return text.replace(/([^\x09\x0A\x0D\x20-\uD7FF\uE000-\uFFFC\u{10000}-\u{10FFFF}])/ug, '')
+  return text.replace(/([^\x09\x0A\x0D\x20-\uD7FF\uE000-\uFFFC\u{10000}-\u{10FFFF}])/ug, '');
 };
 
 export const isTrainingLicence = values => {

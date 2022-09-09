@@ -15,21 +15,21 @@ const comments = (state = {}, action) => {
           },
           ...(state[action.field] || [])
         ]
-      }
+      };
 
     case types.COMMENT_EDITED:
-        return {
-          ...state,
-          [action.field]: (state[action.field] || []).map(comment => {
-            if (comment.id === action.id) {
-              return {
-                ...comment,
-                comment: action.comment
-              }
-            }
-            return comment;
-          })
-        };
+      return {
+        ...state,
+        [action.field]: (state[action.field] || []).map(comment => {
+          if (comment.id === action.id) {
+            return {
+              ...comment,
+              comment: action.comment
+            };
+          }
+          return comment;
+        })
+      };
 
     case types.REFRESH_COMMENTS:
       return action.comments;
@@ -42,13 +42,13 @@ const comments = (state = {}, action) => {
             return {
               ...comment,
               deleted: true
-            }
+            };
           }
           return comment;
         })
       };
   }
-  return state
+  return state;
 };
 
 export default comments;

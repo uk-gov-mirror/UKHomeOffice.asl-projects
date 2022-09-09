@@ -10,7 +10,7 @@ export const commentAdded = ({ comment, author, field, id }) => {
     author,
     field,
     id
-  }
+  };
 };
 
 export const commentEdited = ({ comment, field, id }) => {
@@ -19,7 +19,7 @@ export const commentEdited = ({ comment, field, id }) => {
     comment,
     field,
     id
-  }
+  };
 };
 
 const commentDeleted = ({ id, field }) => ({
@@ -38,7 +38,7 @@ const refreshComments = comments => {
 const getUrl = (state, suffix) => {
   const url = state.application.basename.replace(/\/edit?/, '').replace(/\/full-application?/, '');
   return `${url}${suffix}`;
-}
+};
 
 export const addComment = comment => (dispatch, getState) => {
   const state = getState();
@@ -46,7 +46,7 @@ export const addComment = comment => (dispatch, getState) => {
     url: getUrl(state, `/comment`),
     method: 'POST',
     data: comment
-  }
+  };
   return Promise.resolve()
     .then(() => sendMessage(params))
     .then(({ id }) => {
@@ -56,7 +56,7 @@ export const addComment = comment => (dispatch, getState) => {
       console.error(err);
       dispatch(throwError('Error posting comment'));
     });
-}
+};
 
 export const editComment = ({ id, field, comment }) => (dispatch, getState) => {
   const state = getState();
@@ -78,7 +78,7 @@ export const editComment = ({ id, field, comment }) => (dispatch, getState) => {
       console.error(err);
       dispatch(throwError('Error updating comment'));
     });
-}
+};
 
 export const deleteComment = ({ id, field }) => (dispatch, getState) => {
   const state = getState();
@@ -93,4 +93,4 @@ export const deleteComment = ({ id, field }) => (dispatch, getState) => {
       console.error(err);
       dispatch(throwError('Error deleting comment'));
     });
-}
+};

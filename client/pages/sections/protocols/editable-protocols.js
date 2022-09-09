@@ -15,6 +15,6 @@ const EditableProtocols = ({ advance, exit, ...props }) => (
 
     <Controls onContinue={advance} onExit={exit} />
   </Fragment>
-)
+);
 
 export default EditableProtocols;

@@ -85,12 +85,12 @@ class FormatToolbar extends Component {
 
   onClickBlock = (event, type) => {
     event.preventDefault();
-    this.props.command('toggleBlock', type)
+    this.props.command('toggleBlock', type);
   }
 
   onClickImage = event => {
     event.preventDefault();
-    this.props.command('onClickImage', event)
+    this.props.command('onClickImage', event);
   }
 
   command = (action, ...args) => event => {
@@ -118,7 +118,7 @@ class FormatToolbar extends Component {
         >
           <SizedIcon icon={table2} />
         </button>
-      )
+      );
   }
 
   renderListToolbar() {
@@ -185,7 +185,7 @@ class FormatToolbar extends Component {
       aria-label="Clear formatting"
     >
       <SizedIcon icon={ic_format_clear} />
-    </button>
+    </button>;
   }
 
   render () {
@@ -205,7 +205,7 @@ class FormatToolbar extends Component {
         {this.renderClearFormattingButton()}
         {this.renderTableToolbar()}
       </div>
-    )
+    );
   }
 }
 

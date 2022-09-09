@@ -15,14 +15,14 @@ const selector = ({
   protocols,
   previous,
   isGranted
-})
+});
 
 export default function ReorderedBadge({ id }) {
   const { protocols, previous, isGranted } = useSelector(selector, shallowEqual);
   if (!previous) {
     return null;
   }
-  
+
   const previousIds = previous.filter(p => !(protocols.find(protocol => protocol.id === p) || {}).deleted);
   const ids = (protocols || []).filter(p => !p.deleted).filter(p => previous.includes(p.id)).map(p => p.id);
 
@@ -33,5 +33,5 @@ export default function ReorderedBadge({ id }) {
     return null;
   }
 
-  return <span className="badge reordered">{previousIndex > newIndex ? 'Moved up' : 'Moved down'}</span>
+  return <span className="badge reordered">{previousIndex > newIndex ? 'Moved up' : 'Moved down'}</span>;
 }

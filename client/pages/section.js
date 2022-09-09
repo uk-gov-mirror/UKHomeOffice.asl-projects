@@ -67,11 +67,11 @@ class Section extends React.Component {
         isGranted={this.props.isGranted}
         project={this.props.project}
         options={this.props.options}
-      />
+      />;
     }
 
     if (this.props.actualProject.isLegacyStub && this.props.section === 'additional-conditions') {
-      return <StaticSection section={this.props.options} { ...rest } />
+      return <StaticSection section={this.props.options} { ...rest } />;
     }
 
     const Component = this.props.component || DefaultSection;
@@ -117,7 +117,7 @@ class Section extends React.Component {
           }
         </div>
       </Fragment>
-    )
+    );
   }
 
 }

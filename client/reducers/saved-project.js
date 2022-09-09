@@ -10,6 +10,6 @@ const savedProject = (state = {}, action) => {
       };
   }
   return state;
-}
+};
 
 export default savedProject;

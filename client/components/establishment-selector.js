@@ -7,7 +7,7 @@ const revealContent = `To change the primary establishment you must:
 
 * have the agreement of both establishment licence holders
 * take the application through the AWERB review process at the new establishment (and any additional establishments)
-* review any related sections of the application that appear as ‘incomplete'`
+* review any related sections of the application that appear as ‘incomplete'`;
 
 export default function EstablishmentSelector({ value, onFieldChange, review, diff, ...props }) {
   const {
@@ -26,7 +26,7 @@ export default function EstablishmentSelector({ value, onFieldChange, review, di
   } = useSelector(state => state.application, shallowEqual);
 
   if (isGranted || legacyGranted) {
-    return <p>{projectEstablishment.name}</p>
+    return <p>{projectEstablishment.name}</p>;
   }
 
   const [localValue, setLocalValue] = useState(value);
@@ -66,7 +66,7 @@ export default function EstablishmentSelector({ value, onFieldChange, review, di
   const establishmentName = displayEstablishment.name || 'Another establishment';
 
   if (review) {
-    return <p>{project.transferToEstablishmentName || establishmentName}</p>
+    return <p>{project.transferToEstablishmentName || establishmentName}</p>;
   }
 
   if (draft && canTransferDraft) {

@@ -10,6 +10,6 @@ const GrantedProtocols = ({ pdf, ...props }) => (
         : <Protocols {...props} />
     }
   </Fragment>
-)
+);
 
 export default GrantedProtocols;

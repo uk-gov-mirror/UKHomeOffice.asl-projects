@@ -13,6 +13,6 @@ const questionVersions = (state = {}, action) => {
       };
   }
   return state;
-}
+};
 
 export default questionVersions;

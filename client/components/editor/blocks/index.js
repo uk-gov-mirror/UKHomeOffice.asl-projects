@@ -15,7 +15,7 @@ const findRootElem = (document, block) => {
     return block;
   }
   return findRootElem(document, parent);
-}
+};
 
 const unwrapBlock = (editor, block) => {
   const { value } = editor;
@@ -33,7 +33,7 @@ const unwrapBlock = (editor, block) => {
     unwrapBlock(editor, block);
   });
 
-}
+};
 
 const unwrapBlocks = editor => {
   const { value } = editor;
@@ -48,7 +48,7 @@ const unwrapBlocks = editor => {
 
   childBlocks.forEach(block => unwrapBlock(editor, block));
   editor.setBlocks(DEFAULT_BLOCK);
-}
+};
 
 const toggleBlock = (editor, type) => {
   const isActive = hasBlock(editor, type);
@@ -75,5 +75,5 @@ export default function Blocks() {
     queries: {
       hasBlock
     }
-  }
+  };
 }

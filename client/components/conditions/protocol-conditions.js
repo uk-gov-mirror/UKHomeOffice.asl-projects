@@ -26,7 +26,7 @@ function ProtocolConditions(props) {
         key: uuid()
       }
     ])
-      .then(() => setUpdating(false))
+      .then(() => setUpdating(false));
   }
 
   return (
@@ -73,7 +73,7 @@ function ProtocolConditions(props) {
         )
       }
     </Fragment>
-  )
+  );
 }
 
 export default connect(({ application: { editConditions } }) => ({ editConditions }), (dispatch, { type, values: { id } }) => ({

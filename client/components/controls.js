@@ -15,4 +15,4 @@ export default ({
       <a href="#" onClick={onExit}>{exitLabel}</a>
     }
   </p>
-)
+);

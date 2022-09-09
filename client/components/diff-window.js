@@ -7,7 +7,7 @@ import { Warning } from '@ukhomeoffice/react-components';
 import { fetchQuestionVersions } from '../actions/projects';
 import { mapAnimalQuantities } from '../helpers';
 import Modal from './modal';
-import ReviewField from './review-field'
+import ReviewField from './review-field';
 import Tabs from './tabs';
 
 import normaliseWhitespace from '../helpers/normalise-whitespace';
@@ -59,19 +59,19 @@ const DiffWindow = (props) => {
   const toggleModal = e => {
     e.preventDefault();
     setModelOpen(!modalOpen);
-  }
+  };
 
   const selectTab = n => e => {
     e.preventDefault();
     setActive(n);
-  }
+  };
 
   const parseValue = (val) => {
     if (typeof val === 'string') {
       val = JSON.parse(val || '{}');
     }
     return Value.fromJSON(val || {});
-  }
+  };
 
   const hasContentChanges = (a, b, type) => {
     if (type !== 'texteditor') {
@@ -82,7 +82,7 @@ const DiffWindow = (props) => {
     const after = parseValue(b);
 
     return normaliseWhitespace(before.document.text) !== normaliseWhitespace(after.document.text);
-  }
+  };
 
   const decorateNode = (parts) => {
 
@@ -134,12 +134,12 @@ const DiffWindow = (props) => {
 
     };
 
-  }
+  };
 
   const renderDecoration = (props) => {
     const { children, decoration, attributes } = props;
     return <span className={classnames('diff', decoration.type)} {...attributes}>{ children }</span>;
-  }
+  };
 
   const renderDiff = (parts, value) => {
 
@@ -159,10 +159,9 @@ const DiffWindow = (props) => {
         }, [])
         .map(item => ({ ...item, label: getLabel(item.value) }))
         .map(({ value, added, removed, label }) => {
-          return <li key={value}><span className={classnames({ added, removed, diff: (added || removed) })}>{ label }</span></li>
+          return <li key={value}><span className={classnames({ added, removed, diff: (added || removed) })}>{ label }</span></li>;
         });
     };
-
 
     const permissiblePurposeDiff = () => {
       const diffs = parts
@@ -189,7 +188,7 @@ const DiffWindow = (props) => {
               }
             </ul>;
           }
-          return <Option option={option} key={option.value} />
+          return <Option option={option} key={option.value} />;
         });
     };
 
@@ -213,10 +212,10 @@ const DiffWindow = (props) => {
       case 'species-selector':
         return parts.length
           ? (
-              <ul>
-                { arrayDiff() }
-              </ul>
-            )
+            <ul>
+              { arrayDiff() }
+            </ul>
+          )
           : (
             <p>
               <em>{ DEFAULT_LABEL }</em>
@@ -225,10 +224,10 @@ const DiffWindow = (props) => {
       case 'permissible-purpose':
         return parts.length
           ? (
-              <ul>
-                { permissiblePurposeDiff() }
-              </ul>
-            )
+            <ul>
+              { permissiblePurposeDiff() }
+            </ul>
+          )
           : (
             <p>
               <em>{ DEFAULT_LABEL }</em>
@@ -251,7 +250,7 @@ const DiffWindow = (props) => {
             diff={true}
             noComments
           />
-        )
+        );
       default:
         return (
           <ReviewField
@@ -267,10 +266,10 @@ const DiffWindow = (props) => {
             diff={true}
             noComments
           />
-        )
+        );
 
     }
-  }
+  };
 
   const controls = () => {
     const labels = {
@@ -292,7 +291,7 @@ const DiffWindow = (props) => {
         <Fragment>
           <h3>{labels[versions[0]]}</h3>
         </Fragment>
-      )
+      );
   };
 
   const compare = () => {
@@ -329,9 +328,8 @@ const DiffWindow = (props) => {
           </div>
         </div>
       </div>
-    </Fragment>
-  }
-
+    </Fragment>;
+  };
 
   return modalOpen
     ? (
@@ -352,6 +350,6 @@ const DiffWindow = (props) => {
       </Modal>
     )
     : <a href="#" className="modal-trigger" onClick={toggleModal}>See what&apos;s changed</a>;
-}
+};
 
 export default DiffWindow;

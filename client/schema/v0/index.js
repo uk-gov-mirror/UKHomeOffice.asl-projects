@@ -93,7 +93,7 @@ export default () => ({
             type: 'texteditor'
           }
         ]
-      },
+      }
     }
   },
   projectLocation: {
@@ -242,7 +242,7 @@ export default () => ({
                   options: [
                     {
                       label: '(i) Avoidance, prevention, diagnosis or treatment of disease, ill-health  or abnormality, or their effects, in man, animals or plants.',
-                      value: 'purpose-b1',
+                      value: 'purpose-b1'
                     },
                     {
                       label: '(ii) Assessment, detection, regulation or modification of physiological conditions in man, animals or plants.',
@@ -358,7 +358,7 @@ export default () => ({
             name: 'title',
             label: 'Title',
             type: 'text'
-          },
+          }
         ],
         sections: {
           details: {

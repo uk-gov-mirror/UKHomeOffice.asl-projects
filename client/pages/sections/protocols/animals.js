@@ -89,7 +89,7 @@ class Animal extends Component {
             )
         }
       </Expandable>
-    )
+    );
   }
 }
 
@@ -109,7 +109,7 @@ class Animals extends Component {
 
       if (precodedSpecies) {
         value = precodedSpecies.value;
-        item = precodedSpecies.label
+        item = precodedSpecies.label;
         const matchingValue = speciesDetails.find(sd => sd.value === value);
         // item is already in list - make sure it has the right label
         if (matchingValue) {
@@ -121,7 +121,7 @@ class Animals extends Component {
       if (some(speciesDetails, sd => sd.name === item)) {
         return;
       }
-      speciesDetails.push({ name: item, id: uuid(), value })
+      speciesDetails.push({ name: item, id: uuid(), value });
     });
 
     return filterSpeciesByActive({ speciesDetails, species }, project);
@@ -137,7 +137,7 @@ class Animals extends Component {
     const deprecatedSpecies = (this.props.project.species || [])
       .filter(s => deprecated.includes(s))
       .filter(s => s.indexOf('other') === -1)
-      .map(s => (SPECIES.deprecated.find(d => d.value === s) || {}).label)
+      .map(s => (SPECIES.deprecated.find(d => d.value === s) || {}).label);
 
     const deprecatedOthers = flatten(
       values(
@@ -153,15 +153,16 @@ class Animals extends Component {
       ...deprecatedOthers
     ];
 
-    const speciesField = fields.filter(f => f.section === 'intro').map(f => ({ ...f, options: flatten([
-      ...projectSpecies.map(s => {
-        if (s.indexOf('other') > -1) {
-          return this.props.project[`species-${s}`]
-        }
-        return flatten(values(SPECIES)).find(species => species.value === s);
-      }),
-      ...otherSpecies
-    ]) }));
+    const speciesField = fields.filter(f => f.section === 'intro').map(f => ({ ...f,
+      options: flatten([
+        ...projectSpecies.map(s => {
+          if (s.indexOf('other') > -1) {
+            return this.props.project[`species-${s}`];
+          }
+          return flatten(values(SPECIES)).find(species => species.value === s);
+        }),
+        ...otherSpecies
+      ]) }));
 
     const items = this.getItems();
 
@@ -169,7 +170,7 @@ class Animals extends Component {
       return <Review
         label="Animals used in this protocol"
         value={null}
-      />
+      />;
     }
 
     const protocolSpecies = [
@@ -214,7 +215,7 @@ class Animals extends Component {
           editable && !deleted && <Link to="../introduction">Manage animal types</Link>
         }
       </Fragment>
-    )
+    );
   }
 }
 

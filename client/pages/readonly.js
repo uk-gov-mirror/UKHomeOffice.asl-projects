@@ -10,7 +10,7 @@ import { keepAlive } from '../actions/session';
 function Readonly({ isGranted, project, options, schemaVersion, showConditions, keepAlive, location, match }) {
 
   useEffect(() => {
-    keepAlive()
+    keepAlive();
   }, [location]);
 
   return (
@@ -37,7 +37,7 @@ function Readonly({ isGranted, project, options, schemaVersion, showConditions, 
         </div>
       </div>
     </Fragment>
-  )
+  );
 }
 
 const mapStateToProps = ({

@@ -25,6 +25,6 @@ const renderApp = initialState => {
     </ErrorBoundary>,
     document.getElementById('ppl-drafting-tool')
   );
-}
+};
 
 export default renderApp;

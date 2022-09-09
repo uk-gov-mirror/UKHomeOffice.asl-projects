@@ -41,5 +41,5 @@ export default function Submit({ onComplete }) {
         <a href={projectUrl}>Go to project overview</a>
       </p>
     </Fragment>
-  )
+  );
 }

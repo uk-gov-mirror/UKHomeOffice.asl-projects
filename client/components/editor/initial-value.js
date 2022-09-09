@@ -7,7 +7,7 @@ export default (text = '') => ({
         nodes: [
           {
             object: 'text',
-            text,
+            text
           }
         ]
       }

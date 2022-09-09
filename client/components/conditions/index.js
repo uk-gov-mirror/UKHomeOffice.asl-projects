@@ -5,7 +5,7 @@ import { Button } from '@ukhomeoffice/react-components';
 import { updateConditions } from '../../actions/projects';
 import Conditions from './conditions';
 import AddConditions from './add-conditions';
-import RetrospectiveAssessment from '../retrospective-assessment'
+import RetrospectiveAssessment from '../retrospective-assessment';
 
 function ConditionsPage({
   values,

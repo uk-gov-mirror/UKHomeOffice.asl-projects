@@ -17,5 +17,5 @@ export default function RaDetails() {
         <dd><RaReasons reasons={project.raReasons} /></dd>
       </dl>
     </div>
-  )
+  );
 }

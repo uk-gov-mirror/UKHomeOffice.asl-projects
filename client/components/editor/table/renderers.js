@@ -22,7 +22,7 @@ const renderBlock = (props, editor, next) => {
         </table>
       );
     case 'table-row':
-      return <tr { ...attributes }>{ children }</tr>
+      return <tr { ...attributes }>{ children }</tr>;
     case 'table-cell':
       return (
         <td
@@ -34,8 +34,8 @@ const renderBlock = (props, editor, next) => {
         </td>
       );
     default:
-      return next()
+      return next();
   }
-}
+};
 
 export default renderBlock;

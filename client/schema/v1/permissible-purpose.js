@@ -19,7 +19,7 @@ const permissiblePurpose = {
         options: [
           {
             label: '(i) Avoidance, prevention, diagnosis or treatment of disease, ill-health  or abnormality, or their effects, in man, animals or plants',
-            value: 'translational-research-1',
+            value: 'translational-research-1'
           },
           {
             label: '(ii) Assessment, detection, regulation or modification of physiological conditions in man, animals or plants',

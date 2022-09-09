@@ -17,7 +17,7 @@ const pack = (doc, filename) => {
 const scaleAndPreserveAspectRatio = (srcWidth, srcHeight, maxWidth, maxHeight) => {
   const ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
   return { width: srcWidth * ratio, height: srcHeight * ratio };
-}
+};
 
 const updateImageDimensions = node => {
   return new Promise(resolve => {
@@ -43,7 +43,7 @@ export default application => {
     render: ({ sections, values }) => {
       return Promise.resolve()
         .then(() => renderer(application, sections, values, updateImageDimensions))
-        .then(doc => pack(doc, values.title))
+        .then(doc => pack(doc, values.title));
     }
-  }
+  };
 };

@@ -10,7 +10,7 @@ class WarningButton extends React.Component {
 
   render() {
     if (this.state && this.state.warning) {
-      return <Button { ...this.props }>{this.props.warning}</Button>
+      return <Button { ...this.props }>{this.props.warning}</Button>;
     }
     return <Button { ...this.props } onClick={e => this.warn(e)} />;
   }
@@ -19,6 +19,6 @@ class WarningButton extends React.Component {
 
 WarningButton.defaultProps = {
   warning: 'Are you sure?'
-}
+};
 
 export default WarningButton;

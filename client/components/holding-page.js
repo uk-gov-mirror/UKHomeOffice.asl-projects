@@ -8,5 +8,5 @@ export default function HoldingPage() {
       <h2>This should only take a few seconds</h2>
       <Spinner />
     </div>
-  )
+  );
 }

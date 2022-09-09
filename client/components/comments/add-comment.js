@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { addComment } from '../../actions/comments';
 import { keepAlive } from '../../actions/session';
-import { Button, TextArea } from '@ukhomeoffice/react-components'
+import { Button, TextArea } from '@ukhomeoffice/react-components';
 
 class AddComment extends Component {
   _isMounted = false;
@@ -17,7 +17,7 @@ class AddComment extends Component {
     this.props.keepAlive();
     this.setState({
       comment: e.target.value
-    })
+    });
   }
 
   onSubmit = () => {
@@ -72,7 +72,7 @@ class AddComment extends Component {
           </p>
         </Fragment>
       )
-      : <Button className="button-secondary" onClick={this.toggleAdding}>Add comment</Button>
+      : <Button className="button-secondary" onClick={this.toggleAdding}>Add comment</Button>;
   }
 }
 

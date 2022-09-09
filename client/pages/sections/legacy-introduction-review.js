@@ -42,23 +42,23 @@ const LegacyIntroduction = ({ fields, project, values, pdf, readonly, title, lic
         values={values}
         fields={fields.filter(f => f.name !== 'continuation')}
       />
-    {
-      values.continuation && (
-        <Review
-          {...continuationField}
-          label={continuationField.grantedLabel}
-          value={values.continuation}
-          values={values}
-        >
-          <dl className="inline">
-            <dt>From the licence</dt>
-            <dd>{values['continuation-licence-number']}</dd>
-            <dt>Expiring on</dt>
-            <dd>{values['continuation-expiry-date'] && formatDate(values['continuation-expiry-date'], DATE_FORMAT.long)}</dd>
-          </dl>
-        </Review>
-      )
-    }
+      {
+        values.continuation && (
+          <Review
+            {...continuationField}
+            label={continuationField.grantedLabel}
+            value={values.continuation}
+            values={values}
+          >
+            <dl className="inline">
+              <dt>From the licence</dt>
+              <dd>{values['continuation-licence-number']}</dd>
+              <dt>Expiring on</dt>
+              <dd>{values['continuation-expiry-date'] && formatDate(values['continuation-expiry-date'], DATE_FORMAT.long)}</dd>
+            </dl>
+          </Review>
+        )
+      }
       {readonly && !pdf && (
         <Fragment>
           {project.issueDate && (
@@ -77,7 +77,7 @@ const LegacyIntroduction = ({ fields, project, values, pdf, readonly, title, lic
       )}
     </div>
   );
-}
+};
 
 export default connect(({
   project: values,

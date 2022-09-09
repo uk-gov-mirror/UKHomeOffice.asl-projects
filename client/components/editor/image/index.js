@@ -61,7 +61,7 @@ const onClickImage = (editor, event) => {
         if (result.status !== 200) {
           throw new Error('Failed to save image');
         }
-        return result.json()
+        return result.json();
       })
       .then(({ token }) => {
         if (!token) {
@@ -84,7 +84,7 @@ function Image() {
       onClickImage
     },
     schema
-  }
+  };
 }
 
 export default Image;

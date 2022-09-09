@@ -9,7 +9,7 @@ const getItems = (values, repeats) => {
   if (items && items.length) {
     return items;
   }
-}
+};
 
 const Items = ({
   title,
@@ -39,7 +39,7 @@ const Items = ({
       />
       <Controls onContinue={advance} onExit={exit} />
     </div>
-  )
-}
+  );
+};
 
 export default Items;

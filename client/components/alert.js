@@ -5,7 +5,7 @@ import { hideMessage } from '../actions/messages';
 
 const mapStateToProps = state => {
   return { ...state.message };
-}
+};
 
 class Create extends React.Component {
 
@@ -29,7 +29,7 @@ class Create extends React.Component {
       transitionName="alert"
       transitionEnterTimeout={100}
       transitionLeaveTimeout={500}
-      >
+    >
       { this.alert() }
     </CSSTransitionGroup>;
   }

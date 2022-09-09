@@ -11,7 +11,7 @@ export default function List() {
     renderBlock,
     shouldNodeComponentUpdate: props => {
       // To update the highlighting of nodes inside the selection
-      props.node.type === 'list-item'
+      props.node.type === 'list-item';
     }
-  }
+  };
 }

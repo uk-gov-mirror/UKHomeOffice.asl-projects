@@ -28,7 +28,7 @@ export default function SectionNav() {
       return !s.granted.show || s.granted.show({ ...project, ...application });
     }
     return !s.show || s.show({ ...project, ...application });
-  })
+  });
 
   let subsectionKeys = Object.keys(subsections);
 

@@ -26,11 +26,11 @@ class OtherSpecies extends Component {
 
   removeItem = index => {
     if (this.state.items.length === 1) {
-      return this.setState({ items: [null] }, this.save)
+      return this.setState({ items: [null] }, this.save);
     }
     this.setState({
       items: this.state.items.filter((item, i) => i !== index)
-    }, this.save)
+    }, this.save);
   }
 
   save = () => {
@@ -70,7 +70,7 @@ class OtherSpecies extends Component {
         }
         <Button className="button-secondary" onClick={this.addItem}>Add another</Button>
       </Fragment>
-    )
+    );
   }
 }
 

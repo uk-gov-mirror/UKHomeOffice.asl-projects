@@ -5,7 +5,7 @@ let hideTimeout;
 export function hideMessage() {
   return {
     type: types.HIDE_MESSAGE
-  }
+  };
 }
 
 export function showMessage(message) {

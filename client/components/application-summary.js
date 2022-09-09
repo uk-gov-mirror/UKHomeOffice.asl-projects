@@ -38,7 +38,7 @@ const mapStateToProps = ({
     return {
       ...obj,
       ...mapValues(subsections, subsection => flattenReveals(getFields(subsection), project).map(field => field.name))
-    }
+    };
   }, {});
   return {
     readonly,
@@ -52,7 +52,7 @@ const mapStateToProps = ({
     basename,
     project: actualProject
   };
-}
+};
 
 const ApplicationSummary = () => {
 
@@ -78,7 +78,7 @@ const ApplicationSummary = () => {
     return Object.keys(subsections)
       .map(key => ({ ...subsections[key], key }))
       .filter(subsection => isComplete(subsection, subsection.key) !== COMPLETE);
-  }
+  };
 
   const isComplete = (subsection, key) => {
     if (typeof subsection.complete === 'function') {
@@ -89,15 +89,13 @@ const ApplicationSummary = () => {
 
     if (values[`${key}-complete`]) {
       completeness = COMPLETE;
-    }
-
-    else if (Array.isArray(subsection.fields)) {
+    } else if (Array.isArray(subsection.fields)) {
       if (some(subsection.fields, field => values[field.name])) {
         completeness = PARTIALLY_COMPLETE;
       }
     }
     return completeness;
-  }
+  };
 
   const CompleteBadge = ({ isComplete }) => {
     if (legacy) {
@@ -111,7 +109,7 @@ const ApplicationSummary = () => {
       default:
         return null;
     }
-  }
+  };
 
   const ErrorMessage = ({title, isComplete, children}) => {
     if (readonly || legacy || !errors) {
@@ -125,8 +123,8 @@ const ApplicationSummary = () => {
         <span className="govuk-error-message">Complete the {title.replace(/^[A-Z]{1}/, str => str.toLowerCase())} section</span>
         { children }
       </div>
-    )
-  }
+    );
+  };
 
   const ErrorSummary = () => {
     if (readonly || !errors) {
@@ -149,12 +147,12 @@ const ApplicationSummary = () => {
           </ul>
         </div>
       </div>
-    )
-  }
+    );
+  };
 
   const subsectionVisible = subsection => {
     return !subsection.show || subsection.show(values);
-  }
+  };
 
   const getCommentCount = (key) => {
     const fields = fieldsBySection[key] || [];
@@ -163,17 +161,17 @@ const ApplicationSummary = () => {
       return Object.keys(newComments)
         .filter(match)
         .reduce((sum, q) => sum + newComments[q].length, 0);
-    }
+    };
     return fields.reduce((total, field) => total + getCommentsForKey(field), 0);
-  }
+  };
 
   const Comments = ({ subsection }) => {
     if (!showComments) {
       return null;
     }
     const count = getCommentCount(subsection);
-    return <NewComments comments={count} />
-  }
+    return <NewComments comments={count} />;
+  };
 
   const onComplete = () => {
     const incomplete = getIncompleteSubsections();
@@ -184,7 +182,7 @@ const ApplicationSummary = () => {
       return;
     }
     submit();
-  }
+  };
 
   const submit = () => {
     if (isSyncing) {
@@ -228,30 +226,30 @@ const ApplicationSummary = () => {
             }
             <table className="govuk-table">
               <tbody>
-              {
-                subsections.map(key => {
-                  const subsection = section.subsections[key];
-                  const fields = Object.values(fieldsBySection[key] || []);
-                  if (subsection.repeats) {
-                    fields.push(subsection.repeats);
-                  }
-                  return <tr key={key}>
-                    <td>
-                      <ErrorMessage title={subsection.title} isComplete={isComplete(subsection, key)}>
-                        <Link to={`/${key}`}>{ subsection.title }</Link>
-                      </ErrorMessage>
-                    </td>
-                    <td className="controls">
-                      <Comments subsection={key} />
-                      <ChangedBadge fields={fields} />
-                      <CompleteBadge isComplete={isComplete(subsection, key)} />
-                    </td>
-                  </tr>
-                })
-              }
+                {
+                  subsections.map(key => {
+                    const subsection = section.subsections[key];
+                    const fields = Object.values(fieldsBySection[key] || []);
+                    if (subsection.repeats) {
+                      fields.push(subsection.repeats);
+                    }
+                    return <tr key={key}>
+                      <td>
+                        <ErrorMessage title={subsection.title} isComplete={isComplete(subsection, key)}>
+                          <Link to={`/${key}`}>{ subsection.title }</Link>
+                        </ErrorMessage>
+                      </td>
+                      <td className="controls">
+                        <Comments subsection={key} />
+                        <ChangedBadge fields={fields} />
+                        <CompleteBadge isComplete={isComplete(subsection, key)} />
+                      </td>
+                    </tr>;
+                  })
+                }
               </tbody>
             </table>
-          </Fragment>
+          </Fragment>;
         })
       }
       {
@@ -260,8 +258,8 @@ const ApplicationSummary = () => {
       <PreviewLicence />
       <NextSteps />
     </div>
-  )
+  );
 
-}
+};
 
 export default ApplicationSummary;

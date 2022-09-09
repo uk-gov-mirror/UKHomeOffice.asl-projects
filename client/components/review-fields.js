@@ -14,8 +14,8 @@ const fieldIncluded = (field, values, application) => {
   if (field.show && typeof field.show === 'function') {
     return field.show({ ...values, ...application });
   }
-  return every(Object.keys(field.conditional), key => field.conditional[key] === values[key])
-}
+  return every(Object.keys(field.conditional), key => field.conditional[key] === values[key]);
+};
 
 const ReviewFields = ({
   fields,
@@ -65,7 +65,7 @@ const ReviewFields = ({
                 altLabels={altLabels}
                 readonly={readonly}
                 hideChanges={hideChanges}
-              />
+              />;
             })
           }
         </Fragment>

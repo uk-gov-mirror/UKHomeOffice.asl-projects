@@ -14,7 +14,7 @@ function Image({ src, token, remove, loading }) {
       </div>
       <p>{ loading ? 'Saving image...' : <img src={src} /> }</p>
     </div>
-  )
+  );
 }
 
 const renderBlock = (props, editor, next) => {
@@ -41,10 +41,10 @@ const renderBlock = (props, editor, next) => {
       const src = node.data.get('src');
       const loading = node.data.get('loading');
       const token = node.data.get('token');
-      return <Image src={src} token={token} loading={loading} {...attributes} selected={isFocused} remove={remove} />
+      return <Image src={src} token={token} loading={loading} {...attributes} selected={isFocused} remove={remove} />;
     }
     case 'block': {
-      return <span {...attributes}>{children}</span>
+      return <span {...attributes}>{children}</span>;
     }
     default:
       return next();

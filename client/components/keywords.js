@@ -30,7 +30,7 @@ export default function Keywords(props) {
         label: '',
         type: 'text'
       };
-    })
+    });
   }
 
   const [keywords, setKeywords] = useState(mapKeywords(props.value));
