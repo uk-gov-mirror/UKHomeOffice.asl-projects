@@ -1,6 +1,5 @@
 extends:
-  - eslint:recommended
-  - plugin:react/recommended
+  - lennym
 
 env:
   es6: true
