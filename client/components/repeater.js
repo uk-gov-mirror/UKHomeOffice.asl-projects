@@ -1,3 +1,4 @@
+/* eslint camelcase: ["error", {allow: ["^UNSAFE_"]}] */
 import React, { Component, Fragment } from 'react';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
