@@ -10,6 +10,6 @@ const ScrollToTop = ({ children, location }) => {
   }, [location.pathname]);
 
   return children;
-}
+};
 
 export default withRouter(ScrollToTop);

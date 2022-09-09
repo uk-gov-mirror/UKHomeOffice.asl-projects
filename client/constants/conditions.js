@@ -293,7 +293,7 @@ Genetically altered animals may not be re-homed.`
           'pigs',
           'sheep'
         ];
-        return nopes.some(species => (project.species || []).includes(species)) && project['purpose-bred'] === false
+        return nopes.some(species => (project.species || []).includes(species)) && project['purpose-bred'] === false;
       },
       type: 'condition',
       versions: [
@@ -389,4 +389,4 @@ For studies requested for other worldwide authorities, for example the US Food a
       ]
     }
   }
-}
+};

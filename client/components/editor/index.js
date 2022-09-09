@@ -13,7 +13,7 @@ import merge from 'lodash/merge';
 import { throwError } from '../../actions/messages';
 
 import FormatToolbar from './format-toolbar';
-import initialValue from './initial-value'
+import initialValue from './initial-value';
 import Blocks from './blocks';
 import Marks from './marks';
 import Image from './image';
@@ -43,9 +43,8 @@ const hasNonParagraphNode = (nodes) => {
     } else {
       return false;
     }
-  })
+  });
 };
-
 
 const serialiseValue = value => {
   if (!value.document.text && !hasNonParagraphNode(value.document.nodes)) {
@@ -62,8 +61,8 @@ const normaliseValue = value => {
   if (typeof value === 'string') {
     try {
       // try and parse value
-      value = JSON.parse(value)
-    } catch(e) {
+      value = JSON.parse(value);
+    } catch (e) {
       // if value is unable to be JSON parsed, set it as a single text node
       value = initialValue(value);
     }
@@ -73,7 +72,7 @@ const normaliseValue = value => {
     value = initialValue('');
   }
   return value;
-}
+};
 
 class TextEditor extends Component {
   constructor(props) {
@@ -83,7 +82,7 @@ class TextEditor extends Component {
     this.state = {
       value: Value.fromJSON(value),
       focus: false
-    }
+    };
   }
 
   ref = editor => {
@@ -125,7 +124,7 @@ class TextEditor extends Component {
       return false;
     }
     if (!this.editor[func]) {
-      throw new Error(`Query "${func}" is not defined`)
+      throw new Error(`Query "${func}" is not defined`);
     }
     return this.editor[func](...args);
   }

@@ -48,8 +48,8 @@ const StaticSection = ({ section, project, fields = [], isGranted, subsection = 
         !props.pdf && <SectionNav section={section} />
       }
     </div>
-  )
-}
+  );
+};
 
 const mapStateToProps = ({ project, application: { isGranted, schemaVersion, isFullApplication } }, { section }) => {
   const fields = flatten([
@@ -63,7 +63,7 @@ const mapStateToProps = ({ project, application: { isGranted, schemaVersion, isF
     isGranted,
     isLegacy: schemaVersion === 0,
     isFullApplication
-  }
-}
+  };
+};
 
 export default connect(mapStateToProps)(StaticSection);

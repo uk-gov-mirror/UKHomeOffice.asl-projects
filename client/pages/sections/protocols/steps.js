@@ -1,7 +1,7 @@
 import React, { Component, Fragment, createRef } from 'react';
 import { useParams } from 'react-router';
 
-import classnames from 'classnames'
+import classnames from 'classnames';
 import { Button } from '@ukhomeoffice/react-components';
 
 import isUndefined from 'lodash/isUndefined';
@@ -75,7 +75,7 @@ class Step extends Component {
     if (this.props.protocolState && !isUndefined(this.props.protocolState.sectionItem)) {
       const activeStep = this.props.protocolState.sectionItem;
       if (activeStep === this.props.values.id) {
-        this.props.updateItem({ completed: false })
+        this.props.updateItem({ completed: false });
       }
     }
   }
@@ -146,22 +146,22 @@ class Step extends Component {
                 }
               </p>
             </Fragment>
-          : <div className="review">
-            <ReviewFields
-              fields={fields.filter(f => f.name !== 'title')}
-              values={values}
-              prefix={this.props.prefix}
-              editLink={`0#${this.props.prefix}`}
-              readonly={!isReviewStep}
-              protocolId={protocol.id}
-            />
-            {
-              editable && !deleted && <a href="#" onClick={this.editStep}>Edit step</a>
-            }
-          </div>
+            : <div className="review">
+              <ReviewFields
+                fields={fields.filter(f => f.name !== 'title')}
+                values={values}
+                prefix={this.props.prefix}
+                editLink={`0#${this.props.prefix}`}
+                readonly={!isReviewStep}
+                protocolId={protocol.id}
+              />
+              {
+                editable && !deleted && <a href="#" onClick={this.editStep}>Edit step</a>
+              }
+            </div>
         }
       </section>
-    )
+    );
   }
 }
 
@@ -189,5 +189,5 @@ export default function Steps({ values, prefix, updateItem, editable, ...props }
         />
       </Repeater>
     </div>
-  )
+  );
 }

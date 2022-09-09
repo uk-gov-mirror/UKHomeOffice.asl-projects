@@ -4,7 +4,7 @@ import ReactMarkdown from 'react-markdown';
 import { Link } from '@asl/components';
 import TextEditor from './editor';
 import { projectSpecies as speciesOptions } from '@asl/constants';
-import { getLegacySpeciesLabel, mapSpecies } from '../helpers';
+import { getLegacySpeciesLabel, mapSpecies, formatDate } from '../helpers';
 
 import castArray from 'lodash/castArray';
 import flatten from 'lodash/flatten';
@@ -16,7 +16,6 @@ import get from 'lodash/get';
 
 import EstablishmentSelector from './establishment-selector';
 
-import { formatDate } from '../helpers';
 import { DATE_FORMAT } from '../constants';
 import ReviewFields from './review-fields';
 import { ReviewRepeater } from '../pages/sections/repeater/review';
@@ -35,7 +34,7 @@ function RevealChildren({ value, options, values, prefix, diff }) {
         prefix={prefix}
       />
     </div>
-  )
+  );
 }
 
 class ReviewField extends React.Component {
@@ -77,7 +76,7 @@ class ReviewField extends React.Component {
           <dt>Months:</dt>
           <dd>{months}</dd>
         </dl>
-      )
+      );
     }
 
     if (this.props.type === 'keywords') {
@@ -101,7 +100,7 @@ class ReviewField extends React.Component {
     }
 
     if (this.props.type === 'establishment-selector') {
-      return <EstablishmentSelector {...this.props} review={true} />
+      return <EstablishmentSelector {...this.props} review={true} />;
     }
 
     if (value && this.props.type === 'date') {
@@ -119,7 +118,7 @@ class ReviewField extends React.Component {
     if (this.props.type === 'repeater') {
       const items = this.props.values[this.props.name];
       if (!items || !items.length) {
-        return <em>No answer provided</em>
+        return <em>No answer provided</em>;
       }
       return (
         <ReviewRepeater
@@ -131,7 +130,7 @@ class ReviewField extends React.Component {
           noComments={true}
           hideChanges={true}
         />
-      )
+      );
     }
 
     if (this.props.type === 'permissible-purpose') {
@@ -154,7 +153,7 @@ class ReviewField extends React.Component {
                         <ul>
                           {
                             this.props.project[o.reveal.name].map((val, index) => {
-                              return <li key={index}>{o.reveal.options.find(opt => opt.value === val).label}</li>
+                              return <li key={index}>{o.reveal.options.find(opt => opt.value === val).label}</li>;
                             })
                           }
                         </ul>
@@ -164,7 +163,7 @@ class ReviewField extends React.Component {
                 ))
             }
           </ul>
-        )
+        );
       }
       return <p><em>None selected</em></p>;
     }
@@ -183,11 +182,11 @@ class ReviewField extends React.Component {
       }
 
       const getValue = value => {
-        const v = (options || []).find(option => option.value === value)
+        const v = (options || []).find(option => option.value === value);
         return v
           ? v.label
-          : value
-      }
+          : value;
+      };
 
       return (
         <ul>
@@ -214,13 +213,13 @@ class ReviewField extends React.Component {
             ? 'Yes'
             : 'No'
         }
-      </p>
+      </p>;
     }
 
     if (this.props.type === 'additional-availability') {
       const item = (this.props.project.establishments || []).find(e => e['establishment-id'] === this.props.value);
       if (item) {
-        return <p>{item.name || item['establishment-name']}</p> // establishment-name is legacy
+        return <p>{item.name || item['establishment-name']}</p>; // establishment-name is legacy
       }
     }
 
@@ -239,13 +238,13 @@ class ReviewField extends React.Component {
           key: s && s.value,
           title: opt ? opt.label : s,
           value: this.props.project[`${this.props.name}-${s}`]
-        }
+        };
       });
 
       if (!species.length) {
         return <p>
           <em>No answer provided.</em>
-        </p>
+        </p>;
       }
       return <dl className="inline">
         {
@@ -256,7 +255,7 @@ class ReviewField extends React.Component {
             </Fragment>
           ))
         }
-      </dl>
+      </dl>;
     }
 
     if (this.props.type === 'texteditor') {
@@ -289,6 +288,6 @@ const mapStateToProps = ({ project, settings }, props) => {
     project: props.project || project,
     settings
   };
-}
+};
 
 export default connect(mapStateToProps)(ReviewField);

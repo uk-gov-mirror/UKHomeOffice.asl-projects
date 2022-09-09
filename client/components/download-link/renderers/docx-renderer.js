@@ -112,7 +112,6 @@ export default (application, sections, values, updateImageDimensions) => {
       .font('Helvetica')
       .spacing({ before: 100, after: 100 });
 
-
     document.Styles.createParagraphStyle('aside', 'Aside')
       .basedOn('Body')
       .next('Body')
@@ -204,7 +203,7 @@ export default (application, sections, values, updateImageDimensions) => {
     });
 
     return matrix;
-  }
+  };
 
   const populateTable = (matrix, table) => {
     matrix.forEach((row, rowIndex) => {
@@ -214,7 +213,7 @@ export default (application, sections, values, updateImageDimensions) => {
         }
       });
     });
-  }
+  };
 
   const mergeCells = (matrix, table) => {
     populateTable(matrix, table);
@@ -257,7 +256,6 @@ export default (application, sections, values, updateImageDimensions) => {
     try {
       mergeCells(matrix, table);
     } catch (err) {
-      console.log('Failed to merge cells', err);
       table = initTable(matrix);
       populateTable(matrix, table);
     }
@@ -272,7 +270,7 @@ export default (application, sections, values, updateImageDimensions) => {
 
     const getContent = input => {
       return get(input, 'nodes[0].leaves[0].text', get(input, 'nodes[0].text')).trim();
-    }
+    };
 
     switch (node.type) {
       case 'list-item':
@@ -285,7 +283,7 @@ export default (application, sections, values, updateImageDimensions) => {
 
         parent.addParagraph(p);
         node.nodes.forEach((n, index) => renderNode(parent, n, depth + 1, p, null, index));
-        break
+        break;
 
       case 'heading-one':
         parent.createParagraph(getContent(node)).heading1();
@@ -300,7 +298,7 @@ export default (application, sections, values, updateImageDimensions) => {
         break;
 
       case 'table-cell':
-        node.nodes.forEach(part => renderNode(parent, part))
+        node.nodes.forEach(part => renderNode(parent, part));
         break;
 
       case 'table':
@@ -376,18 +374,18 @@ export default (application, sections, values, updateImageDimensions) => {
         // if there is no matching type then it's probably a denormalised text node with no wrapping paragraph
         // attempt to render with the node wrapped in a paragraph
         if (node.text) {
-          renderNode(parent, { object: 'block', type: 'paragraph', nodes: [ node ] }, depth, paragraph)
+          renderNode(parent, { object: 'block', type: 'paragraph', nodes: [ node ] }, depth, paragraph);
         }
 
     }
-  }
+  };
 
   const renderTextEditor = (doc, value, noSeparator) => {
     let content = value;
     if (typeof value === 'string') {
       try {
         content = JSON.parse(value);
-      } catch(e) {
+      } catch (e) {
         return renderText(doc, value, noSeparator);
       }
     }
@@ -429,10 +427,10 @@ export default (application, sections, values, updateImageDimensions) => {
   const renderLegacySpecies = (doc, values, value, noSeparator) => {
     const label = getLegacySpeciesLabel(values);
     return renderText(doc, label, noSeparator);
-  }
+  };
 
   const renderSpeciesSelector = (doc, values, value, noSeparator) => {
-    const species = mapSpecies(values)
+    const species = mapSpecies(values);
 
     if (!species.length) {
       return renderNull(doc);
@@ -454,7 +452,7 @@ export default (application, sections, values, updateImageDimensions) => {
 
   const renderAdditionalEstablishment = (doc, field, values, value, noSeparator) => {
     return renderText(doc, values.name || values['establishment-name'], noSeparator);
-  }
+  };
 
   const renderKeywords = (doc, values, value, noSeparator) => {
     const keywords = value || [];
@@ -480,7 +478,7 @@ export default (application, sections, values, updateImageDimensions) => {
     value = value = Array.isArray(value) ? value : [value];
     const children = values[field.options.find(opt => opt.reveal).reveal.name] || [];
     if (!value.length && !children.length) {
-      return renderNull(doc)
+      return renderNull(doc);
     }
 
     field.options.filter(opt => value.includes(opt.value) || (opt.reveal && children.length)).forEach(opt => {
@@ -491,13 +489,13 @@ export default (application, sections, values, updateImageDimensions) => {
       doc.addParagraph(paragraph);
       if (opt && opt.reveal) {
         [].concat(opt.reveal).forEach(reveal => {
-          renderField(doc, reveal, values, null, true)
+          renderField(doc, reveal, values, null, true);
         });
       }
     });
 
     renderHorizontalRule(doc);
-  }
+  };
 
   const renderSelector = (doc, field, value, values, project, noSeparator) => {
     value = Array.isArray(value) ? value : [value];
@@ -522,7 +520,7 @@ export default (application, sections, values, updateImageDimensions) => {
     }
 
     if (field.options) {
-      value = value.filter(v => field.options.map(o => o.value).includes(v))
+      value = value.filter(v => field.options.map(o => o.value).includes(v));
     }
 
     value.forEach(item => {
@@ -537,7 +535,7 @@ export default (application, sections, values, updateImageDimensions) => {
       doc.addParagraph(paragraph);
       if (opt && opt.reveal) {
         [].concat(opt.reveal).forEach(reveal => {
-          renderField(doc, reveal, values, null, true)
+          renderField(doc, reveal, values, null, true);
         });
       }
     });
@@ -562,7 +560,7 @@ export default (application, sections, values, updateImageDimensions) => {
   };
 
   const renderDeclaration = (/*doc, field, values, value*/) => {
-    return;
+
   };
 
   const renderDuration = (doc, value) => {
@@ -589,8 +587,8 @@ export default (application, sections, values, updateImageDimensions) => {
     if (!noSeparator) {
       renderHorizontalRule(doc);
     }
-    return;
-  }
+
+  };
 
   const renderHorizontalRule = doc => {
     doc.createParagraph('___________________________________________________________________');
@@ -611,7 +609,7 @@ export default (application, sections, values, updateImageDimensions) => {
         key: s && s.value,
         title: opt ? opt.label : s,
         value: values[`reduction-quantities-${s}`]
-      }
+      };
     });
 
     if (!species.length) {
@@ -625,14 +623,14 @@ export default (application, sections, values, updateImageDimensions) => {
       paragraph.addRun(new TextRun(`${s.title}: `).bold());
       s.value
         ? paragraph.addRun(new TextRun(s.value))
-        : paragraph.addRun(new TextRun('No answer provided').italics())
+        : paragraph.addRun(new TextRun('No answer provided').italics());
     });
 
     doc.addParagraph(paragraph);
     if (!noSeparator) {
       renderHorizontalRule(doc);
     }
-    return;
+
   };
 
   const renderField = (doc, field, values, project, noSeparator) => {
@@ -646,10 +644,10 @@ export default (application, sections, values, updateImageDimensions) => {
       return renderDeclaration(doc, field, values, value);
     }
 
-    doc.createParagraph(field.review || field.label).style('Question')
+    doc.createParagraph(field.review || field.label).style('Question');
 
     if (field.hint) {
-      doc.createParagraph(field.hint).style('aside')
+      doc.createParagraph(field.hint).style('aside');
     }
 
     switch (field.type) {
@@ -692,7 +690,7 @@ export default (application, sections, values, updateImageDimensions) => {
         return renderAdditionalEstablishment(doc, field, values, value, noSeparator);
 
       case 'repeater':
-        return (value || []).map(item => renderFields(doc, field, item, field.fields, project))
+        return (value || []).map(item => renderFields(doc, field, item, field.fields, project));
 
       case 'date':
         return renderText(doc, format(value, 'DD/MM/YYYY'));
@@ -739,7 +737,7 @@ export default (application, sections, values, updateImageDimensions) => {
         (step.fields || []).forEach(field => renderField(doc, field, values, project));
       }
     });
-  }
+  };
 
   const renderMarkdown = (doc, markdown) => {
     // if we ever use slate >= 0.5 this function can be replaced with
@@ -768,7 +766,7 @@ export default (application, sections, values, updateImageDimensions) => {
             const text = stripInvalidXmlChars(get(listItem, 'children[0].children[0].value').trim());
             p = new Paragraph(text);
             p.style('body');
-            p.bullet(0)
+            p.bullet(0);
             doc.addParagraph(p);
           });
           break;
@@ -825,14 +823,14 @@ export default (application, sections, values, updateImageDimensions) => {
 
       Object.keys(subsection.sections)
         .filter(k => !subsection.sections[k].show || subsection.sections[k].show(values))
-        .map(k => renderProtocol(doc, k, subsection.sections[k], protocolValues, values, title))
+        .map(k => renderProtocol(doc, k, subsection.sections[k], protocolValues, values, title));
     });
   };
 
   const renderSubsection = (doc, subsection, values) => {
     subsection.name !== 'protocols' && doc.createParagraph(subsection.title).heading3();
 
-    if(subsection.name === 'protocol' || subsection.name === 'protocols') {
+    if (subsection.name === 'protocol' || subsection.name === 'protocols') {
       if (application.schemaVersion > 0) {
         renderProtocolConditions(doc);
       }
@@ -862,7 +860,7 @@ export default (application, sections, values, updateImageDimensions) => {
       return {
         ...obj,
         ...values
-      }
+      };
     }, {});
     get(section, 'subsections[nts-review].sections', []).forEach(s => {
       let fields;
@@ -873,7 +871,7 @@ export default (application, sections, values, updateImageDimensions) => {
       doc.createParagraph(s.title).style('SectionTitle');
       renderFields(doc, subsection, values, fields);
     });
-  }
+  };
 
   const renderDocument = (sections, values) => {
     values = values || {};
@@ -935,7 +933,7 @@ export default (application, sections, values, updateImageDimensions) => {
 
       return Promise.resolve()
         .then(() => fn(val))
-        .then(transformed => obj[key] = transformed);
+        .then(transformed => { obj[key] = transformed; });
     });
 
     return Promise.all(promises).then(() => obj);
@@ -984,4 +982,4 @@ export default (application, sections, values, updateImageDimensions) => {
     .then(() => renderDocument(sections, values))
     .then(() => addPageNumbers())
     .then(() => document);
-}
+};

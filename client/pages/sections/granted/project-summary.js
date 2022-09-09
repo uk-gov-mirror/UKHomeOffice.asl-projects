@@ -18,18 +18,18 @@ const GrantedAuthoritySection = () => (
 );
 
 const PermissiblePurpose = ({ values }) => {
-  return isTrainingLicence(values) ?
-    <div className="review">
+  return isTrainingLicence(values)
+    ? <div className="review">
       <h3>Which permissible purposes apply to this project?</h3>
       <ul>
         <li>(f) Higher education and training</li>
       </ul>
-    </div>:
-    <Review
+    </div>
+    : <Review
       {...permissiblePurpose}
       value={values['permissible-purpose']}
       noComments
-    />
+    />;
 };
 
 export default function ProjectSummary({ fields = [], pdf }) {
@@ -37,7 +37,7 @@ export default function ProjectSummary({ fields = [], pdf }) {
   const values = useSelector(state => state.project);
 
   function grantedField(val) {
-    return isPreview ? <em>Licence not yet granted</em> : val
+    return isPreview ? <em>Licence not yet granted</em> : val;
   }
 
   return (

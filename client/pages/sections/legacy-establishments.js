@@ -27,8 +27,8 @@ const LegacyEstablishments = ({ establishment, pdf, ...props }) => {
 
       <RepeaterReview {...props} />
     </Fragment>
-  )
-}
+  );
+};
 
 const mapStateToProps = ({ application: { establishment } }) => ({ establishment });
 

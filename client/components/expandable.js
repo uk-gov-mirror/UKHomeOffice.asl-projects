@@ -3,7 +3,7 @@ import classnames from 'classnames';
 
 const hasTwoChildren = children => {
   return children && children.length === 2;
-}
+};
 
 const Expandable = ({
   expanded,
@@ -25,7 +25,7 @@ const Expandable = ({
       {
         hasTwoChildren(children) ? children[1] : children
       }
-    </Fragment>
+    </Fragment>;
   }
 
   return <div className={classnames('expandable', { expanded }, className)}>
@@ -40,7 +40,7 @@ const Expandable = ({
     <div className={classnames('content', { hidden: !expanded })}>
       { renderContent() }
     </div>
-  </div>
+  </div>;
 };
 
 export default Expandable;

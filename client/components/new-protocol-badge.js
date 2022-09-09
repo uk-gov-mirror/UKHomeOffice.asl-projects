@@ -14,5 +14,5 @@ export default function NewProtocolBadge({ id }) {
     return null;
   }
 
-  return <span className={classnames('badge', { created: !previous.includes(id) })}>new</span>
+  return <span className={classnames('badge', { created: !previous.includes(id) })}>new</span>;
 }

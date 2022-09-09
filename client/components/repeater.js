@@ -1,3 +1,4 @@
+/* eslint camelcase: ["error", {allow: ["^UNSAFE_"]}] */
 import React, { Component, Fragment } from 'react';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
@@ -20,12 +21,12 @@ class Repeater extends Component {
     this.save = this.save.bind(this);
     this.state = {
       items: this.props.items || []
-    }
+    };
   }
 
   UNSAFE_componentWillReceiveProps({ items }) {
     if (items) {
-      this.setState({ items })
+      this.setState({ items });
     }
   }
 
@@ -47,7 +48,7 @@ class Repeater extends Component {
     this.update(this.state.items.map((item, i) => index === i
       ? { ...item, ...updated }
       : item
-    ))
+    ));
   }
 
   duplicateItem(index, event) {
@@ -91,9 +92,9 @@ class Repeater extends Component {
               return { ...item, deleted: true };
             }
             return item;
-          }))
+          }));
         }
-        this.update(this.state.items.filter((item, i) => index !== i))
+        this.update(this.state.items.filter((item, i) => index !== i));
       })
       .then(this.props.onAfterRemove)
       .catch(err => this.props.throwError(err.message || 'Error removing item'));
@@ -110,7 +111,7 @@ class Repeater extends Component {
           return {
             ...item,
             deleted: false
-          }
+          };
         }
         return item;
       })))
@@ -121,7 +122,7 @@ class Repeater extends Component {
   update(items) {
     return new Promise(resolve => this.setState({ items }, resolve))
       .then(this.save)
-      .catch(err => this.props.throwError(err.message || 'Error updating item'))
+      .catch(err => this.props.throwError(err.message || 'Error updating item'));
   }
 
   save() {
@@ -151,7 +152,7 @@ class Repeater extends Component {
   }
 
   render() {
-    const addButton = <Button className={classnames('block', 'add-another', this.props.addAnotherClassName || 'button-secondary')} onClick={this.addItem}>{this.props.addAnotherLabel || `Add another ${this.props.singular}`}</Button>
+    const addButton = <Button className={classnames('block', 'add-another', this.props.addAnotherClassName || 'button-secondary')} onClick={this.addItem}>{this.props.addAnotherLabel || `Add another ${this.props.singular}`}</Button>;
     return (
       <Fragment>
         {
@@ -177,7 +178,7 @@ class Repeater extends Component {
                 expanded: this.props.expanded && this.props.expanded[index],
                 // get index ignoring previous deleted items
                 number: index - (this.state.items.slice(0, index).filter(i => i.deleted) || []).length
-              })
+              });
             })
           )
         }

@@ -28,7 +28,7 @@ export function ReviewRepeater({ items = [], singular, fields, name, step, hideC
                       hideChanges={hideChanges}
                       noComments={noComments}
                     />
-                  )
+                  );
                 })
               }
             </div>
@@ -36,7 +36,7 @@ export function ReviewRepeater({ items = [], singular, fields, name, step, hideC
         ))
       }
     </Fragment>
-  )
+  );
 }
 
 const ReviewSection = ({ title, steps, values, readonly, singular, repeaterFor }) => (
@@ -57,7 +57,7 @@ const ReviewSection = ({ title, steps, values, readonly, singular, repeaterFor }
     }
 
   </Fragment>
-)
+);
 
 const mapStateToProps = ({ project, application: { readonly } }) => ({ project, readonly });
 

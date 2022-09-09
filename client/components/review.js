@@ -31,12 +31,12 @@ class Review extends React.Component {
     let { hint } = this.props;
 
     if (this.props.raPlayback) {
-      hint = <RAPlaybackHint {...this.props.raPlayback} hint={hint} />
+      hint = <RAPlaybackHint {...this.props.raPlayback} hint={hint} />;
     }
 
     const showComments = !this.props.noComments && this.props.type !== 'repeater';
     const changed = changedFromFirst || changedFromLatest || changedFromGranted;
-    const showDiffWindow = this.props.readonly && !hideChanges && changed
+    const showDiffWindow = this.props.readonly && !hideChanges && changed;
     const showChanges = !hideChanges && changed;
 
     if (this.props.type === 'comments-only' && showComments) {
@@ -84,7 +84,7 @@ class Review extends React.Component {
                   to={this.props.editLink || `#${this.props.name}`}
                   className="edit-link"
                   onClick={e => this.props.onEdit && this.props.onEdit(e, this.props.name)}
-                  >Edit</Link>
+                >Edit</Link>
               </p>
               <hr />
             </Fragment>
@@ -95,8 +95,7 @@ class Review extends React.Component {
   }
 }
 
-
-const mapStateToProps = ({ application: { readonly, isGranted, previousProtocols } = {}, changes : { first = [], latest = [], granted = [] } = {} }, ownProps) => {
+const mapStateToProps = ({ application: { readonly, isGranted, previousProtocols } = {}, changes: { first = [], latest = [], granted = [] } = {} }, ownProps) => {
   const key = `${ownProps.prefix || ''}${ownProps.name}`;
   const changedFromGranted = granted.includes(key);
   const changedFromLatest = latest.includes(key);
@@ -109,9 +108,9 @@ const mapStateToProps = ({ application: { readonly, isGranted, previousProtocols
     isGranted,
     previousProtocols
   };
-}
+};
 
-const ConnectedReview = connect(mapStateToProps)(Review)
+const ConnectedReview = connect(mapStateToProps)(Review);
 
 const SafeReview = props => (
   <ErrorBoundary

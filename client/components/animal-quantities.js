@@ -16,20 +16,20 @@ const AnimalQuantities = ({ label, hint, error, name, species, onFieldChange }) 
       {
         size(species)
           ? map(species, ({ fieldName, value }, key) => {
-              const definition = definitions.find(s => s.value === key);
-              return <Field
-                key={key}
-                type="text"
-                name={fieldName}
-                label={definition ? definition.label : key}
-                onChange={val => onFieldChange(fieldName, val)}
-                value={value}
-              />
-            })
+            const definition = definitions.find(s => s.value === key);
+            return <Field
+              key={key}
+              type="text"
+              name={fieldName}
+              label={definition ? definition.label : key}
+              onChange={val => onFieldChange(fieldName, val)}
+              value={value}
+            />;
+          })
           : <p>No animals have been added</p>
       }
     </div>
-  )
+  );
 };
 
 const mapStateToProps = ({ project }, { name }) => {
@@ -53,7 +53,7 @@ const mapStateToProps = ({ project }, { name }) => {
         }
       };
     }, {})
-  }
-}
+  };
+};
 
 export default connect(mapStateToProps)(AnimalQuantities);

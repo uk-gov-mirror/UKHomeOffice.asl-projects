@@ -1,7 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-
 export default function RaSidePanel() {
   const sidebarLinks = useSelector(state => state.application.sidebarLinks);
   return (
@@ -17,5 +16,5 @@ export default function RaSidePanel() {
         <li><a href={sidebarLinks.protocols} target="_blank" rel="noopener noreferrer">Protocol summary table</a></li>
       </ul>
     </nav>
-  )
+  );
 }

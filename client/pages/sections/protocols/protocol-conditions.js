@@ -33,11 +33,11 @@ class ProtocolConditions extends Component {
 
         {
           this.props.pdf ? <Content />
-          : (
-            <Details summary="Show general constraints">
-              <Content />
-            </Details>
-          )
+            : (
+              <Details summary="Show general constraints">
+                <Content />
+              </Details>
+            )
         }
       </div>
     );

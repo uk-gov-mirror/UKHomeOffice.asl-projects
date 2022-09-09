@@ -8,6 +8,6 @@ const ActionPlan = props => (
     }
     <ObjectivesReview {...props} />
   </div>
-)
+);
 
 export default ActionPlan;

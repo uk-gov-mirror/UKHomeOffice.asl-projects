@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useSelector, shallowEqual } from 'react-redux'
+import { useSelector, shallowEqual } from 'react-redux';
 import isEqual from 'lodash/isEqual';
 import classnames from 'classnames';
 
@@ -30,7 +30,7 @@ const SyncHandler = () => {
       if (isSyncing) {
         return true;
       }
-    }
+    };
 
     const nextSteps = document.querySelector('#page-component > p.next-steps > a');
     const statusMessage = document.querySelector('#page-component > p.next-steps > span.status-message');
@@ -56,7 +56,7 @@ const SyncHandler = () => {
         nextSteps.onclick = null;
       }
       statusMessage && (statusMessage.innerText = '');
-    }
+    };
   }, [isSyncing]);
 
   return <div className={classnames('sync-indicator', { syncing: isSyncing })}>

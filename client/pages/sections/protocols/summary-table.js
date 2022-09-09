@@ -25,7 +25,7 @@ function ExpandingRow({ protocol }) {
         ))
       }
     </Fragment>
-  )
+  );
 }
 
 export default function SummaryTable() {
@@ -44,5 +44,5 @@ export default function SummaryTable() {
       </div>
       <Table protocols={protocols} isLegacy={isLegacy} project={project} className="govuk-table protocols-summary" ExpandingRow={ExpandingRow} />
     </Fragment>
-  )
+  );
 }

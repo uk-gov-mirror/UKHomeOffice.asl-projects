@@ -13,7 +13,7 @@ const Locations = ({ values }) => {
       <ReviewFields
         fields={fields.filter(f => f.name === 'locations')}
         values={values}
-        />
+      />
     </div>
   );
 };

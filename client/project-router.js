@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { useSelector, shallowEqual } from 'react-redux'
+import { useSelector, shallowEqual } from 'react-redux';
 import { DocumentHeader, Link } from '@asl/components';
 
 import ScrollToTop from './components/scroll-to-top';
@@ -69,11 +69,11 @@ const ProjectRouter = () => {
     if (!statusShowing) {
       statusDetails.classList.add('hidden');
       licenceStatusBanner.classList.remove('open');
-      showHide.innerText = 'Show more'
+      showHide.innerText = 'Show more';
     } else {
       statusDetails.classList.remove('hidden');
       licenceStatusBanner.classList.add('open');
-      showHide.innerText = 'Show less'
+      showHide.innerText = 'Show less';
     }
   }, [statusShowing]);
 
@@ -86,7 +86,7 @@ const ProjectRouter = () => {
     showHide.onclick = (e) => {
       e.preventDefault();
       toggleStatusShowing();
-    }
+    };
     return () => {
       showHide.onclick = null;
     };
@@ -113,7 +113,7 @@ const ProjectRouter = () => {
   }
 
   if (isPreview) {
-    title = 'Project licence preview'
+    title = 'Project licence preview';
   }
 
   const downloadType = isApplication
@@ -168,39 +168,38 @@ const ProjectRouter = () => {
 
             {
               <Fragment>
-                  <dt>Downloads</dt>
-                  <dd>
-                    <ul>
-                      {
-                        isRa ?
-                          <li>
-                            <Link
-                              page="projectVersion.ntsPdf"
-                              label="Download non-technical summary and retrospective assessment as a PDF"
-                              establishmentId={establishment.id}
-                              projectId={project.id}
-                              versionId={project.granted.id}
-                              query={{ draftRa: !!project.draftRa }}
-                            />
-                          </li>
-                        :
-                          <Fragment>
-                            {
-                              (isGranted || legacyGranted) &&
+                <dt>Downloads</dt>
+                <dd>
+                  <ul>
+                    {
+                      isRa
+                        ? <li>
+                          <Link
+                            page="projectVersion.ntsPdf"
+                            label="Download non-technical summary and retrospective assessment as a PDF"
+                            establishmentId={establishment.id}
+                            projectId={project.id}
+                            versionId={project.granted.id}
+                            query={{ draftRa: !!project.draftRa }}
+                          />
+                        </li>
+                        : <Fragment>
+                          {
+                            (isGranted || legacyGranted) &&
                               <li><Link page="projectVersion.pdf" label="Download licence (PDF)" establishmentId={establishment.id} projectId={project.id} versionId={version.id} /></li>
-                            }
-                            {
-                              (isApplication || isAmendment || isSuperseded) &&
+                          }
+                          {
+                            (isApplication || isAmendment || isSuperseded) &&
                                 <Fragment>
                                   <li><Link page="projectVersion.docx" label={`Download ${downloadType} (DOCX)`} establishmentId={establishment.id} projectId={project.id} versionId={version.id} /></li>
                                   <li><Link page="projectVersion.pdf" query={{ application: true }} label={`Download ${downloadType} (PDF)`} establishmentId={establishment.id} projectId={project.id} versionId={version.id} /></li>
                                 </Fragment>
-                            }
-                          </Fragment>
-                      }
-                    </ul>
-                  </dd>
-                </Fragment>
+                          }
+                        </Fragment>
+                    }
+                  </ul>
+                </dd>
+              </Fragment>
             }
           </dl>
         </DocumentHeader>
@@ -213,7 +212,7 @@ const ProjectRouter = () => {
 
       </ScrollToTop>
     </BrowserRouter>
-  )
+  );
 };
 
 export default ProjectRouter;

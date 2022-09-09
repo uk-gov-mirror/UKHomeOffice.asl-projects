@@ -18,7 +18,7 @@ export function getGrantedSubsections(schemaVersion) {
       return {
         ...sections,
         ...pickBy(section.subsections, subsection => {
-          return !isUndefined(subsection.granted)
+          return !isUndefined(subsection.granted);
         })
       };
     }, {});

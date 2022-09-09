@@ -22,6 +22,6 @@ const renderBlock = (props, editor, next) => {
     default:
       return next();
   }
-}
+};
 
 export default renderBlock;

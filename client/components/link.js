@@ -6,6 +6,6 @@ const LinkTo = ({ to, label }) => {
     label = `View ${to}`;
   }
   return <Link to={`/${to}`}>{ label }</Link>;
-}
+};
 
 export default LinkTo;

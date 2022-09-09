@@ -9,7 +9,7 @@ import { Item } from '../../../components/repeater-field';
 class Objectives extends Component {
   render() {
     if (!this.props.values) {
-      return null
+      return null;
     }
     return <Fragment>
       <h1>{ this.props.title }</h1>
@@ -36,7 +36,7 @@ class Objectives extends Component {
         onFieldChange={this.props.save}
       />
       <Controls onContinue={this.props.advance} onExit={this.props.exit} />
-    </Fragment>
+    </Fragment>;
   }
 }
 

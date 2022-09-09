@@ -2,7 +2,7 @@ import omit from 'lodash/omit';
 import debounce from 'lodash/debounce';
 import cloneDeep from 'lodash/cloneDeep';
 import isEqual from 'lodash/isEqual';
-import pick from 'lodash/pick'
+import pick from 'lodash/pick';
 
 import * as types from './types';
 import database from '../database';
@@ -47,7 +47,7 @@ export function setProject(project) {
   return {
     type: types.SET_PROJECT,
     project
-  }
+  };
 }
 
 export function createProject(project) {
@@ -64,10 +64,9 @@ export function createProject(project) {
 }
 
 export function importProject(project) {
-  project = omit(project, 'id');
   return dispatch => {
     return database()
-      .then(db => db.create(project))
+      .then(db => db.create(omit(project, 'id')))
       .then(project => dispatch({ type: types.CREATE_PROJECT, project }))
       .then(() => dispatch(showMessage('Project imported!')))
       .catch(error => dispatch({ type: types.ERROR, error }));
@@ -88,14 +87,14 @@ export function updateProject(project) {
   return {
     type: types.UPDATE_PROJECT,
     project
-  }
+  };
 }
 
 export function addChange(change) {
   return {
     type: types.ADD_CHANGE,
     change
-  }
+  };
 }
 
 export function addChanges(changes = {}) {
@@ -103,38 +102,38 @@ export function addChanges(changes = {}) {
     type: types.ADD_CHANGES,
     granted: changes.granted || [],
     latest: changes.latest || []
-  }
+  };
 }
 
 export function updateSavedProject(project) {
   return {
     type: types.UPDATE_SAVED_PROJECT,
     project
-  }
+  };
 }
 
 export function isSyncing() {
   return {
     type: types.IS_SYNCING
-  }
+  };
 }
 
 export function doneSyncing() {
   return {
     type: types.DONE_SYNCING
-  }
+  };
 }
 
 export function syncError() {
   return {
     type: types.SYNC_ERROR
-  }
+  };
 }
 
 export function syncErrorResolved() {
   return {
     type: types.SYNC_ERROR_RESOLVED
-  }
+  };
 }
 
 const debouncedUpdate = debounce((id, data, dispatch) => {
@@ -142,8 +141,8 @@ const debouncedUpdate = debounce((id, data, dispatch) => {
     .then(db => db.update(id, data))
     .then(() => updateSavedProject(data))
     // TODO: notify user autosaved.
-    .catch(err => dispatch({ type: types.ERROR, err }))
-}, 500, { maxWait: 5000 })
+    .catch(err => dispatch({ type: types.ERROR, err }));
+}, 500, { maxWait: 5000 });
 
 export function indexedDBSync(data) {
   return (dispatch, getState) => {
@@ -200,21 +199,21 @@ const syncConditions = (dispatch, getState) => {
     method: 'PUT',
     url: getUrl(state, '/conditions'),
     data
-  }
+  };
 
   return Promise.resolve()
     .then(() => sendMessage(params))
     .then(() => {
-      dispatch(doneSyncing())
+      dispatch(doneSyncing());
       if (state.application.syncError) {
         dispatch(syncErrorResolved());
-        dispatch(showMessage('Saved successfully'))
+        dispatch(showMessage('Saved successfully'));
       }
     })
     .then(() => dispatch(updateSavedProject(applyConditions(state.savedProject, data))))
     .then(() => syncConditions(dispatch, getState))
     .catch(err => {
-      return onSyncError(syncConditions, err, dispatch, getState)
+      return onSyncError(syncConditions, err, dispatch, getState);
     });
 };
 
@@ -239,7 +238,6 @@ const shouldSyncProject = state => {
 };
 
 const onSyncError = (func, err, dispatch, getState, ...args) => {
-  console.error(err);
   dispatch(doneSyncing());
   dispatch(syncError());
   const errorCount = getState().application.errorCount;
@@ -247,7 +245,7 @@ const onSyncError = (func, err, dispatch, getState, ...args) => {
     return dispatch(throwError('This software has been updated. You must refresh your browser to avoid losing work.'));
   }
   if (errorCount > 5) {
-     return dispatch(throwError('Failed to save your changes. Try refreshing your browser to continue. If the problem persists then please report to aspeltechnicalqueries@homeoffice.gov.uk'));
+    return dispatch(throwError('Failed to save your changes. Try refreshing your browser to continue. If the problem persists then please report to aspeltechnicalqueries@homeoffice.gov.uk'));
   }
   dispatch(throwError(`Failed to save, trying again in ${Math.pow(2, errorCount)} seconds`));
   return setTimeout(() => func(dispatch, getState, ...args), 1000 * Math.pow(2, errorCount));
@@ -298,11 +296,11 @@ const syncProject = (dispatch, getState) => {
     .then(() => dispatch(updateProject(project)))
     .then(() => sendMessage(params))
     .then(json => {
-      dispatch(addChanges(json.changes))
-      dispatch(doneSyncing())
+      dispatch(addChanges(json.changes));
+      dispatch(doneSyncing());
       if (state.application.syncError) {
         dispatch(syncErrorResolved());
-        dispatch(showMessage('Saved successfully'))
+        dispatch(showMessage('Saved successfully'));
       }
     })
     .then(() => {
@@ -312,12 +310,12 @@ const syncProject = (dispatch, getState) => {
     .then(() => wait(2000))
     .then(() => syncProject(dispatch, getState))
     .catch(err => {
-      onSyncError(syncProject, err, dispatch, getState)
+      onSyncError(syncProject, err, dispatch, getState);
     });
-}
+};
 
 const debouncedSyncConditions = debounce((dispatch, getState) => {
-  return syncConditions(dispatch, getState)
+  return syncConditions(dispatch, getState);
 }, 1000, { maxWait: 5000, leading: true });
 
 export function updateRetrospectiveAssessment(retrospectiveAssessment) {
@@ -329,7 +327,7 @@ export function updateRetrospectiveAssessment(retrospectiveAssessment) {
     };
     dispatch(updateProject(newState));
     return debouncedSyncConditions(dispatch, getState);
-  }
+  };
 }
 
 export function updateConditions(type, conditions, protocolId) {
@@ -344,22 +342,22 @@ export function updateConditions(type, conditions, protocolId) {
         ...((state.project.protocols || [])
           .find((p => p.id === protocolId) || {}).conditions || []).filter(condition => condition.type !== type),
         ...conditions
-      ]
+      ];
 
     const newState = cloneDeep(state.project);
     if (protocolId) {
       newState.protocols = newState.protocols.map(protocol => {
         if (protocol.id === protocolId) {
-          return { ...protocol, conditions: newConditions }
+          return { ...protocol, conditions: newConditions };
         }
         return protocol;
-      })
+      });
     } else {
       newState.conditions = type === 'legacy' ? conditions : newConditions;
     }
     dispatch(updateProject(newState));
-    return debouncedSyncConditions(dispatch, getState)
-  }
+    return debouncedSyncConditions(dispatch, getState);
+  };
 }
 
 export function fetchQuestionVersions(key, { version, type, isRa }) {
@@ -370,13 +368,13 @@ export function fetchQuestionVersions(key, { version, type, isRa }) {
     const params = {
       state,
       url: getUrl(state, `/question/${key}?version=${version}&type=${type}&isRa=${isRa}`)
-    }
+    };
 
     return Promise.resolve()
       .then(() => sendMessage(params))
       .then(value => dispatch({ type: types.LOAD_QUESTION_VERSIONS, value, key, version }))
       .catch(error => dispatch({ type: types.ERROR, error }));
-  }
+  };
 }
 
 const debouncedSyncProject = debounce((...args) => {

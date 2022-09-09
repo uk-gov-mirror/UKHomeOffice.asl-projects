@@ -19,7 +19,7 @@ export function Protocol({ protocol, number, sections, isLegacy, project, childr
       return {
         ...s,
         name: label || '-'
-      }
+      };
     });
   return (
     <table className={classnames('protocol', className)}>
@@ -141,8 +141,8 @@ const PDF = ({ protocols = [], isLegacy, ...props }) => {
         ))
       }
     </Fragment>
-  )
-}
+  );
+};
 
 const mapStateToProps = ({
   project,

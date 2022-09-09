@@ -22,7 +22,6 @@ export default function RAPlaybackHint({ hint, summary, name }) {
     type = 'training';
   }
 
-
   if (schemaVersion !== 'RA') {
     return hint;
   }
@@ -56,5 +55,5 @@ export default function RAPlaybackHint({ hint, summary, name }) {
         </Inset>
       </Details>
     </Fragment>
-  )
+  );
 }

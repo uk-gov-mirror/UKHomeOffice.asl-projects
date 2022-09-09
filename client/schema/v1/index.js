@@ -592,7 +592,7 @@ If you can only add generic information at this stage, provide a general descrip
                 type: 'text',
                 repeats: true,
                 toggleEdit: true,
-                confirmEdit: confirmProtocolsAffected('edit', 'locations', 'POLE', 'title', 'name'),
+                confirmEdit: confirmProtocolsAffected('edit', 'locations', 'POLE', 'title', 'name')
               },
               {
                 name: 'pole-info',
@@ -1118,7 +1118,7 @@ If you can only add generic information at this stage, provide a general descrip
                 objective: true,
                 repeats: true,
                 toggleEdit: true,
-                confirmEdit: confirmProtocolsAffected('edit', 'objectives', 'objective', 'title'),
+                confirmEdit: confirmProtocolsAffected('edit', 'objectives', 'objective', 'title')
               },
               {
                 name: 'objective-relation',
@@ -1509,7 +1509,7 @@ each other.`,
                 }
               }
             ]
-          },
+          }
         ]
       }
     }
@@ -1532,7 +1532,7 @@ each other.`,
             name: 'title',
             label: 'Title',
             type: 'text'
-          },
+          }
         ],
         sections: {
           details: {
@@ -2611,7 +2611,7 @@ each other.`,
               {
                 name: 'wild-animals-declaration',
                 label: 'I confirm that I have, or will have, all necessary permissions from other regulators in place before commencing any work involving animals taken from the wild.',
-                type: 'declaration',
+                type: 'declaration'
               }
             ]
           }

@@ -15,8 +15,8 @@ class Accordion extends React.Component {
         return true;
       }
       return false;
-    })
-    this.state = { open }
+    });
+    this.state = { open };
   }
 
   toggle(i) {
@@ -24,9 +24,9 @@ class Accordion extends React.Component {
     if (this.props.openOne) {
       open.forEach((item, index) => {
         if (i !== index) {
-          open[index] = false
+          open[index] = false;
         }
-      })
+      });
     }
     open[i] = !open[i];
     this.setState({ open });

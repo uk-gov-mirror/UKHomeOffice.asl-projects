@@ -20,5 +20,5 @@ export default function RAHint() {
       <NTSWritingTips />
       <Button onClick={redirect}>Continue</Button>
     </div>
-  )
+  );
 }

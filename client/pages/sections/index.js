@@ -47,7 +47,7 @@ class Questions extends PureComponent {
     const fields = this.props.fields;
     return fields.filter(field => {
       if (field.show && typeof field.show === 'function') {
-        return field.show({ ...this.props.project, ...this.props.application })
+        return field.show({ ...this.props.project, ...this.props.application });
       }
       return true;
     });
@@ -88,7 +88,7 @@ class Questions extends PureComponent {
           )
         }
       </Fragment>
-    )
+    );
   }
 }
 
@@ -136,7 +136,7 @@ class Review extends Component {
           <p>You can still edit this section later, but you will be unable to send this application to the Home Office until all sections are marked as complete.</p>
         </Complete>
       </Fragment>
-    )
+    );
   }
 }
 
@@ -151,7 +151,7 @@ class Section extends PureComponent {
   render = () => {
     const { onProgress, exit, step, ...props } = this.props;
     if (!props.project) {
-      return null
+      return null;
     }
     const steps = props.steps || [props];
 
@@ -160,13 +160,13 @@ class Section extends PureComponent {
         {
           steps.filter(this.showStep).map((stepSettings, index) => {
             const Component = stepSettings.component || Questions;
-            return <Component values={props.project} key={index} exit={exit} step={index} {...props} {...stepSettings} />
+            return <Component values={props.project} key={index} exit={exit} step={index} {...props} {...stepSettings} />;
           })
         }
 
         <Review {...props} values={props.project} step={steps.length} onContinue={exit} exit={exit} />
       </Wizard>
-    )
+    );
   }
 }
 

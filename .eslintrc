@@ -1,10 +1,8 @@
 extends:
-  - eslint:recommended
-  - plugin:react/recommended
+  - lennym
 
 env:
   es6: true
-  node: true
   browser: true
 
 parser: babel-eslint
@@ -18,8 +16,6 @@ settings:
 
 rules:
   no-console: 1
-  react/prop-types: 0
-  react/display-name: 0
   no-var: 2
   no-irregular-whitespace:
     - 2

@@ -5,7 +5,7 @@ function getProtocolParts(protocols) {
   return protocols.map((p, i) => {
     const str = `${p.index + 1}`;
     if (i === protocols.length - 1) {
-      return ` and ${str}`
+      return ` and ${str}`;
     }
     if (i > 0) {
       return `, ${str}`;
@@ -36,7 +36,7 @@ const confirmProtocolsAffected = (changeType, protocolRef, singularName, key, la
 
   // item appears in all protocols
   if (affectedProtocols.length === protocols.length) {
-    return window.confirm(`${message} all protocols.`)
+    return window.confirm(`${message} all protocols.`);
   }
 
   const protocolText = affectedProtocols.length === 1

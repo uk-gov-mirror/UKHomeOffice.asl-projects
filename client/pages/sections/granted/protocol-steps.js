@@ -38,8 +38,8 @@ const Step = ({ id, index, fields, prefix, ...props }) => {
         )
       }
     </div>
-  )
-}
+  );
+};
 
 const Steps = ({ values, fields, pdf, prefix }) => {
   const getStepTitle = title => {
@@ -90,7 +90,7 @@ const Steps = ({ values, fields, pdf, prefix }) => {
         values.steps.map((step, index) => <Step key={step.id} {...step} index={index} fields={fields} pdf={pdf} prefix={`${prefix}steps.${step.id}.`} />)
       }
     </div>
-  )
-}
+  );
+};
 
 export default Steps;

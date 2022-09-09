@@ -33,7 +33,7 @@ const Comments = ({ field, collapsed }) => {
   }, shallowEqual);
 
   const { commentable, showComments } = useSelector(state => state.application);
-  const [expanded, setExpanded] = useState(!collapsed)
+  const [expanded, setExpanded] = useState(!collapsed);
   const [showPrevious, setShowPrevious] = useState(false);
   const [editing, setEditing] = useState(false);
 
@@ -46,7 +46,7 @@ const Comments = ({ field, collapsed }) => {
   }
 
   if (!comments.length && commentable && !editing) {
-    return <AddComment field={field} />
+    return <AddComment field={field} />;
   }
 
   if (!comments.length) {
@@ -86,7 +86,7 @@ const Comments = ({ field, collapsed }) => {
         }
       </Fragment>
     </ExpandingPanel>
-  )
+  );
 };
 
 export default Comments;

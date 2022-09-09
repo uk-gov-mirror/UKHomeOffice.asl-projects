@@ -56,6 +56,6 @@ const ObjectivesReview = ({ playback, values, steps, goto, readonly, isFullAppli
   </Fragment>
 );
 
-const mapStateToProps = ({ application: { readonly, isFullApplication } }) => ({ readonly, isFullApplication })
+const mapStateToProps = ({ application: { readonly, isFullApplication } }) => ({ readonly, isFullApplication });
 
 export default connect(mapStateToProps)(ObjectivesReview);

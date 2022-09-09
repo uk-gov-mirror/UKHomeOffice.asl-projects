@@ -9,8 +9,8 @@ const clearMarks = editor => {
     .removeMark('bold')
     .removeMark('code')
     .removeMark('superscript')
-    .removeMark('subscript')
-}
+    .removeMark('subscript');
+};
 
 export default function Marks() {
   return {
@@ -19,5 +19,5 @@ export default function Marks() {
     commands: {
       clearMarks
     }
-  }
+  };
 }

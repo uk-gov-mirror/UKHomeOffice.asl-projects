@@ -103,11 +103,11 @@ export default function RetrospectiveAssessment({ showTitle = true }) {
                   </Fragment>
                 )
                 : <Button onClick={() => setIsChanging(true)} className="link">Change</Button>
-              }
+            }
 
           </p>
         )
       }
     </div>
-  )
+  );
 }

@@ -4,5 +4,5 @@ export const setBasename = basename => {
   return {
     type: SET_BASENAME,
     basename
-  }
+  };
 };

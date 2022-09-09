@@ -24,5 +24,5 @@ export default function EstablishmentsReview({ steps, ...props }) {
 
       <ReviewFields {...props} fields={steps[2].fields} showTitle={false} />
     </div>
-  )
+  );
 }

@@ -27,9 +27,9 @@ export default function ChangedBadge({ fields = [], changedFromGranted, changedF
     return source.length && fields.some(field => {
       return source.some(change => {
         return minimatch(change, field);
-      })
+      });
     });
-  }
+  };
 
   if ((changedFromLatest || changedFrom(latest)) && (!protocolId || previousProtocols.previous.includes(protocolId))) {
     return <span className="badge changed">{ noLabel ? '' : 'changed' }</span>;

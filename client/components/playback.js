@@ -3,7 +3,7 @@ import { withRouter } from 'react-router';
 
 import { connect } from 'react-redux';
 
-import map from 'lodash/map'
+import map from 'lodash/map';
 import findKey from 'lodash/findKey';
 import isFunction from 'lodash/isFunction';
 import isEmpty from 'lodash/isEmpty';
@@ -20,7 +20,7 @@ const getUrl = (section, step) => {
     url = `${url}/${step}`;
   }
   return url;
-}
+};
 
 const Playback = ({ project, step, history, field, section, readonly, basename, title, isPdf }) => {
   if (!project || !field || isEmpty(field)) {
@@ -38,8 +38,8 @@ const Playback = ({ project, step, history, field, section, readonly, basename, 
         onEdit={() => history.push(page)}
       />
     </div>
-  )
-}
+  );
+};
 
 const mapStateToProps = ({
   application: {
@@ -64,7 +64,7 @@ const mapStateToProps = ({
   const section = findKey(subsections, subsection => {
     if (subsection.steps) {
       return subsection.steps.find((s, index) => {
-        field = s.fields.find(f => f.name === playback)
+        field = s.fields.find(f => f.name === playback);
         if (field) {
           step = index;
           return true;
@@ -84,6 +84,6 @@ const mapStateToProps = ({
     title: subsections[section].title,
     isPdf
   };
-}
+};
 
 export default withRouter(connect(mapStateToProps)(Playback));

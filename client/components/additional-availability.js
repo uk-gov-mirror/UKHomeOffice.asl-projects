@@ -22,14 +22,14 @@ export default function AdditionalAvailability(props) {
   const { establishments: additionalEstablishments } = useSelector(state => state.project);
 
   if (!canTransfer) {
-    return <ReadOnly {...props} />
+    return <ReadOnly {...props} />;
   }
 
   const name = props.name.replace(props.prefix, '');
   const value = props.values[name];
 
   const availableEstablishments = establishments.filter(e => {
-    return e.id === value || !(additionalEstablishments || []).map(e => e['establishment-id']).includes(e.id)
+    return e.id === value || !(additionalEstablishments || []).map(e => e['establishment-id']).includes(e.id);
   });
 
   const estName = props.values['establishment-name'];
@@ -37,7 +37,7 @@ export default function AdditionalAvailability(props) {
   const freeTextSet = !!estName && !value;
 
   function deselect(e) {
-    e.preventDefault()
+    e.preventDefault();
     props.updateItem({ [name]: null, 'name': null });
   }
 
@@ -133,5 +133,5 @@ export default function AdditionalAvailability(props) {
         )
       }
     </Fragment>
-  )
+  );
 }

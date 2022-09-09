@@ -1,8 +1,8 @@
 import React from 'react';
 import Establishments from './establishments';
 import Controls from '../../../components/controls';
-import {shallowEqual, useSelector} from "react-redux";
-import {Inset, Link} from "@asl/components";
+import {shallowEqual, useSelector} from 'react-redux';
+import {Inset, Link} from '@asl/components';
 
 export default function Index({ advance, exit, ...props }) {
   const {
@@ -30,10 +30,10 @@ export default function Index({ advance, exit, ...props }) {
           <p className="larger">
             {
               canTransfer
-              ? isActive
+                ? isActive
                   ? <Link to="/" label="Change"/>
                   : <Link page="project.transferDraft" label="Change" establishmentId={establishment.id} projectId={project.id} />
-              : null
+                : null
             }
             {
               !canTransfer && <Inset><p>Only the project’s licence holder can change the primary establishment.</p></Inset>
@@ -44,5 +44,5 @@ export default function Index({ advance, exit, ...props }) {
       <Establishments {...props} editable={true} />
       <Controls onContinue={advance} onExit={exit} />
     </div>
-  )
+  );
 }

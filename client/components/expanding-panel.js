@@ -18,7 +18,7 @@ export default function ExpandingPanel(props) {
   function scrollToTop() {
     window.scrollTo({
       top: getScrollPos(ref.current, OFFSET)
-    })
+    });
   }
 
   function toggle(e) {
@@ -32,7 +32,7 @@ export default function ExpandingPanel(props) {
   function content() {
     return props.scrollToActive
       ? React.Children.map(props.children, child => React.cloneElement(child, { ...props, scrollToTop }))
-      : props.children
+      : props.children;
   }
 
   function closeLink() {
@@ -56,5 +56,5 @@ export default function ExpandingPanel(props) {
       </div>
       { closeLink() }
     </section>
-  )
+  );
 }

@@ -41,7 +41,7 @@ function LegacyConditions({
     props.saveConditions([
       ...(custom ? [custom] : []),
       ...activeConditions
-    ])
+    ]);
   }
 
   function updateCustom(content) {
@@ -81,7 +81,7 @@ function LegacyConditions({
                 values.isLegacyStub &&
                   <Link to="/"><span>List of sections</span></Link>
               }
-          </Fragment>
+            </Fragment>
           )
           : (
             <Fragment>
@@ -96,7 +96,7 @@ function LegacyConditions({
                       editable={false}
                       expandable={false}
                     />
-                  )
+                  );
                 })
               }
               <Condition
@@ -114,7 +114,7 @@ function LegacyConditions({
           )
       }
     </Fragment>
-  )
+  );
 }
 
 export default connect(({
@@ -128,7 +128,7 @@ export default connect(({
   showConditions,
   editConditions
 }),
-  dispatch => ({
-    saveConditions: conditions => dispatch(updateConditions('legacy', conditions))
-  })
+dispatch => ({
+  saveConditions: conditions => dispatch(updateConditions('legacy', conditions))
+})
 )(LegacyConditions);

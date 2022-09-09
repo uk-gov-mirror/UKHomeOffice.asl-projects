@@ -7,12 +7,12 @@ export default function LegacySpeciesSelector(props) {
   const [isOtherSpecies, setIsOtherSpecies] = useState(props.value === otherSpeciesId);
 
   function onSpeciesChange(value) {
-    setIsOtherSpecies(value === otherSpeciesId)
+    setIsOtherSpecies(value === otherSpeciesId);
     props.onChange(value);
   }
 
   function onOtherSpeciesChange(value) {
-    props.onFieldChange('other-species-type', value)
+    props.onFieldChange('other-species-type', value);
   }
 
   return (

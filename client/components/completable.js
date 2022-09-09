@@ -11,7 +11,7 @@ const Completable = ({ status = 'incomplete', legacy, readonly, children }) => {
 
   switch (status) {
     case 'deleted':
-      label = 'Removed'
+      label = 'Removed';
       break;
     case 'incomplete':
       label = 'In progress';

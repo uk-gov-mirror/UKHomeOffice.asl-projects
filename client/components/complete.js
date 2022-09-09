@@ -8,7 +8,7 @@ class Complete extends Component {
     super(props);
     this.state = {
       checked: this.props.complete || false
-    }
+    };
     this.toggleChecked = this.toggleChecked.bind(this);
     this.emitChange = this.emitChange.bind(this);
   }
@@ -46,7 +46,7 @@ class Complete extends Component {
         />
         <Button disabled={this.props.checkChanged && this.props.complete === this.state.checked} onClick={this.emitChange}>Continue</Button>
       </div>
-    )
+    );
   }
 }
 

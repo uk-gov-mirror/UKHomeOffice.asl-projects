@@ -1,5 +1,5 @@
 import React from 'react';
-import Wizard from '../../../components/wizard'
+import Wizard from '../../../components/wizard';
 import EditableProtocols from './editable-protocols';
 import Review from './review';
 

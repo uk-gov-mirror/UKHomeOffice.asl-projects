@@ -9,7 +9,7 @@ function titleCase(str) {
 
 function TableRow({ species, protocol, index, isLegacy, ExpandingRow, expanded, onClick }) {
   // this is necessary due to :hover css not taking rowspan into account.
-  const [hover, setHover] = useState(false)
+  const [hover, setHover] = useState(false);
   function onMouseEnter() {
     setHover(true);
   }
@@ -86,15 +86,15 @@ function TableRow({ species, protocol, index, isLegacy, ExpandingRow, expanded, 
           )
         }
       </Fragment>
-    )
-  })
+    );
+  });
 }
 
 export default function SummaryTable({ protocols, isLegacy, project, className, ExpandingRow }) {
   const [expanded, setExpanded] = useState(protocols.map(() => false));
 
   function setAllExpanded(e) {
-    e.preventDefault()
+    e.preventDefault();
     if (expanded.every(item => item)) {
       return setExpanded(expanded.map(() => false));
     }
@@ -108,8 +108,8 @@ export default function SummaryTable({ protocols, isLegacy, project, className, 
           return !item;
         }
         return item;
-      }))
-    }
+      }));
+    };
   }
 
   return (
@@ -167,11 +167,11 @@ export default function SummaryTable({ protocols, isLegacy, project, className, 
                 ExpandingRow={ExpandingRow}
                 expanded={expanded[index]}
                 onClick={onRowClick(index)}
-              />
+              />;
             })
           }
         </tbody>
       </table>
     </Fragment>
-  )
+  );
 }

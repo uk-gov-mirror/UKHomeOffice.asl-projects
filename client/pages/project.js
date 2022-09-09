@@ -4,7 +4,7 @@ import { Redirect, useLocation } from 'react-router-dom';
 import isEmpty from 'lodash/isEmpty';
 import omit from 'lodash/omit';
 
-import { getGrantedSubsections } from '../schema'
+import { getGrantedSubsections } from '../schema';
 import ApplicationSummary from '../components/application-summary';
 import RaDeclaration from '../components/ra-declaration';
 import RaDetails from '../components/ra-details';
@@ -18,7 +18,7 @@ export default function Index() {
 
   const query = useQuery();
   if (!project) {
-    return null
+    return null;
   }
 
   if (isGranted) {
@@ -27,7 +27,7 @@ export default function Index() {
   }
 
   if (schemaVersion === 'RA' && isEmpty(omit(project, 'id')) && !query.get('declaration-accepted')) {
-    return <RaDeclaration />
+    return <RaDeclaration />;
   }
 
   return (
@@ -35,5 +35,5 @@ export default function Index() {
       { schemaVersion === 'RA' && <RaDetails /> }
       <ApplicationSummary />
     </Fragment>
-  )
+  );
 }

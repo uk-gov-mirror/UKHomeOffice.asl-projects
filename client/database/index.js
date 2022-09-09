@@ -5,8 +5,8 @@ export default () => {
     request.onerror = reject;
     request.onupgradeneeded = event => {
       const db = event.target.result;
-      db.createObjectStore('projects', { autoIncrement : true });
-      db.createObjectStore('settings', { autoIncrement : true });
+      db.createObjectStore('projects', { autoIncrement: true });
+      db.createObjectStore('settings', { autoIncrement: true });
     };
     request.onsuccess = event => {
       const db = event.target.result;

@@ -36,7 +36,6 @@
     "date-fns": "^1.30.1",
     "details-element-polyfill": "^2.3.0",
     "docx": "5.0.0-rc4",
-    "eslint-config-lennym": "^2.2.1",
     "file-saver": "^2.0.0",
     "immutable": "^3.8.2",
     "is-hotkey": "^0.2.0",
@@ -65,8 +64,8 @@
   "devDependencies": {
     "@babel/register": "^7.8.3",
     "babel-eslint": "^10.0.1",
-    "eslint": "^5.12.0",
-    "eslint-plugin-react": "^7.12.4",
+    "eslint": "^7.32.0",
+    "eslint-config-lennym": "^2.3.2",
     "mocha": "^9.2.0"
   },
   "files": [

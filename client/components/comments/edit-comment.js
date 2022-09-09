@@ -9,7 +9,7 @@ const EditComment = ({id, value, field, cancel}) => {
 
   const onChange = e => {
     setComment(e.target.value);
-  }
+  };
 
   const onSubmit = () => {
     dispatch(
@@ -18,7 +18,7 @@ const EditComment = ({id, value, field, cancel}) => {
       setComment('');
       cancel();
     });
-  }
+  };
 
   if (!comment) {
     return null;
@@ -40,6 +40,6 @@ const EditComment = ({id, value, field, cancel}) => {
       </p>
     </Fragment>
   );
-}
+};
 
 export default EditComment;

@@ -5,15 +5,15 @@ export default function Modal({ onClose, children }) {
     const keydownHandler = e => {
       const listener = keyListeners.get(e.key);
       return listener && listener(e);
-    }
+    };
     document.getElementsByTagName('html')[0].classList.add('modal-open');
-    document.addEventListener("keydown", keydownHandler);
+    document.addEventListener('keydown', keydownHandler);
 
     return () => {
       document.getElementsByTagName('html')[0].classList.remove('modal-open');
-      document.removeEventListener("keydown", keydownHandler);
-    }
-  })
+      document.removeEventListener('keydown', keydownHandler);
+    };
+  });
 
   const modalRef = createRef();
   const handleTabKey = e => {
@@ -32,18 +32,18 @@ export default function Modal({ onClose, children }) {
       lastElement.focus();
       return e.preventDefault();
     }
-  }
+  };
 
   const keyListeners = new Map([
     ['Escape', onClose],
     ['Tab', handleTabKey]
-  ])
+  ]);
 
   const close = e => {
     if (e.target.className === 'modal') {
-      onClose(e)
+      onClose(e);
     }
-  }
+  };
 
   return (
     <div className="modal" onClick={close}>
@@ -51,5 +51,5 @@ export default function Modal({ onClose, children }) {
         {children}
       </div>
     </div>
-  )
+  );
 }

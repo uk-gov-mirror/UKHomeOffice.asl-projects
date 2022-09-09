@@ -53,10 +53,10 @@ class Protocol extends PureComponent {
     const protocolState = {
       activeProtocol: parts[1],
       fieldName: parts[parts.length - 1]
-    }
+    };
     if (parts.length === 5) {
-      protocolState.section = parts[2],
-      protocolState.sectionItem = parts[3]
+      protocolState.section = parts[2];
+      protocolState.sectionItem = parts[3];
     }
 
     return protocolState;
@@ -89,11 +89,11 @@ class Protocol extends PureComponent {
         toggleActive={this.toggleActive}
       />
       : <ProtocolSections
-          {...this.props}
-          newComments={newComments}
-          protocolState={isActive && protocolState}
-          onToggleActive={this.toggleActive}
-        />
+        {...this.props}
+        newComments={newComments}
+        protocolState={isActive && protocolState}
+        onToggleActive={this.toggleActive}
+      />;
   }
 }
 
@@ -147,7 +147,7 @@ class Protocols extends PureComponent {
           window.scrollTo({
             top: document.body.scrollHeight,
             behavior: 'smooth'
-          })
+          });
         }}
         onBeforeDuplicate={(items, id) => {
           return items.map((item) => {
@@ -156,10 +156,10 @@ class Protocols extends PureComponent {
                 ...item,
                 title: `${item.title} (Copy)`,
                 complete: false
-              }
+              };
             }
-            return item
-          })
+            return item;
+          });
         }}
         onAfterDuplicate={(item, id) => {
           const index = items.findIndex(i => i.id === id);
@@ -172,7 +172,7 @@ class Protocols extends PureComponent {
       >
         <Protocol {...this.props} />
       </Repeater>
-    )
+    );
   }
 }
 

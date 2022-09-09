@@ -1,6 +1,6 @@
 import React from 'react';
 
-import flatten from 'lodash/flatten'
+import flatten from 'lodash/flatten';
 
 class Wizard extends React.Component {
 
@@ -37,6 +37,6 @@ class Wizard extends React.Component {
 
 Wizard.defaultProps = {
   steps: 0
-}
+};
 
 export default Wizard;

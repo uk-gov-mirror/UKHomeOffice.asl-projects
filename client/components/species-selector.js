@@ -28,11 +28,11 @@ const getField = (options, name, fieldName) => ({
           name: `${fieldName}-${option.value}`,
           type: 'other-species-selector'
         }
-      }
+      };
     }
-    return option
+    return option;
   })
-})
+});
 
 class SpeciesSelector extends Component {
 
@@ -45,7 +45,7 @@ class SpeciesSelector extends Component {
 
   onGroupChange = name => val => {
     const nopes = (SPECIES[name] || []).map(o => o.value);
-    const value = uniq((this.props.value || []).filter(item => !nopes.includes(item)).concat(val))
+    const value = uniq((this.props.value || []).filter(item => !nopes.includes(item)).concat(val));
     this.props.onChange(value);
   }
 
@@ -105,7 +105,7 @@ class SpeciesSelector extends Component {
                   noComments={true}
                 />
               </details>
-            )
+            );
           })
         }
         <details open={otherValues.length}>
@@ -118,7 +118,7 @@ class SpeciesSelector extends Component {
           />
         </details>
       </div>
-    )
+    );
   }
 }
 

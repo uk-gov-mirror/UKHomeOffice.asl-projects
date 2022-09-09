@@ -3,7 +3,7 @@ import castArray from 'lodash/castArray';
 
 import ReviewFields from '../../components/review-fields';
 import Banner from '../../components/banner';
-import NTS from '../../components/nts'
+import NTS from '../../components/nts';
 import Playback from '../../components/playback';
 
 const ReviewSection = ({
@@ -32,7 +32,7 @@ const ReviewSection = ({
       }
       <ReviewFields fields={fields} values={values} onEdit={onEdit} />
     </Fragment>
-  )
-}
+  );
+};
 
 export default ReviewSection;

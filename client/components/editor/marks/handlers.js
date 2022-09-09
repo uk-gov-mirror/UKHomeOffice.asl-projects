@@ -9,7 +9,6 @@ const isSubscriptHotkey = isKeyHotkey('mod+shift++');
 
 const isClearCommentHotkey = isKeyHotkey('mod+k');
 
-
 export const onKeyDown = (event, editor, next) => {
   let mark;
 

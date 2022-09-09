@@ -17,5 +17,5 @@ export default function RaReasons({ reasons }) {
         map(reasons, (value, key) => (<li key={key}>{descriptions[key]}</li>))
       }
     </ul>
-  )
+  );
 }

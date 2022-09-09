@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import classnames from 'classnames';
 
-import Fieldset from './fieldset'
+import Fieldset from './fieldset';
 
 const getNumbers = length => Array.apply(null, { length }).map(Number.call, String);
 
@@ -19,7 +19,7 @@ const getFields = (years) => {
       type: 'select',
       options: getNumbers(years < 5 ? 12 : 1)
     }
-  ]
+  ];
 };
 
 const Duration = ({ name, error, label, hint, value = {}, onChange }) => {
@@ -59,7 +59,7 @@ const Duration = ({ name, error, label, hint, value = {}, onChange }) => {
         noComments={true}
       />
     </div>
-  )
+  );
 
 };
 
