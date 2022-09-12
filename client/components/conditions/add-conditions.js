@@ -38,15 +38,17 @@ function CustomConditions({ conditions, onUpdate, onAdd, onRemove, conditionKey 
 }
 
 const getConditions = (type, omit = []) => {
-  return Object.keys(CONDITIONS.inspector)
-    .filter(key => CONDITIONS.inspector[key].type === type)
+  const conditions = { ...CONDITIONS.inspector, ...CONDITIONS.project };
+
+  return Object.keys(conditions)
+    .filter(key => conditions[key].type === type)
     .filter(key => !omit.includes(key))
     .map(key => ({
       key,
       type,
       checked: false,
       inspectorAdded: true,
-      ...CONDITIONS.inspector[key].versions[CONDITIONS.inspector[key].versions.length - 1]
+      ...conditions[key].versions[conditions[key].versions.length - 1]
     }));
 };
 
