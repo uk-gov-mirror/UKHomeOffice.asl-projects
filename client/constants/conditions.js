@@ -274,7 +274,7 @@ Genetically altered animals may not be re-homed.`
     },
     'non-purpose-bred-sched-2': {
       include: project => {
-        const nopes = [
+        const triggers = [
           'mice',
           'rats',
           'guinea-pigs',
@@ -284,6 +284,7 @@ Genetically altered animals may not be re-homed.`
           'cats',
           'dogs',
           'ferrets',
+          'fowl',
           'other-domestic-fowl',
           'other-birds',
           'common-frogs',
@@ -293,7 +294,7 @@ Genetically altered animals may not be re-homed.`
           'pigs',
           'sheep'
         ];
-        return nopes.some(species => (project.species || []).includes(species)) && project['purpose-bred'] === false;
+        return triggers.some(species => (project.species || []).includes(species)) && project['purpose-bred'] === false;
       },
       type: 'condition',
       versions: [
