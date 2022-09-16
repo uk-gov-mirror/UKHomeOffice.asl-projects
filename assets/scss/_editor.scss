@@ -28,6 +28,9 @@
   }
 
   &:not(.readonly) {
+    [data-slate-editor="true"] {
+      -webkit-user-modify: read-write!important;
+    }
     .image-wrapper:hover .image-overlay {
       display: block;
     }
