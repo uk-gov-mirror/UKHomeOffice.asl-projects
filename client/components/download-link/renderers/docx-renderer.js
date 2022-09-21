@@ -370,6 +370,10 @@ export default (application, sections, values, updateImageDimensions) => {
         parent.addParagraph(paragraph);
         break;
 
+      case 'error':
+        parent.createParagraph(getContent(node)).style('error');
+        break;
+
       default:
         // if there is no matching type then it's probably a denormalised text node with no wrapping paragraph
         // attempt to render with the node wrapped in a paragraph
