@@ -3,6 +3,7 @@ import debounce from 'lodash/debounce';
 import cloneDeep from 'lodash/cloneDeep';
 import isEqual from 'lodash/isEqual';
 import pick from 'lodash/pick';
+import difference from 'lodash/difference';
 
 import * as types from './types';
 import database from '../database';
@@ -279,6 +280,18 @@ const syncProject = (dispatch, getState) => {
   const project = state.application.schemaVersion > 0
     ? getProjectWithConditions(state.project)
     : state.project;
+
+  const removedProjectSpecies = difference(state.savedProject.species, project.species);
+
+  // When removing species from the top level, we also remove them from each protocol so that it displays as changed.
+  // Leave protocol.speciesDetails intact so that it can be recovered by re-enabling the removed species at both project
+  // and protocol level.
+  if (state.application.schemaVersion > 0 && removedProjectSpecies.length > 0) {
+    project.protocols = project.protocols.map(protocol => {
+      protocol.species = protocol.species.filter(species => !removedProjectSpecies.includes(species));
+      return protocol;
+    });
+  }
 
   const patch = jsondiff.diff(state.savedProject, project);
   if (!patch) {
