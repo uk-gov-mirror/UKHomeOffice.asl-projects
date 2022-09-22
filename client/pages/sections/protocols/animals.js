@@ -18,6 +18,18 @@ import Repeater from '../../../components/repeater';
 
 const allSpecies = flatten(Object.values(SPECIES));
 
+function getProjectSpecies(project) {
+  return flatten([
+    ...(project.species || []).map(s => {
+      if (s.indexOf('other') > -1) {
+        return project[`species-${s}`];
+      }
+      return s;
+    }),
+    ...(project['species-other'] || [])
+  ]);
+}
+
 function normaliseValues(speciesDetails) {
   return speciesDetails.map(details => {
     if (details.value) {
@@ -34,9 +46,10 @@ function normaliseValues(speciesDetails) {
 
 export function filterSpeciesByActive(protocol, project) {
   const { species = [], speciesDetails = [] } = protocol;
+  const projectSpecies = getProjectSpecies(project);
 
   return normaliseValues(speciesDetails).filter(s => {
-    return species.includes(s.value) || species.includes(s.name);
+    return (species.includes(s.value) || species.includes(s.name)) && (projectSpecies.includes(s.value) || projectSpecies.includes(s.name));
   });
 }
 
