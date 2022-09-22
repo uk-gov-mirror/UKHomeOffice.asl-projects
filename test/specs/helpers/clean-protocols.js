@@ -1,10 +1,10 @@
 import assert from 'assert';
-import helper from '../../../client/helpers/clean-protocols';
+import cleanProtocols from '../../../client/helpers/clean-protocols';
 
 describe('clean-protocols', () => {
 
   it('removes unused establishments from protocols', () => {
-    const project = {
+    const state = {
       title: 'Test project',
       objectives: [],
       protocols: [
@@ -18,7 +18,7 @@ describe('clean-protocols', () => {
         }
       ]
     };
-    const props = {
+    const changed = {
       establishments: [
         { 'establishment-name': 'University of Croydon' }
       ]
@@ -26,7 +26,7 @@ describe('clean-protocols', () => {
     const establishment = {
       name: 'University of Cheese'
     };
-    assert.deepEqual(helper(project, props, establishment), {
+    assert.deepEqual(cleanProtocols({ state, changed, establishment }), {
       title: 'Test project',
       objectives: [],
       establishments: [
@@ -45,11 +45,11 @@ describe('clean-protocols', () => {
   });
 
   it('does not throw an error if project has no objectives', () => {
-    const project = {
+    const state = {
       title: 'Test project',
       protocols: []
     };
-    const props = {
+    const changed = {
       establishments: [
         { 'establishment-name': 'University of Croydon' }
       ]
@@ -57,11 +57,47 @@ describe('clean-protocols', () => {
     const establishment = {
       name: 'University of Cheese'
     };
-    assert.deepEqual(helper(project, props, establishment), {
+    assert.deepEqual(cleanProtocols({ state, changed, establishment }), {
       title: 'Test project',
       protocols: [],
       establishments: [
         { 'establishment-name': 'University of Croydon' }
+      ]
+    });
+  });
+
+  it('removes species from protocols when they are removed from the project', () => {
+    const savedState = {
+      title: 'Test project',
+      species: ['mice', 'rats'],
+      protocols: [
+        {
+          species: ['mice', 'rats']
+        }
+      ]
+    };
+    const state = {
+      title: 'Test project',
+      species: ['mice'],
+      protocols: [
+        {
+          species: ['mice', 'rats']
+        }
+      ]
+    };
+    const changed = {
+      species: ['mice']
+    };
+    const establishment = {
+      name: 'University of Cheese'
+    };
+    assert.deepEqual(cleanProtocols({ state, savedState, changed, establishment }), {
+      title: 'Test project',
+      species: ['mice'],
+      protocols: [
+        {
+          species: ['mice']
+        }
       ]
     });
   });

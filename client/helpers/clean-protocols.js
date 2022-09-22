@@ -1,27 +1,36 @@
 import intersection from 'lodash/intersection';
+import difference from 'lodash/difference';
 import getLocations from './get-locations';
 
-export default function cleanProtocols (state, props = {}, establishment, schemaVersion) {
-  const project = { ...state, ...props };
+export default function cleanProtocols({ state, savedState, changed = {}, establishment, schemaVersion }) {
+  const project = { ...state, ...changed };
 
   if (schemaVersion === 0) {
     return project;
   }
 
-  if (!props.objectives && !props.establishments && !props.polesList && !props.transferToEstablishmentName) {
+  if (!changed.objectives && !changed.establishments && !changed.polesList && !changed.transferToEstablishmentName && !changed.species) {
     return project;
   }
 
   project.protocols = project.protocols || [];
 
+  if (changed.species) {
+    const removedProjectSpecies = difference(savedState.species, changed.species);
+
+    project.protocols.forEach(protocol => {
+      protocol.species = protocol.species.filter(species => !removedProjectSpecies.includes(species));
+    });
+  }
+
   const locations = getLocations(project, establishment);
   const objectives = (project.objectives || []).map(o => o.title);
 
   project.protocols.forEach(protocol => {
-    if (props.objectives) {
+    if (changed.objectives) {
       protocol.objectives = intersection(protocol.objectives, objectives);
     }
-    if (props.establishments || props.polesList || props.transferToEstablishmentName) {
+    if (changed.establishments || changed.polesList || changed.transferToEstablishmentName) {
       protocol.locations = intersection(protocol.locations, locations);
     }
   });

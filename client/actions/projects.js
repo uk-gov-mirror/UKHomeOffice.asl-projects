@@ -381,10 +381,10 @@ const debouncedSyncProject = debounce((...args) => {
   return syncProject(...args);
 }, 2000, { maxWait: 20000, leading: false });
 
-export const ajaxSync = props => {
+export const ajaxSync = changed => {
   return (dispatch, getState) => {
-    const { project, application: { establishment, schemaVersion } } = getState();
-    const newState = cleanProtocols(project, props, establishment, schemaVersion);
+    const { project, savedProject, application: { establishment, schemaVersion } } = getState();
+    const newState = cleanProtocols({ state: project, savedState: savedProject, changed, establishment, schemaVersion });
 
     dispatch(updateProject(newState));
     return debouncedSyncProject(dispatch, getState);
