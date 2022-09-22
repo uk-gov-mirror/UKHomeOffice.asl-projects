@@ -3,7 +3,6 @@ import debounce from 'lodash/debounce';
 import cloneDeep from 'lodash/cloneDeep';
 import isEqual from 'lodash/isEqual';
 import pick from 'lodash/pick';
-import difference from 'lodash/difference';
 
 import * as types from './types';
 import database from '../database';
@@ -281,18 +280,6 @@ const syncProject = (dispatch, getState) => {
     ? getProjectWithConditions(state.project)
     : state.project;
 
-  const removedProjectSpecies = difference(state.savedProject.species, project.species);
-
-  // When removing species from the top level, we also remove them from each protocol so that it displays as changed.
-  // Leave protocol.speciesDetails intact so that it can be recovered by re-enabling the removed species at both project
-  // and protocol level.
-  if (state.application.schemaVersion > 0 && removedProjectSpecies.length > 0) {
-    project.protocols = project.protocols.map(protocol => {
-      protocol.species = protocol.species.filter(species => !removedProjectSpecies.includes(species));
-      return protocol;
-    });
-  }
-
   const patch = jsondiff.diff(state.savedProject, project);
   if (!patch) {
     return Promise.resolve();
@@ -394,10 +381,10 @@ const debouncedSyncProject = debounce((...args) => {
   return syncProject(...args);
 }, 2000, { maxWait: 20000, leading: false });
 
-export const ajaxSync = props => {
+export const ajaxSync = changed => {
   return (dispatch, getState) => {
-    const { project, application: { establishment, schemaVersion } } = getState();
-    const newState = cleanProtocols(project, props, establishment, schemaVersion);
+    const { project, savedProject, application: { establishment, schemaVersion } } = getState();
+    const newState = cleanProtocols({ state: project, savedState: savedProject, changed, establishment, schemaVersion });
 
     dispatch(updateProject(newState));
     return debouncedSyncProject(dispatch, getState);
