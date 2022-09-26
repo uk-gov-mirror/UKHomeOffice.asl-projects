@@ -24,7 +24,7 @@ export default {
       versions: [
         {
           title: 'POLEs',
-          content: 'The assigned inspector must be notified before starting any procedures at a place other than a licensed establishment (POLE) authorised under this licence, in order that the inspector may be present if she or he wishes. The minimum period of notice to be given, the information to be provided and the means of notification must be agreed in writing with the Inspector at least 7 days before regulated procedures at a POLE are started.'
+          content: 'ASRU must be notified via ASRUPoleNotification@homeoffice.gov.uk before starting any procedures at a place other than a licensed establishment (POLE) authorised under this licence, in order that an inspector may be present if ASRU wishes. The minimum period of notice to be given, the information to be provided, and the means of notification must be agreed in writing with ASRU at least 7 days before regulated procedures at a POLE are due to start. '
         }
       ]
     },
@@ -344,7 +344,7 @@ For studies requested for other worldwide authorities, for example the US Food a
         {
           title: 'Reporting requirement',
           requiresEditing: true,
-          content: 'A report in writing to [ASRUComplianceAssurance@homeoffice.gov.uk](ASRUComplianceAssurance@homeoffice.gov.uk) or orally to <<<INSERT name of assigned inspector HERE>>>  on the project shall be made by <<<INSERT date HERE>>>  or after <<<INSERT number HERE>>> animals have been used, whichever is the sooner. The report shall contain <<<INSERT required content of report HERE>>>.'
+          content: 'A report in writing to ASRUEnforcement@homeoffice.gov.uk on the project shall be made by <<<INSERT date HERE>>> or after <<<INSERT number HERE>>> animals have been used, whichever is the sooner. The report shall contain <<<INSERT required content of report HERE>>>.'
         }
       ]
     },
@@ -353,7 +353,7 @@ For studies requested for other worldwide authorities, for example the US Food a
       versions: [
         {
           title: 'Inspection requirement',
-          content: 'The licence holder shall ensure that the assigned inspector is notified before regulated procedures are applied at any place specified in this licence to enable the inspector to be present if he/she wishes. The minimum periods of notice to be given, the information to be provided, and the means of notification shall be agreed in writing with the Inspector at least 7 days before commencement of regulated procedures in this project.'
+          content: 'The licence holder shall ensure that ASRU is notified via ASRUEnforcement@homeoffice.gov.uk before regulated procedures are applied at any place specified in this licence to enable an inspector to be present if ASRU wishes. The minimum periods of notice to be given, the information to be provided, and the means of notification shall be agreed in writing with ASRU at least 7 days before commencement of regulated procedures in this project.'
         }
       ]
     },
@@ -386,6 +386,15 @@ For studies requested for other worldwide authorities, for example the US Food a
           title: 'Minimising suffering for wild or feral animals',
           requiresEditing: true,
           content: 'In accordance with paragraph 25(5) of Schedule 2C to the Act, the words “...and, unless the Secretary of State has agreed otherwise, action has been taken to minimise the suffering of the animal” in part (b) of Standard Condition 14 (b) of this licence shall not apply to wild <<<INSERT animal type(s) HERE>>> or feral <<<INSERT animal type(s) HERE>>> undergoing procedures under protocol <<<INSERT protocol number(s) HERE>>> of the licence for the purpose of the programme of work specified and justified in the licence.'
+        }
+      ]
+    },
+    cosmetics: {
+      type: 'condition',
+      versions: [
+        {
+          title: 'Cosmetic use',
+          content: 'The testing in animals of cosmetic ingredients or finished cosmetic products for meeting the requirements of the Cosmetics Regulations themselves is not authorised, unless it is for the testing of cosmetic ingredients and products to meet the requirements of other UK Regulations for example UK REACH provided all other requirements under ASPA are met.'
         }
       ]
     }
