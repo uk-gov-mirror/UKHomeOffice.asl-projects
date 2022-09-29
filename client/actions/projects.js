@@ -282,6 +282,8 @@ const syncProject = (dispatch, getState) => {
 
   const patch = jsondiff.diff(state.savedProject, project);
   if (!patch) {
+    dispatch(updateSavedProject(project));
+    dispatch(doneSyncing());
     return Promise.resolve();
   }
 
