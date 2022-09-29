@@ -19,6 +19,9 @@ export default function cleanProtocols({ state, savedState, changed = {}, establ
     const removedProjectSpecies = difference(savedState.species, changed.species);
 
     project.protocols.forEach(protocol => {
+      if (!Array.isArray(protocol.species)) {
+        return;
+      }
       protocol.species = protocol.species.filter(species => !removedProjectSpecies.includes(species));
     });
   }
