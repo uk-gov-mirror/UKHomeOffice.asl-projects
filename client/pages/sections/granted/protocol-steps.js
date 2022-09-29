@@ -2,12 +2,13 @@ import React, { Fragment } from 'react';
 import { Value } from 'slate';
 import Review from '../../../components/review';
 import ReviewFields from '../../../components/review-fields';
+import {hydrateSteps} from '../../../helpers/reusable-steps';
 
 const Step = ({ id, index, fields, prefix, ...props }) => {
   return (
     <div className="granted-step" id={id}>
       <div className="header">
-        <h2 className="step-number">Step {index + 1} <span className="smaller">({ props.optional ? 'Optional' : 'Mandatory'})</span></h2>
+        <h2 className="step-number">Step {index + 1} {props.reference && (<Fragment>: { props.reference }</Fragment>)} <span className="smaller">({ props.optional ? 'Optional' : 'Mandatory'})</span></h2>
         <Review
           {...fields.find(f => f.name === 'title')}
           label=""
@@ -41,7 +42,8 @@ const Step = ({ id, index, fields, prefix, ...props }) => {
   );
 };
 
-const Steps = ({ values, fields, pdf, prefix }) => {
+const Steps = ({ values, fields, pdf, prefix, project }) => {
+  const [ steps ] = hydrateSteps(project.protocols, values.steps, project.reusableSteps || {});
   const getStepTitle = title => {
     const untitled = <em>Untitled step</em>;
     if (!title) {
@@ -73,10 +75,10 @@ const Steps = ({ values, fields, pdf, prefix }) => {
             <h3 id="step-index">Index of steps</h3>
             <ol>
               {
-                values.steps.map((step, index) => (
+                steps.map((step, index) => (
                   <li key={step.id} className="step-index-item">
                     <span>{index + 1}. </span>
-                    <a href={`#${step.id}`}>{getStepTitle(step.title)}</a><br />
+                    <a href={`#${step.id}`}>{step.reference || getStepTitle(step.title)}</a><br />
                     <span>{step.optional ? 'Optional' : 'Mandatory'}</span>
                   </li>
                 ))
@@ -87,7 +89,7 @@ const Steps = ({ values, fields, pdf, prefix }) => {
         )
       }
       {
-        values.steps.map((step, index) => <Step key={step.id} {...step} index={index} fields={fields} pdf={pdf} prefix={`${prefix}steps.${step.id}.`} />)
+        steps.map((step, index) => <Step key={step.id} {...step} index={index} fields={fields} pdf={pdf} prefix={`${prefix}steps.${step.id}.`} />)
       }
     </div>
   );

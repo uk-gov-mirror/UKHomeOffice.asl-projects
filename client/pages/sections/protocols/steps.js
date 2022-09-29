@@ -14,6 +14,8 @@ import NewComments from '../../../components/new-comments';
 import ChangedBadge from '../../../components/changed-badge';
 import {v4 as uuid} from 'uuid';
 import Review from '../../../components/review';
+import {hydrateSteps} from '../../../helpers/reusable-steps';
+import {saveReusableSteps} from '../../../actions/projects';
 
 function isNewStep(step) {
   return step && isEqual(Object.keys(step).filter(a => a !== 'addExisting'), ['id']);
@@ -71,7 +73,7 @@ class Step extends Component {
 
   editThisStep = e => {
     e.preventDefault();
-    this.props.updateItem({ completed: false, reference: `${this.props.values.reference} (edited)`, reusableStepId: null, existingValues: this.props.values });
+    this.props.updateItem({ completed: false, reference: `${this.props.values.reference} (edited)`, reusableStepId: null, saved: false, existingValues: this.props.values });
     this.scrollToStep();
   }
 
@@ -136,7 +138,7 @@ class Step extends Component {
     ).reduce((total, comments) => total + (comments || []).length, 0);
 
     const completed = !editable || values.completed;
-    let editingReusableStep = !completed && values.existingValues && values.reusableStepId;
+    const editingReusableStep = !completed && values.existingValues && values.reusableStepId;
     const step = <>
       <section
         className={classnames('step', { completed, editable })}
@@ -300,11 +302,11 @@ const StepSelector = ({ reusableSteps, values, onSaveSelection, length, onCancel
     label: 'Select step',
     type: 'checkbox',
     className: 'smaller',
-    options: uniqBy(reusableSteps, 'step.id')
+    options: uniqBy(reusableSteps, 'id')
       .map(reusableStep => {
         return {
-          label: reusableStep.step.reference,
-          value: reusableStep.step.id
+          label: reusableStep.reference,
+          value: reusableStep.id
         };
       })
   }];
@@ -330,45 +332,9 @@ const StepSelector = ({ reusableSteps, values, onSaveSelection, length, onCancel
   </Fragment>;
 };
 
-export default function Steps({ values, prefix, updateItem, editable, ...props }) {
+export default function Steps({ values, prefix, updateItem, editable, project, ...props }) {
   const isReviewStep = parseInt(useParams().step, 10) === 1;
-  const reusableSteps = (props.protocols || [])
-    .flatMap(protocol => (protocol.reusableSteps || [])
-      .map((step, index) => {
-        return { protocol, step, protocolNumber: index + 1 };
-      })
-    );
-
-  const reusableStepsInAllProtocols =
-    (props.protocols || [])
-      .flatMap((protocol, index) => (protocol.steps || [])
-        .filter(step => !!step.reusableStepId)
-        .map(step => {
-          return { reusableStepId: step.reusableStepId, protocolIndex: index + 1 };
-        })
-      )
-      .reduce((map, reusableStep) => {
-        if (!map[reusableStep.reusableStepId]) {
-          map[reusableStep.reusableStepId] = [];
-        }
-        map[reusableStep.reusableStepId].push(reusableStep.protocolIndex);
-        return map;
-      }, {});
-
-  const allReusableStepsById = reusableSteps
-    .reduce((map, stepWithProtocol) => {
-      map[stepWithProtocol.step.id] = stepWithProtocol;
-      return map;
-    }, {});
-
-  const steps = (values.steps || []).filter(Boolean)
-    .map(step => {
-      if (step.reusableStepId) {
-        const reusableStep = {...allReusableStepsById[step.reusableStepId]?.step, usedInProtocols: reusableStepsInAllProtocols[step.reusableStepId]};
-        return { ...step, ...reusableStep };
-      }
-      return step;
-    });
+  const [ steps, reusableSteps ] = hydrateSteps(props.protocols, values.steps, project.reusableSteps || {});
 
   const lastStepIsNew = isNewStep(steps[steps.length - 1]);
 
@@ -382,20 +348,22 @@ export default function Steps({ values, prefix, updateItem, editable, ...props }
         prefix={prefix}
         items={steps}
         onSave={steps => {
-          // Extract reusable to own field
-          const reusableSteps = steps.filter(step => step.reusable)
+          // Extract reusable steps to save
+          // Update reusableSteps on project only when they are complete, or have previously been saved
+          const reusableSteps = steps.filter(step => step.reusable && (step.completed || step.saved))
             .map(reusableStep => {
-              return { ...reusableStep };
+              return { ...reusableStep, id: reusableStep.reusableStepId || reusableStep.id, saved: true };
             });
 
           const mappedSteps = steps.map(step => {
-            if (step.reusable) {
-              return { id: step.id, reusableStepId: step.id };
+            if (step.reusable && (step.completed || step.saved)) {
+              return { id: step.id, reusableStepId: step.reusableStepId || step.id };
             }
             return step;
           });
 
-          updateItem({ steps: mappedSteps, reusableSteps });
+          props.dispatch(saveReusableSteps(reusableSteps));
+          updateItem({ steps: mappedSteps });
         }}
         addAnother={!props.pdf && !values.deleted && editable && !lastStepIsNew}
         {...props}

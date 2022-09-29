@@ -166,12 +166,14 @@ const mapStateToProps = ({
     showConditions,
     isGranted,
     isFullApplication
-  }
+  },
+  project
 }, { sections }) => ({
   schemaVersion,
   showConditions,
   isGranted,
   isFullApplication,
+  project,
   // show all sections for legacy
   sections: isGranted && !isFullApplication && schemaVersion !== 0
     ? pickBy(sections, section => section.granted)
