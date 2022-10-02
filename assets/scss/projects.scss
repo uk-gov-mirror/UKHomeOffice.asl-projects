@@ -985,6 +985,38 @@ html.modal-open, html.modal-open body {
         background: $white;
       }
     }
+
+    .review-step {
+      margin-bottom: $govuk-gutter;
+
+      .expandable {
+        > .header {
+          background-color: $mid-grey;
+
+          h3 {
+            margin-bottom: 10px;
+          }
+
+          .title:before {
+            content: none;
+          }
+
+          &:hover {
+            background-color: #f3f2f1;
+          }
+        }
+
+        > .content {
+          padding: $govuk-gutter-half;
+          background: $mid-grey;
+
+          > .review {
+            background-color: $white;
+            padding: $govuk-gutter-half;
+          }
+        }
+      }
+    }
   }
 
   .accordion {

@@ -1,8 +1,7 @@
 import React, { Fragment } from 'react';
-import { Value } from 'slate';
 import Review from '../../../components/review';
 import ReviewFields from '../../../components/review-fields';
-import {hydrateSteps} from '../../../helpers/reusable-steps';
+import {getStepTitle, hydrateSteps} from '../../../helpers/steps';
 
 const Step = ({ id, index, fields, prefix, ...props }) => {
   return (
@@ -44,25 +43,6 @@ const Step = ({ id, index, fields, prefix, ...props }) => {
 
 const Steps = ({ values, fields, pdf, prefix, project }) => {
   const [ steps ] = hydrateSteps(project.protocols, values.steps, project.reusableSteps || {});
-  const getStepTitle = title => {
-    const untitled = <em>Untitled step</em>;
-    if (!title) {
-      return untitled;
-    }
-
-    if (typeof title === 'string') {
-      try {
-        title = JSON.parse(title);
-      } catch (e) {
-        return untitled;
-      }
-    }
-
-    const value = Value.fromJSON(title);
-    return value.document.text && value.document.text !== ''
-      ? value.document.text
-      : untitled;
-  };
 
   return (
     <div className="granted-steps">

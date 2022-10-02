@@ -14,8 +14,9 @@ import NewComments from '../../../components/new-comments';
 import ChangedBadge from '../../../components/changed-badge';
 import {v4 as uuid} from 'uuid';
 import Review from '../../../components/review';
-import {hydrateSteps} from '../../../helpers/reusable-steps';
+import {getStepTitle, hydrateSteps} from '../../../helpers/steps';
 import {saveReusableSteps} from '../../../actions/projects';
+import Expandable from '../../../components/expandable';
 
 function isNewStep(step) {
   return step && isEqual(Object.keys(step).filter(a => a !== 'addExisting'), ['id']);
@@ -30,6 +31,10 @@ function renderProtocols(values) {
 }
 
 class Step extends Component {
+  state = {
+    expanded: false
+  }
+
   constructor(options) {
     super(options);
     this.step = createRef();
@@ -106,6 +111,10 @@ class Step extends Component {
     this.props.moveDown();
   }
 
+  toggleExpanded = () => {
+    this.setState({ expanded: !this.state.expanded });
+  }
+
   componentDidMount() {
     if (this.props.protocolState && !isUndefined(this.props.protocolState.sectionItem)) {
       const activeStep = this.props.protocolState.sectionItem;
@@ -139,6 +148,71 @@ class Step extends Component {
 
     const completed = !editable || values.completed;
     const editingReusableStep = !completed && values.existingValues && values.reusableStepId;
+    const stepContent = <>{
+      completed && values.title && (
+        <ReviewFields
+          fields={[fields.find(f => f.name === 'title')]}
+          values={{ title: values.title }}
+          prefix={this.props.prefix}
+          editLink={`0#${this.props.prefix}`}
+          protocolId={protocol.id}
+          readonly={!isReviewStep}
+        />
+      )
+    }
+    {
+      !completed && !deleted
+        ? <Fragment>
+          {!(editingReusableStep) ? <Fieldset
+            fields={fields}
+            prefix={prefix}
+            onFieldChange={(key, value) => updateItem({ [key]: value })}
+            values={values}
+          /> : <Fragment>
+            <Fieldset
+              fields={fields.filter(f => f.name !== 'reusable')}
+              prefix={prefix}
+              onFieldChange={(key, value) => updateItem({ [key]: value })}
+              values={values}
+            />
+            <Review
+              {...fields.find(f => f.name === 'reusable')}
+              value={values.existingValues.reusable}
+              readonly={true}
+              className={'reusable'}
+            />
+            <Warning>You cannot change this answer when editing all instances of this step.</Warning>
+          </Fragment>
+          }
+          <p className="control-panel">
+            <Button onClick={this.saveStep}>Save step</Button>
+            {
+              length > 1 && <Button className="link" onClick={this.removeItem}>Remove step</Button>
+            }
+            {
+              values.existingValues && <Button className="link" onClick={this.cancelItem}>Cancel</Button>
+            }
+          </p>
+        </Fragment>
+        : <div className="review">
+          <ReviewFields
+            fields={fields.filter(f => f.name !== 'title')}
+            values={values}
+            prefix={this.props.prefix}
+            editLink={`0#${this.props.prefix}`}
+            readonly={!isReviewStep}
+            protocolId={protocol.id}
+          />
+          {
+            !values.reusable && editable && !deleted && <a href="#" onClick={this.editStep}>Edit step</a>
+          }
+          {
+            values.reusable && editable && !deleted && (<><a href="#" onClick={this.editThisStep}>Edit just this
+              step</a> | <a href="#" onClick={this.editReusableStep}>Edit every instance of this step</a></>)
+          }
+        </div>
+    }</>;
+
     const step = <>
       <section
         className={classnames('step', { completed, editable })}
@@ -168,76 +242,16 @@ class Step extends Component {
               <span className="light smaller">{` (${values.optional === true ? 'optional' : 'mandatory'})`}</span>
             }
           </h3>
-          {
-            completed && values.title && (
-              <ReviewFields
-                fields={[fields.find(f => f.name === 'title')]}
-                values={{ title: values.title }}
-                prefix={this.props.prefix}
-                editLink={`0#${this.props.prefix}`}
-                protocolId={protocol.id}
-                readonly={!isReviewStep}
-              />
-            )
-          }
         </Fragment>
         {
-          editingReusableStep && (<Warning>{`You are editing all instances of this step. The changes will also appear in protocols ${(renderProtocols(values))}.`}</Warning>)
+          editingReusableStep && (
+            <Warning>{`You are editing all instances of this step. The changes will also appear in protocols ${(renderProtocols(values))}.`}</Warning>)
         }
         {
-          !completed && values.existingValues && !values.reusableStepId && (<Warning>{`You are editing only this instance of this step. Changes made to this step will not appear where the '${values.existingValues.reference}' step is reused on protocols ${(renderProtocols(values))}.`}</Warning>)
+          !completed && values.existingValues && !values.reusableStepId && (
+            <Warning>{`You are editing only this instance of this step. Changes made to this step will not appear where the '${values.existingValues.reference}' step is reused on protocols ${(renderProtocols(values))}.`}</Warning>)
         }
-        {
-          !completed && !deleted
-            ? <Fragment>
-              {!(editingReusableStep) ? <Fieldset
-                fields={fields}
-                prefix={prefix}
-                onFieldChange={(key, value) => updateItem({ [key]: value })}
-                values={values}
-              /> : <Fragment>
-                <Fieldset
-                  fields={fields.filter(f => f.name !== 'reusable')}
-                  prefix={prefix}
-                  onFieldChange={(key, value) => updateItem({ [key]: value })}
-                  values={values}
-                />
-                <Review
-                  {...fields.find(f => f.name === 'reusable')}
-                  value={values.existingValues.reusable}
-                  readonly={true}
-                  className={'reusable'}
-                />
-                <Warning>You cannot change this answer when editing all instances of this step.</Warning>
-              </Fragment>
-              }
-              <p className="control-panel">
-                <Button onClick={this.saveStep}>Save step</Button>
-                {
-                  length > 1 && <Button className="link" onClick={this.removeItem}>Remove step</Button>
-                }
-                {
-                  values.existingValues && <Button className="link" onClick={this.cancelItem}>Cancel</Button>
-                }
-              </p>
-            </Fragment>
-            : <div className="review">
-              <ReviewFields
-                fields={fields.filter(f => f.name !== 'title')}
-                values={values}
-                prefix={this.props.prefix}
-                editLink={`0#${this.props.prefix}`}
-                readonly={!isReviewStep}
-                protocolId={protocol.id}
-              />
-              {
-                !values.reusable && editable && !deleted && <a href="#" onClick={this.editStep}>Edit step</a>
-              }
-              {
-                values.reusable && editable && !deleted && (<><a href="#" onClick={this.editThisStep}>Edit just this step</a> | <a href="#" onClick={this.editReusableStep}>Edit every instance of this step</a></>)
-              }
-            </div>
-        }
+        {stepContent}
       </section>
     </>;
 
@@ -291,6 +305,24 @@ class Step extends Component {
       </Fragment>);
     }
 
+    if (isReviewStep) {
+      return (
+        <section className={'review-step'}>
+          <NewComments comments={relevantComments}/>
+          <ChangedBadge fields={[prefix.substr(0, prefix.length - 1)]} protocolId={protocol.id}/>
+          <Expandable expanded={this.state.expanded} onHeaderClick={this.toggleExpanded}>
+            <Fragment>
+              <p className={'toggles float-right'}>
+                <Button className="link no-wrap" onClick={this.toggleExpanded}>{this.state.expanded ? 'Close' : 'Open'} step</Button>
+              </p>
+              {values.reference ? <h3 className={'title inline'}>{values.reference}</h3> : <h3 className={'title no-wrap'}>{getStepTitle(values.title)}</h3>}
+              <h4 className="light">{values.optional === true ? 'Optional' : 'Mandatory'}</h4>
+            </Fragment>
+            {stepContent}
+          </Expandable>
+        </section>
+      );
+    }
     return step;
   }
 }
@@ -332,52 +364,61 @@ const StepSelector = ({ reusableSteps, values, onSaveSelection, length, onCancel
   </Fragment>;
 };
 
-export default function Steps({ values, prefix, updateItem, editable, project, ...props }) {
-  const isReviewStep = parseInt(useParams().step, 10) === 1;
+const StepsRepeater = ({ values, prefix, updateItem, editable, project, isReviewStep, ...props }) => {
   const [ steps, reusableSteps ] = hydrateSteps(props.protocols, values.steps, project.reusableSteps || {});
 
   const lastStepIsNew = isNewStep(steps[steps.length - 1]);
+
+  return (<Repeater
+    type="steps"
+    singular="step"
+    prefix={prefix}
+    items={steps}
+    onSave={steps => {
+      // Extract reusable steps to save
+      // Update reusableSteps on project only when they are complete, or have previously been saved
+      const reusableSteps = steps.filter(step => step.reusable && (step.completed || step.saved))
+        .map(reusableStep => {
+          return { ...reusableStep, id: reusableStep.reusableStepId || reusableStep.id, saved: true };
+        });
+
+      const mappedSteps = steps.map(step => {
+        if (step.reusable && (step.completed || step.saved)) {
+          return { id: step.id, reusableStepId: step.reusableStepId || step.id };
+        }
+        return step;
+      });
+
+      props.dispatch(saveReusableSteps(reusableSteps));
+      updateItem({ steps: mappedSteps });
+    }}
+    addAnother={!props.pdf && !values.deleted && editable && !lastStepIsNew}
+    {...props}
+  >
+    <Step
+      editable={editable}
+      deleted={values.deleted}
+      isReviewStep={isReviewStep}
+      protocol={values}
+      reusableSteps={reusableSteps}
+      {...props}
+      parentUpdateItem={updateItem}
+    />
+  </Repeater>);
+};
+
+export default function Steps(props) {
+  const isReviewStep = parseInt(useParams().step, 10) === 1;
+
+  if (isReviewStep) {
+    return (<StepsRepeater {...props} isReviewStep={isReviewStep} />);
+  }
 
   return (
     <div className="steps">
       <p className="grey">{props.hint}</p>
       <br/>
-      <Repeater
-        type="steps"
-        singular="step"
-        prefix={prefix}
-        items={steps}
-        onSave={steps => {
-          // Extract reusable steps to save
-          // Update reusableSteps on project only when they are complete, or have previously been saved
-          const reusableSteps = steps.filter(step => step.reusable && (step.completed || step.saved))
-            .map(reusableStep => {
-              return { ...reusableStep, id: reusableStep.reusableStepId || reusableStep.id, saved: true };
-            });
-
-          const mappedSteps = steps.map(step => {
-            if (step.reusable && (step.completed || step.saved)) {
-              return { id: step.id, reusableStepId: step.reusableStepId || step.id };
-            }
-            return step;
-          });
-
-          props.dispatch(saveReusableSteps(reusableSteps));
-          updateItem({ steps: mappedSteps });
-        }}
-        addAnother={!props.pdf && !values.deleted && editable && !lastStepIsNew}
-        {...props}
-      >
-        <Step
-          editable={editable}
-          deleted={values.deleted}
-          isReviewStep={isReviewStep}
-          protocol={values}
-          reusableSteps={reusableSteps}
-          {...props}
-          parentUpdateItem={updateItem}
-        />
-      </Repeater>
+      <StepsRepeater {...props} isReviewStep={isReviewStep} />
     </div>
   );
 }
