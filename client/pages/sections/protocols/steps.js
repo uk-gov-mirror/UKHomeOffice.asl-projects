@@ -22,7 +22,7 @@ function isNewStep(step) {
   return step && isEqual(Object.keys(step).filter(a => a !== 'addExisting'), ['id']);
 }
 
-function renderProtocols(values) {
+function renderUsedInProtocols(values) {
   let usedInProtocols = uniq(values.usedInProtocols || []);
   if (usedInProtocols.length < 2) {
     return usedInProtocols;
@@ -245,11 +245,11 @@ class Step extends Component {
         </Fragment>
         {
           editingReusableStep && (
-            <Warning>{`You are editing all instances of this step. The changes will also appear in protocols ${(renderProtocols(values))}.`}</Warning>)
+            <Warning>{`You are editing all instances of this step. The changes will also appear in protocols ${(renderUsedInProtocols(values))}.`}</Warning>)
         }
         {
           !completed && values.existingValues && !values.reusableStepId && (
-            <Warning>{`You are editing only this instance of this step. Changes made to this step will not appear where the '${values.existingValues.reference}' step is reused on protocols ${(renderProtocols(values))}.`}</Warning>)
+            <Warning>{`You are editing only this instance of this step. Changes made to this step will not appear where the '${values.existingValues.reference}' step is reused on protocols ${(renderUsedInProtocols(values))}.`}</Warning>)
         }
         {stepContent}
       </section>
