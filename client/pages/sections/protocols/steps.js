@@ -19,7 +19,7 @@ import {saveReusableSteps} from '../../../actions/projects';
 import Expandable from '../../../components/expandable';
 
 function isNewStep(step) {
-  return step && isEqual(Object.keys(step).filter(a => a !== 'addExisting'), ['id']);
+  return step && (isEqual(Object.keys(step).filter(a => a !== 'addExisting'), ['id']) || !isUndefined(step.addExisting));
 }
 
 function renderUsedInProtocols(values) {
@@ -66,7 +66,7 @@ class Step extends Component {
 
   saveStep = e => {
     e.preventDefault();
-    this.props.updateItem({ completed: true, existingValues: undefined });
+    this.props.updateItem({ completed: true, existingValues: undefined, addExisting: undefined });
     this.scrollToStep();
   }
 
@@ -218,8 +218,8 @@ class Step extends Component {
         className={classnames('step', { completed, editable })}
         ref={this.step}
       >
-        <NewComments comments={relevantComments}/>
-        <ChangedBadge fields={[prefix.substr(0, prefix.length - 1)]} protocolId={protocol.id}/>
+        <NewComments comments={relevantComments} />
+        <ChangedBadge fields={[ prefix.substr(0, prefix.length - 1) ]} protocolId={protocol.id} />
         <Fragment>
           {
             editable && completed && !deleted && (
@@ -308,8 +308,8 @@ class Step extends Component {
     if (isReviewStep) {
       return (
         <section className={'review-step'}>
-          <NewComments comments={relevantComments}/>
-          <ChangedBadge fields={[prefix.substr(0, prefix.length - 1)]} protocolId={protocol.id}/>
+          <NewComments comments={relevantComments} />
+          <ChangedBadge fields={[ prefix.substr(0, prefix.length - 1) ]} protocolId={protocol.id} />
           <Expandable expanded={this.state.expanded} onHeaderClick={this.toggleExpanded}>
             <Fragment>
               <p className={'toggles float-right'}>
