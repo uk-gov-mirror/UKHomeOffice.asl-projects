@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import {Button, Warning} from '@ukhomeoffice/react-components';
 
 import isUndefined from 'lodash/isUndefined';
-import {isEqual, pickBy, uniqBy, uniq} from 'lodash';
+import {isEqual, pickBy, uniqBy} from 'lodash';
 
 import ReviewFields from '../../../components/review-fields';
 import Repeater from '../../../components/repeater';
@@ -22,12 +22,11 @@ function isNewStep(step) {
   return step && (isEqual(Object.keys(step).filter(a => a !== 'addExisting'), ['id']) || !isUndefined(step.addExisting));
 }
 
-function renderUsedInProtocols(values) {
-  let usedInProtocols = uniq(values.usedInProtocols || []);
-  if (usedInProtocols.length < 2) {
-    return usedInProtocols;
+function renderUsedInProtocols(protocolIndexes) {
+  if (protocolIndexes.length < 2) {
+    return protocolIndexes;
   }
-  return `${usedInProtocols.slice(0, usedInProtocols.length - 1).join(',')} and ${usedInProtocols[usedInProtocols.length - 1]}`;
+  return `${protocolIndexes.slice(0, protocolIndexes.length - 1).join(',')} and ${protocolIndexes[protocolIndexes.length - 1]}`;
 }
 
 class Step extends Component {
@@ -243,14 +242,7 @@ class Step extends Component {
             }
           </h3>
         </Fragment>
-        {
-          editingReusableStep && (
-            <Warning>{`You are editing all instances of this step. The changes will also appear in protocols ${(renderUsedInProtocols(values))}.`}</Warning>)
-        }
-        {
-          !completed && values.existingValues && !values.reusableStepId && (
-            <Warning>{`You are editing only this instance of this step. Changes made to this step will not appear where the '${values.existingValues.reference}' step is reused on protocols ${(renderUsedInProtocols(values))}.`}</Warning>)
-        }
+        <EditStepWarning editingReusableStep={editingReusableStep} protocol={protocol} step={values} completed={completed}/>
         {stepContent}
       </section>
     </>;
@@ -306,6 +298,7 @@ class Step extends Component {
     }
 
     if (isReviewStep) {
+      const repeatedFrom = (values.usedInProtocols || []).length > 0 && values.usedInProtocols[0].protocolId !== protocol.id ? values.usedInProtocols[0].protocolNumber : undefined;
       return (
         <section className={'review-step'}>
           <NewComments comments={relevantComments} />
@@ -316,7 +309,7 @@ class Step extends Component {
                 <Button className="link no-wrap" onClick={this.toggleExpanded}>{this.state.expanded ? 'Close' : 'Open'} step</Button>
               </p>
               {values.reference ? <h3 className={'title inline'}>{values.reference}</h3> : <h3 className={'title no-wrap'}>{getStepTitle(values.title)}</h3>}
-              <h4 className="light">{values.optional === true ? 'Optional' : 'Mandatory'}</h4>
+              <h4 className="light">{values.optional === true ? 'Optional' : 'Mandatory'}{repeatedFrom ? ` - repeated from protocol ${repeatedFrom}` : ''}</h4>
             </Fragment>
             {stepContent}
           </Expandable>
@@ -362,6 +355,24 @@ const StepSelector = ({ reusableSteps, values, onSaveSelection, length, onCancel
       }
     </p>
   </Fragment>;
+};
+
+const EditStepWarning = ({ editingReusableStep, protocol, step, completed }) => {
+  const usedInProtocolIndexes = (protocol, step) =>
+    (step.usedInProtocols || [])
+      .filter(usedInProtocol => usedInProtocol.protocolId !== protocol.id)
+      .map(p => p.protocolNumber);
+
+  if (editingReusableStep) {
+    const protocolIndexes = usedInProtocolIndexes(protocol, step);
+    const usedInProtocolsMessage = protocolIndexes.length > 0 ? ` The changes will also appear in protocols ${(renderUsedInProtocols(protocolIndexes))}.` : '';
+    return (<Warning>{`You are editing all instances of this step.${usedInProtocolsMessage}`}</Warning>);
+  } else if (!completed && step.existingValues && !step.reusableStepId) {
+    const protocolIndexes = usedInProtocolIndexes(protocol, step);
+    const usedInProtocolsMessage = protocolIndexes.length > 0 ? `  Changes made to this step will not appear where the '${step.existingValues.reference}' step is reused on protocols ${(renderUsedInProtocols(protocolIndexes))}.` : '';
+    return (<Warning>{`You are editing only this instance of this step.${usedInProtocolsMessage}`}</Warning>);
+  }
+  return null;
 };
 
 const StepsRepeater = ({ values, prefix, updateItem, editable, project, isReviewStep, ...props }) => {
