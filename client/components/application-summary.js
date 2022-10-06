@@ -230,6 +230,9 @@ const ApplicationSummary = () => {
                   subsections.map(key => {
                     const subsection = section.subsections[key];
                     const fields = Object.values(fieldsBySection[key] || []);
+                    if (key === 'protocols') {
+                      fields.push('reusableSteps');
+                    }
                     if (subsection.repeats) {
                       fields.push(subsection.repeats);
                     }

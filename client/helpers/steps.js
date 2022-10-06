@@ -56,3 +56,8 @@ export const getStepTitle = title => {
     ? value.document.text
     : untitled;
 };
+
+export const reusableStepFieldKeys = (protocol) =>
+  (protocol.steps || [])
+    .filter(step => step.reusableStepId)
+    .map(reusableStep => `reusableSteps.${reusableStep.reusableStepId}`);

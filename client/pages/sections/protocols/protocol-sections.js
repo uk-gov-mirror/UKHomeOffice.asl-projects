@@ -15,6 +15,7 @@ import ReorderedBadge from '../../../components/reordered-badge';
 import { filterSpeciesByActive } from './animals';
 
 import { keepAlive } from '../../../actions/session';
+import { reusableStepFieldKeys } from '../../../helpers/steps';
 
 class ProtocolSections extends PureComponent {
   state = {
@@ -98,7 +99,7 @@ class ProtocolSections extends PureComponent {
             <Fragment>
               <NewProtocolBadge id={values.id} />
               <ReorderedBadge id={values.id} />
-              <ChangedBadge fields={[`protocols.${values.id}`]} protocolId={values.id} />
+              <ChangedBadge fields={[`protocols.${values.id}`, ...reusableStepFieldKeys(values)]} protocolId={values.id} />
             </Fragment>
           )
         }
