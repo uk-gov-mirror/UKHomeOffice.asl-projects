@@ -81,7 +81,7 @@ const getOpenSection = (protocolState, editable, sections) => {
 const getFieldKeys = (section, values) => {
   if (section.repeats) {
     // If steps then add the reusable steps to the field keys
-    const additionalReusableStepKeys = section.repeats === 'steps' ? reusableStepFieldKeys(values): [];
+    const additionalReusableStepKeys = section.repeats === 'steps' ? reusableStepFieldKeys(values) : [];
     return [`protocols.${values.id}.${section.repeats}`, ...additionalReusableStepKeys];
   }
   const flattenedFields = flattenReveals(section.fields || [], values);
