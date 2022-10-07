@@ -17,6 +17,7 @@ import Review from '../../../components/review';
 import {getStepTitle, hydrateSteps} from '../../../helpers/steps';
 import {saveReusableSteps} from '../../../actions/projects';
 import Expandable from '../../../components/expandable';
+import cloneDeep from 'lodash/cloneDeep';
 
 function isNewStep(step) {
   return step && (isEqual(Object.keys(step).filter(a => a !== 'addExisting'), ['id']) || !isUndefined(step.addExisting));
@@ -79,20 +80,19 @@ class Step extends Component {
 
   editThisStep = e => {
     e.preventDefault();
-    this.props.updateItem({ completed: false, reference: `${this.props.values.reference} (edited)`, reusableStepId: null, saved: false, existingValues: this.props.values });
+    this.props.updateItem({ completed: false, reference: `${this.props.values.reference} (edited)`, reusableStepId: uuid(), saved: false, existingValues: cloneDeep(this.props.values) });
     this.scrollToStep();
   }
 
   editReusableStep = e => {
     e.preventDefault();
-    this.props.updateItem({ completed: false, existingValues: this.props.values });
+    this.props.updateItem({ completed: false, existingValues: cloneDeep(this.props.values) });
     this.scrollToStep();
   }
 
   cancelItem = e => {
     e.preventDefault();
-    let updateItem = {...this.props.values.existingValues, existingValues: null};
-    this.props.updateItem(updateItem);
+    this.props.updateItem({ ...(cloneDeep(this.props.values.existingValues)), existingValues: undefined });
     this.scrollToStep();
   }
 
@@ -148,7 +148,7 @@ class Step extends Component {
     ).reduce((total, comments) => total + (comments || []).length, 0);
 
     const completed = !editable || values.completed;
-    const editingReusableStep = !completed && values.existingValues && values.reusableStepId;
+    const editingReusableStep = !completed && values.existingValues && values.reusableStepId && values.saved;
     const stepContent = <>{
       completed && values.title && (
         <ReviewFields
@@ -369,7 +369,7 @@ const EditStepWarning = ({ editingReusableStep, protocol, step, completed }) => 
     const protocolIndexes = usedInProtocolIndexes(protocol, step);
     const usedInProtocolsMessage = protocolIndexes.length > 0 ? ` The changes will also appear in protocols ${(renderUsedInProtocols(protocolIndexes))}.` : '';
     return (<Warning>{`You are editing all instances of this step.${usedInProtocolsMessage}`}</Warning>);
-  } else if (!completed && step.existingValues && !step.reusableStepId) {
+  } else if (!completed && step.existingValues && !step.saved) {
     const protocolIndexes = usedInProtocolIndexes(protocol, step);
     const usedInProtocolsMessage = protocolIndexes.length > 0 ? `  Changes made to this step will not appear where the '${step.existingValues.reference}' step is reused on protocols ${(renderUsedInProtocols(protocolIndexes))}.` : '';
     return (<Warning>{`You are editing only this instance of this step.${usedInProtocolsMessage}`}</Warning>);
