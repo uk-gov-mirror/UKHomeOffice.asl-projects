@@ -66,6 +66,8 @@ function Editable({ edited,
         value={state.content}
         onChange={onContentChange}
         autoExpand={true}
+        // do not add autofocus to the custom condition as it is loaded before you enable it
+        autoFocus={state.content !== ''}
       />
 
       {
