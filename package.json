@@ -31,7 +31,7 @@
     "@joefitter/slate-edit-list": "0.0.3",
     "@joefitter/slate-edit-table": "0.0.3",
     "@ukhomeoffice/frontend-toolkit": "^2.8.1",
-    "@ukhomeoffice/react-components": "^0.10.5",
+    "@ukhomeoffice/react-components": "^0.10.6",
     "classnames": "^2.2.6",
     "date-fns": "^1.30.1",
     "details-element-polyfill": "^2.3.0",
