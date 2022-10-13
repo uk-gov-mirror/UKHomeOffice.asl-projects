@@ -98,7 +98,7 @@ export function saveReusableSteps(reusableSteps) {
     const updatedReusableSteps = keyBy(reusableSteps, 'id');
     newState.reusableSteps = {...newState.reusableSteps, ...updatedReusableSteps};
     dispatch(updateProject(newState));
-    return debouncedSyncConditions(dispatch, getState);
+    return debouncedSyncProject(dispatch, getState);
   };
 }
 
