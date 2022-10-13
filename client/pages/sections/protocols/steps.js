@@ -92,7 +92,7 @@ class Step extends Component {
 
   cancelItem = e => {
     e.preventDefault();
-    this.props.updateItem({ ...(cloneDeep(this.props.values.existingValues)), existingValues: undefined });
+    this.props.updateItem({ ...(cloneDeep(this.props.values.existingValues)), existingValues: undefined, completed: true });
     this.scrollToStep();
   }
 
@@ -149,8 +149,10 @@ class Step extends Component {
 
     const completed = !editable || values.completed;
     const editingReusableStep = !completed && values.existingValues && values.reusableStepId && values.saved;
+    const stepEditable = editingReusableStep ? (values.existingValues.id === values.id) : !completed;
+
     const stepContent = <>{
-      completed && values.title && (
+      !stepEditable && values.title && (
         <ReviewFields
           fields={[fields.find(f => f.name === 'title')]}
           values={{ title: values.title }}
@@ -162,9 +164,9 @@ class Step extends Component {
       )
     }
     {
-      !completed && !deleted
+      stepEditable && !deleted
         ? <Fragment>
-          {!(editingReusableStep) ? <Fieldset
+          {!editingReusableStep ? <Fieldset
             fields={fields}
             prefix={changeFieldPrefix}
             onFieldChange={(key, value) => updateItem({ [key]: value })}
@@ -216,7 +218,7 @@ class Step extends Component {
 
     const step = <>
       <section
-        className={classnames('step', { completed, editable })}
+        className={classnames('step', { completed: !stepEditable, editable })}
         ref={this.step}
       >
         <NewComments comments={relevantComments} />
