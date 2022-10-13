@@ -190,7 +190,7 @@ class Step extends Component {
           <p className="control-panel">
             <Button onClick={this.saveStep}>Save step</Button>
             {
-              length > 1 && <Button className="link" onClick={this.removeItem}>Remove step</Button>
+              length > 1 && <Button className="link" onClick={this.removeItem}>{editingReusableStep ? 'Remove this step from this protocol' : 'Remove step'}</Button>
             }
             {
               values.existingValues && <Button className="link" onClick={this.cancelItem}>Cancel</Button>
