@@ -24,7 +24,7 @@ export default {
       versions: [
         {
           title: 'POLEs',
-          content: 'ASRU must be notified via ASRUPoleNotification@homeoffice.gov.uk before starting any procedures at a place other than a licensed establishment (POLE) authorised under this licence, in order that an inspector may be present if ASRU wishes. The minimum period of notice to be given, the information to be provided, and the means of notification must be agreed in writing with ASRU at least 7 days before regulated procedures at a POLE are due to start. '
+          content: 'ASRU must be notified via ASRUPoleNotification@homeoffice.gov.uk before starting any procedures at a place other than a licensed establishment (POLE) authorised under this licence, in order that an inspector may be present if ASRU wishes. The minimum period of notice to be given, the information to be provided, and the means of notification must be agreed in writing with ASRU at least 7 days before regulated procedures at a POLE are due to start.'
         }
       ]
     },
@@ -136,7 +136,7 @@ export default {
       versions: [
         {
           title: 'POLEs',
-          content: 'The assigned inspector must be notified before starting any procedures at a place other than a licensed establishment (POLE) authorised under this licence, in order that the inspector may be present if she or he wishes. The minimum period of notice to be given, the information to be provided, and the means of notification must be agreed in writing with the Inspector at least 7 days before regulated procedures at a POLE are due to start.'
+          content: 'ASRU must be notified via ASRUPoleNotification@homeoffice.gov.uk before starting any procedures at a place other than a licensed establishment (POLE) authorised under this licence, in order that an inspector may be present if ASRU wishes. The minimum period of notice to be given, the information to be provided, and the means of notification must be agreed in writing with ASRU at least 7 days before regulated procedures at a POLE are due to start.'
         }
       ]
     },
