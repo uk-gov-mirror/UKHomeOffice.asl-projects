@@ -28,6 +28,7 @@ function getFieldsForSection(section, project) {
     fields.push(section.repeats);
   }
   if (section.name === 'protocols') {
+    fields.push('reusableSteps');
     return fields.filter(f => f !== 'title');
   }
   return fields;
@@ -53,10 +54,11 @@ export default function SideNav(props) {
           .sort((a, b) => !isGranted ? true : sections[a].granted.order - sections[b].granted.order)
           .map(key => {
             const section = sections[key];
+            const fieldsForSection = getFieldsForSection(section, project);
             if (section.subsections) {
               const open = !!(activeSection && section.subsections[activeSection]);
               const title = <Fragment>
-                <ChangedBadge fields={getFieldsForSection(section, project)} noLabel />
+                <ChangedBadge fields={fieldsForSection} noLabel />
                 <span className="indent">{section.subtitle || section.title}</span>
               </Fragment>;
               return (
@@ -74,7 +76,7 @@ export default function SideNav(props) {
             }
             return (
               <NavLink key={key} to={`/${key}`}>
-                <ChangedBadge fields={getFieldsForSection(section, project)} notLabel />
+                <ChangedBadge fields={fieldsForSection} notLabel />
                 <h3>
                   {
                     isGranted

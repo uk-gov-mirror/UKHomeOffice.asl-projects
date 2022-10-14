@@ -44,7 +44,7 @@ class Review extends React.Component {
     }
 
     return (
-      <div className="review">
+      <div className={this.props.className || 'review'}>
         {
           (!isGranted || showGrantedLabel) && <h3>{review || label}</h3>
         }

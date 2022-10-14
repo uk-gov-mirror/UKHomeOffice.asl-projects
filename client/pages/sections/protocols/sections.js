@@ -19,6 +19,7 @@ import Animals from './animals';
 import LegacyAnimals from './legacy-animals';
 import Conditions from '../../../components/conditions/protocol-conditions';
 import ChangedBadge from '../../../components/changed-badge';
+import {reusableStepFieldKeys} from '../../../helpers/steps';
 
 const getSection = (section, props) => {
   const isFullApplicationPdf = props.isFullApplication && props.pdf;
@@ -79,7 +80,9 @@ const getOpenSection = (protocolState, editable, sections) => {
 
 const getFieldKeys = (section, values) => {
   if (section.repeats) {
-    return [`protocols.${values.id}.${section.repeats}`];
+    // If steps then add the reusable steps to the field keys
+    const additionalReusableStepKeys = section.repeats === 'steps' ? reusableStepFieldKeys(values) : [];
+    return [`protocols.${values.id}.${section.repeats}`, ...additionalReusableStepKeys];
   }
   const flattenedFields = flattenReveals(section.fields || [], values);
   if (section.repeats) {
@@ -166,12 +169,14 @@ const mapStateToProps = ({
     showConditions,
     isGranted,
     isFullApplication
-  }
+  },
+  project
 }, { sections }) => ({
   schemaVersion,
   showConditions,
   isGranted,
   isFullApplication,
+  project,
   // show all sections for legacy
   sections: isGranted && !isFullApplication && schemaVersion !== 0
     ? pickBy(sections, section => section.granted)

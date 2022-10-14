@@ -11,6 +11,7 @@ import sendMessage from './messaging';
 import { getConditions } from '../helpers';
 import cleanProtocols from '../helpers/clean-protocols';
 import sha from 'sha.js';
+import { keyBy } from 'lodash';
 
 const CONDITIONS_FIELDS = ['conditions', 'retrospectiveAssessment'];
 
@@ -87,6 +88,17 @@ export function updateProject(project) {
   return {
     type: types.UPDATE_PROJECT,
     project
+  };
+}
+
+export function saveReusableSteps(reusableSteps) {
+  return (dispatch, getState) => {
+    const state = getState();
+    const newState = cloneDeep(state.project);
+    const updatedReusableSteps = keyBy(reusableSteps, 'id');
+    newState.reusableSteps = {...newState.reusableSteps, ...updatedReusableSteps};
+    dispatch(updateProject(newState));
+    return debouncedSyncProject(dispatch, getState);
   };
 }
 

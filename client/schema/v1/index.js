@@ -1871,6 +1871,12 @@ each other.`,
                 hint: 'Explain where one or more steps are repeated in one experiment, list any alternative techniques within a step (e.g. dosing routes), and include all procedures performed under terminal anaesthesia.\n\nWhen describing the technical aspects of a step, be broad enough to be flexible when the variation does not impact on animal welfare (e.g. use "antibiotic" instead of "penicillin"). Finally, avoid specifying volumes and frequencies when they do not impact on animal welfare.'
               },
               {
+                name: 'reference',
+                type: 'text',
+                label: 'Step reference',
+                hint: 'Provide a short reference for this step, e.g. \'Blood sampling\' or \'Transgene induction\''
+              },
+              {
                 name: 'optional',
                 label: 'Is this step optional?',
                 type: 'radio',
@@ -1918,6 +1924,23 @@ each other.`,
                         type: 'texteditor'
                       }
                     ]
+                  },
+                  {
+                    label: 'No',
+                    value: false
+                  }
+                ]
+              },
+              {
+                name: 'reusable',
+                label: 'Do you want to be able to use this step on other protocols?',
+                type: 'radio',
+                inline: true,
+                className: 'smaller',
+                options: [
+                  {
+                    label: 'Yes',
+                    value: true
                   },
                   {
                     label: 'No',
