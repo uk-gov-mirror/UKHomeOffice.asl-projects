@@ -14,7 +14,7 @@ import NewComments from '../../../components/new-comments';
 import ChangedBadge from '../../../components/changed-badge';
 import {v4 as uuid} from 'uuid';
 import Review from '../../../components/review';
-import {getStepTitle, hydrateSteps} from '../../../helpers/steps';
+import {getStepTitle, getTruncatedStepTitle, hydrateSteps} from '../../../helpers/steps';
 import {saveReusableSteps} from '../../../actions/projects';
 import Expandable from '../../../components/expandable';
 import cloneDeep from 'lodash/cloneDeep';
@@ -325,19 +325,28 @@ class Step extends Component {
 }
 
 const StepSelector = ({ reusableSteps, values, onSaveSelection, length, onCancel }) => {
+  const DEFAULT_STEP_REFERENCE = 'Unnamed step';
+  const MAX_CHARACTERS_FROM_TITLE = 80;
   const [selectedSteps, setSelectedSteps] = useState([]);
+  const references = {};
+  const options = uniqBy(reusableSteps, 'id')
+    .map(reusableStep => {
+      const reference = reusableStep.reference || getTruncatedStepTitle(reusableStep, MAX_CHARACTERS_FROM_TITLE) || DEFAULT_STEP_REFERENCE;
+      const referenceCount = references[reference] || 0;
+      references[reference] = referenceCount + 1;
+      return {
+        label: reference + (referenceCount > 0 ? ' ' + referenceCount : ''),
+        value: reusableStep.id
+      };
+    })
+    .sort((a, b) => (a.label.toLowerCase() > b.label.toLowerCase()) ? 1 : -1);
+
   const selectStepFields = [{
     name: 'select-steps',
     label: 'Select step',
     type: 'checkbox',
     className: 'smaller',
-    options: uniqBy(reusableSteps, 'id')
-      .map(reusableStep => {
-        return {
-          label: reusableStep.reference,
-          value: reusableStep.id
-        };
-      })
+    options: options
   }];
   const saveSelectionHandler = (e) => {
     onSaveSelection(selectedSteps);
