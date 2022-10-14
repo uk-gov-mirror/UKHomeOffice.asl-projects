@@ -37,8 +37,13 @@ export const hydrateSteps = (protocols, steps, reusableSteps) => {
   return [hydratedSteps, Object.values(reusableSteps)];
 };
 
-export const getStepTitle = title => {
-  const untitled = <em>Untitled step</em>;
+export const getTruncatedStepTitle = (step, numCharacters) => {
+  const title = getStepTitle(step.title, null);
+  if (!title || title.trim() === '') return null;
+  return title.substring(0, Math.min(title.length, numCharacters));
+};
+
+export const getStepTitle = (title, untitled = <em>Untitled step</em>) => {
   if (!title) {
     return untitled;
   }
