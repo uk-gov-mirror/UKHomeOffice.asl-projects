@@ -9,6 +9,7 @@ import ChangedBadge from './changed-badge';
 import RAPlaybackHint from './ra-playback-hint';
 
 import ErrorBoundary from './error-boundary';
+import classnames from 'classnames';
 
 class Review extends React.Component {
 
@@ -44,7 +45,7 @@ class Review extends React.Component {
     }
 
     return (
-      <div className={this.props.className || 'review'}>
+      <div className={classnames('review', this.props.className)}>
         {
           (!isGranted || showGrantedLabel) && <h3>{review || label}</h3>
         }

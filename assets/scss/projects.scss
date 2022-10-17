@@ -903,6 +903,9 @@ html.modal-open, html.modal-open body {
       &.editable > .review .review a.edit-link {
         display: none;
       }
+      > .reusable {
+        padding: 0 $govuk-gutter-half;
+      }
     }
   }
 
