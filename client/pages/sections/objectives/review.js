@@ -34,6 +34,7 @@ const ObjectivesReview = ({ playback, values, steps, goto, readonly, isFullAppli
           <Review
             key={index}
             {...steps[0].fields.find(f => f.name === 'title')}
+            className=""
             value={objective.title}
             prefix={`objectives.${objective.id}.`}
             onEdit={() => goto(0)}

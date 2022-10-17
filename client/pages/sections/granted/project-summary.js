@@ -27,6 +27,7 @@ const PermissiblePurpose = ({ values }) => {
     </div>
     : <Review
       {...permissiblePurpose}
+      className=""
       value={values['permissible-purpose']}
       noComments
     />;
@@ -101,6 +102,7 @@ export default function ProjectSummary({ fields = [], pdf }) {
             <div className="granted-section">
               <Review
                 {...fields.find(f => f.name === 'duration')}
+                className=""
                 value={values.duration}
                 noComments
               />

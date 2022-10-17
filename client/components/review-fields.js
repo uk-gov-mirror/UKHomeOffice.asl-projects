@@ -50,6 +50,7 @@ const ReviewFields = ({
             flattenReveals(fields.filter(field => fieldIncluded(field, project, application)), item).map(field => {
               return <Review
                 { ...field }
+                className=""
                 prefix={ prefix }
                 label={ field.review || field.label }
                 key={ field.name }

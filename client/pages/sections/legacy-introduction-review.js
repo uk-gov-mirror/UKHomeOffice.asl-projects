@@ -46,6 +46,7 @@ const LegacyIntroduction = ({ fields, project, values, pdf, readonly, title, lic
         values.continuation && (
           <Review
             {...continuationField}
+            className=""
             label={continuationField.grantedLabel}
             value={values.continuation}
             values={values}
