@@ -62,7 +62,11 @@ export const getStepTitle = (title, untitled = <em>Untitled step</em>) => {
     : untitled;
 };
 
-export const reusableStepFieldKeys = (protocol) =>
-  (protocol.steps || [])
+export const reusableStepFieldKeys = (protocol) => {
+  if (!Array.isArray(protocol.steps)) {
+    return [];
+  }
+  return (protocol.steps || [])
     .filter(step => step.reusableStepId)
     .map(reusableStep => `reusableSteps.${reusableStep.reusableStepId}`);
+};
