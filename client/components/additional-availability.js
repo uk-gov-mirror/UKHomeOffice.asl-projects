@@ -9,6 +9,7 @@ function ReadOnly(props) {
     <Fragment>
       <Review
         {...props}
+        className=""
         value={props.values.name || props.values['establishment-name']}
         readonly={true}
       />
@@ -76,6 +77,7 @@ export default function AdditionalAvailability(props) {
         availableEstablishments.length === 0 && (
           <Review
             {...props}
+            className=""
             nullValue="No establishments available"
             value={null}
             readonly={true}

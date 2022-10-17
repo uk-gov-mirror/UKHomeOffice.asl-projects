@@ -22,6 +22,7 @@ export function ReviewRepeater({ items = [], singular, fields, name, step, hideC
                     <Review
                       key={field.name}
                       {...field}
+                      className=""
                       value={item[field.name]}
                       prefix={prefix}
                       editLink={editLink}

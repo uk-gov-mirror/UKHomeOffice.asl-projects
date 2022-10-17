@@ -10,6 +10,7 @@ const Step = ({ id, index, fields, prefix, ...props }) => {
         <h2 className="step-number">Step {index + 1} {props.reference && (<Fragment>: { props.reference }</Fragment>)} <span className="smaller">({ props.optional ? 'Optional' : 'Mandatory'})</span></h2>
         <Review
           {...fields.find(f => f.name === 'title')}
+          className=""
           label=""
           prefix={prefix}
           value={props.title}

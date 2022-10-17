@@ -32,6 +32,7 @@ const Playback = ({ project, step, history, field, section, readonly, basename, 
     <div className="playback">
       <Review
         { ...field }
+        className=""
         label={field.playbackLabel || field.label}
         hint={hint}
         value={project[field.name]}

@@ -182,7 +182,7 @@ class Step extends Component {
               {...fields.find(f => f.name === 'reusable')}
               value={values.existingValues.reusable}
               readonly={true}
-              className={'reusable'}
+              className="reusable"
             />
             <Warning>You cannot change this answer when editing all instances of this step.</Warning>
           </Fragment>
