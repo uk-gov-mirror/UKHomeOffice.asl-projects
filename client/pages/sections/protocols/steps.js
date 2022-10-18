@@ -14,7 +14,7 @@ import NewComments from '../../../components/new-comments';
 import ChangedBadge from '../../../components/changed-badge';
 import {v4 as uuid} from 'uuid';
 import Review from '../../../components/review';
-import {getStepTitle, getTruncatedStepTitle, hydrateSteps} from '../../../helpers/steps';
+import {getRepeatedFromProtocolIndex, getStepTitle, getTruncatedStepTitle, hydrateSteps} from '../../../helpers/steps';
 import {saveReusableSteps} from '../../../actions/projects';
 import Expandable from '../../../components/expandable';
 import cloneDeep from 'lodash/cloneDeep';
@@ -138,7 +138,8 @@ class Step extends Component {
       isReviewStep,
       protocol,
       newComments,
-      reusableSteps
+      reusableSteps,
+      pdf
     } = this.props;
     const changeFieldPrefix = values.reusableStepId ? `reusableSteps.${values.reusableStepId}.` : this.props.prefix;
 
@@ -216,6 +217,7 @@ class Step extends Component {
         </div>
     }</>;
 
+    const repeatedFrom = getRepeatedFromProtocolIndex(values, protocol.id);
     const step = <>
       <section
         className={classnames('step', { completed: !stepEditable, editable })}
@@ -240,11 +242,15 @@ class Step extends Component {
           }
           <h3>
             {`Step ${index + 1}`}
+            {pdf && values.reference && (<Fragment>: { values.reference }</Fragment>)}
             {
               completed && !isUndefined(values.optional) &&
               <span className="light smaller">{` (${values.optional === true ? 'optional' : 'mandatory'})`}</span>
             }
           </h3>
+          {
+            pdf && repeatedFrom && <span className="review"><p className="grey">{`Repeated from protocol ${repeatedFrom}`}</p></span>
+          }
         </Fragment>
         <EditStepWarning editingReusableStep={editingReusableStep} protocol={protocol} step={values} completed={completed}/>
         {stepContent}
@@ -302,7 +308,6 @@ class Step extends Component {
     }
 
     if (isReviewStep) {
-      const repeatedFrom = (values.usedInProtocols || []).length > 0 && values.usedInProtocols[0].protocolId !== protocol.id ? values.usedInProtocols[0].protocolNumber : undefined;
       return (
         <section className={'review-step'}>
           <NewComments comments={relevantComments} />
@@ -389,7 +394,7 @@ const EditStepWarning = ({ editingReusableStep, protocol, step, completed }) => 
 };
 
 const StepsRepeater = ({ values, prefix, updateItem, editable, project, isReviewStep, ...props }) => {
-  const [ steps, reusableSteps ] = hydrateSteps(props.protocols, values.steps, project.reusableSteps || {});
+  const [ steps, reusableSteps ] = hydrateSteps(project.protocols, values.steps, project.reusableSteps || {});
 
   const lastStepIsNew = isNewStep(steps[steps.length - 1]);
 

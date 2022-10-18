@@ -12,6 +12,7 @@ import { projectSpecies as SPECIES } from '@asl/constants';
 import { getLegacySpeciesLabel, mapSpecies, stripInvalidXmlChars } from '../../../helpers';
 import { filterSpeciesByActive } from '../../../pages/sections/protocols/animals';
 import protocolConditions from '../../../constants/protocol-conditions';
+import { getRepeatedFromProtocolIndex, hydrateSteps } from '../../../helpers/steps';
 
 export default (application, sections, values, updateImageDimensions) => {
   const document = new Document();
@@ -799,9 +800,14 @@ export default (application, sections, values, updateImageDimensions) => {
 
     switch (name) {
       case 'steps':
-        return (values.steps || []).forEach((stepValues, index) => {
-          doc.createParagraph(`Step ${index + 1} (${stepValues.optional ? 'optional' : 'mandatory'})`).heading4();
-          renderFields(doc, section, stepValues);
+        const [ steps ] = hydrateSteps(project.protocols, values.steps, project.reusableSteps || {});
+        return (steps || []).forEach((stepValues, index) => {
+          doc.createParagraph(`Step ${index + 1}${stepValues.reference ? `: ${stepValues.reference}` : ''} (${stepValues.optional ? 'optional' : 'mandatory'})`).heading4();
+          const repeatedFrom = getRepeatedFromProtocolIndex(stepValues, values.id);
+          if (repeatedFrom) {
+            doc.createParagraph(`Repeated from protocol ${repeatedFrom}`).style('aside');
+          }
+          renderFields(doc, section, {...stepValues, readonly: true});
         });
       case 'animals':
         return filterSpeciesByActive(values, project).forEach(speciesValues => {

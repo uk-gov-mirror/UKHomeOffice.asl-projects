@@ -1874,7 +1874,10 @@ each other.`,
                 name: 'reference',
                 type: 'text',
                 label: 'Step reference',
-                hint: 'Provide a short reference for this step, e.g. \'Blood sampling\' or \'Transgene induction\''
+                hint: 'Provide a short reference for this step, e.g. \'Blood sampling\' or \'Transgene induction\'',
+                show: props => {
+                  return !props.readonly;
+                }
               },
               {
                 name: 'optional',
@@ -1946,7 +1949,8 @@ each other.`,
                     label: 'No',
                     value: false
                   }
-                ]
+                ],
+                show: props => !props.readonly
               }
             ]
           },
