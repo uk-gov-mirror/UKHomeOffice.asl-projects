@@ -253,7 +253,7 @@ class Step extends Component {
             }
           </h3>
           {
-            pdf && !readonly && repeatedFrom && <span className="review"><p className="grey">{`Repeated from protocol ${repeatedFrom}`}</p></span>
+            pdf && repeatedFrom && <span className="review"><p className="grey">{`Repeated from protocol ${repeatedFrom}`}</p></span>
           }
         </Fragment>
         <EditStepWarning editingReusableStep={editingReusableStep} protocol={protocol} step={values} completed={completed}/>
