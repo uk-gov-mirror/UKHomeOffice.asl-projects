@@ -139,7 +139,8 @@ class Step extends Component {
       protocol,
       newComments,
       reusableSteps,
-      pdf
+      pdf,
+      readonly
     } = this.props;
     const changeFieldPrefix = values.reusableStepId ? `reusableSteps.${values.reusableStepId}.` : this.props.prefix;
 
@@ -242,10 +243,13 @@ class Step extends Component {
           }
           <h3>
             {`Step ${index + 1}`}
-            {pdf && values.reference && (<Fragment>: { values.reference }</Fragment>)}
+            {(pdf || readonly) && values.reference && (<Fragment>: { values.reference }</Fragment>)}
             {
               completed && !isUndefined(values.optional) &&
               <span className="light smaller">{` (${values.optional === true ? 'optional' : 'mandatory'})`}</span>
+            }
+            {
+              !pdf && readonly && repeatedFrom && <div className="light smaller">{`Repeated from protocol ${repeatedFrom}`}</div>
             }
           </h3>
           {
