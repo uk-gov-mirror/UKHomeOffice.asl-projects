@@ -557,6 +557,12 @@ html.modal-open, html.modal-open body {
     &.alert-error {
       background: $govuk-error-colour;
     }
+    &.alert-warning {
+      background: #E3733B;
+    }
+    a {
+      color: white;
+    }
   }
 
   .alert-enter {
