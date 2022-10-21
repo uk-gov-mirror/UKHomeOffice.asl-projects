@@ -8,7 +8,7 @@ import shasum from 'shasum';
 import * as types from './types';
 import database from '../database';
 import { showMessage, showWarning, throwError } from './messages';
-import sendMessage from './messaging';
+import sendMessage, { postError } from './messaging';
 import { getConditions } from '../helpers';
 import cleanProtocols from '../helpers/clean-protocols';
 import sha from 'sha.js';
@@ -250,16 +250,18 @@ const shouldSyncProject = state => {
   return !isEqual(state.savedProject, state.project);
 };
 
-const onSyncError = (func, err, dispatch, getState, ...args) => {
+const onSyncError = (func, error, dispatch, getState, ...args) => {
   dispatch(doneSyncing());
   dispatch(syncError());
   const errorCount = getState().application.errorCount;
-  if (err.code === 'UPDATE_REQUIRED') {
+  if (error.code === 'UPDATE_REQUIRED') {
     return dispatch(throwError('This software has been updated. You must refresh your browser to avoid losing work.'));
   }
   if (errorCount > 5) {
     return dispatch(throwError('Failed to save your changes. Try refreshing your browser to continue. If the problem persists then please report to aspeltechnicalqueries@homeoffice.gov.uk'));
   }
+  console.error(error);
+  postError({ error });
   dispatch(throwError(`Failed to save, trying again in ${Math.pow(2, errorCount)} seconds`));
   return setTimeout(() => func(dispatch, getState, ...args), 1000 * Math.pow(2, errorCount));
 };
@@ -321,7 +323,10 @@ const syncProject = (dispatch, getState) => {
     })
     .then(response => {
       const patched = jsondiff.patch(state.savedProject, patch);
-      if (response.checksum !== shasum(omit(patched, ...response.checksumOmit))) {
+      // always exclude the id from the checksum since it does not exist in the server data and is set locally
+      // also exclude any server-computed properties that are returned in the response
+      const checksumOmit = [...(response.checksumOmit || []), 'id'];
+      if (response.checksum !== shasum(omit(patched, ...checksumOmit))) {
         dispatch(showWarning('This project has been updated elsewhere. [Reload the page]() to get the latest version.'));
       }
       dispatch(updateSavedProject(patched));
