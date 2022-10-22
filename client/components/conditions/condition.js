@@ -18,7 +18,8 @@ const Condition = ({
   editable = true,
   expandable = true,
   className,
-  conditionKey
+  conditionKey,
+  reminders
 }) => {
   const [editing, setEditing] = useState(isEditing);
   const [expanded, setExpanded] = useState(expandable === false);
@@ -67,6 +68,7 @@ const Condition = ({
               onChange={handleChange}
               showRevert={true}
               conditionKey={conditionKey}
+              reminders={reminders}
             />
           )
           : (

@@ -25,6 +25,7 @@ function CustomConditions({ conditions, onUpdate, onAdd, onRemove, conditionKey 
               onUpdate={handleOnUpdate(index)}
               onChange={handleOnUpdate(index)}
               content={condition.content}
+              reminders={condition.reminders}
               conditionKey={conditionKey}
             />
           </Fragment>
@@ -105,6 +106,7 @@ function AddConditions({
         expandable={!isLegacy}
         editable={!isLegacy}
         conditionKey={condition.key}
+        reminders={condition.reminders}
       />
     };
   });
