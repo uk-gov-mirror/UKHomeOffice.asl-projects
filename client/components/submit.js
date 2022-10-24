@@ -13,7 +13,7 @@ export default function Submit({ onComplete }) {
   return (
     <Fragment>
       {
-        !readonly && (
+        !readonly ? (
           <Fragment>
             <h2>{`Submit ${type}`}</h2>
             {
@@ -23,23 +23,29 @@ export default function Submit({ onComplete }) {
                     {
                       !isLegacy && <p>All sections must be marked as complete before you can continue.</p>
                     }
-                    <Button onClick={onComplete}>
-                      {
-                        project.isLegacyStub ? 'Continue to final confirmation' : 'Continue'
-                      }
-                    </Button>
+                    <p className='control-panel'>
+                      <Button onClick={onComplete}>
+                        {
+                          project.isLegacyStub ? 'Continue to final confirmation' : 'Continue'
+                        }
+                      </Button>
+                      <a href={projectUrl}>Go to project overview</a>
+                    </p>
                   </Fragment>
                 )
                 : (
-                  <p>Only the licence holder or an admin can submit this to the Home Office</p>
+                  <Fragment>
+                    <p>Only the licence holder or an admin can submit this to the Home Office</p>
+                    <a href={projectUrl}>Go to project overview</a>
+                  </Fragment>
                 )
             }
           </Fragment>
         )
+          : <p className="back-to-project">
+            <a href={projectUrl}>Go to project overview</a>
+          </p>
       }
-      <p className="back-to-project">
-        <a href={projectUrl}>Go to project overview</a>
-      </p>
     </Fragment>
   );
 }
