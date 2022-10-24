@@ -1,4 +1,4 @@
-import EditTable from '@joefitter/slate-edit-table';
+import EditTable from '@asl/slate-edit-table';
 import renderBlock from './renderers';
 
 export default function Table() {
