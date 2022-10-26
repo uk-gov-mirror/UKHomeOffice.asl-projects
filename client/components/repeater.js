@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import { Button } from '@ukhomeoffice/react-components';
 import { v4 as uuid } from 'uuid';
 import cloneDeep from 'lodash/cloneDeep';
+import omitBy from 'lodash/omitBy';
+import isUndefined from 'lodash/isUndefined';
 import { throwError } from '../actions/messages';
 
 class Repeater extends Component {
@@ -46,7 +48,7 @@ class Repeater extends Component {
 
   updateItem(index, updated) {
     this.update(this.state.items.map((item, i) => index === i
-      ? { ...item, ...updated }
+      ? omitBy({ ...item, ...updated }, isUndefined)
       : item
     ));
   }

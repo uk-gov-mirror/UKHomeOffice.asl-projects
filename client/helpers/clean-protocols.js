@@ -1,9 +1,11 @@
 import intersection from 'lodash/intersection';
 import difference from 'lodash/difference';
+import omitBy from 'lodash/omitBy';
+import isUndefined from 'lodash/isUndefined';
 import getLocations from './get-locations';
 
 export default function cleanProtocols({ state, savedState, changed = {}, establishment, schemaVersion }) {
-  const project = { ...state, ...changed };
+  const project = omitBy({ ...state, ...changed }, isUndefined);
 
   if (schemaVersion === 0) {
     return project;
