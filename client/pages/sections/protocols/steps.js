@@ -261,7 +261,7 @@ class Step extends Component {
       </section>
     </>;
 
-    if (isNewStep(values) && reusableSteps.length > 0) {
+    if (editable && isNewStep(values) && reusableSteps.length > 0) {
       const onSaveSelection = (selectedSteps) => {
         // Replace current step with selected
         const mappedSteps = (this.props.protocol.steps || []).flatMap(step => {
