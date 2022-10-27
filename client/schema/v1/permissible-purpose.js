@@ -11,6 +11,7 @@ const permissiblePurpose = {
     {
       label: '(b) Translational or applied research with one of the following aims:',
       value: 'translational-research',
+      disabled: true,
       reveal: {
         name: 'translational-research',
         label: '',
