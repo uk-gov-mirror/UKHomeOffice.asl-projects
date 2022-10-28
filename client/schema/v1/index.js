@@ -2948,7 +2948,6 @@ each other.`,
   },
   conditions: {
     title: 'Additional conditions and authorisations',
-    subtitle: 'Additional conditions',
     show: props => props.showConditions,
     subsections: {
       conditions: {
