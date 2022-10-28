@@ -124,6 +124,10 @@ export const flattenReveals = (fields, values) => {
     if (item.options && !item.preserveHierarchy) {
       item.options.forEach(option => {
         if (option.reveal) {
+          // fixes ASL-4119 where the user has already clicked the hidden checkbox
+          if (option.value === 'translational-research') {
+            return null;
+          }
           if (Array.isArray(values[item.name]) && values[item.name].includes(option.value)) {
             reveals.push(flattenReveals(castArray(option.reveal), values));
           } else if (option.value === values[item.name]) {
