@@ -65,10 +65,10 @@ const Steps = ({ values, fields, pdf, prefix, project }) => {
                 ))
               }
             </ol>
-            <h3>You may perform these steps in any order</h3>
           </Fragment>
         )
       }
+      <h3>You may perform these steps in any order</h3>
       {
         steps.map((step, index) => <Step key={step.id} {...step} index={index} fields={fields} pdf={pdf} prefix={`${prefix}steps.${step.id}.`} />)
       }
