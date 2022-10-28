@@ -2,6 +2,7 @@
 @import "images";
 $light-green: #26A197;
 $pink: #ff1493;
+$hint-colour: #696F73;
 
 @mixin sticky {
   position: -webkit-sticky;
@@ -1622,6 +1623,7 @@ html.modal-open, html.modal-open body {
   // and to remove the checkbox for the reveal option
   input[name="permissible-purpose"][value="translational-research"] {
     & + label {
+      opacity: 1 !important;
       &:before,
       &:after {
         display: none;
