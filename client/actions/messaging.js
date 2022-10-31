@@ -7,6 +7,7 @@ export function postError({ error, info }) {
     body: JSON.stringify({
       message: error.message,
       stack: error.stack,
+      status: error.status,
       url: document.URL,
       ...info
     }),
@@ -44,11 +45,14 @@ export default function sendMessage({ method, data, url }) {
         .then(json => {
           if (response.status > 399) {
             const err = new Error(json.message || `Action failed with status code: ${response.status}`);
-            err.status = response.status;
             Object.assign(err, json);
             throw err;
           }
           return json;
+        })
+        .catch(err => {
+          err.status = response.status;
+          throw err;
         });
     });
 }
