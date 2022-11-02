@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import {Button, Warning} from '@ukhomeoffice/react-components';
 
 import isUndefined from 'lodash/isUndefined';
-import {isEqual, pickBy, uniqBy} from 'lodash';
+import {isEqual, pickBy, uniqBy, flatMap} from 'lodash';
 
 import ReviewFields from '../../../components/review-fields';
 import Repeater from '../../../components/repeater';
@@ -33,10 +33,6 @@ function renderUsedInProtocols(protocolIndexes) {
 const changeFields = (step, prefix) => step.reusable ? [ `reusableSteps.${step.reusableStepId}` ] : [ prefix.substr(0, prefix.length - 1) ];
 
 class Step extends Component {
-  state = {
-    expanded: false
-  }
-
   constructor(options) {
     super(options);
     this.step = createRef();
@@ -112,10 +108,6 @@ class Step extends Component {
     this.props.moveDown();
   }
 
-  toggleExpanded = () => {
-    this.setState({ expanded: !this.state.expanded });
-  }
-
   componentDidMount() {
     if (this.props.protocolState && !isUndefined(this.props.protocolState.sectionItem)) {
       const activeStep = this.props.protocolState.sectionItem;
@@ -140,7 +132,9 @@ class Step extends Component {
       newComments,
       reusableSteps,
       pdf,
-      readonly
+      readonly,
+      expanded,
+      onToggleExpanded
     } = this.props;
     const changeFieldPrefix = values.reusableStepId ? `reusableSteps.${values.reusableStepId}.` : this.props.prefix;
 
@@ -264,7 +258,7 @@ class Step extends Component {
     if (editable && isNewStep(values) && reusableSteps.length > 0) {
       const onSaveSelection = (selectedSteps) => {
         // Replace current step with selected
-        const mappedSteps = (this.props.protocol.steps || []).flatMap(step => {
+        const mappedSteps = flatMap(this.props.protocol.steps || [], step => {
           if (step.id === values.id) {
             return selectedSteps.map(selectedStep => {
               return { id: uuid(), reusableStepId: selectedStep };
@@ -311,15 +305,15 @@ class Step extends Component {
       </Fragment>);
     }
 
-    if (isReviewStep) {
+    if (isReviewStep || readonly) {
       return (
         <section className={'review-step'}>
           <NewComments comments={relevantComments} />
           <ChangedBadge fields={changeFields(values, changeFieldPrefix)} protocolId={protocol.id} />
-          <Expandable expanded={this.state.expanded} onHeaderClick={this.toggleExpanded}>
+          <Expandable expanded={expanded} onHeaderClick={() => onToggleExpanded(index)}>
             <Fragment>
               <p className={'toggles float-right'}>
-                <Button className="link no-wrap" onClick={this.toggleExpanded}>{this.state.expanded ? 'Close' : 'Open'} step</Button>
+                <Button className="link no-wrap" onClick={() => onToggleExpanded(index)}>{expanded ? 'Close' : 'Open'} step</Button>
               </p>
               {values.reference ? <h3 className={'title inline'}>{values.reference}</h3> : <h3 className={'title no-wrap'}>{getStepTitle(values.title)}</h3>}
               <h4 className="light">{values.optional === true ? 'Optional' : 'Mandatory'}{repeatedFrom ? ` - repeated from protocol ${repeatedFrom}` : ''}</h4>
@@ -397,9 +391,7 @@ const EditStepWarning = ({ editingReusableStep, protocol, step, completed }) => 
   return null;
 };
 
-const StepsRepeater = ({ values, prefix, updateItem, editable, project, isReviewStep, ...props }) => {
-  const [ steps, reusableSteps ] = hydrateSteps(project.protocols, values.steps, project.reusableSteps || {});
-
+const StepsRepeater = ({ values, prefix, updateItem, editable, project, isReviewStep, steps, reusableSteps, ...props }) => {
   const lastStepIsNew = isNewStep(steps[steps.length - 1]);
 
   return (<Repeater
@@ -440,18 +432,70 @@ const StepsRepeater = ({ values, prefix, updateItem, editable, project, isReview
   </Repeater>);
 };
 
-export default function Steps(props) {
+export default function Steps({project, values, ...props}) {
   const isReviewStep = parseInt(useParams().step, 10) === 1;
+  const [ steps, reusableSteps ] = hydrateSteps(project.protocols, values.steps, project.reusableSteps || {});
+
+  const [expanded, setExpanded] = useState(steps.map(() => false));
+
+  const setAllExpanded = (e) => {
+    e.preventDefault();
+    if (expanded.every(item => item)) {
+      return setExpanded(expanded.map(() => false));
+    }
+    setExpanded(expanded.map(() => true));
+  };
+  const openCloseLink = (props.readonly || isReviewStep) && <p className="toggles">
+    <a href="#" onClick={setAllExpanded}>
+      {
+        expanded.every(item => item)
+          ? 'Close all steps'
+          : 'Open all steps'
+      }
+    </a>
+  </p>;
+
+  const onToggleExpanded = (index) => {
+    setExpanded(expanded.map((item, i) => {
+      if (i === index) {
+        return !item;
+      }
+      return item;
+    }));
+  };
 
   if (isReviewStep) {
-    return (<StepsRepeater {...props} isReviewStep={isReviewStep} />);
+    return (
+      <div className="accordion">
+        {openCloseLink}
+        <StepsRepeater {...props}
+          project={project}
+          values={values}
+          steps={steps}
+          reusableSteps={reusableSteps}
+          isReviewStep={isReviewStep}
+          expanded={expanded}
+          onToggleExpanded={onToggleExpanded}
+        />
+      </div>);
   }
 
   return (
-    <div className="steps">
-      <p className="grey">{props.hint}</p>
-      <br/>
-      <StepsRepeater {...props} isReviewStep={isReviewStep} />
+    <div className="accordion">
+      <div className="steps">
+        <p className="grey">{props.hint}</p>
+        <br/>
+        {openCloseLink}
+        <StepsRepeater {...props}
+          project={project}
+          values={values}
+          steps={steps}
+          reusableSteps={reusableSteps}
+          isReviewStep={isReviewStep}
+          expanded={expanded}
+          onToggleExpanded={onToggleExpanded}
+        />
+      </div>
     </div>
   );
 }

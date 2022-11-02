@@ -1,18 +1,17 @@
 import {Value} from 'slate';
 import React from 'react';
-import { uniq } from 'lodash';
+import {uniq, flatMap} from 'lodash';
 
 export const hydrateSteps = (protocols, steps, reusableSteps) => {
 
   const reusableStepsInAllProtocols =
-    (protocols || [])
-      .filter(protocol => !protocol.deleted)
-      .flatMap((protocol, index) => (protocol.steps || [])
-        .filter(step => !!step.reusableStepId)
-        .map(step => {
-          return { reusableStepId: step.reusableStepId, protocolIndex: index + 1, protocolId: protocol.id };
-        })
-      )
+    flatMap((protocols || [])
+      .filter(protocol => !protocol.deleted), (protocol, index) => (protocol.steps || [])
+      .filter(step => !!step.reusableStepId)
+      .map(step => {
+        return { reusableStepId: step.reusableStepId, protocolIndex: index + 1, protocolId: protocol.id };
+      })
+    )
       .reduce((map, reusableStep) => {
         if (!map[reusableStep.reusableStepId]) {
           map[reusableStep.reusableStepId] = [];
