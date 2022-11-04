@@ -1669,3 +1669,33 @@ html.modal-open, html.modal-open body {
   padding: 0 0.5em;
   color: $hint-colour;
 }
+
+.rte-table-container {
+  overflow: auto;
+
+  @media (min-width: 641px) {
+    max-width: 1054px;
+  }
+
+  @media (min-width: 1260px) {
+    max-width: 1186px;
+  }
+
+  @media (max-width: 640px) {
+    max-width: 926px;
+  }
+}
+
+.rte-table-cell {
+  @media (min-width: 641px) {
+    min-width: 175px;
+  }
+
+  @media (min-width: 1200px) {
+    min-width: 200px;
+  }
+
+  @media (max-width: 640px) {
+    min-width: 155px;
+  }
+}
