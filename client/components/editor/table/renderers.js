@@ -17,9 +17,11 @@ const renderBlock = (props, editor, next) => {
         );
       }
       return (
-        <table {...attributes}>
-          <tbody>{children}</tbody>
-        </table>
+        <div className="rte-table-container">
+          <table {...attributes}>
+            <tbody>{children}</tbody>
+          </table>
+        </div>
       );
     case 'table-row':
       return <tr { ...attributes }>{ children }</tr>;
@@ -29,6 +31,7 @@ const renderBlock = (props, editor, next) => {
           colSpan={node.get('data').get('colSpan')}
           rowSpan={node.get('data').get('rowSpan')}
           {...attributes}
+          className="rte-table-cell"
         >
           {children}
         </td>
