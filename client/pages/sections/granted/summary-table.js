@@ -7,7 +7,7 @@ function titleCase(str) {
   return `${str.charAt(0).toUpperCase()}${str.substring(1)}`;
 }
 
-function TableRow({ species, protocol, index, isLegacy, ExpandingRow, expanded, onClick }) {
+function TableRow({ species, project, protocol, index, isLegacy, ExpandingRow, expanded, onClick }) {
   // this is necessary due to :hover css not taking rowspan into account.
   const [hover, setHover] = useState(false);
   function onMouseEnter() {
@@ -80,7 +80,7 @@ function TableRow({ species, protocol, index, isLegacy, ExpandingRow, expanded, 
           showExpandingRow && speciesIndex === species.length - 1 && (
             <tr className={classnames({ hidden: !expanded })}>
               <td colSpan="8" className="expanding-container">
-                <ExpandingRow protocol={protocol} />
+                <ExpandingRow protocol={protocol} project={project} />
               </td>
             </tr>
           )
@@ -161,6 +161,7 @@ export default function SummaryTable({ protocols, isLegacy, project, className, 
               return <TableRow
                 key={index}
                 species={species}
+                project={project}
                 protocol={protocol}
                 index={index}
                 isLegacy={isLegacy}

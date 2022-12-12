@@ -4,8 +4,10 @@ import { Button } from '@ukhomeoffice/react-components';
 import Table from '../granted/summary-table';
 import ReviewField from '../../../components/review-field';
 import ProtocolConditions from './protocol-conditions';
+import {hydrateSteps} from '../../../helpers/steps';
 
-function ExpandingRow({ protocol }) {
+function ExpandingRow({ protocol, project }) {
+  const [ steps ] = hydrateSteps(project.protocols, protocol.steps || [], project.reusableSteps || {});
   return (
     <Fragment>
       <h3>Where this protocol can be carried out</h3>
@@ -14,7 +16,7 @@ function ExpandingRow({ protocol }) {
         value={protocol.locations}
       />
       {
-        (protocol.steps || []).map((s, index) => (
+        steps.map((s, index) => (
           <Fragment key={index}>
             <h3>{`Step ${index + 1} (${s.optional ? 'optional' : 'mandatory'})`}</h3>
             <ReviewField
