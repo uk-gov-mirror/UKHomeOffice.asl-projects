@@ -46,7 +46,7 @@ export default function RAPlaybackHint({ hint, summary, name }) {
       <p><Markdown links={true}>{ hint }</Markdown></p>
       <Details summary={summary} className="ra-playback">
         <Inset>
-          <label className="govuk-hint">Extract from non-technical summary</label>
+          <label className="govuk-hint">Extract from Programme of Work or Non-technical Summary</label>
           <ReviewFields
             fields={fields}
             values={grantedVersion.data}

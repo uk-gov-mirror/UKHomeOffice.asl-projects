@@ -23,7 +23,7 @@ export default () => ({
           {
             name: 'aims-achieved',
             label: 'Did the project achieve its aims and if not, why not?',
-            hint: 'If aims were only partially achieved, explain why',
+            hint: 'Described whether the programme of work has been carried out and the extent to which the objectives (aims) of the programme of work have been achieved. Include a summary of the benefits delivered. If aims were only partially achieved, explain why.',
             raPlayback: {
               name: {
                 default: 'project-aim',
@@ -41,7 +41,9 @@ export default () => ({
           {
             name: 'actual-harms',
             label: 'What harms were caused to the animals, how severe were those harms and how many animals were affected?',
-            hint: `Don't just list procedures but reflect on the animals' experience. For example, 'animals experienced mild discomfort as tumours 10mm wide were allowed to grow under the skin'.
+            hint: `Summarise the overall amount of harm caused to animals by describing the procedures, harms, and adverse effects. You must include the species and number of animals subjected to regulated procedures and the actual severity of those procedures.
+
+Don't just list procedures but reflect on the animals' experience. For example, 'animals experienced mild discomfort as tumours 10mm wide were allowed to grow under the skin'.
 
 If animals went through procedures more than once, make sure this is reflected in the numbers and in your assessment of their overall suffering.`,
             raPlayback: {
