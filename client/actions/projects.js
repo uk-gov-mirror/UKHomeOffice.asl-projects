@@ -257,11 +257,11 @@ const onSyncError = (func, error, dispatch, getState, ...args) => {
   if (error.code === 'UPDATE_REQUIRED') {
     return dispatch(throwError('This software has been updated. You must refresh your browser to avoid losing work.'));
   }
+  console.error(error);
   if (errorCount > 5) {
+    postError({ error });
     return dispatch(throwError('Failed to save your changes. Try refreshing your browser to continue. If the problem persists then please report to aspeltechnicalqueries@homeoffice.gov.uk'));
   }
-  console.error(error);
-  postError({ error });
   dispatch(throwError(`Failed to save, trying again in ${Math.pow(2, errorCount)} seconds`));
   return setTimeout(() => func(dispatch, getState, ...args), 1000 * Math.pow(2, errorCount));
 };
