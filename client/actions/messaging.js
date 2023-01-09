@@ -39,7 +39,7 @@ export default function sendMessage({ method, data, url }) {
       // detect if redirect was attempted
       if (response.type === 'opaqueredirect') {
         window.onbeforeunload = null;
-        return window.location.reload();
+        window.location.reload();
       }
       return response.json()
         .then(json => {
