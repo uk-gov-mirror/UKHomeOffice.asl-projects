@@ -23,7 +23,8 @@ const selector = ({
     establishment,
     schemaVersion,
     licenceHolder,
-    isPreview
+    isPreview,
+    readonly
   }
 }) => {
   return {
@@ -36,7 +37,8 @@ const selector = ({
     establishment,
     schemaVersion,
     licenceHolder,
-    isPreview
+    isPreview,
+    readonly
   };
 };
 
@@ -52,7 +54,8 @@ const ProjectRouter = () => {
     licenceHolder,
     isGranted,
     legacyGranted,
-    isPreview
+    isPreview,
+    readonly
   } = useSelector(selector, shallowEqual);
 
   function toggleStatusShowing() {
@@ -122,6 +125,8 @@ const ProjectRouter = () => {
 
   const projectTitle = version.title || project.title || 'Untitled project';
 
+  const guidanceText = !readonly && <>For help and example answers, <Link target="_blank" url="https://www.gov.uk/guidance/animal-research-technical-advice#guidance-notes-for-project-licence-applications" label="read guidance notes for project licence applications (opens in new tab)" />.</>;
+
   return (
     <BrowserRouter basename={basename}>
       <ScrollToTop>
@@ -131,6 +136,7 @@ const ProjectRouter = () => {
           detailsLabel="details and downloads"
           status={<SyncHandler />}
           backLink={<Link page="project.read" label="Go to project overview" establishmentId={establishment.id} projectId={project.id} />}
+          footer={guidanceText}
         >
           <dl>
             <dt>Project title</dt>
