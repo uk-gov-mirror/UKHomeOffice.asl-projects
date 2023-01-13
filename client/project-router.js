@@ -125,7 +125,7 @@ const ProjectRouter = () => {
 
   const projectTitle = version.title || project.title || 'Untitled project';
 
-  const guidanceText = !readonly && <>For help and example answers, <Link target="_blank" url="https://www.gov.uk/guidance/animal-research-technical-advice#guidance-notes-for-project-licence-applications" label="read guidance notes for project licence applications (opens in new tab)" />.</>;
+  const guidanceText = !readonly && !isRa && <>For help and example answers, <Link target="_blank" url="https://www.gov.uk/guidance/animal-research-technical-advice#guidance-notes-for-project-licence-applications" label="read guidance notes for project licence applications (opens in new tab)" />.</>;
 
   return (
     <BrowserRouter basename={basename}>
