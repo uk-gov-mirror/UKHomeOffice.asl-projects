@@ -136,9 +136,9 @@ class Step extends Component {
       expanded,
       onToggleExpanded
     } = this.props;
-    const changeFieldPrefix = values.reusableStepId ? `reusableSteps.${values.reusableStepId}.` : this.props.prefix;
+    const changeFieldPrefix = values.reusableStepId ? `protocols.${protocol.id}.reusableSteps.${values.reusableStepId}.` : this.props.prefix;
 
-    const re = new RegExp(`^steps.${values.id}\\.`);
+    const re = new RegExp(`^(reusable)?S?s?teps.${values.id}\\.`);
     const relevantComments = Object.values(
       pickBy(newComments, (value, key) => key.match(re))
     ).reduce((total, comments) => total + (comments || []).length, 0);

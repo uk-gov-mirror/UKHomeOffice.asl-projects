@@ -97,7 +97,8 @@ const getBadges = (section, newComments, values) => {
   let relevantComments;
   if (section.repeats) {
     const re = new RegExp(`^${section.repeats}\\.`);
-    relevantComments = pickBy(newComments, (value, key) => key.match(re));
+    relevantComments = section.title !== 'Steps' ? pickBy(newComments, (value, key) => key.match(re))
+      : pickBy(newComments, (value, key) => key.match(re) || key.match('^reusableSteps\\.'));
   } else {
     relevantComments = pick(newComments, flattenReveals(section.fields, values).map(field => field.name));
   }
