@@ -72,8 +72,15 @@ class Protocol extends PureComponent {
   render() {
     const { editable } = this.props;
 
+    const updatedComments = Object.fromEntries(
+      Object.entries(this.props.newComments).map(([key, value]) => {
+        const newKey = key.includes(this.props.values.steps[0].reusableStepId) ? key.replace('protocols.', `protocols.${this.props.values.id}.`) : key;
+        return [newKey, value];
+      })
+    );
+
     const newComments = mapKeys(
-      pickBy(this.props.newComments, (comments, key) => {
+      pickBy(updatedComments, (comments, key) => {
         const re = new RegExp(`^protocols.${this.props.values.id}`);
         return key.match(re);
       }),
