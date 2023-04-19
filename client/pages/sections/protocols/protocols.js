@@ -72,9 +72,17 @@ class Protocol extends PureComponent {
   render() {
     const { editable } = this.props;
 
+    // for each protocol: map through new comments, if the protocol includes a reusable step that has a comment (key includes id)
+    // insert the protocol id to the comment to flag it as a new comment on the protocol
+    let match = false;
     const updatedComments = Object.fromEntries(
       Object.entries(this.props.newComments).map(([key, value]) => {
-        const newKey = key.includes(this.props.values.steps[0].reusableStepId) ? key.replace('protocols.', `protocols.${this.props.values.id}.`) : key;
+        this.props.values.steps.forEach(step => {
+          if (key.includes(step.reusableStepId)) {
+            match = true;
+          }
+        });
+        const newKey = match ? key.replace('protocols.reusableSteps.', `protocols.${this.props.values.id}.reusableSteps.`) : key;
         return [newKey, value];
       })
     );
