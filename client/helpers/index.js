@@ -106,12 +106,12 @@ export const getScrollPos = (elem, offset = 0) => {
 
 export const getNewComments = (comments, user) => {
   // The way reusable steps is set up means that comments on reusable steps aren't captured in the comment count for the protocol section, this captures them
-  const updatedComments = Object.fromEntries(
+  const updatedComments = comments ? Object.fromEntries(
     Object.entries(comments).map(([key, value]) => {
       const newKey = key.includes('reusableSteps') ? key.replace('reusableSteps', 'protocols.reusableSteps') : key;
       return [newKey, value];
     })
-  );
+  ) : comments;
   const filterNew = field => field.filter(comment => comment.isNew && comment.author !== user && !comment.deleted);
   return pickBy(mapValues(updatedComments, filterNew), filterNew);
 };
