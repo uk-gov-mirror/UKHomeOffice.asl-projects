@@ -2,6 +2,7 @@ import flatten from 'lodash/flatten';
 import values from 'lodash/values';
 import castArray from 'lodash/castArray';
 import pickBy from 'lodash/pickBy';
+import mapKeys from 'lodash/mapKeys';
 import mapValues from 'lodash/mapValues';
 import map from 'lodash/map';
 import dateFormatter from 'date-fns/format';
@@ -114,6 +115,20 @@ export const getNewComments = (comments, user) => {
   // ) : comments;
   const filterNew = field => field.filter(comment => comment.isNew && comment.author !== user && !comment.deleted);
   return pickBy(mapValues(comments, filterNew), filterNew);
+};
+
+export const filterProtocolComments = (_comments, _id) => {
+  return mapKeys(
+    pickBy(_comments, (comments, key) => {
+      const re = new RegExp(`^protocols.${_id}`);
+      return key.match(re);
+    }),
+    (value, key) => key.replace(`protocols.${_id}.`, '')
+  );
+  // const re = new RegExp(`^protocols.${_id}`);
+  // return _comments
+  // .filter((comment) => comment.field.match(re))
+  // .map((comment) => comment.field.replace(`protocols.${_id}.`, ''));
 };
 
 export const getLegacySpeciesLabel = species => {
