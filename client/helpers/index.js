@@ -2,10 +2,10 @@ import flatten from 'lodash/flatten';
 import values from 'lodash/values';
 import castArray from 'lodash/castArray';
 import pickBy from 'lodash/pickBy';
-import mapKeys from 'lodash/mapKeys';
 import mapValues from 'lodash/mapValues';
 import map from 'lodash/map';
 import dateFormatter from 'date-fns/format';
+import {JSONPath} from 'jsonpath-plus';
 import LEGACY_SPECIES from '../constants/legacy-species';
 import { projectSpecies as SPECIES } from '@ukhomeoffice/asl-constants';
 import CONDITIONS from '../constants/conditions';
@@ -117,20 +117,6 @@ export const getNewComments = (comments, user) => {
   return pickBy(mapValues(comments, filterNew), filterNew);
 };
 
-export const filterProtocolComments = (_comments, _id) => {
-  return mapKeys(
-    pickBy(_comments, (comments, key) => {
-      const re = new RegExp(`^protocols.${_id}`);
-      return key.match(re);
-    }),
-    (value, key) => key.replace(`protocols.${_id}.`, '')
-  );
-  // const re = new RegExp(`^protocols.${_id}`);
-  // return _comments
-  // .filter((comment) => comment.field.match(re))
-  // .map((comment) => comment.field.replace(`protocols.${_id}.`, ''));
-};
-
 export const getLegacySpeciesLabel = species => {
   const matched = LEGACY_SPECIES.find(s => s.value === species.speciesId);
   let label = matched && matched.label;
@@ -166,12 +152,16 @@ export const flattenReveals = (fields, values) => {
   }, []);
 };
 
-export function getFields(section) {
+export function getFields(section, includeReveals = false) {
   if (section.name === 'protocols') {
-    return flatten(Object.values(section.sections).concat(section.fields).map(getFields))
+    return flatten(flatten(Object.values(section.sections).concat(section.fields).map(getFields))
       .map(field => {
-        return { ...field, name: `protocols.*.${field.name}` };
-      });
+        if (includeReveals) {
+          return getRevealFields(field);
+        } else {
+          return { ...field, name: `protocols.*.${field.name}` };
+        }
+      }));
   }
   if (section.fields && section.fields.length) {
     return section.fields.map(field => {
@@ -186,6 +176,18 @@ export function getFields(section) {
   } else if (section.steps) {
     return flatten(section.steps.map(getFields));
   } else return [];
+}
+
+export function getRevealFields(field) {
+  const result = [...new Set(JSONPath({path: '$..reveal..name', json: field}))];
+  if (result && result.length > 0) {
+    return result.reduce(
+      (pv, cv) => [...pv, { name: `protocols.*.${cv}` }],
+      [{ name: `protocols.*.${field.name}` }]
+    );
+  } else {
+    return { name: `protocols.*.${field.name}` };
+  }
 }
 
 /* eslint-disable no-control-regex */
