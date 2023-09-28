@@ -35,9 +35,10 @@ const mapStateToProps = ({
 }) => {
   const schema = schemaMap[schemaVersion];
   const fieldsBySection = Object.values(schema()).map(section => section.subsections).reduce((obj, subsections) => {
+    const includeReveals = true;
     return {
       ...obj,
-      ...mapValues(subsections, subsection => flattenReveals(getFields(subsection), project).map(field => field.name))
+      ...mapValues(subsections, subsection => flattenReveals(getFields(subsection, includeReveals), project).map(field => field.name))
     };
   }, {});
   return {
