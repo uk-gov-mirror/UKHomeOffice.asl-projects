@@ -67,7 +67,7 @@ export const reusableStepFieldKeys = (protocol) => {
   }
   return (protocol.steps || [])
     .filter(step => step.reusableStepId)
-    .map(reusableStep => `reusableSteps.${reusableStep.reusableStepId}`);
+    .map(reusableStep => `protocols.${protocol.id}.reusableSteps.${reusableStep.reusableStepId}`);
 };
 
 export const getRepeatedFromProtocolIndex = (step, currentProtocolId) => {

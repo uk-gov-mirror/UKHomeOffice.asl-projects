@@ -30,7 +30,7 @@ function renderUsedInProtocols(protocolIndexes) {
   return `${protocolIndexes.slice(0, protocolIndexes.length - 1).join(',')} and ${protocolIndexes[protocolIndexes.length - 1]}`;
 }
 
-const changeFields = (step, prefix) => step.reusable ? [ `reusableSteps.${step.reusableStepId}` ] : [ prefix.substr(0, prefix.length - 1) ];
+const changeFields = (prefix) => [ prefix.substr(0, prefix.length - 1) ];
 
 class Step extends Component {
   constructor(options) {
@@ -138,7 +138,7 @@ class Step extends Component {
       expanded,
       onToggleExpanded
     } = this.props;
-    const changeFieldPrefix = values.reusableStepId ? `reusableSteps.${values.reusableStepId}.` : this.props.prefix;
+    const changeFieldPrefix = values.reusableStepId ? `protocols.${protocol.id}.reusableSteps.${values.reusableStepId}.` : this.props.prefix;
 
     const re = values.reusableStepId ? new RegExp(`^(reusable)?S?s?teps.(${values.id})?(${values.reusableStepId})?\\.`) : new RegExp(`^(reusable)?S?s?teps.${values.id}\\.`);
     const relevantComments = Object.values(
@@ -221,7 +221,7 @@ class Step extends Component {
         ref={this.step}
       >
         <NewComments comments={relevantComments} />
-        <ChangedBadge fields={changeFields(values, changeFieldPrefix)} protocolId={protocol.id} />
+        <ChangedBadge fields={changeFields(changeFieldPrefix)} protocolId={protocol.id} />
         <Fragment>
           {
             editable && completed && !deleted && (
@@ -311,7 +311,7 @@ class Step extends Component {
       return (
         <section className={'review-step'}>
           <NewComments comments={relevantComments} />
-          <ChangedBadge fields={changeFields(values, changeFieldPrefix)} protocolId={protocol.id} />
+          <ChangedBadge fields={changeFields(changeFieldPrefix)} protocolId={protocol.id} />
           <Expandable expanded={expanded} onHeaderClick={() => onToggleExpanded(index)}>
             <Fragment>
               <p className={'toggles float-right'}>
