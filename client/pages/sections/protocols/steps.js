@@ -140,7 +140,7 @@ class Step extends Component {
     const fieldPrefix = values.reusableStepId ? `protocols.${protocol.id}.reusableSteps.${values.reusableStepId}.` : this.props.prefix;
     // Change field prefix. The list of changes don't include the protocols prefix, so it has to be removed here
     const changeFieldPrefix = values.reusableStepId ? `reusableSteps.${values.reusableStepId}.` : this.props.prefix;
-    const changeFields = [changeFieldPrefix.substr(0, changeFieldPrefix.length - 1)];
+    const changeFields = [changeFieldPrefix.substring(0, changeFieldPrefix.length - 1)];
 
     const re = values.reusableStepId ? new RegExp(`^(reusable)?S?s?teps.(${values.id})?(${values.reusableStepId})?\\.`) : new RegExp(`^(reusable)?S?s?teps.${values.id}\\.`);
     const relevantComments = Object.values(
