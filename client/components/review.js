@@ -98,9 +98,15 @@ class Review extends React.Component {
 
 const mapStateToProps = ({ application: { readonly, isGranted, previousProtocols } = {}, changes: { first = [], latest = [], granted = [] } = {} }, ownProps) => {
   const key = `${ownProps.prefix || ''}${ownProps.name}`;
-  const changedFromGranted = granted.includes(key);
-  const changedFromLatest = latest.includes(key);
-  const changedFromFirst = first.includes(key);
+  // The adjustedKey (stripping out the 'protocols.' prefix from reusable step key) is
+  // to workaround the fact that reusable steps change fields don't have the 'protocols.' prefix.
+  // The Diff Window (aka 'See what's changed') would break otherwise
+  const reusableStepsPosition = key.indexOf('reusableSteps.');
+  const adjustedKey = (reusableStepsPosition < 0) ? key : key.substring(reusableStepsPosition);
+
+  const changedFromGranted = granted.includes(adjustedKey);
+  const changedFromLatest = latest.includes(adjustedKey);
+  const changedFromFirst = first.includes(adjustedKey);
   return {
     readonly: ownProps.readonly || readonly,
     changedFromFirst,
