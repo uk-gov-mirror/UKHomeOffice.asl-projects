@@ -30,6 +30,8 @@ function renderUsedInProtocols(protocolIndexes) {
   return `${protocolIndexes.slice(0, protocolIndexes.length - 1).join(',')} and ${protocolIndexes[protocolIndexes.length - 1]}`;
 }
 
+const changeFields = (step, prefix) => step.reusable ? [ `reusableSteps.${step.reusableStepId}` ] : [ prefix.substr(0, prefix.length - 1) ];
+
 class Step extends Component {
   constructor(options) {
     super(options);
@@ -136,11 +138,7 @@ class Step extends Component {
       expanded,
       onToggleExpanded
     } = this.props;
-    // Default field prefix. e.g. For Comments component to work, it requires the field to have 'protocols.<protocol_id>' prefix
-    const fieldPrefix = values.reusableStepId ? `protocols.${protocol.id}.reusableSteps.${values.reusableStepId}.` : this.props.prefix;
-    // Change field prefix. The list of changes don't include the protocols prefix, so it has to be removed here
     const changeFieldPrefix = values.reusableStepId ? `reusableSteps.${values.reusableStepId}.` : this.props.prefix;
-    const changeFields = [changeFieldPrefix.substring(0, changeFieldPrefix.length - 1)];
 
     const re = values.reusableStepId ? new RegExp(`^(reusable)?S?s?teps.(${values.id})?(${values.reusableStepId})?\\.`) : new RegExp(`^(reusable)?S?s?teps.${values.id}\\.`);
     const relevantComments = Object.values(
@@ -156,7 +154,7 @@ class Step extends Component {
         <ReviewFields
           fields={[fields.find(f => f.name === 'title')]}
           values={{ title: values.title }}
-          prefix={fieldPrefix}
+          prefix={changeFieldPrefix}
           editLink={`0#${this.props.prefix}`}
           protocolId={protocol.id}
           readonly={!isReviewStep}
@@ -168,13 +166,13 @@ class Step extends Component {
         ? <Fragment>
           {!editingReusableStep ? <Fieldset
             fields={fields}
-            prefix={fieldPrefix}
+            prefix={changeFieldPrefix}
             onFieldChange={(key, value) => updateItem({ [key]: value })}
             values={values}
           /> : <Fragment>
             <Fieldset
               fields={fields.filter(f => f.name !== 'reusable')}
-              prefix={fieldPrefix}
+              prefix={changeFieldPrefix}
               onFieldChange={(key, value) => updateItem({ [key]: value })}
               values={values}
             />
@@ -201,7 +199,7 @@ class Step extends Component {
           <ReviewFields
             fields={fields.filter(f => f.name !== 'title')}
             values={values}
-            prefix={fieldPrefix}
+            prefix={changeFieldPrefix}
             editLink={`0#${this.props.prefix}`}
             readonly={!isReviewStep}
             protocolId={protocol.id}
@@ -223,7 +221,7 @@ class Step extends Component {
         ref={this.step}
       >
         <NewComments comments={relevantComments} />
-        <ChangedBadge fields={changeFields} protocolId={protocol.id} />
+        <ChangedBadge fields={changeFields(values, changeFieldPrefix)} protocolId={protocol.id} />
         <Fragment>
           {
             editable && completed && !deleted && (
@@ -313,7 +311,7 @@ class Step extends Component {
       return (
         <section className={'review-step'}>
           <NewComments comments={relevantComments} />
-          <ChangedBadge fields={changeFields} protocolId={protocol.id} />
+          <ChangedBadge fields={changeFields(values, changeFieldPrefix)} protocolId={protocol.id} />
           <Expandable expanded={expanded} onHeaderClick={() => onToggleExpanded(index)}>
             <Fragment>
               <p className={'toggles float-right'}>
