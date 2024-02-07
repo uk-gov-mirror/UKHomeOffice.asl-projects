@@ -362,8 +362,7 @@ For studies requested for other worldwide authorities, for example the US Food a
     14. how you’ll refine the procedures to minimise potential harm to animals 
     
 3. You must share any project reports and AWERB review outcomes with ASRU when requested 
-`,
-          trimWhitespace: false
+`
         }
       ]
     },
