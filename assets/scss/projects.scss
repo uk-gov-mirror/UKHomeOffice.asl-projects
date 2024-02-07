@@ -1512,8 +1512,12 @@ html.modal-open, html.modal-open body {
       @include purple-inset;
       margin-bottom: $govuk-gutter;
 
-      p.condition-text {
-        white-space: pre-wrap;
+      ol ol {
+        list-style-type: lower-alpha;
+
+        & ol {
+          list-style-type: lower-roman;
+        }
       }
     }
   }
@@ -1528,7 +1532,6 @@ html.modal-open, html.modal-open body {
     display: table;
     table-layout: fixed;
     width: 100%;
-    white-space: pre-wrap;
 
     .clamp {
       > * {
@@ -1547,10 +1550,19 @@ html.modal-open, html.modal-open body {
           display: none;
 
           &:first-child {
-            display: inherit;
+            display: list-item;
             white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+
+            > * {
+              display: none;
+
+              &:first-child {
+                display: inherit;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+              }
+            }
           }
         }
       }
@@ -1574,6 +1586,14 @@ html.modal-open, html.modal-open body {
         &:before {
           content: '▲';
         }
+      }
+    }
+
+    ol ol {
+      list-style-type: lower-alpha;
+
+      & ol {
+        list-style-type: lower-roman;
       }
     }
   }

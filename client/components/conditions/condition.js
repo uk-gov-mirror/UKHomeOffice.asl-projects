@@ -69,13 +69,20 @@ const Condition = ({
               showRevert={true}
               conditionKey={conditionKey}
               reminders={reminders}
+              hint={<MarkdownHint />}
             />
           )
           : (
             <Fragment>
               {
                 content && content !== ''
-                  ? <Markdown id={id} className={classnames('light', { clamp: expandable && !expanded })}>{content}</Markdown>
+                  ? <Markdown
+                    id={id}
+                    className={classnames('light', { clamp: expandable && !expanded })}
+                    significantLineBreaks
+                  >
+                    {content}
+                  </Markdown>
                   : <em>No answer provided</em>
               }
               {
@@ -102,5 +109,10 @@ const Condition = ({
     </div>
   );
 };
+
+const MarkdownHint = () => <>
+  You can use markdown to format this condition.<br />
+  <a href="https://commonmark.org/help/" target="_blank" rel="noreferrer">Markdown quick reference (opens in new window)</a>.
+</>;
 
 export default Condition;

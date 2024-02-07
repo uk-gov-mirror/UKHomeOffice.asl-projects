@@ -8,6 +8,7 @@ function Editable({ edited,
   conditionKey,
   reminders,
   content,
+  hint,
   onChange = () => {},
   allowEmpty,
   onSave = () => {},
@@ -60,6 +61,7 @@ function Editable({ edited,
 
   return (
     <Fragment>
+      {hint && <span className="govuk-hint">{hint}</span>}
       <TextArea
         name="content"
         label=""

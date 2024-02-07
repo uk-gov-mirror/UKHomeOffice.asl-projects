@@ -333,8 +333,36 @@ For studies requested for other worldwide authorities, for example the US Food a
       type: 'condition',
       versions: [
         {
-          title: 'Antibody generation',
-          content: 'Unless otherwise specified, antibodies can only be generated using animals when a non-animal alternative has been tried (including taking expert advice) and has failed.'
+          title: 'Antibody production',
+          content: `\
+1.  You must not use living animals to produce antibodies as part of this project unless you have prior approval from the AWERB.
+    
+    You must request approval on a case-by-case basis for each antibody - giving a robust, legitimate scientific rationale to explain why non-animal alternatives are not suitable
+      
+2.  You must submit an annual project report to AWERB by 31 December each year for the duration of the project licence. The report should include the following information: 
+    1.  each antibody produced using living animals 
+    2.  the current state of knowledge in the relevant area of scientific research 
+    3.  any validated non-animal alternatives already available 
+    4.  any identically active antibodies or alternative binding or affinity reagents already available, either commercially or through other means 
+    5.  why existing antibodies or reagents are unsuitable and why it’s necessary to produce an antibody using living animals 
+    6.  the scientific rationale for producing each antibody using living animals, for example: 
+        1. a statement that you’ve tried to use a non-animal alternative and this approach has failed, including the scientific reasons why  
+        2. a statement that extrapolation of existing data strongly indicates that a non-animal antibody alternative is highly unlikely to be suitable 
+        3. a statement that the target epitope does not bind to non-animal alternatives 
+        4. discussion of availability and timeliness of non-animal antibody alternatives - this may be particularly relevant for therapeutic applications or where there is a scientific urgency (for example, global infectious disease pandemics where there is a need for a new diagnostic)
+        
+        Note: The regulator will not accept cost or convenience as reasons why you haven’t developed or used non-animal alternatives to produce antibodies (or used a third party) 
+    7.  the animal models and numbers, antigen(s) and methods you’ve used during this project 
+    8.  any specific problems you’ve addressed 
+    9.  how the antibody will be used 
+    10. who or what is likely to benefit - and how - in the short, medium and longer term 
+    11. why the adjuvants, techniques and administration routes you’ve used are the most appropriate and refined 
+    12. how you’re keeping up to date with advances in the 3Rs, and implementing these advances effectively 
+    13. how you’ve used 3Rs learnings from previous projects 
+    14. how you’ll refine the procedures to minimise potential harm to animals 
+    
+3. You must share any project reports and AWERB review outcomes with ASRU when requested 
+`
         }
       ]
     },
