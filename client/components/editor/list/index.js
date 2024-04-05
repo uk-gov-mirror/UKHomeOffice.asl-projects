@@ -1,4 +1,4 @@
-import EditList from '@joefitter/slate-edit-list';
+import EditList from '@ukhomeoffice/asl-slate-edit-list';
 import renderBlock from './renderers';
 
 export default function List() {

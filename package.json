@@ -26,10 +26,10 @@
   "dependencies": {
     "@ukhomeoffice/asl-components": "13.3.1",
     "@ukhomeoffice/asl-constants": "^2.1.5",
+    "@ukhomeoffice/asl-slate-edit-list": "0.0.7",
     "@asl/service": "^10.3.1",
     "@asl/slate-edit-table": "0.0.3",
     "@babel/core": "^7.24.4",
-    "@joefitter/slate-edit-list": "0.0.3",
     "@ukhomeoffice/frontend-toolkit": "^3.0.0",
     "@ukhomeoffice/react-components": "^1.0.0",
     "classnames": "^2.2.6",
