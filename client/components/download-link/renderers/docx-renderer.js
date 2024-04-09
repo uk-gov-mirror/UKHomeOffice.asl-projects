@@ -7,7 +7,7 @@ import isNull from 'lodash/isNull';
 import get from 'lodash/get';
 import pickBy from 'lodash/pickBy';
 import mapValues from 'lodash/mapValues';
-import format from 'date-fns/format';
+import { format } from 'date-fns';
 import { projectSpecies as SPECIES } from '@ukhomeoffice/asl-constants';
 import { getLegacySpeciesLabel, mapSpecies, stripInvalidXmlChars } from '../../../helpers';
 import { filterSpeciesByActive } from '../../../pages/sections/protocols/animals';

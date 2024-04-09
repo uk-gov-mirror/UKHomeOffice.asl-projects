@@ -1,4 +1,4 @@
 export const DATE_FORMAT = {
-  long: 'DD MMMM YYYY',
-  short: 'DD/MM/YYYY'
+  long: 'dd MMMM yyyy',
+  short: 'dd/MM/yyyy'
 };
