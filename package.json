@@ -1,6 +1,6 @@
 {
   "name": "@asl/projects",
-  "version": "15.0.7",
+  "version": "15.1.0",
   "description": "ASL PPL prototype",
   "main": "client/external.js",
   "styles": "assets/scss/projects.scss",
@@ -24,7 +24,7 @@
     "registry": "https://artifactory.digital.homeoffice.gov.uk/artifactory/api/npm/npm-virtual/"
   },
   "dependencies": {
-    "@ukhomeoffice/asl-components": "13.3.1",
+    "@ukhomeoffice/asl-components": "13.4.0",
     "@ukhomeoffice/asl-constants": "^2.1.5",
     "@ukhomeoffice/asl-slate-edit-list": "0.0.8",
     "@asl/service": "^10.3.1",
@@ -33,7 +33,7 @@
     "@ukhomeoffice/frontend-toolkit": "^3.0.0",
     "@ukhomeoffice/react-components": "^1.0.0",
     "classnames": "^2.2.6",
-    "date-fns": "^1.30.1",
+    "date-fns": "^3.6.0",
     "details-element-polyfill": "^2.3.0",
     "docx": "5.0.0-rc4",
     "file-saver": "^2.0.0",

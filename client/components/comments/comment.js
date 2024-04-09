@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
-import format from 'date-fns/format';
+import { format } from 'date-fns';
 import { Button } from '@ukhomeoffice/react-components';
 import { Markdown } from '@ukhomeoffice/asl-components';
 import { deleteComment } from '../../actions/comments';

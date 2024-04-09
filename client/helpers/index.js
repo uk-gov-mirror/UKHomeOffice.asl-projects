@@ -4,7 +4,7 @@ import castArray from 'lodash/castArray';
 import pickBy from 'lodash/pickBy';
 import mapValues from 'lodash/mapValues';
 import map from 'lodash/map';
-import dateFormatter from 'date-fns/format';
+import { format as dateFormatter } from 'date-fns';
 import {JSONPath} from 'jsonpath-plus';
 import LEGACY_SPECIES from '../constants/legacy-species';
 import { projectSpecies as SPECIES } from '@ukhomeoffice/asl-constants';
