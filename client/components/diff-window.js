@@ -169,6 +169,20 @@ const DiffWindow = (props) => {
         });
     };
 
+    const radioDiff = () => {
+      return (
+        <p>
+          {
+            value === undefined ? (
+              <em>{ DEFAULT_LABEL }</em>
+            ) : (
+              <span className={`diff ${parts.added ? 'added' : 'removed'}`}> { value ? 'Yes' : 'No'}</span>
+            )
+          }
+        </p>
+      );
+    };
+
     const permissiblePurposeDiff = () => {
       const diffs = parts
         .reduce((arr, { value, added, removed }) => {
@@ -228,6 +242,8 @@ const DiffWindow = (props) => {
               <em>{ DEFAULT_LABEL }</em>
             </p>
           );
+      case 'radio':
+        return radioDiff();
       case 'permissible-purpose':
         return parts.length
           ? (
@@ -304,6 +320,11 @@ const DiffWindow = (props) => {
   const compare = () => {
 
     const hasVisibleChanges = hasContentChanges(before, props.value, props.type);
+    let { removed, added } = changes.removed;
+    if (props.type === 'radio') {
+      removed = { added: false };
+      added = { added: true };
+    }
 
     return <Fragment>
       {
@@ -322,7 +343,7 @@ const DiffWindow = (props) => {
           }
           <div className="panel light-grey before">
             {
-              loading ? <p>Loading...</p> : renderDiff(changes.removed, before)
+              loading ? <p>Loading...</p> : renderDiff(removed, before)
             }
           </div>
         </div>
@@ -330,7 +351,7 @@ const DiffWindow = (props) => {
           <h3>Proposed</h3>
           <div className="panel light-grey after">
             {
-              renderDiff(changes.added, props.value)
+              renderDiff(added, props.value)
             }
           </div>
         </div>
