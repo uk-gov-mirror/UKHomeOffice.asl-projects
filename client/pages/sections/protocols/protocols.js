@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
 import pickBy from 'lodash/pickBy';
+import _ from 'lodash';
 import mapKeys from 'lodash/mapKeys';
 import ProtocolSections from './protocol-sections';
 import Fieldset from '../../../components/fieldset';
@@ -9,6 +10,7 @@ import Repeater from '../../../components/repeater';
 import Controls from '../../../components/controls';
 import { getNewComments } from '../../../helpers';
 import { renderFieldsInProtocol } from '../../../helpers/render-fields-in-protocol';
+import NTSFateOfAnimalFields from '../../../helpers/nts-field';
 
 const Form = ({
   number,
@@ -80,15 +82,17 @@ class Protocol extends PureComponent {
     const protocolState = this.getProtocolState();
     const isActive = this.isActive(protocolState);
 
-    const conditionalFateOfAnimalFields = renderFieldsInProtocol(this.props.project['fate-of-animals'] ?? 'default');
+    if (editable) {
+      const conditionalFateOfAnimalFields = renderFieldsInProtocol(this.props.project['fate-of-animals']);
 
-    // Ensure options array exists, and is initialised properly
-    if (!this.props.sections.fate.fields[0].options) {
-      this.props.sections.fate.fields[0].options = [];
+      // Ensure options array exists and is initialized properly
+      _.set(this.props.sections, 'fate.fields[0].options', _.get(this.props.sections, 'fate.fields[0].options', []));
+
+      // Update the options array with unique fields
+      this.props.sections.fate.fields[0].options = conditionalFateOfAnimalFields;
+    } else {
+      this.props.sections.fate.fields[0].options = NTSFateOfAnimalFields();
     }
-
-    // Update the options array with unique fields
-    this.props.sections.fate.fields[0].options = conditionalFateOfAnimalFields;
 
     return editable && this.state.active
       ? <Form
