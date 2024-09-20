@@ -35,11 +35,18 @@ export function getSubsections(schemaVersion) {
     }, {});
 
   // inject the project licence holder into introductory details
-  const field = {
-    label: 'Licence holder',
-    name: 'holder',
-    type: 'holder-name'
-  };
+  const field = [
+    {
+      label: 'Licence holder',
+      name: 'licenceHolder',
+      type: 'holder-name'
+    },
+    {
+      label: 'Licence Number',
+      name: 'licenceNumber',
+      type: 'licence-number'
+    }
+  ];
 
   subsections['introduction'].fields.splice(1, 0, field);
 
