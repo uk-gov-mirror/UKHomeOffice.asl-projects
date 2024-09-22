@@ -61,7 +61,7 @@ const mapStateToProps = ({ project, application: { isGranted, schemaVersion, isF
     project: {
       ...project,
       licenceHolder: application.licenceHolder,
-      licenceNumber: application.licenceNumber
+      licenceNumber: application.establishment.licenceNumber
     },
     fields,
     isGranted,

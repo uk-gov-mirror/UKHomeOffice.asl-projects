@@ -105,6 +105,12 @@ class ReviewField extends React.Component {
       );
     }
 
+    if (this.props.type === 'licence-number') {
+      return (
+        <p>{value}</p>
+      );
+    }
+
     if (this.props.type === 'establishment-selector') {
       return <EstablishmentSelector {...this.props} review={true} />;
     }
