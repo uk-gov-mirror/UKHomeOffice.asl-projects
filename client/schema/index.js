@@ -26,13 +26,26 @@ export function getGrantedSubsections(schemaVersion) {
 
 export function getSubsections(schemaVersion) {
   const schema = versions[schemaVersion];
-  return Object.values(schema())
+  const subsections = Object.values(schema())
     .reduce((sections, section) => {
       return {
         ...sections,
         ...(section.subsections || {})
       };
     }, {});
+
+  // inject the project licence holder into introductory details
+  const field = [
+    {
+      label: 'Licence holder',
+      name: 'licenceHolder',
+      type: 'holder-name'
+    }
+  ];
+
+  subsections['introduction'].fields.splice(1, 0, field);
+
+  return subsections;
 }
 
 export default versions;
