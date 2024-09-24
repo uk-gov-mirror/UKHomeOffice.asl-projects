@@ -40,11 +40,6 @@ export function getSubsections(schemaVersion) {
       label: 'Licence holder',
       name: 'licenceHolder',
       type: 'holder-name'
-    },
-    {
-      label: 'Licence number',
-      name: 'licenceNumber',
-      type: 'licence-number'
     }
   ];
 
