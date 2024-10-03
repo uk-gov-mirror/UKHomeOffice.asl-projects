@@ -34,16 +34,18 @@ export function getSubsections(schemaVersion) {
       };
     }, {});
 
-  // inject the project licence holder into introductory details
-  const field = [
-    {
-      label: 'Licence holder',
-      name: 'licenceHolder',
-      type: 'holder-name'
-    }
-  ];
+  if (schemaVersion === 1) {
+    // inject the project licence holder into introductory details
+    const field = [
+      {
+        label: 'Licence holder',
+        name: 'licenceHolder',
+        type: 'holder-name'
+      }
+    ];
 
-  subsections['introduction'].fields.splice(1, 0, field);
+    subsections['introduction'].fields.splice(1, 0, field);
+  }
 
   return subsections;
 }
