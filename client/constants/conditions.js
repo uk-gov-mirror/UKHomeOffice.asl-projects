@@ -162,6 +162,17 @@ export default {
 * <<<INSERT any other measures to safeguard the animal's welfare on being re-homed HERE>>>.
 
 Genetically altered animals may not be re-homed.`
+        },
+        {
+          title: 'Rehoming',
+          requiresEditing: true,
+          content: `Animals may be re-homed at the end of a series of regulated procedures provided the establishment has taken action to ensure that:
+* the animal's state of health allows it to be re-homed
+* re-homing the animal poses no danger to public health, animal health or the environment
+* the animal is socialised when it is re-homed
+* the animal's welfare is safeguarded when it is re-homed
+
+Genetically altered animals may not be re-homed.`
         }
       ]
     },
@@ -177,6 +188,15 @@ Genetically altered animals may not be re-homed.`
 * <<<INSERT actions to ensure that the setting free of the animal poses no danger to public health, animal health or the environment HERE>>>;
 * <<<INSERT actions to ensure socialisation of the animal on being set free HERE>>>; and
 * <<<INSERT any other measures to safeguard the animal's welfare on being set free HERE>>>`
+        },
+        {
+          title: 'Setting free',
+          requiresEditing: true,
+          content: `Animals may be set free at the end of a series of regulated procedures provided the establishment has taken action to ensure that:
+* the animal's state of health allows it to be set free
+* setting the animal free poses no danger to public health, animal health or the environment
+* the animal is socialised when it is set free, where appropriate
+* the animal's welfare is safeguarded when it is set free`
         }
       ]
     },
