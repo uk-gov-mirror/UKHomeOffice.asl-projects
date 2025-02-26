@@ -17,6 +17,11 @@ export function hasDatabaseChange(fieldName, storedValue, currentValue, values, 
     throw new Error('fieldName must be provided.');
   }
 
+  console.log(`Field name: ${fieldName}`);
+  console.log(`Stored field value: normaliseValue(${storedValue})`);
+  console.log(`Current field value:`, JSON.stringify(normaliseValue(currentValue), null, 2));
+  console.log(`Full object:`, values);  // No need for template literals for objects
+
   const actualCurrentValue = currentValue ?? values?.[fieldName] ?? '';
   const adjustedStoredValue = fieldName === 'duration' ? normaliseDuration(storedValue) : storedValue;
 
