@@ -237,6 +237,17 @@ const ApplicationSummary = () => {
                     if (subsection.repeats) {
                       fields.push(subsection.repeats);
                     }
+                    // Call `hasSectionChanged` before rendering `ChangedBadge`
+                    const sectionHasChanges = hasSectionChanged(
+                        fields,
+                        values,
+                        project.initialValues || {},
+                        project.latestSubmittedValues || {},
+                        project.firstSubmittedValues || {},
+                        project.grantedValues || {},
+                        project.isGranted
+                    );
+                    console.log(`Section: ${fields} - Changed: ${sectionHasChanges}`);
                     return <tr key={key}>
                       <td>
                         <ErrorMessage title={subsection.title} isComplete={isComplete(subsection, key)}>
@@ -245,7 +256,7 @@ const ApplicationSummary = () => {
                       </td>
                       <td className="controls">
                         <Comments subsection={key} />
-                        {hasSectionChanged(fields, values, project.initialValues || {}) && <ChangedBadge fields={fields} />}
+                        {sectionHasChanges && <ChangedBadge fields={fields} />}  {/* Only render if sectionHasChanges is true */}
                         <CompleteBadge isComplete={isComplete(subsection, key)} />
                       </td>
                     </tr>;

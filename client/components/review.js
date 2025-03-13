@@ -27,11 +27,15 @@ class Review extends React.Component {
       changedFromFirst,
       changedFromLatest,
       changedFromGranted,
-      hideChanges
+      hideChanges,
+      latestSubmittedValue,  // ✅ Ensure this is included
+      firstSubmittedValue,   // ✅ Ensure this is included
+      grantedValue           // ✅ Ensure this is included
     } = this.props;
 
     let { hint } = this.props;
     const { fieldName, storedValue, currentValue, values } = this.props;
+
 
     if (this.props.raPlayback) {
       hint = <RAPlaybackHint {...this.props.raPlayback} hint={hint} />;
@@ -46,8 +50,24 @@ class Review extends React.Component {
     const showComments = !this.props.noComments && this.props.type !== 'repeater';
     const changed = changedFromFirst || changedFromLatest || changedFromGranted;
     const showDiffWindow = this.props.readonly && !hideChanges && changed;
-    const netChange = hasDatabaseChange(fieldName, storedValue, currentValue, values, hasSpeciesFieldChanges);
+// ✅ Call `hasDatabaseChange` before rendering `ChangedBadge`
+    const netChange = hasDatabaseChange(
+        fieldName,
+        storedValue,
+        currentValue,
+        latestSubmittedValue,  // ✅ Pass it here
+        firstSubmittedValue,   // ✅ Pass it here
+        grantedValue,          // ✅ Pass it here
+        isGranted,
+        values,
+        hasSpeciesFieldChanges
+    );
+
+
+    console.log(`Field: ${fieldName} - Changed: ${netChange}`);
+
     const showChanges = !hideChanges && netChange;
+
 
     if (this.props.type === 'comments-only' && showComments) {
       return <Comments field={`${this.props.prefix || ''}${this.props.name}`} collapsed={!this.props.readonly} />;
@@ -108,7 +128,10 @@ class Review extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { application: { readonly = false, isGranted = false, previousProtocols = {} } = {}, changes: { first = [], latest = [], granted = [] } = {} } = state;
+  const {
+    application: { readonly = false, isGranted = false, previousProtocols = {} } = {},
+    changes: { first = [], latest = [], granted = [] } = {}
+  } = state;
 
   const key = `${ownProps.prefix || ''}${ownProps.name}`;
 
@@ -116,11 +139,13 @@ const mapStateToProps = (state, ownProps) => {
   const changedFromLatest = latest.includes(key);
   const changedFromFirst = first.includes(key);
 
-  // Safely accessing database values
+  // ✅ Ensure these values are retrieved safely
   const storedValue = (state.databaseValues && state.databaseValues[key]) || null;
-
-  // current value from props, if available
   const currentValue = ownProps.value || null;
+  const latestSubmittedValue = (state.latestSubmittedValues && state.latestSubmittedValues[key]) || null;
+  const firstSubmittedValue = (state.firstSubmittedValues && state.firstSubmittedValues[key]) || null;
+  const grantedValue = (state.grantedValues && state.grantedValues[key]) || null;
+
   return {
     readonly: ownProps.readonly || readonly,
     changedFromFirst,
@@ -130,9 +155,14 @@ const mapStateToProps = (state, ownProps) => {
     previousProtocols,
     storedValue,
     currentValue,
+    latestSubmittedValue,  // ✅ Ensure this is passed
+    firstSubmittedValue,   // ✅ Ensure this is passed
+    grantedValue,          // ✅ Ensure this is passed
     fieldName: ownProps.name
   };
 };
+
+
 
 const ConnectedReview = connect(mapStateToProps)(Review);
 

@@ -1,5 +1,6 @@
 import stringify from 'json-stable-stringify';
 
+
 /**
  * Normalises a given value into a consistent string format.
  * Uses json-stable-stringify to ensure consistent object key order.
@@ -27,7 +28,7 @@ export function normaliseValue(value) {
 }
 
 /**
- * Extracts plain text from a Slate.js-style rich text object.
+ * extracts plain text from a Slate.js-style rich text object.
  * @param {object} richTextObject - The input rich text object.
  * @returns {string} - Extracted plain text.
  */
