@@ -17,6 +17,7 @@ import Submit from './submit';
 import { selector } from './sync-handler';
 import HoldingPage from './holding-page';
 import { hasSectionChanged } from '../helpers/section-change-detection';
+import { useFeatureFlag } from '@asl/service/ui/feature-flag';
 
 const mapStateToProps = ({
   project,
@@ -63,6 +64,7 @@ const ApplicationSummary = () => {
 
   const [errors, setErrors] = useState(false);
   const ref = useRef(null);
+  const changeDetectionFlag = useFeatureFlag('feature-change-detection');
 
   useEffect(() => {
     if (submitted && !isSyncing) { submit(); }
@@ -248,7 +250,7 @@ const ApplicationSummary = () => {
                       project.grantedValues || {},
                       project.isGranted
                     );
-                    console.log(`Section: ${fields} - Changed: ${sectionHasChanges}`);
+
                     return <tr key={key}>
                       <td>
                         <ErrorMessage title={subsection.title} isComplete={isComplete(subsection, key)}>
@@ -257,6 +259,7 @@ const ApplicationSummary = () => {
                       </td>
                       <td className="controls">
                         <Comments subsection={key} />
+
                         {sectionHasChanges && <ChangedBadge fields={fields} />}  {/* Only render if sectionHasChanges is true */}
                         <CompleteBadge isComplete={isComplete(subsection, key)} />
                       </td>
