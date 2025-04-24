@@ -36,13 +36,13 @@ const Legacy = ({ project, licenceHolder }) => {
             <section className={classnames('section', key)} key={index}>
               <StaticSection section={section} pdf />
             </section>
-          )
+          );
         })
       }
       <StandardConditions />
     </div>
-  )
-}
+  );
+};
 
 export default connect(({
   project: values,

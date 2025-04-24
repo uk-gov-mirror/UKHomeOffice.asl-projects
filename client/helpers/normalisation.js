@@ -1,6 +1,5 @@
 import stringify from 'json-stable-stringify';
 
-
 /**
  * Normalises a given value into a consistent string format.
  * Uses json-stable-stringify to ensure consistent object key order.
@@ -18,9 +17,18 @@ export function normaliseValue(value) {
     return extractText(value);
   }
 
+  // Treat empty arrays as empty strings
+  if (Array.isArray(value) && value.length === 0) {
+    return '';
+  }
+
   // Use json-stable-stringify for objects and arrays to ensure stable ordering
   if (typeof value === 'object') {
     return stringify(value).trim();
+  }
+
+  if (typeof value === 'string') {
+    return value.replace(/\s+/g, ' ').trim();
   }
 
   // Convert primitive types to a consistent string format
@@ -38,9 +46,9 @@ function extractText(richTextObject) {
   }
 
   return richTextObject.document.nodes
-      .map(block =>
-          block.nodes?.map(node => node.text || '').join(' ') || ''
-      )
-      .join('\n')
-      .trim();
+    .map(block =>
+      block.nodes?.map(node => node.text || '').join(' ') || ''
+    )
+    .join('\n')
+    .trim();
 }

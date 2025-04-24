@@ -56,6 +56,7 @@ const mapStateToProps = ({
 const ApplicationSummary = () => {
 
   const props = useSelector(mapStateToProps);
+  console.log(props);
   const { isSyncing } = useSelector(selector);
   const [submitted, setSubmitted] = useState(false);
   const { legacy, values, readonly, sections, basename, fieldsBySection, newComments, project, showComments } = props;
@@ -239,13 +240,13 @@ const ApplicationSummary = () => {
                     }
                     // Call `hasSectionChanged` before rendering `ChangedBadge`
                     const sectionHasChanges = hasSectionChanged(
-                        fields,
-                        values,
-                        project.initialValues || {},
-                        project.latestSubmittedValues || {},
-                        project.firstSubmittedValues || {},
-                        project.grantedValues || {},
-                        project.isGranted
+                      fields,
+                      values,
+                      project.initialValues || {},
+                      project.latestSubmittedValues || {},
+                      project.firstSubmittedValues || {},
+                      project.grantedValues || {},
+                      project.isGranted
                     );
                     console.log(`Section: ${fields} - Changed: ${sectionHasChanges}`);
                     return <tr key={key}>

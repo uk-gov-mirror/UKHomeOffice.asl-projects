@@ -16,17 +16,18 @@ import { normaliseDuration } from './normalise-duration';
  * @returns {boolean} - Returns `true` if a change is detected and not reverted, otherwise `false`.
  */
 export function hasDatabaseChange(
-    fieldName,
-    storedValue,
-    currentValue,
-    latestSubmittedValue,
-    firstSubmittedValue,
-    grantedValue,
-    isGranted,
-    values,
-    hasSpeciesFieldChanges
+  fieldName,
+  storedValue,
+  currentValue,
+  latestSubmittedValue,
+  firstSubmittedValue,
+  grantedValue,
+  isGranted,
+  values,
+  hasSpeciesFieldChanges
 ) {
   if (fieldName == null) {
+    // eslint-disable-next-line no-console
     console.log('fieldName must be provided.');
     return false;
   }
@@ -35,21 +36,21 @@ export function hasDatabaseChange(
   const adjustedStoredValue = fieldName === 'duration' ? normaliseDuration(storedValue) : storedValue;
 
   const normalisedStoredValue = fieldName === 'duration'
-      ? normaliseDuration(adjustedStoredValue)
-      : normaliseValue(adjustedStoredValue);
+    ? normaliseDuration(adjustedStoredValue)
+    : normaliseValue(adjustedStoredValue);
 
   const normalisedCurrentValue = fieldName === 'duration'
-      ? normaliseDuration(actualCurrentValue)
-      : normaliseValue(actualCurrentValue);
+    ? normaliseDuration(actualCurrentValue)
+    : normaliseValue(actualCurrentValue);
 
   const baseVersion = isGranted ? grantedValue : firstSubmittedValue;
   const normalisedBaseValue = fieldName === 'duration'
-      ? normaliseDuration(baseVersion)
-      : normaliseValue(baseVersion);
+    ? normaliseDuration(baseVersion)
+    : normaliseValue(baseVersion);
 
   const normalisedLatestSubmittedValue = fieldName === 'duration'
-      ? normaliseDuration(latestSubmittedValue)
-      : normaliseValue(latestSubmittedValue);
+    ? normaliseDuration(latestSubmittedValue)
+    : normaliseValue(latestSubmittedValue);
 
   const changedFromFirst = !isEqual(normalisedBaseValue, normalisedCurrentValue);
   const changedFromLatest = !isEqual(normalisedLatestSubmittedValue, normalisedCurrentValue);

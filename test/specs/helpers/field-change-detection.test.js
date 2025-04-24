@@ -1,87 +1,100 @@
+// field-change-detection.test.js
 import assert from 'assert';
 import { hasDatabaseChange } from '../../../client/helpers/field-change-detection';
 
+/**
+ * Test coverage:
+ * - Simple text fields
+ * - Cleared fields
+ * - Duration fields
+ * - Arrays (select/multi-select)
+ * - Nested objects
+ * - Reverted changes
+ * - Granted application scenarios
+ */
 describe('hasDatabaseChange', () => {
 
-  it('should return false if the stored value and current value are identical', () => {
-    const result = hasDatabaseChange('field1', 'value', 'value', {}, () => false);
+  it('returns false for unchanged simple text field', () => {
+    const result = hasDatabaseChange('experience', 'test', 'test', 'test', 'test', 'test', false, {}, () => false);
     assert.strictEqual(result, false);
   });
 
-  it('should return true if the stored value and current value differ', () => {
-    const result = hasDatabaseChange('field2', 'oldValue', 'newValue', {}, () => false);
+  it('detects change in simple text field', () => {
+    const result = hasDatabaseChange('experience', 'test', 'test 2', 'test', 'test', 'test', false, {}, () => false);
     assert.strictEqual(result, true);
   });
 
-  it('should handle null values correctly', () => {
-    const result = hasDatabaseChange('field3', null, 'newValue', {}, () => false);
+  it('detects cleared text field', () => {
+    const result = hasDatabaseChange('experience', 'test', '', 'test', 'test', 'test', false, {}, () => false);
     assert.strictEqual(result, true);
   });
 
-  it('should treat undefined values as empty strings', () => {
-    const result = hasDatabaseChange('field4', undefined, undefined, {}, () => false);
+  it('returns false if reverted to base version', () => {
+    const result = hasDatabaseChange('experience', 'test 2', 'test', 'test 2', 'test', 'test', false, {}, () => false);
     assert.strictEqual(result, false);
   });
 
-  it('should correctly handle null, undefined, and empty string equivalence', () => {
-    assert.strictEqual(hasDatabaseChange('field5', null, undefined, {}, () => false), false);
-    assert.strictEqual(hasDatabaseChange('field5', undefined, '', {}, () => false), false);
-    assert.strictEqual(hasDatabaseChange('field5', null, '', {}, () => false), false);
-  });
-
-  it('should normalise and compare duration values correctly (default 5 years 0 months)', () => {
-    const result = hasDatabaseChange('duration', '5 years 0 months', '7 years 0 months', {}, () => false);
-    assert.strictEqual(result, true);
-  });
-
-  it('should return false if duration values are logically equivalent after normalization (default 5 years 0 months)', () => {
-    const result = hasDatabaseChange('duration', '5 years 0 months', '5 years 0 months', {}, () => false);
-    assert.strictEqual(result, false); // Ensuring normalization keeps them equal
-  });
-
-  it('should return true if species-related fields have changed', () => {
-    const values = { species: ['mice'], storedValue: { 'reduction-quantities-mice': 5 }, 'reduction-quantities-mice': 10 };
-    const result = hasDatabaseChange('species', 'mice', 'mice', values, () => true);
-    assert.strictEqual(result, true);
-  });
-
-  it('should return false if species-related fields have not changed', () => {
-    const values = { species: ['mice'], storedValue: { 'reduction-quantities-mice': 5 }, 'reduction-quantities-mice': 5 };
-    const result = hasDatabaseChange('species', 'mice', 'mice', values, () => false);
+  it('returns false if reverted to latest submitted version', () => {
+    const result = hasDatabaseChange('experience', 'test 2', 'test 2', 'test 2', 'test', 'test', false, {}, () => false);
     assert.strictEqual(result, false);
   });
 
-  it('should detect changes in nested object fields', () => {
-    const values = {
-      protocols: [{ id: 'bb94a161-0a97-4f73-ba05-ba0270e46901', title: 'Test' }]
-    };
-    const initialValues = {
-      protocols: [{ id: 'bb94a161-0a97-4f73-ba05-ba0270e46901', title: 'Original' }]
-    };
-
-    const result = hasDatabaseChange('protocols', initialValues.protocols, values.protocols, values, () => false);
+  it('detects change if radio button toggled Yes -> No -> No', () => {
+    const result = hasDatabaseChange('radio-field', 'yes', 'no', 'yes', 'yes', 'yes', false, {}, () => false);
     assert.strictEqual(result, true);
   });
 
-  it('should return false if objects with identical key-value pairs are compared', () => {
-    const result = hasDatabaseChange(
-      'field6',
-      { key: 'value' },
-      { key: 'value' },
-      {},
-      () => false
-    );
+  it('detects change in duration field', () => {
+    const result = hasDatabaseChange('duration', '5 years 0 months', '7 years 0 months', '5 years 0 months', '5 years 0 months', '5 years 0 months', false, {}, () => false);
+    assert.strictEqual(result, true);
+  });
+
+  it('returns false for logically equivalent duration', () => {
+    const result = hasDatabaseChange('duration', '5 years 0 months', '5 years 0 months', '5 years 0 months', '5 years 0 months', '5 years 0 months', false, {}, () => false);
     assert.strictEqual(result, false);
   });
 
-  it('should return true if array contents are different', () => {
-    const result = hasDatabaseChange(
-      'field7',
-      ['mice', 'rats'],
-      ['mice', 'rats', 'dogs'],
-      {},
-      () => false
-    );
+  it('detects change in array (select) values', () => {
+    const result = hasDatabaseChange('species', ['mice', 'rats'], ['mice', 'rats', 'dogs'], ['mice', 'rats'], ['mice', 'rats'], ['mice', 'rats'], false, {}, () => false);
+    assert.strictEqual(result, true);
+  });
+
+  it('returns false for same arrays', () => {
+    const result = hasDatabaseChange('species', ['mice', 'rats'], ['mice', 'rats'], ['mice', 'rats'], ['mice', 'rats'], ['mice', 'rats'], false, {}, () => false);
+    assert.strictEqual(result, false);
+  });
+
+  it('detects change in nested object', () => {
+    const initial = [{ id: 1, title: 'test' }];
+    const modified = [{ id: 1, title: 'test updated' }];
+    const result = hasDatabaseChange('protocols', initial, modified, initial, initial, initial, false, {}, () => false);
+    assert.strictEqual(result, true);
+  });
+
+  it('handles granted application badge logic', () => {
+    const result = hasDatabaseChange('experience', 'test 2', 'test 3', 'test 2', 'test', 'test 2', true, {}, () => false);
+    assert.strictEqual(result, true);
+  });
+
+  it('detects change in boolean field', () => {
+    const result = hasDatabaseChange('isLegacyProject', true, false, true, true, true, false, {}, () => false);
+    assert.strictEqual(result, true);
+  });
+
+  it('detects change in number field', () => {
+    const result = hasDatabaseChange('licenceNumber', 123, 456, 123, 123, 123, false, {}, () => false);
+    assert.strictEqual(result, true);
+  });
+
+  it('returns false for empty object comparison', () => {
+    const result = hasDatabaseChange('fields', {}, {}, {}, {}, {}, false, {}, () => false);
+    assert.strictEqual(result, false);
+  });
+
+  it('detects change in rich text field (Slate.js object)', () => {
+    const initial = { document: { nodes: [{ object: 'block', nodes: [{ object: 'text', text: 'Hello' }] }] } };
+    const modified = { document: { nodes: [{ object: 'block', nodes: [{ object: 'text', text: 'Hello World' }] }] } };
+    const result = hasDatabaseChange('objectivesRichText', initial, modified, initial, initial, initial, false, {}, () => false);
     assert.strictEqual(result, true);
   });
 

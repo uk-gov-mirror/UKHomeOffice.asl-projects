@@ -28,14 +28,13 @@ class Review extends React.Component {
       changedFromLatest,
       changedFromGranted,
       hideChanges,
-      latestSubmittedValue,  // ✅ Ensure this is included
-      firstSubmittedValue,   // ✅ Ensure this is included
-      grantedValue           // ✅ Ensure this is included
+      latestSubmittedValue, // ✅ Ensure this is included
+      firstSubmittedValue, // ✅ Ensure this is included
+      grantedValue // ✅ Ensure this is included
     } = this.props;
 
     let { hint } = this.props;
     const { fieldName, storedValue, currentValue, values } = this.props;
-
 
     if (this.props.raPlayback) {
       hint = <RAPlaybackHint {...this.props.raPlayback} hint={hint} />;
@@ -50,24 +49,22 @@ class Review extends React.Component {
     const showComments = !this.props.noComments && this.props.type !== 'repeater';
     const changed = changedFromFirst || changedFromLatest || changedFromGranted;
     const showDiffWindow = this.props.readonly && !hideChanges && changed;
-// ✅ Call `hasDatabaseChange` before rendering `ChangedBadge`
+    // ✅ Call `hasDatabaseChange` before rendering `ChangedBadge`
     const netChange = hasDatabaseChange(
-        fieldName,
-        storedValue,
-        currentValue,
-        latestSubmittedValue,  // ✅ Pass it here
-        firstSubmittedValue,   // ✅ Pass it here
-        grantedValue,          // ✅ Pass it here
-        isGranted,
-        values,
-        hasSpeciesFieldChanges
+      fieldName,
+      storedValue,
+      currentValue,
+      latestSubmittedValue, // ✅ Pass it here
+      firstSubmittedValue, // ✅ Pass it here
+      grantedValue, // ✅ Pass it here
+      isGranted,
+      values,
+      hasSpeciesFieldChanges
     );
-
 
     console.log(`Field: ${fieldName} - Changed: ${netChange}`);
 
     const showChanges = !hideChanges && netChange;
-
 
     if (this.props.type === 'comments-only' && showComments) {
       return <Comments field={`${this.props.prefix || ''}${this.props.name}`} collapsed={!this.props.readonly} />;
@@ -155,14 +152,12 @@ const mapStateToProps = (state, ownProps) => {
     previousProtocols,
     storedValue,
     currentValue,
-    latestSubmittedValue,  // ✅ Ensure this is passed
-    firstSubmittedValue,   // ✅ Ensure this is passed
-    grantedValue,          // ✅ Ensure this is passed
+    latestSubmittedValue, // ✅ Ensure this is passed
+    firstSubmittedValue, // ✅ Ensure this is passed
+    grantedValue, // ✅ Ensure this is passed
     fieldName: ownProps.name
   };
 };
-
-
 
 const ConnectedReview = connect(mapStateToProps)(Review);
 
