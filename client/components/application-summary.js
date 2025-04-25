@@ -57,7 +57,6 @@ const mapStateToProps = ({
 const ApplicationSummary = () => {
 
   const props = useSelector(mapStateToProps);
-  console.log(props);
   const { isSyncing } = useSelector(selector);
   const [submitted, setSubmitted] = useState(false);
   const { legacy, values, readonly, sections, basename, fieldsBySection, newComments, project, showComments } = props;
@@ -260,7 +259,8 @@ const ApplicationSummary = () => {
                       <td className="controls">
                         <Comments subsection={key} />
 
-                        {sectionHasChanges && <ChangedBadge fields={fields} />}  {/* Only render if sectionHasChanges is true */}
+                        {changeDetectionFlag && sectionHasChanges && <ChangedBadge fields={fields} />}
+                        {/* Only render if sectionHasChanges is true and feature flag is on*/}
                         <CompleteBadge isComplete={isComplete(subsection, key)} />
                       </td>
                     </tr>;
