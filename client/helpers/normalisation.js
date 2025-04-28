@@ -1,3 +1,4 @@
+/* eslint-disable implicit-dependencies/no-implicit */
 import stringify from 'json-stable-stringify';
 
 /**
