@@ -2,7 +2,6 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import classnames from 'classnames';
 import ChangedBadge from './changed-badge';
-import { useFeatureFlag } from '@asl/service/ui/feature-flag';
 
 const changeFields = (step, prefix) => step.reusable ? [ `reusableSteps.${step.reusableStepId}` ] : [ prefix.substr(0, prefix.length - 1) ];
 

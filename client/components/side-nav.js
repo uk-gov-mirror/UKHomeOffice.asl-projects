@@ -10,7 +10,6 @@ import ExpandingPanel from './expanding-panel';
 import schemaMap, { getGrantedSubsections } from '../schema';
 import { flattenReveals, getFields } from '../helpers';
 import { hasSectionChanged } from '../helpers/section-change-detection';
-import { useFeatureFlag, FEATURE_CHANGE_DETECTION } from '@asl/service/ui/feature-flag';
 
 const sectionVisible = (section, values) => {
   return !section.show || section.show(values);

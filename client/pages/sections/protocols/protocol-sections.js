@@ -16,7 +16,6 @@ import { filterSpeciesByActive } from './animals';
 
 import { keepAlive } from '../../../actions/session';
 import { reusableStepFieldKeys } from '../../../helpers/steps';
-import { useFeatureFlag } from '@asl/service/ui/feature-flag';
 
 class ProtocolSections extends PureComponent {
   state = {

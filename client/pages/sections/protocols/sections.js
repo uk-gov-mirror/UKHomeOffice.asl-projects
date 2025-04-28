@@ -17,7 +17,6 @@ import Conditions from '../../../components/conditions/protocol-conditions';
 import ChangedBadge from '../../../components/changed-badge';
 import {reusableStepFieldKeys} from '../../../helpers/steps';
 import { normaliseValue } from '../../../helpers/normalisation';
-import { useFeatureFlag } from '@asl/service/ui/feature-flag';
 
 const getSection = (section, props) => {
 
