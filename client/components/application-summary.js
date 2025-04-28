@@ -17,7 +17,7 @@ import Submit from './submit';
 import { selector } from './sync-handler';
 import HoldingPage from './holding-page';
 import { hasSectionChanged } from '../helpers/section-change-detection';
-import { useFeatureFlag } from '@asl/service/ui/feature-flag';
+import { useFeatureFlag, FEATURE_CHANGE_DETECTION } from '@asl/service/ui/feature-flag';
 
 const mapStateToProps = ({
   project,
@@ -55,15 +55,13 @@ const mapStateToProps = ({
 };
 
 const ApplicationSummary = () => {
-
   const props = useSelector(mapStateToProps);
   const { isSyncing } = useSelector(selector);
   const [submitted, setSubmitted] = useState(false);
   const { legacy, values, readonly, sections, basename, fieldsBySection, newComments, project, showComments } = props;
-
   const [errors, setErrors] = useState(false);
   const ref = useRef(null);
-  const changeDetectionFlag = useFeatureFlag('feature-change-detection');
+  const hasChangeDetectionFeature = useFeatureFlag(FEATURE_CHANGE_DETECTION);
 
   useEffect(() => {
     if (submitted && !isSyncing) { submit(); }
@@ -258,9 +256,7 @@ const ApplicationSummary = () => {
                       </td>
                       <td className="controls">
                         <Comments subsection={key} />
-
-                        {changeDetectionFlag && sectionHasChanges && <ChangedBadge fields={fields} />}
-                        {/* Only render if sectionHasChanges is true and feature flag is on*/}
+                        {hasChangeDetectionFeature ? sectionHasChanges && <ChangedBadge fields={fields} /> : <ChangedBadge fields={fields} />}  {/* Only render if sectionHasChanges and feature flag is true */}
                         <CompleteBadge isComplete={isComplete(subsection, key)} />
                       </td>
                     </tr>;

@@ -11,7 +11,7 @@ import ErrorBoundary from './error-boundary';
 import classnames from 'classnames';
 import { hasDatabaseChange } from '../helpers/field-change-detection';
 import { hasSpeciesFieldChanges } from '../helpers/species-change-detection';
-import { useFeatureFlag } from '@asl/service/ui/feature-flag';
+
 class Review extends React.Component {
 
   replay() {
@@ -35,7 +35,7 @@ class Review extends React.Component {
 
     let { hint } = this.props;
     const { fieldName, storedValue, currentValue, values } = this.props;
-    const changeDetectionFlag = useFeatureFlag('feature-change-detection');
+
     if (this.props.raPlayback) {
       hint = <RAPlaybackHint {...this.props.raPlayback} hint={hint} />;
     } else if (hint && !React.isValidElement(hint)) {
@@ -62,6 +62,8 @@ class Review extends React.Component {
       hasSpeciesFieldChanges
     );
 
+    console.log(`Field: ${fieldName} - Changed: ${netChange}`);
+
     const showChanges = !hideChanges && netChange;
 
     if (this.props.type === 'comments-only' && showComments) {
@@ -74,7 +76,7 @@ class Review extends React.Component {
           (!isGranted || showGrantedLabel) && <h3>{review || label}</h3>
         }
         {
-          changeDetectionFlag && showChanges && (
+          showChanges && (
             <ChangedBadge
               changedFromFirst={changedFromFirst}
               changedFromLatest={changedFromLatest}

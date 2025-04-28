@@ -17,6 +17,7 @@ import Conditions from '../../../components/conditions/protocol-conditions';
 import ChangedBadge from '../../../components/changed-badge';
 import {reusableStepFieldKeys} from '../../../helpers/steps';
 import { normaliseValue } from '../../../helpers/normalisation';
+import { useFeatureFlag } from '@asl/service/ui/feature-flag';
 
 const getSection = (section, props) => {
 
@@ -91,7 +92,7 @@ const getFieldKeys = (section, values) => {
   return flattenedFields.map(f => `protocols.${values.id}.${f.name}`);
 };
 
-const getBadges = (section, newComments, values) => {
+const getBadges = (section, newComments, values, project) => {
   let relevantComments;
   if (section.repeats) {
     const re = new RegExp(`^${section.repeats}\\.`);
