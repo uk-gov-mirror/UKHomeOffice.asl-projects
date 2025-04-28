@@ -1,16 +1,16 @@
 import React, { Fragment } from 'react';
 import { HashLink as Link } from 'react-router-hash-link';
 import { connect } from 'react-redux';
+
 import Comments from './comments';
 import DiffWindow from './diff-window';
 import ReviewField from './review-field';
 import ChangedBadge from './changed-badge';
 import RAPlaybackHint from './ra-playback-hint';
 import { Markdown } from '@ukhomeoffice/asl-components';
+
 import ErrorBoundary from './error-boundary';
 import classnames from 'classnames';
-import { hasDatabaseChange } from '../helpers/field-change-detection';
-import { hasSpeciesFieldChanges } from '../helpers/species-change-detection';
 
 class Review extends React.Component {
 
@@ -34,15 +34,16 @@ class Review extends React.Component {
     } = this.props;
 
     let { hint } = this.props;
-    const { fieldName, storedValue, currentValue, values } = this.props;
 
     if (this.props.raPlayback) {
       hint = <RAPlaybackHint {...this.props.raPlayback} hint={hint} />;
     } else if (hint && !React.isValidElement(hint)) {
-      hint = <Markdown links={true} paragraphProps={{ className: 'grey' }}>{hint}</Markdown>;
+      hint = <Markdown links={true} paragraphProps={{className: 'grey'}}>{hint}</Markdown>;
     } else if (hint) {
+      // Defensive: keep old behaviour for unexpected edge cases
       hint = <p className="grey">{hint}</p>;
     } else {
+      // Cast all falsy hints to null, so react definitely renders nothing
       hint = null;
     }
 
@@ -63,9 +64,7 @@ class Review extends React.Component {
     );
 
     console.log(`Field: ${fieldName} - Changed: ${netChange}`);
-
     const showChanges = !hideChanges && netChange;
-
     if (this.props.type === 'comments-only' && showComments) {
       return <Comments field={`${this.props.prefix || ''}${this.props.name}`} collapsed={!this.props.readonly} />;
     }
@@ -124,14 +123,13 @@ class Review extends React.Component {
   }
 }
 
+
 const mapStateToProps = (state, ownProps) => {
   const {
     application: { readonly = false, isGranted = false, previousProtocols = {} } = {},
     changes: { first = [], latest = [], granted = [] } = {}
   } = state;
-
   const key = `${ownProps.prefix || ''}${ownProps.name}`;
-
   const changedFromGranted = granted.includes(key);
   const changedFromLatest = latest.includes(key);
   const changedFromFirst = first.includes(key);
@@ -152,9 +150,9 @@ const mapStateToProps = (state, ownProps) => {
     previousProtocols,
     storedValue,
     currentValue,
-    latestSubmittedValue, // ✅ Ensure this is passed
-    firstSubmittedValue, // ✅ Ensure this is passed
-    grantedValue, // ✅ Ensure this is passed
+    latestSubmittedValue,
+    firstSubmittedValue,
+    grantedValue,
     fieldName: ownProps.name
   };
 };
