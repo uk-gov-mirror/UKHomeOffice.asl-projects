@@ -11,6 +11,8 @@ import { Markdown } from '@ukhomeoffice/asl-components';
 
 import ErrorBoundary from './error-boundary';
 import classnames from 'classnames';
+import { hasDatabaseChange } from '../helpers/field-change-detection';
+import { hasSpeciesFieldChanges } from '../helpers/species-change-detection';
 
 class Review extends React.Component {
 
